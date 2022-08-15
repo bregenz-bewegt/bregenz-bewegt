@@ -17,7 +17,6 @@ const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
         >
           UI Components
         </a>
-        Döner
       </p>
     </div>
   );
