@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "bregenz-bewegt",
+	"webDir": "../../dist/apps/bregenz-bewegt",
+	"bundledWebRuntime": false
+}

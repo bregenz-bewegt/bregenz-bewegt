@@ -1,0 +1,7 @@
+{
+  "name": "bregenz-bewegt",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

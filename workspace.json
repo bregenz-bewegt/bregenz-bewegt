@@ -1,5 +1,9 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
-  "projects": {}
+  "projects": {
+    "bregenz-bewegt": "apps/bregenz-bewegt",
+    "bregenz-bewegt-e2e": "apps/bregenz-bewegt-e2e",
+    "server": "apps/server"
+  }
 }
