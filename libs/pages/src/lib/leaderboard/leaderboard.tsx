@@ -5,27 +5,25 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import ExploreContainer from '../../components/ExploreContainer';
-import './scan.scss';
+import { ExploreContainer } from '@bregenz-bewegt/components';
+import './leaderboard.scss';
 
-const Scan: React.FC = () => {
+export const Leaderboard: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Scan</IonTitle>
+          <IonTitle>Leaderboard</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Scan</IonTitle>
+            <IonTitle size="large">Leaderboard</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Scan" />
+        <ExploreContainer name="Leaderboard" />
       </IonContent>
     </IonPage>
   );
 };
-
-export default Scan;

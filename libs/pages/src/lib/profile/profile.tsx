@@ -5,27 +5,25 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import ExploreContainer from '../../components/ExploreContainer';
-import './leaderboard.scss';
+import { ExploreContainer } from '@bregenz-bewegt/components';
+import './profile.scss';
 
-const Leaderboard: React.FC = () => {
+export const Profile: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Leaderboard</IonTitle>
+          <IonTitle>Profile</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Leaderboard</IonTitle>
+            <IonTitle size="large">Profile</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Leaderboard" />
+        <ExploreContainer name="profile" />
       </IonContent>
     </IonPage>
   );
 };
-
-export default Leaderboard;

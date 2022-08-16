@@ -5,27 +5,25 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import ExploreContainer from '../../components/ExploreContainer';
-import './Tab2.scss';
+import { ExploreContainer } from '@bregenz-bewegt/components';
+import './start.scss';
 
-const Analytics: React.FC = () => {
+export const Start: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Analytics</IonTitle>
+          <IonTitle>Start</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Analytics</IonTitle>
+            <IonTitle size="large">Start</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Analytics" />
+        <ExploreContainer name="Scan" />
       </IonContent>
     </IonPage>
   );
 };
-
-export default Analytics;
