@@ -7,13 +7,13 @@
   },
   "scripts": {
     "nx": "nx",
-    "dev": "concurrently \"nx serve client\" \"nx serve server\"",
-    "dev:native": "nx build && nx run client:copy && nx run client:open && nx serve client",
+    "dev": "nx run-many --target=serve",
+    "dev:native": "nx build client && nx run client:copy && nx run client:open && nx serve client",
     "start": "nx serve",
     "start:client": "nx serve client",
     "start:server": "nx serve server",
-    "build": "nx build",
-    "test": "nx test"
+    "build": "nx run-many --target=build",
+    "test": "nx run-many --target=test"
   },
   "private": true,
   "dependencies": {

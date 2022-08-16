@@ -1,11 +1,4 @@
 import {
-  Start,
-  Leaderboard,
-  Scan,
-  Analytics,
-  Profile,
-} from '@bregenz-bewegt/pages';
-import {
   IonTabs,
   IonRouterOutlet,
   IonTabBar,
