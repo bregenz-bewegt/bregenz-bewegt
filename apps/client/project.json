@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/bregenz-bewegt/src",
+  "sourceRoot": "apps/client/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,17 +9,14 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
-        "outputPath": "dist/apps/bregenz-bewegt",
-        "index": "apps/bregenz-bewegt/src/index.html",
+        "outputPath": "dist/apps/client",
+        "index": "apps/client/src/index.html",
         "baseHref": "/",
-        "main": "apps/bregenz-bewegt/src/main.tsx",
-        "polyfills": "apps/bregenz-bewegt/src/polyfills.ts",
-        "tsConfig": "apps/bregenz-bewegt/tsconfig.app.json",
-        "assets": [
-          "apps/bregenz-bewegt/src/assets",
-          "apps/bregenz-bewegt/src/manifest.json"
-        ],
-        "styles": ["apps/bregenz-bewegt/src/styles.css"],
+        "main": "apps/client/src/main.tsx",
+        "polyfills": "apps/client/src/polyfills.ts",
+        "tsConfig": "apps/client/tsconfig.app.json",
+        "assets": ["apps/client/src/assets", "apps/client/src/manifest.json"],
+        "styles": ["apps/client/src/styles.css"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },
@@ -33,8 +30,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/bregenz-bewegt/src/environments/environment.ts",
-              "with": "apps/bregenz-bewegt/src/environments/environment.prod.ts"
+              "replace": "apps/client/src/environments/environment.ts",
+              "with": "apps/client/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -50,16 +47,15 @@
       "executor": "@nrwl/web:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "bregenz-bewegt:build",
-        "hmr": true,
-        "proxyConfig": "apps/bregenz-bewegt/proxy.conf.json"
+        "buildTarget": "client:build",
+        "hmr": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "bregenz-bewegt:build:development"
+          "buildTarget": "client:build:development"
         },
         "production": {
-          "buildTarget": "bregenz-bewegt:build:production",
+          "buildTarget": "client:build:production",
           "hmr": false
         }
       }
@@ -68,14 +64,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/bregenz-bewegt/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/client/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/bregenz-bewegt"],
+      "outputs": ["coverage/apps/client"],
       "options": {
-        "jestConfig": "apps/bregenz-bewegt/jest.config.ts",
+        "jestConfig": "apps/client/jest.config.ts",
         "passWithNoTests": true
       }
     },

@@ -1,5 +1,5 @@
 {
-  "name": "bregenz-bewegt",
+  "name": "client",
   "devDependencies": {
     "@capacitor/cli": "^3.6.0"
   }

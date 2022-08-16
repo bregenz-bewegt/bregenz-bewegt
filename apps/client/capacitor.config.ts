@@ -2,8 +2,8 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'bregenz-bewegt',
-  webDir: '../../dist/apps/bregenz-bewegt',
+  appName: 'client',
+  webDir: '../../dist/apps/client',
   bundledWebRuntime: false,
 };
 
