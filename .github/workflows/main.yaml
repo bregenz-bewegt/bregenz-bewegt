@@ -3,7 +3,7 @@ name: production build application
 on: [push, pull_request]
 
 jobs:
-  build_test:
+  build:
     runs-on: ubuntu-latest
 
     strategy:

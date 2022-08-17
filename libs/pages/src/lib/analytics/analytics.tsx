@@ -6,7 +6,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { ExploreContainer } from '@bregenz-bewegt/components';
-import './Analytics.scss';
+import './analytics.scss';
 
 export const Analytics: React.FC = () => {
   return (
