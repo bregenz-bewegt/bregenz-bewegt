@@ -31,5 +31,9 @@
       "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     }
-  ]
+  ],
+  "rules": {
+    "no-var": "error",
+    "sort-keys": "error"
+  }
 }
