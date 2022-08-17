@@ -1,4 +1,4 @@
-name: production build application
+name: production build
 
 on:
   push:
