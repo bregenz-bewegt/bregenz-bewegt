@@ -13,7 +13,8 @@
     "start:client": "nx serve client",
     "start:server": "nx serve server",
     "build": "nx build",
-    "test": "nx test"
+    "lint": "nx run-many --target=lint",
+    "test": "nx run-many --target=test"
   },
   "private": true,
   "dependencies": {
