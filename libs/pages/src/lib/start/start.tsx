@@ -22,7 +22,7 @@ export const Start: React.FC = () => {
             <IonTitle size="large">Start</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Scan" />
+        <ExploreContainer name="Start" />
       </IonContent>
     </IonPage>
   );
