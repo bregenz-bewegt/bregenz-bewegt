@@ -9,3 +9,49 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id               String   @id @default(cuid())
+  username         String?
+  email            String?  @unique
+  isEmailConfirmed Boolean?
+  firstname        String?
+  lastname         String?
+  role             Role
+  registratedAt    DateTime @default(now())
+  updatedAt        DateTime @default(now()) @updatedAt
+  password         String?
+  profilePicture   String?
+  preferences      Json?
+}
+
+enum Role {
+  USER
+  GUEST
+}
+
+model Park {
+  id      Int    @id @default(autoincrement())
+  name    String
+  address String
+  image   String
+}
+
+model Coordinates {
+  id              Int   @id @default(autoincrement())
+  latitude        Float
+  longitude       Float
+  toleranceRadius Int   @default(50)
+}
+
+model Activity {
+  id         Int        @id @default(autoincrement())
+  difficulty Difficulty
+  startedAt  DateTime
+  endedAt    DateTime
+}
+
+enum Difficulty {
+  BEGINNER
+  ADVANCED
+}
