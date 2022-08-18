@@ -1,10 +1,10 @@
-import './ExploreContainer.css';
+import './ExploreContainer.scss';
 
 interface ContainerProps {
   name: string;
 }
 
-const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
+export const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
   return (
     <div className="container">
       <strong>{name}</strong>
@@ -21,5 +21,3 @@ const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
     </div>
   );
 };
-
-export default ExploreContainer;
