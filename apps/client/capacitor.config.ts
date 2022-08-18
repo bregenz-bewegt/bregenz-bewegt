@@ -8,10 +8,10 @@ const config: CapacitorConfig = {
   appName: 'client',
   webDir: '../../dist/apps/client',
   bundledWebRuntime: false,
-  // server: {
-  //   url: `${ip.address()}:4200`,
-  //   cleartext: true,
-  // },
+  server: {
+    url: `http://${ip.address()}:4200`,
+    cleartext: true,
+  },
 };
 
 export default config;

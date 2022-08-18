@@ -8,10 +8,10 @@
   "scripts": {
     "nx": "nx",
     "dev": "nx run-many --target=serve",
-    "dev:native": "nx run client:build && nx run client:cap:android",
+    "dev:native:android": "nx run client:cap:android",
     "start": "nx serve",
-    "start:client": "nx serve client",
-    "start:server": "nx serve server",
+    "start:client": "nx run client:serve",
+    "start:server": "nx run server:serve",
     "build": "nx run-many --target=build",
     "test": "nx run-many --target=test"
   },
