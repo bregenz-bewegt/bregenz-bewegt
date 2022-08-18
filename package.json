@@ -6,14 +6,15 @@
     "node": "14.20.0"
   },
   "scripts": {
-    "nx": "nx",
-    "serve": "nx serve",
     "dev": "nx run-many --target=serve",
     "dev:client": "nx run client:serve",
     "dev:server": "nx run server:serve",
     "dev:native:android": "nx run client:cap:android",
     "build": "nx run-many --target=build",
-    "test": "nx run-many --target=test"
+    "test": "nx run-many --target=test",
+    "prisma:migrate": "npx prisma migrate dev",
+    "nx": "nx",
+    "prisma": "npx prisma"
   },
   "private": true,
   "dependencies": {
