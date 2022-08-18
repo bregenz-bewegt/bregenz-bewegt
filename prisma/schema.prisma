@@ -23,7 +23,7 @@ model User {
   password         String?
   profilePicture   String?
   preferences      Json?
-  coins            Int?
+  coins            Int?     @default(0)
 
   @@index([email])
 }
