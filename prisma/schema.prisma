@@ -11,21 +11,29 @@ datasource db {
 }
 
 model User {
-  id               String   @id @default(cuid())
+  id               String       @id @default(cuid())
   username         String?
-  email            String?  @unique
+  email            String?      @unique
   isEmailConfirmed Boolean?
   firstname        String?
   lastname         String?
   role             Role
-  registratedAt    DateTime @default(now())
-  updatedAt        DateTime @default(now()) @updatedAt
+  registratedAt    DateTime     @default(now())
+  updatedAt        DateTime     @default(now()) @updatedAt
   password         String?
   profilePicture   String?
-  preferences      Json?
-  coins            Int?     @default(0)
+  coins            Int?         @default(0)
+  preferences      Preferences?
+  activities       Activity[]
 
   @@index([email])
+}
+
+model Preferences {
+  id         Int         @id @default(autoincrement())
+  difficulty Difficulty?
+  user       User        @relation(fields: [userId], references: [id])
+  userId     String      @unique
 }
 
 enum Role {
@@ -34,10 +42,13 @@ enum Role {
 }
 
 model Park {
-  id      Int    @id @default(autoincrement())
-  name    String
-  address String
-  image   String
+  id          Int          @id @default(autoincrement())
+  qr          String       @unique
+  name        String
+  address     String
+  image       String
+  coordinates Coordinates?
+  exercises   Exercise[]
 }
 
 model Coordinates {
@@ -45,16 +56,33 @@ model Coordinates {
   latitude        Float
   longitude       Float
   toleranceRadius Int   @default(50)
+  park            Park  @relation(fields: [parkId], references: [id])
+  parkId          Int   @unique
 }
 
 model Activity {
-  id         Int        @id @default(autoincrement())
-  difficulty Difficulty
+  id         Int      @id @default(autoincrement())
   startedAt  DateTime
   endedAt    DateTime
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId Int
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     String?
 }
 
 enum Difficulty {
   BEGINNER
   ADVANCED
+}
+
+model Exercise {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String
+  video       String
+  points      Int
+  difficulty  Difficulty
+  Park        Park?      @relation(fields: [parkId], references: [id])
+  parkId      Int?
+  Activity    Activity[]
 }
