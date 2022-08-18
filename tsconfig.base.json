@@ -15,9 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@bregenz-bewegt/components": ["libs/components/src/index.ts"],
-      "@bregenz-bewegt/pages": ["libs/pages/src/index.ts"],
-      "@bregenz-bewegt/router": ["libs/router/src/index.ts"]
+      "@bregenz-bewegt/client-ui-components": [
+        "libs/client/ui/components/src/index.ts"
+      ],
+      "@bregenz-bewegt/client-ui-pages": ["libs/client/ui/pages/src/index.ts"],
+      "@bregenz-bewegt/client-ui-router": ["libs/client/ui/router/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

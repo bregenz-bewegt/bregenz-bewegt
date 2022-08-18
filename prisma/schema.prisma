@@ -23,6 +23,9 @@ model User {
   password         String?
   profilePicture   String?
   preferences      Json?
+  coins            Int?
+
+  @@index([email])
 }
 
 enum Role {

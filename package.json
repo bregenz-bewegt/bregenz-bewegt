@@ -7,11 +7,11 @@
   },
   "scripts": {
     "nx": "nx",
+    "serve": "nx serve",
     "dev": "nx run-many --target=serve",
+    "dev:client": "nx run client:serve",
+    "dev:server": "nx run server:serve",
     "dev:native:android": "nx run client:cap:android",
-    "start": "nx serve",
-    "start:client": "nx run client:serve",
-    "start:server": "nx run server:serve",
     "build": "nx run-many --target=build",
     "test": "nx run-many --target=test"
   },
