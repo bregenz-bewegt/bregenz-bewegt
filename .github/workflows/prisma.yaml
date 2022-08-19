@@ -1,4 +1,4 @@
-name: production build
+name: generate prisma
 
 on:
   push:
