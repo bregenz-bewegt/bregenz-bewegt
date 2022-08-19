@@ -5,7 +5,13 @@ import { Injectable } from '@nestjs/common';
 export class AuthService {
   constructor(private userService: UserService) {}
 
-  async validateUser(username, password) {
-    const user = await this.userService
+  async validateUser(email: string, password: string) {
+    const user = await this.userService.findOne(email);
+
+    if (user && user.password === password) {
+      return user;
+    }
+
+    return null;
   }
 }
