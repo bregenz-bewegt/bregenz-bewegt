@@ -19,7 +19,15 @@
         "libs/client/ui/components/src/index.ts"
       ],
       "@bregenz-bewegt/client-ui-pages": ["libs/client/ui/pages/src/index.ts"],
-      "@bregenz-bewegt/client-ui-router": ["libs/client/ui/router/src/index.ts"]
+      "@bregenz-bewegt/client-ui-router": [
+        "libs/client/ui/router/src/index.ts"
+      ],
+      "@bregenz-bewegt/server-controllers-user": [
+        "libs/server/controllers/user/src/index.ts"
+      ],
+      "@bregenz-bewegt/server-controllers-users": [
+        "libs/server/controllers/users/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -5,6 +5,9 @@
   "engines": {
     "node": "14.20.0"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "dev": "nx run-many --target=serve",
     "dev:client": "nx run client:serve",
@@ -12,8 +15,9 @@
     "dev:native:android": "nx run client:cap:android",
     "build": "nx run-many --target=build",
     "test": "nx run-many --target=test",
-    "prisma:generate": "npx prisma generate",
+    "prisma:seed": "npx prisma db seed",
     "prisma:migrate": "npx prisma migrate dev",
+    "prisma:generate": "npx prisma generate",
     "nx": "nx",
     "prisma": "npx prisma"
   },

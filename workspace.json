@@ -7,6 +7,7 @@
     "client-ui-components": "libs/client/ui/components",
     "client-ui-pages": "libs/client/ui/pages",
     "client-ui-router": "libs/client/ui/router",
-    "server": "apps/server"
+    "server": "apps/server",
+    "server-controllers-user": "libs/server/controllers/user"
   }
 }
