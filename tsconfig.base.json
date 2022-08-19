@@ -22,6 +22,9 @@
       "@bregenz-bewegt/client-ui-router": [
         "libs/client/ui/router/src/index.ts"
       ],
+      "@bregenz-bewegt/server-controllers-auth": [
+        "libs/server/controllers/auth/src/index.ts"
+      ],
       "@bregenz-bewegt/server-controllers-user": [
         "libs/server/controllers/user/src/index.ts"
       ],
