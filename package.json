@@ -19,6 +19,7 @@
     "prisma:seed": "npx prisma db seed",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:generate": "npx prisma generate",
+    "prisma:db:push": "npx prisma db push",
     "prisma:studio": "npx prisma studio",
     "nx": "nx",
     "prisma": "npx prisma"
