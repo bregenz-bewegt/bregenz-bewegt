@@ -1,8 +1,24 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const main = async () => {};
+const main = async () => {
+  await prisma.user.createMany({
+    data: [
+      {
+        username: 'simonostini',
+        email: 'simonostini@gmail.com',
+        isEmailConfirmed: true,
+        firstname: 'Simon',
+        lastname: 'Ostini',
+        role: 'USER',
+        password: 'my-secred-password',
+        profilePicture: 'path/to/picture',
+        coins: 100,
+      },
+    ],
+  });
+};
 
 main()
   .catch(async (e) => {
