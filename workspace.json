@@ -10,6 +10,7 @@
     "server": "apps/server",
     "server-controllers-auth": "libs/server/controllers/auth",
     "server-controllers-user": "libs/server/controllers/user",
-    "server-prisma": "libs/server/prisma"
+    "server-prisma": "libs/server/prisma",
+    "shared-types": "libs/shared/types"
   }
 }

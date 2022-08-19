@@ -7,7 +7,7 @@ import { JwtGuard } from '@bregenz-bewegt/server-controllers-auth';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @UseGuards(JwtGuard)
+  // @UseGuards(JwtGuard)
   @Get()
   profile(@Req() req: Request) {
     return req.user;
