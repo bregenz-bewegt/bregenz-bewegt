@@ -22,3 +22,5 @@ jobs:
       - run: npm ci
       - run: npm run prisma:seed
       - run: npm run prisma:generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
