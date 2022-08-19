@@ -1,15 +1,15 @@
+import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
 
 @Injectable()
 export class UserService {
+  constructor(private prismaService: PrismaService) {}
+
   getUsers() {
-    return prisma.user.findMany();
+    return this.prismaService.user.findMany();
   }
 
   async findOne(email: string) {
-    return prisma.user.findUnique({ where: { email: email } });
+    return this.prismaService.user.findUnique({ where: { email: email } });
   }
 }

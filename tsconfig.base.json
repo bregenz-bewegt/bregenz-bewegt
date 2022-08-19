@@ -30,7 +30,8 @@
       ],
       "@bregenz-bewegt/server-controllers-users": [
         "libs/server/controllers/users/src/index.ts"
-      ]
+      ],
+      "@bregenz-bewegt/server-prisma": ["libs/server/prisma/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
