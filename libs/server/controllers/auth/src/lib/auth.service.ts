@@ -14,4 +14,12 @@ export class AuthService {
 
     return null;
   }
+
+  signIn() {
+    return 'signed in';
+  }
+
+  signUp() {
+    return 'signed up';
+  }
 }
