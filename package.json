@@ -21,8 +21,8 @@
     "prisma:generate": "npx prisma generate",
     "prisma:db:push": "npx prisma db push",
     "prisma:studio": "npx prisma studio",
-    "nx": "nx",
-    "prisma": "npx prisma"
+    "prisma": "npx prisma",
+    "nx": "nx"
   },
   "private": true,
   "dependencies": {

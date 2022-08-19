@@ -21,6 +21,7 @@ model User {
   registratedAt    DateTime     @default(now())
   updatedAt        DateTime     @default(now()) @updatedAt
   password         String?
+  refreshToken     String?
   profilePicture   String?
   coins            Int?         @default(0)
   preferences      Preferences?

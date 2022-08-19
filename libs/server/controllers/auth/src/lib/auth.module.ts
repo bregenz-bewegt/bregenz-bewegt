@@ -5,12 +5,23 @@ import { UserModule } from '@bregenz-bewegt/server-controllers-user';
 import { PrismaModule } from '@bregenz-bewegt/server-prisma';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { LocalStrategy, JwtStrategy } from './passport/strategy';
+import {
+  LocalStrategy,
+  JwtStrategy,
+  AccessTokenStrategy,
+  RefreshTokenStrategy,
+} from './passport/strategy';
 
 @Module({
   imports: [UserModule, PassportModule, PrismaModule, JwtModule.register({})],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    AccessTokenStrategy,
+    RefreshTokenStrategy,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}

@@ -10,6 +10,7 @@ import { LoginDto, RegisterDto } from './dto';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
+import { Tokens } from '@bregenz-bewegt/shared/types';
 
 @Injectable()
 export class AuthService {
@@ -34,7 +35,7 @@ export class AuthService {
     const hash = await argon.hash(dto.password);
 
     try {
-      const user = await this.prismaService.user.create({
+      const newUser = await this.prismaService.user.create({
         data: {
           email: dto.email,
           username: dto.username,
@@ -43,7 +44,9 @@ export class AuthService {
         },
       });
 
-      return this.signToken(user.id, user.email);
+      const tokens = await this.signTokens(newUser.id, newUser.email);
+      this.updateRefreshToken(newUser.id, tokens.refresh_token);
+      return tokens;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -68,23 +71,47 @@ export class AuthService {
 
     if (!passwordMatches) throw new ForbiddenException('Credentials incorrect');
 
-    return this.signToken(user.id, user.email);
+    return this.signTokens(user.id, user.email);
   }
 
   async logout() {
     //
   }
 
-  async signToken(userId: string, email: string): Promise<{ access_token }> {
-    const payload = { sub: userId, email };
-
-    const token = await this.jwtService.signAsync(payload, {
-      expiresIn: '15m',
-      secret: this.configService.get('JWT_SECRET'),
-    });
+  async signTokens(userId: string, email: string): Promise<Tokens> {
+    const [access_token, refresh_token] = await Promise.all([
+      this.jwtService.signAsync(
+        { sub: userId, email },
+        {
+          expiresIn: '15m',
+          secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
+        }
+      ),
+      this.jwtService.signAsync(
+        { sub: userId, email },
+        {
+          expiresIn: '7d',
+          secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+        }
+      ),
+    ]);
 
     return {
-      access_token: token,
+      access_token,
+      refresh_token,
     };
+  }
+
+  async updateRefreshToken(userId: string, refreshToken: string) {
+    const hash = await argon.hash(refreshToken);
+
+    await this.prismaService.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        refreshToken: hash,
+      },
+    });
   }
 }
