@@ -1,8 +1,6 @@
 import { CapacitorConfig } from '@capacitor/cli';
 import ip from 'ip';
 
-console.log(ip.address());
-
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
   appName: 'client',

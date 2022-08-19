@@ -1,10 +1,15 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
 import { UserService } from '@bregenz-bewegt/server-controllers-user';
 import { SignInDto, SignUpDto } from './dto';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -45,11 +50,11 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new ForbiddenException();
+    if (!user) throw new ForbiddenException('Credentials incorrect');
 
-    const passwordMatch = await argon.verify(user.password, dto.password);
+    const passwordMatches = await argon.verify(user.password, dto.password);
 
-    if (!passwordMatch) throw new ForbiddenException();
+    if (!passwordMatches) throw new ForbiddenException('Credentials incorrect');
 
     return this.signToken(user.id, user.email);
   }
@@ -57,6 +62,25 @@ export class AuthService {
   async signUp(dto: SignUpDto) {
     const hash = await argon.hash(dto.password);
 
-    return 'signed up';
+    try {
+      const user = await this.prismaService.user.create({
+        data: {
+          email: dto.email,
+          username: dto.username,
+          password: hash,
+          role: 'USER',
+        },
+      });
+
+      return this.signToken(user.id, user.email);
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ConflictException('Username is already taken');
+        }
+      }
+
+      throw error;
+    }
   }
 }
