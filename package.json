@@ -15,6 +15,7 @@
     "dev:native:android": "nx run client:cap:android",
     "build": "nx run-many --target=build",
     "test": "nx run-many --target=test",
+    "prisma:format": "npx prisma format",
     "prisma:seed": "npx prisma db seed",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:generate": "npx prisma generate",
