@@ -73,6 +73,7 @@ model Activity {
 enum Difficulty {
   BEGINNER
   ADVANCED
+  GAME
 }
 
 model Exercise {
@@ -82,7 +83,6 @@ model Exercise {
   video       String
   points      Int
   difficulty  Difficulty
-  Park        Park?      @relation(fields: [parkId], references: [id])
-  parkId      Int?
+  parks       Park[]
   Activity    Activity[]
 }
