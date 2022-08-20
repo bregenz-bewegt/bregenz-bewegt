@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
 import './ExploreContainer.scss';
+import axios from 'axios';
 
 interface ContainerProps {
   name: string;
 }
 
 export const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
-  const [users, setUsers] = useState();
+  const [data, setData] = useState<any>();
 
   useEffect(() => {
-    fetch('http://localhost:3333/api/users')
-      .then((data) => data.json())
-      .then((data) => setUsers(data));
+    axios.get('http://localhost:3333/api').then(({ data }) => setData(data));
   }, []);
 
   return (
@@ -24,7 +23,8 @@ export const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
           rel="noopener noreferrer"
           href="https://ionicframework.com/docs/components"
         >
-          {JSON.stringify(users)}
+          {JSON.stringify(data)}
+          {data?.message}
         </a>
       </p>
     </div>
