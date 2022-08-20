@@ -3,14 +3,14 @@ import {
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { JwtSecretRequestType, JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
 import { UserService } from '@bregenz-bewegt/server-controllers-user';
 import { LoginDto, RegisterDto } from './dto';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
-import { Tokens } from '@bregenz-bewegt/shared/types';
+import { JwtPayload, Tokens } from '@bregenz-bewegt/shared/types';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +22,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string) {
-    const user = await this.userService.findOne(email);
+    const user = await this.userService.findOneByEmail(email);
 
     if (user && user.password === password) {
       return user;
@@ -91,21 +91,20 @@ export class AuthService {
   }
 
   async signTokens(userId: string, email: string): Promise<Tokens> {
+    const jwtPayload: JwtPayload = {
+      sub: userId,
+      email,
+    };
+
     const [access_token, refresh_token] = await Promise.all([
-      this.jwtService.signAsync(
-        { sub: userId, email },
-        {
-          expiresIn: '15m',
-          secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
-        }
-      ),
-      this.jwtService.signAsync(
-        { sub: userId, email },
-        {
-          expiresIn: '7d',
-          secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
-        }
-      ),
+      this.jwtService.signAsync(jwtPayload, {
+        expiresIn: '15m',
+        secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
+      }),
+      this.jwtService.signAsync(jwtPayload, {
+        expiresIn: '7d',
+        secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+      }),
     ]);
 
     return {
@@ -121,7 +120,8 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new ForbiddenException('Access denied');
+    if (!user || !user.refreshToken)
+      throw new ForbiddenException('Access denied');
 
     const refreshTokenMatches = await argon.verify(
       refreshToken,

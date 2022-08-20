@@ -1,3 +1,4 @@
+import { JwtPayloadWithRefreshToken } from '@bregenz-bewegt/shared/types';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
@@ -17,7 +18,7 @@ export class RefreshTokenStrategy extends PassportStrategy(
     });
   }
 
-  validate(req: Request, payload: any) {
+  validate(req: Request, payload: any): JwtPayloadWithRefreshToken {
     const refreshToken = req.get('authorization').replace('Bearer', '').trim();
 
     if (!refreshToken) throw new ForbiddenException('Incorrect refresh token');
