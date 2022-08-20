@@ -2,11 +2,12 @@ import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { Tokens } from '@bregenz-bewegt/shared/types';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto';
+
 import {
   AccessTokenGuard,
   GetCurrentUser,
   RefreshTokenGuard,
-} from './passport';
+} from '@bregenz-bewegt/server/common';
 
 @Controller('auth')
 export class AuthController {

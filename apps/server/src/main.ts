@@ -7,6 +7,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AccessTokenGuard } from '@bregenz-bewegt/server/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +20,7 @@ async function bootstrap() {
       whitelist: true,
     })
   );
+  // app.useGlobalGuards(new AccessTokenGuard());
   app.enableCors();
 
   const document = SwaggerModule.createDocument(
