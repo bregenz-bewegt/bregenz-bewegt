@@ -71,11 +71,23 @@ export class AuthService {
 
     if (!passwordMatches) throw new ForbiddenException('Credentials incorrect');
 
-    return this.signTokens(user.id, user.email);
+    const tokens = await this.signTokens(user.id, user.email);
+    this.updateRefreshToken(user.id, tokens.refresh_token);
+    return tokens;
   }
 
-  async logout() {
-    //
+  async logout(userId: string) {
+    await this.prismaService.user.updateMany({
+      where: {
+        id: userId,
+        refreshToken: {
+          not: null,
+        },
+      },
+      data: {
+        refreshToken: null,
+      },
+    });
   }
 
   async signTokens(userId: string, email: string): Promise<Tokens> {
@@ -100,6 +112,27 @@ export class AuthService {
       access_token,
       refresh_token,
     };
+  }
+
+  async refreshTokens(userId: string, refreshToken: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) throw new ForbiddenException('Access denied');
+
+    const refreshTokenMatches = await argon.verify(
+      refreshToken,
+      user.refreshToken
+    );
+
+    if (!refreshTokenMatches) throw new ForbiddenException('Access denied');
+
+    const tokens = await this.signTokens(user.id, user.email);
+    this.updateRefreshToken(user.id, tokens.refresh_token);
+    return tokens;
   }
 
   async updateRefreshToken(userId: string, refreshToken: string) {

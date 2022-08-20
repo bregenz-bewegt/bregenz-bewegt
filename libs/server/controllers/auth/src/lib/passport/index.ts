@@ -1,2 +1,3 @@
-export * from './guard';
-export * from './strategy';
+export * from './guards';
+export * from './strategies';
+export * from './decorators';

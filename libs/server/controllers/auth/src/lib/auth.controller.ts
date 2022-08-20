@@ -1,7 +1,12 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { Tokens } from '@bregenz-bewegt/shared/types';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto';
+import {
+  AccessTokenGuard,
+  GetCurrentUser,
+  RefreshTokenGuard,
+} from './passport';
 
 @Controller('auth')
 export class AuthController {
@@ -17,8 +22,18 @@ export class AuthController {
     return this.authService.login(dto);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Post('logout')
-  logout() {
-    this.authService.logout();
+  logout(@GetCurrentUser('sub') userId: string) {
+    return this.authService.logout(userId);
+  }
+
+  @UseGuards(RefreshTokenGuard)
+  @Post('refresh')
+  refreshTokens(
+    @GetCurrentUser('sub') userId: string,
+    @GetCurrentUser('refreshToken') refreshToken: string
+  ) {
+    return this.authService.refreshTokens(userId, refreshToken);
   }
 }
