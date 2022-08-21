@@ -24,7 +24,6 @@ export const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
           href="https://ionicframework.com/docs/components"
         >
           {JSON.stringify(data)}
-          {data?.message}
         </a>
       </p>
     </div>
