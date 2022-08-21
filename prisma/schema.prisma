@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String       @id @default(cuid())
+  username         String?      @unique
+  email            String?      @unique
+  isEmailConfirmed Boolean      @default(false)
+  firstname        String?
+  lastname         String?
+  role             Role
+  registratedAt    DateTime     @default(now())
+  updatedAt        DateTime     @default(now()) @updatedAt
+  password         String?
+  refreshToken     String?
+  profilePicture   String?
+  coins            Int?         @default(0)
+  preferences      Preferences?
+  activities       Activity[]
+
+  @@index([email])
+}
+
+model Preferences {
+  id         Int         @id @default(autoincrement())
+  difficulty Difficulty?
+  user       User        @relation(fields: [userId], references: [id])
+  userId     String      @unique
+}
+
+enum Role {
+  USER
+  GUEST
+}
+
+model Park {
+  id          Int          @id @default(autoincrement())
+  qr          String       @unique
+  name        String
+  address     String
+  image       String
+  coordinates Coordinates?
+  exercises   Exercise[]
+}
+
+model Coordinates {
+  id              Int   @id @default(autoincrement())
+  latitude        Float
+  longitude       Float
+  toleranceRadius Int   @default(50)
+  park            Park  @relation(fields: [parkId], references: [id])
+  parkId          Int   @unique
+}
+
+model Activity {
+  id         Int      @id @default(autoincrement())
+  startedAt  DateTime
+  endedAt    DateTime
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId Int
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+}
+
+enum Difficulty {
+  BEGINNER
+  ADVANCED
+  GAME
+}
+
+model Exercise {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String
+  video       String
+  points      Int
+  difficulty  Difficulty
+  parks       Park[]
+  Activity    Activity[]
+}

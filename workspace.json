@@ -4,9 +4,14 @@
   "projects": {
     "client": "apps/client",
     "client-e2e": "apps/client-e2e",
-    "components": "libs/components",
-    "pages": "libs/pages",
-    "router": "libs/router",
-    "server": "apps/server"
+    "client-ui-components": "libs/client/ui/components",
+    "client-ui-pages": "libs/client/ui/pages",
+    "client-ui-router": "libs/client/ui/router",
+    "server": "apps/server",
+    "server-common": "libs/server/common",
+    "server-controllers-auth": "libs/server/controllers/auth",
+    "server-controllers-user": "libs/server/controllers/user",
+    "server-prisma": "libs/server/prisma",
+    "shared-types": "libs/shared/types"
   }
 }

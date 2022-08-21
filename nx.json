@@ -30,5 +30,6 @@
         "babel": true
       }
     }
-  }
+  },
+  "defaultProject": "server"
 }
