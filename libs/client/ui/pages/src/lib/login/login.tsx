@@ -1,6 +1,13 @@
 import { ExploreContainer } from '@bregenz-bewegt/client-ui-components';
-import { IonPage, IonContent } from '@ionic/react';
+import {
+  IonPage,
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+} from '@ionic/react';
 import './login.scss';
+import { scan } from 'ionicons/icons';
 
 /* eslint-disable-next-line */
 export interface LoginProps {}

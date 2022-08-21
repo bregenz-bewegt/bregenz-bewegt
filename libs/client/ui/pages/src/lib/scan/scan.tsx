@@ -1,12 +1,16 @@
+import './scan.scss';
 import {
   IonContent,
+  IonFab,
+  IonFabButton,
   IonHeader,
+  IonIcon,
   IonPage,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
 import { ExploreContainer } from '@bregenz-bewegt/client-ui-components';
-import './scan.scss';
+import { scan } from 'ionicons/icons';
 
 export const Scan: React.FC = () => {
   return (
@@ -22,6 +26,11 @@ export const Scan: React.FC = () => {
             <IonTitle size="large">Scan</IonTitle>
           </IonToolbar>
         </IonHeader>
+        <IonFab vertical="bottom" horizontal="center" slot="fixed" edge>
+          <IonFabButton>
+            <IonIcon icon={scan} />
+          </IonFabButton>
+        </IonFab>
         <ExploreContainer name="Scan" />
       </IonContent>
     </IonPage>
