@@ -21,12 +21,12 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  login(@Body() dto: LoginDto) {
+  login(@Body() dto: LoginDto): Promise<Tokens> {
     return this.authService.login(dto);
   }
 
   @Post('logout')
-  logout(@GetCurrentUser('sub') userId: string) {
+  logout(@GetCurrentUser('sub') userId: string): Promise<void> {
     return this.authService.logout(userId);
   }
 
@@ -36,7 +36,7 @@ export class AuthController {
   refreshTokens(
     @GetCurrentUser('sub') userId: string,
     @GetCurrentUser('refreshToken') refreshToken: string
-  ) {
+  ): Promise<Tokens> {
     return this.authService.refreshTokens(userId, refreshToken);
   }
 }
