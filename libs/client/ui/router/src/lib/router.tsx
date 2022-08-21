@@ -15,9 +15,9 @@ export const Router: React.FC = () => {
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          {Object.values(routes).map((page) => {
+          {Object.values(routes).map((page, i) => {
             return (
-              <Route exact path={`${page.route}`}>
+              <Route exact path={`${page.route}`} key={i}>
                 <page.component />
               </Route>
             );
@@ -27,9 +27,9 @@ export const Router: React.FC = () => {
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          {Object.values(routes).map((page) => {
+          {Object.values(routes).map((page, i) => {
             return (
-              <IonTabButton tab={page.route} href={page.route}>
+              <IonTabButton tab={page.route} href={page.route} key={i}>
                 <IonIcon icon={page.icon} />
                 <IonLabel>{page.label}</IonLabel>
               </IonTabButton>
