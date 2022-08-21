@@ -1,18 +1,22 @@
 import './scan.scss';
 import {
+  IonButton,
   IonContent,
-  IonFab,
-  IonFabButton,
   IonHeader,
-  IonIcon,
   IonPage,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
 import { ExploreContainer } from '@bregenz-bewegt/client-ui-components';
-import { scan } from 'ionicons/icons';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 export const Scan: React.FC = () => {
+  const openScanner = async () => {
+    BarcodeScanner.hideBackground();
+    const data = await BarcodeScanner.startScan();
+    console.log(`Barcode data: ${data}`);
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -26,12 +30,8 @@ export const Scan: React.FC = () => {
             <IonTitle size="large">Scan</IonTitle>
           </IonToolbar>
         </IonHeader>
-        {/* <IonFab vertical="bottom" horizontal="center" slot="fixed" edge>
-          <IonFabButton>
-            <IonIcon icon={scan} />
-          </IonFabButton>
-        </IonFab> */}
         <ExploreContainer name="Scan" />
+        <IonButton onClick={() => openScanner()}>Scan</IonButton>
       </IonContent>
     </IonPage>
   );
