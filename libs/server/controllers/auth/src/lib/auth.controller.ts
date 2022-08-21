@@ -4,7 +4,6 @@ import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto';
 
 import {
-  AccessTokenGuard,
   GetCurrentUser,
   Public,
   RefreshTokenGuard,
