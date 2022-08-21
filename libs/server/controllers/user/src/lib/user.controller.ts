@@ -1,10 +1,14 @@
-import { AccessTokenGuard } from '@bregenz-bewegt/server/common';
+import {
+  AccessTokenGuard,
+  RemoveSensitiveFieldsInterceptor,
+} from '@bregenz-bewegt/server/common';
 import {
   Controller,
   Get,
   Param,
   ParseIntPipe,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 
@@ -18,6 +22,7 @@ export class UserController {
     return this.userService.findOneById(id);
   }
 
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Get()
   getUsers() {
     return this.userService.getUsers();
