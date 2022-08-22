@@ -1,4 +1,4 @@
-import { IonAvatar, IonFab, IonFabButton } from '@ionic/react';
+import { IonAvatar, IonFab, IonFabButton, IonHeader } from '@ionic/react';
 import './header.scss';
 
 /* eslint-disable-next-line */
@@ -6,14 +6,14 @@ export interface HeaderProps {}
 
 export const Header = (props: HeaderProps) => {
   return (
-    <div>
-      <IonAvatar>
-        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+    <IonHeader className="header">
+      <IonAvatar className="header__avatar">
+        <img src="https://i.pravatar.cc/150?img=3" alt="profile" />
       </IonAvatar>
-      <IonFab>
-        <IonFabButton></IonFabButton>
+      <IonFab className="header__fab" horizontal="end">
+        <IonFabButton className="header__fab__button"></IonFabButton>
       </IonFab>
-    </div>
+    </IonHeader>
   );
 };
 

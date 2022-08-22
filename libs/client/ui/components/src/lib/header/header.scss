@@ -1,7 +1,19 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.header {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+
+  &__avatar {
+    height: 48px;
+    width: 48px;
+  }
+
+  &__fab {
+    &__button {
+      height: 48px;
+      width: 48px;
+    }
+  }
+}
