@@ -4,6 +4,7 @@
   "projects": {
     "client": "apps/client",
     "client-e2e": "apps/client-e2e",
+    "client-types": "libs/client/types",
     "client-ui-components": "libs/client/ui/components",
     "client-ui-pages": "libs/client/ui/pages",
     "client-ui-router": "libs/client/ui/router",
