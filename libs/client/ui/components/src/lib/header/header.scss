@@ -1,15 +1,9 @@
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 24px 16px;
 
-  &__avatar {
-    height: 56px;
-    width: 56px;
-  }
-
   &__fab {
+    margin-left: auto;
+
     &__button {
       height: 56px;
       width: 56px;
@@ -20,5 +14,10 @@
         --background: var(--ion-color-primary);
       }
     }
+  }
+
+  &__avatar {
+    height: 56px;
+    width: 56px;
   }
 }
