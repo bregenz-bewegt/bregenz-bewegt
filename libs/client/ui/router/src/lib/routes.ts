@@ -47,4 +47,4 @@ export const routes: Routes = {
     label: 'Profil',
     icon: person,
   },
-} as const;
+};
