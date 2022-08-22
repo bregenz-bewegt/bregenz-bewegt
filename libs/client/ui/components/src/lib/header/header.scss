@@ -1,9 +1,8 @@
 .header {
-  margin-top: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
+  padding: 24px 16px;
 
   &__avatar {
     height: 56px;
@@ -15,6 +14,7 @@
       height: 56px;
       width: 56px;
       --background: var(--ion-color-light-tint);
+      --box-shadow: none;
 
       &__icon {
         --background: var(--ion-color-primary);

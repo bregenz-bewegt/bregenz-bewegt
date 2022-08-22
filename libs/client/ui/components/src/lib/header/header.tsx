@@ -14,10 +14,7 @@ export interface HeaderProps {}
 export const Header = (props: HeaderProps) => {
   return (
     <IonHeader className="header">
-      <IonAvatar className="header__avatar">
-        <img src="https://i.pravatar.cc/150?img=3" alt="profile" />
-      </IonAvatar>
-      <IonFab className="header__fab" horizontal="end">
+      <IonFab className="header__fab">
         <IonFabButton className="header__fab__button">
           <IonIcon
             className="header__fab__button__icon"
@@ -26,6 +23,9 @@ export const Header = (props: HeaderProps) => {
           />
         </IonFabButton>
       </IonFab>
+      <IonAvatar className="header__avatar">
+        <img src="https://i.pravatar.cc/150?img=3" alt="profile" />
+      </IonAvatar>
     </IonHeader>
   );
 };
