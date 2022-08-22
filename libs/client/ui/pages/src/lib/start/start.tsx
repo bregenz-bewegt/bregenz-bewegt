@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Header } from '@bregenz-bewegt/client-ui-components';
 import {
   IonContent,
+  IonItem,
   IonPage,
   IonSearchbar,
   IonSelect,
@@ -22,22 +23,24 @@ export const Start: React.FC = () => {
     <IonPage className="start">
       <Header></Header>
       <IonContent fullscreen className="start__content">
-        <IonText>
-          <h2>Spielplätze</h2>
-        </IonText>
+        <IonItem>
+          <IonText>
+            <h2>Spielplätze</h2>
+          </IonText>
+          <IonSelect value={parkDisplayType}>
+            <IonSelectOption value={ParkDisplayType.List}>
+              Listenansicht
+            </IonSelectOption>
+            <IonSelectOption value={ParkDisplayType.Map}>
+              Kartenansicht
+            </IonSelectOption>
+          </IonSelect>
+        </IonItem>
         <IonSearchbar
           value={searchText}
           onIonChange={(e) => setSearchText(e.detail.value ?? searchText)}
           placeholder="Suche nach Spielplätzen"
         ></IonSearchbar>
-        <IonSelect value={ParkDisplayType.List}>
-          <IonSelectOption value={ParkDisplayType.List}>
-            Listenansicht
-          </IonSelectOption>
-          <IonSelectOption value={ParkDisplayType.Map}>
-            Kartenansicht
-          </IonSelectOption>
-        </IonSelect>
       </IonContent>
     </IonPage>
   );
