@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import { Header } from '@bregenz-bewegt/client-ui-components';
 import {
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
   IonContent,
   IonItem,
+  IonList,
   IonPage,
   IonSearchbar,
   IonSelect,
@@ -44,7 +50,20 @@ export const Start: React.FC = () => {
           value={searchText}
           onIonChange={(e) => setSearchText(e.detail.value ?? searchText)}
           placeholder="Suche nach Spielplätzen"
+          className="start__content__search-bar"
         ></IonSearchbar>
+        <IonList>
+          <IonCard>
+            <img src="https://picsum.photos/400/200" alt="park" />
+            <IonCardHeader>
+              <IonCardSubtitle>Rotfarbgasse 14a, 6850 Dornbirn</IonCardSubtitle>
+              <IonCardTitle>Rieden Vorkloster</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              Mein Lieblingsspielplatz
+            </IonCardContent>
+          </IonCard>
+        </IonList>
       </IonContent>
     </IonPage>
   );
