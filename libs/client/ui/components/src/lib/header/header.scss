@@ -14,7 +14,11 @@
     &__button {
       height: 56px;
       width: 56px;
-      --background: white;
+      --background: var(--ion-color-light-tint);
+
+      &__icon {
+        --background: var(--ion-color-primary);
+      }
     }
   }
 }

@@ -17,9 +17,13 @@ export const Header = (props: HeaderProps) => {
       <IonAvatar className="header__avatar">
         <img src="https://i.pravatar.cc/150?img=3" alt="profile" />
       </IonAvatar>
-      <IonFab className="header__fab" horizontal="end" color="white">
+      <IonFab className="header__fab" horizontal="end">
         <IonFabButton className="header__fab__button">
-          <IonIcon icon={notifications} />
+          <IonIcon
+            className="header__fab__button__icon"
+            icon={notifications}
+            color="primary"
+          />
         </IonFabButton>
       </IonFab>
     </IonHeader>
