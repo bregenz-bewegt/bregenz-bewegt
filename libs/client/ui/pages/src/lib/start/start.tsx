@@ -23,7 +23,7 @@ export const Start: React.FC = () => {
     <IonPage className="start">
       <Header></Header>
       <IonContent fullscreen className="start__content">
-        <div>
+        <div className="start__content__title-wrapper">
           <IonText>
             <h2>Spielplätze</h2>
           </IonText>
