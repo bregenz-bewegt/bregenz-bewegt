@@ -6,14 +6,18 @@
   padding: 8px;
 
   &__avatar {
-    // height: 48px;
-    // width: 48px;
+    height: 56px;
+    width: 56px;
   }
 
   &__fab {
     &__button {
-      // height: 48px;
-      // width: 48px;
+      height: 56px;
+      width: 56px;
+
+      .button-native {
+        background-color: white;
+      }
     }
   }
 }
