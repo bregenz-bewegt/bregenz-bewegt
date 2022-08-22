@@ -14,10 +14,7 @@
     &__button {
       height: 56px;
       width: 56px;
-
-      .button-native {
-        background-color: white;
-      }
+      --background: white;
     }
   }
 }
