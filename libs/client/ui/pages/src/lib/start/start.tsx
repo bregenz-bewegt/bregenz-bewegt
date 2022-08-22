@@ -27,7 +27,11 @@ export const Start: React.FC = () => {
           <IonText>
             <h2>Spielplätze</h2>
           </IonText>
-          <IonSelect value={parkDisplayType}>
+          <IonSelect
+            interface="popover"
+            value={parkDisplayType}
+            className="start__content__display-type-select"
+          >
             <IonSelectOption value={ParkDisplayType.List}>
               Listenansicht
             </IonSelectOption>
