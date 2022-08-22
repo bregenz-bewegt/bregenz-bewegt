@@ -4,7 +4,7 @@ import { useState } from 'react';
 import './start.scss';
 
 export const Start: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchText, setSearchText] = useState<string>('');
 
   return (
     <IonPage className="start">
@@ -14,7 +14,8 @@ export const Start: React.FC = () => {
           <h2>Spielplätze</h2>
         </IonText>
         <IonSearchbar
-          value={searchQuery}
+          value={searchText}
+          onIonChange={(e) => setSearchText(e.detail.value ?? searchText)}
           placeholder="Suche nach Spielplätzen"
         ></IonSearchbar>
       </IonContent>
