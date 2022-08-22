@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Header } from '@bregenz-bewegt/client-ui-components';
+import { Header, ParkCard } from '@bregenz-bewegt/client-ui-components';
 import {
   IonCard,
   IonCardContent,
@@ -53,16 +53,13 @@ export const Start: React.FC = () => {
           className="start__content__search-bar"
         ></IonSearchbar>
         <IonList>
-          <IonCard>
-            <img src="https://picsum.photos/400/200" alt="park" />
-            <IonCardHeader>
-              <IonCardSubtitle>Rotfarbgasse 14a, 6850 Dornbirn</IonCardSubtitle>
-              <IonCardTitle>Rieden Vorkloster</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              Mein Lieblingsspielplatz
-            </IonCardContent>
-          </IonCard>
+          <ParkCard
+            title="Rieden Vorkloster"
+            location="Rotfarbgasse 14a, 6900 Bregenz"
+            image="https://picsum.photos/400/200"
+            description="Mein Lieblingsspielplatz"
+            link="#"
+          />
         </IonList>
       </IonContent>
     </IonPage>
