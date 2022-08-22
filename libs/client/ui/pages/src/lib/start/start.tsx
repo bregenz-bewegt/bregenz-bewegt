@@ -23,7 +23,7 @@ export const Start: React.FC = () => {
     <IonPage className="start">
       <Header></Header>
       <IonContent fullscreen className="start__content">
-        <IonItem>
+        <div>
           <IonText>
             <h2>Spielplätze</h2>
           </IonText>
@@ -39,7 +39,7 @@ export const Start: React.FC = () => {
               Kartenansicht
             </IonSelectOption>
           </IonSelect>
-        </IonItem>
+        </div>
         <IonSearchbar
           value={searchText}
           onIonChange={(e) => setSearchText(e.detail.value ?? searchText)}
