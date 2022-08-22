@@ -7,6 +7,8 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonContent,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
   IonItem,
   IonList,
   IonPage,
@@ -14,6 +16,7 @@ import {
   IonSelect,
   IonSelectOption,
   IonText,
+  IonVirtualScroll,
 } from '@ionic/react';
 import { ParkDisplayType } from '@bregenz-bewegt/client/types';
 
@@ -28,7 +31,7 @@ export const Start: React.FC = () => {
   return (
     <IonPage className="start">
       <Header></Header>
-      <IonContent fullscreen className="start__content">
+      <IonContent className="start__content">
         <div className="start__content__title-wrapper">
           <IonText>
             <h2>Spielplätze</h2>
@@ -52,15 +55,31 @@ export const Start: React.FC = () => {
           placeholder="Suche nach Spielplätzen"
           className="start__content__search-bar"
         ></IonSearchbar>
-        <IonList>
-          <ParkCard
-            title="Rieden Vorkloster"
-            location="Rotfarbgasse 14a, 6900 Bregenz"
-            image="https://picsum.photos/400/200"
-            description="Mein Lieblingsspielplatz"
-            link="#"
-          />
-        </IonList>
+        <div className="start__content__parks">
+          <IonList>
+            <ParkCard
+              title="Rieden Vorkloster"
+              location="Rotfarbgasse 14a, 6900 Bregenz"
+              image="https://picsum.photos/400/200"
+              description="Mein Lieblingsspielplatz"
+              link="#"
+            />
+            <ParkCard
+              title="Rieden Vorkloster"
+              location="Rotfarbgasse 14a, 6900 Bregenz"
+              image="https://picsum.photos/400/200"
+              description="Mein Lieblingsspielplatz"
+              link="#"
+            />
+            <ParkCard
+              title="Rieden Vorkloster"
+              location="Rotfarbgasse 14a, 6900 Bregenz"
+              image="https://picsum.photos/400/200"
+              description="Mein Lieblingsspielplatz"
+              link="#"
+            />
+          </IonList>
+        </div>
       </IonContent>
     </IonPage>
   );

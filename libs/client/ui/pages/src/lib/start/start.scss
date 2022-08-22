@@ -14,5 +14,11 @@
       justify-content: space-between;
       align-items: flex-end;
     }
+
+    &__parks {
+      overflow-y: scroll;
+      height: 50vh;
+      position: fixed;
+    }
   }
 }
