@@ -5,7 +5,6 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { ExploreContainer } from '@bregenz-bewegt/client-ui-components';
 import './profile.scss';
 
 export const Profile: React.FC = () => {
@@ -22,7 +21,6 @@ export const Profile: React.FC = () => {
             <IonTitle size="large">Profile</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Profile" />
       </IonContent>
     </IonPage>
   );

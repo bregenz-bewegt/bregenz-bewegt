@@ -8,7 +8,6 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { ExploreContainer } from '@bregenz-bewegt/client-ui-components';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { useEffect, useState } from 'react';
 
@@ -24,11 +23,9 @@ export const Scan: React.FC = () => {
     try {
       const status = await BarcodeScanner.checkPermission({ force: true });
       console.log(status);
-
       if (status.granted) {
         return true;
       }
-
       return false;
     } catch (error) {
       setIsQrImplemented(false);

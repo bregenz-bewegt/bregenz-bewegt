@@ -5,7 +5,6 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { ExploreContainer } from '@bregenz-bewegt/client-ui-components';
 import './analytics.scss';
 
 export const Analytics: React.FC = () => {
@@ -22,7 +21,6 @@ export const Analytics: React.FC = () => {
             <IonTitle size="large">Analytics</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Analytics" />
       </IonContent>
     </IonPage>
   );
