@@ -32,31 +32,31 @@ export const Start: React.FC = () => {
     <IonPage className="start">
       <Header></Header>
       <IonContent className="start__content">
-        <div className="start__content__title-wrapper">
-          <IonText>
-            <h2>Spielplätze</h2>
-          </IonText>
-          <IonSelect
-            interface="popover"
-            value={parkDisplayType}
-            className="start__content__display-type-select"
-          >
-            <IonSelectOption value={ParkDisplayType.List}>
-              Listenansicht
-            </IonSelectOption>
-            <IonSelectOption value={ParkDisplayType.Map}>
-              Kartenansicht
-            </IonSelectOption>
-          </IonSelect>
-        </div>
-        <IonSearchbar
-          value={searchText}
-          onIonChange={(e) => setSearchText(e.detail.value ?? searchText)}
-          placeholder="Suche nach Spielplätzen"
-          className="start__content__search-bar"
-        ></IonSearchbar>
-        <div className="start__content__parks">
-          <IonList>
+        <div className="start__content__scroll-wrapper">
+          <div className="start__content__title-wrapper">
+            <IonText>
+              <h2>Spielplätze</h2>
+            </IonText>
+            <IonSelect
+              interface="popover"
+              value={parkDisplayType}
+              className="start__content__display-type-select"
+            >
+              <IonSelectOption value={ParkDisplayType.List}>
+                Listenansicht
+              </IonSelectOption>
+              <IonSelectOption value={ParkDisplayType.Map}>
+                Kartenansicht
+              </IonSelectOption>
+            </IonSelect>
+          </div>
+          <IonSearchbar
+            value={searchText}
+            onIonChange={(e) => setSearchText(e.detail.value ?? searchText)}
+            placeholder="Suche nach Spielplätzen"
+            className="start__content__search-bar"
+          ></IonSearchbar>
+          <div className="start__content__parks">
             <ParkCard
               title="Rieden Vorkloster"
               location="Rotfarbgasse 14a, 6900 Bregenz"
@@ -78,7 +78,7 @@ export const Start: React.FC = () => {
               description="Mein Lieblingsspielplatz"
               link="#"
             />
-          </IonList>
+          </div>
         </div>
       </IonContent>
     </IonPage>

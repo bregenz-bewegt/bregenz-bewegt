@@ -9,6 +9,12 @@
       margin-bottom: 4px;
     }
 
+    &__scroll-wrapper {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
     &__title-wrapper {
       display: flex;
       justify-content: space-between;
@@ -17,8 +23,7 @@
 
     &__parks {
       overflow-y: scroll;
-      height: 50vh;
-      position: fixed;
+      flex-grow: 1;
     }
   }
 }
