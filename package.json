@@ -35,6 +35,7 @@
     "@ionic/cli": "^6.20.1",
     "@ionic/react": "^6.2.0",
     "@ionic/react-router": "^6.2.0",
+    "@ionic/storage": "^3.0.6",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
