@@ -7,7 +7,7 @@ export interface LoginProps {}
 export const Login: React.FC = (props: LoginProps) => {
   return (
     <IonPage>
-      <IonContent fullscreen></IonContent>
+      <IonContent fullscreen>Login</IonContent>
     </IonPage>
   );
 };
