@@ -31,6 +31,7 @@ export const Start: React.FC = () => {
               interface="popover"
               value={parkDisplayType}
               className="start__content__display-type-select"
+              onIonChange={(e) => setParkDisplayType(e.detail.value)}
             >
               <IonSelectOption value={ParkDisplayType.List}>
                 Listenansicht
@@ -46,29 +47,33 @@ export const Start: React.FC = () => {
             placeholder="Suche nach Spielplätzen"
             className="start__content__search-bar"
           ></IonSearchbar>
-          <div className="start__content__parks">
-            <ParkCard
-              title="Rieden Vorkloster"
-              location="Rotfarbgasse 14a, 6900 Bregenz"
-              image="https://picsum.photos/400/200"
-              description="Mein Lieblingsspielplatz"
-              link="#"
-            />
-            <ParkCard
-              title="Rieden Vorkloster"
-              location="Rotfarbgasse 14a, 6900 Bregenz"
-              image="https://picsum.photos/400/200"
-              description="Mein Lieblingsspielplatz"
-              link="#"
-            />
-            <ParkCard
-              title="Rieden Vorkloster"
-              location="Rotfarbgasse 14a, 6900 Bregenz"
-              image="https://picsum.photos/400/200"
-              description="Mein Lieblingsspielplatz"
-              link="#"
-            />
-          </div>
+          {parkDisplayType === ParkDisplayType.List ? (
+            <div className="start__content__parks-list">
+              <ParkCard
+                title="Rieden Vorkloster"
+                location="Rotfarbgasse 14a, 6900 Bregenz"
+                image="https://picsum.photos/400/200"
+                description="Mein Lieblingsspielplatz"
+                link="#"
+              />
+              <ParkCard
+                title="Rieden Vorkloster"
+                location="Rotfarbgasse 14a, 6900 Bregenz"
+                image="https://picsum.photos/400/200"
+                description="Mein Lieblingsspielplatz"
+                link="#"
+              />
+              <ParkCard
+                title="Rieden Vorkloster"
+                location="Rotfarbgasse 14a, 6900 Bregenz"
+                image="https://picsum.photos/400/200"
+                description="Mein Lieblingsspielplatz"
+                link="#"
+              />
+            </div>
+          ) : (
+            <IonText>Map</IonText>
+          )}
         </div>
       </IonContent>
     </IonPage>

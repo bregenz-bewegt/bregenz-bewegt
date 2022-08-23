@@ -21,9 +21,13 @@
       align-items: flex-end;
     }
 
-    &__parks {
+    &__parks-list {
       overflow-y: scroll;
       flex-grow: 1;
+    }
+
+    &__parks-map {
+      //
     }
   }
 }
