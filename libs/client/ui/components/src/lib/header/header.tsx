@@ -25,7 +25,7 @@ export const Header = (props: HeaderProps) => {
           />
         </IonFabButton>
       </IonFab>
-      <Link to={routes['profile'].route}>
+      <Link to={routes.profile.route}>
         <IonAvatar className="header__avatar">
           <img src="https://i.pravatar.cc/150?img=3" alt="profile" />
         </IonAvatar>

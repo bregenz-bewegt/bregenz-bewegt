@@ -7,7 +7,6 @@ import {
   IonLabel,
   IonFab,
   IonFabButton,
-  IonTab,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Route, Redirect } from 'react-router-dom';
@@ -40,13 +39,13 @@ export const Router: React.FC = () => {
                 </IonTabButton>
               );
             } else {
-              return <IonTabButton tab={page.route}></IonTabButton>;
+              return <IonTabButton disabled tab={page.route}></IonTabButton>;
             }
           })}
         </IonTabBar>
       </IonTabs>
       <IonFab vertical="bottom" horizontal="center" slot="fixed">
-        <IonFabButton href={routes['scan'].route}>
+        <IonFabButton href={routes.scan.route}>
           <IonIcon icon={scan} />
         </IonFabButton>
       </IonFab>
