@@ -21,6 +21,10 @@
       align-items: flex-end;
     }
 
+    &__search-bar {
+      padding: 24px 0;
+    }
+
     &__parks-list {
       overflow-y: scroll;
       flex-grow: 1;
