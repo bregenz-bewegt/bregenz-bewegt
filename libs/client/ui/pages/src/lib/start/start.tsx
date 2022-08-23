@@ -36,12 +36,12 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       setSearchText(e.detail.value ?? searchText);
 
       const query = e.detail.value?.trim().toLowerCase();
-      if (!query) return;
+      if (!query) return setParksResult(parkStore?.parks);
 
       const queriedParks = parkStore?.parks.filter(
         (park) =>
           park.name.toLowerCase().includes(query) ||
-          park.description.toLowerCase().includes(query)
+          park.address.toLowerCase().includes(query)
       );
 
       setParksResult(queriedParks ?? parksResult);
@@ -83,19 +83,21 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
             ></IonSearchbar>
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
-                {parksResult.length > 0
-                  ? parksResult.map((park) => {
-                      return (
-                        <ParkCard
-                          title={park.name}
-                          location={park.address}
-                          image={park.image}
-                          description={park.description}
-                          link="#"
-                        />
-                      );
-                    })
-                  : 'Spielplätze laden'}
+                {parksResult.length > 0 ? (
+                  parksResult.map((park) => {
+                    return (
+                      <ParkCard
+                        title={park.name}
+                        location={park.address}
+                        image={park.image}
+                        description={park.description}
+                        link="#"
+                      />
+                    );
+                  })
+                ) : (
+                  <IonText>Keine Spielplätze gefunden</IonText>
+                )}
               </div>
             ) : (
               <IonText>Map</IonText>
