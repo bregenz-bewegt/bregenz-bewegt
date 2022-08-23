@@ -11,7 +11,7 @@ export const Intro: React.FC = (props: IntroProps) => {
         <IonSlides
           pager={true}
           options={{
-            initialSlide: 1,
+            initialSlide: 0,
             speed: 400,
           }}
         >
