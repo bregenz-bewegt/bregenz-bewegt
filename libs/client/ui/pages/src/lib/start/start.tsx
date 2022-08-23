@@ -54,6 +54,7 @@ export const Start: React.FC<StartProps> = inject(ParkStore.storeKey)(
             <IonSearchbar
               value={searchText}
               onIonChange={(e) => setSearchText(e.detail.value ?? searchText)}
+              debounce={250}
               placeholder="Suche nach Spielplätzen"
               className="start__content__search-bar"
             ></IonSearchbar>
