@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "client": "apps/client",
+    "client-common-http": "libs/client/common/http",
     "client-common-stores": "libs/client/common/stores",
     "client-e2e": "apps/client-e2e",
     "client-types": "libs/client/types",

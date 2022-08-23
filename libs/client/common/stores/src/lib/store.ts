@@ -1,3 +1,3 @@
-export interface IStore {
-  readonly storeKey: `${string}Store`;
+export abstract class Store {
+  static readonly storeKey: `${string}Store`;
 }

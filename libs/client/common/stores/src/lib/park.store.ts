@@ -1,16 +1,26 @@
-import { IStore } from './store';
-import { action, observable } from 'mobx';
+import { Store } from './store';
+import { action, makeAutoObservable, observable } from 'mobx';
+import { http } from '@bregenz-bewegt/client/common/http';
 
-export class ParkStore implements IStore {
-  storeKey = 'parkStore' as const;
-  @observable count = 0;
+export class ParkStore implements Store {
+  static storeKey = 'parkStore' as const;
+  @observable parks: any[] = [];
 
   constructor() {
-    //
+    makeAutoObservable(this);
   }
 
-  @action increase() {
-    this.count += 1;
+  @action setParks(parks: any[]) {
+    this.parks = parks;
+  }
+
+  @action async fetchParks() {
+    try {
+      const { data } = await http.get('/parks');
+      this.setParks(data);
+    } catch (error) {
+      return;
+    }
   }
 }
 

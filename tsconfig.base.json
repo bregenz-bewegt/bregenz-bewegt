@@ -22,6 +22,9 @@
       "@bregenz-bewegt/client-ui-router": [
         "libs/client/ui/router/src/index.ts"
       ],
+      "@bregenz-bewegt/client/common/http": [
+        "libs/client/common/http/src/index.ts"
+      ],
       "@bregenz-bewegt/client/common/stores": [
         "libs/client/common/stores/src/index.ts"
       ],

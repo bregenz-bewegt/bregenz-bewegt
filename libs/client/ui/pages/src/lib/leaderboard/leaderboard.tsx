@@ -15,13 +15,7 @@ export const Leaderboard: React.FC = () => {
           <IonTitle>Leaderboard</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Leaderboard</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-      </IonContent>
+      <IonContent fullscreen></IonContent>
     </IonPage>
   );
 };

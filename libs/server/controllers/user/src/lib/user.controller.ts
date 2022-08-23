@@ -2,7 +2,7 @@ import {
   GetCurrentUser,
   RemoveSensitiveFieldsInterceptor,
 } from '@bregenz-bewegt/server/common';
-import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('users')
