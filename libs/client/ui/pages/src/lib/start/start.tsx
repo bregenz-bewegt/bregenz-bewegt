@@ -12,6 +12,10 @@ import { ParkDisplayType } from '@bregenz-bewegt/client/types';
 import './start.scss';
 import { parkStore, ParkStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
+import {
+  IonSearchbarCustomEvent,
+  SearchbarChangeEventDetail,
+} from '@ionic/core';
 
 interface StartProps {
   parkStore?: ParkStore;
@@ -20,12 +24,22 @@ interface StartProps {
 export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
   observer(({ parkStore }) => {
     const [searchText, setSearchText] = useState<string>('');
+    const [parksResult, setParksResult] = useState<any[]>([]);
     const [parkDisplayType, setParkDisplayType] = useState<ParkDisplayType>(
       ParkDisplayType.List
     );
 
+    const handleSearch = (
+      e: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
+    ) => {
+      const query = e.detail.value?.trim();
+      if (!query) return;
+
+      setSearchText(query);
+    };
+
     useEffect(() => {
-      parkStore?.fetchParks();
+      parkStore?.fetchParks().then((parks) => setParksResult(parks ?? []));
     }, []);
 
     return (
@@ -53,15 +67,15 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
             </div>
             <IonSearchbar
               value={searchText}
-              onIonChange={(e) => setSearchText(e.detail.value ?? searchText)}
+              onIonChange={(e) => handleSearch(e)}
               debounce={250}
               placeholder="Suche nach Spielplätzen"
               className="start__content__search-bar"
             ></IonSearchbar>
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
-                {parkStore?.parks && parkStore.parks.length > 0
-                  ? parkStore.parks.map((park) => {
+                {parksResult.length > 0
+                  ? parksResult.map((park) => {
                       return (
                         <ParkCard
                           title={park.name}

@@ -18,6 +18,7 @@ export class ParkStore implements Store {
     try {
       const { data } = await http.get('/parks');
       this.setParks(data);
+      return data;
     } catch (error) {
       return;
     }
