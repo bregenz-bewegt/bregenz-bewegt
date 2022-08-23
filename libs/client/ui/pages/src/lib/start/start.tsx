@@ -36,7 +36,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       setSearchText(e.detail.value ?? searchText);
 
       const query = e.detail.value?.trim().toLowerCase();
-      if (!query) return setParksResult(parkStore?.parks);
+      if (!query) return setParksResult(parkStore?.parks ?? parksResult);
 
       const queriedParks = parkStore?.parks.filter(
         (park) =>
