@@ -3,7 +3,7 @@ import {
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import { JwtSecretRequestType, JwtService } from '@nestjs/jwt';
+import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
 import { UserService } from '@bregenz-bewegt/server-controllers-user';
 import { LoginDto, RegisterDto } from './dto';

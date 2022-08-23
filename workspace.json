@@ -11,6 +11,7 @@
     "server": "apps/server",
     "server-common": "libs/server/common",
     "server-controllers-auth": "libs/server/controllers/auth",
+    "server-controllers-park": "libs/server/controllers/park",
     "server-controllers-user": "libs/server/controllers/user",
     "server-prisma": "libs/server/prisma",
     "shared-types": "libs/shared/types"

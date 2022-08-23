@@ -8,11 +8,13 @@ import { PrismaModule } from '@bregenz-bewegt/server-prisma';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AccessTokenGuard } from '@bregenz-bewegt/server/common';
+import { ParkModule } from 'libs/server/controllers/park/src';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     UserModule,
+    ParkModule,
     AuthModule,
     PrismaModule,
   ],
