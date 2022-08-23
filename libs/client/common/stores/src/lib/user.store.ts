@@ -1,3 +1,4 @@
+import { http } from '@bregenz-bewegt/client/common/http';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
 
@@ -11,5 +12,32 @@ export class UserStore implements Store {
 
   @action setIsLoggedIn(value: boolean) {
     this.isLoggedIn = value;
+  }
+
+  @action async register(username: string, email: string, password: string) {
+    try {
+      const { data } = await http.post('/auth/register', {
+        username,
+        email,
+        password,
+      });
+
+      console.log(data);
+    } catch (error) {
+      return;
+    }
+  }
+
+  @action async login(email: string, password: string) {
+    try {
+      const { data } = await http.post('/auth/login', {
+        email,
+        password,
+      });
+
+      console.log(data);
+    } catch (error) {
+      return;
+    }
   }
 }

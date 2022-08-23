@@ -4,3 +4,4 @@ export * from './profile/profile';
 export * from './scan/scan';
 export * from './start/start';
 export * from './login/login';
+export * from './intro/intro';

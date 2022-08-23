@@ -12,13 +12,14 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from './routes';
 import { scan } from 'ionicons/icons';
-import { Login } from '@bregenz-bewegt/client-ui-pages';
+import { Login, Intro } from '@bregenz-bewegt/client-ui-pages';
 
 export const Router: React.FC = () => {
   return (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
+          <Route exact path={'/intro'} component={() => <Intro />}></Route>
           <Route exact path={'/login'} component={() => <Login />}></Route>
           {Object.values(tabRoutes).map((page, i) => {
             return (
