@@ -3,7 +3,7 @@ import { action, makeAutoObservable, observable } from 'mobx';
 import { http } from '@bregenz-bewegt/client/common/http';
 
 export class ParkStore implements Store {
-  static storeKey = 'parkStore' as const;
+  storeKey = 'parkStore' as const;
   @observable parks: any[] = [];
 
   constructor() {

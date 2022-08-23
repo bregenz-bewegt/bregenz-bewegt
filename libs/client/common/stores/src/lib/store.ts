@@ -1,3 +1,3 @@
-export abstract class Store {
-  static readonly storeKey: `${string}Store`;
+export interface Store {
+  readonly storeKey: `${string}Store`;
 }

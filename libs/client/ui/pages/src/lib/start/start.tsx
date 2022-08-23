@@ -10,14 +10,14 @@ import {
 } from '@ionic/react';
 import { ParkDisplayType } from '@bregenz-bewegt/client/types';
 import './start.scss';
-import { ParkStore } from '@bregenz-bewegt/client/common/stores';
+import { parkStore, ParkStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 
 interface StartProps {
   parkStore?: ParkStore;
 }
 
-export const Start: React.FC<StartProps> = inject(ParkStore.storeKey)(
+export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
   observer(({ parkStore }) => {
     const [searchText, setSearchText] = useState<string>('');
     const [parkDisplayType, setParkDisplayType] = useState<ParkDisplayType>(
