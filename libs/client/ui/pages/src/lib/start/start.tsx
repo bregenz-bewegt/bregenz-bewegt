@@ -29,13 +29,22 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       ParkDisplayType.List
     );
 
+    // TODO improve this with a fuzzy search algorithm
     const handleSearch = (
       e: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
     ) => {
-      const query = e.detail.value?.trim();
+      setSearchText(e.detail.value ?? searchText);
+
+      const query = e.detail.value?.trim().toLowerCase();
       if (!query) return;
 
-      setSearchText(query);
+      const queriedParks = parkStore?.parks.filter(
+        (park) =>
+          park.name.toLowerCase().includes(query) ||
+          park.description.toLowerCase().includes(query)
+      );
+
+      setParksResult(queriedParks ?? parksResult);
     };
 
     useEffect(() => {
