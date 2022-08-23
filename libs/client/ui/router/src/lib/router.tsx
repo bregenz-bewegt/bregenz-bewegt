@@ -10,27 +10,29 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Route, Redirect } from 'react-router-dom';
-import { routes } from './routes';
+import { tabRoutes } from './routes';
 import { scan } from 'ionicons/icons';
+import { Login } from '@bregenz-bewegt/client-ui-pages';
 
 export const Router: React.FC = () => {
   return (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          {Object.values(routes).map((page, i) => {
+          <Route exact path={'/login'} component={() => <Login />}></Route>
+          {Object.values(tabRoutes).map((page, i) => {
             return (
               <Route exact path={`${page.route}`} key={i}>
                 <page.component />
               </Route>
             );
           })}
-          <Route exact path="/">
+          <Route path="">
             <Redirect to="/start" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          {Object.values(routes).map((page, i) => {
+          {Object.values(tabRoutes).map((page, i) => {
             if (page.label !== 'Scan') {
               return (
                 <IonTabButton tab={page.route} href={page.route} key={i}>
@@ -45,7 +47,7 @@ export const Router: React.FC = () => {
         </IonTabBar>
       </IonTabs>
       <IonFab vertical="bottom" horizontal="center" slot="fixed">
-        <IonFabButton href={routes.scan.route}>
+        <IonFabButton href={tabRoutes.scan.route}>
           <IonIcon icon={scan} />
         </IonFabButton>
       </IonFab>

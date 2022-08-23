@@ -8,7 +8,7 @@ import {
 import './header.scss';
 import { notifications } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
-import { routes } from '@bregenz-bewegt/client-ui-router';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 /* eslint-disable-next-line */
 export interface HeaderProps {}
@@ -25,7 +25,7 @@ export const Header = (props: HeaderProps) => {
           />
         </IonFabButton>
       </IonFab>
-      <Link to={routes.profile.route}>
+      <Link to={tabRoutes.profile.route}>
         <IonAvatar className="header__avatar">
           <img src="https://i.pravatar.cc/150?img=3" alt="profile" />
         </IonAvatar>

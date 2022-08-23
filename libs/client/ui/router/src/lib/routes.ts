@@ -7,10 +7,10 @@ import {
 } from '@bregenz-bewegt/client-ui-pages';
 import { home, podium, scan, analytics, person } from 'ionicons/icons';
 
-type _Routes = 'start' | 'leaderboard' | 'scan' | 'analytics' | 'profile';
+type _TabRoutes = 'start' | 'leaderboard' | 'scan' | 'analytics' | 'profile';
 
-export type Routes = {
-  [K in _Routes]: {
+export type TabRoutes = {
+  [K in _TabRoutes]: {
     component: React.FC;
     route: string;
     label: string;
@@ -18,7 +18,7 @@ export type Routes = {
   };
 };
 
-export const routes: Routes = {
+export const tabRoutes: TabRoutes = {
   start: {
     component: Start,
     route: '/start',
