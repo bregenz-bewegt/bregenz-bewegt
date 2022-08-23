@@ -13,7 +13,7 @@ jobs:
       matrix:
         node-version: [14.20.0]
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NX_DATABASE_URL: ${{ secrets.NX_DATABASE_URL }}
 
     steps:
       - uses: actions/checkout@v3
