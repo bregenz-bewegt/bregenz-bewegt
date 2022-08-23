@@ -1,22 +1,12 @@
 import { useState } from 'react';
 import { Header, ParkCard } from '@bregenz-bewegt/client-ui-components';
 import {
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
   IonContent,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
-  IonItem,
-  IonList,
   IonPage,
   IonSearchbar,
   IonSelect,
   IonSelectOption,
   IonText,
-  IonVirtualScroll,
 } from '@ionic/react';
 import { ParkDisplayType } from '@bregenz-bewegt/client/types';
 
