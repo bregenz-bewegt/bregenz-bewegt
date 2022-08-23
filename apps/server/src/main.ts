@@ -30,7 +30,7 @@ async function bootstrap() {
   );
   SwaggerModule.setup(`${globalPrefix}/swagger`, app, document);
 
-  const port = process.env.PORT || 3333;
+  const port = process.env.API_PORT || 3333;
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
