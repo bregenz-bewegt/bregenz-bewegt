@@ -1,6 +1,6 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
-import { Tokens } from '@bregenz-bewegt/shared/types';
+import type { Tokens } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
 
@@ -37,6 +37,10 @@ export class UserStore implements Store {
         password,
       });
 
+      this.setTokens({
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+      });
       this.setIsLoggedIn(true);
       return data;
     } catch (error: any) {
@@ -45,8 +49,9 @@ export class UserStore implements Store {
   }
 
   @action async setTokens(tokens: Tokens) {
-    await storage.set('access_token', tokens.access_token);
-    await storage.set('refresh_token', tokens.refresh_token);
+    await Promise.all(
+      Object.entries(tokens).map(([key, value]) => storage.set(key, value))
+    );
   }
 
   @action async getTokens(): Promise<Tokens> {
