@@ -16,7 +16,7 @@ import { Login, Intro, Register } from '@bregenz-bewegt/client-ui-pages';
 import { inject, observer } from 'mobx-react';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import { RouteGuard } from '@bregenz-bewegt/client-ui-components';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export interface RouterProps {
   userStore?: UserStore;
@@ -24,8 +24,6 @@ export interface RouterProps {
 
 export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
   observer(({ userStore }: RouterProps) => {
-    const [displayTabs, setDisplayTabs] = useState<boolean>(false);
-
     useEffect(() => {
       userStore?.checkIfLoggedIn();
     }, []);
@@ -61,7 +59,7 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
           </IonRouterOutlet>
           <IonTabBar
             slot="bottom"
-            style={!displayTabs ? { display: 'none' } : {}}
+            style={!userStore?.isLoggedIn ? { display: 'none' } : {}}
           >
             {Object.values(tabRoutes).map((page, i) => {
               if (page.label !== 'Scan') {
@@ -81,7 +79,7 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
           vertical="bottom"
           horizontal="center"
           slot="fixed"
-          style={!displayTabs ? { display: 'none' } : {}}
+          style={!userStore?.isLoggedIn ? { display: 'none' } : {}}
         >
           <IonFabButton href={tabRoutes.scan.route}>
             <IonIcon icon={scan} />

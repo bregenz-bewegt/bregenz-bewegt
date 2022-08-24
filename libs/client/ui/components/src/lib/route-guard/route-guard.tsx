@@ -13,23 +13,17 @@ export interface RouteGuardProps {
 
 export const RouteGuard: React.FC<RouteGuardProps> = inject(userStore.storeKey)(
   observer(({ children, userStore }: RouteGuardProps) => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    // const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-      userStore?.checkIfLoggedIn().then((isLoggedIn) => {
-        setIsAuthenticated(isLoggedIn);
-        setIsLoading(false);
-      });
-    }, []);
+    // useEffect(() => {
+    //   userStore?.checkIfLoggedIn().then((isLoggedIn) => {
+    //     setIsAuthenticated(isLoggedIn);
+    //     setIsLoading(false);
+    //   });
+    // }, []);
 
-    return isLoading ? (
-      <IonSpinner name="crescent"></IonSpinner>
-    ) : userStore?.isLoggedIn ? (
-      children
-    ) : (
-      <Redirect to="/login" />
-    );
+    return userStore?.isLoggedIn ? children : <Redirect to="/login" />;
   })
 );
 

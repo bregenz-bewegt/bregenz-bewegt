@@ -33,7 +33,7 @@ export class UserStore implements Store {
         password,
       });
 
-      this.setTokens({
+      await this.setTokens({
         access_token: data.access_token,
         refresh_token: data.refresh_token,
       });
@@ -47,21 +47,20 @@ export class UserStore implements Store {
   @action async logout() {
     try {
       await this.removeTokens();
-      await this.setIsLoggedIn(false);
+      this.setIsLoggedIn(false);
     } catch (error) {
       return;
     }
   }
 
-  async setIsLoggedIn(value: boolean) {
+  setIsLoggedIn(value: boolean) {
     this.isLoggedIn = value;
   }
 
   async checkIfLoggedIn() {
     const tokens = await this.getTokens();
 
-    if (tokens.access_token && tokens.refresh_token) return true;
-    else return false;
+    if (tokens.access_token && tokens.refresh_token) this.setIsLoggedIn(true);
   }
 
   @action async setTokens(tokens: Tokens) {
