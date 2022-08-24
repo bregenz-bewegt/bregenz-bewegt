@@ -1,16 +1,21 @@
+import { LoginCredentials } from '@bregenz-bewegt/client/types';
 import {
   IonPage,
   IonContent,
   IonText,
   IonButton,
   IonInput,
+  IonItem,
 } from '@ionic/react';
+import { useState } from 'react';
 import './login.scss';
 
 /* eslint-disable-next-line */
 export interface LoginProps {}
 
 export const Login: React.FC = (props: LoginProps) => {
+  const [credentials, setCredentials] = useState<LoginCredentials>();
+
   return (
     <IonPage className="login">
       <IonContent className="login__content" fullscreen>
@@ -27,14 +32,28 @@ export const Login: React.FC = (props: LoginProps) => {
               <h2>Anmelden</h2>
             </IonText>
 
-            <IonInput></IonInput>
-            <IonInput></IonInput>
-            <IonButton expand="block" color="primary">
-              Anmelden
-            </IonButton>
-            <IonButton expand="block" color="primary" fill="outline">
-              Neu Registrieren
-            </IonButton>
+            <IonInput
+              type="email"
+              inputMode="email"
+              placeholder="Email"
+              name="email"
+              required
+            ></IonInput>
+            <IonInput
+              type="password"
+              inputMode="text"
+              placeholder="Passwort"
+              name="password"
+              required
+            ></IonInput>
+            <div className="login__content__login__actions">
+              <IonButton expand="block" color="primary">
+                Anmelden
+              </IonButton>
+              <IonButton expand="block" color="primary" fill="outline">
+                Neu Registrieren
+              </IonButton>
+            </div>
           </div>
         </div>
       </IonContent>
