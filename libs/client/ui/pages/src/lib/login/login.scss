@@ -1,7 +1,17 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.login {
+  &__content {
+    --padding-top: 24px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+  }
+
+  &__title h1 {
+    background: -webkit-linear-gradient(
+      90deg,
+      var(--ion-color-primary),
+      var(--ion-color-secondary)
+    );
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

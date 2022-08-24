@@ -14,13 +14,17 @@ import { tabRoutes } from './routes';
 import { scan } from 'ionicons/icons';
 import { Login, Intro } from '@bregenz-bewegt/client-ui-pages';
 import { inject, observer } from 'mobx-react';
-import { userStore } from '@bregenz-bewegt/client/common/stores';
+import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 
-export const Router: React.FC = inject(userStore.storeKey)(
-  observer(() => {
+export interface RouterProps {
+  userStore?: UserStore;
+}
+
+export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
+  observer(({ userStore }: RouterProps) => {
     return (
       <IonReactRouter>
-        {userStore.isLoggedIn ? (
+        {userStore?.isLoggedIn ? (
           <>
             <IonTabs>
               <IonRouterOutlet>
