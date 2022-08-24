@@ -12,7 +12,7 @@ export interface RouteGuardProps {
 
 export const RouteGuard: React.FC<RouteGuardProps> = inject(userStore.storeKey)(
   observer(({ children, userStore }: RouteGuardProps) => {
-    console.log(userStore?.isLoggedIn);
+    console.log('guard', userStore?.isLoggedIn);
     return userStore?.isLoggedIn ? children : <Redirect to="/login" />;
   })
 );
