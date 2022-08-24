@@ -24,7 +24,7 @@ export class UserStore implements Store {
 
       return data;
     } catch (error) {
-      return;
+      return error;
     }
   }
 
@@ -37,7 +37,7 @@ export class UserStore implements Store {
 
       return data;
     } catch (error) {
-      return;
+      return error;
     }
   }
 }
