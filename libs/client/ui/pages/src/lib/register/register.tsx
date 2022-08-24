@@ -12,14 +12,14 @@ import {
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './login.scss';
+import './register.scss';
 
 /* eslint-disable-next-line */
-export interface LoginProps {
+export interface RegisterProps {
   userStore?: UserStore;
 }
 
-export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
+export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const [credentials, setCredentials] = useState<LoginCredentials>({
       email: '',
@@ -27,7 +27,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     });
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const handleLogin = (
+    const handleRegister = (
       e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>
     ) => {
       console.log(credentials);
@@ -37,19 +37,19 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     };
 
     return (
-      <IonPage className="login">
-        <IonContent className="login__content" fullscreen>
-          <div className="login__flex-wrapper">
-            <IonText className="login__content__title">
+      <IonPage className="register">
+        <IonContent className="register__content" fullscreen>
+          <div className="register__flex-wrapper">
+            <IonText className="register__content__title">
               <h1>
                 Bregenz
                 <br />
                 Bewegt
               </h1>
             </IonText>
-            <div className="login__content__login">
+            <div className="register__content__login">
               <IonText>
-                <h2>Anmelden</h2>
+                <h2>Registrieren</h2>
               </IonText>
               <IonInput
                 value={credentials.email}
@@ -85,7 +85,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
               <IonButton
                 expand="block"
                 color="primary"
-                onClick={(e) => handleLogin(e)}
+                onClick={(e) => handleRegister(e)}
                 disabled={isLoading}
               >
                 {isLoading ? (

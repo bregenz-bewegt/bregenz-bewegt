@@ -12,7 +12,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from './routes';
 import { scan } from 'ionicons/icons';
-import { Login, Intro } from '@bregenz-bewegt/client-ui-pages';
+import { Login, Intro, Register } from '@bregenz-bewegt/client-ui-pages';
 import { inject, observer } from 'mobx-react';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 
@@ -66,7 +66,11 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
           <IonRouterOutlet>
             <Route exact path={'/intro'} component={() => <Intro />}></Route>
             <Route exact path={'/login'} component={() => <Login />}></Route>
-            <Route exact path={'/register'} component={() => <Login />}></Route>
+            <Route
+              exact
+              path={'/register'}
+              component={() => <Register />}
+            ></Route>
             <Route path="">
               <Redirect to="/intro" />
             </Route>
