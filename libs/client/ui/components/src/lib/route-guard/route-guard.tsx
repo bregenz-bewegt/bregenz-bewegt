@@ -5,7 +5,7 @@ import './route-guard.scss';
 
 /* eslint-disable-next-line */
 export interface RouteGuardProps {
-  children: ReactElement<any, any>;
+  children: ReactElement;
   userStore?: UserStore;
 }
 
@@ -20,7 +20,7 @@ export const RouteGuard: React.FC<RouteGuardProps> = ({
       console.log(data);
       setIsAllowed(data);
     });
-  });
+  }, []);
 
   return isAllowed ? children : <Redirect to="/login" />;
 };
