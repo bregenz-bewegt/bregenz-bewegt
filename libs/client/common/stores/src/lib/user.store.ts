@@ -43,8 +43,17 @@ export class UserStore implements Store {
     }
   }
 
-  setIsLoggedIn(value: boolean) {
-    storage.set('is_logged_in', value);
+  @action async logout() {
+    try {
+      await this.removeTokens();
+      await this.setIsLoggedIn(false);
+    } catch (error) {
+      return;
+    }
+  }
+
+  async setIsLoggedIn(value: boolean) {
+    await storage.set('is_logged_in', value);
   }
 
   async isLoggedIn() {
@@ -56,6 +65,13 @@ export class UserStore implements Store {
     await Promise.all(
       Object.entries(tokens).map(([key, value]) => storage.set(key, value))
     );
+  }
+
+  @action async removeTokens() {
+    await Promise.all([
+      storage.remove('access_token'),
+      storage.remove('refresh_token'),
+    ]);
   }
 
   @action async getTokens(): Promise<Tokens> {
