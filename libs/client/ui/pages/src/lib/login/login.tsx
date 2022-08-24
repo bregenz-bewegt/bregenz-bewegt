@@ -19,6 +19,8 @@ export const Login: React.FC = (props: LoginProps) => {
     password: '',
   });
 
+  console.log(credentials);
+
   return (
     <IonPage className="login">
       <IonContent className="login__content" fullscreen>
