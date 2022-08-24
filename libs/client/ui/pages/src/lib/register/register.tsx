@@ -29,13 +29,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
 
     const handleRegister = (
       e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>
-    ) => {
-      setIsLoading(true);
-      userStore?.login(credentials.email, credentials.password).then((data) => {
-        console.log(data);
-        setIsLoading(false);
-      });
-    };
+    ) => {};
 
     return (
       <IonPage className="register">

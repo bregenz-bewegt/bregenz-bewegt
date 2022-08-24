@@ -30,10 +30,13 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     const handleLogin = (
       e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>
     ) => {
-      console.log(credentials);
+      if (!credentials.email || !credentials.password) return;
+
       setIsLoading(true);
-      setTimeout(() => setIsLoading(false), 1000);
-      // userStore?.login(credentials.email, credentials.password);
+      userStore?.login(credentials.email, credentials.password).then((data) => {
+        console.log(data);
+        setIsLoading(false);
+      });
     };
 
     return (
