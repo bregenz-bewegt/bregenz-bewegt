@@ -30,13 +30,11 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     const handleLogin = (
       e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>
     ) => {
-      console.log(e);
+      console.log(credentials);
       setIsLoading(true);
       setTimeout(() => setIsLoading(false), 1000);
       // userStore?.login(credentials.email, credentials.password);
     };
-
-    console.log(credentials);
 
     return (
       <IonPage className="login">
