@@ -26,7 +26,7 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
   observer(({ userStore }: RouterProps) => {
     useEffect(() => {
       userStore?.checkIfLoggedIn();
-    }, []);
+    }, [userStore]);
 
     return (
       <IonReactRouter>
