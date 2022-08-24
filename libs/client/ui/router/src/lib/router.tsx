@@ -30,7 +30,7 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
       userStore?.isLoggedIn().then((isLoggedIn) => {
         setDisplayTabs(isLoggedIn);
       });
-    }, [userStore]);
+    });
 
     return (
       <IonReactRouter>
