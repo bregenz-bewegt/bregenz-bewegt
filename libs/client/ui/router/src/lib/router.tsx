@@ -62,8 +62,9 @@ export const Router: React.FC = inject(userStore.storeKey)(
           <IonRouterOutlet>
             <Route exact path={'/intro'} component={() => <Intro />}></Route>
             <Route exact path={'/login'} component={() => <Login />}></Route>
+            <Route exact path={'/register'} component={() => <Login />}></Route>
             <Route path="">
-              <Redirect to="/start" />
+              <Redirect to="/intro" />
             </Route>
           </IonRouterOutlet>
         )}
