@@ -50,14 +50,12 @@ export const Login: React.FC = (props: LoginProps) => {
             <Link className="login__content__login__forgot-password" to={'#'}>
               Passwort vergessen?
             </Link>
-            <div className="login__content__login__actions">
-              <IonButton expand="block" color="primary">
-                Anmelden
-              </IonButton>
-              <IonButton expand="block" color="primary" fill="outline">
-                Neu Registrieren
-              </IonButton>
-            </div>
+            <IonButton expand="block" color="primary">
+              Anmelden
+            </IonButton>
+            <IonButton expand="block" color="primary" fill="outline">
+              Neu Registrieren
+            </IonButton>
           </div>
         </div>
       </IonContent>
