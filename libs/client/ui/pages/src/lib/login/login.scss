@@ -19,8 +19,13 @@
     &__login {
       width: 100%;
 
+      &__forgot-password {
+        display: inline-block;
+        margin: 8px 0;
+      }
+
       &__actions {
-        margin-top: 16px;
+        margin-top: 24px;
       }
     }
   }

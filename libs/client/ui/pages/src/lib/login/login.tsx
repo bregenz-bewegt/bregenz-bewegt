@@ -47,7 +47,9 @@ export const Login: React.FC = (props: LoginProps) => {
               name="password"
               required
             ></IonInput>
-            <Link to={'#'}>Passwort vergessen?</Link>
+            <Link className="login__content__login__forgot-password" to={'#'}>
+              Passwort vergessen?
+            </Link>
             <div className="login__content__login__actions">
               <IonButton expand="block" color="primary">
                 Anmelden
