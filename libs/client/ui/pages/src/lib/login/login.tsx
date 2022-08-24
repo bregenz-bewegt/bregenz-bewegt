@@ -5,7 +5,6 @@ import {
   IonText,
   IonButton,
   IonInput,
-  IonItem,
 } from '@ionic/react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -15,7 +14,10 @@ import './login.scss';
 export interface LoginProps {}
 
 export const Login: React.FC = (props: LoginProps) => {
-  const [credentials, setCredentials] = useState<LoginCredentials>();
+  const [credentials, setCredentials] = useState<LoginCredentials>({
+    email: '',
+    password: '',
+  });
 
   return (
     <IonPage className="login">
@@ -32,20 +34,33 @@ export const Login: React.FC = (props: LoginProps) => {
             <IonText>
               <h2>Anmelden</h2>
             </IonText>
-
             <IonInput
+              value={credentials.email}
               type="email"
               inputMode="email"
               placeholder="Email"
               name="email"
               required
+              onIonChange={(e) =>
+                setCredentials((prev) => ({
+                  ...prev,
+                  email: e.detail.value ?? credentials?.email,
+                }))
+              }
             ></IonInput>
             <IonInput
+              value={credentials.password}
               type="password"
               inputMode="text"
               placeholder="Passwort"
               name="password"
               required
+              onIonChange={(e) =>
+                setCredentials((prev) => ({
+                  ...prev,
+                  password: e.detail.value ?? credentials?.password,
+                }))
+              }
             ></IonInput>
             <Link className="login__content__login__forgot-password" to={'#'}>
               Passwort vergessen?
