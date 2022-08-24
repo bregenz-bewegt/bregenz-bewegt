@@ -16,7 +16,10 @@ export const RouteGuard: React.FC<RouteGuardProps> = ({
   const [isAllowed, setIsAllowed] = useState<boolean>(false);
 
   useEffect(() => {
-    userStore?.isLoggedIn().then((data) => setIsAllowed(data));
+    userStore?.isLoggedIn().then((data) => {
+      console.log(data);
+      setIsAllowed(data);
+    });
   });
 
   return isAllowed ? children : <Redirect to="/login" />;
