@@ -23,7 +23,7 @@ export class UserStore implements Store {
       });
 
       return data;
-    } catch (error) {
+    } catch (error: any) {
       return error.response.data;
     }
   }
@@ -36,7 +36,7 @@ export class UserStore implements Store {
       });
 
       return data;
-    } catch (error) {
+    } catch (error: any) {
       return error.response.data;
     }
   }

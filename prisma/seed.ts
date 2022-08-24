@@ -4,7 +4,7 @@ import * as argon from 'argon2';
 
 const createUsers = async () => {
   await prisma.user.deleteMany();
-  const password = await argon.hash('some-secret-password');
+  const password = await argon.hash('test');
   await prisma.user.createMany({
     data: [
       {
