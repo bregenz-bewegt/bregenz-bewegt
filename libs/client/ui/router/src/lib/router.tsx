@@ -61,9 +61,9 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
               <Redirect to="/start" />
             </Route>
           </IonRouterOutlet>
-          {displayTabs && (
-            <IonTabBar slot="bottom">
-              {Object.values(tabRoutes).map((page, i) => {
+          <IonTabBar slot="bottom">
+            {displayTabs &&
+              Object.values(tabRoutes).map((page, i) => {
                 if (page.label !== 'Scan') {
                   return (
                     <IonTabButton tab={page.route} href={page.route} key={i}>
@@ -77,8 +77,7 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
                   );
                 }
               })}
-            </IonTabBar>
-          )}
+          </IonTabBar>
         </IonTabs>
         <IonFab vertical="bottom" horizontal="center" slot="fixed">
           <IonFabButton href={tabRoutes.scan.route}>
