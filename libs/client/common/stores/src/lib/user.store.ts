@@ -1,11 +1,12 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
 import type { Tokens } from '@bregenz-bewegt/shared/types';
-import { action, makeAutoObservable } from 'mobx';
+import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
 
 export class UserStore implements Store {
   storeKey = 'userStore' as const;
+  @observable isLoggedIn = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -53,12 +54,14 @@ export class UserStore implements Store {
   }
 
   async setIsLoggedIn(value: boolean) {
-    await storage.set('is_logged_in', value);
+    this.isLoggedIn = value;
   }
 
-  async isLoggedIn() {
-    const value = await storage.get('is_logged_in');
-    return value ?? false;
+  async checkIfLoggedIn() {
+    const tokens = await this.getTokens();
+
+    if (tokens.access_token && tokens.refresh_token) return true;
+    else return false;
   }
 
   @action async setTokens(tokens: Tokens) {

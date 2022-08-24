@@ -27,10 +27,8 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
     const [displayTabs, setDisplayTabs] = useState<boolean>(false);
 
     useEffect(() => {
-      userStore?.isLoggedIn().then((isLoggedIn) => {
-        setDisplayTabs(isLoggedIn);
-      });
-    });
+      userStore?.checkIfLoggedIn();
+    }, []);
 
     return (
       <IonReactRouter>
