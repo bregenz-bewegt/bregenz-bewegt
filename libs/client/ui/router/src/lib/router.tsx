@@ -40,7 +40,11 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
                   exact
                   path={`${page.route}`}
                   key={i}
-                  component={() => <RouteGuard children={<page.component />} />}
+                  component={() => (
+                    <RouteGuard>
+                      <page.component />
+                    </RouteGuard>
+                  )}
                 ></Route>
               );
             })}
