@@ -34,59 +34,57 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
 
     return (
       <IonReactRouter>
-        <IonRouterOutlet>
-          <Route exact path={'/intro'} component={() => <Intro />}></Route>
-          <Route exact path={'/login'} component={() => <Login />}></Route>
-          <Route
-            exact
-            path={'/register'}
-            component={() => <Register />}
-          ></Route>
-          {Object.values(tabRoutes).map((page, i) => {
-            return (
-              <Route
-                exact
-                path={`${page.route}`}
-                key={i}
-                component={() => (
-                  <RouteGuard>
-                    <page.component />
-                  </RouteGuard>
-                )}
-              ></Route>
-            );
-          })}
-          <Route path="">
-            <Redirect to="/start" />
-          </Route>
-        </IonRouterOutlet>
-        {displayTabs && (
-          <>
-            <IonTabs>
-              <IonTabBar slot="bottom">
-                {Object.values(tabRoutes).map((page, i) => {
-                  if (page.label !== 'Scan') {
-                    return (
-                      <IonTabButton tab={page.route} href={page.route} key={i}>
-                        <IonIcon icon={page.icon} />
-                        <IonLabel>{page.label}</IonLabel>
-                      </IonTabButton>
-                    );
-                  } else {
-                    return (
-                      <IonTabButton disabled tab={page.route}></IonTabButton>
-                    );
-                  }
-                })}
-              </IonTabBar>
-            </IonTabs>
-            <IonFab vertical="bottom" horizontal="center" slot="fixed">
-              <IonFabButton href={tabRoutes.scan.route}>
-                <IonIcon icon={scan} />
-              </IonFabButton>
-            </IonFab>
-          </>
-        )}
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route exact path={'/intro'} component={() => <Intro />}></Route>
+            <Route exact path={'/login'} component={() => <Login />}></Route>
+            <Route
+              exact
+              path={'/register'}
+              component={() => <Register />}
+            ></Route>
+            {Object.values(tabRoutes).map((page, i) => {
+              return (
+                <Route
+                  exact
+                  path={`${page.route}`}
+                  key={i}
+                  component={() => (
+                    <RouteGuard>
+                      <page.component />
+                    </RouteGuard>
+                  )}
+                ></Route>
+              );
+            })}
+            <Route path="">
+              <Redirect to="/start" />
+            </Route>
+          </IonRouterOutlet>
+          {displayTabs && (
+            <IonTabBar slot="bottom">
+              {Object.values(tabRoutes).map((page, i) => {
+                if (page.label !== 'Scan') {
+                  return (
+                    <IonTabButton tab={page.route} href={page.route} key={i}>
+                      <IonIcon icon={page.icon} />
+                      <IonLabel>{page.label}</IonLabel>
+                    </IonTabButton>
+                  );
+                } else {
+                  return (
+                    <IonTabButton disabled tab={page.route}></IonTabButton>
+                  );
+                }
+              })}
+            </IonTabBar>
+          )}
+        </IonTabs>
+        <IonFab vertical="bottom" horizontal="center" slot="fixed">
+          <IonFabButton href={tabRoutes.scan.route}>
+            <IonIcon icon={scan} />
+          </IonFabButton>
+        </IonFab>
       </IonReactRouter>
     );
   })
