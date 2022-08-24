@@ -34,34 +34,34 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
 
     return (
       <IonReactRouter>
-        <IonTabs>
-          <IonRouterOutlet>
-            <Route exact path={'/intro'} component={() => <Intro />}></Route>
-            <Route exact path={'/login'} component={() => <Login />}></Route>
-            <Route
-              exact
-              path={'/register'}
-              component={() => <Register />}
-            ></Route>
-            {Object.values(tabRoutes).map((page, i) => {
-              return (
-                <Route
-                  exact
-                  path={`${page.route}`}
-                  key={i}
-                  component={() => (
-                    <RouteGuard>
-                      <page.component />
-                    </RouteGuard>
-                  )}
-                ></Route>
-              );
-            })}
-            <Route path="">
-              <Redirect to="/start" />
-            </Route>
-          </IonRouterOutlet>
-          {displayTabs && (
+        <IonRouterOutlet>
+          <Route exact path={'/intro'} component={() => <Intro />}></Route>
+          <Route exact path={'/login'} component={() => <Login />}></Route>
+          <Route
+            exact
+            path={'/register'}
+            component={() => <Register />}
+          ></Route>
+          {Object.values(tabRoutes).map((page, i) => {
+            return (
+              <Route
+                exact
+                path={`${page.route}`}
+                key={i}
+                component={() => (
+                  <RouteGuard>
+                    <page.component />
+                  </RouteGuard>
+                )}
+              ></Route>
+            );
+          })}
+          <Route path="">
+            <Redirect to="/start" />
+          </Route>
+        </IonRouterOutlet>
+        {displayTabs && (
+          <IonTabs>
             <IonTabBar slot="bottom">
               {Object.values(tabRoutes).map((page, i) => {
                 if (page.label !== 'Scan') {
@@ -78,8 +78,8 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
                 }
               })}
             </IonTabBar>
-          )}
-        </IonTabs>
+          </IonTabs>
+        )}
         <IonFab vertical="bottom" horizontal="center" slot="fixed">
           <IonFabButton href={tabRoutes.scan.route}>
             <IonIcon icon={scan} />
