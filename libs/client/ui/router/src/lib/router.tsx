@@ -31,6 +31,9 @@ export const Router: React.FC = inject(userStore.storeKey)(
                     </Route>
                   );
                 })}
+                <Route path="">
+                  <Redirect to="/start" />
+                </Route>
               </IonRouterOutlet>
               <IonTabBar slot="bottom">
                 {Object.values(tabRoutes).map((page, i) => {
