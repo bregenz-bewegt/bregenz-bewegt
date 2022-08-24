@@ -7,10 +7,10 @@
 
   &__title h1 {
     background: -webkit-linear-gradient(
-      90deg,
       var(--ion-color-primary),
       var(--ion-color-secondary)
     );
+    display: inline-block;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
