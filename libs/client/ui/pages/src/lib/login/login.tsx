@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './login.scss';
 
 /* eslint-disable-next-line */
@@ -21,6 +21,7 @@ export interface LoginProps {
 
 export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
+    const history = useHistory();
     const [credentials, setCredentials] = useState<LoginCredentials>({
       email: '',
       password: '',
@@ -33,9 +34,10 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       if (!credentials.email || !credentials.password) return;
 
       setIsLoading(true);
-      userStore
-        ?.login(credentials.email, credentials.password)
-        .then(() => setIsLoading(false));
+      userStore?.login(credentials.email, credentials.password).then(() => {
+        setIsLoading(false);
+        history.push('/start');
+      });
     };
 
     return (
