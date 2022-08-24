@@ -19,7 +19,7 @@ export const RouteGuard: React.FC<RouteGuardProps> = inject(userStore.storeKey)(
     useEffect(() => {
       userStore?.isLoggedIn().then((isLoggedIn) => {
         setIsAuthenticated(isLoggedIn);
-        // setIsLoading(false);
+        setIsLoading(false);
       });
     }, []);
 
