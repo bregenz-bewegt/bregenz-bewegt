@@ -4,7 +4,7 @@ import { Store } from './store';
 
 export class UserStore implements Store {
   storeKey = 'userStore' as const;
-  @observable isLoggedIn = false;
+  @observable isLoggedIn = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -41,3 +41,5 @@ export class UserStore implements Store {
     }
   }
 }
+
+export const userStore = new UserStore();
