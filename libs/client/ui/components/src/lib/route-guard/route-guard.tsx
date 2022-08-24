@@ -17,7 +17,7 @@ export const RouteGuard: React.FC<RouteGuardProps> = inject(userStore.storeKey)(
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
-      userStore?.isLoggedIn().then((isLoggedIn) => {
+      userStore?.checkIfLoggedIn().then((isLoggedIn) => {
         setIsAuthenticated(isLoggedIn);
         setIsLoading(false);
       });
@@ -25,7 +25,7 @@ export const RouteGuard: React.FC<RouteGuardProps> = inject(userStore.storeKey)(
 
     return isLoading ? (
       <IonSpinner name="crescent"></IonSpinner>
-    ) : isAuthenticated ? (
+    ) : userStore?.isLoggedIn ? (
       children
     ) : (
       <Redirect to="/login" />
