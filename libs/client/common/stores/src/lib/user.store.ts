@@ -6,14 +6,9 @@ import { Store } from './store';
 
 export class UserStore implements Store {
   storeKey = 'userStore' as const;
-  @observable isLoggedIn = false;
 
   constructor() {
     makeAutoObservable(this);
-  }
-
-  @action setIsLoggedIn(value: boolean) {
-    this.isLoggedIn = value;
   }
 
   @action async register(username: string, email: string, password: string) {
@@ -46,6 +41,16 @@ export class UserStore implements Store {
     } catch (error: any) {
       return error.response.data;
     }
+  }
+
+  setIsLoggedIn(value: boolean) {
+    storage.set('is_logged_in', value);
+  }
+
+  async isLoggedIn() {
+    const isLoggedIn = await storage.get('is_logged_in');
+    console.log({ isLoggedIn });
+    return isLoggedIn;
   }
 
   @action async setTokens(tokens: Tokens) {
