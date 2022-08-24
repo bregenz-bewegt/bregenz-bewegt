@@ -49,7 +49,6 @@ export class UserStore implements Store {
 
   async isLoggedIn() {
     const value = await storage.get('is_logged_in');
-    console.log({ isLoggedIn: value });
     return value ?? false;
   }
 
