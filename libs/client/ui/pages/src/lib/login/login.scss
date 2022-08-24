@@ -3,17 +3,28 @@
     --padding-top: 24px;
     --padding-start: 16px;
     --padding-end: 16px;
+
+    &__title h1 {
+      font-size: 2.5em;
+      background: -webkit-linear-gradient(
+        0deg,
+        var(--ion-color-primary),
+        var(--ion-color-secondary)
+      );
+      display: inline-block;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    &__login {
+      width: 100%;
+    }
   }
 
-  &__title h1 {
-    font-size: 2.5em;
-    background: -webkit-linear-gradient(
-      0deg,
-      var(--ion-color-primary),
-      var(--ion-color-secondary)
-    );
-    display: inline-block;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  &__flex-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 }
