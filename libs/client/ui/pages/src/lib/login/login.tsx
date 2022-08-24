@@ -33,10 +33,9 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       if (!credentials.email || !credentials.password) return;
 
       setIsLoading(true);
-      userStore?.login(credentials.email, credentials.password).then((data) => {
-        console.log(data);
-        setIsLoading(false);
-      });
+      userStore
+        ?.login(credentials.email, credentials.password)
+        .then(() => setIsLoading(false));
     };
 
     return (
