@@ -22,7 +22,7 @@ export class UserStore implements Store {
         password,
       });
 
-      console.log(data);
+      return data;
     } catch (error) {
       return;
     }
@@ -35,7 +35,7 @@ export class UserStore implements Store {
         password,
       });
 
-      console.log(data);
+      return data;
     } catch (error) {
       return;
     }
