@@ -13,16 +13,16 @@ export const RouteGuard: React.FC<RouteGuardProps> = ({
   children,
   userStore,
 }: RouteGuardProps) => {
-  const [isAllowed, setIsAllowed] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
     userStore?.isLoggedIn().then((data) => {
       console.log(data);
-      setIsAllowed(data);
+      setIsAuthenticated(data);
     });
-  }, []);
+  }, [isAuthenticated]);
 
-  return isAllowed ? children : <Redirect to="/login" />;
+  return isAuthenticated ? children : <Redirect to="/login" />;
 };
 
 export default RouteGuard;

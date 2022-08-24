@@ -1,7 +1,7 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
 import type { Tokens } from '@bregenz-bewegt/shared/types';
-import { action, makeAutoObservable, observable } from 'mobx';
+import { action, makeAutoObservable } from 'mobx';
 import { Store } from './store';
 
 export class UserStore implements Store {
@@ -48,9 +48,9 @@ export class UserStore implements Store {
   }
 
   async isLoggedIn() {
-    const isLoggedIn = await storage.get('is_logged_in');
-    console.log({ isLoggedIn });
-    return isLoggedIn;
+    const value = await storage.get('is_logged_in');
+    console.log({ isLoggedIn: value });
+    return value;
   }
 
   @action async setTokens(tokens: Tokens) {
