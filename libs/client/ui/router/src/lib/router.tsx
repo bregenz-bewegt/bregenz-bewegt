@@ -10,7 +10,7 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Route, Redirect } from 'react-router-dom';
-import { tabRoutes } from './routes';
+import { tabRoutes } from './tabs';
 import { scan } from 'ionicons/icons';
 import {
   Login,
