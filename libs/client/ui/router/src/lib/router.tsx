@@ -28,7 +28,17 @@ export interface RouterProps {
 export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
   observer(({ userStore }: RouterProps) => {
     console.log(userStore?.isLoggedIn);
-    return <Loading />;
+    return (
+      <IonReactRouter>
+        {userStore?.isLoadingLoginState ? (
+          <Loading />
+        ) : userStore?.isLoggedIn ? (
+          <Tabs />
+        ) : (
+          <RequireAuth />
+        )}
+      </IonReactRouter>
+    );
   })
 );
 
