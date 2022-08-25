@@ -1,4 +1,5 @@
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
+import { IonSpinner } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { ReactElement } from 'react';
 import { Redirect } from 'react-router-dom';
@@ -11,7 +12,13 @@ export interface RouteGuardProps {
 
 export const RouteGuard: React.FC<RouteGuardProps> = inject(userStore.storeKey)(
   observer(({ children, userStore }: RouteGuardProps) => {
-    return userStore?.isLoggedIn ? children : <Redirect to="/login" />;
+    return userStore?.isLoadingLoginState ? (
+      <IonSpinner name="crescent" />
+    ) : userStore?.isLoggedIn ? (
+      children
+    ) : (
+      <Redirect to="/login" />
+    );
   })
 );
 

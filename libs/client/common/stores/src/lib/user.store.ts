@@ -7,6 +7,7 @@ import { Store } from './store';
 export class UserStore implements Store {
   storeKey = 'userStore' as const;
   @observable isLoggedIn = false;
+  @observable isLoadingLoginState = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -54,15 +55,21 @@ export class UserStore implements Store {
     }
   }
 
-  setIsLoggedIn(value: boolean) {
+  @action setIsLoggedIn(value: boolean) {
     this.isLoggedIn = value;
   }
 
+  @action setIsloadingLoginState(value: boolean) {
+    this.isLoadingLoginState = value;
+  }
+
   async checkIfLoggedIn() {
+    this.setIsloadingLoginState(true);
     const tokens = await this.getTokens();
 
     if (tokens.access_token) this.setIsLoggedIn(true);
     else this.setIsLoggedIn(false);
+    this.setIsloadingLoginState(false);
   }
 
   @action async setTokens(tokens: Tokens) {
