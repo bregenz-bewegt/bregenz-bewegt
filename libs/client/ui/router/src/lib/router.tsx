@@ -54,14 +54,14 @@ export const Tabs: React.FC = () => {
                 exact
                 path={`${page.route}`}
                 key={i}
-                component={() => <page.component />}
+                component={page.component}
               ></Route>
             );
           })}
           <Route
             exact
             path={`${tabRoutes.start}/:id`}
-            component={() => <ParkDetail />}
+            component={ParkDetail}
           ></Route>
           <Route path="">
             <Redirect to="/start" />
@@ -94,9 +94,9 @@ export const Tabs: React.FC = () => {
 export const RequireAuth: React.FC = () => {
   return (
     <IonRouterOutlet>
-      <Route exact path={'/intro'} component={() => <Intro />}></Route>
-      <Route exact path={'/login'} component={() => <Login />}></Route>
-      <Route exact path={'/register'} component={() => <Register />}></Route>
+      <Route exact path={'/intro'} component={Intro}></Route>
+      <Route exact path={'/login'} component={Login}></Route>
+      <Route exact path={'/register'} component={Register}></Route>
       <Route path="">
         <Redirect to="/login" />
       </Route>

@@ -8,15 +8,15 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import { useHistory } from 'react-router-dom';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
 import './park-detail.scss';
 
-export interface ParkDetail {
+export interface ParkDetail extends RouteComponentProps {
   userStore?: UserStore;
 }
 
 export const ParkDetail: React.FC<ParkDetail> = inject(userStore.storeKey)(
-  observer(() => {
+  observer(({ userStore, match }) => {
     const history = useHistory();
 
     return (
