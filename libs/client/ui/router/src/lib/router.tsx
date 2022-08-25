@@ -77,16 +77,6 @@ export const Tabs: React.FC = () => {
             path={tabRoutes.profile.route}
             component={tabRoutes.profile.component}
           ></Route>
-          {/* {Object.values(tabRoutes).map((page, i) => {
-            return (
-              <Route
-                exact
-                path={`${page.route}`}
-                key={i}
-                component={page.component}
-              ></Route>
-            );
-          })} */}
           <Route path="">
             <Redirect to="/start" />
           </Route>
