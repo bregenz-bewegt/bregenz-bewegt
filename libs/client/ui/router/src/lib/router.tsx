@@ -97,7 +97,10 @@ export const Tabs: React.FC = () => {
         </IonTabBar>
       </IonTabs>
       <IonFab vertical="bottom" horizontal="center" slot="fixed">
-        <IonFabButton href={tabRoutes.scan.route}>
+        <IonFabButton
+          href={tabRoutes.scan.route}
+          routerLink={tabRoutes.scan.route}
+        >
           <IonIcon icon={scan} />
         </IonFabButton>
       </IonFab>
