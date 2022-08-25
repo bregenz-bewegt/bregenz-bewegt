@@ -1,3 +1,4 @@
+import { Loading } from '@bregenz-bewegt/client-ui-pages';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import { IonSpinner } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
@@ -13,7 +14,7 @@ export interface RouteGuardProps {
 export const RouteGuard: React.FC<RouteGuardProps> = inject(userStore.storeKey)(
   observer(({ children, userStore }: RouteGuardProps) => {
     return userStore?.isLoadingLoginState ? (
-      <IonSpinner name="crescent" />
+      <Loading />
     ) : userStore?.isLoggedIn ? (
       children
     ) : (

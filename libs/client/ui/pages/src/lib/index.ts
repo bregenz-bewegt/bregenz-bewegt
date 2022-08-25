@@ -1,3 +1,4 @@
+export * from './loading/loading';
 export * from './analytics/analytics';
 export * from './leaderboard/leaderboard';
 export * from './profile/profile';

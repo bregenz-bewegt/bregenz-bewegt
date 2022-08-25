@@ -7,16 +7,19 @@ import {
   IonLabel,
   IonFab,
   IonFabButton,
-  IonSpinner,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from './routes';
 import { scan } from 'ionicons/icons';
-import { Login, Intro, Register } from '@bregenz-bewegt/client-ui-pages';
+import {
+  Login,
+  Intro,
+  Register,
+  Loading,
+} from '@bregenz-bewegt/client-ui-pages';
 import { inject, observer } from 'mobx-react';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
-import { RouteGuard } from '@bregenz-bewegt/client-ui-components';
 
 export interface RouterProps {
   userStore?: UserStore;
@@ -28,7 +31,7 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
     return (
       <IonReactRouter>
         {userStore?.isLoadingLoginState ? (
-          <IonSpinner name="crescent" />
+          <Loading />
         ) : userStore?.isLoggedIn ? (
           <Tabs />
         ) : (
@@ -50,11 +53,7 @@ export const Tabs: React.FC = () => {
                 exact
                 path={`${page.route}`}
                 key={i}
-                component={() => (
-                  <RouteGuard>
-                    <page.component />
-                  </RouteGuard>
-                )}
+                component={() => <page.component />}
               ></Route>
             );
           })}
