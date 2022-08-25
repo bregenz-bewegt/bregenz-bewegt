@@ -48,7 +48,7 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <IonItem>
+    <IonItem lines="none">
       {label && <IonLabel>{label}</IonLabel>}
       <IonInput {...inputProps}></IonInput>
       {error && <IonText color="danger">{error}</IonText>}
