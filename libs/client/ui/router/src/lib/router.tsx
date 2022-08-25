@@ -100,6 +100,7 @@ export const Tabs: React.FC = () => {
         <IonFabButton
           href={tabRoutes.scan.route}
           routerLink={tabRoutes.scan.route}
+          routerDirection="root"
         >
           <IonIcon icon={scan} />
         </IonFabButton>
