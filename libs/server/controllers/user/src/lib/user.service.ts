@@ -1,5 +1,6 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { Injectable } from '@nestjs/common';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -9,11 +10,11 @@ export class UserService {
     return this.prismaService.user.findMany();
   }
 
-  async findOneByEmail(email: string) {
+  async getUserByEmail(email: User['email']) {
     return this.prismaService.user.findUnique({ where: { email: email } });
   }
 
-  async findOneById(id: string) {
+  async getUserById(id: User['id']) {
     return this.prismaService.user.findUnique({ where: { id: id } });
   }
 }

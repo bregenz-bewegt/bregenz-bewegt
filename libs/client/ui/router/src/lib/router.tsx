@@ -28,7 +28,6 @@ export interface RouterProps {
 
 export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
   observer(({ userStore }: RouterProps) => {
-    console.log(userStore?.isLoggedIn);
     return (
       <IonReactRouter>
         {userStore?.isLoadingLoginState ? (
@@ -48,6 +47,11 @@ export const Tabs: React.FC = () => {
     <>
       <IonTabs>
         <IonRouterOutlet>
+          <Route
+            exact
+            path={`${tabRoutes.start}/:id`}
+            component={ParkDetail}
+          ></Route>
           {Object.values(tabRoutes).map((page, i) => {
             return (
               <Route
@@ -58,11 +62,6 @@ export const Tabs: React.FC = () => {
               ></Route>
             );
           })}
-          <Route
-            exact
-            path={`${tabRoutes.start}/:id`}
-            component={ParkDetail}
-          ></Route>
           <Route path="">
             <Redirect to="/start" />
           </Route>

@@ -11,7 +11,7 @@ export class UserStore implements Store {
 
   constructor() {
     makeAutoObservable(this);
-    this.checkIfLoggedIn();
+    this.initLoggedIn();
   }
 
   @action async register(username: string, email: string, password: string) {
@@ -63,7 +63,7 @@ export class UserStore implements Store {
     this.isLoadingLoginState = value;
   }
 
-  async checkIfLoggedIn() {
+  async initLoggedIn() {
     this.setIsloadingLoginState(true);
     const tokens = await this.getTokens();
 
@@ -78,14 +78,14 @@ export class UserStore implements Store {
     );
   }
 
-  @action async removeTokens() {
+  async removeTokens() {
     await Promise.all([
       storage.remove('access_token'),
       storage.remove('refresh_token'),
     ]);
   }
 
-  @action async getTokens(): Promise<Tokens> {
+  async getTokens(): Promise<Tokens> {
     const access_token = await storage.get('access_token');
     const refresh_token = await storage.get('refresh_token');
 

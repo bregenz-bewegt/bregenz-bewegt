@@ -16,7 +16,7 @@ export class UserController {
   }
 
   @Get('me')
-  profile(@GetCurrentUser('sub') userId: string) {
-    return this.userService.findOneById(userId);
+  getUser(@GetCurrentUser('sub') userId: string) {
+    return this.userService.getUserById(userId);
   }
 }

@@ -8,7 +8,7 @@ import {
   IonSelectOption,
   IonText,
 } from '@ionic/react';
-import { ParkDisplayType } from '@bregenz-bewegt/client/types';
+import { Park, ParkDisplayType } from '@bregenz-bewegt/client/types';
 import './start.scss';
 import { parkStore, ParkStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
@@ -16,6 +16,7 @@ import {
   IonSearchbarCustomEvent,
   SearchbarChangeEventDetail,
 } from '@ionic/core';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 interface StartProps {
   parkStore?: ParkStore;
@@ -24,7 +25,7 @@ interface StartProps {
 export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
   observer(({ parkStore }) => {
     const [searchText, setSearchText] = useState<string>('');
-    const [parksResult, setParksResult] = useState<any[]>([]);
+    const [parksResult, setParksResult] = useState<Park[]>([]);
     const [parkDisplayType, setParkDisplayType] = useState<ParkDisplayType>(
       ParkDisplayType.List
     );
@@ -90,8 +91,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                         title={park.name}
                         location={park.address}
                         image={park.image}
-                        description={park.description}
-                        link="#"
+                        link={`${tabRoutes.start.route}/${park.id}`}
                       />
                     );
                   })
