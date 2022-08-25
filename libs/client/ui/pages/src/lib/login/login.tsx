@@ -104,7 +104,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 expand="block"
                 color="primary"
                 fill="outline"
-                href="/register"
+                routerLink="/register"
               >
                 Neu Registrieren
               </IonButton>
