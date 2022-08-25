@@ -3,7 +3,7 @@ import {
   Leaderboard,
   Scan,
   Analytics,
-  Profile,
+  ParkDetail,
 } from '@bregenz-bewegt/client-ui-pages';
 import { home, podium, scan, analytics, person } from 'ionicons/icons';
 
@@ -44,7 +44,7 @@ export const tabRoutes: TabRoutes = {
     icon: analytics,
   },
   profile: {
-    component: Profile,
+    component: ParkDetail,
     route: '/profile',
     label: 'Profil',
     icon: person,

@@ -9,27 +9,21 @@ import {
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
-import './profile.scss';
+import './park-detail.scss';
 
-export const Profile: React.FC = inject(userStore.storeKey)(
+export const ParkDetail: React.FC = inject(userStore.storeKey)(
   observer(() => {
     const history = useHistory();
-
-    const handleLogout = () => {
-      userStore.logout().then(() => {
-        history.push('/login');
-      });
-    };
 
     return (
       <IonPage>
         <IonHeader>
           <IonToolbar>
-            <IonTitle>Profile</IonTitle>
+            <IonTitle>Park Detail</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
-          <IonButton onClick={() => handleLogout()}>Logout</IonButton>
+          <IonButton>Park Detail</IonButton>
         </IonContent>
       </IonPage>
     );

@@ -57,6 +57,7 @@ export const Tabs: React.FC = () => {
               ></Route>
             );
           })}
+          <Route exact path={`${tabRoutes.start}/:id`}></Route>
           <Route path="">
             <Redirect to="/start" />
           </Route>
