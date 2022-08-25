@@ -1,3 +1,4 @@
+import { Input } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import { LoginCredentials } from '@bregenz-bewegt/client/types';
 import {
@@ -83,6 +84,14 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                   }))
                 }
               ></IonInput>
+              <Input
+                value={credentials.password}
+                type="password"
+                inputMode="text"
+                placeholder="Passwort"
+                name="password"
+                required
+              />
               <Link className="login__content__login__forgot-password" to={'#'}>
                 Passwort vergessen?
               </Link>
