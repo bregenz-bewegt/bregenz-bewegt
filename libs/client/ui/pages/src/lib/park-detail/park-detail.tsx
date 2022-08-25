@@ -16,6 +16,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { Loading } from '../loading/loading';
 import './park-detail.scss';
 
 interface MatchParams {
@@ -33,14 +34,20 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
 )(
   observer(({ userStore, match }) => {
     const history = useHistory();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [park, setPark] = useState<Park>();
     const [exercises, setExercises] = useState<any[]>();
 
     useEffect(() => {
-      parkStore.getPark(+match.params.id).then((park) => setPark(park));
+      parkStore.getPark(+match.params.id).then((park) => {
+        setPark(park);
+        setIsLoading(false);
+      });
     }, []);
 
-    return (
+    return isLoading ? (
+      <Loading />
+    ) : (
       <IonPage>
         <IonHeader>
           <IonToolbar>
