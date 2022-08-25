@@ -8,8 +8,8 @@ export interface LoadingProps {
 
 export const Loading: React.FC<LoadingProps> = ({ spinner = 'crescent' }) => {
   return (
-    <IonPage>
-      <IonContent fullscreen>
+    <IonPage className="loading">
+      <IonContent fullscreen className="loading__content">
         <IonSpinner name={spinner} />
       </IonContent>
     </IonPage>
