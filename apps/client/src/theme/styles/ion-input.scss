@@ -7,7 +7,7 @@ ion-input {
   --padding-end: 8px !important;
   --background: var(--ion-color-light) !important;
 
-  .ios {
+  &.ios {
     border-radius: 8px;
   }
 }
