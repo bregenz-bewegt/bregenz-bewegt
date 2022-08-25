@@ -49,9 +49,15 @@ export const Tabs: React.FC = () => {
         <IonRouterOutlet>
           <Route
             exact
-            path={`${tabRoutes.start}/:id`}
-            component={ParkDetail}
-          ></Route>
+            path={`${tabRoutes.start}`}
+            component={tabRoutes.start.component}
+          >
+            <Route
+              exact
+              path={`${tabRoutes.start}/:id`}
+              component={ParkDetail}
+            ></Route>
+          </Route>
           {Object.values(tabRoutes).map((page, i) => {
             return (
               <Route
