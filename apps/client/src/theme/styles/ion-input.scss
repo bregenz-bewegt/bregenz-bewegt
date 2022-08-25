@@ -1,11 +1,11 @@
 ion-input {
   border: 1px solid var(--ion-color-medium);
   border-radius: 8px;
-  background-color: var(--ion-color-light);
-  --padding-top: 4px;
-  --padding-bottom: 4px;
-  --padding-start: 8px;
-  --padding-end: 8px;
-  --background: var(--ion-color-light);
   margin: 8px 0;
+  padding: 8px 4px !important;
+  // --padding-top: 4px;
+  // --padding-bottom: 4px;
+  // --padding-start: 8px;
+  // --padding-end: 8px;
+  --background: var(--ion-color-light) !important;
 }
