@@ -69,6 +69,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                     email: e.detail.value ?? credentials?.email,
                   }))
                 }
+                error="Email fehlt"
               ></Input>
               <Input
                 value={credentials.password}
