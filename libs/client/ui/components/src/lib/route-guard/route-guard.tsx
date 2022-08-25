@@ -4,7 +4,6 @@ import { ReactElement } from 'react';
 import { Redirect } from 'react-router-dom';
 import './route-guard.scss';
 
-/* eslint-disable-next-line */
 export interface RouteGuardProps {
   children: ReactElement;
   userStore?: UserStore;
@@ -12,7 +11,6 @@ export interface RouteGuardProps {
 
 export const RouteGuard: React.FC<RouteGuardProps> = inject(userStore.storeKey)(
   observer(({ children, userStore }: RouteGuardProps) => {
-    console.log('guard', userStore?.isLoggedIn);
     return userStore?.isLoggedIn ? children : <Redirect to="/login" />;
   })
 );

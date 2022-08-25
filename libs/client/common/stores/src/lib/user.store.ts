@@ -10,6 +10,7 @@ export class UserStore implements Store {
 
   constructor() {
     makeAutoObservable(this);
+    this.checkIfLoggedIn();
   }
 
   @action async register(username: string, email: string, password: string) {
@@ -60,7 +61,7 @@ export class UserStore implements Store {
   async checkIfLoggedIn() {
     const tokens = await this.getTokens();
 
-    if (tokens.access_token && tokens.refresh_token) this.setIsLoggedIn(true);
+    if (tokens.access_token) this.setIsLoggedIn(true);
   }
 
   @action async setTokens(tokens: Tokens) {
