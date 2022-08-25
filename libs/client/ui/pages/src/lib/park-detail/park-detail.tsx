@@ -18,7 +18,11 @@ import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import './park-detail.scss';
 
-export interface ParkDetail extends RouteComponentProps {
+interface MatchParams {
+  id: string;
+}
+
+export interface ParkDetail extends RouteComponentProps<MatchParams> {
   userStore?: UserStore;
   parkStore?: ParkStore;
 }
@@ -31,11 +35,13 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     const history = useHistory();
     const [park, setPark] = useState<Park>();
 
-    console.log(match);
+    console.log(match.params.id);
 
     useEffect(() => {
-      // parkStore.getPark().then((park) => setPark(park));
+      parkStore.getPark(+match.params.id).then((park) => setPark(park));
     }, []);
+
+    console.log(park);
 
     return (
       <IonPage>
