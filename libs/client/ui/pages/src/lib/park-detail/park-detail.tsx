@@ -35,13 +35,9 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     const history = useHistory();
     const [park, setPark] = useState<Park>();
 
-    console.log(match.params.id);
-
     useEffect(() => {
       parkStore.getPark(+match.params.id).then((park) => setPark(park));
     }, []);
-
-    console.log(park);
 
     return (
       <IonPage>
