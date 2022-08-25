@@ -24,6 +24,7 @@ export interface RouterProps {
 
 export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
   observer(({ userStore }: RouterProps) => {
+    console.log(userStore?.isLoggedIn);
     return (
       <IonReactRouter>
         {userStore?.isLoggedIn ? <Tabs /> : <RequireAuth />}
@@ -86,7 +87,7 @@ export const RequireAuth: React.FC = () => {
       <Route exact path={'/login'} component={() => <Login />}></Route>
       <Route exact path={'/register'} component={() => <Register />}></Route>
       <Route path="">
-        <Redirect to="/start" />
+        <Redirect to="/login" />
       </Route>
     </IonRouterOutlet>
   );
