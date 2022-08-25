@@ -56,7 +56,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
               <IonText>
                 <h2>Anmelden</h2>
               </IonText>
-              <IonInput
+              <Input
                 value={credentials.email}
                 type="email"
                 inputMode="email"
@@ -69,8 +69,8 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                     email: e.detail.value ?? credentials?.email,
                   }))
                 }
-              ></IonInput>
-              <IonInput
+              ></Input>
+              <Input
                 value={credentials.password}
                 type="password"
                 inputMode="text"
@@ -83,14 +83,6 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                     password: e.detail.value ?? credentials?.password,
                   }))
                 }
-              ></IonInput>
-              <Input
-                value={credentials.password}
-                type="password"
-                inputMode="text"
-                placeholder="Passwort"
-                name="password"
-                required
               />
               <Link className="login__content__login__forgot-password" to={'#'}>
                 Passwort vergessen?
