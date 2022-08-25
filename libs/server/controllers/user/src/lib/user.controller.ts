@@ -2,7 +2,7 @@ import {
   GetCurrentUser,
   RemoveSensitiveFieldsInterceptor,
 } from '@bregenz-bewegt/server/common';
-import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -16,7 +16,7 @@ export class UserController {
   }
 
   @Get('me')
-  profile(@GetCurrentUser('sub') userId: string) {
-    return this.userService.findOneById(userId);
+  getUser(@GetCurrentUser('sub') userId: string) {
+    return this.userService.getUserById(userId);
   }
 }

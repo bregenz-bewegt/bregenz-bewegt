@@ -7,23 +7,25 @@ import {
 } from '@bregenz-bewegt/client-ui-pages';
 import { home, podium, scan, analytics, person } from 'ionicons/icons';
 
-export interface Routes {
-  [page: string]: {
+type _TabRoutes = 'start' | 'leaderboard' | 'scan' | 'analytics' | 'profile';
+
+export type TabRoutes = {
+  [K in _TabRoutes]: {
     component: React.FC;
     route: string;
     label: string;
     icon: string;
   };
-}
+};
 
-export const routes: Routes = {
+export const tabRoutes: TabRoutes = {
   start: {
     component: Start,
     route: '/start',
     label: 'Start',
     icon: home,
   },
-  leaderborad: {
+  leaderboard: {
     component: Leaderboard,
     route: '/leaderboard',
     label: 'Rangliste',
@@ -47,4 +49,4 @@ export const routes: Routes = {
     label: 'Profil',
     icon: person,
   },
-} as const;
+};

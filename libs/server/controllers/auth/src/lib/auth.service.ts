@@ -3,7 +3,7 @@ import {
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import { JwtSecretRequestType, JwtService } from '@nestjs/jwt';
+import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
 import { UserService } from '@bregenz-bewegt/server-controllers-user';
 import { LoginDto, RegisterDto } from './dto';
@@ -22,7 +22,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string) {
-    const user = await this.userService.findOneByEmail(email);
+    const user = await this.userService.getUserByEmail(email);
 
     if (user && user.password === password) {
       return user;
@@ -99,11 +99,11 @@ export class AuthService {
     const [access_token, refresh_token] = await Promise.all([
       this.jwtService.signAsync(jwtPayload, {
         expiresIn: '15m',
-        secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
+        secret: this.configService.get('NX_JWT_ACCESS_TOKEN_SECRET'),
       }),
       this.jwtService.signAsync(jwtPayload, {
         expiresIn: '7d',
-        secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+        secret: this.configService.get('NX_JWT_REFRESH_TOKEN_SECRET'),
       }),
     ]);
 
