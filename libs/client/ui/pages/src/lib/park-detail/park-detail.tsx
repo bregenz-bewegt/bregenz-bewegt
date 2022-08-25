@@ -34,6 +34,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
   observer(({ userStore, match }) => {
     const history = useHistory();
     const [park, setPark] = useState<Park>();
+    const [exercises, setExercises] = useState<any[]>();
 
     useEffect(() => {
       parkStore.getPark(+match.params.id).then((park) => setPark(park));
