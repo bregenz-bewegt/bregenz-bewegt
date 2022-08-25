@@ -20,7 +20,7 @@ export const ParkCard: React.FC<ParkCardProps> = ({
   link,
 }: ParkCardProps) => {
   return (
-    <IonCard href={link}>
+    <IonCard routerLink={link}>
       <img src={image} alt="park" />
       <IonCardHeader>
         <IonCardSubtitle>{location}</IonCardSubtitle>
