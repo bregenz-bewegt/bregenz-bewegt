@@ -1,4 +1,4 @@
-import { userStore } from '@bregenz-bewegt/client/common/stores';
+import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonButton,
   IonContent,
@@ -11,12 +11,16 @@ import { inject, observer } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
 import './profile.scss';
 
-export const Profile: React.FC = inject(userStore.storeKey)(
-  observer(() => {
+export interface ProfileProps {
+  userStore?: UserStore;
+}
+
+export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
+  observer(({ userStore }) => {
     const history = useHistory();
 
     const handleLogout = () => {
-      userStore.logout().then(() => {
+      userStore?.logout().then(() => {
         history.push('/login');
       });
     };

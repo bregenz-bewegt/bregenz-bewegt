@@ -1,4 +1,4 @@
-import { userStore } from '@bregenz-bewegt/client/common/stores';
+import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonButton,
   IonContent,
@@ -11,7 +11,11 @@ import { inject, observer } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
 import './park-detail.scss';
 
-export const ParkDetail: React.FC = inject(userStore.storeKey)(
+export interface ParkDetail {
+  userStore?: UserStore;
+}
+
+export const ParkDetail: React.FC<ParkDetail> = inject(userStore.storeKey)(
   observer(() => {
     const history = useHistory();
 

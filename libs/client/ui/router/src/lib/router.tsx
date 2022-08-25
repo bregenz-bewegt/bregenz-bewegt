@@ -17,6 +17,7 @@ import {
   Intro,
   Register,
   Loading,
+  ParkDetail,
 } from '@bregenz-bewegt/client-ui-pages';
 import { inject, observer } from 'mobx-react';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
@@ -57,7 +58,11 @@ export const Tabs: React.FC = () => {
               ></Route>
             );
           })}
-          <Route exact path={`${tabRoutes.start}/:id`}></Route>
+          <Route
+            exact
+            path={`${tabRoutes.start}/:id`}
+            component={() => <ParkDetail />}
+          ></Route>
           <Route path="">
             <Redirect to="/start" />
           </Route>
