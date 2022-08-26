@@ -100,11 +100,13 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                 <IonRefresher
                   slot="fixed"
                   onIonRefresh={(e) => refreshParks(e)}
-                  pullFactor={0.5}
-                  pullMin={100}
-                  pullMax={200}
                 >
-                  <IonRefresherContent>
+                  <IonRefresherContent
+                    refreshingSpinner="crescent"
+                    pullFactor={0.5}
+                    pullMin={100}
+                    pullMax={200}
+                  >
                     {parksResult.length > 0 ? (
                       parksResult.map((park) => {
                         return (
