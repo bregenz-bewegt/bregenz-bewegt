@@ -80,6 +80,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 placeholder="Passwort"
                 name="password"
                 required
+                error="error"
                 onIonChange={(e) =>
                   setCredentials((prev) => ({
                     ...prev,
