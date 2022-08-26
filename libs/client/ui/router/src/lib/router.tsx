@@ -21,7 +21,6 @@ import {
 } from '@bregenz-bewegt/client-ui-pages';
 import { inject, observer } from 'mobx-react';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
-import { TabBar } from '@bregenz-bewegt/client-ui-components';
 
 export interface RouterProps {
   userStore?: UserStore;
@@ -82,7 +81,20 @@ export const Tabs: React.FC = () => {
             <Redirect to="/start" />
           </Route>
         </IonRouterOutlet>
-        <TabBar tabRoutes={tabRoutes} />
+        <IonTabBar slot="bottom">
+          {Object.values(tabRoutes).map((page, i) => {
+            if (page.label !== 'Scan') {
+              return (
+                <IonTabButton tab={page.route} href={page.route} key={i}>
+                  <IonIcon icon={page.icon} />
+                  <IonLabel>{page.label}</IonLabel>
+                </IonTabButton>
+              );
+            } else {
+              return <IonTabButton disabled tab={page.route}></IonTabButton>;
+            }
+          })}
+        </IonTabBar>
       </IonTabs>
       <IonFab vertical="bottom" horizontal="center" slot="fixed">
         <IonFabButton routerLink={tabRoutes.scan.route} routerDirection="root">
