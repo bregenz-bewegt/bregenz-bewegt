@@ -91,6 +91,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 Passwort vergessen?
               </Link>
               <IonButton
+                mode="ios"
                 expand="block"
                 color="primary"
                 onClick={(e) => handleLogin(e)}
@@ -105,6 +106,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 )}
               </IonButton>
               <IonButton
+                mode="ios"
                 expand="block"
                 color="primary"
                 fill="outline"
