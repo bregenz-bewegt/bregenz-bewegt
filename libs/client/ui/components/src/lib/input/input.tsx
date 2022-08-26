@@ -59,7 +59,7 @@ export const Input: React.FC<InputProps> = ({
     <div className="input">
       <IonGrid>
         <IonRow>
-          <IonItem lines="none">
+          <IonItem lines="none" className={`${error ? "ion-invalid" : ""}`}>
             {label && <IonLabel>{label}</IonLabel>}
             <IonInput {...inputProps}></IonInput>
             {error && (
