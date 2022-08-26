@@ -4,6 +4,7 @@ import {
   IonInput,
   IonItem,
   IonLabel,
+  IonNote,
   IonRow,
   IonText,
 } from '@ionic/react';
@@ -65,9 +66,9 @@ export const Input: React.FC<InputProps> = ({
         </IonRow>
         <IonRow>
           {error && (
-            <IonText color="danger">
-              <small>{error}</small>
-            </IonText>
+            <IonNote color="danger">
+              <small slot="error">{error}</small>
+            </IonNote>
           )}
         </IonRow>
       </IonGrid>
