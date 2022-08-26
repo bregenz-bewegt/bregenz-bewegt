@@ -76,6 +76,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
               </IonSelect>
             </div>
             <IonSearchbar
+              mode="ios"
               value={searchText}
               onIonChange={(e) => handleSearch(e)}
               debounce={250}

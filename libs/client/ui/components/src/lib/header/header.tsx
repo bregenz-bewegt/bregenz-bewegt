@@ -15,7 +15,7 @@ export interface HeaderProps {}
 
 export const Header = (props: HeaderProps) => {
   return (
-    <IonHeader className="header">
+    <IonHeader mode="ios" className="header">
       <IonFab className="header__fab">
         <IonFabButton className="header__fab__button">
           <IonIcon
