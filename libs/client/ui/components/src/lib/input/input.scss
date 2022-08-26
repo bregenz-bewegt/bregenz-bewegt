@@ -14,5 +14,9 @@
       --padding-end: 8px !important;
       --background: var(--ion-color-light-tint) !important;
     }
+
+    ion-text {
+      margin-left: 4px;
+    }
   }
 }
