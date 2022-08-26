@@ -32,6 +32,10 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       ParkDisplayType.List
     );
 
+    const refreshParks = () => {
+      parkStore?.fetchParks().then((parks) => setParksResult(parks ?? []));
+    };
+
     // TODO improve this with a fuzzy search algorithm
     const handleSearch = (
       e: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
@@ -51,7 +55,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
     };
 
     useEffect(() => {
-      parkStore?.fetchParks().then((parks) => setParksResult(parks ?? []));
+      refreshParks();
     }, []);
 
     return (
@@ -87,7 +91,13 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
             ></IonSearchbar>
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
-                <IonRefresher slot="fixed">
+                <IonRefresher
+                  slot="fixed"
+                  onIonRefresh={() => refreshParks()}
+                  pullFactor={0.5}
+                  pullMin={100}
+                  pullMax={200}
+                >
                   <IonRefresherContent>
                     {parksResult.length > 0 ? (
                       parksResult.map((park) => {
