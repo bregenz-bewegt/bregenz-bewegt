@@ -24,6 +24,15 @@
     &__parks-list {
       overflow-y: scroll;
       flex-grow: 1;
+
+      ion-refresher {
+        display: initial;
+        position: initial;
+
+        ion-refresher-content {
+          display: initial;
+        }
+      }
     }
 
     &__parks-map {
