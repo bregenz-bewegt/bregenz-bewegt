@@ -6,7 +6,6 @@ import {
   IonContent,
   IonText,
   IonButton,
-  IonInput,
   IonLabel,
   IonSpinner,
 } from '@ionic/react';
@@ -35,10 +34,13 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       if (!credentials.email || !credentials.password) return;
       setIsLoading(true);
 
-      userStore?.login(credentials.email, credentials.password).then(() => {
-        setIsLoading(false);
-        history.push('/start');
-      });
+      userStore
+        ?.login(credentials.email, credentials.password)
+        .then(() => {
+          setIsLoading(false);
+          history.push('/start');
+        })
+        .catch(() => setIsLoading(false));
     };
 
     return (

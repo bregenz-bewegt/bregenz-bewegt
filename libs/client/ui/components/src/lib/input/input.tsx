@@ -48,10 +48,12 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <IonItem lines="none">
-      {label && <IonLabel>{label}</IonLabel>}
-      <IonInput {...inputProps}></IonInput>
-      {error && <IonText color="danger">{error}</IonText>}
-    </IonItem>
+    <div className="input">
+      <IonItem lines="none">
+        {label && <IonLabel>{label}</IonLabel>}
+        <IonInput {...inputProps}></IonInput>
+        {error && <IonText color="danger">{error}</IonText>}
+      </IonItem>
+    </div>
   );
 };
