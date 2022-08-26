@@ -2,8 +2,10 @@ import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonButton,
   IonContent,
+  IonGrid,
   IonHeader,
   IonPage,
+  IonRow,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
@@ -33,6 +35,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
+          <IonGrid>
+            <IonRow></IonRow>
+          </IonGrid>
+
           <IonButton onClick={() => handleLogout()}>Logout</IonButton>
         </IonContent>
       </IonPage>

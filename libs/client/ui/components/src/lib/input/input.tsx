@@ -1,5 +1,12 @@
 import './input.scss';
-import { IonInput, IonItem, IonLabel, IonText } from '@ionic/react';
+import {
+  IonGrid,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonRow,
+  IonText,
+} from '@ionic/react';
 import {
   InputChangeEventDetail,
   IonInputCustomEvent,
@@ -49,11 +56,15 @@ export const Input: React.FC<InputProps> = ({
 
   return (
     <div className="input">
-      <IonItem lines="none">
-        {label && <IonLabel>{label}</IonLabel>}
-        <IonInput {...inputProps}></IonInput>
-        {error && <IonText color="danger">{error}</IonText>}
-      </IonItem>
+      <IonGrid>
+        <IonRow>
+          <IonItem lines="none">
+            {label && <IonLabel>{label}</IonLabel>}
+            <IonInput {...inputProps}></IonInput>
+          </IonItem>
+        </IonRow>
+        <IonRow>{error && <IonText color="danger">{error}</IonText>}</IonRow>
+      </IonGrid>
     </div>
   );
 };
