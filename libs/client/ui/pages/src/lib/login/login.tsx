@@ -71,7 +71,6 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                     email: e.detail.value ?? credentials?.email,
                   }))
                 }
-                error="Email fehlt"
               ></Input>
               <Input
                 value={credentials.password}
@@ -80,7 +79,6 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 placeholder="Passwort"
                 name="password"
                 required
-                error="error"
                 onIonChange={(e) =>
                   setCredentials((prev) => ({
                     ...prev,
