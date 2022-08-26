@@ -87,7 +87,7 @@ export const Tabs: React.FC = () => {
               return (
                 <IonTabButton tab={page.route} href={page.route} key={i}>
                   <IonIcon icon={page.icon} />
-                  <IonLabel>{page.label}</IonLabel>
+                  {/* <IonLabel>{page.label}</IonLabel> */}
                 </IonTabButton>
               );
             } else {
