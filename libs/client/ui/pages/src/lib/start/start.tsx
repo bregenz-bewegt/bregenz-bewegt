@@ -97,33 +97,20 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
             ></IonSearchbar>
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
-                <IonRefresher
-                  slot="fixed"
-                  onIonRefresh={(e) => refreshParks(e)}
-                  pullFactor={0.5}
-                  pullMin={100}
-                  pullMax={200}
-                >
-                  <IonRefresherContent
-                    refreshingSpinner="crescent"
-                    pullingIcon="crescent"
-                  >
-                    {parksResult.length > 0 ? (
-                      parksResult.map((park) => {
-                        return (
-                          <ParkCard
-                            title={park.name}
-                            location={park.address}
-                            image={park.image}
-                            link={`${tabRoutes.start.route}/${park.id}`}
-                          />
-                        );
-                      })
-                    ) : (
-                      <IonText>Keine Spielplätze gefunden</IonText>
-                    )}
-                  </IonRefresherContent>
-                </IonRefresher>
+                {parksResult.length > 0 ? (
+                  parksResult.map((park) => {
+                    return (
+                      <ParkCard
+                        title={park.name}
+                        location={park.address}
+                        image={park.image}
+                        link={`${tabRoutes.start.route}/${park.id}`}
+                      />
+                    );
+                  })
+                ) : (
+                  <IonText>Keine Spielplätze gefunden</IonText>
+                )}
               </div>
             ) : (
               <IonText>Map</IonText>
