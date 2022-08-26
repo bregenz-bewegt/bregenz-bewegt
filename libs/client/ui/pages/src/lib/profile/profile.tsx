@@ -13,7 +13,6 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './profile.scss';
 

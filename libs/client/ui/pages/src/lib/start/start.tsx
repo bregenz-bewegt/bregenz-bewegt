@@ -3,8 +3,6 @@ import { Header, ParkCard } from '@bregenz-bewegt/client-ui-components';
 import {
   IonContent,
   IonPage,
-  IonRefresher,
-  IonRefresherContent,
   IonSearchbar,
   IonSelect,
   IonSelectOption,
@@ -34,12 +32,6 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
 
     const fetchParks = async () => {
       parkStore?.fetchParks().then((parks) => setParksResult(parks ?? []));
-    };
-
-    const refreshParks = (e: any) => {
-      fetchParks().then(() => {
-        e.detail.complete();
-      });
     };
 
     // TODO improve this with a fuzzy search algorithm
