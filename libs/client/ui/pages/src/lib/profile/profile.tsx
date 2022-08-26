@@ -1,3 +1,4 @@
+import { Input } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonAvatar,
@@ -7,6 +8,7 @@ import {
   IonHeader,
   IonPage,
   IonRow,
+  IonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
@@ -42,6 +44,23 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               <IonAvatar>
                 <img src={userStore?.user?.profilePicture} alt="profile" />
               </IonAvatar>
+            </IonRow>
+            <IonRow>
+              <IonText>
+                <h2>Profil</h2>
+              </IonText>
+            </IonRow>
+            <IonRow>
+              <Input label="Vorname" value={userStore?.user?.firstname} />
+            </IonRow>
+            <IonRow>
+              <Input label="Nachname" value={userStore?.user?.lastname} />
+            </IonRow>
+            <IonRow>
+              <Input label="Benutzername" value={userStore?.user?.username} />
+            </IonRow>
+            <IonRow>
+              <Input label="Passwort" disabled value={'*'.repeat(11)} />
             </IonRow>
           </IonGrid>
           <IonButton onClick={() => handleLogout()}>Logout</IonButton>

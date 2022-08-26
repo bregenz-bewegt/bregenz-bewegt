@@ -29,6 +29,7 @@ export interface InputProps {
   placeholder?: string;
   name?: string;
   required?: boolean;
+  disabled?: boolean;
   label?: string;
   error?: string;
   onIonChange?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
@@ -41,6 +42,7 @@ export const Input: React.FC<InputProps> = ({
   placeholder,
   name,
   required,
+  disabled,
   label,
   error,
   onIonChange,
@@ -52,6 +54,7 @@ export const Input: React.FC<InputProps> = ({
     placeholder,
     name,
     required,
+    disabled,
     onIonChange,
   };
 
@@ -60,7 +63,7 @@ export const Input: React.FC<InputProps> = ({
       <IonGrid>
         <IonRow>
           <IonItem lines="none" className={`${error ? 'ion-invalid' : ''}`}>
-            {label && <IonLabel>{label}</IonLabel>}
+            {label && <IonLabel position="floating">{label}</IonLabel>}
             <IonInput {...inputProps}></IonInput>
             {error && (
               <IonNote color="danger" slot="error">
