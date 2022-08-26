@@ -42,11 +42,12 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     const [exercises, setExercises] = useState<any[]>();
 
     useEffect(() => {
+      console.log(match.params);
       parkStore.getPark(+match.params.id).then((park) => {
         setPark(park);
         setIsLoading(false);
       });
-    }, []);
+    }, [match.params]);
 
     return isLoading ? (
       <Loading />
