@@ -23,19 +23,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
 
-    const fetchProfile = () => {
-      userStore?.fetchProfile().then((data) => console.log(data));
-    };
-
     const handleLogout = () => {
       userStore?.logout().then(() => {
         history.push('/login');
       });
     };
-
-    useEffect(() => {
-      fetchProfile();
-    }, []);
 
     return (
       <IonPage>
@@ -48,7 +40,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           <IonGrid>
             <IonRow className="ion-justify-content-center">
               <IonAvatar>
-                <img src="" alt="profile" />
+                <img src={userStore?.user?.profilePicture} alt="profile" />
               </IonAvatar>
             </IonRow>
           </IonGrid>

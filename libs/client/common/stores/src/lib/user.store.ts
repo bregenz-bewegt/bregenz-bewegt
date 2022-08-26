@@ -13,7 +13,7 @@ export class UserStore implements Store {
 
   constructor() {
     makeAutoObservable(this);
-    this.initLoggedIn();
+    this.initUser();
   }
 
   @action async register(username: string, email: string, password: string) {
@@ -57,8 +57,7 @@ export class UserStore implements Store {
     }
   }
 
-  @action async fetchProfile() {
-    const tokens = await this.getTokens();
+  async fetchProfile() {
     try {
       const { data } = await http.get('/users/profile');
 
@@ -76,11 +75,15 @@ export class UserStore implements Store {
     this.isLoadingLoginState = value;
   }
 
-  async initLoggedIn() {
+  async initUser() {
     this.setIsloadingLoginState(true);
     const tokens = await this.getTokens();
 
-    if (tokens.access_token) this.setIsLoggedIn(true);
+    if (tokens.access_token) {
+      const profile = await this.fetchProfile();
+      this.setUser(profile);
+      this.setIsLoggedIn(true);
+    }
     this.setIsloadingLoginState(false);
   }
 
@@ -88,6 +91,10 @@ export class UserStore implements Store {
     await Promise.all(
       Object.entries(tokens).map(([key, value]) => storage.set(key, value))
     );
+  }
+
+  @action setUser(user: User) {
+    this.user = user;
   }
 
   async removeTokens() {
