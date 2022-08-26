@@ -1,4 +1,4 @@
-import './park-card.scss';
+import './tab-bar.scss';
 import { IonIcon, IonLabel, IonTabBar, IonTabButton } from '@ionic/react';
 import { TabRoutes } from '@bregenz-bewegt/client-ui-router';
 
