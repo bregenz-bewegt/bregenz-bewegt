@@ -3,6 +3,8 @@ import { Header, ParkCard } from '@bregenz-bewegt/client-ui-components';
 import {
   IonContent,
   IonPage,
+  IonRefresher,
+  IonRefresherContent,
   IonSearchbar,
   IonSelect,
   IonSelectOption,
@@ -85,20 +87,24 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
             ></IonSearchbar>
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
-                {parksResult.length > 0 ? (
-                  parksResult.map((park) => {
-                    return (
-                      <ParkCard
-                        title={park.name}
-                        location={park.address}
-                        image={park.image}
-                        link={`${tabRoutes.start.route}/${park.id}`}
-                      />
-                    );
-                  })
-                ) : (
-                  <IonText>Keine Spielplätze gefunden</IonText>
-                )}
+                <IonRefresher>
+                  <IonRefresherContent>
+                    {parksResult.length > 0 ? (
+                      parksResult.map((park) => {
+                        return (
+                          <ParkCard
+                            title={park.name}
+                            location={park.address}
+                            image={park.image}
+                            link={`${tabRoutes.start.route}/${park.id}`}
+                          />
+                        );
+                      })
+                    ) : (
+                      <IonText>Keine Spielplätze gefunden</IonText>
+                    )}
+                  </IonRefresherContent>
+                </IonRefresher>
               </div>
             ) : (
               <IonText>Map</IonText>
