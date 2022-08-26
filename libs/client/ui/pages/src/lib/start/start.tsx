@@ -32,8 +32,14 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       ParkDisplayType.List
     );
 
-    const refreshParks = () => {
+    const fetchParks = async () => {
       parkStore?.fetchParks().then((parks) => setParksResult(parks ?? []));
+    };
+
+    const refreshParks = (e: any) => {
+      fetchParks().then(() => {
+        e.detail.complete();
+      });
     };
 
     // TODO improve this with a fuzzy search algorithm
@@ -55,7 +61,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
     };
 
     useEffect(() => {
-      refreshParks();
+      fetchParks();
     }, []);
 
     return (
@@ -93,7 +99,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
               <div className="start__content__parks-list">
                 <IonRefresher
                   slot="fixed"
-                  onIonRefresh={() => refreshParks()}
+                  onIonRefresh={(e) => refreshParks(e)}
                   pullFactor={0.5}
                   pullMin={100}
                   pullMax={200}
