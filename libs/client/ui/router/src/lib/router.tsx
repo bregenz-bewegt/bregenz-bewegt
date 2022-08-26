@@ -85,9 +85,14 @@ export const Tabs: React.FC = () => {
           {Object.values(tabRoutes).map((page, i) => {
             if (page.label !== 'Scan') {
               return (
-                <IonTabButton tab={page.route} href={page.route} key={i}>
+                <IonTabButton
+                  mode="ios"
+                  tab={page.route}
+                  href={page.route}
+                  key={i}
+                >
                   <IonIcon icon={page.icon} />
-                  {/* <IonLabel>{page.label}</IonLabel> */}
+                  <IonLabel>{page.label}</IonLabel>
                 </IonTabButton>
               );
             } else {
