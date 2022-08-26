@@ -98,7 +98,7 @@ export class AuthService {
 
     const [access_token, refresh_token] = await Promise.all([
       this.jwtService.signAsync(jwtPayload, {
-        expiresIn: '15m',
+        expiresIn: '3s',
         secret: this.configService.get('NX_JWT_ACCESS_TOKEN_SECRET'),
       }),
       this.jwtService.signAsync(jwtPayload, {
@@ -124,8 +124,8 @@ export class AuthService {
       throw new ForbiddenException('Access denied');
 
     const refreshTokenMatches = await argon.verify(
-      refreshToken,
-      user.refreshToken
+      user.refreshToken,
+      refreshToken
     );
 
     if (!refreshTokenMatches) throw new ForbiddenException('Access denied');

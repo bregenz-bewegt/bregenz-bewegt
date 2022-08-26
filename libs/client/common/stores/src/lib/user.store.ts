@@ -1,11 +1,13 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
+import type { User } from '@bregenz-bewegt/client/types';
 import type { Tokens } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
 
 export class UserStore implements Store {
   storeKey = 'userStore' as const;
+  @observable user?: User;
   @observable isLoggedIn = false;
   @observable isLoadingLoginState = false;
 
@@ -55,6 +57,17 @@ export class UserStore implements Store {
     }
   }
 
+  @action async fetchProfile() {
+    const tokens = await this.getTokens();
+    try {
+      const { data } = await http.get('/users/profile');
+
+      return data;
+    } catch (error) {
+      return;
+    }
+  }
+
   @action setIsLoggedIn(value: boolean) {
     this.isLoggedIn = value;
   }
@@ -68,7 +81,6 @@ export class UserStore implements Store {
     const tokens = await this.getTokens();
 
     if (tokens.access_token) this.setIsLoggedIn(true);
-    else this.setIsLoggedIn(false);
     this.setIsloadingLoginState(false);
   }
 

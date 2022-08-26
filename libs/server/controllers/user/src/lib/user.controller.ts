@@ -15,7 +15,8 @@ export class UserController {
     return this.userService.getUsers();
   }
 
-  @Get('me')
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Get('profile')
   getUser(@GetCurrentUser('sub') userId: string) {
     return this.userService.getUserById(userId);
   }

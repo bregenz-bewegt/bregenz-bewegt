@@ -11,6 +11,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './profile.scss';
 
@@ -22,11 +23,19 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
 
+    const fetchProfile = () => {
+      userStore?.fetchProfile().then((data) => console.log(data));
+    };
+
     const handleLogout = () => {
       userStore?.logout().then(() => {
         history.push('/login');
       });
     };
+
+    useEffect(() => {
+      fetchProfile();
+    }, []);
 
     return (
       <IonPage>
@@ -37,8 +46,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         </IonHeader>
         <IonContent fullscreen>
           <IonGrid>
-            <IonRow>
-              <IonAvatar></IonAvatar>
+            <IonRow className="ion-justify-content-center">
+              <IonAvatar>
+                <img src="" alt="profile" />
+              </IonAvatar>
             </IonRow>
           </IonGrid>
           <IonButton onClick={() => handleLogout()}>Logout</IonButton>
