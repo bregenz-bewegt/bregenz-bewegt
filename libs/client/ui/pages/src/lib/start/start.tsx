@@ -87,7 +87,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
             ></IonSearchbar>
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
-                <IonRefresher>
+                <IonRefresher slot="fixed">
                   <IonRefresherContent>
                     {parksResult.length > 0 ? (
                       parksResult.map((park) => {
