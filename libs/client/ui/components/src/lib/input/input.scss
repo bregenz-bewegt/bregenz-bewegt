@@ -1,11 +1,12 @@
 .input {
+  width: 100%;
+
   ion-item {
     width: 100%;
     --padding-start: 0;
     --padding-end: 0;
 
     ion-input {
-      // border: 1px solid var(--ion-color-medium);
       border-radius: 8px;
       margin: 4px 0;
       --padding-top: 8px !important;
