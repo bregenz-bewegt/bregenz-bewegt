@@ -23,12 +23,19 @@
    ```
 3. Setup [Android Studio][android-studio-url] (Windows), [XCode][xcode-url] (Mac) or another mobile emulator of your choice
 4. Install [MySQL][mysql-url]
-5. Feed database with mock data
+5. Initialize database
+   ```sh
+   npm run prisma:db:push
+   ```
+6. Feed database with mock data
    ```sh
    npm run prisma:seed
    ```
-6. Configure environment variables in `.env` file
-7. Run app (see `package.json` scripts)
+7. Configure environment variables in `.env` file
+8. Run app (see `package.json` scripts for more information)
+   ```sh
+   npm run dev
+   ```
 
 [ionic]: https://img.shields.io/badge/Ionic-3880FF?style=for-the-badge&logo=ionic&logoColor=white
 [ionic-url]: https://ionicframework.com/
