@@ -6,6 +6,7 @@
     "client-common-http": "libs/client/common/http",
     "client-common-storage": "libs/client/common/storage",
     "client-common-stores": "libs/client/common/stores",
+    "client-common-validation": "libs/client/common/validation",
     "client-e2e": "apps/client-e2e",
     "client-types": "libs/client/types",
     "client-ui-components": "libs/client/ui/components",

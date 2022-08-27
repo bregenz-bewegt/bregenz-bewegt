@@ -17,35 +17,27 @@ export class UserStore implements Store {
   }
 
   @action async register(username: string, email: string, password: string) {
-    try {
-      const { data } = await http.post('/auth/register', {
-        username,
-        email,
-        password,
-      });
+    const { data } = await http.post('/auth/register', {
+      username,
+      email,
+      password,
+    });
 
-      return data;
-    } catch (error: any) {
-      return error.response.data;
-    }
+    return data;
   }
 
   @action async login(email: string, password: string) {
-    try {
-      const { data } = await http.post('/auth/login', {
-        email,
-        password,
-      });
+    const { data } = await http.post('/auth/login', {
+      email,
+      password,
+    });
 
-      await this.setTokens({
-        access_token: data.access_token,
-        refresh_token: data.refresh_token,
-      });
-      this.setIsLoggedIn(true);
-      return data;
-    } catch (error: any) {
-      return error.response.data;
-    }
+    await this.setTokens({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+    });
+    this.setIsLoggedIn(true);
+    return data;
   }
 
   @action async logout() {

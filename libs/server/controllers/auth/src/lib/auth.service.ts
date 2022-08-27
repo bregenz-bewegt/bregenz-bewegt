@@ -65,11 +65,12 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new ForbiddenException('Credentials incorrect');
+    if (!user) throw new ForbiddenException('Anmeldedaten inkorrekt');
 
     const passwordMatches = await argon.verify(user.password, dto.password);
 
-    if (!passwordMatches) throw new ForbiddenException('Credentials incorrect');
+    if (!passwordMatches)
+      throw new ForbiddenException('Anmeldedaten inkorrekt');
 
     const tokens = await this.signTokens(user.id, user.email);
     this.updateRefreshToken(user.id, tokens.refresh_token);

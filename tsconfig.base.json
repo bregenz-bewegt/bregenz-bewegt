@@ -31,6 +31,9 @@
       "@bregenz-bewegt/client/common/stores": [
         "libs/client/common/stores/src/index.ts"
       ],
+      "@bregenz-bewegt/client/common/validation": [
+        "libs/client/common/validation/src/index.ts"
+      ],
       "@bregenz-bewegt/client/types": ["libs/client/types/src/index.ts"],
       "@bregenz-bewegt/server-controllers-auth": [
         "libs/server/controllers/auth/src/index.ts"

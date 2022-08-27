@@ -5,6 +5,7 @@ import {
   IonInputCustomEvent,
   TextFieldTypes,
 } from '@ionic/core';
+import { UseFormRegister, FieldValues } from 'react-hook-form';
 
 export interface InputProps {
   value?: string | number | null;
@@ -26,7 +27,9 @@ export interface InputProps {
   error?: string;
   expand?: boolean;
   className?: string;
-  onIonChange?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
+  ref?: any;
+  onChange?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
+  onBlur?: (event: IonInputCustomEvent<FocusEvent>) => void;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -41,7 +44,9 @@ export const Input: React.FC<InputProps> = ({
   error,
   expand = true,
   className,
-  onIonChange,
+  ref,
+  onChange,
+  onBlur,
 }) => {
   const inputProps = {
     value,
@@ -51,7 +56,9 @@ export const Input: React.FC<InputProps> = ({
     name,
     required,
     disabled,
-    onIonChange,
+    ref,
+    onIonChange: onChange,
+    onIonBlur: onBlur,
   };
 
   return (

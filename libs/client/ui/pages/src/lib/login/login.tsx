@@ -1,6 +1,5 @@
 import { Input } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
-import { LoginCredentials } from '@bregenz-bewegt/client/types';
 import {
   IonPage,
   IonContent,
@@ -12,6 +11,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { Controller, useForm } from 'react-hook-form';
 import './login.scss';
 
 /* eslint-disable-next-line */
@@ -22,33 +22,28 @@ export interface LoginProps {
 export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
-    const [credentials, setCredentials] = useState<{
-      [K in keyof LoginCredentials]: {
-        value: LoginCredentials[K];
-        error: LoginCredentials[K];
-      };
-    }>({
-      email: { value: '', error: '' },
-      password: { value: '', error: '' },
-    });
+    const { control, getValues, formState } = useForm();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleLogin = (
       e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>
     ) => {
-      if (!credentials.email || !credentials.password) return;
-      setIsLoading(true);
+      const credentials = getValues();
+      const errors = formState.errors;
+      console.log(credentials);
+      console.log(errors);
+      // setIsLoading(true);
 
-      userStore
-        ?.login(credentials.email.value, credentials.password.value)
-        .then(() => {
-          setIsLoading(false);
-          history.push('/start');
-        })
-        .catch((error) => {
-          console.log(error);
-          setIsLoading(false);
-        });
+      // userStore
+      //   ?.login(credentials.email.value, credentials.password.value)
+      //   .then(() => {
+      //     setIsLoading(false);
+      //     history.push('/start');
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     setIsLoading(false);
+      //   });
     };
 
     return (
@@ -66,41 +61,55 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
               <IonText>
                 <h2>Anmelden</h2>
               </IonText>
-              <Input
-                value={credentials.email.value}
-                error={credentials.email.error}
-                type="email"
-                inputMode="email"
-                placeholder="Email"
+              <Controller
                 name="email"
-                required
-                onIonChange={(e) =>
-                  setCredentials((prev) => ({
-                    ...prev,
-                    email: {
-                      value: e.detail.value ?? prev?.email.value,
-                      error: prev.email.error,
-                    },
-                  }))
-                }
-              ></Input>
-              <Input
-                value={credentials.password.value}
-                error={credentials.password.error}
-                type="password"
-                inputMode="text"
-                placeholder="Passwort"
+                control={control}
+                rules={{
+                  required: { value: true, message: 'Email benötigt' },
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Ungültige Email Adresse',
+                  },
+                }}
+                render={({ field, fieldState }) => (
+                  <Input
+                    ref={field.ref}
+                    value={field.value}
+                    error={fieldState.error?.message}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    type="email"
+                    inputMode="email"
+                    placeholder="Email"
+                    name="email"
+                    required
+                  ></Input>
+                )}
+              />
+              <Controller
                 name="password"
-                required
-                onIonChange={(e) =>
-                  setCredentials((prev) => ({
-                    ...prev,
-                    password: {
-                      value: e.detail.value ?? prev?.password.value,
-                      error: prev.password.error,
-                    },
-                  }))
-                }
+                control={control}
+                rules={{
+                  required: { value: true, message: 'Passwort benötigt' },
+                  minLength: {
+                    value: 4,
+                    message: 'Mindestens 4 Zeichen benötigt',
+                  },
+                }}
+                render={({ field, fieldState }) => (
+                  <Input
+                    ref={field.ref}
+                    value={field.value}
+                    error={fieldState.error?.message}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    type="password"
+                    inputMode="text"
+                    placeholder="Passwort"
+                    name="password"
+                    required
+                  />
+                )}
               />
               <Link className="login__content__login__forgot-password" to={'#'}>
                 Passwort vergessen?
