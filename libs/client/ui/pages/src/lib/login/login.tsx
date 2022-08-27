@@ -22,9 +22,14 @@ export interface LoginProps {
 export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
-    const [credentials, setCredentials] = useState<LoginCredentials>({
-      email: '',
-      password: '',
+    const [credentials, setCredentials] = useState<{
+      [K in keyof LoginCredentials]: {
+        value: LoginCredentials[K];
+        error: LoginCredentials[K];
+      };
+    }>({
+      email: { value: '', error: '' },
+      password: { value: '', error: '' },
     });
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -35,12 +40,15 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       setIsLoading(true);
 
       userStore
-        ?.login(credentials.email, credentials.password)
+        ?.login(credentials.email.value, credentials.password.value)
         .then(() => {
           setIsLoading(false);
           history.push('/start');
         })
-        .catch(() => setIsLoading(false));
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
     };
 
     return (
@@ -59,7 +67,8 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 <h2>Anmelden</h2>
               </IonText>
               <Input
-                value={credentials.email}
+                value={credentials.email.value}
+                error={credentials.email.error}
                 type="email"
                 inputMode="email"
                 placeholder="Email"
@@ -68,12 +77,16 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 onIonChange={(e) =>
                   setCredentials((prev) => ({
                     ...prev,
-                    email: e.detail.value ?? credentials?.email,
+                    email: {
+                      value: e.detail.value ?? prev?.email.value,
+                      error: prev.email.error,
+                    },
                   }))
                 }
               ></Input>
               <Input
-                value={credentials.password}
+                value={credentials.password.value}
+                error={credentials.password.error}
                 type="password"
                 inputMode="text"
                 placeholder="Passwort"
@@ -82,7 +95,10 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 onIonChange={(e) =>
                   setCredentials((prev) => ({
                     ...prev,
-                    password: e.detail.value ?? credentials?.password,
+                    password: {
+                      value: e.detail.value ?? prev?.password.value,
+                      error: prev.password.value,
+                    },
                   }))
                 }
               />

@@ -25,6 +25,7 @@ export interface InputProps {
   label?: string;
   error?: string;
   expand?: boolean;
+  className?: string;
   onIonChange?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
 }
 
@@ -39,6 +40,7 @@ export const Input: React.FC<InputProps> = ({
   label,
   error,
   expand = true,
+  className,
   onIonChange,
 }) => {
   const inputProps = {
@@ -53,7 +55,11 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <div className={`input ${expand ? 'expand' : ''}`}>
+    <div
+      className={`input${expand ? ' expand' : ''}${
+        className ? ` ${className}` : ''
+      }`}
+    >
       <IonItem lines="none" className={`${error ? 'ion-invalid' : ''}`}>
         {label && <IonLabel position="floating">{label}</IonLabel>}
         <IonInput {...inputProps}></IonInput>

@@ -1,5 +1,5 @@
 .input {
-  .expand {
+  &.expand {
     width: 100%;
   }
 
@@ -7,6 +7,7 @@
     width: 100%;
     --padding-start: 0;
     --padding-end: 0;
+    --inner-padding-end: 0;
 
     ion-input {
       border-radius: 8px;

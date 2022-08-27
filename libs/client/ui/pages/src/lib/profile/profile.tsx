@@ -28,6 +28,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const history = useHistory();
 
     const handleChangePassword = () => {};
+    const handleSaveChanges = () => {};
 
     const handleLogout = () => {
       userStore?.logout().then(() => {
@@ -36,13 +37,13 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     };
 
     return (
-      <IonPage>
+      <IonPage className="profile">
         <IonHeader>
           <IonToolbar>
             <IonTitle>Profile</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen>
+        <IonContent fullscreen className="profile__content">
           <IonGrid>
             <IonRow className="ion-justify-content-center">
               <IonAvatar>
@@ -61,16 +62,27 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               <Input label="Nachname" value={user?.lastname} />
             </IonRow>
             <IonRow>
-              <Input error="test" label="Benutzername" value={user?.username} />
+              <Input label="Benutzername" value={user?.username} />
             </IonRow>
-            <IonRow>
-              <Input expand={false} label="Passwort" disabled value={'*'.repeat(11)} />
-              <IonButton onClick={() => handleChangePassword()}>
+            <IonRow className="profile__content__password-row">
+              <Input
+                className="profile__content__password-row__input"
+                expand={false}
+                label="Passwort"
+                disabled
+                value={'*'.repeat(11)}
+              />
+              <IonButton onClick={() => handleChangePassword()} size="small">
                 Ändern
               </IonButton>
             </IonRow>
           </IonGrid>
-          <IonButton onClick={() => handleLogout()}>Logout</IonButton>
+          <IonButton onClick={() => handleSaveChanges()} expand="block">
+            Änderungen Speichern
+          </IonButton>
+          <IonButton onClick={() => handleLogout()} expand="block">
+            Logout
+          </IonButton>
         </IonContent>
       </IonPage>
     );

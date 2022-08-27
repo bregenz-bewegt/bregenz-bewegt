@@ -1,0 +1,13 @@
+.profile {
+  &__content {
+    &__password-row {
+      align-items: flex-end;
+      justify-content: space-between;
+
+      &__input {
+        flex: 1;
+        margin-right: 8px;
+      }
+    }
+  }
+}
