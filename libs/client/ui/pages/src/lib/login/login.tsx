@@ -97,7 +97,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                     ...prev,
                     password: {
                       value: e.detail.value ?? prev?.password.value,
-                      error: prev.password.value,
+                      error: prev.password.error,
                     },
                   }))
                 }
