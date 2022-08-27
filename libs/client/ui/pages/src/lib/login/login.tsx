@@ -22,7 +22,9 @@ export interface LoginProps {
 export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
-    const { control, getValues, formState } = useForm();
+    const { control, getValues, formState } = useForm({
+      defaultValues: { email: '', password: '' },
+    });
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleLogin = (
