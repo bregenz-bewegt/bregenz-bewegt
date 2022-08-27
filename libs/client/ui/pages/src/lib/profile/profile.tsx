@@ -1,5 +1,6 @@
 import { Input } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
+import { User } from '@bregenz-bewegt/client/types';
 import {
   IonAvatar,
   IonButton,
@@ -13,6 +14,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './profile.scss';
 
@@ -22,7 +24,10 @@ export interface ProfileProps {
 
 export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
+    const [user, setUser] = useState<User | undefined>(userStore?.user);
     const history = useHistory();
+
+    const handleChangePassword = () => {};
 
     const handleLogout = () => {
       userStore?.logout().then(() => {
@@ -41,7 +46,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           <IonGrid>
             <IonRow className="ion-justify-content-center">
               <IonAvatar>
-                <img src={userStore?.user?.profilePicture} alt="profile" />
+                <img src={user?.profilePicture} alt="profile" />
               </IonAvatar>
             </IonRow>
             <IonRow>
@@ -50,16 +55,19 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonText>
             </IonRow>
             <IonRow>
-              <Input label="Vorname" value={userStore?.user?.firstname} />
+              <Input label="Vorname" value={user?.firstname} />
             </IonRow>
             <IonRow>
-              <Input label="Nachname" value={userStore?.user?.lastname} />
+              <Input label="Nachname" value={user?.lastname} />
             </IonRow>
             <IonRow>
-              <Input label="Benutzername" value={userStore?.user?.username} />
+              <Input error="test" label="Benutzername" value={user?.username} />
             </IonRow>
             <IonRow>
-              <Input label="Passwort" disabled value={'*'.repeat(11)} />
+              <Input expand={false} label="Passwort" disabled value={'*'.repeat(11)} />
+              <IonButton onClick={() => handleChangePassword()}>
+                Ändern
+              </IonButton>
             </IonRow>
           </IonGrid>
           <IonButton onClick={() => handleLogout()}>Logout</IonButton>

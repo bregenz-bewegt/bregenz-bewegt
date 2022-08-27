@@ -1,13 +1,5 @@
 import './input.scss';
-import {
-  IonGrid,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonNote,
-  IonRow,
-  IonText,
-} from '@ionic/react';
+import { IonInput, IonItem, IonLabel, IonNote } from '@ionic/react';
 import {
   InputChangeEventDetail,
   IonInputCustomEvent,
@@ -32,6 +24,7 @@ export interface InputProps {
   disabled?: boolean;
   label?: string;
   error?: string;
+  expand?: boolean;
   onIonChange?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
 }
 
@@ -45,6 +38,7 @@ export const Input: React.FC<InputProps> = ({
   disabled,
   label,
   error,
+  expand = true,
   onIonChange,
 }) => {
   const inputProps = {
@@ -59,21 +53,16 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <div className="input">
-      <IonGrid>
-        <IonRow>
-          <IonItem lines="none" className={`${error ? 'ion-invalid' : ''}`}>
-            {label && <IonLabel position="floating">{label}</IonLabel>}
-            <IonInput {...inputProps}></IonInput>
-            {error && (
-              <IonNote color="danger" slot="error">
-                {error}
-              </IonNote>
-            )}
-          </IonItem>
-        </IonRow>
-        <IonRow></IonRow>
-      </IonGrid>
+    <div className={`input ${expand ? 'expand' : ''}`}>
+      <IonItem lines="none" className={`${error ? 'ion-invalid' : ''}`}>
+        {label && <IonLabel position="floating">{label}</IonLabel>}
+        <IonInput {...inputProps}></IonInput>
+        {error && (
+          <IonNote color="danger" slot="error">
+            {error}
+          </IonNote>
+        )}
+      </IonItem>
     </div>
   );
 };
