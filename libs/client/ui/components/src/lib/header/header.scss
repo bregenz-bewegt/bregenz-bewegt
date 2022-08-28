@@ -2,18 +2,14 @@
   padding: 24px 16px;
   --box-shadow: none;
 
-  &__fab {
-    margin-left: auto;
+  &__fab-__button {
+    height: 48px;
+    width: 48px;
+    --background: var(--ion-color-light-tint);
+    --box-shadow: none;
 
-    &__button {
-      height: 48px;
-      width: 48px;
-      --background: var(--ion-color-light-tint);
-      --box-shadow: none;
-
-      &__icon {
-        --background: var(--ion-color-primary);
-      }
+    &__icon {
+      --background: var(--ion-color-primary);
     }
   }
 

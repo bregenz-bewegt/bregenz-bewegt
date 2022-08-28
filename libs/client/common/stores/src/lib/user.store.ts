@@ -77,9 +77,7 @@ export class UserStore implements Store {
     const tokens = await this.getTokens();
 
     if (tokens.access_token) {
-      const profile = await this.fetchProfile();
-      console.log(profile);
-      this.setUser(profile);
+      this.refreshProfile();
       this.setIsLoggedIn(true);
     }
     this.setIsloadingLoginState(false);
