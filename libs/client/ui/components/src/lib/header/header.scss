@@ -23,10 +23,12 @@
       ion-text {
         margin: 2px 0;
         display: block;
+        width: var(--spacing-xxl) * 2;
       }
 
       &__username {
         font-weight: bold;
+        width: var(--spacing-3xl) * 2;
       }
     }
   }
