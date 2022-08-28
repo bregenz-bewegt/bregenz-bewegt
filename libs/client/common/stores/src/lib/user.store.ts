@@ -49,6 +49,11 @@ export class UserStore implements Store {
     }
   }
 
+  async refreshAccessToken() {
+    const { data } = await http.get('auth/');
+    return data;
+  }
+
   async fetchProfile() {
     try {
       const { data } = await http.get('/users/profile');
@@ -59,9 +64,10 @@ export class UserStore implements Store {
     }
   }
 
-  async patchProfile(dto: PatchProfileDto) {
+  @action async patchProfile(dto: PatchProfileDto) {
     const { data } = await http.patch('/users/profile', { ...dto });
-    return data;
+    this.setUser(data);
+    return <User>data;
   }
 
   @action setIsLoggedIn(value: boolean) {
@@ -72,7 +78,7 @@ export class UserStore implements Store {
     this.isLoadingLoginState = value;
   }
 
-  async initUser() {
+  @action async initUser() {
     this.setIsloadingLoginState(true);
     const tokens = await this.getTokens();
 
@@ -92,6 +98,12 @@ export class UserStore implements Store {
 
   @action setUser(user: User) {
     this.user = user;
+  }
+
+  @action async refreshProfile() {
+    const profile = await this.fetchProfile();
+    this.setUser(profile);
+    return profile;
   }
 
   async removeTokens() {

@@ -7,8 +7,10 @@ import {
   IonContent,
   IonGrid,
   IonHeader,
+  IonLabel,
   IonPage,
   IonRow,
+  IonSpinner,
   IonText,
   IonTitle,
   IonToolbar,
@@ -28,6 +30,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
     const [user, setUser] = useState<User | undefined>(userStore?.user);
+    const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
     const defaultValues = {
       firstname: userStore?.user?.firstname ?? '',
       lastname: userStore?.user?.lastname ?? '',
@@ -41,10 +44,14 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     };
 
     const handleSaveChanges = () => {
+      setIsSavingChanges(true);
       userStore
         ?.patchProfile(getValues())
-        .then((result) => result)
-        .catch((error) => console.log(error));
+        .then((result) => {
+          reset({ firstname: result.firstname, lastname: result.lastname });
+          setIsSavingChanges(false);
+        })
+        .catch((error) => setIsSavingChanges(false));
     };
 
     const handleLogout = () => {
@@ -129,11 +136,17 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             </IonRow>
           </IonGrid>
           <IonButton
-            disabled={!formState.isDirty}
+            disabled={!formState.isDirty || isSavingChanges}
             onClick={() => handleSaveChanges()}
             expand="block"
           >
-            Änderungen Speichern
+            {isSavingChanges ? (
+              <IonLabel>
+                <IonSpinner name="crescent">Anmelden</IonSpinner>
+              </IonLabel>
+            ) : (
+              'Änderungen Speichern'
+            )}
           </IonButton>
           <IonButton onClick={() => handleLogout()} expand="block">
             Logout

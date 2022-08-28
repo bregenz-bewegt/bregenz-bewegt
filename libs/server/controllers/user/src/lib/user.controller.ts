@@ -22,11 +22,12 @@ export class UserController {
     return this.userService.getById(userId);
   }
 
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Patch('profile')
   patchProfile(
     @GetCurrentUser('sub') userId: string,
     @Body() dto: PatchProfileDto
   ) {
-    this.userService.patchProfile(userId, dto);
+    return this.userService.patchProfile(userId, dto);
   }
 }

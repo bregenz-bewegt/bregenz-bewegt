@@ -27,7 +27,7 @@ export const createResponseInterceptor = (instance: AxiosInstance) => {
           await userStore.setTokens(response.data);
           error.response.config.headers['authorization'] =
             'Bearer ' + response.data.access_token;
-          return instance(error.response.config);
+          return instance.request(error.response.config);
         })
         .catch((error) => {
           userStore.removeTokens();
