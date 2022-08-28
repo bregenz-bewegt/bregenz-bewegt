@@ -39,6 +39,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       userStore
         ?.login(credentials.email, credentials.password)
         .then(() => {
+          userStore.refreshProfile();
           setIsLoading(false);
           history.push('/start');
         })
