@@ -12,16 +12,21 @@
       display: inline-block;
       height: 48px;
       width: 48px;
-      margin-right: 4px;
+      margin-right: 8px;
     }
 
-    ion-text {
-      margin: 8px 0;
-      display: block;
-    }
+    &__greeting {
+      flex-direction: column;
+      justify-content: center;
 
-    &__username {
-      font-weight: bold;
+      ion-text {
+        margin: 2px 0;
+        display: block;
+      }
+
+      &__username {
+        font-weight: bold;
+      }
     }
   }
 

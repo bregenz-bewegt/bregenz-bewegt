@@ -100,6 +100,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                   parksResult.map((park) => {
                     return (
                       <ParkCard
+                        isLoading={isLoadingParks}
                         title={park.name}
                         location={park.address}
                         image={park.image}
