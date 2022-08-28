@@ -10,7 +10,7 @@
     --inner-padding-end: 0;
 
     ion-label {
-      &:not(.ios) {
+      &.md {
         margin-bottom: 4px;
       }
     }
