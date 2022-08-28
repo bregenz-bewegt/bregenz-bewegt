@@ -28,7 +28,7 @@
 
       &__username {
         font-weight: bold;
-        width: calc(var(--spacing-3xl) * 2);
+        width: calc(var(--spacing-3xl) * 2) !important;
       }
     }
   }
