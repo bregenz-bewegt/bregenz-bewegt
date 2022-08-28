@@ -5,7 +5,7 @@ import {
   IonInputCustomEvent,
   TextFieldTypes,
 } from '@ionic/core';
-import { UseFormRegister, FieldValues } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
 
 export interface InputProps {
   value?: string | number | null;
@@ -27,7 +27,8 @@ export interface InputProps {
   error?: string;
   expand?: boolean;
   className?: string;
-  ref?: any;
+  ref?: React.Ref<HTMLIonInputElement>;
+  register?: UseFormRegister<any>;
   onChange?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
   onBlur?: (event: IonInputCustomEvent<FocusEvent>) => void;
 }
