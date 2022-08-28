@@ -22,7 +22,7 @@ export interface LoginProps {
 export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
-    const { control, getValues, formState, register } = useForm({
+    const { control, getValues, formState } = useForm({
       defaultValues: { email: '', password: '' },
     });
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,18 +34,18 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       const errors = formState.errors;
       console.log(credentials);
       console.log(errors);
-      // setIsLoading(true);
+      setIsLoading(true);
 
-      // userStore
-      //   ?.login(credentials.email.value, credentials.password.value)
-      //   .then(() => {
-      //     setIsLoading(false);
-      //     history.push('/start');
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     setIsLoading(false);
-      //   });
+      userStore
+        ?.login(credentials.email, credentials.password)
+        .then(() => {
+          setIsLoading(false);
+          history.push('/start');
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
     };
 
     return (
