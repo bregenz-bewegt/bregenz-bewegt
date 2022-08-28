@@ -6,11 +6,15 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
 import { UserService } from '@bregenz-bewegt/server-controllers-user';
-import { LoginDto, RegisterDto } from './dto';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
-import { JwtPayload, Tokens } from '@bregenz-bewegt/shared/types';
+import {
+  JwtPayload,
+  LoginDto,
+  RegisterDto,
+  Tokens,
+} from '@bregenz-bewegt/shared/types';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +26,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string) {
-    const user = await this.userService.getUserByEmail(email);
+    const user = await this.userService.getByEmail(email);
 
     if (user && user.password === password) {
       return user;

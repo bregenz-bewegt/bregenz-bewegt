@@ -12,9 +12,11 @@ import {
   IonText,
   IonTitle,
   IonToolbar,
+  useIonViewDidLeave,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import './profile.scss';
 
@@ -24,17 +26,36 @@ export interface ProfileProps {
 
 export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
-    const [user, setUser] = useState<User | undefined>(userStore?.user);
     const history = useHistory();
+    const [user, setUser] = useState<User | undefined>(userStore?.user);
+    const defaultValues = {
+      firstname: userStore?.user?.firstname ?? '',
+      lastname: userStore?.user?.lastname ?? '',
+    };
+    const { control, formState, getValues, reset } = useForm({
+      defaultValues,
+    });
 
-    const handleChangePassword = () => {};
-    const handleSaveChanges = () => {};
+    const handleChangePassword = () => {
+      //
+    };
+
+    const handleSaveChanges = () => {
+      userStore
+        ?.patchProfile(getValues())
+        .then((result) => result)
+        .catch((error) => console.log(error));
+    };
 
     const handleLogout = () => {
       userStore?.logout().then(() => {
         history.push('/login');
       });
     };
+
+    useIonViewDidLeave(() => {
+      reset();
+    });
 
     return (
       <IonPage className="profile">
@@ -56,13 +77,43 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonText>
             </IonRow>
             <IonRow>
-              <Input label="Vorname" value={user?.firstname} />
+              <Controller
+                name="firstname"
+                control={control}
+                rules={{ required: true }}
+                render={({ field, fieldState }) => (
+                  <Input
+                    label="Vorname"
+                    name={field.name}
+                    value={field.value}
+                    error={fieldState.error?.message}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    ref={field.ref}
+                  />
+                )}
+              />
             </IonRow>
             <IonRow>
-              <Input label="Nachname" value={user?.lastname} />
+              <Controller
+                name="lastname"
+                control={control}
+                rules={{ required: true }}
+                render={({ field, fieldState }) => (
+                  <Input
+                    label="Nachname"
+                    name={field.name}
+                    value={field.value}
+                    error={fieldState.error?.message}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    ref={field.ref}
+                  />
+                )}
+              />
             </IonRow>
             <IonRow>
-              <Input label="Benutzername" value={user?.username} />
+              <Input label="Benutzername" value={user?.username} disabled />
             </IonRow>
             <IonRow className="profile__content__password-row">
               <Input
@@ -77,7 +128,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonButton>
             </IonRow>
           </IonGrid>
-          <IonButton onClick={() => handleSaveChanges()} expand="block">
+          <IonButton
+            disabled={!formState.isDirty}
+            onClick={() => handleSaveChanges()}
+            expand="block"
+          >
             Änderungen Speichern
           </IonButton>
           <IonButton onClick={() => handleLogout()} expand="block">

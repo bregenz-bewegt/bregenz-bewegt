@@ -69,7 +69,7 @@ export const Input: React.FC<InputProps> = ({
       }`}
     >
       <IonItem lines="none" className={`${error ? 'ion-invalid' : ''}`}>
-        {label && <IonLabel position="floating">{label}</IonLabel>}
+        {label && <IonLabel position="stacked">{label}</IonLabel>}
         <IonInput {...inputProps}></IonInput>
         {error && (
           <IonNote color="danger" slot="error">

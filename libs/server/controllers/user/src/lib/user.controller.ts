@@ -2,7 +2,8 @@ import {
   GetCurrentUser,
   RemoveSensitiveFieldsInterceptor,
 } from '@bregenz-bewegt/server/common';
-import { Controller, Get, UseInterceptors } from '@nestjs/common';
+import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
+import { Body, Controller, Get, Patch, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -12,12 +13,20 @@ export class UserController {
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Get()
   getUsers() {
-    return this.userService.getUsers();
+    return this.userService.getAll();
   }
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Get('profile')
   getUser(@GetCurrentUser('sub') userId: string) {
-    return this.userService.getUserById(userId);
+    return this.userService.getById(userId);
+  }
+
+  @Patch('profile')
+  patchProfile(
+    @GetCurrentUser('sub') userId: string,
+    @Body() dto: PatchProfileDto
+  ) {
+    this.userService.patchProfile(userId, dto);
   }
 }

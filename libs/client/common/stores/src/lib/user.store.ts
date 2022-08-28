@@ -1,7 +1,7 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
 import type { User } from '@bregenz-bewegt/client/types';
-import type { Tokens } from '@bregenz-bewegt/shared/types';
+import type { PatchProfileDto, Tokens } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
 
@@ -57,6 +57,11 @@ export class UserStore implements Store {
     } catch (error) {
       return;
     }
+  }
+
+  async patchProfile(dto: PatchProfileDto) {
+    const { data } = await http.patch('/users/profile', { ...dto });
+    return data;
   }
 
   @action setIsLoggedIn(value: boolean) {
