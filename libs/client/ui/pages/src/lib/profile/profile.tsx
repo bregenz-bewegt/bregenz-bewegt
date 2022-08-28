@@ -14,6 +14,7 @@ import {
   IonText,
   IonTitle,
   IonToolbar,
+  useIonToast,
   useIonViewDidLeave,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
@@ -29,7 +30,7 @@ export interface ProfileProps {
 export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
-    const [user, setUser] = useState<User | undefined>(userStore?.user);
+    const [present, dismiss] = useIonToast();
     const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
     const defaultValues = {
       firstname: userStore?.user?.firstname ?? '',
@@ -75,7 +76,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           <IonGrid>
             <IonRow className="ion-justify-content-center">
               <IonAvatar>
-                <img src={user?.profilePicture} alt="profile" />
+                <img src={userStore?.user?.profilePicture} alt="profile" />
               </IonAvatar>
             </IonRow>
             <IonRow>
@@ -120,7 +121,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               />
             </IonRow>
             <IonRow>
-              <Input label="Benutzername" value={user?.username} disabled />
+              <Input
+                label="Benutzername"
+                value={userStore?.user?.username}
+                disabled
+              />
             </IonRow>
             <IonRow className="profile__content__password-row">
               <Input
