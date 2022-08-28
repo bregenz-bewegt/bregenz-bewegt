@@ -30,7 +30,7 @@ export interface ProfileProps {
 export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
-    const [present, dismiss] = useIonToast();
+    const [present] = useIonToast();
     const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
     const defaultValues = {
       firstname: userStore?.user?.firstname ?? '',
@@ -51,6 +51,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         .then((result) => {
           reset({ firstname: result.firstname, lastname: result.lastname });
           setIsSavingChanges(false);
+          present({ message: 'Änderungen gespeichert', duration: 500 });
         })
         .catch((error) => setIsSavingChanges(false));
     };
