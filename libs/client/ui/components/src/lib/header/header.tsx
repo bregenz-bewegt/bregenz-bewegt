@@ -38,9 +38,15 @@ export const Header = inject(userStore.storeKey)(
             </IonAvatar>
           </Link>
           <div className="header__profile__greeting">
-            <IonText>Guten Tag</IonText>
-            <IonText className="header__profile__greeting__username">
-              {userStore.user?.username}
+            <IonText>
+              {isImageLoaded ? 'Guten Tag' : <IonSkeletonText animated />}
+            </IonText>
+            <IonText>
+              {isImageLoaded ? (
+                userStore.user?.username
+              ) : (
+                <IonSkeletonText animated />
+              )}
             </IonText>
           </div>
         </div>
