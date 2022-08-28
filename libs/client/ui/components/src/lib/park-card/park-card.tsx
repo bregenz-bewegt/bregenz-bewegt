@@ -30,14 +30,12 @@ export const ParkCard: React.FC<ParkCardProps> = ({
 
   return (
     <IonCard routerLink={isLoaded ? link : undefined} routerDirection="forward">
-      {!isLoading && (
-        <img
-          onLoad={() => setIsImageLoaded(true)}
-          src={image}
-          alt="park"
-          style={{ display: isLoading ? 'none' : 'initial' }}
-        />
-      )}
+      <img
+        onLoad={() => setIsImageLoaded(true)}
+        src={image}
+        alt="park"
+        style={{ display: isLoaded ? 'none' : 'initial' }}
+      />
       {!isLoaded && <IonSkeletonText style={{ height: '48px' }} animated />}
       <IonCardHeader>
         <IonCardSubtitle>
