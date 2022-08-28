@@ -34,6 +34,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [toastPresent] = useIonToast();
     const [actionSheetPresent, actionSheetDismiss] = useIonActionSheet();
     const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
+    const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const defaultValues = {
       firstname: userStore?.user?.firstname ?? '',
       lastname: userStore?.user?.lastname ?? '',
@@ -70,8 +71,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     };
 
     const handleLogout = () => {
+      setIsLoggingOut(true);
       userStore?.logout().then(() => {
         history.push('/login');
+        setIsLoggingOut(false);
       });
     };
 
@@ -190,7 +193,13 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             )}
           </IonButton>
           <IonButton onClick={() => handleLogout()} expand="block" mode="ios">
-            Logout
+            {isLoggingOut ? (
+              <IonLabel>
+                <IonSpinner name="crescent">Anmelden</IonSpinner>
+              </IonLabel>
+            ) : (
+              'Logout'
+            )}
           </IonButton>
         </IonContent>
       </IonPage>
