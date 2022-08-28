@@ -48,11 +48,6 @@ export class UserStore implements Store {
     }
   }
 
-  async refreshAccessToken() {
-    const { data } = await http.get('auth/');
-    return data;
-  }
-
   async fetchProfile() {
     try {
       const { data } = await http.get('/users/profile');
@@ -83,6 +78,7 @@ export class UserStore implements Store {
 
     if (tokens.access_token) {
       const profile = await this.fetchProfile();
+      console.log(profile);
       this.setUser(profile);
       this.setIsLoggedIn(true);
     }
