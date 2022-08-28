@@ -1,5 +1,9 @@
 .profile {
   &__content {
+    ion-avatar {
+      height: var(--spacing-5xl);
+      width: var(--spacing-5xl);
+    }
     &__password-row {
       align-items: flex-end;
       justify-content: space-between;

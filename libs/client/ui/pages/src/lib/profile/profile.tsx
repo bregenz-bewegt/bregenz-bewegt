@@ -51,7 +51,13 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         .then((result) => {
           reset({ firstname: result.firstname, lastname: result.lastname });
           setIsSavingChanges(false);
-          present({ message: 'Änderungen gespeichert', duration: 500 });
+          present({
+            message: 'Änderungen gespeichert',
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'success',
+          });
         })
         .catch((error) => setIsSavingChanges(false));
     };
