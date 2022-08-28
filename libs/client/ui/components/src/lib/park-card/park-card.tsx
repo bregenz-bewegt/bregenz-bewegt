@@ -21,18 +21,19 @@ export const ParkCard: React.FC<ParkCardProps> = ({
   location,
   image,
   link,
-  isLoading,
+  isLoading = false,
 }: ParkCardProps) => {
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
   const isLoaded = !isLoading && isImageLoaded;
 
+  console.log(!isLoading, isImageLoaded);
+
   return (
     <IonCard routerLink={isLoaded ? link : undefined} routerDirection="forward">
-      {isLoaded ? (
+      {!isLoading && (
         <img onLoad={() => setIsImageLoaded(true)} src={image} alt="park" />
-      ) : (
-        <IonSkeletonText style={{ height: '48px' }} animated />
       )}
+      {!isLoaded && <IonSkeletonText style={{ height: '48px' }} animated />}
       <IonCardHeader>
         <IonCardSubtitle>
           {isLoaded ? location : <IonSkeletonText animated />}
