@@ -14,6 +14,7 @@ import {
   IonText,
   IonTitle,
   IonToolbar,
+  useIonActionSheet,
   useIonToast,
   useIonViewDidLeave,
 } from '@ionic/react';
@@ -30,7 +31,8 @@ export interface ProfileProps {
 export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
-    const [present] = useIonToast();
+    const [toastPresent] = useIonToast();
+    const [actionSheetPresent, actionSheetDismiss] = useIonActionSheet();
     const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
     const defaultValues = {
       firstname: userStore?.user?.firstname ?? '',
@@ -44,6 +46,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       //
     };
 
+    const handleImageChange = () => {
+      //
+    };
+
     const handleSaveChanges = () => {
       setIsSavingChanges(true);
       userStore
@@ -51,7 +57,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         .then((result) => {
           reset({ firstname: result.firstname, lastname: result.lastname });
           setIsSavingChanges(false);
-          present({
+          toastPresent({
             message: 'Änderungen gespeichert',
             icon: checkmark,
             duration: 2000,
@@ -87,8 +93,20 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 <img src={userStore?.user?.profilePicture} alt="profile" />
               </IonAvatar>
             </IonRow>
-            <IonRow>
-              <IonText className="text-center" color="primary">
+            <IonRow className="ion-justify-content-center">
+              <IonText
+                className="text-center"
+                color="primary"
+                onClick={() =>
+                  actionSheetPresent({
+                    buttons: [
+                      { text: 'Ok' },
+                      { text: 'Abbrechen', role: 'cancel' },
+                    ],
+                    header: 'Profilbild',
+                  })
+                }
+              >
                 <p>Ändern</p>
               </IonText>
             </IonRow>
