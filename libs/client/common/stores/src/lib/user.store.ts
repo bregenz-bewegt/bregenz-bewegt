@@ -13,7 +13,6 @@ export class UserStore implements Store {
 
   constructor() {
     makeAutoObservable(this);
-    this.initUser();
   }
 
   @action async register(username: string, email: string, password: string) {

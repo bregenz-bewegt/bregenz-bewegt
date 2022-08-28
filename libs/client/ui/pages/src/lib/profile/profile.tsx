@@ -88,6 +88,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonAvatar>
             </IonRow>
             <IonRow>
+              <IonText className="text-center" color="primary">
+                <p>Ändern</p>
+              </IonText>
+            </IonRow>
+            <IonRow>
               <IonText>
                 <h2>Profil</h2>
               </IonText>

@@ -21,6 +21,7 @@ import {
 } from '@bregenz-bewegt/client-ui-pages';
 import { inject, observer } from 'mobx-react';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
+import { useEffect } from 'react';
 
 export interface RouterProps {
   userStore?: UserStore;
@@ -28,6 +29,10 @@ export interface RouterProps {
 
 export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
   observer(({ userStore }: RouterProps) => {
+    useEffect(() => {
+      userStore?.initUser();
+    }, []);
+
     return (
       <IonReactRouter>
         {userStore?.isLoadingLoginState ? (
