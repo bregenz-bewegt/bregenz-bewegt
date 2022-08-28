@@ -24,14 +24,21 @@ interface StartProps {
 
 export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
   observer(({ parkStore }) => {
+    const [isLoadingParks, setIsLoadingParks] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
-    const [parksResult, setParksResult] = useState<Park[]>([]);
+    const [parksResult, setParksResult] = useState<Park[]>(
+      Array(10).fill({ id: 0, name: '', address: '', image: '', qr: '' })
+    );
     const [parkDisplayType, setParkDisplayType] = useState<ParkDisplayType>(
       ParkDisplayType.List
     );
 
     const fetchParks = async () => {
-      parkStore?.fetchParks().then((parks) => setParksResult(parks ?? []));
+      setIsLoadingParks(true);
+      parkStore?.fetchParks().then((parks) => {
+        setParksResult(parks ?? []);
+        setIsLoadingParks(false);
+      });
     };
 
     // TODO improve this with a fuzzy search algorithm

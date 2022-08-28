@@ -6,7 +6,7 @@ import {
 
 const http = axios.create({
   baseURL: process.env['NX_API_BASE_URL'],
-  timeout: 1000,
+  timeout: 10000,
 });
 
 createRequestInterceptor(http);
