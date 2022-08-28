@@ -1,6 +1,6 @@
+import './profile.scss';
 import { Input } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
-import { User } from '@bregenz-bewegt/client/types';
 import {
   IonAvatar,
   IonButton,
@@ -21,7 +21,7 @@ import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import './profile.scss';
+import { checkmark } from 'ionicons/icons';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -53,6 +53,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           setIsSavingChanges(false);
           present({
             message: 'Änderungen gespeichert',
+            icon: checkmark,
             duration: 2000,
             position: 'top',
             mode: 'ios',
