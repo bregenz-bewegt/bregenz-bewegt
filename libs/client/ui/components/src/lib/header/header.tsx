@@ -25,6 +25,25 @@ export const Header = inject(userStore.storeKey)(
 
     return (
       <IonHeader mode="ios" className="header">
+        <div className="header__profile">
+          <Link to={tabRoutes.profile.route}>
+            <IonAvatar>
+              <img
+                onLoad={() => setIsImageLoaded(true)}
+                src={userStore?.user?.profilePicture}
+                alt="profile"
+                style={{ display: isImageLoaded ? 'initial' : 'none' }}
+              />
+              {!isImageLoaded && <IonSkeletonText animated />}
+            </IonAvatar>
+          </Link>
+          <div>
+            <IonText>Guten Tag</IonText>
+            <IonText className="header__profile__username">
+              {userStore.user?.username}
+            </IonText>
+          </div>
+        </div>
         <IonFabButton className="header__fab-button">
           <IonIcon
             className="header__fab__button__icon"
@@ -32,18 +51,6 @@ export const Header = inject(userStore.storeKey)(
             color="primary"
           />
         </IonFabButton>
-        <IonText>Guten Morgen</IonText>
-        <Link to={tabRoutes.profile.route}>
-          <IonAvatar className="header__avatar">
-            <img
-              onLoad={() => setIsImageLoaded(true)}
-              src={userStore?.user?.profilePicture}
-              alt="profile"
-              style={{ display: isImageLoaded ? 'initial' : 'none' }}
-            />
-            {!isImageLoaded && <IonSkeletonText animated />}
-          </IonAvatar>
-        </Link>
       </IonHeader>
     );
   })

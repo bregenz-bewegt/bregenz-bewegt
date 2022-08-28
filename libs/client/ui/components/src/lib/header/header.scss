@@ -1,8 +1,30 @@
 .header {
   padding: 24px 16px;
   --box-shadow: none;
+  display: flex;
+  justify-content: space-between;
 
-  &__fab-__button {
+  &__profile {
+    display: flex;
+    justify-content: center;
+
+    ion-avatar {
+      display: inline-block;
+      height: 48px;
+      width: 48px;
+      margin-right: 4px;
+    }
+
+    ion-text {
+      margin: 4px 0;
+    }
+
+    &__username {
+      font-weight: bold;
+    }
+  }
+
+  &__fab-button {
     height: 48px;
     width: 48px;
     --background: var(--ion-color-light-tint);
@@ -11,11 +33,5 @@
     &__icon {
       --background: var(--ion-color-primary);
     }
-  }
-
-  &__avatar {
-    margin-left: auto;
-    height: 48px;
-    width: 48px;
   }
 }
