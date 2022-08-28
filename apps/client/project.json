@@ -75,7 +75,7 @@
       },
       "configurations": {
         "android": {
-          "cmd": "run android -l --external"
+          "cmd": "run android -l --external --consolelogs"
         }
       }
     },

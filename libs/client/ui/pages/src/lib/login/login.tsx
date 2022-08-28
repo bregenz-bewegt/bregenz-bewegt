@@ -9,7 +9,7 @@ import {
   IonSpinner,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import './login.scss';
@@ -63,7 +63,6 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
               <IonText>
                 <h2>Anmelden</h2>
               </IonText>
-              {formState.errors.password?.message}
               <Controller
                 name="email"
                 control={control}
