@@ -29,10 +29,6 @@ export interface RouterProps {
 
 export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
   observer(({ userStore }: RouterProps) => {
-    useEffect(() => {
-      userStore?.initUser();
-    }, []);
-
     return (
       <IonReactRouter>
         {userStore?.isLoadingLoginState ? (
@@ -48,6 +44,10 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
 );
 
 export const Tabs: React.FC = () => {
+  useEffect(() => {
+    userStore?.initUser();
+  }, []);
+
   return (
     <>
       <IonTabs>
