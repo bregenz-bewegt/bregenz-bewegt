@@ -36,7 +36,7 @@ export const ParkCard: React.FC<ParkCardProps> = ({
         alt="park"
         style={{ display: isLoaded ? 'initial' : 'none' }}
       />
-      {!isLoaded && <IonSkeletonText style={{ height: '48px' }} animated />}
+      {!isLoaded && <IonSkeletonText style={{ height: '64px' }} animated />}
       <IonCardHeader>
         <IonCardSubtitle>
           {isLoaded ? location : <IonSkeletonText animated />}
