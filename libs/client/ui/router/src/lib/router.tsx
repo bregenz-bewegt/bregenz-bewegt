@@ -43,8 +43,12 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
   })
 );
 
-export const Tabs: React.FC = inject(userStore.storeKey)(
-  observer(() => {
+export interface TabsProps {
+  userStore?: UserStore;
+}
+
+export const Tabs: React.FC<TabsProps> = inject(userStore.storeKey)(
+  observer(({ userStore }) => {
     useEffect(() => {
       userStore?.initUser();
     }, []);
