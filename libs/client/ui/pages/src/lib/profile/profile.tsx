@@ -143,7 +143,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 disabled
                 value={'*'.repeat(11)}
               />
-              <IonButton onClick={() => handleChangePassword()} size="small">
+              <IonButton
+                onClick={() => handleChangePassword()}
+                size="small"
+                mode="ios"
+              >
                 Ändern
               </IonButton>
             </IonRow>
@@ -152,6 +156,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             disabled={!formState.isDirty || isSavingChanges}
             onClick={() => handleSaveChanges()}
             expand="block"
+            mode="ios"
           >
             {isSavingChanges ? (
               <IonLabel>
@@ -161,7 +166,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               'Änderungen Speichern'
             )}
           </IonButton>
-          <IonButton onClick={() => handleLogout()} expand="block">
+          <IonButton onClick={() => handleLogout()} expand="block" mode="ios">
             Logout
           </IonButton>
         </IonContent>

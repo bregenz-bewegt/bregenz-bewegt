@@ -9,6 +9,12 @@
     --padding-end: 0;
     --inner-padding-end: 0;
 
+    ion-label {
+      &:not(.ios) {
+        margin-bottom: 4px;
+      }
+    }
+
     ion-input {
       border-radius: 8px;
       margin: 4px 0;
@@ -17,10 +23,6 @@
       --padding-start: 8px !important;
       --padding-end: 8px !important;
       --background: var(--ion-color-light-tint) !important;
-    }
-
-    ion-text {
-      margin-left: 4px;
     }
   }
 }
