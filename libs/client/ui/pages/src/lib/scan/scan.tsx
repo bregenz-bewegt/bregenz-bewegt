@@ -9,6 +9,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner';
+// import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { useEffect, useState } from 'react';
 
 export const Scan: React.FC = () => {
@@ -16,7 +17,7 @@ export const Scan: React.FC = () => {
   const openScanner = async () => {
     const data = await BarcodeScanner.scan();
     console.log(`Barcode data: ${data}`);
-    setQrResult(data.text);
+    setQrResult(data.text ?? 'test');
   };
 
   useEffect(() => {
