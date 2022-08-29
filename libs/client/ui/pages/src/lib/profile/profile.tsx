@@ -23,7 +23,7 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { checkmark } from 'ionicons/icons';
-import { Camera, CameraResultType } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -48,10 +48,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       //
     };
 
-    const handleImageChange = () => {
+    const handleImageChange = (source: CameraSource) => {
       Camera.getPhoto({
         resultType: CameraResultType.Uri,
         allowEditing: true,
+        source,
       }).then((result) => {
         console.log(result);
       });
@@ -109,7 +110,14 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 onClick={() =>
                   actionSheetPresent({
                     buttons: [
-                      { text: 'Bild Ändern', handler: handleImageChange },
+                      {
+                        text: 'Aus Gallerie wählen',
+                        handler: () => handleImageChange(CameraSource.Photos),
+                      },
+                      {
+                        text: 'Bild Aufnehmen',
+                        handler: () => handleImageChange(CameraSource.Photos),
+                      },
                       { text: 'Abbrechen', role: 'cancel' },
                     ],
                     header: 'Profilbild',
