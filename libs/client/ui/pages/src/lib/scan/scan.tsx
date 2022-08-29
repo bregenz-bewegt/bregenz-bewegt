@@ -12,10 +12,11 @@ import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner';
 import { useEffect, useState } from 'react';
 
 export const Scan: React.FC = () => {
-  const [isQrImplemented, setIsQrImplemented] = useState<boolean>(true);
+  const [qrResult, setQrResult] = useState<string>('');
   const openScanner = async () => {
     const data = await BarcodeScanner.scan();
     console.log(`Barcode data: ${data}`);
+    setQrResult(data.text);
   };
 
   useEffect(() => {
@@ -35,8 +36,7 @@ export const Scan: React.FC = () => {
             <IonTitle size="large">Scan</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonRow>{isQrImplemented ? 'yes' : 'no'}</IonRow>
-        {/* <ExploreContainer name="Scan" /> */}
+        <IonRow>{qrResult}</IonRow>
         <IonButton onClick={() => openScanner()}>Scan</IonButton>
       </IonContent>
     </IonPage>
