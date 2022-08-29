@@ -29,4 +29,17 @@ export class UserService {
       },
     });
   }
+
+  async editProfilePicture(id: User['id'], file: Express.Multer.File) {
+    console.log(file);
+
+    return this.prismaService.user.update({
+      where: {
+        id,
+      },
+      data: {
+        profilePicture: file.destination,
+      },
+    });
+  }
 }

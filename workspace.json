@@ -17,6 +17,7 @@
     "server-controllers-auth": "libs/server/controllers/auth",
     "server-controllers-park": "libs/server/controllers/park",
     "server-controllers-user": "libs/server/controllers/user",
+    "server-multer": "libs/server/multer",
     "server-prisma": "libs/server/prisma",
     "shared-types": "libs/shared/types"
   }

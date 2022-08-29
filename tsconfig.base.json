@@ -46,6 +46,7 @@
       "@bregenz-bewegt/server/controllers/park": [
         "libs/server/controllers/park/src/index.ts"
       ],
+      "@bregenz-bewegt/server/multer": ["libs/server/multer/src/index.ts"],
       "@bregenz-bewegt/shared/types": ["libs/shared/types/src/index.ts"]
     }
   },

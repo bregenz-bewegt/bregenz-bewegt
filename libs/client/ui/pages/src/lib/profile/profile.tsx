@@ -10,6 +10,7 @@ import {
   IonLabel,
   IonPage,
   IonRow,
+  IonSkeletonText,
   IonSpinner,
   IonText,
   IonTitle,
@@ -36,6 +37,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [actionSheetPresent, actionSheetDismiss] = useIonActionSheet();
     const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
+    const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
     const defaultValues = {
       firstname: userStore?.user?.firstname ?? '',
       lastname: userStore?.user?.lastname ?? '',
@@ -48,14 +50,24 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       //
     };
 
-    const handleImageChange = (source: CameraSource) => {
-      Camera.getPhoto({
-        resultType: CameraResultType.Uri,
-        allowEditing: true,
-        source,
-      }).then((result) => {
-        console.log(result);
-      });
+    const handleImageChange = async (source: CameraSource) => {
+      try {
+        const photo = await Camera.getPhoto({
+          resultType: CameraResultType.Uri,
+          allowEditing: true,
+          source,
+        });
+
+        if (!photo.webPath) return;
+
+        const res = await fetch(photo.webPath);
+        const blob = await res.blob();
+        const file = await new File([blob], `file.${photo.format}`);
+        console.log(file);
+        userStore?.editProfilePicture(file);
+      } catch (error) {
+        return;
+      }
     };
 
     const handleSaveChanges = () => {
@@ -100,7 +112,13 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           <IonGrid>
             <IonRow className="ion-justify-content-center">
               <IonAvatar>
-                <img src={userStore?.user?.profilePicture} alt="profile" />
+                <img
+                  onLoad={() => setIsImageLoaded(true)}
+                  src={userStore?.user?.profilePicture}
+                  alt="profile"
+                  style={{ display: isImageLoaded ? 'initial' : 'none' }}
+                />
+                {!isImageLoaded && <IonSkeletonText animated />}
               </IonAvatar>
             </IonRow>
             <IonRow className="ion-justify-content-center">

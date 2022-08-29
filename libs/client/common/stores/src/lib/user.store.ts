@@ -64,6 +64,21 @@ export class UserStore implements Store {
     return <User>data;
   }
 
+  @action async editProfilePicture(picture: File) {
+    const { data } = await http.post(
+      '/users/profile-picture',
+      {
+        file: picture,
+      },
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    return data;
+  }
+
   @action setIsLoggedIn(value: boolean) {
     this.isLoggedIn = value;
   }

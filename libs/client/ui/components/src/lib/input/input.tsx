@@ -1,5 +1,11 @@
 import './input.scss';
-import { IonInput, IonItem, IonLabel, IonNote } from '@ionic/react';
+import {
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonNote,
+  IonSkeletonText,
+} from '@ionic/react';
 import {
   InputChangeEventDetail,
   IonInputCustomEvent,
