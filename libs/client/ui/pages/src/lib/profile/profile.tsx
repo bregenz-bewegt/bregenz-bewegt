@@ -23,6 +23,7 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { checkmark } from 'ionicons/icons';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -48,7 +49,12 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     };
 
     const handleImageChange = () => {
-      //
+      Camera.getPhoto({
+        resultType: CameraResultType.Uri,
+        allowEditing: true,
+      }).then((result) => {
+        console.log(result);
+      });
     };
 
     const handleSaveChanges = () => {
@@ -103,7 +109,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 onClick={() =>
                   actionSheetPresent({
                     buttons: [
-                      { text: 'Ok' },
+                      { text: 'Bild Ändern', handler: handleImageChange },
                       { text: 'Abbrechen', role: 'cancel' },
                     ],
                     header: 'Profilbild',
