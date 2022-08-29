@@ -8,33 +8,18 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner';
 import { useEffect, useState } from 'react';
 
 export const Scan: React.FC = () => {
   const [isQrImplemented, setIsQrImplemented] = useState<boolean>(true);
   const openScanner = async () => {
-    BarcodeScanner.hideBackground();
-    const data = await BarcodeScanner.startScan();
+    const data = await BarcodeScanner.scan();
     console.log(`Barcode data: ${data}`);
   };
 
-  const checkPermission = async () => {
-    try {
-      const status = await BarcodeScanner.checkPermission({ force: true });
-      console.log(status);
-      if (status.granted) {
-        return true;
-      }
-      return false;
-    } catch (error) {
-      setIsQrImplemented(false);
-      return false;
-    }
-  };
-
   useEffect(() => {
-    checkPermission();
+    // openScanner();
   }, []);
 
   return (
