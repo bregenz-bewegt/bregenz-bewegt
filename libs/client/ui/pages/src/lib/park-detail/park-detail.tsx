@@ -13,7 +13,6 @@ import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Loading } from '../loading/loading';
-import { arrowBack } from 'ionicons/icons';
 
 interface MatchParams {
   id: string;

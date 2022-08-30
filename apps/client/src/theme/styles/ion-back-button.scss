@@ -4,7 +4,6 @@ ion-back-button {
   }
 
   &::part(icon) {
-    margin-right: var(--spacing-xs);
     height: var(--spacing-l);
   }
 }
