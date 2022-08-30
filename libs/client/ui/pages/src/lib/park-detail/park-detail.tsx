@@ -59,7 +59,9 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
           <IonText>
             <h1>{park?.name}</h1>
           </IonText>
-          <IonBackButton defaultHref={tabRoutes.start.route} text="Zurück" />
+          <IonButtons slot="start">
+            <IonBackButton defaultHref={tabRoutes.start.route} text="Zurück" />
+          </IonButtons>
         </IonContent>
       </IonPage>
     );
