@@ -2,6 +2,10 @@
   ion-back-button {
     color: var(--ion-color-medium);
     display: inline-block;
-    margin-left: -var(--spacing-xs);
+    margin-left: calc(var(--spacing-xs) * -1);
+  }
+
+  &__park-name {
+    margin-top: var(--spacing-m);
   }
 }

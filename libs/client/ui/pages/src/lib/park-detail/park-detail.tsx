@@ -52,7 +52,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
             defaultHref={tabRoutes.start.route}
             text="Zurück"
           />
-          <IonText>
+          <IonText className="park-detail__park-name">
             <h1>{park?.name}</h1>
           </IonText>
         </IonContent>
