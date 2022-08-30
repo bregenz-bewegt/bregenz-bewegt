@@ -220,7 +220,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           >
             {isSavingChanges ? (
               <IonLabel>
-                <IonSpinner name="crescent">Anmelden</IonSpinner>
+                <IonSpinner name="crescent" />
               </IonLabel>
             ) : (
               'Änderungen Speichern'
@@ -229,7 +229,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           <IonButton onClick={() => handleLogout()} expand="block" mode="ios">
             {isLoggingOut ? (
               <IonLabel>
-                <IonSpinner name="crescent">Anmelden</IonSpinner>
+                <IonSpinner name="crescent" />
               </IonLabel>
             ) : (
               'Logout'

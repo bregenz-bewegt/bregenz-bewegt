@@ -87,7 +87,7 @@ export class UserStore implements Store {
       const reader = new window.FileReader();
       reader.readAsDataURL(data);
       reader.onload = () => {
-        if (this.user) this.user.profilePicture = `${reader.result}`;
+        this.setProfilePicture(`${reader.result}`);
       };
     } catch (error) {
       console.log('giegers');
