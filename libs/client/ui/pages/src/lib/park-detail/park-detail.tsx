@@ -55,6 +55,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
         <Header />
         <IonContent fullscreen>
           <IonBackButton
+            color="primary"
             mode="ios"
             defaultHref={tabRoutes.start.route}
             text="Zurück"

@@ -1,13 +1,12 @@
 .park-detail {
   ion-back-button {
-    color: var(--ion-color-medium);
     display: inline-block;
     margin-left: calc(var(--spacing-xs) * -1);
   }
 
   &__name {
     h1 {
-      margin-top: var(--spacing-s);
+      margin-top: var(--spacing-m);
     }
   }
 
