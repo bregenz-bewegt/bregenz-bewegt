@@ -47,6 +47,8 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       });
     }, [match.params]);
 
+    console.log(park);
+
     return isLoading ? (
       <Loading />
     ) : (
