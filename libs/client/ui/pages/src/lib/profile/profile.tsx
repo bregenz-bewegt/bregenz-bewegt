@@ -155,7 +155,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       {
                         text: 'Abbrechen',
                         role: 'cancel',
-                        handler: actionSheetDismiss,
+                        handler: () => actionSheetDismiss(),
                       },
                     ],
                     header: 'Profilbild',
@@ -184,6 +184,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                     ref={field.ref}
+                    disabled={!isImageLoaded}
                   />
                 )}
               />
@@ -202,6 +203,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                     ref={field.ref}
+                    disabled={!isImageLoaded}
                   />
                 )}
               />
