@@ -6,4 +6,4 @@ import { MulterService } from './multer.service';
   providers: [MulterService],
   exports: [MulterService],
 })
-export class ServerMulterModule {}
+export class MulterModule {}

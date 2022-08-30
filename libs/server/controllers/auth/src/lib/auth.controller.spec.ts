@@ -1,5 +1,6 @@
 import { UserService } from '@bregenz-bewegt/server-controllers-user';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
+import { MulterService } from '@bregenz-bewegt/server/multer';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
@@ -18,6 +19,7 @@ describe('AuthController', () => {
         JwtService,
         ConfigService,
         UserService,
+        MulterService,
       ],
       controllers: [AuthController],
     }).compile();

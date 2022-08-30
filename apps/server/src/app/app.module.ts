@@ -9,6 +9,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AccessTokenGuard } from '@bregenz-bewegt/server/common';
 import { ParkModule } from 'libs/server/controllers/park/src';
+import { MulterModule } from '@bregenz-bewegt/server/multer';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ParkModule } from 'libs/server/controllers/park/src';
     ParkModule,
     AuthModule,
     PrismaModule,
+    MulterModule,
   ],
   controllers: [AppController],
   providers: [
