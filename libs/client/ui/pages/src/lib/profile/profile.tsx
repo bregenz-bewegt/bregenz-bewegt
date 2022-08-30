@@ -115,6 +115,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         firstname: userStore?.user?.firstname,
         lastname: userStore?.user?.lastname,
       });
+      userStore?.fetchProfilePicture();
     }, [userStore?.user?.firstname, userStore?.user?.lastname]);
 
     return (
