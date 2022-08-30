@@ -1,10 +1,10 @@
 ion-back-button {
-  button {
+  &::part(native) {
     padding-inline-start: 0;
+  }
 
-    ion-icon {
-      margin-right: var(--spacing-xs);
-      height: var(--spacing-l);
-    }
+  &::part(icon) {
+    margin-right: var(--spacing-xs);
+    height: var(--spacing-l);
   }
 }
