@@ -152,7 +152,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                         text: 'Bild Aufnehmen',
                         handler: () => handleImageChange(CameraSource.Camera),
                       },
-                      { text: 'Abbrechen', role: 'cancel' },
+                      {
+                        text: 'Abbrechen',
+                        role: 'cancel',
+                        handler: actionSheetDismiss,
+                      },
                     ],
                     header: 'Profilbild',
                   })
