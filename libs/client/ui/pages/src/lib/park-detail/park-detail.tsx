@@ -1,3 +1,4 @@
+import './park-detail.scss';
 import { Header } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
@@ -12,7 +13,7 @@ import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Loading } from '../loading/loading';
-import './park-detail.scss';
+import { arrowBack } from 'ionicons/icons';
 
 interface MatchParams {
   id: string;
@@ -46,7 +47,12 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       <IonPage className="park-detail">
         <Header />
         <IonContent fullscreen>
-          <IonBackButton defaultHref={tabRoutes.start.route} text="Zurück" />
+          <IonBackButton
+            mode="ios"
+            icon={arrowBack}
+            defaultHref={tabRoutes.start.route}
+            text="Zurück"
+          />
           <IonText>
             <h1>{park?.name}</h1>
           </IonText>

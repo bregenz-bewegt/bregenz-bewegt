@@ -1,0 +1,10 @@
+ion-back-button {
+  button {
+    padding-inline-start: 0;
+
+    ion-icon {
+      margin-right: var(--spacing-xs);
+      height: var(--spacing-l);
+    }
+  }
+}
