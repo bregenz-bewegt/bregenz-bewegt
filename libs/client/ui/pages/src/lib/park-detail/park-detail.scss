@@ -5,7 +5,13 @@
     margin-left: calc(var(--spacing-xs) * -1);
   }
 
-  &__park-name {
-    margin-top: var(--spacing-m);
+  &__name {
+    h1 {
+      margin-top: var(--spacing-s);
+    }
+  }
+
+  &__address {
+    
   }
 }

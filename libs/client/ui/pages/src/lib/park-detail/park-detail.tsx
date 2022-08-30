@@ -8,11 +8,19 @@ import {
   userStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { Park } from '@bregenz-bewegt/client/types';
-import { IonBackButton, IonContent, IonPage, IonText } from '@ionic/react';
+import {
+  IonBackButton,
+  IonContent,
+  IonIcon,
+  IonNote,
+  IonPage,
+  IonText,
+} from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Loading } from '../loading/loading';
+import { location } from 'ionicons/icons';
 
 interface MatchParams {
   id: string;
@@ -52,9 +60,13 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
             defaultHref={tabRoutes.start.route}
             text="Zurück"
           />
-          <IonText className="park-detail__park-name">
+          <IonText className="park-detail__name">
             <h1>{park?.name}</h1>
           </IonText>
+          <IonNote className="park-detail__park-address">
+            <IonIcon icon={location} />
+            {park?.address}
+          </IonNote>
         </IonContent>
       </IonPage>
     );
