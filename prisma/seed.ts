@@ -15,7 +15,6 @@ const createUsers = async () => {
         lastname: 'Ostini',
         role: 'USER',
         password: password,
-        profilePicture: 'https://i.pravatar.cc/150?img=4',
         coins: 100,
       },
     ],

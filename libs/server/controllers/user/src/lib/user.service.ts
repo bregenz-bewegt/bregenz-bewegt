@@ -1,11 +1,20 @@
+import * as path from 'path';
+import * as fs from 'fs';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
+import { MulterService } from '@bregenz-bewegt/server/multer';
 import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
+import { Response } from 'express';
 
 @Injectable()
 export class UserService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private multerService: MulterService,
+    private configService: ConfigService
+  ) {}
 
   async getAll() {
     return this.prismaService.user.findMany();
@@ -31,15 +40,39 @@ export class UserService {
   }
 
   async editProfilePicture(id: User['id'], file: Express.Multer.File) {
-    console.log(file);
+    const user = await this.getById(id);
+
+    if (this.uploadedProfilePictureExists(user.profilePicture)) {
+      await this.multerService.deleteProfilePicture(user.profilePicture);
+    }
 
     return this.prismaService.user.update({
       where: {
         id,
       },
       data: {
-        profilePicture: file.destination,
+        profilePicture: `${file.filename}`,
       },
     });
+  }
+
+  async getProfilePicture(id: User['id'], res: Response) {
+    const user = await this.getById(id);
+
+    if (await !this.uploadedProfilePictureExists(user.profilePicture)) {
+      throw new NotFoundException();
+    }
+
+    const filePath = this.multerService.getProfilePicturePath(
+      user.profilePicture
+    );
+
+    return res.sendFile(filePath);
+  }
+
+  uploadedProfilePictureExists(filename: string) {
+    const filePath = this.multerService.getProfilePicturePath(filename);
+
+    return fs.existsSync(filePath);
   }
 }

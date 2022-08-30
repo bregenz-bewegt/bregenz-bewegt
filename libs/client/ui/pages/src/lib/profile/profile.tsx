@@ -20,7 +20,7 @@ import {
   useIonViewDidLeave,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { checkmark } from 'ionicons/icons';
@@ -64,7 +64,9 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         const blob = await res.blob();
         const file = await new File([blob], `file.${photo.format}`);
         console.log(file);
-        userStore?.editProfilePicture(file);
+        userStore
+          ?.editProfilePicture(file)
+          .then(() => userStore.fetchProfilePicture());
       } catch (error) {
         return;
       }

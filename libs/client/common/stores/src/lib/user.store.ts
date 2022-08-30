@@ -79,6 +79,22 @@ export class UserStore implements Store {
     return data;
   }
 
+  @action async fetchProfilePicture() {
+    try {
+      const { data } = await http.get('/users/profile-picture', {
+        responseType: 'blob',
+      });
+      const reader = new window.FileReader();
+      reader.readAsDataURL(data);
+      reader.onload = () => {
+        if (this.user) this.user.profilePicture = `${reader.result}`;
+      };
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  }
+
   @action setIsLoggedIn(value: boolean) {
     this.isLoggedIn = value;
   }
@@ -110,7 +126,9 @@ export class UserStore implements Store {
 
   @action async refreshProfile() {
     const profile = await this.fetchProfile();
+    await this.fetchProfilePicture();
     this.setUser(profile);
+
     return profile;
   }
 

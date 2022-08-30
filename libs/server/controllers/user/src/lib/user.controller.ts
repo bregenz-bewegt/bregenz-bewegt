@@ -1,5 +1,6 @@
 import {
   GetCurrentUser,
+  Public,
   RemoveSensitiveFieldsInterceptor,
 } from '@bregenz-bewegt/server/common';
 import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
@@ -12,6 +13,7 @@ import {
   Patch,
   Post,
   Put,
+  Res,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -21,10 +23,15 @@ import { diskStorage } from 'multer';
 import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterService } from '@bregenz-bewegt/server/multer';
+import { Response } from 'express';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private configService: ConfigService
+  ) {}
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Get()
@@ -47,6 +54,7 @@ export class UserController {
     return this.userService.patchProfile(userId, dto);
   }
 
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @UseInterceptors(
     FileInterceptor('file', {
       storage: MulterService.getStorage((req, file, cb) => {
@@ -56,7 +64,7 @@ export class UserController {
         const extension = path.parse(file.originalname).ext;
 
         cb(null, `${filename}${extension}`);
-      }, 'profile-pictures'),
+      }, MulterService.destinations.profilePictures),
     })
   )
   @Post('profile-picture')
@@ -68,7 +76,11 @@ export class UserController {
     // })
     Express.Multer.File
   ) {
-    console.log(id, file);
     return this.userService.editProfilePicture(id, file);
+  }
+
+  @Get('profile-picture')
+  async getProfilePicture(@GetCurrentUser('sub') id, @Res() res: Response) {
+    return this.userService.getProfilePicture(id, res);
   }
 }
