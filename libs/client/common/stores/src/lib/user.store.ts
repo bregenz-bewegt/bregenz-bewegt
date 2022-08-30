@@ -89,6 +89,7 @@ export class UserStore implements Store {
       reader.onload = () => {
         this.setProfilePicture(`${reader.result}`);
       };
+      return reader.result;
     } catch (error) {
       console.log('giegers');
       this.setProfilePicture('https://i.pravatar.cc/150?img=4');

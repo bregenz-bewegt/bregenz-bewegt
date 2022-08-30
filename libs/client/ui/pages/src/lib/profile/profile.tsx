@@ -16,6 +16,7 @@ import {
   IonTitle,
   IonToolbar,
   useIonActionSheet,
+  useIonLoading,
   useIonToast,
   useIonViewDidLeave,
 } from '@ionic/react';
@@ -34,6 +35,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
     const [toastPresent] = useIonToast();
+    const [loadingPresent, loadingDismiss] = useIonLoading();
     const [actionSheetPresent, actionSheetDismiss] = useIonActionSheet();
     const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
@@ -63,10 +65,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         const res = await fetch(photo.webPath);
         const blob = await res.blob();
         const file = await new File([blob], `file.${photo.format}`);
-        console.log(file);
+        loadingPresent({
+          message: 'Ändere Profilbild',
+          spinner: 'crescent',
+        });
         userStore
           ?.editProfilePicture(file)
-          .then(() => userStore.fetchProfilePicture());
+          .then(() =>
+            userStore.fetchProfilePicture().then(() => loadingDismiss())
+          );
       } catch (error) {
         return;
       }
@@ -102,6 +109,13 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     useIonViewDidLeave(() => {
       reset();
     });
+
+    useEffect(() => {
+      reset({
+        firstname: userStore?.user?.firstname,
+        lastname: userStore?.user?.lastname,
+      });
+    }, [userStore?.user?.firstname, userStore?.user?.lastname]);
 
     return (
       <IonPage className="profile">
