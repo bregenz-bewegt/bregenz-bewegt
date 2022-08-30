@@ -49,7 +49,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
         <IonContent fullscreen>
           <IonBackButton
             mode="ios"
-            icon={arrowBack}
+            // icon={arrowBack}
             defaultHref={tabRoutes.start.route}
             text="Zurück"
           />
