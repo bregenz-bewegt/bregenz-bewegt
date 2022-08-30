@@ -64,7 +64,7 @@ export class UserStore implements Store {
     return <User>data;
   }
 
-  @action async editProfilePicture(picture: File) {
+  @action async editProfilePicture(picture: globalThis.File) {
     const { data } = await http.post(
       '/users/profile-picture',
       {
