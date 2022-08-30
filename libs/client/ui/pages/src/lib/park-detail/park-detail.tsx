@@ -7,17 +7,7 @@ import {
   userStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { Park } from '@bregenz-bewegt/client/types';
-import {
-  IonBackButton,
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonText,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/react';
+import { IonBackButton, IonContent, IonPage, IonText } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
@@ -53,13 +43,13 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     return isLoading ? (
       <Loading />
     ) : (
-      <IonPage>
+      <IonPage className="park-detail">
         <Header />
         <IonContent fullscreen>
+          <IonBackButton defaultHref={tabRoutes.start.route} text="Zurück" />
           <IonText>
             <h1>{park?.name}</h1>
           </IonText>
-          <IonBackButton defaultHref={tabRoutes.start.route} text="Zurück" />
         </IonContent>
       </IonPage>
     );
