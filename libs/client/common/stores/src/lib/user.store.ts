@@ -91,7 +91,7 @@ export class UserStore implements Store {
       };
       return reader.result;
     } catch (error) {
-      this.setProfilePicture('https://i.pravatar.cc/150?img=4');
+      this.setAvatarProfilePicture();
       return;
     }
   }
@@ -128,6 +128,12 @@ export class UserStore implements Store {
   @action setProfilePicture(picture: string) {
     if (this.user) {
       this.user.profilePicture = picture;
+    }
+  }
+
+  @action setAvatarProfilePicture() {
+    if (this.user) {
+      this.user.profilePicture = `https://avatars.dicebear.com/api/initials/${this.user.email}.svg`;
     }
   }
 
