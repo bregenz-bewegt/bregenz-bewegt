@@ -1,3 +1,4 @@
+import { Header } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   ParkStore,
@@ -13,6 +14,7 @@ import {
   IonContent,
   IonHeader,
   IonPage,
+  IonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
@@ -52,19 +54,13 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       <Loading />
     ) : (
       <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonBackButton
-                defaultHref={tabRoutes.start.route}
-                text="Zurück"
-              />
-            </IonButtons>
-            <IonTitle>Park Detail</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+        <Header />
         <IonContent fullscreen>
+          <IonText>
+            <h1>{park?.name}</h1>
+          </IonText>
           <IonButton>Park Detail</IonButton>
+          <IonBackButton defaultHref={tabRoutes.start.route} text="Zurück" />
         </IonContent>
       </IonPage>
     );
