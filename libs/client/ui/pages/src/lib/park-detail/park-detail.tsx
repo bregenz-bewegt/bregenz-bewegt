@@ -7,7 +7,7 @@ import {
   UserStore,
   userStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { Park } from '@bregenz-bewegt/client/types';
+import { Exercise, Park } from '@bregenz-bewegt/client/types';
 import {
   IonBackButton,
   IonContent,
@@ -39,10 +39,9 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     const history = useHistory();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [park, setPark] = useState<Park>();
-    const [exercises, setExercises] = useState<any[]>();
 
     useEffect(() => {
-      parkStore.getPark(+match.params.id).then((park) => {
+      parkStore.getParkWithExercises(+match.params.id).then((park) => {
         setPark(park);
         setIsLoading(false);
       });
@@ -67,6 +66,13 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
             <IonIcon icon={location} />
             {park?.address}
           </IonNote>
+          <div className="park-detail__exercises">
+            {park?.exercises &&
+              park.exercises.length > 0 &&
+              park.exercises.map((exercise) => {
+                return <div>{exercise.name}</div>;
+              })}
+          </div>
         </IonContent>
       </IonPage>
     );

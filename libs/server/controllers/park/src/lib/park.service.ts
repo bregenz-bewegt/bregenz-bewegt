@@ -17,4 +17,15 @@ export class ParkService {
       },
     });
   }
+
+  async getParkWithExercises(id: Park['id']) {
+    return this.prismaService.park.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        exercises: true,
+      },
+    });
+  }
 }

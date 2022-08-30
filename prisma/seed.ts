@@ -21,6 +21,50 @@ const createUsers = async () => {
   });
 };
 
+const createExercises = async () => {
+  await prisma.exercise.deleteMany();
+  const parks = await prisma.park.findMany();
+
+  await prisma.exercise.createMany({
+    data: [
+      {
+        name: 'Sit-Up',
+        description: 'Some description',
+        difficulty: 'BEGINNER',
+        points: 10,
+        video: 'not-yet-defined',
+      },
+      {
+        name: 'Liegestütze',
+        description: 'Some description',
+        difficulty: 'BEGINNER',
+        points: 10,
+        video: 'not-yet-defined',
+      },
+      {
+        name: 'Plank',
+        description: 'Some description',
+        difficulty: 'BEGINNER',
+        points: 10,
+        video: 'not-yet-defined',
+      },
+    ],
+  });
+
+  const exercises = await prisma.exercise.findMany();
+
+  await Promise.all([
+    parks.map((park) => {
+      exercises.map(async (exercise, i) => {
+        prisma.park.update({
+          where: { id: park.id },
+          data: { exercises: { connect: { id: exercises[i].id } } },
+        });
+      });
+    }),
+  ]);
+};
+
 const createParks = async () => {
   await prisma.park.deleteMany();
   await prisma.park.createMany({
@@ -92,6 +136,7 @@ const createParks = async () => {
 const main = async () => {
   await createUsers();
   await createParks();
+  await createExercises();
 };
 
 main()

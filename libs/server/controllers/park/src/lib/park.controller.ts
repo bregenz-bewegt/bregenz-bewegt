@@ -17,4 +17,9 @@ export class ParkController {
   getPark(@Param('id', ParseIntPipe) id: number) {
     return this.parkService.getPark(id);
   }
+
+  @Get(':id/exercises')
+  getParkWithExercises(@Param('id', ParseIntPipe) id: number) {
+    return this.parkService.getParkWithExercises(id);
+  }
 }
