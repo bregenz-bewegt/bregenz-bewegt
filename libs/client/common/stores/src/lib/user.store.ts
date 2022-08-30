@@ -90,7 +90,8 @@ export class UserStore implements Store {
         if (this.user) this.user.profilePicture = `${reader.result}`;
       };
     } catch (error) {
-      console.log(error);
+      console.log('giegers');
+      this.setProfilePicture('https://i.pravatar.cc/150?img=4');
       return;
     }
   }
@@ -122,6 +123,12 @@ export class UserStore implements Store {
 
   @action setUser(user: User) {
     this.user = user;
+  }
+
+  @action setProfilePicture(picture: string) {
+    if (this.user) {
+      this.user.profilePicture = picture;
+    }
   }
 
   @action async refreshProfile() {
