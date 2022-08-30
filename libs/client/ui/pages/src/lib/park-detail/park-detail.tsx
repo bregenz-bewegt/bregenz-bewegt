@@ -62,7 +62,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
           <IonText className="park-detail__name">
             <h1>{park?.name}</h1>
           </IonText>
-          <IonNote className="park-detail__park-address">
+          <IonNote className="park-detail__address">
             <IonIcon icon={location} />
             {park?.address}
           </IonNote>

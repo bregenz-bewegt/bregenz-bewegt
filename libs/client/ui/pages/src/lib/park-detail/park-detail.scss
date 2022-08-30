@@ -12,6 +12,9 @@
   }
 
   &__address {
-    
+    ion-icon {
+      display: inline-block;
+      margin-right: var(--spacing-xxs);
+    }
   }
 }
