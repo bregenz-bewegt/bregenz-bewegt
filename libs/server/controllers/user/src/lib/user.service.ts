@@ -12,8 +12,7 @@ import { Response } from 'express';
 export class UserService {
   constructor(
     private prismaService: PrismaService,
-    private multerService: MulterService,
-    private configService: ConfigService
+    private multerService: MulterService
   ) {}
 
   async getAll() {
@@ -59,7 +58,7 @@ export class UserService {
   async getProfilePicture(id: User['id'], res: Response) {
     const user = await this.getById(id);
 
-    if (await !this.uploadedProfilePictureExists(user.profilePicture)) {
+    if (!this.uploadedProfilePictureExists(user.profilePicture)) {
       throw new NotFoundException();
     }
 
@@ -71,6 +70,8 @@ export class UserService {
   }
 
   uploadedProfilePictureExists(filename: string) {
+    if (!filename) return false;
+
     const filePath = this.multerService.getProfilePicturePath(filename);
 
     return fs.existsSync(filePath);

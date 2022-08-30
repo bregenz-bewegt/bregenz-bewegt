@@ -91,7 +91,7 @@ export class UserStore implements Store {
       };
       return reader.result;
     } catch (error) {
-      console.log('giegers');
+      console.log(error);
       this.setProfilePicture('https://i.pravatar.cc/150?img=4');
       return;
     }
@@ -134,8 +134,8 @@ export class UserStore implements Store {
 
   @action async refreshProfile() {
     const profile = await this.fetchProfile();
-    await this.fetchProfilePicture();
     this.setUser(profile);
+    await this.fetchProfilePicture();
 
     return profile;
   }
