@@ -91,7 +91,6 @@ export class UserStore implements Store {
       };
       return reader.result;
     } catch (error) {
-      console.log(error);
       this.setProfilePicture('https://i.pravatar.cc/150?img=4');
       return;
     }
