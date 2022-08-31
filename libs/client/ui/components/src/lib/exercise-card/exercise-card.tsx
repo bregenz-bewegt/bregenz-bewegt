@@ -5,9 +5,11 @@ import {
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
+  IonIcon,
   IonSkeletonText,
 } from '@ionic/react';
 import { Exercise } from '@bregenz-bewegt/client/types';
+import { play } from 'ionicons/icons';
 
 export interface ExerciseCardProps extends Exercise {
   link: string;
@@ -43,7 +45,9 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
             {isLoaded ? description : <IonSkeletonText animated />}
           </IonCardContent>
         </div>
-        <div className="exercise-card__wrapper__video"></div>
+        <div className="exercise-card__wrapper__video">
+          <IonIcon icon={play} />
+        </div>
       </div>
     </IonCard>
   );
