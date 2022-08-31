@@ -116,6 +116,20 @@ const createExercises = async () => {
       points: 10,
       video: 'not-yet-defined',
     },
+    {
+      name: 'Squat',
+      description: 'Some description',
+      difficulty: 'BEGINNER',
+      points: 10,
+      video: 'not-yet-defined',
+    },
+    {
+      name: 'Versteinerte Hexe',
+      description: 'Some description',
+      difficulty: 'GAME',
+      points: 10,
+      video: 'not-yet-defined',
+    },
   ];
 
   await Promise.all([
