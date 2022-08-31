@@ -17,6 +17,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
+      ion-icon {
+        height: var(--spacing-m);
+        width: var(--spacing-m);
+        background-color: var(--ion-color-light);
+      }
     }
   }
 }
