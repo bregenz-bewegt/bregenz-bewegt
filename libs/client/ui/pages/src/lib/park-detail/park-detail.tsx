@@ -55,19 +55,21 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       <IonPage className="park-detail">
         <Header />
         <IonContent fullscreen>
-          <IonBackButton
-            color="primary"
-            mode="ios"
-            defaultHref={tabRoutes.start.route}
-            text="Zurück"
-          />
-          <IonText className="park-detail__name">
-            <h1>{park?.name}</h1>
-          </IonText>
-          <IonNote className="park-detail__address">
-            <IonIcon icon={location} />
-            {park?.address}
-          </IonNote>
+          <div className="park-detail__header-wrapper">
+            <IonBackButton
+              color="primary"
+              mode="ios"
+              defaultHref={tabRoutes.start.route}
+              text="Zurück"
+            />
+            <IonText className="park-detail__header-wrapper__name">
+              <h1>{park?.name}</h1>
+            </IonText>
+            <IonNote className="park-detail__header-wrapper__address">
+              <IonIcon icon={location} />
+              {park?.address}
+            </IonNote>
+          </div>
           <div className="park-detail__exercises">
             {park?.exercises &&
               park.exercises.length > 0 &&
