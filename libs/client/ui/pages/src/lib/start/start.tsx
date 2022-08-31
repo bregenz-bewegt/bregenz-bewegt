@@ -86,14 +86,15 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                 </IonSelectOption>
               </IonSelect>
             </div>
-            <IonSearchbar
-              mode="ios"
-              value={searchText}
-              onIonChange={(e) => handleSearch(e)}
-              debounce={250}
-              placeholder="Suche nach Spielplätzen"
-              className="start__content__search-bar"
-            ></IonSearchbar>
+            <div className="start__content__searchbar-wrapper">
+              <IonSearchbar
+                mode="ios"
+                value={searchText}
+                onIonChange={(e) => handleSearch(e)}
+                debounce={250}
+                placeholder="Suche nach Spielplätzen"
+              ></IonSearchbar>
+            </div>
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
                 {parksResult.length > 0 ? (

@@ -24,25 +24,20 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
   link,
   isLoading,
 }) => {
-  const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
-  const isLoaded = !isLoading && isImageLoaded;
+  // const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+  const isLoaded = !isLoading;
 
   return (
-    <IonCard routerLink={link}>
-      <IonCard
-        routerLink={isLoaded ? link : undefined}
-        routerDirection="forward"
-      >
-        {!isLoaded && <IonSkeletonText style={{ height: '64px' }} animated />}
-        <IonCardHeader>
-          <IonCardTitle>
-            {isLoaded ? name : <IonSkeletonText animated />}
-          </IonCardTitle>
-        </IonCardHeader>
-        <IonCardContent>
-          {isLoaded ? description : <IonSkeletonText animated />}
-        </IonCardContent>
-      </IonCard>
+    <IonCard routerLink={isLoaded ? link : undefined} routerDirection="forward">
+      {!isLoaded && <IonSkeletonText style={{ height: '64px' }} animated />}
+      <IonCardHeader>
+        <IonCardTitle>
+          {isLoaded ? name : <IonSkeletonText animated />}
+        </IonCardTitle>
+      </IonCardHeader>
+      <IonCardContent>
+        {isLoaded ? description : <IonSkeletonText animated />}
+      </IonCardContent>
     </IonCard>
   );
 };
