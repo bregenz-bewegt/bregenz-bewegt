@@ -7,7 +7,7 @@ import {
   UserStore,
   userStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { Exercise, Park } from '@bregenz-bewegt/client/types';
+import { Park } from '@bregenz-bewegt/client/types';
 import {
   IonBackButton,
   IonContent,

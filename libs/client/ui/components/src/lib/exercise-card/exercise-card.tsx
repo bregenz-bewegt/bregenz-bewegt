@@ -8,7 +8,6 @@ import {
   IonSkeletonText,
 } from '@ionic/react';
 import { Exercise } from '@bregenz-bewegt/client/types';
-import { title } from 'process';
 
 export interface ExerciseCardProps extends Exercise {
   link: string;
@@ -37,7 +36,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
         {!isLoaded && <IonSkeletonText style={{ height: '64px' }} animated />}
         <IonCardHeader>
           <IonCardTitle>
-            {isLoaded ? title : <IonSkeletonText animated />}
+            {isLoaded ? name : <IonSkeletonText animated />}
           </IonCardTitle>
         </IonCardHeader>
         <IonCardContent>
