@@ -1,5 +1,5 @@
 import './park-detail.scss';
-import { Header } from '@bregenz-bewegt/client-ui-components';
+import { ExerciseCard, Header } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   ParkStore,
@@ -72,7 +72,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
             {park?.exercises &&
               park.exercises.length > 0 &&
               park.exercises.map((exercise) => {
-                return <div>{exercise.name}</div>;
+                return <ExerciseCard {...exercise} link={`#`} />;
               })}
           </div>
         </IonContent>
