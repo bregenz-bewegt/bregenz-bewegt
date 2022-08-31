@@ -1,7 +1,7 @@
 ion-card {
   ion-card-header {
     ion-card-title {
-      font-size: 1em;
+      font-size: var(--spacing-m);
     }
   }
 }
