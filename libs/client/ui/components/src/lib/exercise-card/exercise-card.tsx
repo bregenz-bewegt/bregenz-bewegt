@@ -32,17 +32,19 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
       routerDirection="forward"
       className="exercise-card"
     >
-      <div className="exercise-card__content">
-        <IonCardHeader>
-          <IonCardTitle>
-            {isLoaded ? name : <IonSkeletonText animated />}
-          </IonCardTitle>
-        </IonCardHeader>
-        <IonCardContent>
-          {isLoaded ? description : <IonSkeletonText animated />}
-        </IonCardContent>
+      <div className="exercise-card__wrapper">
+        <div className="exercise-card__wrapper__content">
+          <IonCardHeader>
+            <IonCardTitle>
+              {isLoaded ? name : <IonSkeletonText animated />}
+            </IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            {isLoaded ? description : <IonSkeletonText animated />}
+          </IonCardContent>
+        </div>
+        <div className="exercise-card__wrapper__video"></div>
       </div>
-      <div className="exercise-card__video"></div>
     </IonCard>
   );
 };

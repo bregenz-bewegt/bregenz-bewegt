@@ -1,17 +1,19 @@
 .exercise-card {
-  display: flex;
+  &__wrapper {
+    display: flex;
 
-  &__content {
-    width: 50%;
+    &__content {
+      width: 50%;
 
-    ion-card-header,
-    ion-card-content {
+      ion-card-header,
+      ion-card-content {
+      }
     }
-  }
 
-  &__video {
-    width: 50%;
-    height: 100%;
-    background-color: red;
+    &__video {
+      width: 50%;
+      height: 100%;
+      background-color: red;
+    }
   }
 }
