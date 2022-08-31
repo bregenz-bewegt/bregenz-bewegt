@@ -2,6 +2,8 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 import * as argon from 'argon2';
 
+const exercises = [];
+
 const createUsers = async () => {
   await prisma.user.deleteMany();
   const password = await argon.hash('test');
@@ -19,50 +21,6 @@ const createUsers = async () => {
       },
     ],
   });
-};
-
-const createExercises = async () => {
-  await prisma.exercise.deleteMany();
-  const parks = await prisma.park.findMany();
-
-  await prisma.exercise.createMany({
-    data: [
-      {
-        name: 'Sit-Up',
-        description: 'Some description',
-        difficulty: 'BEGINNER',
-        points: 10,
-        video: 'not-yet-defined',
-      },
-      {
-        name: 'Liegestütze',
-        description: 'Some description',
-        difficulty: 'BEGINNER',
-        points: 10,
-        video: 'not-yet-defined',
-      },
-      {
-        name: 'Plank',
-        description: 'Some description',
-        difficulty: 'BEGINNER',
-        points: 10,
-        video: 'not-yet-defined',
-      },
-    ],
-  });
-
-  const exercises = await prisma.exercise.findMany();
-
-  await Promise.all([
-    parks.map((park) => {
-      exercises.map(async (exercise, i) => {
-        prisma.park.update({
-          where: { id: park.id },
-          data: { exercises: { connect: { id: exercises[i].id } } },
-        });
-      });
-    }),
-  ]);
 };
 
 const createParks = async () => {
@@ -131,6 +89,47 @@ const createParks = async () => {
       },
     ],
   });
+};
+
+const createExercises = async () => {
+  await prisma.exercise.deleteMany();
+  const parks = await prisma.park.findMany();
+  const exercises = [
+    {
+      name: 'Sit-Up',
+      description: 'Some description',
+      difficulty: 'BEGINNER',
+      points: 10,
+      video: 'not-yet-defined',
+    },
+    {
+      name: 'Liegestütze',
+      description: 'Some description',
+      difficulty: 'BEGINNER',
+      points: 10,
+      video: 'not-yet-defined',
+    },
+    {
+      name: 'Plank',
+      description: 'Some description',
+      difficulty: 'BEGINNER',
+      points: 10,
+      video: 'not-yet-defined',
+    },
+  ];
+
+  await Promise.all([
+    exercises.map(async (exercise) => {
+      await prisma.exercise.create({
+        data: <any>{
+          ...exercise,
+          parks: {
+            connect: parks.map((park) => ({ id: park.id })),
+          },
+        },
+      });
+    }),
+  ]);
 };
 
 const main = async () => {
