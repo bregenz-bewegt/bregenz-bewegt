@@ -1,0 +1,16 @@
+ion-card.exercise-card {
+  display: flex;
+
+  &__content {
+    width: 50%;
+
+    ion-card-header,
+    ion-card-content {
+    }
+  }
+
+  &__video {
+    height: 100%;
+    background-color: red;
+  }
+}

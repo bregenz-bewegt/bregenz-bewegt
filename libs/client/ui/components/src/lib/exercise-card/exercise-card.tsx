@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './exercise-card.scss';
 import {
   IonCard,
@@ -24,20 +24,25 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
   link,
   isLoading,
 }) => {
-  // const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
   const isLoaded = !isLoading;
 
   return (
-    <IonCard routerLink={isLoaded ? link : undefined} routerDirection="forward">
-      {!isLoaded && <IonSkeletonText style={{ height: '64px' }} animated />}
-      <IonCardHeader>
-        <IonCardTitle>
-          {isLoaded ? name : <IonSkeletonText animated />}
-        </IonCardTitle>
-      </IonCardHeader>
-      <IonCardContent>
-        {isLoaded ? description : <IonSkeletonText animated />}
-      </IonCardContent>
+    <IonCard
+      routerLink={isLoaded ? link : undefined}
+      routerDirection="forward"
+      className="exercise-card"
+    >
+      <div className="exercise-card__content">
+        <IonCardHeader>
+          <IonCardTitle>
+            {isLoaded ? name : <IonSkeletonText animated />}
+          </IonCardTitle>
+        </IonCardHeader>
+        <IonCardContent>
+          {isLoaded ? description : <IonSkeletonText animated />}
+        </IonCardContent>
+      </div>
+      <div className="exercise-card__video"></div>
     </IonCard>
   );
 };

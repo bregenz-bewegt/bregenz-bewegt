@@ -27,7 +27,11 @@ export const ParkCard: React.FC<ParkCardProps> = ({
   const isLoaded = !isLoading && isImageLoaded;
 
   return (
-    <IonCard routerLink={isLoaded ? link : undefined} routerDirection="forward">
+    <IonCard
+      routerLink={isLoaded ? link : undefined}
+      routerDirection="forward"
+      className="park-card"
+    >
       <img
         onLoad={() => setIsImageLoaded(true)}
         src={image}
