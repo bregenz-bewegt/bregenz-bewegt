@@ -40,5 +40,6 @@
   &__scroll-wrapper__exercises {
     overflow-y: scroll;
     flex-grow: 1;
+    padding-bottom: var(--spacing-5xl);
   }
 }
