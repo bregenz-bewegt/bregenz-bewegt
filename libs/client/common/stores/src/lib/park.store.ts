@@ -35,8 +35,12 @@ export class ParkStore implements Store {
   }
 
   async getParkWithExercises(id: Park['id']) {
-    const { data } = await http.get(`/parks/${id}/exercises`);
-    return data;
+    try {
+      const { data } = await http.get(`/parks/${id}/exercises`);
+      return data;
+    } catch (error) {
+      return null;
+    }
   }
 }
 

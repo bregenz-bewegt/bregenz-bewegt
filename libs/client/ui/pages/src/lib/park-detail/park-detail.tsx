@@ -42,16 +42,12 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     const [park, setPark] = useState<Park>();
 
     useEffect(() => {
-      parkStore
-        .getParkWithExercises(+match.params.park)
-        .then((park) => {
-          setPark(park);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          history.push(`${tabRoutes.start.route}`);
-        });
+      parkStore.getParkWithExercises(+match.params.park).then((park) => {
+        if (!park) return history.push(`${tabRoutes.start.route}`);
+
+        setPark(park);
+        setIsLoading(false);
+      });
     }, [match.params]);
 
     console.log({ park });
