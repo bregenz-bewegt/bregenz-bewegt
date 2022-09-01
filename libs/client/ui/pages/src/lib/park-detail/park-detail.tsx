@@ -14,6 +14,7 @@ import {
   IonIcon,
   IonNote,
   IonPage,
+  IonRouterOutlet,
   IonText,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
@@ -23,7 +24,7 @@ import { Loading } from '../loading/loading';
 import { location } from 'ionicons/icons';
 
 interface MatchParams {
-  id: string;
+  park: string;
 }
 
 export interface ParkDetail extends RouteComponentProps<MatchParams> {
@@ -41,10 +42,13 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     const [park, setPark] = useState<Park>();
 
     useEffect(() => {
-      parkStore.getParkWithExercises(+match.params.id).then((park) => {
-        setPark(park);
-        setIsLoading(false);
-      });
+      parkStore
+        .getParkWithExercises(+match.params.park)
+        .then((park) => {
+          setPark(park);
+          setIsLoading(false);
+        })
+        .catch((error) => console.log('error'));
     }, [match.params]);
 
     console.log(park);
@@ -75,7 +79,12 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
               {park?.exercises &&
                 park.exercises.length > 0 &&
                 park.exercises.map((exercise) => {
-                  return <ExerciseCard {...exercise} link={`#`} />;
+                  return (
+                    <ExerciseCard
+                      {...exercise}
+                      link={`${tabRoutes.start.route}/${park.id}/${exercise.id}`}
+                    />
+                  );
                 })}
             </div>
           </div>
