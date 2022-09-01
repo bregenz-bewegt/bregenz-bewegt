@@ -1,27 +1,39 @@
 .park-detail {
-  &__header-wrapper {
-    margin: 0 var(--spacing-m);
+  overflow: hidden;
 
-    ion-back-button {
-      display: inline-block;
-      margin-left: calc(var(--spacing-xs) * -1);
-    }
+  &__scroll-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
-    &__name {
-      h1 {
-        margin-top: var(--spacing-m);
-      }
-    }
+    &__header-wrapper {
+      margin: 0 var(--spacing-m);
 
-    &__address {
-      ion-icon {
+      ion-back-button {
         display: inline-block;
-        margin-right: var(--spacing-xs);
-        margin-bottom: calc(var(--spacing-xxs) * -1);
+        margin-left: calc(var(--spacing-xs) * -1);
+      }
+
+      ion-text {
+        h1 {
+          margin-top: var(--spacing-m);
+        }
+      }
+
+      ion-note {
+        margin-bottom: var(--spacing-m);
+
+        ion-icon {
+          display: inline-block;
+          margin-right: var(--spacing-xs);
+          margin-bottom: calc(var(--spacing-xxs) * -1);
+        }
       }
     }
   }
 
-  &__exercises {
+  &__scroll-wrapper__exercises {
+    overflow-y: scroll;
+    flex-grow: 1;
   }
 }
