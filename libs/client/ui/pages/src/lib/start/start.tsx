@@ -65,7 +65,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
 
     return (
       <IonPage className="start">
-        <Header></Header>
+        <Header />
         <IonContent className="start__content" scrollY={false}>
           <div className="start__content__scroll-wrapper">
             <div className="start__content__title-wrapper">

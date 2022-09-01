@@ -15,6 +15,7 @@ import {
   IonNote,
   IonPage,
   IonText,
+  IonTitle,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
@@ -63,9 +64,9 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
                 defaultHref={tabRoutes.start.route}
                 text="Zurück"
               />
-              <IonText>
+              <IonTitle>
                 <h1>{park?.name}</h1>
-              </IonText>
+              </IonTei>
               <IonNote>
                 <IonIcon icon={location} />
                 {park?.address}
