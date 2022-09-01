@@ -6,6 +6,7 @@ import { parkStore, userStore } from '@bregenz-bewegt/client/common/stores';
 const stores = {
   parkStore,
   userStore,
+  ex
 };
 
 interface StoreProviderProps {

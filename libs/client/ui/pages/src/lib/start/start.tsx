@@ -35,7 +35,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
 
     const fetchParks = async () => {
       setIsLoadingParks(true);
-      parkStore?.fetchParks().then((parks) => {
+      parkStore?.getParks().then((parks) => {
         setParksResult(parks ?? []);
         setIsLoadingParks(false);
       });

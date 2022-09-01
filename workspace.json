@@ -15,6 +15,7 @@
     "server": "apps/server",
     "server-common": "libs/server/common",
     "server-controllers-auth": "libs/server/controllers/auth",
+    "server-controllers-exercise": "libs/server/controllers/exercise",
     "server-controllers-park": "libs/server/controllers/park",
     "server-controllers-user": "libs/server/controllers/user",
     "server-multer": "libs/server/multer",

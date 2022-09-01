@@ -15,13 +15,13 @@ export class ParkStore implements Store {
     this.parks = parks;
   }
 
-  @action async fetchParks() {
+  @action async getParks() {
     try {
       const { data } = await http.get('/parks');
       this.setParks(data);
       return data;
     } catch (error) {
-      return;
+      return null;
     }
   }
 
@@ -30,7 +30,7 @@ export class ParkStore implements Store {
       const { data } = await http.get(`/parks/${id}`);
       return data;
     } catch (error) {
-      return;
+      return null;
     }
   }
 

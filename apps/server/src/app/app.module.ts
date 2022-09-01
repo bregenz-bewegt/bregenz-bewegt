@@ -10,12 +10,14 @@ import { AppService } from './app.service';
 import { AccessTokenGuard } from '@bregenz-bewegt/server/common';
 import { ParkModule } from 'libs/server/controllers/park/src';
 import { MulterModule } from '@bregenz-bewegt/server/multer';
+import { ExerciseModule } from '@bregenz-bewegt/server/controllers/exercise';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     UserModule,
     ParkModule,
+    ExerciseModule,
     AuthModule,
     PrismaModule,
     MulterModule,

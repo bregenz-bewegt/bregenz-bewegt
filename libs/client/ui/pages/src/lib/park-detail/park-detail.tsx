@@ -2,7 +2,7 @@ import './park-detail.scss';
 import { ExerciseCard, Header } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
-  ParkStore,
+  ExerciseStore,
   parkStore,
   UserStore,
   userStore,
@@ -29,7 +29,7 @@ interface MatchParams {
 
 export interface ParkDetail extends RouteComponentProps<MatchParams> {
   userStore?: UserStore;
-  parkStore?: ParkStore;
+  parkStore?: ExerciseStore;
 }
 
 export const ParkDetail: React.FC<ParkDetail> = inject(
@@ -42,8 +42,15 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     const [park, setPark] = useState<Park>();
 
     useEffect(() => {
-      parkStore.getParkWithExercises(+match.params.park).then((park) => {
-        if (!park) return history.push(`${tabRoutes.start.route}`);
+      const navigateBackToStart = () => history.push(`${tabRoutes.start.route}`);
+      const parkId = +match.params.park;
+
+      if (!parkId) {
+        navigateBackToStart();
+      }
+
+      parkStore.getParkWithExercises(parkId).then((park) => {
+        if (!park) return navigateBackToStart();
 
         setPark(park);
         setIsLoading(false);
