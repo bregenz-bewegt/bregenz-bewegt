@@ -33,6 +33,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
       routerLink={isLoaded ? link : undefined}
       routerDirection="forward"
       className="exercise-card"
+      mode="ios"
     >
       <div className="exercise-card__wrapper">
         <div className="exercise-card__wrapper__content">
