@@ -50,7 +50,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
         })
         .catch((error) => {
           console.log(error);
-          history.push(`/${tabRoutes.start}`);
+          history.push(`${tabRoutes.start.route}`);
         });
     }, [match.params]);
 
