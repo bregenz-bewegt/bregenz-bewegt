@@ -19,8 +19,8 @@ export interface HeaderProps {
   userStore?: UserStore;
 }
 
-export const Header = inject(userStore.storeKey)(
-  observer((props: HeaderProps) => {
+export const Header: React.FC<HeaderProps> = inject(userStore.storeKey)(
+  observer(() => {
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
 
     return (
