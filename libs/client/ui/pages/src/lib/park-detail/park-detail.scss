@@ -1,6 +1,10 @@
 .park-detail {
   overflow: hidden;
 
+  &::part(scroll) {
+    padding-bottom: 0;
+  }
+
   &__scroll-wrapper {
     height: 100%;
     display: flex;

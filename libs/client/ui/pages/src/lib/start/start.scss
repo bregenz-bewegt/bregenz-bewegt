@@ -1,5 +1,9 @@
 .start {
   &__content {
+    &::part(scroll) {
+      padding-bottom: 0;
+    }
+
     &__display-type-select {
       margin-left: auto;
       margin-bottom: 4px;
@@ -33,10 +37,6 @@
 
     &__parks-map {
       //
-    }
-
-    &::part(scroll) {
-      padding-bottom: 0;
     }
   }
 }
