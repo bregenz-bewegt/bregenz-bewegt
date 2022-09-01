@@ -7,7 +7,7 @@
     flex-direction: column;
 
     &__header-wrapper {
-      margin: 0 var(--spacing-m);
+      margin: 0 var(--spacing-m) var(--spacing-m) var(--spacing-m);
 
       ion-back-button {
         display: inline-block;
@@ -21,8 +21,6 @@
       }
 
       ion-note {
-        margin-bottom: var(--spacing-m);
-
         ion-icon {
           display: inline-block;
           margin-right: var(--spacing-xs);
