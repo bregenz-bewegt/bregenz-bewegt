@@ -48,10 +48,13 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
           setPark(park);
           setIsLoading(false);
         })
-        .catch((error) => console.log('error'));
+        .catch((error) => {
+          console.log(error);
+          history.push(`/${tabRoutes.start}`);
+        });
     }, [match.params]);
 
-    console.log(park);
+    console.log({ park });
 
     return isLoading ? (
       <Loading />
