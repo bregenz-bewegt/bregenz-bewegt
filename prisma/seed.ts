@@ -112,7 +112,7 @@ const createExercises = async () => {
     {
       name: 'Plank',
       description: 'Some description',
-      difficulty: 'BEGINNER',
+      difficulty: 'ADVANCED',
       points: 10,
       video: 'not-yet-defined',
     },

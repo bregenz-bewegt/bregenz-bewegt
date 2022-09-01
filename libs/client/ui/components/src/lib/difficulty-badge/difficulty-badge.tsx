@@ -9,5 +9,14 @@ export interface DifficultyBadgeProps {
 export const DifficultyBadge: React.FC<DifficultyBadgeProps> = ({
   difficulty,
 }) => {
-  return <IonBadge className="difficulty-badge" color="primary">{difficulty}</IonBadge>;
+  const displayTexts: { [K in Difficulty]: string } = {
+    [Difficulty.BEGINNER]: 'Anfänger',
+    [Difficulty.ADVANCED]: 'Fortgeschritten',
+    [Difficulty.GAME]: 'Spiel',
+  };
+  return (
+    <IonBadge className="difficulty-badge" color="primary">
+      {displayTexts[difficulty]}
+    </IonBadge>
+  );
 };

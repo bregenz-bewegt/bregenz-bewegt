@@ -39,10 +39,10 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
       <div className="exercise-card__wrapper">
         <div className="exercise-card__wrapper__content">
           <IonCardHeader>
-            <DifficultyBadge difficulty={difficulty} />
             <IonCardTitle>
               {isLoaded ? name : <IonSkeletonText animated />}
             </IonCardTitle>
+            <DifficultyBadge difficulty={difficulty} />
           </IonCardHeader>
           <IonCardContent>
             {isLoaded ? description : <IonSkeletonText animated />}
