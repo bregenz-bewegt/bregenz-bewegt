@@ -6,7 +6,7 @@ import { ExerciseService } from './exercise.service';
 export class ExerciseController {
   constructor(private exerciseService: ExerciseService) {}
 
-  @Get()
+  @Get(':id')
   getExercise(@Param('id', ParseIntPipe) id: Exercise['id']) {
     return this.exerciseService.getExercise(id);
   }
