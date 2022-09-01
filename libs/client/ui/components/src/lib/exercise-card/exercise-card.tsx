@@ -8,8 +8,9 @@ import {
   IonIcon,
   IonSkeletonText,
 } from '@ionic/react';
-import { Exercise } from '@bregenz-bewegt/client/types';
+import { Difficulty, Exercise } from '@bregenz-bewegt/client/types';
 import { play } from 'ionicons/icons';
+import { DifficultyBadge } from '../difficulty-badge/difficulty-badge';
 
 export interface ExerciseCardProps extends Exercise {
   link: string;
@@ -38,6 +39,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
       <div className="exercise-card__wrapper">
         <div className="exercise-card__wrapper__content">
           <IonCardHeader>
+            <DifficultyBadge difficulty={difficulty} />
             <IonCardTitle>
               {isLoaded ? name : <IonSkeletonText animated />}
             </IonCardTitle>
