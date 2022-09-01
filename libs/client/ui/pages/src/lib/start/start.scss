@@ -2,6 +2,7 @@
   &__content {
     &::part(scroll) {
       padding-bottom: 0;
+      overflow: hidden;
     }
 
     &__display-type-select {
