@@ -38,6 +38,7 @@
     width: 48px;
     --background: var(--ion-color-light-tint);
     --box-shadow: none;
+    --background-activated: none;
 
     &__icon {
       --background: var(--ion-color-primary);
