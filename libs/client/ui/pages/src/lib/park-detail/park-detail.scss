@@ -1,9 +1,11 @@
 .park-detail {
   overflow: hidden;
 
-  &::part(scroll) {
-    padding-bottom: 0;
-    overflow: hidden;
+  ion-content {
+    &::part(scroll) {
+      padding-bottom: 0;
+      overflow: hidden;
+    }
   }
 
   &__scroll-wrapper {
