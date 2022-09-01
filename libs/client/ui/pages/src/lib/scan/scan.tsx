@@ -1,6 +1,5 @@
 import './scan.scss';
 import {
-  IonButton,
   IonContent,
   IonHeader,
   IonPage,
