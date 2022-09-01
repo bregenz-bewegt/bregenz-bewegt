@@ -1,12 +1,16 @@
 import { ReactNode } from 'react';
 import { Provider } from 'mobx-react';
 
-import { parkStore, userStore } from '@bregenz-bewegt/client/common/stores';
+import {
+  parkStore,
+  userStore,
+  exerciseStore,
+} from '@bregenz-bewegt/client/common/stores';
 
 const stores = {
   parkStore,
   userStore,
-  ex
+  exerciseStore,
 };
 
 interface StoreProviderProps {
