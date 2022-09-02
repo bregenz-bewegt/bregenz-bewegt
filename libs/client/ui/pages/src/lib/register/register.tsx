@@ -14,7 +14,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './register.scss';
 
-/* eslint-disable-next-line */
 export interface RegisterProps {
   userStore?: UserStore;
 }

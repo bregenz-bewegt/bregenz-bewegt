@@ -12,6 +12,8 @@ import { Prisma } from '@prisma/client';
 import {
   JwtPayload,
   LoginDto,
+  loginError,
+  LoginError,
   RegisterDto,
   Tokens,
 } from '@bregenz-bewegt/shared/types';
@@ -69,12 +71,15 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new ForbiddenException('Anmeldedaten inkorrekt');
+    if (!user) {
+      throw new ForbiddenException(loginError);
+    }
 
     const passwordMatches = await argon.verify(user.password, dto.password);
 
-    if (!passwordMatches)
-      throw new ForbiddenException('Anmeldedaten inkorrekt');
+    if (!passwordMatches) {
+      throw new ForbiddenException(loginError);
+    }
 
     const tokens = await this.signTokens(user.id, user.email);
     this.updateRefreshToken(user.id, tokens.refresh_token);

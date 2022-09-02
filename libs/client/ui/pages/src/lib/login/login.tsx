@@ -13,8 +13,8 @@ import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, FormikErrors } from 'formik';
-import { LoginCredentials } from '@bregenz-bewegt/client/types';
 import { loginSchema } from '@bregenz-bewegt/client/common/validation';
+import { LoginCredentials } from '@bregenz-bewegt/client/types';
 
 export interface LoginProps {
   userStore?: UserStore;
@@ -45,7 +45,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
         })
         .catch((error) => {
           console.log(error.response.data);
-          // setErrors({});
+          setErrors({});
           setIsLoading(false);
         });
     };

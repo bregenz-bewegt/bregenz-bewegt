@@ -18,6 +18,10 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
+      validationError: {
+        target: true,
+        value: true,
+      },
     })
   );
   app.enableCors({ origin: true });
