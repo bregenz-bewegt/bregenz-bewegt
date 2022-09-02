@@ -1,6 +1,13 @@
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
-import { IonCard, IonCardContent, IonCardHeader } from '@ionic/react';
+import {
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonIcon,
+} from '@ionic/react';
 import { inject, observer } from 'mobx-react';
+import { add } from 'ionicons/icons';
 import './coin-depot.scss';
 
 export interface CoinDepotProps {
@@ -16,7 +23,12 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
             <h2>BB</h2>
           </div>
         </IonCardHeader>
-        <IonCardContent>test</IonCardContent>
+        <IonCardContent>
+          <IonButton>
+            <IonIcon slot="start" icon={add} />
+            Left Icon
+          </IonButton>
+        </IonCardContent>
       </IonCard>
     );
   })
