@@ -1,5 +1,6 @@
 .checkbox {
   display: flex;
+  align-items: center;
 
   ion-checkbox {
     min-height: var(--spacing-l);
