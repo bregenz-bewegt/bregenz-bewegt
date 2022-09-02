@@ -109,6 +109,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 className="password-confirm"
               ></Input>
               <Checkbox
+                className="accept-agb"
                 checked={profile.values.agbAccept}
                 label="Ich akzeptiere die AGBs und Nutzungsbedigungen"
                 onChange={profile.handleChange}
