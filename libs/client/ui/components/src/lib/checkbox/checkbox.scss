@@ -6,10 +6,10 @@
     height: var(--spacing-l);
     width: var(--spacing-l);
     min-width: var(--spacing-l);
-    padding-left: var(--spacing-s);
   }
 
   ion-label {
     display: inline-block;
+    padding-left: var(--spacing-s);
   }
 }
