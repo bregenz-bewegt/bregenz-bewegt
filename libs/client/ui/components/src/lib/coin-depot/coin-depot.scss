@@ -2,6 +2,9 @@
   margin: 0;
 
   ion-card-header {
+    display: flex;
+    align-items: center;
+
     .bb-coin {
       height: calc(var(--spacing-3xl) * 2);
       width: calc(var(--spacing-3xl) * 2);
