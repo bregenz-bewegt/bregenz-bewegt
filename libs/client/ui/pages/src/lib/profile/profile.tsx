@@ -227,7 +227,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             </IonRow>
           </IonGrid>
           <IonButton
-            disabled={profile.dirty || profile.isSubmitting}
+            disabled={!profile.dirty || profile.isSubmitting}
             onClick={() => profile.submitForm()}
             expand="block"
             mode="ios"
