@@ -26,7 +26,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
         email: '',
         password: '',
         passwordConfirm: '',
-        agbAccept: false,
+        acceptTos: false,
       },
       onSubmit: (values) => {
         console.log(values);
@@ -104,8 +104,9 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 className="password-confirm"
               ></Input>
               <Checkbox
-                className="accept-agb"
-                checked={profile.values.agbAccept}
+                name="accept-terms"
+                className="accept-tos"
+                checked={profile.values.acceptTos}
                 label={
                   <IonNote>
                     Ich akzeptiere die AGBs und Nutzungsbedigungen

@@ -3,14 +3,16 @@ import { ReactNode } from 'react';
 import './checkbox.scss';
 
 export interface CheckboxProps {
-  label?: ReactNode;
+  name: string;
   checked: boolean;
+  label?: ReactNode;
   className?: string;
   onChange: React.FormEventHandler<HTMLIonCheckboxElement>;
   onBlur: React.FocusEventHandler<HTMLIonCheckboxElement>;
 }
 
 export const Checkbox: React.FC<CheckboxProps> = ({
+  name,
   label,
   checked,
   className,
@@ -18,6 +20,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   onBlur,
 }: CheckboxProps) => {
   const checkboxProps = {
+    name,
     checked,
     onChange,
     onBlur,
