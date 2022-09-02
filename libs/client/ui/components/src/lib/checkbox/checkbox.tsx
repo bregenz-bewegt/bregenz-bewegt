@@ -5,10 +5,11 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/react';
+import { ReactNode } from 'react';
 import './checkbox.scss';
 
 export interface CheckboxProps {
-  label?: string;
+  label?: ReactNode;
   checked: boolean;
   onChange: (
     event: IonCheckboxCustomEvent<CheckboxChangeEventDetail<any>>
