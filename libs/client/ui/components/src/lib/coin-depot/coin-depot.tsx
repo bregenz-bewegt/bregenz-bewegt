@@ -11,7 +11,9 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     return (
       <IonCard className="coin-depot" color="secondary">
-        <IonCardHeader></IonCardHeader>
+        <IonCardHeader>
+          <div className="bb-coin"></div>
+        </IonCardHeader>
         <IonCardContent>test</IonCardContent>
       </IonCard>
     );
