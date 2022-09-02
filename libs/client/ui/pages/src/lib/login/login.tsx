@@ -66,8 +66,13 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
               <IonText>
                 <h2>Anmelden</h2>
               </IonText>
-              <IonRow>
-                <IonButton mode="ios" color="primary" fill="outline">
+              <IonRow className="login__content__login__socials">
+                <IonButton
+                  mode="ios"
+                  color="primary"
+                  fill="outline"
+                  size="small"
+                >
                   Als Gast beitreten
                 </IonButton>
               </IonRow>

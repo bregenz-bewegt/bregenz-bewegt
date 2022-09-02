@@ -15,6 +15,10 @@
     &__login {
       width: 100%;
 
+      &__socials {
+        marign-bottom: var(--spacing-m);
+      }
+
       &__forgot-password {
         display: inline-block;
         margin: 8px 0 16px 0;
