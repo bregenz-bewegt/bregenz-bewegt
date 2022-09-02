@@ -9,7 +9,7 @@ import {
   IonSpinner,
   IonNote,
 } from '@ionic/react';
-import { useFormik } from 'formik';
+import { Field, Formik, useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
 import './register.scss';
@@ -20,27 +20,17 @@ export interface RegisterProps {
 
 export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
-    const profile = useFormik({
-      initialValues: {
-        username: '',
-        email: '',
-        password: '',
-        passwordConfirm: '',
-        acceptTos: false,
-      },
-      onSubmit: (values) => {
-        console.log(values);
-      },
-    });
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const handleRegister = (
-      e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>
-    ) => {
-      //
+    const handleRegister = async (values: {
+      username: string;
+      email: string;
+      password: string;
+      passwordConfirm: string;
+      acceptTos: boolean;
+    }) => {
+      console.log(values);
     };
-
-    console.log(profile.values);
 
     return (
       <IonPage className="register">
@@ -57,87 +47,112 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
               <IonText>
                 <h2>Registrieren</h2>
               </IonText>
-              <Input
-                name="username"
-                placeholder="Benutzername"
-                value={profile.values.username}
-                error={
-                  profile.touched.username ? profile.errors.username : undefined
-                }
-                onChange={profile.handleChange}
-                onBlur={profile.handleBlur}
-                className="username"
-              ></Input>
-              <Input
-                name="email"
-                placeholder="Email"
-                type="email"
-                inputMode="email"
-                value={profile.values.email}
-                error={profile.touched.email ? profile.errors.email : undefined}
-                onChange={profile.handleChange}
-                onBlur={profile.handleBlur}
-                className="email"
-              ></Input>
-              <Input
-                name="password"
-                placeholder="Passwort"
-                value={profile.values.password}
-                error={
-                  profile.touched.password ? profile.errors.password : undefined
-                }
-                onChange={profile.handleChange}
-                onBlur={profile.handleBlur}
-                className="password"
-              ></Input>
-              <Input
-                name="password-confirm"
-                placeholder="Passwort bestätigen"
-                value={profile.values.passwordConfirm}
-                error={
-                  profile.touched.passwordConfirm
-                    ? profile.errors.passwordConfirm
-                    : undefined
-                }
-                onChange={profile.handleChange}
-                onBlur={profile.handleBlur}
-                className="password-confirm"
-              ></Input>
-              <Checkbox
-                name="accept-terms"
-                className="accept-tos"
-                checked={profile.values.acceptTos}
-                label={
-                  <IonNote>
-                    Ich akzeptiere die AGBs und Nutzungsbedigungen
-                  </IonNote>
-                }
-                onChange={profile.handleChange}
-                onBlur={profile.handleBlur}
-              />
-              <IonButton
-                expand="block"
-                color="primary"
-                onClick={(e) => handleRegister(e)}
-                disabled={isLoading}
+              <Formik
+                initialValues={{
+                  username: '',
+                  email: '',
+                  password: '',
+                  passwordConfirm: '',
+                  acceptTos: false,
+                }}
+                onSubmit={(values) => {
+                  handleRegister(values);
+                }}
               >
-                {isLoading ? (
-                  <IonLabel>
-                    <IonSpinner name="crescent" />
-                  </IonLabel>
-                ) : (
-                  'Registrieren'
+                {({
+                  values,
+                  errors,
+                  touched,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                }) => (
+                  <form>
+                    <Input
+                      name="username"
+                      placeholder="Benutzername"
+                      value={values.username}
+                      error={touched.username ? errors.username : undefined}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className="username"
+                    ></Input>
+                    <Input
+                      name="email"
+                      placeholder="Email"
+                      type="email"
+                      inputMode="email"
+                      value={values.email}
+                      error={touched.email ? errors.email : undefined}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className="email"
+                    ></Input>
+                    <Input
+                      name="password"
+                      placeholder="Passwort"
+                      value={values.password}
+                      error={touched.password ? errors.password : undefined}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className="password"
+                    ></Input>
+                    <Input
+                      name="passwordConfirm"
+                      placeholder="Passwort bestätigen"
+                      value={values.passwordConfirm}
+                      error={
+                        touched.passwordConfirm
+                          ? errors.passwordConfirm
+                          : undefined
+                      }
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className="password-confirm"
+                    ></Input>
+                    <Field
+                      name="accept-tos"
+                      render={() => (
+                        <Checkbox
+                          name="accept-tos"
+                          className="accept-tos"
+                          checked={values.acceptTos}
+                          label={
+                            <IonNote>
+                              Ich akzeptiere die AGBs und Nutzungsbedigungen
+                            </IonNote>
+                          }
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                      )}
+                    ></Field>
+                    <IonButton
+                      expand="block"
+                      color="primary"
+                      onClick={() => handleSubmit()}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <IonLabel>
+                          <IonSpinner name="crescent" />
+                        </IonLabel>
+                      ) : (
+                        'Registrieren'
+                      )}
+                    </IonButton>
+                    <IonButton
+                      expand="block"
+                      color="primary"
+                      fill="outline"
+                      routerLink="/login"
+                      routerDirection="back"
+                    >
+                      Anmelden
+                    </IonButton>
+                  </form>
                 )}
-              </IonButton>
-              <IonButton
-                expand="block"
-                color="primary"
-                fill="outline"
-                routerLink="/login"
-                routerDirection="back"
-              >
-                Anmelden
-              </IonButton>
+              </Formik>
             </div>
           </div>
         </IonContent>
