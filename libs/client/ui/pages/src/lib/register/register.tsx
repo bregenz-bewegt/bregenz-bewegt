@@ -1,22 +1,16 @@
 import { Checkbox, Input } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
-import { LoginCredentials } from '@bregenz-bewegt/client/types';
-import { IonCheckboxCustomEvent } from '@ionic/core';
 import {
   IonPage,
   IonContent,
   IonText,
   IonButton,
-  IonInput,
   IonLabel,
   IonSpinner,
-  IonCheckbox,
-  CheckboxChangeEventDetail,
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import './register.scss';
 
 export interface RegisterProps {
