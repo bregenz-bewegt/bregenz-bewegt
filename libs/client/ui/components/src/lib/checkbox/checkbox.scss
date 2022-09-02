@@ -1,8 +1,10 @@
 .checkbox {
-  ion-item {
-    ion-checkbox {
-    }
-    ion-label {
-    }
+  display: flex;
+
+  ion-checkbox {
+  }
+
+  ion-label {
+    display: inline-block;
   }
 }

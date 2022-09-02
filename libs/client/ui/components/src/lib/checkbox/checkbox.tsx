@@ -31,10 +31,8 @@ export const Checkbox: React.FC<CheckboxProps> = ({
 
   return (
     <div className="checkbox">
-      <IonItem>
-        <IonCheckbox {...checkboxProps} />
-        {label && <IonLabel>{label}</IonLabel>}
-      </IonItem>
+      <IonCheckbox {...checkboxProps} />
+      {label && <IonLabel>{label}</IonLabel>}
     </div>
   );
 };
