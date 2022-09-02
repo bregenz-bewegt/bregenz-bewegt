@@ -116,7 +116,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 expand="block"
                 color="primary"
                 fill="outline"
-                href="/register"
+                href="/login"
               >
                 Anmelden
               </IonButton>
