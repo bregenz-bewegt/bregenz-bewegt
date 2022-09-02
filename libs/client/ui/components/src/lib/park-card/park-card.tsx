@@ -29,7 +29,7 @@ export const ParkCard: React.FC<ParkCardProps> = ({
   return (
     <IonCard
       routerLink={isLoaded ? link : undefined}
-      routerDirection="root"
+      routerDirection="forward"
       className="park-card"
       mode="ios"
     >
