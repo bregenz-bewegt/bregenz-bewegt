@@ -25,6 +25,7 @@ export interface InputProps {
   label?: string;
   error?: string;
   expand?: boolean;
+  clearOnEdit?: boolean;
   className?: string;
   ref?: React.Ref<HTMLIonInputElement>;
   onChange?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
@@ -43,6 +44,7 @@ export const Input: React.FC<InputProps> = ({
   error,
   expand = true,
   className,
+  clearOnEdit = false,
   ref,
   onChange,
   onBlur,
@@ -55,6 +57,7 @@ export const Input: React.FC<InputProps> = ({
     name,
     required,
     disabled,
+    clearOnEdit,
     ref,
     onIonChange: onChange,
     onIonBlur: onBlur,
