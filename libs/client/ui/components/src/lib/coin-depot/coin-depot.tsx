@@ -9,6 +9,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import { add } from 'ionicons/icons';
 import './coin-depot.scss';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 export interface CoinDepotProps {
   userStore?: UserStore;
@@ -24,9 +25,9 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
           </div>
         </IonCardHeader>
         <IonCardContent>
-          <IonButton>
+          <IonButton routerLink={tabRoutes.start.route}>
             <IonIcon slot="start" icon={add} />
-            Left Icon
+            Mehr Coins verdienen
           </IonButton>
         </IonCardContent>
       </IonCard>
