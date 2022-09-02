@@ -16,7 +16,11 @@
       width: 100%;
 
       &__socials {
-        marign-bottom: var(--spacing-m);
+        margin-bottom: var(--spacing-m);
+
+        &__guest {
+          margin-left: auto;
+        }
       }
 
       &__forgot-password {

@@ -71,7 +71,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                   mode="ios"
                   color="primary"
                   fill="outline"
-                  size="small"
+                  className="login__content__login__socials__guest"
                 >
                   Als Gast beitreten
                 </IonButton>
