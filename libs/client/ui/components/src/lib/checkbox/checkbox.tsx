@@ -1,10 +1,5 @@
 import { IonCheckboxCustomEvent } from '@ionic/core';
-import {
-  CheckboxChangeEventDetail,
-  IonCheckbox,
-  IonItem,
-  IonLabel,
-} from '@ionic/react';
+import { CheckboxChangeEventDetail, IonCheckbox, IonLabel } from '@ionic/react';
 import { ReactNode } from 'react';
 import './checkbox.scss';
 
