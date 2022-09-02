@@ -106,10 +106,10 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
               >
                 {isLoading ? (
                   <IonLabel>
-                    <IonSpinner name="crescent">Anmelden</IonSpinner>
+                    <IonSpinner name="crescent" />
                   </IonLabel>
                 ) : (
-                  'Anmelden'
+                  'Registrieren'
                 )}
               </IonButton>
               <IonButton
@@ -118,7 +118,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 fill="outline"
                 href="/register"
               >
-                Neu Registrieren
+                Anmelden
               </IonButton>
             </div>
           </div>
