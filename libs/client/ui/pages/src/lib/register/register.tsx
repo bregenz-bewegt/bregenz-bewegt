@@ -52,7 +52,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 Bewegt
               </h1>
             </IonText>
-            <div className="register__content__login">
+            <div className="register__content__wrapper">
               <IonText>
                 <h2>Registrieren</h2>
               </IonText>
@@ -65,6 +65,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 }
                 onChange={profile.handleChange}
                 onBlur={profile.handleBlur}
+                className="username"
               ></Input>
               <Input
                 name="email"
@@ -75,6 +76,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 error={profile.touched.email ? profile.errors.email : undefined}
                 onChange={profile.handleChange}
                 onBlur={profile.handleBlur}
+                className="email"
               ></Input>
               <Input
                 name="password"
@@ -85,6 +87,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 }
                 onChange={profile.handleChange}
                 onBlur={profile.handleBlur}
+                className="password"
               ></Input>
               <Input
                 name="password-confirm"
@@ -97,6 +100,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 }
                 onChange={profile.handleChange}
                 onBlur={profile.handleBlur}
+                className="password-confirm"
               ></Input>
               <IonButton
                 expand="block"
