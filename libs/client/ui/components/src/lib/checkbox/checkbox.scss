@@ -2,8 +2,9 @@
   display: flex;
 
   ion-checkbox {
-    height: var(--spacing-m);
-    width: var(--spacing-m);
+    min-height: var(--spacing-l);
+    min-width: var(--spacing-l);
+    padding-left: var(--spacing-s);
   }
 
   ion-label {
