@@ -5,6 +5,7 @@ import {
   IonCardContent,
   IonCardHeader,
   IonIcon,
+  IonRow,
   IonText,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
@@ -25,8 +26,12 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
             <h1>BB</h1>
           </div>
           <div>
-            <IonText>Du hast</IonText>
-            <IonText>{userStore?.user?.coins}</IonText>
+            <IonRow>
+              <IonText>Du hast</IonText>
+            </IonRow>
+            <IonRow>
+              <IonText>{userStore?.user?.coins}</IonText>
+            </IonRow>
           </div>
         </IonCardHeader>
         <IonCardContent>
