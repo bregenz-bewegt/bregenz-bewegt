@@ -45,7 +45,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
         })
         .catch((error) => {
           console.log(error.response.data);
-          setErrors({});
+          setErrors(error.response.data);
           setIsLoading(false);
         });
     };
