@@ -108,7 +108,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     };
 
     useIonViewDidLeave(() => {
-      // reset();
+      profile.resetForm();
     });
 
     useEffect(() => {
