@@ -25,6 +25,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { useFormik } from 'formik';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -39,6 +40,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+    const profile = useFormik({
+      initialValues: {
+        firstname: userStore?.user?.firstname ?? '',
+        lastname: userStore?.user?.lastname ?? '',
+      },
+      onSubmit: (values) => {
+        handleSaveChanges();
+      },
+    });
     const handleChangePassword = () => {
       //
     };
@@ -103,10 +113,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     useEffect(() => {
       setIsImageLoaded(false);
-      // reset({
-      //   firstname: userStore?.user?.firstname,
-      //   lastname: userStore?.user?.lastname,
-      // });
+      profile.setValues({
+        firstname: userStore?.user?.firstname ?? '',
+        lastname: userStore?.user?.lastname ?? '',
+      });
       userStore?.refreshProfile().then(() => setIsImageLoaded(true));
     }, [userStore?.user?.firstname, userStore?.user?.lastname]);
 
@@ -164,10 +174,34 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonText>
             </IonRow>
             <IonRow>
-              <Input label="Vorname" disabled={!isImageLoaded} />
+              <Input
+                name="firstname"
+                placeholder="Vorname"
+                label="Vorname"
+                value={profile.values.firstname}
+                error={
+                  profile.touched.firstname
+                    ? profile.errors.firstname
+                    : undefined
+                }
+                onChange={profile.handleChange}
+                onBlur={profile.handleBlur}
+                disabled={!isImageLoaded}
+              />
             </IonRow>
             <IonRow>
-              <Input label="Nachname" disabled={!isImageLoaded} />
+              <Input
+                name="lastname"
+                placeholder="Nachname"
+                label="Nachname"
+                value={profile.values.lastname}
+                error={
+                  profile.touched.lastname ? profile.errors.lastname : undefined
+                }
+                onChange={profile.handleChange}
+                onBlur={profile.handleBlur}
+                disabled={!isImageLoaded}
+              />
             </IonRow>
             <IonRow>
               <Input
