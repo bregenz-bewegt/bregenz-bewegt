@@ -1,5 +1,4 @@
-import { IonCheckboxCustomEvent } from '@ionic/core';
-import { CheckboxChangeEventDetail, IonCheckbox, IonLabel } from '@ionic/react';
+import { IonCheckbox, IonLabel } from '@ionic/react';
 import { ReactNode } from 'react';
 import './checkbox.scss';
 
@@ -7,10 +6,8 @@ export interface CheckboxProps {
   label?: ReactNode;
   checked: boolean;
   className?: string;
-  onChange: (
-    event: IonCheckboxCustomEvent<CheckboxChangeEventDetail<any>>
-  ) => void;
-  onBlur: (event: IonCheckboxCustomEvent<void>) => void;
+  onChange: React.FormEventHandler<HTMLIonCheckboxElement>;
+  onBlur: React.FocusEventHandler<HTMLIonCheckboxElement>;
 }
 
 export const Checkbox: React.FC<CheckboxProps> = ({
@@ -22,8 +19,8 @@ export const Checkbox: React.FC<CheckboxProps> = ({
 }: CheckboxProps) => {
   const checkboxProps = {
     checked,
-    onIonChange: onChange,
-    onIonBlur: onBlur,
+    onChange,
+    onBlur,
   };
 
   return (
