@@ -112,11 +112,11 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                     ></Input>
                     <Field
                       name="accept-tos"
-                      render={() => (
+                      render={({ field }: any) => (
                         <Checkbox
                           name="accept-tos"
                           className="accept-tos"
-                          checked={values.acceptTos}
+                          checked={field.value}
                           label={
                             <IonNote>
                               Ich akzeptiere die AGBs und Nutzungsbedigungen
