@@ -12,7 +12,7 @@ yup.setLocale({
     min: 'Eingabe muss mindestens ${min} Zeichen lang sein',
     max: 'Eingabe darf höchstens ${max} Zeichen lang sein',
     matches: 'Eingabe muss wie folgt aussehen: "${regex}"',
-    email: 'Feld muss eine gültige E-Mail Adresse sein',
+    email: 'Eingabe muss eine gültige E-Mail Adresse sein',
     url: 'Eingabe muss eine gültige URL sein',
     trim: 'Eingabe darf keine Leerzeichen am Anfang oder Ende enthalten',
     lowercase: 'Eingabe darf nur Kleinschreibung enthalten',
