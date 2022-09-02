@@ -12,7 +12,7 @@ import { Prisma } from '@prisma/client';
 import {
   JwtPayload,
   LoginDto,
-  loginError,
+  defaultLoginError,
   LoginError,
   RegisterDto,
   Tokens,
@@ -72,13 +72,13 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new ForbiddenException(loginError);
+      throw new ForbiddenException(defaultLoginError);
     }
 
     const passwordMatches = await argon.verify(user.password, dto.password);
 
     if (!passwordMatches) {
-      throw new ForbiddenException(loginError);
+      throw new ForbiddenException(defaultLoginError);
     }
 
     const tokens = await this.signTokens(user.id, user.email);
