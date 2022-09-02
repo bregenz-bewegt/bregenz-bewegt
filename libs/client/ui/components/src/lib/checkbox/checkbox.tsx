@@ -11,6 +11,7 @@ import './checkbox.scss';
 export interface CheckboxProps {
   label?: ReactNode;
   checked: boolean;
+  className?: string;
   onChange: (
     event: IonCheckboxCustomEvent<CheckboxChangeEventDetail<any>>
   ) => void;
@@ -20,6 +21,7 @@ export interface CheckboxProps {
 export const Checkbox: React.FC<CheckboxProps> = ({
   label,
   checked,
+  className,
   onChange,
   onBlur,
 }: CheckboxProps) => {
@@ -30,7 +32,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   };
 
   return (
-    <div className="checkbox">
+    <div className={`checkbox${className ? ` ${className}` : ''}`}>
       <IonCheckbox {...checkboxProps} />
       {label && <IonLabel>{label}</IonLabel>}
     </div>
