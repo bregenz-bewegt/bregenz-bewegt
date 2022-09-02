@@ -24,6 +24,10 @@
 
     .coin-stats {
       flex: 1;
+
+      h2 {
+        margin: var(--spacing-m) 0 0 0;
+      }
     }
   }
 }
