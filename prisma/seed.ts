@@ -6,7 +6,7 @@ const exercises = [];
 
 const createUsers = async () => {
   await prisma.user.deleteMany();
-  const password = await argon.hash('test');
+  const password = await argon.hash('testtest');
   await prisma.user.createMany({
     data: [
       {

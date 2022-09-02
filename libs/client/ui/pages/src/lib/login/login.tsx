@@ -12,7 +12,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Formik } from 'formik';
+import { Formik, FormikErrors } from 'formik';
 import { LoginCredentials } from '@bregenz-bewegt/client/types';
 import { loginSchema } from '@bregenz-bewegt/client/common/validation';
 
@@ -25,7 +25,15 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     const history = useHistory();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const handleLogin = (credentials: LoginCredentials) => {
+    const handleLogin = (
+      credentials: LoginCredentials,
+      setErrors: (
+        errors: FormikErrors<{
+          email: string;
+          password: string;
+        }>
+      ) => void
+    ) => {
       setIsLoading(true);
 
       userStore
@@ -60,9 +68,9 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 initialValues={{ email: '', password: '' }}
                 validationSchema={loginSchema}
                 validateOnChange
-                onSubmit={(values) => {
+                onSubmit={(values, { setErrors }) => {
                   console.log(values);
-                  handleLogin(values);
+                  handleLogin(values, setErrors);
                 }}
               >
                 {({
@@ -80,7 +88,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                       inputMode="email"
                       placeholder="Email"
                       value={values.email}
-                      error={errors.email}
+                      error={touched.email ? errors.email : undefined}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     ></Input>
@@ -90,7 +98,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                       inputMode="text"
                       placeholder="Passwort"
                       value={values.password}
-                      error={errors.password}
+                      error={touched.password ? errors.password : undefined}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />

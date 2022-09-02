@@ -12,7 +12,7 @@ yup.setLocale({
     min: '${path} muss mindestens ${min} Zeichen lang sein',
     max: '${path} darf höchstens ${max} Zeichen lang sein',
     matches: '${path} muss wie folgt aussehen: "${regex}"',
-    email: '${path} muss eine gültige E-Mail-Adresse enthalten',
+    email: '${path} muss eine gültige E-Mail Adresse enthalten',
     url: '${path} muss eine gültige URL sein',
     trim: '${path} darf keine Leerzeichen am Anfang oder Ende enthalten',
     lowercase: '${path} darf nur Kleinschreibung enthalten',

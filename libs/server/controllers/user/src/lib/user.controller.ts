@@ -28,16 +28,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Controller('users')
 export class UserController {
-  constructor(
-    private userService: UserService,
-    private configService: ConfigService
-  ) {}
-
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Get()
-  getUsers() {
-    return this.userService.getAll();
-  }
+  constructor(private userService: UserService) {}
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Get('profile')
