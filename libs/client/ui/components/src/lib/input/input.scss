@@ -23,6 +23,10 @@
       --padding-start: 8px !important;
       --padding-end: 8px !important;
       --background: var(--ion-color-light-tint) !important;
+
+      .ion-invalid {
+        border: 1px solid var(--ion-color-danger);
+      }
     }
 
     ion-note {
