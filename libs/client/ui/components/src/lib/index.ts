@@ -6,3 +6,4 @@ export * from './route-guard/route-guard';
 export * from './input/input';
 export * from './difficulty-badge/difficulty-badge';
 export * from './checkbox/checkbox';
+export * from './coin-depot/coin-depot';
