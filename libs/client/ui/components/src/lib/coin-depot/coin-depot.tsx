@@ -25,7 +25,7 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
           </div>
         </IonCardHeader>
         <IonCardContent>
-          <IonButton routerLink={tabRoutes.start.route}>
+          <IonButton expand="block" routerLink={tabRoutes.start.route}>
             <IonIcon slot="start" icon={add} />
             Mehr Coins verdienen
           </IonButton>
