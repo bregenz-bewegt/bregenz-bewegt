@@ -1,5 +1,6 @@
 import { Checkbox, Input } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
+import { registerSchema } from '@bregenz-bewegt/client/common/validation';
 import {
   IonPage,
   IonContent,
@@ -9,7 +10,7 @@ import {
   IonSpinner,
   IonNote,
 } from '@ionic/react';
-import { Field, Formik, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
 import './register.scss';
@@ -20,7 +21,6 @@ export interface RegisterProps {
 
 export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [acceptTos, setAcceptTos] = useState<boolean>(false);
     const register = useFormik({
       initialValues: {
@@ -29,6 +29,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
         password: '',
         passwordConfirm: '',
       },
+      validationSchema: registerSchema,
       onSubmit: (values, { setSubmitting }) => {
         setSubmitting(true);
         userStore
@@ -122,9 +123,9 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 expand="block"
                 color="primary"
                 onClick={() => register.submitForm()}
-                disabled={isLoading}
+                disabled={register.isSubmitting}
               >
-                {isLoading ? (
+                {register.isSubmitting ? (
                   <IonLabel>
                     <IonSpinner name="crescent" />
                   </IonLabel>

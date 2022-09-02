@@ -14,7 +14,7 @@ import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, FormikErrors } from 'formik';
-import { loginSchema } from '@bregenz-bewegt/client/common/validation';
+import { registerSchema } from '@bregenz-bewegt/client/common/validation';
 import { LoginCredentials } from '@bregenz-bewegt/client/types';
 
 export interface LoginProps {
@@ -77,7 +77,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
               </IonRow>
               <Formik
                 initialValues={{ email: '', password: '' }}
-                validationSchema={loginSchema}
+                validationSchema={registerSchema}
                 validateOnChange
                 onSubmit={(values, { setErrors }) => {
                   handleLogin(values, setErrors);
