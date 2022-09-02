@@ -7,6 +7,7 @@ import {
   IonButton,
   IonLabel,
   IonSpinner,
+  IonNote,
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
@@ -105,7 +106,11 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
               <Checkbox
                 className="accept-agb"
                 checked={profile.values.agbAccept}
-                label="Ich akzeptiere die AGBs und Nutzungsbedigungen"
+                label={
+                  <IonNote>
+                    Ich akzeptiere die AGBs und Nutzungsbedigungen
+                  </IonNote>
+                }
                 onChange={profile.handleChange}
                 onBlur={profile.handleBlur}
               />

@@ -8,6 +8,7 @@ import {
   IonButton,
   IonLabel,
   IonSpinner,
+  IonRow,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
@@ -65,6 +66,11 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
               <IonText>
                 <h2>Anmelden</h2>
               </IonText>
+              <IonRow>
+                <IonButton color="primary" fill="outline">
+                  Als Gast beitreten
+                </IonButton>
+              </IonRow>
               <Formik
                 initialValues={{ email: '', password: '' }}
                 validationSchema={loginSchema}
