@@ -20,14 +20,12 @@
         }
       }
 
-      .username,
-      .email,
-      .password,
-      .password-confirm {
-      }
-
       .email {
         margin-bottom: var(--spacing-s);
+      }
+
+      .password-confirm {
+        margin-bottom: var(--spacing-m);
       }
     }
   }
