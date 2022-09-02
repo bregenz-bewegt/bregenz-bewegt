@@ -21,6 +21,7 @@ export interface RegisterProps {
 export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [acceptTos, setAcceptTos] = useState<boolean>(false);
 
     const handleRegister = async (values: {
       username: string;
@@ -110,23 +111,17 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                       onBlur={handleBlur}
                       className="password-confirm"
                     ></Input>
-                    <Field
+                    <Checkbox
                       name="accept-tos"
-                      render={({ field }: any) => (
-                        <Checkbox
-                          name="accept-tos"
-                          className="accept-tos"
-                          checked={field.value}
-                          label={
-                            <IonNote>
-                              Ich akzeptiere die AGBs und Nutzungsbedigungen
-                            </IonNote>
-                          }
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                        />
-                      )}
-                    ></Field>
+                      className="accept-tos"
+                      checked={acceptTos}
+                      label={
+                        <IonNote>
+                          Ich akzeptiere die AGBs und Nutzungsbedigungen
+                        </IonNote>
+                      }
+                      onChange={(e) => setAcceptTos(e.currentTarget.checked)}
+                    />
                     <IonButton
                       expand="block"
                       color="primary"

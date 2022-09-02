@@ -7,8 +7,8 @@ export interface CheckboxProps {
   checked: boolean;
   label?: ReactNode;
   className?: string;
-  onChange: React.FormEventHandler<HTMLIonCheckboxElement>;
-  onBlur: React.FocusEventHandler<HTMLIonCheckboxElement>;
+  onChange?: React.FormEventHandler<HTMLIonCheckboxElement>;
+  onBlur?: React.FocusEventHandler<HTMLIonCheckboxElement>;
 }
 
 export const Checkbox: React.FC<CheckboxProps> = ({
