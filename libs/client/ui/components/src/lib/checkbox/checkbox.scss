@@ -2,6 +2,8 @@
   display: flex;
 
   ion-checkbox {
+    height: var(--spacing-m);
+    width: var(--spacing-m);
   }
 
   ion-label {
