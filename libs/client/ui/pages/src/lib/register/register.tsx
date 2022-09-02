@@ -1,3 +1,4 @@
+import { Input } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import { LoginCredentials } from '@bregenz-bewegt/client/types';
 import {
@@ -9,6 +10,7 @@ import {
   IonLabel,
   IonSpinner,
 } from '@ionic/react';
+import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -20,15 +22,24 @@ export interface RegisterProps {
 
 export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
-    const [credentials, setCredentials] = useState<LoginCredentials>({
-      email: '',
-      password: '',
+    const profile = useFormik({
+      initialValues: {
+        username: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+      },
+      onSubmit: (values) => {
+        console.log(values);
+      },
     });
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleRegister = (
       e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>
-    ) => {};
+    ) => {
+      //
+    };
 
     return (
       <IonPage className="register">
@@ -45,34 +56,48 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
               <IonText>
                 <h2>Registrieren</h2>
               </IonText>
-              <IonInput
-                value={credentials.email}
+              <Input
+                name="username"
+                placeholder="Benutzername"
+                value={profile.values.username}
+                error={
+                  profile.touched.username ? profile.errors.username : undefined
+                }
+                onChange={profile.handleChange}
+                onBlur={profile.handleBlur}
+              ></Input>
+              <Input
+                name="email"
+                placeholder="Email"
                 type="email"
                 inputMode="email"
-                placeholder="Email"
-                name="email"
-                required
-                onIonChange={(e) =>
-                  setCredentials((prev) => ({
-                    ...prev,
-                    email: e.detail.value ?? credentials?.email,
-                  }))
-                }
-              ></IonInput>
-              <IonInput
-                value={credentials.password}
-                type="password"
-                inputMode="text"
-                placeholder="Passwort"
+                value={profile.values.email}
+                error={profile.touched.email ? profile.errors.email : undefined}
+                onChange={profile.handleChange}
+                onBlur={profile.handleBlur}
+              ></Input>
+              <Input
                 name="password"
-                required
-                onIonChange={(e) =>
-                  setCredentials((prev) => ({
-                    ...prev,
-                    password: e.detail.value ?? credentials?.password,
-                  }))
+                placeholder="Passwort"
+                value={profile.values.password}
+                error={
+                  profile.touched.password ? profile.errors.password : undefined
                 }
-              ></IonInput>
+                onChange={profile.handleChange}
+                onBlur={profile.handleBlur}
+              ></Input>
+              <Input
+                name="password-confirm"
+                placeholder="Passwort bestätigen"
+                value={profile.values.passwordConfirm}
+                error={
+                  profile.touched.passwordConfirm
+                    ? profile.errors.passwordConfirm
+                    : undefined
+                }
+                onChange={profile.handleChange}
+                onBlur={profile.handleBlur}
+              ></Input>
               <Link className="login__content__login__forgot-password" to={'#'}>
                 Passwort vergessen?
               </Link>
