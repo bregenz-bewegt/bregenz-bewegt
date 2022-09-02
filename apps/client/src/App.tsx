@@ -18,8 +18,12 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/index.scss';
+
 import { Router } from '@bregenz-bewegt/client-ui-router';
 import { StoreProvider } from '@bregenz-bewegt/client-ui-components';
+
+/* Yup validation */
+import '@bregenz-bewegt/client/common/validation';
 
 setupIonicReact();
 

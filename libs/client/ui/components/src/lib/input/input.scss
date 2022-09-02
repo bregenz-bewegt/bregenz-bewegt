@@ -24,5 +24,9 @@
       --padding-end: 8px !important;
       --background: var(--ion-color-light-tint) !important;
     }
+
+    ion-note {
+      margin-bottom: var(--spacing-s);
+    }
   }
 }

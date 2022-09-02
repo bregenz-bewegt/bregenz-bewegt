@@ -22,7 +22,6 @@ import {
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
@@ -40,14 +39,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
-    const defaultValues = {
-      firstname: userStore?.user?.firstname ?? '',
-      lastname: userStore?.user?.lastname ?? '',
-    };
-    const { control, formState, getValues, reset } = useForm({
-      defaultValues,
-    });
-
     const handleChangePassword = () => {
       //
     };
@@ -80,22 +71,22 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     };
 
     const handleSaveChanges = () => {
-      setIsSavingChanges(true);
-      userStore
-        ?.patchProfile(getValues())
-        .then((result) => {
-          reset({ firstname: result.firstname, lastname: result.lastname });
-          setIsSavingChanges(false);
-          toastPresent({
-            message: 'Änderungen gespeichert',
-            icon: checkmark,
-            duration: 2000,
-            position: 'top',
-            mode: 'ios',
-            color: 'success',
-          });
-        })
-        .catch((error) => setIsSavingChanges(false));
+      // setIsSavingChanges(true);
+      // userStore
+      //   ?.patchProfile(getValues())
+      //   .then((result) => {
+      //     reset({ firstname: result.firstname, lastname: result.lastname });
+      //     setIsSavingChanges(false);
+      //     toastPresent({
+      //       message: 'Änderungen gespeichert',
+      //       icon: checkmark,
+      //       duration: 2000,
+      //       position: 'top',
+      //       mode: 'ios',
+      //       color: 'success',
+      //     });
+      //   })
+      //   .catch((error) => setIsSavingChanges(false));
     };
 
     const handleLogout = () => {
@@ -107,15 +98,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     };
 
     useIonViewDidLeave(() => {
-      reset();
+      // reset();
     });
 
     useEffect(() => {
       setIsImageLoaded(false);
-      reset({
-        firstname: userStore?.user?.firstname,
-        lastname: userStore?.user?.lastname,
-      });
+      // reset({
+      //   firstname: userStore?.user?.firstname,
+      //   lastname: userStore?.user?.lastname,
+      // });
       userStore?.refreshProfile().then(() => setIsImageLoaded(true));
     }, [userStore?.user?.firstname, userStore?.user?.lastname]);
 
@@ -173,42 +164,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonText>
             </IonRow>
             <IonRow>
-              <Controller
-                name="firstname"
-                control={control}
-                rules={{ required: true }}
-                render={({ field, fieldState }) => (
-                  <Input
-                    label="Vorname"
-                    name={field.name}
-                    value={field.value}
-                    error={fieldState.error?.message}
-                    onChange={field.onChange}
-                    onBlur={field.onBlur}
-                    ref={field.ref}
-                    disabled={!isImageLoaded}
-                  />
-                )}
-              />
+              <Input label="Vorname" disabled={!isImageLoaded} />
             </IonRow>
             <IonRow>
-              <Controller
-                name="lastname"
-                control={control}
-                rules={{ required: true }}
-                render={({ field, fieldState }) => (
-                  <Input
-                    label="Nachname"
-                    name={field.name}
-                    value={field.value}
-                    error={fieldState.error?.message}
-                    onChange={field.onChange}
-                    onBlur={field.onBlur}
-                    ref={field.ref}
-                    disabled={!isImageLoaded}
-                  />
-                )}
-              />
+              <Input label="Nachname" disabled={!isImageLoaded} />
             </IonRow>
             <IonRow>
               <Input
@@ -235,7 +194,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             </IonRow>
           </IonGrid>
           <IonButton
-            disabled={!formState.isDirty || isSavingChanges}
+            // disabled={!formState.isDirty || isSavingChanges}
             onClick={() => handleSaveChanges()}
             expand="block"
             mode="ios"

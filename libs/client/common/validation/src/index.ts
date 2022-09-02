@@ -1,1 +1,1 @@
-export * from './lib/client-common-validation';
+export * from './lib';

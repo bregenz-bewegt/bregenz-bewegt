@@ -1,17 +1,10 @@
 import './input.scss';
-import {
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonNote,
-  IonSkeletonText,
-} from '@ionic/react';
+import { IonInput, IonItem, IonLabel, IonNote } from '@ionic/react';
 import {
   InputChangeEventDetail,
   IonInputCustomEvent,
   TextFieldTypes,
 } from '@ionic/core';
-import { UseFormRegister } from 'react-hook-form';
 
 export interface InputProps {
   value?: string | number | null;
@@ -34,7 +27,6 @@ export interface InputProps {
   expand?: boolean;
   className?: string;
   ref?: React.Ref<HTMLIonInputElement>;
-  register?: UseFormRegister<any>;
   onChange?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
   onBlur?: (event: IonInputCustomEvent<FocusEvent>) => void;
 }
