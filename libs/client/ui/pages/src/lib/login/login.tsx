@@ -80,7 +80,6 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 validationSchema={loginSchema}
                 validateOnChange
                 onSubmit={(values, { setErrors }) => {
-                  console.log(values);
                   handleLogin(values, setErrors);
                 }}
               >

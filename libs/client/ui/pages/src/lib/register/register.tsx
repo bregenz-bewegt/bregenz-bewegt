@@ -22,16 +22,23 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [acceptTos, setAcceptTos] = useState<boolean>(false);
-
-    const handleRegister = async (values: {
-      username: string;
-      email: string;
-      password: string;
-      passwordConfirm: string;
-      acceptTos: boolean;
-    }) => {
-      console.log(values);
-    };
+    const register = useFormik({
+      initialValues: {
+        username: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+      },
+      onSubmit: (values, { setSubmitting }) => {
+        setSubmitting(true);
+        userStore
+          ?.register(values.username, values.email, values.password)
+          .then((data) => {
+            console.log(data);
+            setSubmitting(false);
+          });
+      },
+    });
 
     return (
       <IonPage className="register">
@@ -48,106 +55,92 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
               <IonText>
                 <h2>Registrieren</h2>
               </IonText>
-              <Formik
-                initialValues={{
-                  username: '',
-                  email: '',
-                  password: '',
-                  passwordConfirm: '',
-                  acceptTos: false,
-                }}
-                onSubmit={(values) => {
-                  handleRegister(values);
-                }}
+              <Input
+                name="username"
+                placeholder="Benutzername"
+                value={register.values.username}
+                error={
+                  register.touched.username
+                    ? register.errors.username
+                    : undefined
+                }
+                onChange={register.handleChange}
+                onBlur={register.handleBlur}
+                className="username"
+              ></Input>
+              <Input
+                name="email"
+                placeholder="Email"
+                type="email"
+                inputMode="email"
+                value={register.values.email}
+                error={
+                  register.touched.email ? register.errors.email : undefined
+                }
+                onChange={register.handleChange}
+                onBlur={register.handleBlur}
+                className="email"
+              ></Input>
+              <Input
+                name="password"
+                placeholder="Passwort"
+                value={register.values.password}
+                error={
+                  register.touched.password
+                    ? register.errors.password
+                    : undefined
+                }
+                onChange={register.handleChange}
+                onBlur={register.handleBlur}
+                className="password"
+              ></Input>
+              <Input
+                name="passwordConfirm"
+                placeholder="Passwort bestätigen"
+                value={register.values.passwordConfirm}
+                error={
+                  register.touched.passwordConfirm
+                    ? register.errors.passwordConfirm
+                    : undefined
+                }
+                onChange={register.handleChange}
+                onBlur={register.handleBlur}
+                className="password-confirm"
+              ></Input>
+              <Checkbox
+                name="accept-tos"
+                className="accept-tos"
+                checked={acceptTos}
+                label={
+                  <IonNote>
+                    Ich akzeptiere die AGBs und Nutzungsbedigungen
+                  </IonNote>
+                }
+                onChange={(e) => setAcceptTos(e.currentTarget.checked)}
+              />
+              <IonButton
+                expand="block"
+                color="primary"
+                onClick={() => register.submitForm()}
+                disabled={isLoading}
               >
-                {({
-                  values,
-                  errors,
-                  touched,
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                }) => (
-                  <form>
-                    <Input
-                      name="username"
-                      placeholder="Benutzername"
-                      value={values.username}
-                      error={touched.username ? errors.username : undefined}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className="username"
-                    ></Input>
-                    <Input
-                      name="email"
-                      placeholder="Email"
-                      type="email"
-                      inputMode="email"
-                      value={values.email}
-                      error={touched.email ? errors.email : undefined}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className="email"
-                    ></Input>
-                    <Input
-                      name="password"
-                      placeholder="Passwort"
-                      value={values.password}
-                      error={touched.password ? errors.password : undefined}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className="password"
-                    ></Input>
-                    <Input
-                      name="passwordConfirm"
-                      placeholder="Passwort bestätigen"
-                      value={values.passwordConfirm}
-                      error={
-                        touched.passwordConfirm
-                          ? errors.passwordConfirm
-                          : undefined
-                      }
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className="password-confirm"
-                    ></Input>
-                    <Checkbox
-                      name="accept-tos"
-                      className="accept-tos"
-                      checked={acceptTos}
-                      label={
-                        <IonNote>
-                          Ich akzeptiere die AGBs und Nutzungsbedigungen
-                        </IonNote>
-                      }
-                      onChange={(e) => setAcceptTos(e.currentTarget.checked)}
-                    />
-                    <IonButton
-                      expand="block"
-                      color="primary"
-                      onClick={() => handleSubmit()}
-                      disabled={isLoading}
-                    >
-                      {isLoading ? (
-                        <IonLabel>
-                          <IonSpinner name="crescent" />
-                        </IonLabel>
-                      ) : (
-                        'Registrieren'
-                      )}
-                    </IonButton>
-                    <IonButton
-                      expand="block"
-                      color="primary"
-                      fill="outline"
-                      routerLink="/login"
-                      routerDirection="back"
-                    >
-                      Anmelden
-                    </IonButton>
-                  </form>
+                {isLoading ? (
+                  <IonLabel>
+                    <IonSpinner name="crescent" />
+                  </IonLabel>
+                ) : (
+                  'Registrieren'
                 )}
-              </Formik>
+              </IonButton>
+              <IonButton
+                expand="block"
+                color="primary"
+                fill="outline"
+                routerLink="/login"
+                routerDirection="back"
+              >
+                Anmelden
+              </IonButton>
             </div>
           </div>
         </IonContent>
