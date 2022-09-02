@@ -37,7 +37,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [toastPresent] = useIonToast();
     const [loadingPresent, loadingDismiss] = useIonLoading();
     const [actionSheetPresent, actionSheetDismiss] = useIonActionSheet();
-    const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
     const profile = useFormik({
@@ -45,8 +44,27 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         firstname: userStore?.user?.firstname ?? '',
         lastname: userStore?.user?.lastname ?? '',
       },
-      onSubmit: (values) => {
-        handleSaveChanges();
+      onSubmit: (values, { setSubmitting, setValues }) => {
+        setSubmitting(true);
+        userStore
+          ?.patchProfile(values)
+          .then((result) => {
+            setValues({
+              firstname: result.firstname ?? '',
+              lastname: result.lastname ?? '',
+            });
+
+            setSubmitting(false);
+            toastPresent({
+              message: 'Änderungen gespeichert',
+              icon: checkmark,
+              duration: 2000,
+              position: 'top',
+              mode: 'ios',
+              color: 'success',
+            });
+          })
+          .catch((error) => setSubmitting(false));
       },
     });
     const handleChangePassword = () => {
@@ -78,25 +96,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       } catch (error) {
         return;
       }
-    };
-
-    const handleSaveChanges = () => {
-      // setIsSavingChanges(true);
-      // userStore
-      //   ?.patchProfile(getValues())
-      //   .then((result) => {
-      //     reset({ firstname: result.firstname, lastname: result.lastname });
-      //     setIsSavingChanges(false);
-      //     toastPresent({
-      //       message: 'Änderungen gespeichert',
-      //       icon: checkmark,
-      //       duration: 2000,
-      //       position: 'top',
-      //       mode: 'ios',
-      //       color: 'success',
-      //     });
-      //   })
-      //   .catch((error) => setIsSavingChanges(false));
     };
 
     const handleLogout = () => {
@@ -228,12 +227,12 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             </IonRow>
           </IonGrid>
           <IonButton
-            // disabled={!formState.isDirty || isSavingChanges}
-            onClick={() => handleSaveChanges()}
+            disabled={profile.dirty || profile.isSubmitting}
+            onClick={() => profile.submitForm()}
             expand="block"
             mode="ios"
           >
-            {isSavingChanges ? (
+            {profile.isSubmitting ? (
               <IonLabel>
                 <IonSpinner name="crescent" />
               </IonLabel>
