@@ -112,9 +112,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     useEffect(() => {
       setIsImageLoaded(false);
-      profile.setValues({
-        firstname: userStore?.user?.firstname ?? '',
-        lastname: userStore?.user?.lastname ?? '',
+      profile.resetForm({
+        values: {
+          firstname: userStore?.user?.firstname ?? '',
+          lastname: userStore?.user?.lastname ?? '',
+        },
       });
       userStore?.refreshProfile().then(() => setIsImageLoaded(true));
     }, [userStore?.user?.firstname, userStore?.user?.lastname]);
