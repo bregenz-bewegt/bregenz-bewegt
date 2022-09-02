@@ -98,9 +98,6 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 onChange={profile.handleChange}
                 onBlur={profile.handleBlur}
               ></Input>
-              <Link className="login__content__login__forgot-password" to={'#'}>
-                Passwort vergessen?
-              </Link>
               <IonButton
                 expand="block"
                 color="primary"
