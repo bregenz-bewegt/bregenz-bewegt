@@ -1,6 +1,7 @@
-import { Input } from '@bregenz-bewegt/client-ui-components';
+import { Checkbox, Input } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import { LoginCredentials } from '@bregenz-bewegt/client/types';
+import { IonCheckboxCustomEvent } from '@ionic/core';
 import {
   IonPage,
   IonContent,
@@ -9,6 +10,8 @@ import {
   IonInput,
   IonLabel,
   IonSpinner,
+  IonCheckbox,
+  CheckboxChangeEventDetail,
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
@@ -28,6 +31,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
         email: '',
         password: '',
         passwordConfirm: '',
+        agbAccept: false,
       },
       onSubmit: (values) => {
         console.log(values);
@@ -40,6 +44,8 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
     ) => {
       //
     };
+
+    console.log(profile.values);
 
     return (
       <IonPage className="register">
@@ -102,6 +108,11 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 onBlur={profile.handleBlur}
                 className="password-confirm"
               ></Input>
+              <Checkbox
+                checked={profile.values.agbAccept}
+                onChange={profile.handleChange}
+                onBlur={profile.handleBlur}
+              />
               <IonButton
                 expand="block"
                 color="primary"
