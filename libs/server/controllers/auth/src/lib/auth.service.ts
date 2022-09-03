@@ -16,7 +16,6 @@ import {
 } from '@bregenz-bewegt/shared/types';
 import {
   loginError,
-  LoginErrorResponse,
   registerError,
   RegisterErrorResponse,
 } from '@bregenz-bewegt/server/common';
