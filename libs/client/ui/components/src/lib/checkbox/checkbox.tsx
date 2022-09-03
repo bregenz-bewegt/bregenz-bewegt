@@ -9,8 +9,8 @@ export interface CheckboxProps {
   valid?: boolean;
   className?: string;
   mode?: 'ios' | 'md';
-  onChange?: React.FormEventHandler<HTMLIonCheckboxElement>;
-  onBlur?: React.FocusEventHandler<HTMLIonCheckboxElement>;
+  onChange?: any;
+  onBlur?: any;
 }
 
 export const Checkbox: React.FC<CheckboxProps> = ({
@@ -27,8 +27,8 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     name,
     checked,
     mode,
-    onChange,
-    onBlur,
+    onIonChange: onChange,
+    onIonBlur: onBlur,
   };
 
   return (
