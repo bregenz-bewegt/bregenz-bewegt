@@ -1,12 +1,11 @@
-import * as path from 'path';
 import * as fs from 'fs';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
 import { Response } from 'express';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -17,6 +16,12 @@ export class UserService {
 
   async getAll() {
     return this.prismaService.user.findMany();
+  }
+
+  async getSingle(userWhereUniqueInput: Prisma.UserWhereUniqueInput) {
+    return this.prismaService.user.findUnique({
+      where: userWhereUniqueInput,
+    });
   }
 
   async getByEmail(email: User['email']) {

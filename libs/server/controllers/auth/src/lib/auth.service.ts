@@ -13,7 +13,6 @@ import {
   JwtPayload,
   LoginDto,
   defaultLoginError,
-  LoginError,
   RegisterDto,
   Tokens,
   RegisterError,
@@ -59,7 +58,12 @@ export class AuthService {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
           throw new ConflictException(<RegisterError>{
-            username: 'Benutzername bereits vergeben',
+            ...((error.meta.target as string).includes('username') && {
+              username: 'Benutzername bereits vergeben',
+            }),
+            ...((error.meta.target as string).includes('email') && {
+              email: 'E-Mail Adresse bereits verwendet',
+            }),
           });
         }
       }
