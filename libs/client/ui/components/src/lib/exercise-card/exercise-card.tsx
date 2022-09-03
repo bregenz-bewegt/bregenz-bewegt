@@ -8,7 +8,7 @@ import {
   IonIcon,
   IonSkeletonText,
 } from '@ionic/react';
-import { Difficulty, Exercise } from '@bregenz-bewegt/client/types';
+import { Exercise } from '@bregenz-bewegt/client/types';
 import { play } from 'ionicons/icons';
 import { DifficultyBadge } from '../difficulty-badge/difficulty-badge';
 
