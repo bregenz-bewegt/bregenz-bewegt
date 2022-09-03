@@ -125,7 +125,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 checked={acceptTos}
                 valid={acceptTosValid}
                 label={
-                  <IonNote>
+                  <IonNote mode="md">
                     Ich akzeptiere die AGBs und Nutzungsbedigungen
                   </IonNote>
                 }
