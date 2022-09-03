@@ -16,6 +16,7 @@ import {
   LoginError,
   RegisterDto,
   Tokens,
+  RegisterError,
 } from '@bregenz-bewegt/shared/types';
 
 @Injectable()
@@ -54,9 +55,12 @@ export class AuthService {
       this.updateRefreshToken(newUser.id, tokens.refresh_token);
       return tokens;
     } catch (error) {
+      console.log(error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
-          throw new ConflictException('Username is already taken');
+          throw new ConflictException(<RegisterError>{
+            username: 'Benutzername bereits vergeben',
+          });
         }
       }
 
