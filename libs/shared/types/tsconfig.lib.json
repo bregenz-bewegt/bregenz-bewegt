@@ -9,5 +9,5 @@
     "strictPropertyInitialization": false
   },
   "exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts"],
-  "include": ["**/*.ts", "../../client/types/src/lib/login-credentials.ts"]
+  "include": ["**/*.ts"]
 }

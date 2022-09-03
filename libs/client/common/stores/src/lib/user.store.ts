@@ -16,7 +16,7 @@ export class UserStore implements Store {
   }
 
   @action async register(username: string, email: string, password: string) {
-    const { data } = await http.post('/auth/register', {
+    const { data } = await http.post('/auth/local/register', {
       username,
       email,
       password,
@@ -26,7 +26,7 @@ export class UserStore implements Store {
   }
 
   @action async login(email: string, password: string) {
-    const { data } = await http.post('/auth/login', {
+    const { data } = await http.post('/auth/local/login', {
       email,
       password,
     });

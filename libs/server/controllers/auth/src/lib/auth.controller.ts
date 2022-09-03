@@ -13,13 +13,13 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Public()
-  @Post('register')
+  @Post('local/register')
   register(@Body() dto: RegisterDto): Promise<Tokens> {
     return this.authService.register(dto);
   }
 
   @Public()
-  @Post('login')
+  @Post('local/login')
   login(@Body() dto: LoginDto): Promise<Tokens> {
     return this.authService.login(dto);
   }
