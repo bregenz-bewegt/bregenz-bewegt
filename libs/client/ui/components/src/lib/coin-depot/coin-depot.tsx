@@ -20,7 +20,7 @@ export interface CoinDepotProps {
 export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     return (
-      <IonCard className="coin-depot" color="secondary">
+      <IonCard className="coin-depot" color="secondary" mode="ios">
         <IonCardHeader>
           <div className="bb-coin">
             <h1>BB</h1>
@@ -37,7 +37,11 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
           </div>
         </IonCardHeader>
         <IonCardContent>
-          <IonButton expand="block" routerLink={tabRoutes.start.route}>
+          <IonButton
+            expand="block"
+            routerLink={tabRoutes.start.route}
+            mode="ios"
+          >
             <IonIcon slot="start" icon={add} />
             Mehr Coins verdienen
           </IonButton>
