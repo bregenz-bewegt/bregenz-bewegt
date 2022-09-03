@@ -27,10 +27,10 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
         username: '',
         email: '',
         password: '',
-        passwordConfirm: '',
+        passwordConfirmation: '',
       },
       validationSchema: registerSchema,
-      onSubmit: (values, { setSubmitting }) => {
+      onSubmit: (values, { setSubmitting, setErrors }) => {
         setSubmitting(true);
         userStore
           ?.register(values.username, values.email, values.password)
@@ -85,6 +85,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
               <Input
                 name="password"
                 placeholder="Passwort"
+                type="password"
                 value={register.values.password}
                 error={
                   register.touched.password
@@ -96,17 +97,18 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 className="password"
               ></Input>
               <Input
-                name="passwordConfirm"
+                name="passwordConfirmation"
                 placeholder="Passwort bestätigen"
-                value={register.values.passwordConfirm}
+                type="password"
+                value={register.values.passwordConfirmation}
                 error={
-                  register.touched.passwordConfirm
-                    ? register.errors.passwordConfirm
+                  register.touched.passwordConfirmation
+                    ? register.errors.passwordConfirmation
                     : undefined
                 }
                 onChange={register.handleChange}
                 onBlur={register.handleBlur}
-                className="password-confirm"
+                className="password-confirmation"
               ></Input>
               <Checkbox
                 name="accept-tos"
