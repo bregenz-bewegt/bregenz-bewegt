@@ -59,6 +59,8 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       setParksResult(queriedParks ?? parksResult);
     };
 
+    console.log(parksResult);
+
     useEffect(() => {
       fetchParks();
     }, []);
