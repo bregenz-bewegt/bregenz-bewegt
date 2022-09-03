@@ -32,8 +32,10 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
       },
       validationSchema: registerSchema,
       onSubmit: (values, { setSubmitting, setErrors }) => {
-        if (!acceptTos) return setAcceptTosValid(false);
-        setSubmitting(true);
+        if (!acceptTos) {
+          setAcceptTosValid(false);
+          return setSubmitting(false);
+        }
 
         userStore
           ?.register(values.username, values.email, values.password)
