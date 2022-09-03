@@ -10,5 +10,5 @@ export const registerSchema = yup.object().shape({
   passwordConfirmation: yup
     .string()
     .required()
-    .oneOf([yup.ref('password'), null]),
+    .oneOf([yup.ref('password')], 'Passwörter stimmen nicht überein'),
 });

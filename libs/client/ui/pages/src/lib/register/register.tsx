@@ -22,6 +22,7 @@ export interface RegisterProps {
 export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const [acceptTos, setAcceptTos] = useState<boolean>(false);
+    const [acceptTosValid, setAcceptTosValid] = useState<boolean>(false);
     const register = useFormik({
       initialValues: {
         username: '',
@@ -31,11 +32,17 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
       },
       validationSchema: registerSchema,
       onSubmit: (values, { setSubmitting, setErrors }) => {
+        if (!acceptTos) return setAcceptTosValid(false);
+
         setSubmitting(true);
         userStore
           ?.register(values.username, values.email, values.password)
           .then((data) => {
             console.log(data);
+            setSubmitting(false);
+          })
+          .catch((error) => {
+            setErrors(error.response.data);
             setSubmitting(false);
           });
       },
@@ -114,6 +121,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 name="accept-tos"
                 className="accept-tos"
                 checked={acceptTos}
+                valid={acceptTosValid}
                 label={
                   <IonNote>
                     Ich akzeptiere die AGBs und Nutzungsbedigungen

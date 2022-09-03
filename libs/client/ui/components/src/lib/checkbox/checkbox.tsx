@@ -6,6 +6,7 @@ export interface CheckboxProps {
   name: string;
   checked: boolean;
   label?: ReactNode;
+  valid?: boolean;
   className?: string;
   mode?: 'ios' | 'md';
   onChange?: React.FormEventHandler<HTMLIonCheckboxElement>;
@@ -16,6 +17,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   name,
   label,
   checked,
+  valid = true,
   className,
   mode = 'ios',
   onChange,
@@ -31,7 +33,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
 
   return (
     <div className={`checkbox${className ? ` ${className}` : ''}`}>
-      <IonCheckbox {...checkboxProps} />
+      <IonCheckbox {...checkboxProps} className={!valid ? `ion-invalid` : ''} />
       {label && <IonLabel>{label}</IonLabel>}
     </div>
   );
