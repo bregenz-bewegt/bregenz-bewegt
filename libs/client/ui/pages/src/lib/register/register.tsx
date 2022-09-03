@@ -135,6 +135,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 }}
               />
               <IonButton
+                mode="ios"
                 expand="block"
                 color="primary"
                 onClick={() => {
@@ -152,6 +153,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 )}
               </IonButton>
               <IonButton
+                mode="ios"
                 expand="block"
                 color="primary"
                 fill="outline"
