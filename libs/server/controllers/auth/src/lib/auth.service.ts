@@ -5,18 +5,21 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
-import { UserService } from '@bregenz-bewegt/server-controllers-user';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
 import {
   JwtPayload,
   LoginDto,
-  defaultLoginError,
   RegisterDto,
   Tokens,
-  RegisterError,
 } from '@bregenz-bewegt/shared/types';
+import {
+  loginError,
+  LoginErrorResponse,
+  registerError,
+  RegisterErrorResponse,
+} from '@bregenz-bewegt/server/common';
 
 @Injectable()
 export class AuthService {
@@ -49,13 +52,11 @@ export class AuthService {
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
-          throw new ConflictException(<RegisterError>{
-            ...((error.meta.target as string).includes('username') && {
-              username: 'Benutzername bereits vergeben',
-            }),
-            ...((error.meta.target as string).includes('email') && {
-              email: 'E-Mail Adresse bereits verwendet',
-            }),
+          throw new ConflictException(<RegisterErrorResponse>{
+            ...((error.meta.target as string).includes('username') &&
+              registerError.USERNAME_TAKEN),
+            ...((error.meta.target as string).includes('email') &&
+              registerError.EMAIL_TAKEN),
           });
         }
       }
@@ -72,13 +73,13 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new ForbiddenException(defaultLoginError);
+      throw new ForbiddenException(loginError.USER_NOT_FOUND);
     }
 
     const passwordMatches = await argon.verify(user.password, dto.password);
 
     if (!passwordMatches) {
-      throw new ForbiddenException(defaultLoginError);
+      throw new ForbiddenException(loginError.INVALID_CREDENTIALS);
     }
 
     const tokens = await this.signTokens(user.id, user.email);
