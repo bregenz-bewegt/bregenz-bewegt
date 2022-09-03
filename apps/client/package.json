@@ -1,5 +1,10 @@
 {
   "name": "client",
+  "dependencies": {
+    "@awesome-cordova-plugins/barcode-scanner": "^5.44.0",
+    "@awesome-cordova-plugins/core": "^5.44.0",
+    "phonegap-plugin-barcodescanner": "^8.1.0"
+  },
   "devDependencies": {
     "@capacitor/cli": "^3.6.0"
   }

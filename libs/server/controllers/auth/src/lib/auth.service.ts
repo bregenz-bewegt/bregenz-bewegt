@@ -6,11 +6,17 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
 import { UserService } from '@bregenz-bewegt/server-controllers-user';
-import { LoginDto, RegisterDto } from './dto';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
-import { JwtPayload, Tokens } from '@bregenz-bewegt/shared/types';
+import {
+  JwtPayload,
+  LoginDto,
+  defaultLoginError,
+  RegisterDto,
+  Tokens,
+  RegisterError,
+} from '@bregenz-bewegt/shared/types';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +28,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string) {
-    const user = await this.userService.getUserByEmail(email);
+    const user = await this.userService.getByEmail(email);
 
     if (user && user.password === password) {
       return user;
@@ -50,7 +56,14 @@ export class AuthService {
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
-          throw new ConflictException('Username is already taken');
+          throw new ConflictException(<RegisterError>{
+            ...((error.meta.target as string).includes('username') && {
+              username: 'Benutzername bereits vergeben',
+            }),
+            ...((error.meta.target as string).includes('email') && {
+              email: 'E-Mail Adresse bereits verwendet',
+            }),
+          });
         }
       }
 
@@ -65,11 +78,15 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new ForbiddenException('Credentials incorrect');
+    if (!user) {
+      throw new ForbiddenException(defaultLoginError);
+    }
 
     const passwordMatches = await argon.verify(user.password, dto.password);
 
-    if (!passwordMatches) throw new ForbiddenException('Credentials incorrect');
+    if (!passwordMatches) {
+      throw new ForbiddenException(defaultLoginError);
+    }
 
     const tokens = await this.signTokens(user.id, user.email);
     this.updateRefreshToken(user.id, tokens.refresh_token);
@@ -98,7 +115,7 @@ export class AuthService {
 
     const [access_token, refresh_token] = await Promise.all([
       this.jwtService.signAsync(jwtPayload, {
-        expiresIn: '15m',
+        expiresIn: '3s',
         secret: this.configService.get('NX_JWT_ACCESS_TOKEN_SECRET'),
       }),
       this.jwtService.signAsync(jwtPayload, {
@@ -124,8 +141,8 @@ export class AuthService {
       throw new ForbiddenException('Access denied');
 
     const refreshTokenMatches = await argon.verify(
-      refreshToken,
-      user.refreshToken
+      user.refreshToken,
+      refreshToken
     );
 
     if (!refreshTokenMatches) throw new ForbiddenException('Access denied');

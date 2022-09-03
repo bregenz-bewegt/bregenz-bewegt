@@ -18,9 +18,11 @@ import {
   Register,
   Loading,
   ParkDetail,
+  ExerciseDetail,
 } from '@bregenz-bewegt/client-ui-pages';
 import { inject, observer } from 'mobx-react';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
+import { useEffect } from 'react';
 
 export interface RouterProps {
   userStore?: UserStore;
@@ -28,6 +30,10 @@ export interface RouterProps {
 
 export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
   observer(({ userStore }: RouterProps) => {
+    useEffect(() => {
+      userStore?.initUser();
+    }, []);
+
     return (
       <IonReactRouter>
         {userStore?.isLoadingLoginState ? (
@@ -49,7 +55,12 @@ export const Tabs: React.FC = () => {
         <IonRouterOutlet>
           <Route
             exact
-            path={`${tabRoutes.start.route}/:id`}
+            path={`${tabRoutes.start.route}/:park/:exercise`}
+            component={ExerciseDetail}
+          />
+          <Route
+            exact
+            path={`${tabRoutes.start.route}/:park`}
             component={ParkDetail}
           />
           <Route
@@ -85,7 +96,12 @@ export const Tabs: React.FC = () => {
           {Object.values(tabRoutes).map((page, i) => {
             if (page.label !== 'Scan') {
               return (
-                <IonTabButton tab={page.route} href={page.route} key={i}>
+                <IonTabButton
+                  mode="ios"
+                  tab={page.route}
+                  href={page.route}
+                  key={i}
+                >
                   <IonIcon icon={page.icon} />
                   <IonLabel>{page.label}</IonLabel>
                 </IonTabButton>

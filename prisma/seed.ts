@@ -2,9 +2,11 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 import * as argon from 'argon2';
 
+const exercises = [];
+
 const createUsers = async () => {
   await prisma.user.deleteMany();
-  const password = await argon.hash('test');
+  const password = await argon.hash('testtest');
   await prisma.user.createMany({
     data: [
       {
@@ -15,7 +17,6 @@ const createUsers = async () => {
         lastname: 'Ostini',
         role: 'USER',
         password: password,
-        profilePicture: 'path/to/picture',
         coins: 100,
       },
     ],
@@ -90,9 +91,65 @@ const createParks = async () => {
   });
 };
 
+const createExercises = async () => {
+  await prisma.exercise.deleteMany();
+  const parks = await prisma.park.findMany();
+  const exercises = [
+    {
+      name: 'Sit-Up',
+      description: 'Some description',
+      difficulty: 'BEGINNER',
+      points: 10,
+      video: 'not-yet-defined',
+    },
+    {
+      name: 'Liegestütze',
+      description: 'Some description',
+      difficulty: 'BEGINNER',
+      points: 10,
+      video: 'not-yet-defined',
+    },
+    {
+      name: 'Plank',
+      description: 'Some description',
+      difficulty: 'ADVANCED',
+      points: 10,
+      video: 'not-yet-defined',
+    },
+    {
+      name: 'Squat',
+      description: 'Some description',
+      difficulty: 'BEGINNER',
+      points: 10,
+      video: 'not-yet-defined',
+    },
+    {
+      name: 'Versteinerte Hexe',
+      description: 'Some description',
+      difficulty: 'GAME',
+      points: 10,
+      video: 'not-yet-defined',
+    },
+  ];
+
+  await Promise.all([
+    exercises.map(async (exercise) => {
+      await prisma.exercise.create({
+        data: <any>{
+          ...exercise,
+          parks: {
+            connect: parks.map((park) => ({ id: park.id })),
+          },
+        },
+      });
+    }),
+  ]);
+};
+
 const main = async () => {
   await createUsers();
   await createParks();
+  await createExercises();
 };
 
 main()

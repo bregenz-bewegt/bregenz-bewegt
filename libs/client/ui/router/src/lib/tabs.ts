@@ -7,7 +7,12 @@ import {
 } from '@bregenz-bewegt/client-ui-pages';
 import { home, podium, scan, analytics, person } from 'ionicons/icons';
 
-type _TabRoutes = 'start' | 'leaderboard' | 'scan' | 'analytics' | 'profile';
+export type _TabRoutes =
+  | 'start'
+  | 'leaderboard'
+  | 'scan'
+  | 'analytics'
+  | 'profile';
 
 export type TabRoutes = {
   [K in _TabRoutes]: {

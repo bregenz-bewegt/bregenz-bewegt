@@ -1,5 +1,5 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Park } from '@prisma/client';
 
 @Injectable()
@@ -16,5 +16,19 @@ export class ParkService {
         id: id,
       },
     });
+  }
+
+  async getParkWithExercises(id: Park['id']) {
+    const park = await this.prismaService.park.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        exercises: true,
+      },
+    });
+
+    if (!park) throw new NotFoundException();
+    return park;
   }
 }

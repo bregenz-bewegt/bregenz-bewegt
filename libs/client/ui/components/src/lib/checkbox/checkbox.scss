@@ -1,0 +1,20 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+
+  ion-checkbox {
+    min-height: var(--spacing-l);
+    height: var(--spacing-l);
+    width: var(--spacing-l);
+    min-width: var(--spacing-l);
+
+    &.ion-invalid {
+      --border-color: var(--ion-color-danger);
+    }
+  }
+
+  ion-label {
+    display: inline-block;
+    padding-left: var(--spacing-s);
+  }
+}

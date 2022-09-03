@@ -24,11 +24,22 @@ interface StartProps {
 
 export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
   observer(({ parkStore }) => {
+    const [isLoadingParks, setIsLoadingParks] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
-    const [parksResult, setParksResult] = useState<Park[]>([]);
+    const [parksResult, setParksResult] = useState<Park[]>(
+      Array(10).fill({ id: 0, name: '', address: '', image: '', qr: '' })
+    );
     const [parkDisplayType, setParkDisplayType] = useState<ParkDisplayType>(
       ParkDisplayType.List
     );
+
+    const fetchParks = async () => {
+      setIsLoadingParks(true);
+      parkStore?.getParks().then((parks) => {
+        setParksResult(parks ?? []);
+        setIsLoadingParks(false);
+      });
+    };
 
     // TODO improve this with a fuzzy search algorithm
     const handleSearch = (
@@ -48,14 +59,16 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       setParksResult(queriedParks ?? parksResult);
     };
 
+    console.log(parksResult);
+
     useEffect(() => {
-      parkStore?.fetchParks().then((parks) => setParksResult(parks ?? []));
+      fetchParks();
     }, []);
 
     return (
       <IonPage className="start">
-        <Header></Header>
-        <IonContent className="start__content">
+        <Header />
+        <IonContent className="start__content" scrollY={false}>
           <div className="start__content__scroll-wrapper">
             <div className="start__content__title-wrapper">
               <IonText>
@@ -75,19 +88,22 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                 </IonSelectOption>
               </IonSelect>
             </div>
-            <IonSearchbar
-              value={searchText}
-              onIonChange={(e) => handleSearch(e)}
-              debounce={250}
-              placeholder="Suche nach Spielplätzen"
-              className="start__content__search-bar"
-            ></IonSearchbar>
+            <div className="start__content__searchbar-wrapper">
+              <IonSearchbar
+                mode="ios"
+                value={searchText}
+                onIonChange={(e) => handleSearch(e)}
+                debounce={250}
+                placeholder="Suche nach Spielplätzen"
+              ></IonSearchbar>
+            </div>
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
                 {parksResult.length > 0 ? (
                   parksResult.map((park) => {
                     return (
                       <ParkCard
+                        isLoading={isLoadingParks}
                         title={park.name}
                         location={park.address}
                         image={park.image}

@@ -31,6 +31,9 @@
       "@bregenz-bewegt/client/common/stores": [
         "libs/client/common/stores/src/index.ts"
       ],
+      "@bregenz-bewegt/client/common/validation": [
+        "libs/client/common/validation/src/index.ts"
+      ],
       "@bregenz-bewegt/client/types": ["libs/client/types/src/index.ts"],
       "@bregenz-bewegt/server-controllers-auth": [
         "libs/server/controllers/auth/src/index.ts"
@@ -40,9 +43,13 @@
       ],
       "@bregenz-bewegt/server-prisma": ["libs/server/prisma/src/index.ts"],
       "@bregenz-bewegt/server/common": ["libs/server/common/src/index.ts"],
+      "@bregenz-bewegt/server/controllers/exercise": [
+        "libs/server/controllers/exercise/src/index.ts"
+      ],
       "@bregenz-bewegt/server/controllers/park": [
         "libs/server/controllers/park/src/index.ts"
       ],
+      "@bregenz-bewegt/server/multer": ["libs/server/multer/src/index.ts"],
       "@bregenz-bewegt/shared/types": ["libs/shared/types/src/index.ts"]
     }
   },

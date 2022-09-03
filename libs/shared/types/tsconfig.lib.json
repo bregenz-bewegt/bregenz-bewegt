@@ -5,8 +5,9 @@
     "outDir": "../../../dist/out-tsc",
     "declaration": true,
     "types": ["node"],
-    "composite": true
+    "composite": true,
+    "strictPropertyInitialization": false
   },
   "exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts"],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "../../client/types/src/lib/login-credentials.ts"]
 }

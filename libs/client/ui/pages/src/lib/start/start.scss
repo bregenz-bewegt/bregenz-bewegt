@@ -1,5 +1,10 @@
 .start {
   &__content {
+    &::part(scroll) {
+      padding-bottom: 0;
+      overflow: hidden;
+    }
+
     &__display-type-select {
       margin-left: auto;
       margin-bottom: 4px;
@@ -15,10 +20,15 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
+      margin: 0 var(--spacing-m);
     }
 
-    &__search-bar {
-      padding: 32px 0;
+    &__searchbar-wrapper {
+      margin: 0 var(--spacing-m);
+
+      ion-searchbar {
+        padding: 32px 0;
+      }
     }
 
     &__parks-list {

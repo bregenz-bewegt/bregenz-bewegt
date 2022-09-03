@@ -1,21 +1,14 @@
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/react';
+import { CoinDepot, Header } from '@bregenz-bewegt/client-ui-components';
+import { IonContent, IonPage } from '@ionic/react';
 import './leaderboard.scss';
 
 export const Leaderboard: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Leaderboard</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen></IonContent>
+      <Header />
+      <IonContent className="leaderboard" fullscreen>
+        <CoinDepot />
+      </IonContent>
     </IonPage>
   );
 };

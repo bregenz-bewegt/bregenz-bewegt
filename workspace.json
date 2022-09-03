@@ -6,6 +6,7 @@
     "client-common-http": "libs/client/common/http",
     "client-common-storage": "libs/client/common/storage",
     "client-common-stores": "libs/client/common/stores",
+    "client-common-validation": "libs/client/common/validation",
     "client-e2e": "apps/client-e2e",
     "client-types": "libs/client/types",
     "client-ui-components": "libs/client/ui/components",
@@ -14,8 +15,10 @@
     "server": "apps/server",
     "server-common": "libs/server/common",
     "server-controllers-auth": "libs/server/controllers/auth",
+    "server-controllers-exercise": "libs/server/controllers/exercise",
     "server-controllers-park": "libs/server/controllers/park",
     "server-controllers-user": "libs/server/controllers/user",
+    "server-multer": "libs/server/multer",
     "server-prisma": "libs/server/prisma",
     "shared-types": "libs/shared/types"
   }

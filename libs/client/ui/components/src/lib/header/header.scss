@@ -1,25 +1,47 @@
 .header {
   padding: 24px 16px;
   --box-shadow: none;
+  display: flex;
+  justify-content: space-between;
 
-  &__fab {
-    margin-left: auto;
+  &__profile {
+    display: flex;
+    justify-content: center;
 
-    &__button {
+    ion-avatar {
+      display: inline-block;
       height: 48px;
       width: 48px;
-      --background: var(--ion-color-light-tint);
-      --box-shadow: none;
+      margin-right: 8px;
+    }
 
-      &__icon {
-        --background: var(--ion-color-primary);
+    &__greeting {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      ion-text {
+        margin: 2px 0;
+        display: block;
+        width: calc(var(--spacing-xxl) * 2);
+      }
+
+      &__username {
+        font-weight: bold;
+        width: calc(var(--spacing-3xl) * 2) !important;
       }
     }
   }
 
-  &__avatar {
-    margin-left: auto;
+  &__fab-button {
     height: 48px;
     width: 48px;
+    --background: var(--ion-color-light-tint);
+    --box-shadow: none;
+    --background-activated: none;
+
+    &__icon {
+      --background: var(--ion-color-primary);
+    }
   }
 }

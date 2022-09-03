@@ -1,6 +1,5 @@
 import './scan.scss';
 import {
-  IonButton,
   IonContent,
   IonHeader,
   IonPage,
@@ -8,33 +7,19 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner';
 import { useEffect, useState } from 'react';
 
 export const Scan: React.FC = () => {
-  const [isQrImplemented, setIsQrImplemented] = useState<boolean>(true);
+  const [qrResult, setQrResult] = useState<string>('');
   const openScanner = async () => {
-    BarcodeScanner.hideBackground();
-    const data = await BarcodeScanner.startScan();
+    const data = await BarcodeScanner.scan();
     console.log(`Barcode data: ${data}`);
-  };
-
-  const checkPermission = async () => {
-    try {
-      const status = await BarcodeScanner.checkPermission({ force: true });
-      console.log(status);
-      if (status.granted) {
-        return true;
-      }
-      return false;
-    } catch (error) {
-      setIsQrImplemented(false);
-      return false;
-    }
+    setQrResult(data.text ?? 'test');
   };
 
   useEffect(() => {
-    checkPermission();
+    openScanner();
   }, []);
 
   return (
@@ -50,9 +35,7 @@ export const Scan: React.FC = () => {
             <IonTitle size="large">Scan</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonRow>{isQrImplemented ? 'yes' : 'no'}</IonRow>
-        {/* <ExploreContainer name="Scan" /> */}
-        <IonButton onClick={() => openScanner()}>Scan</IonButton>
+        <IonRow>{qrResult}</IonRow>
       </IonContent>
     </IonPage>
   );

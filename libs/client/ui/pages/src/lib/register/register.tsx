@@ -1,35 +1,54 @@
+import { Checkbox, Input } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
-import { LoginCredentials } from '@bregenz-bewegt/client/types';
+import { registerSchema } from '@bregenz-bewegt/client/common/validation';
 import {
   IonPage,
   IonContent,
   IonText,
   IonButton,
-  IonInput,
   IonLabel,
   IonSpinner,
+  IonNote,
 } from '@ionic/react';
+import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import './register.scss';
 
-/* eslint-disable-next-line */
 export interface RegisterProps {
   userStore?: UserStore;
 }
 
 export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
-    const [credentials, setCredentials] = useState<LoginCredentials>({
-      email: '',
-      password: '',
-    });
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [acceptTos, setAcceptTos] = useState<boolean>(false);
+    const [acceptTosValid, setAcceptTosValid] = useState<boolean>(true);
+    const register = useFormik({
+      initialValues: {
+        username: '',
+        email: '',
+        password: '',
+        passwordConfirmation: '',
+      },
+      validationSchema: registerSchema,
+      onSubmit: (values, { setSubmitting, setErrors }) => {
+        if (!acceptTos) {
+          setAcceptTosValid(false);
+          return setSubmitting(false);
+        }
 
-    const handleRegister = (
-      e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>
-    ) => {};
+        userStore
+          ?.register(values.username, values.email, values.password)
+          .then((data) => {
+            console.log(data);
+            setSubmitting(false);
+          })
+          .catch((error) => {
+            setErrors(error.response.data);
+            setSubmitting(false);
+          });
+      },
+    });
 
     return (
       <IonPage className="register">
@@ -42,62 +61,106 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 Bewegt
               </h1>
             </IonText>
-            <div className="register__content__login">
+            <div className="register__content__wrapper">
               <IonText>
                 <h2>Registrieren</h2>
               </IonText>
-              <IonInput
-                value={credentials.email}
+              <Input
+                name="username"
+                placeholder="Benutzername"
+                value={register.values.username}
+                error={
+                  register.touched.username
+                    ? register.errors.username
+                    : undefined
+                }
+                onChange={register.handleChange}
+                onBlur={register.handleBlur}
+                className="username"
+              ></Input>
+              <Input
+                name="email"
+                placeholder="Email"
                 type="email"
                 inputMode="email"
-                placeholder="Email"
-                name="email"
-                required
-                onIonChange={(e) =>
-                  setCredentials((prev) => ({
-                    ...prev,
-                    email: e.detail.value ?? credentials?.email,
-                  }))
+                value={register.values.email}
+                error={
+                  register.touched.email ? register.errors.email : undefined
                 }
-              ></IonInput>
-              <IonInput
-                value={credentials.password}
-                type="password"
-                inputMode="text"
-                placeholder="Passwort"
+                onChange={register.handleChange}
+                onBlur={register.handleBlur}
+                className="email"
+              ></Input>
+              <Input
                 name="password"
-                required
-                onIonChange={(e) =>
-                  setCredentials((prev) => ({
-                    ...prev,
-                    password: e.detail.value ?? credentials?.password,
-                  }))
+                placeholder="Passwort"
+                type="password"
+                value={register.values.password}
+                error={
+                  register.touched.password
+                    ? register.errors.password
+                    : undefined
                 }
-              ></IonInput>
-              <Link className="login__content__login__forgot-password" to={'#'}>
-                Passwort vergessen?
-              </Link>
+                onChange={register.handleChange}
+                onBlur={register.handleBlur}
+                className="password"
+              ></Input>
+              <Input
+                name="passwordConfirmation"
+                placeholder="Passwort bestätigen"
+                type="password"
+                value={register.values.passwordConfirmation}
+                error={
+                  register.touched.passwordConfirmation
+                    ? register.errors.passwordConfirmation
+                    : undefined
+                }
+                onChange={register.handleChange}
+                onBlur={register.handleBlur}
+                className="password-confirmation"
+              ></Input>
+              <Checkbox
+                name="accept-tos"
+                className="accept-tos"
+                checked={acceptTos}
+                valid={acceptTosValid}
+                label={
+                  <IonNote mode="md">
+                    Ich akzeptiere die AGBs und Nutzungsbedigungen
+                  </IonNote>
+                }
+                onChange={(e: any) => {
+                  setAcceptTos(e.currentTarget.checked);
+                  setAcceptTosValid(true);
+                }}
+              />
               <IonButton
+                mode="ios"
                 expand="block"
                 color="primary"
-                onClick={(e) => handleRegister(e)}
-                disabled={isLoading}
+                onClick={() => {
+                  if (!acceptTos) setAcceptTosValid(false);
+                  register.submitForm();
+                }}
+                disabled={register.isSubmitting}
               >
-                {isLoading ? (
+                {register.isSubmitting ? (
                   <IonLabel>
-                    <IonSpinner name="crescent">Anmelden</IonSpinner>
+                    <IonSpinner name="crescent" />
                   </IonLabel>
                 ) : (
-                  'Anmelden'
+                  'Registrieren'
                 )}
               </IonButton>
               <IonButton
+                mode="ios"
                 expand="block"
                 color="primary"
                 fill="outline"
-                href="/register"
+                routerLink="/login"
+                routerDirection="back"
               >
-                Neu Registrieren
+                Anmelden
               </IonButton>
             </div>
           </div>

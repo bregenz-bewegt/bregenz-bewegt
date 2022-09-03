@@ -1,6 +1,8 @@
+import './park-detail.scss';
+import { ExerciseCard, Header } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
-  ParkStore,
+  ExerciseStore,
   parkStore,
   UserStore,
   userStore,
@@ -8,27 +10,26 @@ import {
 import { Park } from '@bregenz-bewegt/client/types';
 import {
   IonBackButton,
-  IonButton,
-  IonButtons,
   IonContent,
-  IonHeader,
+  IonIcon,
+  IonNote,
   IonPage,
-  IonTitle,
-  IonToolbar,
+  IonRouterOutlet,
+  IonText,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Loading } from '../loading/loading';
-import './park-detail.scss';
+import { location } from 'ionicons/icons';
 
 interface MatchParams {
-  id: string;
+  park: string;
 }
 
 export interface ParkDetail extends RouteComponentProps<MatchParams> {
   userStore?: UserStore;
-  parkStore?: ParkStore;
+  parkStore?: ExerciseStore;
 }
 
 export const ParkDetail: React.FC<ParkDetail> = inject(
@@ -39,29 +40,60 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     const history = useHistory();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [park, setPark] = useState<Park>();
-    const [exercises, setExercises] = useState<any[]>();
 
     useEffect(() => {
-      parkStore.getPark(+match.params.id).then((park) => {
+      const navigateBackToStart = () => history.push(`${tabRoutes.start.route}`);
+      const parkId = +match.params.park;
+
+      if (!parkId) {
+        navigateBackToStart();
+      }
+
+      parkStore.getParkWithExercises(parkId).then((park) => {
+        if (!park) return navigateBackToStart();
+
         setPark(park);
         setIsLoading(false);
       });
-    }, []);
+    }, [match.params.park]);
+
+    console.log(match.params);
 
     return isLoading ? (
       <Loading />
     ) : (
-      <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonBackButton defaultHref={tabRoutes.start.route} text="Zurück"/>
-            </IonButtons>
-            <IonTitle>Park Detail</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+      <IonPage className="park-detail">
+        <Header />
         <IonContent fullscreen>
-          <IonButton>Park Detail</IonButton>
+          <div className="park-detail__scroll-wrapper">
+            <div className="park-detail__scroll-wrapper__header-wrapper">
+              <IonBackButton
+                color="primary"
+                mode="ios"
+                defaultHref={tabRoutes.start.route}
+                text="Zurück"
+              />
+              <IonText>
+                <h1>{park?.name}</h1>
+              </IonText>
+              <IonNote>
+                <IonIcon icon={location} />
+                {park?.address}
+              </IonNote>
+            </div>
+            <div className="park-detail__scroll-wrapper__exercises">
+              {park?.exercises &&
+                park.exercises.length > 0 &&
+                park.exercises.map((exercise) => {
+                  return (
+                    <ExerciseCard
+                      {...exercise}
+                      link={`${tabRoutes.start.route}/${park.id}/${exercise.id}`}
+                    />
+                  );
+                })}
+            </div>
+          </div>
         </IonContent>
       </IonPage>
     );

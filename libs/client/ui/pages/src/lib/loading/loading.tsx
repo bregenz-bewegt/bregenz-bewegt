@@ -11,7 +11,7 @@ export const Loading: React.FC<LoadingProps> = ({ spinner = 'crescent' }) => {
     <IonPage className="loading">
       <IonContent fullscreen>
         <div className="loading__wrapper">
-          <IonSpinner name={spinner} />
+          <IonSpinner color="primary" name={spinner} />
         </div>
       </IonContent>
     </IonPage>

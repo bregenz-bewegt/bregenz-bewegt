@@ -1,6 +1,5 @@
 import { Public } from '@bregenz-bewegt/server/common';
-import { Controller, Get, Param } from '@nestjs/common';
-import { GetParkDto } from './dto';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { ParkService } from './park.service';
 
 @Controller('parks')
@@ -15,7 +14,12 @@ export class ParkController {
 
   @Public()
   @Get(':id')
-  getPark(@Param() params: GetParkDto) {
-    return this.parkService.getPark(+params.id);
+  getPark(@Param('id', ParseIntPipe) id: number) {
+    return this.parkService.getPark(id);
+  }
+
+  @Get(':id/exercises')
+  getParkWithExercises(@Param('id', ParseIntPipe) id: number) {
+    return this.parkService.getParkWithExercises(id);
   }
 }

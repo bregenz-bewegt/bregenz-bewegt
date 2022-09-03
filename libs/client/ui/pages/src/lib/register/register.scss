@@ -12,12 +12,24 @@
       -webkit-text-fill-color: transparent;
     }
 
-    &__login {
+    &__wrapper {
       width: 100%;
 
-      &__forgot-password {
-        display: inline-block;
-        margin: 8px 0 16px 0;
+      ion-text {
+        h2 {
+        }
+      }
+
+      .email {
+        margin-bottom: var(--spacing-s);
+      }
+
+      .password-confirmation {
+        margin-bottom: var(--spacing-m);
+      }
+
+      .accept-tos {
+        margin: var(--spacing-s) 0 var(--spacing-m) 0;
       }
     }
   }
