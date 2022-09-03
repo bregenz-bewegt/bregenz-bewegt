@@ -21,20 +21,13 @@ import {
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UserService,
     private prismaService: PrismaService,
     private jwtService: JwtService,
     private configService: ConfigService
   ) {}
 
-  async validateUser(email: string, password: string) {
-    const user = await this.userService.getByEmail(email);
-
-    if (user && user.password === password) {
-      return user;
-    }
-
-    return null;
+  async guest() {
+    //
   }
 
   async register(dto: RegisterDto) {

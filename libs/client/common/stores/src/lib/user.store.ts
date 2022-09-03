@@ -15,12 +15,22 @@ export class UserStore implements Store {
     makeAutoObservable(this);
   }
 
+  @action async guest() {
+    console.log('guest');
+  }
+
   @action async register(username: string, email: string, password: string) {
     const { data } = await http.post('/auth/local/register', {
       username,
       email,
       password,
     });
+
+    await this.setTokens({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+    });
+    this.setIsLoggedIn(true);
 
     return data;
   }

@@ -26,7 +26,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     const history = useHistory();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const handleLogin = (
+    const handleLocalLogin = (
       credentials: LoginCredentials,
       setErrors: (
         errors: FormikErrors<{
@@ -50,6 +50,10 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
         });
     };
 
+    const handleGuestLogin = () => {
+      userStore?.guest();
+    };
+
     return (
       <IonPage className="login">
         <IonContent className="login__content" fullscreen>
@@ -71,6 +75,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                   color="primary"
                   fill="outline"
                   className="login__content__login__socials__guest"
+                  onClick={() => handleGuestLogin()}
                 >
                   Als Gast beitreten
                 </IonButton>
@@ -79,7 +84,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 initialValues={{ email: '', password: '' }}
                 validationSchema={loginSchema}
                 onSubmit={(values, { setErrors }) => {
-                  handleLogin(values, setErrors);
+                  handleLocalLogin(values, setErrors);
                 }}
               >
                 {({

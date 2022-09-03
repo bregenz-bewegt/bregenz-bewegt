@@ -13,6 +13,12 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Public()
+  @Post('guest')
+  guest(@Body() dto: RegisterDto): Promise<Tokens> {
+    return this.authService.register(dto);
+  }
+
+  @Public()
   @Post('local/register')
   register(@Body() dto: RegisterDto): Promise<Tokens> {
     return this.authService.register(dto);
