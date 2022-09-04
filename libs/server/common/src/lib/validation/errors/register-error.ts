@@ -20,6 +20,6 @@ export const registerError: { [K in RegisterError]: RegisterErrorResponse } = {
     username: 'Benutzername bereits vergeben',
   },
   [RegisterError.EMAIL_TAKEN]: {
-    email: 'E-Mail Adresse bereits verwendet',
+    email: 'E-Mail Adresse wird bereits verwendet',
   },
 };
