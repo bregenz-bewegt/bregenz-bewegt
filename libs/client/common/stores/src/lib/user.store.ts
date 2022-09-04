@@ -171,6 +171,13 @@ export class UserStore implements Store {
 
     return { access_token, refresh_token };
   }
+
+  @action async resetPassword() {
+    const { data } = await http.post('/auth/reset-password');
+
+    console.log(data);
+    return data;
+  }
 }
 
 export const userStore = new UserStore();

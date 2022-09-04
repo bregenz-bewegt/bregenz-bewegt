@@ -19,13 +19,17 @@ import {
   registerError,
   RegisterErrorResponse,
 } from '@bregenz-bewegt/server/common';
+import { MailerService } from '@nestjs-modules/mailer';
+import { MailService } from '@bregenz-bewegt/server/mail';
 
 @Injectable()
 export class AuthService {
   constructor(
     private prismaService: PrismaService,
     private jwtService: JwtService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private mailerService: MailerService,
+    private mailService: MailService
   ) {}
 
   async guest() {
@@ -162,5 +166,9 @@ export class AuthService {
         refreshToken: hash,
       },
     });
+  }
+
+  async resetPassword() {
+    return this.mailService.sendMail();
   }
 }

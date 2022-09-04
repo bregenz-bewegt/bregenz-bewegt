@@ -52,4 +52,9 @@ export class AuthController {
   ): Promise<Tokens> {
     return this.authService.refreshTokens(userId, refreshToken);
   }
+
+  @Post('reset-password')
+  resetPassword() {
+    return this.authService.resetPassword();
+  }
 }

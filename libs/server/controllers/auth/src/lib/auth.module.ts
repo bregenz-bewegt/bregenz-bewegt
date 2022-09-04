@@ -9,9 +9,16 @@ import {
   AccessTokenStrategy,
   RefreshTokenStrategy,
 } from './passport/strategies';
+import { MailModule } from '@bregenz-bewegt/server/mail';
 
 @Module({
-  imports: [UserModule, PassportModule, PrismaModule, JwtModule.register({})],
+  imports: [
+    UserModule,
+    PassportModule,
+    PrismaModule,
+    JwtModule.register({}),
+    MailModule,
+  ],
   controllers: [AuthController],
   providers: [AuthService, AccessTokenStrategy, RefreshTokenStrategy],
   exports: [AuthService],
