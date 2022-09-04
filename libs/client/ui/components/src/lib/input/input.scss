@@ -18,12 +18,12 @@
     ion-input {
       border-radius: 8px;
       margin: 4px 0;
+      border: 1px solid var(--ion-color-medium);
       --padding-top: 8px !important;
       --padding-bottom: 8px !important;
       --padding-start: 8px !important;
       --padding-end: 8px !important;
       --background: var(--ion-color-light-tint) !important;
-      border: 2px solid var(--ion-color-medium);
 
       &.ion-invalid {
         border: 1px solid var(--ion-color-danger);
