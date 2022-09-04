@@ -23,6 +23,7 @@
       --padding-start: 8px !important;
       --padding-end: 8px !important;
       --background: var(--ion-color-light-tint) !important;
+      border: 2px solid var(--ion-color-medium);
 
       &.ion-invalid {
         border: 1px solid var(--ion-color-danger);
