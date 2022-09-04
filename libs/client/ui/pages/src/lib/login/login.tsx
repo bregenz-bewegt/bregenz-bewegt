@@ -53,9 +53,14 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
 
     const handleGuestLogin = () => {
       setIsGuestLoading(true);
-      userStore?.guest().then(() => {
-        setIsGuestLoading(false);
-      });
+      userStore
+        ?.guest()
+        .then(() => {
+          setIsGuestLoading(false);
+        })
+        .catch(() => {
+          setIsGuestLoading(false);
+        });
     };
 
     return (
