@@ -29,7 +29,13 @@ export class AuthService {
   ) {}
 
   async guest() {
-    //
+    const newGuest = await this.prismaService.user.create({
+      data: {
+        role: 'GUEST',
+      },
+    });
+
+    return newGuest;
   }
 
   async register(dto: RegisterDto) {

@@ -16,7 +16,10 @@ export class UserStore implements Store {
   }
 
   @action async guest() {
-    console.log('guest');
+    const { data } = await http.post('/auth/local/guest');
+
+    console.log(data);
+    return data;
   }
 
   @action async register(username: string, email: string, password: string) {

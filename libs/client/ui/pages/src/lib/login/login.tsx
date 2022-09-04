@@ -25,6 +25,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isGuestLoading, setIsGuestLoading] = useState<boolean>(false);
 
     const handleLocalLogin = (
       credentials: LoginCredentials,
@@ -51,7 +52,10 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     };
 
     const handleGuestLogin = () => {
-      userStore?.guest();
+      setIsGuestLoading(true);
+      userStore?.guest().then(() => {
+        setIsGuestLoading(false);
+      });
     };
 
     return (
@@ -77,7 +81,13 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                   className="login__content__login__socials__guest"
                   onClick={() => handleGuestLogin()}
                 >
-                  Als Gast beitreten
+                  {isGuestLoading ? (
+                    <IonLabel>
+                      <IonSpinner name="crescent" />
+                    </IonLabel>
+                  ) : (
+                    'Als Gast beitreten'
+                  )}
                 </IonButton>
               </IonRow>
               <Formik
@@ -131,7 +141,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                     >
                       {isLoading ? (
                         <IonLabel>
-                          <IonSpinner name="crescent">Anmelden</IonSpinner>
+                          <IonSpinner name="crescent" />
                         </IonLabel>
                       ) : (
                         'Anmelden'

@@ -1,4 +1,10 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { LoginDto, RegisterDto, Tokens } from '@bregenz-bewegt/shared/types';
 import { AuthService } from './auth.service';
 
@@ -6,6 +12,7 @@ import {
   GetCurrentUser,
   Public,
   RefreshTokenGuard,
+  RemoveSensitiveFieldsInterceptor,
 } from '@bregenz-bewegt/server/common';
 
 @Controller('auth')
@@ -13,9 +20,10 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Public()
-  @Post('guest')
-  guest(@Body() dto: RegisterDto): Promise<Tokens> {
-    return this.authService.register(dto);
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Post('local/guest')
+  guest() {
+    return this.authService.guest();
   }
 
   @Public()
