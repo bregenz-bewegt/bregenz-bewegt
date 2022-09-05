@@ -1,6 +1,12 @@
 import { Input, TitleBanner } from '@bregenz-bewegt/client-ui-components';
 import { passwordResetSchema } from '@bregenz-bewegt/client/common/validation';
-import { IonContent, IonPage } from '@ionic/react';
+import {
+  IonButton,
+  IonContent,
+  IonLabel,
+  IonPage,
+  IonSpinner,
+} from '@ionic/react';
 import { useFormik } from 'formik';
 import './reset-password.scss';
 
@@ -51,6 +57,15 @@ export const ResetPassword = (props: ResetPasswordProps) => {
               onChange={reset.handleChange}
               onBlur={reset.handleBlur}
             />
+            <IonButton>
+              {reset.isSubmitting ? (
+                <IonLabel>
+                  <IonSpinner name="crescent" />
+                </IonLabel>
+              ) : (
+                'Passwort ändern'
+              )}
+            </IonButton>
           </div>
         </div>
       </IonContent>
