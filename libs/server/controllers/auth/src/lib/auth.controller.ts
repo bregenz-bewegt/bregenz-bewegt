@@ -55,7 +55,10 @@ export class AuthController {
   }
 
   @Post('forgot-password')
-  forgotPassword(@GetCurrentUser('email') email: User['email']) {
-    return this.authService.forgotPassword(email);
+  forgotPassword(
+    @GetCurrentUser('email', 'sub') email: User['email'],
+    @GetCurrentUser('sub') userId: User['id']
+  ) {
+    return this.authService.forgotPassword(userId, email);
   }
 }
