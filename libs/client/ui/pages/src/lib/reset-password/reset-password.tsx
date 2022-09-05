@@ -1,3 +1,4 @@
+import { TitleBanner } from '@bregenz-bewegt/client-ui-components';
 import { IonContent, IonPage } from '@ionic/react';
 import './reset-password.scss';
 
@@ -7,7 +8,9 @@ export interface ResetPasswordProps {}
 export const ResetPassword = (props: ResetPasswordProps) => {
   return (
     <IonPage className="reset-password">
-      <IonContent></IonContent>
+      <IonContent>
+        <TitleBanner />
+      </IonContent>
     </IonPage>
   );
 };
