@@ -8,4 +8,8 @@ export class MailService {
   sendMail(options: ISendMailOptions) {
     return this.mailerService.sendMail(options);
   }
+
+  sendPasswordResetMail(options: ISendMailOptions) {
+    return this.mailerService.sendMail({});
+  }
 }

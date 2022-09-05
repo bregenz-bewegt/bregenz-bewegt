@@ -80,18 +80,12 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
                 text="Zurück"
               />
             </IonButtons>
-            <IonTitle>Profile</IonTitle>
+            <IonTitle>{park?.name}</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
           <div className="park-detail__scroll-wrapper">
             <div className="park-detail__scroll-wrapper__header-wrapper">
-              <IonBackButton
-                color="primary"
-                mode="ios"
-                defaultHref={tabRoutes.start.route}
-                text="Zurück"
-              />
               <IonText>
                 <h1>{park?.name}</h1>
               </IonText>
