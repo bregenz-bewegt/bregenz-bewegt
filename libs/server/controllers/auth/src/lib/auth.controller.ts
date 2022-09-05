@@ -16,6 +16,7 @@ import { AuthService } from './auth.service';
 
 import {
   GetCurrentUser,
+  PasswordResetTokenGuard,
   Public,
   RefreshTokenGuard,
   RemoveSensitiveFieldsInterceptor,
@@ -69,8 +70,12 @@ export class AuthController {
   }
 
   @Public()
-  @Post('reset-password/:token')
-  resetPassword(@Param('token') token: string, @Body() dto: ResetPasswordDto) {
-    return this.authService.resetPassword(token, dto);
+  @UseGuards(PasswordResetTokenGuard)
+  @Post('reset-password')
+  resetPassword(
+    @GetCurrentUser('email') email: User['email'],
+    @Body() dto: ResetPasswordDto
+  ) {
+    return this.authService.resetPassword(email, dto);
   }
 }
