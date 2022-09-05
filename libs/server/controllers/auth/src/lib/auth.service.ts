@@ -177,7 +177,6 @@ export class AuthService {
       secret: this.configService.get('NX_JWT_PASSWORD_RESET_TOKEN_SECRET'),
     });
 
-    console.log(token);
     return token;
   }
 
