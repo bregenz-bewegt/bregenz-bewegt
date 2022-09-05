@@ -34,7 +34,7 @@ export const ResetPassword = inject(userStore.storeKey)(
       },
       validationSchema: passwordResetSchema,
       onSubmit: (values, { setSubmitting }) => {
-        console.log('click');
+        console.log(match.params.token);
         userStore
           .resetPassword(values.password, match.params.token ?? '')
           .then((data) => {
