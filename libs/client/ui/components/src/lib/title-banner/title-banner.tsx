@@ -3,10 +3,12 @@ import './title-banner.scss';
 
 /* eslint-disable-next-line */
 export interface TitleBannerProps {
-  textSegments: string[];
+  textSegments?: string[];
 }
 
-export const TitleBanner: React.FC<TitleBannerProps> = ({ textSegments }) => {
+export const TitleBanner: React.FC<TitleBannerProps> = ({
+  textSegments = ['Bregenz', 'Bewegt'],
+}) => {
   return (
     <IonText className="title-banner">
       <h1>

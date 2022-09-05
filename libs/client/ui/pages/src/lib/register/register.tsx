@@ -1,4 +1,8 @@
-import { Checkbox, Input } from '@bregenz-bewegt/client-ui-components';
+import {
+  Checkbox,
+  Input,
+  TitleBanner,
+} from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import { registerSchema } from '@bregenz-bewegt/client/common/validation';
 import {
@@ -54,13 +58,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
       <IonPage className="register">
         <IonContent className="register__content" fullscreen>
           <div className="register__flex-wrapper">
-            <IonText className="register__content__title">
-              <h1>
-                Bregenz
-                <br />
-                Bewegt
-              </h1>
-            </IonText>
+            <TitleBanner />
             <div className="register__content__wrapper">
               <IonText>
                 <h2>Registrieren</h2>

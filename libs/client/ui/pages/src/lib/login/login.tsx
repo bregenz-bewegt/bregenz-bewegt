@@ -67,14 +67,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       <IonPage className="login">
         <IonContent className="login__content" fullscreen>
           <div className="login__flex-wrapper">
-            <TitleBanner textSegments={['Bregenz', 'Bewegt']} />
-            <IonText className="login__content__title">
-              <h1>
-                Bregenz
-                <br />
-                Bewegt
-              </h1>
-            </IonText>
+            <TitleBanner />
             <div className="login__content__login">
               <IonText>
                 <h2>Anmelden</h2>
