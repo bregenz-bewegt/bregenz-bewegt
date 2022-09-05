@@ -1,0 +1,13 @@
+.title-banner {
+  h1 {
+    font-size: 2.5em;
+    background: -webkit-linear-gradient(
+      0deg,
+      var(--ion-color-primary),
+      var(--ion-color-secondary)
+    );
+    display: inline-block;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

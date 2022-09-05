@@ -1,5 +1,5 @@
 import './login.scss';
-import { Input } from '@bregenz-bewegt/client-ui-components';
+import { Input, TitleBanner } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonPage,
@@ -67,6 +67,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       <IonPage className="login">
         <IonContent className="login__content" fullscreen>
           <div className="login__flex-wrapper">
+            <TitleBanner textSegments={['Bregenz', 'Bewegt']} />
             <IonText className="login__content__title">
               <h1>
                 Bregenz
