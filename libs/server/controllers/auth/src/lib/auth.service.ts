@@ -203,8 +203,8 @@ export class AuthService {
 
   async resetPassword(token: string, dto: ResetPasswordDto) {
     console.log(token, dto);
-    const tokenValid = this.jwtService.verify(token, {
-      secret: this.configService.get('NX_PASSWORD_RESET_TOKEN_SECRET'),
+    const tokenValid = await this.jwtService.verifyAsync(token, {
+      secret: this.configService.get('NX_JWT_PASSWORD_RESET_TOKEN_SECRET'),
     });
     console.log(tokenValid);
     // const user = await this.prismaService.user.findUnique({});
