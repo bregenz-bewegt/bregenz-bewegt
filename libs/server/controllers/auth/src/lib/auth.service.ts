@@ -201,8 +201,8 @@ export class AuthService {
     });
   }
 
-  async resetPassword(email: string, dto: ResetPasswordDto) {
-    console.log(email, dto);
+  async resetPassword(token: string, dto: ResetPasswordDto) {
+    return console.log(token, dto);
     // const user = await this.prismaService.user.findUnique({});
   }
 }

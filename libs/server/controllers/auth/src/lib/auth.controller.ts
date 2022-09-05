@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Param,
   Post,
   UseGuards,
   UseInterceptors,
@@ -69,13 +70,14 @@ export class AuthController {
   }
 
   @Public()
-  @UseGuards(PasswordResetTokenGuard)
-  @Post('reset-password')
+  // @UseGuards(PasswordResetTokenGuard)
+  @Post('reset-password/:token')
   resetPassword(
-    @GetCurrentUser('email') email: User['email'],
+    // @GetCurrentUser('email') email: User['email'],
+    @Param('token') token: string,
     @Body() dto: ResetPasswordDto
   ) {
-    console.log(email, dto);
-    return this.authService.resetPassword(email, dto);
+    console.log('reset', token, dto);
+    return this.authService.resetPassword(token, dto);
   }
 }
