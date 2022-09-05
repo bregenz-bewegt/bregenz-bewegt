@@ -8,10 +8,15 @@ import {
   IonSpinner,
 } from '@ionic/react';
 import { useFormik } from 'formik';
+import { RouteComponentProps } from 'react-router-dom';
 import './reset-password.scss';
 
+interface MatchParams {
+  token: string;
+}
+
 /* eslint-disable-next-line */
-export interface ResetPasswordProps {}
+export interface ResetPasswordProps extends RouteComponentProps<MatchParams> {}
 
 export const ResetPassword = (props: ResetPasswordProps) => {
   const reset = useFormik({
