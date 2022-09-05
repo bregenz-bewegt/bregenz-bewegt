@@ -10,7 +10,7 @@ import {
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import './reset-password.scss';
 
@@ -27,6 +27,7 @@ export const ResetPassword = inject(userStore.storeKey)(
   observer(({ match }: ResetPasswordProps) => {
     const navigateBacktoLogin = () => history.push(`/login`);
     const history = useHistory();
+    const [resetToken, setResetToken] = useState<string>();
     const reset = useFormik({
       initialValues: {
         password: '',
@@ -36,21 +37,23 @@ export const ResetPassword = inject(userStore.storeKey)(
       onSubmit: (values, { setSubmitting }) => {
         console.log(values);
         userStore
-          .forgotPassword()
+          .resetPassword(values.password, resetToken)
           .then((data) => {
             console.log(data);
+            setSubmitting(false);
           })
           .catch(() => navigateBacktoLogin());
       },
     });
 
     useEffect(() => {
-      const resetToken = match.params.token;
-      console.log(resetToken);
+      const token = match.params.token;
+      console.log(token);
 
-      if (!resetToken) {
+      if (!token) {
         navigateBacktoLogin();
       }
+      setResetToken(resetToken);
     }, [match.params.token]);
 
     return (
