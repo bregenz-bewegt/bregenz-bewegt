@@ -68,7 +68,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       },
     });
     const handleChangePassword = () => {
-      userStore?.changePassword();
+      userStore?.resetPassword();
     };
 
     const handleImageChange = async (source: CameraSource) => {
