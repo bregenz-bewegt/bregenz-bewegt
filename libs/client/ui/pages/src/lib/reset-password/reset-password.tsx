@@ -1,4 +1,5 @@
 import { Input, TitleBanner } from '@bregenz-bewegt/client-ui-components';
+import { passwordResetSchema } from '@bregenz-bewegt/client/common/validation';
 import { IonContent, IonPage } from '@ionic/react';
 import { useFormik } from 'formik';
 import './reset-password.scss';
@@ -12,6 +13,7 @@ export const ResetPassword = (props: ResetPasswordProps) => {
       password: '',
       passwordConfirmation: '',
     },
+    validationSchema: passwordResetSchema,
     onSubmit: (values, { setSubmitting }) => {
       console.log(values);
     },
