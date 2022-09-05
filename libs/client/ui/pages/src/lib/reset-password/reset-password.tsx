@@ -50,7 +50,10 @@ export const ResetPassword = inject(userStore.storeKey)(
               color: 'success',
             });
           })
-          .catch(() => navigateBacktoLogin());
+          .catch(() => {
+            setSubmitting(false);
+            navigateBacktoLogin();
+          });
       },
     });
 
