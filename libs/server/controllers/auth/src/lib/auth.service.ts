@@ -7,7 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import {
   JwtPayload,
   LoginDto,
@@ -166,7 +166,11 @@ export class AuthService {
     });
   }
 
-  async resetPassword() {
-    return this.mailService.sendMail();
+  async resetPassword(email: User['email']) {
+    return this.mailService.sendMail({
+      to: email,
+      subject: 'Passwort ändern',
+      text: 'Besuche den folgenden Link, um dein Passwort zu ändern: https://google.com',
+    });
   }
 }

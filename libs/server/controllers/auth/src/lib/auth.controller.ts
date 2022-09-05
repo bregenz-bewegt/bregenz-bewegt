@@ -14,6 +14,7 @@ import {
   RefreshTokenGuard,
   RemoveSensitiveFieldsInterceptor,
 } from '@bregenz-bewegt/server/common';
+import { User } from '@prisma/client';
 
 @Controller('auth')
 export class AuthController {
@@ -54,7 +55,7 @@ export class AuthController {
   }
 
   @Post('reset-password')
-  resetPassword() {
-    return this.authService.resetPassword();
+  resetPassword(@GetCurrentUser('email') email: User['email']) {
+    return this.authService.resetPassword(email);
   }
 }
