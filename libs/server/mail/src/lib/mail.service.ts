@@ -1,9 +1,13 @@
 import { ISendMailOptions, MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class MailService {
-  constructor(private mailerService: MailerService) {}
+  constructor(
+    private mailerService: MailerService,
+    private configService: ConfigService
+  ) {}
 
   sendMail(options: ISendMailOptions) {
     return this.mailerService.sendMail(options);
@@ -14,7 +18,7 @@ export class MailService {
     resetToken: string;
   }) {
     console.log(options.resetToken);
-    const resetLink = ``;
+    const resetLink = `${this.configService.get('NX_API_BASE_URL')}`;
 
     return this.mailerService.sendMail({
       to: options.to,
