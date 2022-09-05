@@ -61,4 +61,9 @@ export class AuthController {
   ) {
     return this.authService.forgotPassword(userId, email);
   }
+
+  @Post('reset-password')
+  resetPassword() {
+    return this.authService.resetPassword();
+  }
 }

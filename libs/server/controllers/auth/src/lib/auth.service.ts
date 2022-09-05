@@ -199,4 +199,8 @@ export class AuthService {
       resetToken: token,
     });
   }
+
+  async resetPassword() {
+    //
+  }
 }
