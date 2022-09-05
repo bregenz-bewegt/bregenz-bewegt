@@ -17,7 +17,6 @@ export class MailService {
     to: ISendMailOptions['to'];
     resetToken: string;
   }) {
-    console.log(options.resetToken);
     const resetLink = `${this.configService.get(
       'NX_CLIENT_BASE_URL'
     )}/reset-password/${options.resetToken}`;

@@ -1,7 +1,7 @@
 import {
   Body,
   Controller,
-  Param,
+  Headers,
   Post,
   UseGuards,
   UseInterceptors,
@@ -15,6 +15,7 @@ import {
 import { AuthService } from './auth.service';
 
 import {
+  GetAuthorizationToken,
   GetCurrentUser,
   PasswordResetTokenGuard,
   Public,
@@ -73,9 +74,11 @@ export class AuthController {
   @UseGuards(PasswordResetTokenGuard)
   @Post('reset-password')
   resetPassword(
+    @Headers('authorization') token: string,
     @GetCurrentUser('email') email: string,
     @Body() dto: ResetPasswordDto
   ) {
+    console.log(token);
     return this.authService.resetPassword(email, dto);
   }
 }

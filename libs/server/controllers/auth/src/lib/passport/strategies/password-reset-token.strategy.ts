@@ -22,7 +22,7 @@ export class PasswordResetTokenStrategy extends PassportStrategy(
     const resetToken = req.get('authorization').replace('Bearer', '').trim();
 
     if (!resetToken)
-      throw new ForbiddenException('Incorrect password reset token');
+      throw new ForbiddenException('Invalid password reset token');
 
     return {
       ...payload,

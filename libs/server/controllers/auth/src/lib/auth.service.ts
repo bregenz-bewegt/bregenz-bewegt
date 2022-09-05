@@ -203,7 +203,7 @@ export class AuthService {
   }
 
   async resetPassword(email: string, dto: ResetPasswordDto) {
-    console.log(email, dto);
+    const hash = await argon.hash(dto.password);
 
     const user = await this.prismaService.user.findUnique({
       where: {
