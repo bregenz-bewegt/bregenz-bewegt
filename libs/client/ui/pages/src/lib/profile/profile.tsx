@@ -16,6 +16,7 @@ import {
   IonTitle,
   IonToolbar,
   useIonActionSheet,
+  useIonAlert,
   useIonLoading,
   useIonToast,
   useIonViewDidLeave,
@@ -26,6 +27,7 @@ import { useHistory } from 'react-router-dom';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
+import { closeCircleOutline } from 'ionicons/icons';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -35,6 +37,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
     const [presentToast] = useIonToast();
+    const [presentAlert] = useIonAlert();
     const [presentLoading, dismissLoading] = useIonLoading();
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
@@ -68,7 +71,26 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       },
     });
     const handleChangePassword = () => {
-      userStore?.forgotPassword();
+      userStore
+        ?.forgotPassword()
+        .then(() => {
+          presentAlert({
+            header: 'Passwort zurücksetzen',
+            message: `Eine Email zum Zurücksetzen deines Passworts wurde an ${userStore.user?.email} versandt`,
+            buttons: ['OK'],
+          });
+          presentToast({});
+        })
+        .catch(() => {
+          presentToast({
+            message: 'Etwas ist schiefgelaufen',
+            icon: closeCircleOutline,
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'danger',
+          });
+        });
     };
 
     const handleImageChange = async (source: CameraSource) => {
