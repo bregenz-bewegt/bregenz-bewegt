@@ -9,7 +9,16 @@ export class MailService {
     return this.mailerService.sendMail(options);
   }
 
-  sendPasswordResetMail(options: ISendMailOptions) {
-    return this.mailerService.sendMail({});
+  sendPasswordResetMail(options: {
+    to: ISendMailOptions['to'];
+    resetToken: string;
+  }) {
+    const resetLink = ``;
+
+    return this.mailerService.sendMail({
+      to: options.to,
+      subject: 'Passwort ändern',
+      text: `Besuche den folgenden Link, um dein Passwort zu ändern: ${resetLink}`,
+    });
   }
 }

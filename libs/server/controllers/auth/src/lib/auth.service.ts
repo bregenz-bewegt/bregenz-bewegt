@@ -166,6 +166,21 @@ export class AuthService {
     });
   }
 
+  async signPasswordResetToken(userId: string, email: string) {
+    const jwtPayload: JwtPayload = {
+      sub: userId,
+      email,
+    };
+
+    const token = await this.jwtService.signAsync(jwtPayload, {
+      expiresIn: '15m',
+      secret: this.configService.get('NX_JWT_PASSWORT_RESET_TOKEN_SECRET'),
+    });
+
+    console.log(token);
+    return token;
+  }
+
   async resetPassword(email: User['email']) {
     return this.mailService.sendMail({
       to: email,
