@@ -56,6 +56,11 @@ export const Tabs: React.FC = () => {
         <IonRouterOutlet>
           <Route
             exact
+            path={'/reset-password/:token'}
+            component={ResetPassword}
+          ></Route>
+          <Route
+            exact
             path={`${tabRoutes.start.route}/:park/:exercise`}
             component={ExerciseDetail}
           />
@@ -128,11 +133,6 @@ export const PublicRouterOutlet: React.FC = () => {
       <Route exact path={'/intro'} component={Intro}></Route>
       <Route exact path={'/login'} component={Login}></Route>
       <Route exact path={'/register'} component={Register}></Route>
-      <Route
-        exact
-        path={'/reset-password/:token'}
-        component={ResetPassword}
-      ></Route>
       <Route path="">
         <Redirect to="/login" />
       </Route>
