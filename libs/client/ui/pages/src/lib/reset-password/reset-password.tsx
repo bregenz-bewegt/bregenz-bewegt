@@ -89,7 +89,7 @@ export const ResetPassword = inject(userStore.storeKey)(
                 onChange={reset.handleChange}
                 onBlur={reset.handleBlur}
               />
-              <IonButton expand="block">
+              <IonButton expand="block" onClick={() => reset.submitForm()}>
                 {reset.isSubmitting ? (
                   <IonLabel>
                     <IonSpinner name="crescent" />
