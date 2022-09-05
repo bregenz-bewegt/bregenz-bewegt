@@ -182,10 +182,17 @@ export class AuthService {
   }
 
   async resetPassword(email: User['email']) {
-    return this.mailService.sendMail({
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    const resetToken = await this.signPasswordResetToken(user.id, user.email);
+
+    return this.mailService.sendPasswordResetMail({
       to: email,
-      subject: 'Passwort ändern',
-      text: 'Besuche den folgenden Link, um dein Passwort zu ändern: https://google.com',
+      resetToken: resetToken,
     });
   }
 }
