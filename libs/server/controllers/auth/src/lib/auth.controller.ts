@@ -70,8 +70,12 @@ export class AuthController {
   }
 
   @Public()
-  @Post('reset-password/:token')
-  resetPassword(@Param('token') token: string, @Body() dto: ResetPasswordDto) {
-    return this.authService.resetPassword(token, dto);
+  @UseGuards(PasswordResetTokenGuard)
+  @Post('reset-password')
+  resetPassword(
+    @GetCurrentUser('email') email: string,
+    @Body() dto: ResetPasswordDto
+  ) {
+    return this.authService.resetPassword(email, dto);
   }
 }

@@ -192,8 +192,9 @@ export class AuthService {
       },
     });
 
-    if (!user || !user.passwordResetToken)
+    if (!user || !user.passwordResetToken) {
       throw new ForbiddenException('Access denied');
+    }
 
     return this.mailService.sendPasswordResetMail({
       to: email,
@@ -201,13 +202,21 @@ export class AuthService {
     });
   }
 
-  async resetPassword(token: string, dto: ResetPasswordDto) {
-    console.log(token, dto);
+  async resetPassword(email: string, dto: ResetPasswordDto) {
+    console.log(email, dto);
 
-    const payload = await this.jwtService.verifyAsync(token, {
-      secret: this.configService.get('NX_JWT_PASSWORD_RESET_TOKEN_SECRET'),
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        email: email,
+      },
     });
-    console.log(payload);
+
+    console.log(user);
+
+    if (!user || !user.passwordResetToken) {
+      throw new ForbiddenException('Access denied');
+    }
+
     // const user = await this.prismaService.user.findUnique({});
   }
 }
