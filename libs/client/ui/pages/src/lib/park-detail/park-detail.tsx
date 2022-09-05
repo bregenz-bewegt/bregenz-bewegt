@@ -69,7 +69,6 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     ) : (
       <IonPage className="park-detail">
         {/* <Header /> */}
-
         <IonHeader>
           <IonToolbar>
             <IonButtons>

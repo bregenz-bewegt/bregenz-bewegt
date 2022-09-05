@@ -1,5 +1,13 @@
 import './exercise-detail.scss';
-import { IonContent, IonPage, IonTitle } from '@ionic/react';
+import {
+  IonBackButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 import { Header } from '@bregenz-bewegt/client-ui-components';
 import { useEffect, useState } from 'react';
 import {
@@ -9,6 +17,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Exercise } from '@bregenz-bewegt/client/types';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 interface MatchParams {
   exercise: string;
@@ -38,7 +47,20 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
     return (
       <IonPage className="exercise-detail">
-        <Header />
+        {/* <Header /> */}
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons>
+              <IonBackButton
+                color="primary"
+                mode="ios"
+                defaultHref={tabRoutes.start.route}
+                text="Zurück"
+              />
+            </IonButtons>
+            <IonTitle>{exercise?.name}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
         <IonContent>
           <IonTitle>Test</IonTitle>
         </IonContent>
