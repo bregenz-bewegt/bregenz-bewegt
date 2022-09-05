@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Param,
   Post,
   UseGuards,
   UseInterceptors,
@@ -76,6 +75,7 @@ export class AuthController {
     @GetCurrentUser('email') email: User['email'],
     @Body() dto: ResetPasswordDto
   ) {
+    console.log(email, dto);
     return this.authService.resetPassword(email, dto);
   }
 }
