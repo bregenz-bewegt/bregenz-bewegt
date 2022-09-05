@@ -181,14 +181,18 @@ export class AuthService {
     return token;
   }
 
-  async forgotPassword(email: User['email']) {
-    const user = await this.prismaService.user.findUnique({
-      where: {
-        email: email,
+  async forgotPassword(userId: User['id'], email: User['email']) {
+    const resetToken = await this.signPasswordResetToken(userId, email);
+
+    const user = await this.prismaService.user.update({
+      where: { id: userId },
+      data: {
+        passwordResetToken: resetToken,
       },
     });
 
-    const resetToken = await this.signPasswordResetToken(user.id, user.email);
+    if (!user || !user.passwordResetToken)
+      throw new ForbiddenException('Access denied');
 
     return this.mailService.sendPasswordResetMail({
       to: email,
