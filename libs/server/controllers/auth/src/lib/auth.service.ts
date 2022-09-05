@@ -174,7 +174,7 @@ export class AuthService {
 
     const token = await this.jwtService.signAsync(jwtPayload, {
       expiresIn: '15m',
-      secret: this.configService.get('NX_JWT_PASSWORT_RESET_TOKEN_SECRET'),
+      secret: this.configService.get('NX_JWT_PASSWORD_RESET_TOKEN_SECRET'),
     });
 
     console.log(token);
