@@ -70,14 +70,8 @@ export class AuthController {
   }
 
   @Public()
-  // @UseGuards(PasswordResetTokenGuard)
   @Post('reset-password/:token')
-  resetPassword(
-    // @GetCurrentUser('email') email: User['email'],
-    @Param('token') token: string,
-    @Body() dto: ResetPasswordDto
-  ) {
-    console.log('reset', token, dto);
+  resetPassword(@Param('token') token: string, @Body() dto: ResetPasswordDto) {
     return this.authService.resetPassword(token, dto);
   }
 }
