@@ -67,7 +67,17 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               color: 'success',
             });
           })
-          .catch((error) => setSubmitting(false));
+          .catch(() => {
+            setSubmitting(false);
+            presentToast({
+              message: 'Etwas ist schiefgelaufen',
+              icon: closeCircleOutline,
+              duration: 2000,
+              position: 'top',
+              mode: 'ios',
+              color: 'danger',
+            });
+          });
       },
     });
     const handleChangePassword = () => {
@@ -79,7 +89,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             message: `Eine Email zum Zurücksetzen deines Passworts wurde an ${userStore.user?.email} versandt`,
             buttons: ['OK'],
           });
-          presentToast({});
         })
         .catch(() => {
           presentToast({
