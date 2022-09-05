@@ -8,6 +8,7 @@ import {
   IonPage,
   IonSpinner,
   IonText,
+  useIonAlert,
   useIonToast,
 } from '@ionic/react';
 import { useFormik } from 'formik';
@@ -30,6 +31,7 @@ export const ResetPassword = inject(userStore.storeKey)(
     const navigateBacktoLogin = () => history.push(`/login`);
     const history = useHistory();
     const [presentToast] = useIonToast();
+    const [presentAlert] = useIonAlert();
     const reset = useFormik({
       initialValues: {
         password: '',
@@ -42,13 +44,18 @@ export const ResetPassword = inject(userStore.storeKey)(
           .resetPassword(values.password, match.params.token ?? '')
           .then(() => {
             setSubmitting(false);
-            presentToast({
-              message: 'Password geändert',
-              icon: checkmark,
-              duration: 2000,
-              position: 'top',
-              mode: 'ios',
-              color: 'success',
+            presentAlert({
+              header: 'Passwort erfolgreich zurückgesetzt',
+              message: `Bitte melde dich erneut an`,
+              backdropDismiss: false,
+              buttons: [
+                {
+                  text: 'OK',
+                  handler: () => {
+                    userStore.logout();
+                  },
+                },
+              ],
             });
           })
           .catch(() => {
