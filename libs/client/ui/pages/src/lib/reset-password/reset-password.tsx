@@ -7,6 +7,7 @@ import {
   IonLabel,
   IonPage,
   IonSpinner,
+  IonText,
   useIonToast,
 } from '@ionic/react';
 import { useFormik } from 'formik';
@@ -77,6 +78,9 @@ export const ResetPassword = inject(userStore.storeKey)(
           <div className="reset-password__flex-wrapper">
             <TitleBanner />
             <div className="reset-password__content">
+              <IonText>
+                <h2>Passwort zurücksetzen</h2>
+              </IonText>
               <Input
                 name="password"
                 type="password"
