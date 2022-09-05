@@ -37,7 +37,7 @@ export const ResetPassword = inject(userStore.storeKey)(
       onSubmit: (values, { setSubmitting }) => {
         console.log(values);
         userStore
-          .resetPassword(values.password, resetToken)
+          .resetPassword(values.password, resetToken ?? '')
           .then((data) => {
             console.log(data);
             setSubmitting(false);
