@@ -27,6 +27,7 @@ export const ResetPassword = inject(userStore.storeKey)(
   observer(({ match }: ResetPasswordProps) => {
     const navigateBacktoLogin = () => history.push(`/login`);
     const history = useHistory();
+    const [resetToken, setResetToken] = useState<string>();
     const reset = useFormik({
       initialValues: {
         password: '',
@@ -36,7 +37,7 @@ export const ResetPassword = inject(userStore.storeKey)(
       onSubmit: (values, { setSubmitting }) => {
         console.log(values);
         userStore
-          .resetPassword(values.password, match.params.token ?? '')
+          .resetPassword(values.password, resetToken ?? '')
           .then((data) => {
             console.log(data);
             setSubmitting(false);
@@ -51,6 +52,7 @@ export const ResetPassword = inject(userStore.storeKey)(
       if (!token) {
         navigateBacktoLogin();
       }
+      setResetToken(resetToken);
     }, [match.params.token]);
 
     return (

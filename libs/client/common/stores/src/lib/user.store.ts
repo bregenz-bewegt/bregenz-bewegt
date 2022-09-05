@@ -180,7 +180,6 @@ export class UserStore implements Store {
   }
 
   @action async resetPassword(newPassword: string, resetToken: string) {
-    console.log(newPassword, resetToken);
     const { data } = await http.post(`/auth/reset-password/${resetToken}`, {
       password: newPassword,
     });
