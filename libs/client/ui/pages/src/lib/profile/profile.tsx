@@ -34,9 +34,9 @@ export interface ProfileProps {
 export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
-    const [toastPresent] = useIonToast();
-    const [loadingPresent, loadingDismiss] = useIonLoading();
-    const [actionSheetPresent, actionSheetDismiss] = useIonActionSheet();
+    const [presentToast] = useIonToast();
+    const [presentLoading, dismissLoading] = useIonLoading();
+    const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
     const profile = useFormik({
@@ -55,7 +55,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             });
 
             setSubmitting(false);
-            toastPresent({
+            presentToast({
               message: 'Änderungen gespeichert',
               icon: checkmark,
               duration: 2000,
@@ -84,14 +84,14 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         const res = await fetch(photo.webPath);
         const blob = await res.blob();
         const file = await new File([blob], `file.${photo.format}`);
-        loadingPresent({
+        presentLoading({
           message: 'Ändere Profilbild',
           spinner: 'crescent',
         });
         userStore
           ?.editProfilePicture(file)
           .then(() =>
-            userStore.fetchProfilePicture().then(() => loadingDismiss())
+            userStore.fetchProfilePicture().then(() => dismissLoading())
           );
       } catch (error) {
         return;
@@ -146,7 +146,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 className="text-center"
                 color="primary"
                 onClick={() =>
-                  actionSheetPresent({
+                  presentActionSheet({
                     buttons: [
                       {
                         text: 'Aus Gallerie wählen',
@@ -159,7 +159,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       {
                         text: 'Abbrechen',
                         role: 'cancel',
-                        handler: () => actionSheetDismiss(),
+                        handler: () => dismissActionSheet(),
                       },
                     ],
                     header: 'Profilbild',

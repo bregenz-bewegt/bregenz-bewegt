@@ -15,7 +15,6 @@ import {
 import { AuthService } from './auth.service';
 
 import {
-  GetAuthorizationToken,
   GetCurrentUser,
   PasswordResetTokenGuard,
   Public,
@@ -23,10 +22,14 @@ import {
   RemoveSensitiveFieldsInterceptor,
 } from '@bregenz-bewegt/server/common';
 import { User } from '@prisma/client';
+import { UtilService } from '@bregenz-bewegt/server/util';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private utilService: UtilService
+  ) {}
 
   @Public()
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
@@ -74,11 +77,11 @@ export class AuthController {
   @UseGuards(PasswordResetTokenGuard)
   @Post('reset-password')
   resetPassword(
-    @Headers('authorization') token: string,
+    @Headers('authorization') authorization: string,
     @GetCurrentUser('email') email: string,
     @Body() dto: ResetPasswordDto
   ) {
-    console.log(token);
-    return this.authService.resetPassword(email, dto);
+    const token = this.utilService.extractBearerToken(authorization);
+    return this.authService.resetPassword(email, token, dto);
   }
 }

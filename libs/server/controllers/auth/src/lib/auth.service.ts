@@ -202,21 +202,27 @@ export class AuthService {
     });
   }
 
-  async resetPassword(email: string, dto: ResetPasswordDto) {
-    const hash = await argon.hash(dto.password);
-
+  async resetPassword(email: string, token: string, dto: ResetPasswordDto) {
     const user = await this.prismaService.user.findUnique({
       where: {
         email: email,
       },
     });
 
-    console.log(user);
+    const tokenValid = await argon.verify(user.passwordResetToken, token);
 
-    if (!user || !user.passwordResetToken) {
+    if (!user || !user.passwordResetToken || !tokenValid) {
       throw new ForbiddenException('Access denied');
     }
 
-    // const user = await this.prismaService.user.findUnique({});
+    const passwordHash = await argon.hash(dto.password);
+    return this.prismaService.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        password: passwordHash,
+      },
+    });
   }
 }

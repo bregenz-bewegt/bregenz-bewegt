@@ -51,6 +51,7 @@
       ],
       "@bregenz-bewegt/server/mail": ["libs/server/mail/src/index.ts"],
       "@bregenz-bewegt/server/multer": ["libs/server/multer/src/index.ts"],
+      "@bregenz-bewegt/server/util": ["libs/server/util/src/index.ts"],
       "@bregenz-bewegt/shared/types": ["libs/shared/types/src/index.ts"]
     }
   },

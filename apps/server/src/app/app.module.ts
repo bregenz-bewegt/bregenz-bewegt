@@ -13,6 +13,7 @@ import { ParkModule } from 'libs/server/controllers/park/src';
 import { MulterModule } from '@bregenz-bewegt/server/multer';
 import { ExerciseModule } from '@bregenz-bewegt/server/controllers/exercise';
 import { MailModule } from '@bregenz-bewegt/server/mail';
+import { UtilModule } from '@bregenz-bewegt/server/util';
 
 @Module({
   imports: [
@@ -20,10 +21,11 @@ import { MailModule } from '@bregenz-bewegt/server/mail';
     MailModule,
     PrismaModule,
     MulterModule,
+    AuthModule,
+    UtilModule,
     UserModule,
     ParkModule,
     ExerciseModule,
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [

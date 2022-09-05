@@ -21,6 +21,7 @@
     "server-mail": "libs/server/mail",
     "server-multer": "libs/server/multer",
     "server-prisma": "libs/server/prisma",
+    "server-util": "libs/server/util",
     "shared-types": "libs/shared/types"
   }
 }

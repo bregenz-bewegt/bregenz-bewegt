@@ -7,18 +7,19 @@ import {
   IonLabel,
   IonPage,
   IonSpinner,
+  useIonToast,
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { checkmark } from 'ionicons/icons';
 import './reset-password.scss';
 
 interface MatchParams {
   token: string;
 }
 
-/* eslint-disable-next-line */
 export interface ResetPasswordProps extends RouteComponentProps<MatchParams> {
   userStore?: UserStore;
 }
@@ -27,6 +28,7 @@ export const ResetPassword = inject(userStore.storeKey)(
   observer(({ match }: ResetPasswordProps) => {
     const navigateBacktoLogin = () => history.push(`/login`);
     const history = useHistory();
+    const [presentToast] = useIonToast();
     const reset = useFormik({
       initialValues: {
         password: '',
@@ -37,9 +39,16 @@ export const ResetPassword = inject(userStore.storeKey)(
         console.log(match.params.token);
         userStore
           .resetPassword(values.password, match.params.token ?? '')
-          .then((data) => {
-            console.log(data);
+          .then(() => {
             setSubmitting(false);
+            presentToast({
+              message: 'Password geändert',
+              icon: checkmark,
+              duration: 2000,
+              position: 'top',
+              mode: 'ios',
+              color: 'success',
+            });
           })
           .catch(() => navigateBacktoLogin());
       },
