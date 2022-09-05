@@ -39,7 +39,7 @@ export const ResetPassword = inject(userStore.storeKey)(
 
     useEffect(() => {
       const navigateBacktoLogin = () => history.push(`/login`);
-      const resetToken = +match.params.token;
+      const resetToken = match.params.token;
 
       if (!resetToken) {
         navigateBacktoLogin();
