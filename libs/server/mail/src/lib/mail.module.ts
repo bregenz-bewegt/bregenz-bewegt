@@ -7,7 +7,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
     MailerModule.forRoot({
       transport: {
         host: process.env['NX_MAIL_HOST'],
-        port: 465,
+        port: +process.env['NX_MAIL_PORT'],
         secure: true,
         auth: {
           user: process.env['NX_MAIL_USER'],

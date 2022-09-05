@@ -13,13 +13,13 @@ export class MailService {
     to: ISendMailOptions['to'];
     resetToken: string;
   }) {
+    console.log(options.resetToken);
     const resetLink = ``;
 
     return this.mailerService.sendMail({
       to: options.to,
       subject: 'Passwort ändern',
-      text: `Besuche den folgenden Link, um dein Passwort zu ändern: ${resetLink}.
-      Der Link läuft in 15 Minuten ab.`,
+      text: `Besuche den folgenden Link, um dein Passwort zu ändern: ${resetLink}. Der Link läuft in 15 Minuten ab.`,
     });
   }
 }

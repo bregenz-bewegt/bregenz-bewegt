@@ -181,12 +181,13 @@ export class AuthService {
   }
 
   async forgotPassword(userId: User['id'], email: User['email']) {
-    const resetToken = await this.signPasswordResetToken(userId, email);
+    const token = await this.signPasswordResetToken(userId, email);
+    const tokenHash = await argon.hash(token);
 
     const user = await this.prismaService.user.update({
       where: { id: userId },
       data: {
-        passwordResetToken: resetToken,
+        passwordResetToken: tokenHash,
       },
     });
 
@@ -195,7 +196,7 @@ export class AuthService {
 
     return this.mailService.sendPasswordResetMail({
       to: email,
-      resetToken: resetToken,
+      resetToken: token,
     });
   }
 }
