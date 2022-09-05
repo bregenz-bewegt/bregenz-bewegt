@@ -67,8 +67,8 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           .catch((error) => setSubmitting(false));
       },
     });
-    const handleResetPassword = () => {
-      userStore?.resetPassword();
+    const handleChangePassword = () => {
+      userStore?.changePassword();
     };
 
     const handleImageChange = async (source: CameraSource) => {
@@ -220,7 +220,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 value={'*'.repeat(11)}
               />
               <IonButton
-                onClick={() => handleResetPassword()}
+                onClick={() => handleChangePassword()}
                 size="small"
                 mode="ios"
               >
