@@ -1,11 +1,17 @@
 import {
   Body,
   Controller,
+  Param,
   Post,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { LoginDto, RegisterDto, Tokens } from '@bregenz-bewegt/shared/types';
+import {
+  LoginDto,
+  RegisterDto,
+  ResetPasswordDto,
+  Tokens,
+} from '@bregenz-bewegt/shared/types';
 import { AuthService } from './auth.service';
 
 import {
@@ -62,8 +68,9 @@ export class AuthController {
     return this.authService.forgotPassword(userId, email);
   }
 
-  @Post('reset-password')
-  resetPassword() {
-    return this.authService.resetPassword();
+  @Public()
+  @Post('reset-password/:token')
+  resetPassword(@Param('token') token: string, @Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(token, dto);
   }
 }

@@ -18,7 +18,7 @@ export class MailService {
     resetToken: string;
   }) {
     const resetLink = `${this.configService.get(
-      'NX_API_BASE_URL'
+      'NX_CLIENT_BASE_URL'
     )}/reset-password/${options.resetToken}`;
 
     return this.mailerService.sendMail({

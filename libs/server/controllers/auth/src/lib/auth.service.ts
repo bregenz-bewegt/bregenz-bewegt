@@ -12,6 +12,7 @@ import {
   JwtPayload,
   LoginDto,
   RegisterDto,
+  ResetPasswordDto,
   Tokens,
 } from '@bregenz-bewegt/shared/types';
 import {
@@ -200,7 +201,10 @@ export class AuthService {
     });
   }
 
-  async resetPassword() {
-    //
+  async resetPassword(token: string, dto: ResetPasswordDto) {
+    console.log(dto);
+    const tokenValid = this.jwtService.verify(token);
+    console.log(tokenValid);
+    // const user = await this.prismaService.user.findUnique({});
   }
 }

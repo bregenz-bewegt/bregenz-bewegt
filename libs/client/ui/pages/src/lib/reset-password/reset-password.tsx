@@ -25,6 +25,7 @@ export interface ResetPasswordProps extends RouteComponentProps<MatchParams> {
 
 export const ResetPassword = inject(userStore.storeKey)(
   observer(({ match }: ResetPasswordProps) => {
+    const navigateBacktoLogin = () => history.push(`/login`);
     const history = useHistory();
     const reset = useFormik({
       initialValues: {
@@ -34,22 +35,22 @@ export const ResetPassword = inject(userStore.storeKey)(
       validationSchema: passwordResetSchema,
       onSubmit: (values, { setSubmitting }) => {
         console.log(values);
+        userStore
+          .forgotPassword()
+          .then((data) => {
+            console.log(data);
+          })
+          .catch(() => navigateBacktoLogin());
       },
     });
 
     useEffect(() => {
-      const navigateBacktoLogin = () => history.push(`/login`);
       const resetToken = match.params.token;
+      console.log(resetToken);
 
       if (!resetToken) {
         navigateBacktoLogin();
       }
-      userStore
-        .resetPassword()
-        .then((data) => {
-          console.log(data);
-        })
-        .catch(() => navigateBacktoLogin());
     }, [match.params.token]);
 
     return (
