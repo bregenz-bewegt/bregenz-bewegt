@@ -11,9 +11,9 @@ import {
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { checkmark } from 'ionicons/icons';
+import { checkmark, closeCircleOutline } from 'ionicons/icons';
 import './reset-password.scss';
 
 interface MatchParams {
@@ -52,6 +52,14 @@ export const ResetPassword = inject(userStore.storeKey)(
           })
           .catch(() => {
             setSubmitting(false);
+            presentToast({
+              message: 'Etwas ist schiefgelaufen',
+              icon: closeCircleOutline,
+              duration: 2000,
+              position: 'top',
+              mode: 'ios',
+              color: 'danger',
+            });
             navigateBacktoLogin();
           });
       },
