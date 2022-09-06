@@ -67,7 +67,6 @@ export class UserController {
     // })
     Express.Multer.File
   ) {
-    console.log(file.mimetype);
     return this.userService.editProfilePicture(id, file);
   }
 
