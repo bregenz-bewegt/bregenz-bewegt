@@ -4,7 +4,7 @@
   align-items: center;
   margin-bottom: var(--spacing-m);
 
-  ion-button#{&__option} {
+  &__option {
     height: var(--spacing-l) !important;
   }
 }
