@@ -38,6 +38,10 @@
     &__parks-list {
       overflow-y: scroll;
       flex-grow: 1;
+
+      &__no-results {
+        padding: 0 var(--spacing-m);
+      }
     }
 
     &__parks-map {

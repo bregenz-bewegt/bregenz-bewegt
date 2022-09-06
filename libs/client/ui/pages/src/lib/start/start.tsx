@@ -112,7 +112,9 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                     );
                   })
                 ) : (
-                  <IonText>Keine Spielplätze gefunden</IonText>
+                  <IonText className="start__content__parks-list__no-results">
+                    Keine Spielplätze gefunden
+                  </IonText>
                 )}
               </div>
             ) : (
