@@ -35,6 +35,10 @@
       }
     }
 
+    &__quick-filters {
+      margin: 0 var(--spacing-m);
+    }
+
     &__parks-list {
       overflow-y: scroll;
       flex-grow: 1;
