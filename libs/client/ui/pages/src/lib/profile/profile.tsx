@@ -124,7 +124,18 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           ?.editProfilePicture(file)
           .then(() =>
             userStore.fetchProfilePicture().then(() => dismissLoading())
-          );
+          )
+          .catch(() => {
+            dismissLoading();
+            presentToast({
+              message: 'Etwas ist schiefgelaufen',
+              icon: closeCircleOutline,
+              duration: 2000,
+              position: 'top',
+              mode: 'ios',
+              color: 'danger',
+            });
+          });
       } catch (error) {
         return;
       }

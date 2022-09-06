@@ -61,11 +61,12 @@ export class UserController {
   @Post('profile-picture')
   editProfilePicture(
     @GetCurrentUser('sub') id,
-    @UploadedFile()
-    file: // new ParseFilePipe({
-    //   validators: [new FileTypeValidator({ fileType: /(png|jpg|jpeg)/ })],
-    // })
-    Express.Multer.File
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: /(png|jpg|jpeg)/ })],
+      })
+    )
+    file: Express.Multer.File
   ) {
     return this.userService.editProfilePicture(id, file);
   }
