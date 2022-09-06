@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Header, ParkCard } from '@bregenz-bewegt/client-ui-components';
 import {
+  Header,
+  ParkCard,
+  QuickFilter,
+} from '@bregenz-bewegt/client-ui-components';
+import {
+  IonButton,
   IonContent,
   IonPage,
   IonSearchbar,
@@ -8,7 +13,11 @@ import {
   IonSelectOption,
   IonText,
 } from '@ionic/react';
-import { Park, ParkDisplayType } from '@bregenz-bewegt/client/types';
+import {
+  Difficulty,
+  Park,
+  ParkDisplayType,
+} from '@bregenz-bewegt/client/types';
 import './start.scss';
 import { parkStore, ParkStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
@@ -17,6 +26,7 @@ import {
   SearchbarChangeEventDetail,
 } from '@ionic/core';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
 interface StartProps {
   parkStore?: ParkStore;
@@ -97,6 +107,13 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                 placeholder="Suche nach Spielplätzen"
               ></IonSearchbar>
             </div>
+            <QuickFilter
+              options={[
+                'Alle',
+                difficultyDisplayTexts[Difficulty.BEGINNER],
+                difficultyDisplayTexts[Difficulty.ADVANCED],
+              ]}
+            />
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
                 {parksResult.length > 0 ? (

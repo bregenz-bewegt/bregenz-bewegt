@@ -35,6 +35,9 @@
         "libs/client/common/validation/src/index.ts"
       ],
       "@bregenz-bewegt/client/types": ["libs/client/types/src/index.ts"],
+      "@bregenz-bewegt/client/ui/shared/content": [
+        "libs/client/ui/shared/content/src/index.ts"
+      ],
       "@bregenz-bewegt/server-controllers-auth": [
         "libs/server/controllers/auth/src/index.ts"
       ],
