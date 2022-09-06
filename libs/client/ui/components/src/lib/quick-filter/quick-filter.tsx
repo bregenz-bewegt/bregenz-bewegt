@@ -13,7 +13,11 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
   return (
     <div className={`quick-filter${className ? ` ${className}` : ''}`}>
       {options?.map((option, i) => {
-        return <IonButton size="small">{option}</IonButton>;
+        return (
+          <IonButton className="quick-filter__option" size="small">
+            {option}
+          </IonButton>
+        );
       })}
     </div>
   );
