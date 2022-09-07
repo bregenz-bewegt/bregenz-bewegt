@@ -5,36 +5,40 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
-import { UserService } from '@bregenz-bewegt/server-controllers-user';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import {
   JwtPayload,
   LoginDto,
-  defaultLoginError,
   RegisterDto,
+  ResetPasswordDto,
   Tokens,
-  RegisterError,
 } from '@bregenz-bewegt/shared/types';
+import {
+  loginError,
+  registerError,
+  RegisterErrorResponse,
+} from '@bregenz-bewegt/server/common';
+import { MailService } from '@bregenz-bewegt/server/mail';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UserService,
     private prismaService: PrismaService,
     private jwtService: JwtService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private mailService: MailService
   ) {}
 
-  async validateUser(email: string, password: string) {
-    const user = await this.userService.getByEmail(email);
+  async guest() {
+    const newGuest = await this.prismaService.user.create({
+      data: {
+        role: 'GUEST',
+      },
+    });
 
-    if (user && user.password === password) {
-      return user;
-    }
-
-    return null;
+    return newGuest;
   }
 
   async register(dto: RegisterDto) {
@@ -56,13 +60,11 @@ export class AuthService {
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
-          throw new ConflictException(<RegisterError>{
-            ...((error.meta.target as string).includes('username') && {
-              username: 'Benutzername bereits vergeben',
-            }),
-            ...((error.meta.target as string).includes('email') && {
-              email: 'E-Mail Adresse bereits verwendet',
-            }),
+          throw new ConflictException(<RegisterErrorResponse>{
+            ...((error.meta.target as string).includes('username') &&
+              registerError.USERNAME_TAKEN),
+            ...((error.meta.target as string).includes('email') &&
+              registerError.EMAIL_TAKEN),
           });
         }
       }
@@ -79,13 +81,13 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new ForbiddenException(defaultLoginError);
+      throw new ForbiddenException(loginError.USER_NOT_FOUND);
     }
 
     const passwordMatches = await argon.verify(user.password, dto.password);
 
     if (!passwordMatches) {
-      throw new ForbiddenException(defaultLoginError);
+      throw new ForbiddenException(loginError.INVALID_CREDENTIALS);
     }
 
     const tokens = await this.signTokens(user.id, user.email);
@@ -161,6 +163,65 @@ export class AuthService {
       },
       data: {
         refreshToken: hash,
+      },
+    });
+  }
+
+  async signPasswordResetToken(userId: string, email: string) {
+    const jwtPayload: JwtPayload = {
+      sub: userId,
+      email,
+    };
+
+    const token = await this.jwtService.signAsync(jwtPayload, {
+      expiresIn: '15m',
+      secret: this.configService.get('NX_JWT_PASSWORD_RESET_TOKEN_SECRET'),
+    });
+
+    return token;
+  }
+
+  async forgotPassword(userId: User['id'], email: User['email']) {
+    const token = await this.signPasswordResetToken(userId, email);
+    const tokenHash = await argon.hash(token);
+
+    const user = await this.prismaService.user.update({
+      where: { id: userId },
+      data: {
+        passwordResetToken: tokenHash,
+      },
+    });
+
+    if (!user || !user.passwordResetToken) {
+      throw new ForbiddenException('Access denied');
+    }
+
+    return this.mailService.sendPasswordResetMail({
+      to: email,
+      resetToken: token,
+    });
+  }
+
+  async resetPassword(email: string, token: string, dto: ResetPasswordDto) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    const tokenValid = await argon.verify(user.passwordResetToken, token);
+
+    if (!user || !user.passwordResetToken || !tokenValid) {
+      throw new ForbiddenException('Access denied');
+    }
+
+    const passwordHash = await argon.hash(dto.password);
+    return this.prismaService.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        password: passwordHash,
       },
     });
   }

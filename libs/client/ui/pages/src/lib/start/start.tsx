@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Header, ParkCard } from '@bregenz-bewegt/client-ui-components';
+import {
+  Header,
+  ParkCard,
+  QuickFilter,
+  QuickFilterOption,
+} from '@bregenz-bewegt/client-ui-components';
 import {
   IonContent,
   IonPage,
@@ -8,7 +13,11 @@ import {
   IonSelectOption,
   IonText,
 } from '@ionic/react';
-import { Park, ParkDisplayType } from '@bregenz-bewegt/client/types';
+import {
+  Difficulty,
+  Park,
+  ParkDisplayType,
+} from '@bregenz-bewegt/client/types';
 import './start.scss';
 import { parkStore, ParkStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
@@ -17,6 +26,7 @@ import {
   SearchbarChangeEventDetail,
 } from '@ionic/core';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
 interface StartProps {
   parkStore?: ParkStore;
@@ -26,6 +36,28 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
   observer(({ parkStore }) => {
     const [isLoadingParks, setIsLoadingParks] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
+    const [quickFilters, setQuickFilters] = useState<QuickFilterOption[]>([
+      {
+        key: 0,
+        label: difficultyDisplayTexts[Difficulty.BEGINNER],
+        active: false,
+      },
+      {
+        key: 1,
+        label: difficultyDisplayTexts[Difficulty.ADVANCED],
+        active: false,
+      },
+      {
+        key: 2,
+        label: difficultyDisplayTexts[Difficulty.GAME],
+        active: false,
+      },
+      {
+        key: 3,
+        label: 'In meiner Nähe',
+        active: false,
+      },
+    ]);
     const [parksResult, setParksResult] = useState<Park[]>(
       Array(10).fill({ id: 0, name: '', address: '', image: '', qr: '' })
     );
@@ -97,6 +129,13 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                 placeholder="Suche nach Spielplätzen"
               ></IonSearchbar>
             </div>
+            <QuickFilter
+              options={quickFilters}
+              onChange={(values) => {
+                setQuickFilters(values);
+              }}
+              className={`start__content__quick-filters`}
+            />
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
                 {parksResult.length > 0 ? (
@@ -112,7 +151,9 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                     );
                   })
                 ) : (
-                  <IonText>Keine Spielplätze gefunden</IonText>
+                  <IonText className="start__content__parks-list__no-results">
+                    Keine Spielplätze gefunden
+                  </IonText>
                 )}
               </div>
             ) : (

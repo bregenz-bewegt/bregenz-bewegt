@@ -19,6 +19,7 @@ import {
   Loading,
   ParkDetail,
   ExerciseDetail,
+  ResetPassword,
 } from '@bregenz-bewegt/client-ui-pages';
 import { inject, observer } from 'mobx-react';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
@@ -41,7 +42,7 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
         ) : userStore?.isLoggedIn ? (
           <Tabs />
         ) : (
-          <RequireAuth />
+          <PublicRouterOutlet />
         )}
       </IonReactRouter>
     );
@@ -53,6 +54,11 @@ export const Tabs: React.FC = () => {
     <>
       <IonTabs>
         <IonRouterOutlet>
+          <Route
+            exact
+            path={'/reset-password/:token'}
+            component={ResetPassword}
+          ></Route>
           <Route
             exact
             path={`${tabRoutes.start.route}/:park/:exercise`}
@@ -121,7 +127,7 @@ export const Tabs: React.FC = () => {
   );
 };
 
-export const RequireAuth: React.FC = () => {
+export const PublicRouterOutlet: React.FC = () => {
   return (
     <IonRouterOutlet>
       <Route exact path={'/intro'} component={Intro}></Route>

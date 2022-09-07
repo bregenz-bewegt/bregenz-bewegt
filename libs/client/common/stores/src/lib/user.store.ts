@@ -15,18 +15,31 @@ export class UserStore implements Store {
     makeAutoObservable(this);
   }
 
+  @action async guest() {
+    const { data } = await http.post('/auth/local/guest');
+
+    console.log(data);
+    return data;
+  }
+
   @action async register(username: string, email: string, password: string) {
-    const { data } = await http.post('/auth/register', {
+    const { data } = await http.post('/auth/local/register', {
       username,
       email,
       password,
     });
 
+    await this.setTokens({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+    });
+    this.setIsLoggedIn(true);
+
     return data;
   }
 
   @action async login(email: string, password: string) {
-    const { data } = await http.post('/auth/login', {
+    const { data } = await http.post('/auth/local/login', {
       email,
       password,
     });
@@ -157,6 +170,27 @@ export class UserStore implements Store {
     const refresh_token = await storage.get('refresh_token');
 
     return { access_token, refresh_token };
+  }
+
+  @action async forgotPassword() {
+    const { data } = await http.post('/auth/forgot-password');
+
+    console.log(data);
+    return data;
+  }
+
+  @action async resetPassword(newPassword: string, resetToken: string) {
+    await http.post(
+      `/auth/reset-password`,
+      {
+        password: newPassword,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${resetToken}`,
+        },
+      }
+    );
   }
 }
 

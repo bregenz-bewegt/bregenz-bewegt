@@ -1,5 +1,5 @@
 import './login.scss';
-import { Input } from '@bregenz-bewegt/client-ui-components';
+import { Input, TitleBanner } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonPage,
@@ -25,8 +25,9 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isGuestLoading, setIsGuestLoading] = useState<boolean>(false);
 
-    const handleLogin = (
+    const handleLocalLogin = (
       credentials: LoginCredentials,
       setErrors: (
         errors: FormikErrors<{
@@ -50,17 +51,23 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
         });
     };
 
+    const handleGuestLogin = () => {
+      setIsGuestLoading(true);
+      userStore
+        ?.guest()
+        .then(() => {
+          setIsGuestLoading(false);
+        })
+        .catch(() => {
+          setIsGuestLoading(false);
+        });
+    };
+
     return (
       <IonPage className="login">
         <IonContent className="login__content" fullscreen>
           <div className="login__flex-wrapper">
-            <IonText className="login__content__title">
-              <h1>
-                Bregenz
-                <br />
-                Bewegt
-              </h1>
-            </IonText>
+            <TitleBanner />
             <div className="login__content__login">
               <IonText>
                 <h2>Anmelden</h2>
@@ -71,15 +78,22 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                   color="primary"
                   fill="outline"
                   className="login__content__login__socials__guest"
+                  onClick={() => handleGuestLogin()}
                 >
-                  Als Gast beitreten
+                  {isGuestLoading ? (
+                    <IonLabel>
+                      <IonSpinner name="crescent" />
+                    </IonLabel>
+                  ) : (
+                    'Als Gast beitreten'
+                  )}
                 </IonButton>
               </IonRow>
               <Formik
                 initialValues={{ email: '', password: '' }}
                 validationSchema={loginSchema}
                 onSubmit={(values, { setErrors }) => {
-                  handleLogin(values, setErrors);
+                  handleLocalLogin(values, setErrors);
                 }}
               >
                 {({
@@ -126,7 +140,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                     >
                       {isLoading ? (
                         <IonLabel>
-                          <IonSpinner name="crescent">Anmelden</IonSpinner>
+                          <IonSpinner name="crescent" />
                         </IonLabel>
                       ) : (
                         'Anmelden'

@@ -10,12 +10,16 @@ import {
 import { Park } from '@bregenz-bewegt/client/types';
 import {
   IonBackButton,
+  IonButtons,
   IonContent,
+  IonHeader,
   IonIcon,
   IonNote,
   IonPage,
   IonRouterOutlet,
   IonText,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
@@ -42,7 +46,8 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     const [park, setPark] = useState<Park>();
 
     useEffect(() => {
-      const navigateBackToStart = () => history.push(`${tabRoutes.start.route}`);
+      const navigateBackToStart = () =>
+        history.push(`${tabRoutes.start.route}`);
       const parkId = +match.params.park;
 
       if (!parkId) {
@@ -63,16 +68,23 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       <Loading />
     ) : (
       <IonPage className="park-detail">
-        <Header />
-        <IonContent fullscreen>
-          <div className="park-detail__scroll-wrapper">
-            <div className="park-detail__scroll-wrapper__header-wrapper">
+        {/* <Header /> */}
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons>
               <IonBackButton
                 color="primary"
                 mode="ios"
                 defaultHref={tabRoutes.start.route}
                 text="Zurück"
               />
+            </IonButtons>
+            <IonTitle>{park?.name}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent fullscreen>
+          <div className="park-detail__scroll-wrapper">
+            <div className="park-detail__scroll-wrapper__header-wrapper">
               <IonText>
                 <h1>{park?.name}</h1>
               </IonText>

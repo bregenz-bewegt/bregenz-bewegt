@@ -35,6 +35,9 @@
         "libs/client/common/validation/src/index.ts"
       ],
       "@bregenz-bewegt/client/types": ["libs/client/types/src/index.ts"],
+      "@bregenz-bewegt/client/ui/shared/content": [
+        "libs/client/ui/shared/content/src/index.ts"
+      ],
       "@bregenz-bewegt/server-controllers-auth": [
         "libs/server/controllers/auth/src/index.ts"
       ],
@@ -49,7 +52,9 @@
       "@bregenz-bewegt/server/controllers/park": [
         "libs/server/controllers/park/src/index.ts"
       ],
+      "@bregenz-bewegt/server/mail": ["libs/server/mail/src/index.ts"],
       "@bregenz-bewegt/server/multer": ["libs/server/multer/src/index.ts"],
+      "@bregenz-bewegt/server/util": ["libs/server/util/src/index.ts"],
       "@bregenz-bewegt/shared/types": ["libs/shared/types/src/index.ts"]
     }
   },

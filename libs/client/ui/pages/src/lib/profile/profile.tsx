@@ -16,6 +16,7 @@ import {
   IonTitle,
   IonToolbar,
   useIonActionSheet,
+  useIonAlert,
   useIonLoading,
   useIonToast,
   useIonViewDidLeave,
@@ -26,6 +27,7 @@ import { useHistory } from 'react-router-dom';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
+import { closeCircleOutline } from 'ionicons/icons';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -34,9 +36,10 @@ export interface ProfileProps {
 export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const history = useHistory();
-    const [toastPresent] = useIonToast();
-    const [loadingPresent, loadingDismiss] = useIonLoading();
-    const [actionSheetPresent, actionSheetDismiss] = useIonActionSheet();
+    const [presentToast] = useIonToast();
+    const [presentAlert] = useIonAlert();
+    const [presentLoading, dismissLoading] = useIonLoading();
+    const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
     const profile = useFormik({
@@ -55,7 +58,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             });
 
             setSubmitting(false);
-            toastPresent({
+            presentToast({
               message: 'Änderungen gespeichert',
               icon: checkmark,
               duration: 2000,
@@ -64,14 +67,55 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               color: 'success',
             });
           })
-          .catch((error) => setSubmitting(false));
+          .catch(() => {
+            setSubmitting(false);
+            presentToast({
+              message: 'Etwas ist schiefgelaufen',
+              icon: closeCircleOutline,
+              duration: 2000,
+              position: 'top',
+              mode: 'ios',
+              color: 'danger',
+            });
+          });
       },
     });
     const handleChangePassword = () => {
-      //
+      userStore
+        ?.forgotPassword()
+        .then(() => {
+          presentAlert({
+            header: 'Passwort zurücksetzen',
+            message: `Eine Email zum Zurücksetzen deines Passworts wurde an ${userStore.user?.email} versandt`,
+            backdropDismiss: false,
+            buttons: [{ text: 'OK' }],
+          });
+        })
+        .catch(() => {
+          presentToast({
+            message: 'Etwas ist schiefgelaufen',
+            icon: closeCircleOutline,
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'danger',
+          });
+        });
     };
 
     const handleImageChange = async (source: CameraSource) => {
+      const handleFailure = () => {
+        dismissLoading();
+        presentToast({
+          message: 'Etwas ist schiefgelaufen',
+          icon: closeCircleOutline,
+          duration: 2000,
+          position: 'top',
+          mode: 'ios',
+          color: 'danger',
+        });
+      };
+
       try {
         const photo = await Camera.getPhoto({
           resultType: CameraResultType.Uri,
@@ -81,20 +125,24 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
         if (!photo.webPath) return;
 
-        const res = await fetch(photo.webPath);
-        const blob = await res.blob();
-        const file = await new File([blob], `file.${photo.format}`);
-        loadingPresent({
+        presentLoading({
           message: 'Ändere Profilbild',
           spinner: 'crescent',
         });
+
+        const res = await fetch(photo.webPath);
+        const blob = await res.blob();
+        const file = await new File([blob], `file.${photo.format}`);
         userStore
           ?.editProfilePicture(file)
           .then(() =>
-            userStore.fetchProfilePicture().then(() => loadingDismiss())
-          );
+            userStore.fetchProfilePicture().then(() => dismissLoading())
+          )
+          .catch(() => {
+            handleFailure();
+          });
       } catch (error) {
-        return;
+        handleFailure();
       }
     };
 
@@ -146,7 +194,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 className="text-center"
                 color="primary"
                 onClick={() =>
-                  actionSheetPresent({
+                  presentActionSheet({
                     buttons: [
                       {
                         text: 'Aus Gallerie wählen',
@@ -159,7 +207,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       {
                         text: 'Abbrechen',
                         role: 'cancel',
-                        handler: () => actionSheetDismiss(),
+                        handler: () => dismissActionSheet(),
                       },
                     ],
                     header: 'Profilbild',

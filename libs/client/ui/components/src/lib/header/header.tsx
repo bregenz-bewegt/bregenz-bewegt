@@ -1,6 +1,5 @@
 import {
   IonAvatar,
-  IonFab,
   IonFabButton,
   IonHeader,
   IonIcon,
@@ -14,6 +13,7 @@ import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
+import { FiBell } from 'react-icons/fi';
 
 export interface HeaderProps {
   userStore?: UserStore;

@@ -63,7 +63,7 @@ export class UserController {
     @GetCurrentUser('sub') id,
     @UploadedFile()
     file: // new ParseFilePipe({
-    //   validators: [new FileTypeValidator({ fileType: /(png|jpg|jpeg)/ })],
+    //   validators: [new FileTypeValidator({ fileType: 'png' })],
     // })
     Express.Multer.File
   ) {

@@ -11,21 +11,22 @@ datasource db {
 }
 
 model User {
-  id               String       @id @default(cuid())
-  username         String?      @unique
-  email            String?      @unique
-  isEmailConfirmed Boolean      @default(false)
-  firstname        String?
-  lastname         String?
-  role             Role
-  registratedAt    DateTime     @default(now())
-  updatedAt        DateTime     @default(now()) @updatedAt
-  password         String?
-  refreshToken     String?
-  profilePicture   String?
-  coins            Int?         @default(0)
-  preferences      Preferences?
-  activities       Activity[]
+  id                 String       @id @default(cuid())
+  username           String?      @unique
+  email              String?      @unique
+  isEmailConfirmed   Boolean      @default(false)
+  firstname          String?
+  lastname           String?
+  role               Role
+  registratedAt      DateTime     @default(now())
+  updatedAt          DateTime     @default(now()) @updatedAt
+  password           String?
+  refreshToken       String?
+  passwordResetToken String?
+  profilePicture     String?
+  coins              Int?         @default(0)
+  preferences        Preferences?
+  activities         Activity[]
 
   @@index([email])
 }

@@ -8,5 +8,5 @@
     "composite": true
   },
   "exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts"],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "../ui/shared/content/src/lib/difficultyDisplayTexts.ts"]
 }

@@ -31,8 +31,8 @@
    ```sh
    npm run prisma:seed
    ```
-7. Configure environment variables in `.env` file
-8. Run app (see `package.json` scripts for more information)
+7. Configure environment variables in `.env` file (view `.example.env` for more information)
+8. Run app (view `package.json` scripts for more information)
    ```sh
    npm run dev
    ```

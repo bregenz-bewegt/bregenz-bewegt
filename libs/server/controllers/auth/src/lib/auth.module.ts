@@ -7,13 +7,28 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import {
   AccessTokenStrategy,
+  PasswordResetTokenStrategy,
   RefreshTokenStrategy,
 } from './passport/strategies';
+import { MailModule } from '@bregenz-bewegt/server/mail';
+import { UtilModule } from '@bregenz-bewegt/server/util';
 
 @Module({
-  imports: [UserModule, PassportModule, PrismaModule, JwtModule.register({})],
+  imports: [
+    UserModule,
+    PassportModule,
+    PrismaModule,
+    JwtModule.register({}),
+    MailModule,
+    UtilModule,
+  ],
   controllers: [AuthController],
-  providers: [AuthService, AccessTokenStrategy, RefreshTokenStrategy],
+  providers: [
+    AuthService,
+    AccessTokenStrategy,
+    RefreshTokenStrategy,
+    PasswordResetTokenStrategy,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}

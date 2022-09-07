@@ -27,13 +27,37 @@
       margin: 0 var(--spacing-m);
 
       ion-searchbar {
-        padding: 32px 0;
+        padding: var(--spacing-s) 0 var(--spacing-xs) 0;
+      }
+
+      .searchbar-input {
+        border: 1px solid var(--ion-color-medium);
+      }
+    }
+
+    &__quick-filters {
+      margin: 0 calc(var(--spacing-m) * -1) var(--spacing-m)
+        calc(var(--spacing-m) * -1);
+      padding: 0 calc(var(--spacing-m) * 2);
+      overflow-x: auto;
+      min-height: var(--spacing-l);
+
+      &::-webkit-scrollbar {
+        display: none;
       }
     }
 
     &__parks-list {
       overflow-y: scroll;
       flex-grow: 1;
+
+      ion-card:first-of-type {
+        margin-top: 0;
+      }
+
+      &__no-results {
+        padding: 0 var(--spacing-m);
+      }
     }
 
     &__parks-map {
