@@ -38,7 +38,7 @@
     &__quick-filters {
       margin: 0 calc(var(--spacing-m) * -1) var(--spacing-s)
         calc(var(--spacing-m) * -1);
-      padding: 0 0 0 var(--spacing-m);
+      padding: 0 0 0 calc(var(--spacing-m) * 2);
     }
 
     &__parks-list {
