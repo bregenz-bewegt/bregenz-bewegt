@@ -51,6 +51,10 @@
       overflow-y: scroll;
       flex-grow: 1;
 
+      ion-card:first-of-type {
+        margin-top: 0;
+      }
+
       &__no-results {
         padding: 0 var(--spacing-m);
       }
