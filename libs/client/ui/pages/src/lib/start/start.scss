@@ -45,6 +45,10 @@
       &::-webkit-scrollbar {
         display: none;
       }
+
+      &.no-result {
+        height: auto;
+      }
     }
 
     &__parks-list {
