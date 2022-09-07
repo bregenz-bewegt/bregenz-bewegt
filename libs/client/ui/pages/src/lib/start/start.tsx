@@ -37,15 +37,24 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
     const [isLoadingParks, setIsLoadingParks] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
     const [quickFilters, setQuickFilters] = useState<QuickFilterOption[]>([
-      { key: 0, label: 'Alle', active: false },
+      {
+        key: 0,
+        label: difficultyDisplayTexts[Difficulty.BEGINNER],
+        active: false,
+      },
       {
         key: 1,
-        label: difficultyDisplayTexts[Difficulty.BEGINNER],
+        label: difficultyDisplayTexts[Difficulty.ADVANCED],
         active: false,
       },
       {
         key: 2,
         label: difficultyDisplayTexts[Difficulty.GAME],
+        active: false,
+      },
+      {
+        key: 3,
+        label: 'In meiner Nähe',
         active: false,
       },
     ]);
