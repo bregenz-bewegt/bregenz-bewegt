@@ -32,7 +32,7 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
             color={option.active ? 'primary' : 'secondary'}
             onClick={() =>
               onChange([
-                ...options,
+                ...options.filter((o) => o.key !== option.key),
                 { ...options[i], active: !options[i].active },
               ])
             }

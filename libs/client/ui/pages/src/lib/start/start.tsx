@@ -3,9 +3,9 @@ import {
   Header,
   ParkCard,
   QuickFilter,
+  QuickFilterOption,
 } from '@bregenz-bewegt/client-ui-components';
 import {
-  IonButton,
   IonContent,
   IonPage,
   IonSearchbar,
@@ -36,6 +36,19 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
   observer(({ parkStore }) => {
     const [isLoadingParks, setIsLoadingParks] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
+    const [quickFilters, setQuickFilters] = useState<QuickFilterOption[]>([
+      { key: 0, label: 'Alle', active: false },
+      {
+        key: 1,
+        label: difficultyDisplayTexts[Difficulty.BEGINNER],
+        active: false,
+      },
+      {
+        key: 2,
+        label: difficultyDisplayTexts[Difficulty.GAME],
+        active: false,
+      },
+    ]);
     const [parksResult, setParksResult] = useState<Park[]>(
       Array(10).fill({ id: 0, name: '', address: '', image: '', qr: '' })
     );
@@ -108,25 +121,12 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
               ></IonSearchbar>
             </div>
             <QuickFilter
-              options={[
-                { key: 0, label: 'Alle', active: false },
-                {
-                  key: 1,
-                  label: difficultyDisplayTexts[Difficulty.BEGINNER],
-                  active: true,
-                },
-                {
-                  key: 2,
-                  label: difficultyDisplayTexts[Difficulty.GAME],
-                  active: false,
-                },
-              ]}
+              options={quickFilters}
               onChange={(values) => {
-                console.log(values);
+                setQuickFilters(values);
               }}
               className="start__content__quick-filters"
             />
-            , difficultyDisplayTexts[Difficulty.ADVANCED],
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
                 {parksResult.length > 0 ? (
