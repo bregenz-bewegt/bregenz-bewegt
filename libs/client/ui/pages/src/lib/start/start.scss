@@ -36,7 +36,7 @@
     }
 
     &__quick-filters {
-      margin: calc(var(--spacing-s) * -1) calc(var(--spacing-m) * -1)
+      margin: calc(var(--spacing-xs) * -1) calc(var(--spacing-m) * -1)
         var(--spacing-s) calc(var(--spacing-m) * -1);
       padding: 0 calc(var(--spacing-m) * 2);
       overflow-x: auto;
