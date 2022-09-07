@@ -15,7 +15,7 @@ import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { useEffect } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { checkmark, closeCircleOutline } from 'ionicons/icons';
+import { closeCircleOutline } from 'ionicons/icons';
 import './reset-password.scss';
 
 interface MatchParams {

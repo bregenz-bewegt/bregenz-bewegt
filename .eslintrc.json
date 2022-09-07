@@ -37,7 +37,6 @@
   "rules": {
     "@typescript-eslint/no-unused-vars": ["error"],
     "no-var": "error",
-    "sort-keys": "error",
     "no-empty-pattern": "error",
     "no-console": "error",
     "no-unused-vars": "error",
