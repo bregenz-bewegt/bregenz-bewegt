@@ -138,7 +138,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                 !parksResult ||
                 parksResult.length < 10 ||
                 parkDisplayType === ParkDisplayType.Map
-                  ? ` no-result`
+                  ? ` no-squeeze`
                   : ''
               }`}
             />
