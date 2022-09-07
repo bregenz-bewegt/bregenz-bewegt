@@ -48,16 +48,9 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "client:build",
-        "hmr": true
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "client:build:development"
-        },
-        "production": {
-          "buildTarget": "client:build:production",
-          "hmr": false
-        }
+        "hmr": true,
+        "browserTarget": "project:build",
+        "host": "0.0.0.0"
       }
     },
     "lint": {
@@ -79,6 +72,11 @@
       "executor": "@nxext/capacitor:cap",
       "options": {
         "cmd": "--help"
+      },
+      "configurations": {
+        "android": {
+          "cmd": "run android -l --external --consolelogs"
+        }
       }
     },
     "add": {

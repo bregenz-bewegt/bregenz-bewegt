@@ -1,0 +1,9 @@
+.quick-filter {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  &__option {
+    height: var(--spacing-l) !important;
+  }
+}

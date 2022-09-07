@@ -1,0 +1,41 @@
+.login {
+  &__content {
+    &__title h1 {
+      font-size: 2.5em;
+      background: -webkit-linear-gradient(
+        0deg,
+        var(--ion-color-primary),
+        var(--ion-color-secondary)
+      );
+      display: inline-block;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    &__login {
+      width: 100%;
+
+      &__socials {
+        margin-bottom: var(--spacing-m);
+
+        // &__guest {
+        //   margin-left: auto;
+        // }
+      }
+
+      &__forgot-password {
+        display: inline-block;
+        margin: 8px 0 16px 0;
+      }
+    }
+  }
+
+  &__flex-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 80px;
+  }
+}

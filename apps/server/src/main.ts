@@ -4,16 +4,52 @@
  * This is only a minimal backend to get started.
  */
 
-import * as express from 'express';
+import { Logger, ValidationError, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app/app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import {
+  ValidationException,
+  ValidationFilter,
+} from '@bregenz-bewegt/server/common';
 
-const app = express();
+async function bootstrap() {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to server!' });
-});
+  const globalPrefix = 'api';
+  app.setGlobalPrefix(globalPrefix);
 
-const port = process.env.port || 3000;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
-});
-server.on('error', console.error);
+  app.useGlobalFilters(new ValidationFilter());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      skipMissingProperties: false,
+      exceptionFactory: (errors: ValidationError[]) => {
+        const messages = {};
+        errors.forEach((err) => {
+          messages[err.property] = [...Object.values(err.constraints)];
+        });
+        return new ValidationException(messages);
+      },
+    })
+  );
+  app.enableCors({ origin: true });
+
+  const document = SwaggerModule.createDocument(
+    app,
+    new DocumentBuilder()
+      .setTitle('Bregenz Bewegt API')
+      .setVersion('1.0')
+      .build()
+  );
+  SwaggerModule.setup(`${globalPrefix}/swagger`, app, document);
+
+  const port = process.env.NX_API_PORT || 3333;
+  await app.listen(port);
+  Logger.log(
+    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+  );
+}
+
+bootstrap();

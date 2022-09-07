@@ -1,0 +1,9 @@
+ion-back-button {
+  &::part(native) {
+    padding-inline-start: 0;
+  }
+
+  &::part(icon) {
+    height: var(--spacing-m);
+  }
+}

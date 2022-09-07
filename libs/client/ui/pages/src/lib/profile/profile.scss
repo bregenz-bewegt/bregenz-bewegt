@@ -1,0 +1,18 @@
+.profile {
+  &__content {
+    ion-avatar {
+      height: calc(var(--spacing-5xl) * 2);
+      width: calc(var(--spacing-5xl) * 2);
+    }
+
+    &__password-row {
+      align-items: flex-end;
+      justify-content: space-between;
+
+      &__input {
+        flex: 1;
+        margin-right: 8px;
+      }
+    }
+  }
+}
