@@ -40,13 +40,10 @@
         var(--spacing-s) calc(var(--spacing-m) * -1);
       padding: var(--spacing-m) calc(var(--spacing-m) * 2);
       overflow-x: auto;
+      min-height: var(--spacing-l);
 
       &::-webkit-scrollbar {
         display: none;
-      }
-
-      &.no-squeeze {
-        padding: 0 calc(var(--spacing-m) * 2);
       }
     }
 

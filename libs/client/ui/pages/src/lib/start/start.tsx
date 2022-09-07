@@ -134,13 +134,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
               onChange={(values) => {
                 setQuickFilters(values);
               }}
-              className={`start__content__quick-filters${
-                !parksResult ||
-                parksResult.length < 10 ||
-                parkDisplayType === ParkDisplayType.Map
-                  ? ` no-squeeze`
-                  : ''
-              }`}
+              className={`start__content__quick-filters`}
             />
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
