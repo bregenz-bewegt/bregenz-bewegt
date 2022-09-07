@@ -8,7 +8,6 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Header } from '@bregenz-bewegt/client-ui-components';
 import { useEffect, useState } from 'react';
 import {
   exerciseStore,
@@ -32,7 +31,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 )(
   observer(({ exerciseStore, match }) => {
     const [exercise, setExercise] = useState<Exercise>();
-    const [isLoadingExercises, setIsLoadingExercises] = useState<boolean>(true);
+    // const [isLoadingExercises, setIsLoadingExercises] = useState<boolean>(true);
 
     useEffect(() => {
       const exerciseId = +match.params.exercise;
@@ -42,8 +41,6 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         setExercise(exercise);
       });
     }, [match.params.exercise]);
-
-    console.log(exercise);
 
     return (
       <IonPage className="exercise-detail">

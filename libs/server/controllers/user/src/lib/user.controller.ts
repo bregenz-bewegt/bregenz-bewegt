@@ -1,30 +1,24 @@
 import {
   GetCurrentUser,
-  Public,
   RemoveSensitiveFieldsInterceptor,
 } from '@bregenz-bewegt/server/common';
 import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
 import {
   Body,
   Controller,
-  FileTypeValidator,
   Get,
-  ParseFilePipe,
   Patch,
   Post,
-  Put,
   Res,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
 import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import { Response } from 'express';
-import { ConfigService } from '@nestjs/config';
 
 @Controller('users')
 export class UserController {

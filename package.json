@@ -16,6 +16,7 @@
     "build": "nx run-many --target=build",
     "build:client": "nx run client:build",
     "build:server": "nx run server:build",
+    "lint": "nx run-many --target=lint",
     "test": "nx run-many --target=test",
     "prisma:format": "npx prisma format",
     "prisma:seed": "npx prisma db seed",

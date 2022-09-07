@@ -14,7 +14,6 @@ export const Scan: React.FC = () => {
   const [qrResult, setQrResult] = useState<string>('');
   const openScanner = async () => {
     const data = await BarcodeScanner.scan();
-    console.log(`Barcode data: ${data}`);
     setQrResult(data.text ?? 'test');
   };
 
