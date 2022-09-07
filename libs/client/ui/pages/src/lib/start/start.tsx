@@ -109,12 +109,21 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
             </div>
             <QuickFilter
               options={[
-                'Alle',
-                difficultyDisplayTexts[Difficulty.BEGINNER],
-                difficultyDisplayTexts[Difficulty.ADVANCED],
+                { key: 0, label: 'Alle', active: false },
+                {
+                  key: 1,
+                  label: difficultyDisplayTexts[Difficulty.BEGINNER],
+                  active: true,
+                },
+                {
+                  key: 2,
+                  label: difficultyDisplayTexts[Difficulty.GAME],
+                  active: false,
+                },
               ]}
               className="start__content__quick-filters"
             />
+            , difficultyDisplayTexts[Difficulty.ADVANCED],
             {parkDisplayType === ParkDisplayType.List ? (
               <div className="start__content__parks-list">
                 {parksResult.length > 0 ? (
