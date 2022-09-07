@@ -104,6 +104,18 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     };
 
     const handleImageChange = async (source: CameraSource) => {
+      const handleFailure = () => {
+        dismissLoading();
+        presentToast({
+          message: 'Etwas ist schiefgelaufen',
+          icon: closeCircleOutline,
+          duration: 2000,
+          position: 'top',
+          mode: 'ios',
+          color: 'danger',
+        });
+      };
+
       try {
         const photo = await Camera.getPhoto({
           resultType: CameraResultType.Uri,
@@ -113,31 +125,24 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
         if (!photo.webPath) return;
 
-        const res = await fetch(photo.webPath);
-        const blob = await res.blob();
-        const file = await new File([blob], `file.${photo.format}`);
         presentLoading({
           message: 'Ändere Profilbild',
           spinner: 'crescent',
         });
+
+        const res = await fetch(photo.webPath);
+        const blob = await res.blob();
+        const file = await new File([blob], `file.${photo.format}`);
         userStore
           ?.editProfilePicture(file)
           .then(() =>
             userStore.fetchProfilePicture().then(() => dismissLoading())
           )
           .catch(() => {
-            dismissLoading();
-            presentToast({
-              message: 'Etwas ist schiefgelaufen',
-              icon: closeCircleOutline,
-              duration: 2000,
-              position: 'top',
-              mode: 'ios',
-              color: 'danger',
-            });
+            handleFailure();
           });
       } catch (error) {
-        return;
+        handleFailure();
       }
     };
 
