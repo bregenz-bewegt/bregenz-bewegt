@@ -121,6 +121,9 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                   active: false,
                 },
               ]}
+              onChange={(values) => {
+                console.log(values);
+              }}
               className="start__content__quick-filters"
             />
             , difficultyDisplayTexts[Difficulty.ADVANCED],
