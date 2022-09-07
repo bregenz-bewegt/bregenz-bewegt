@@ -40,14 +40,13 @@
         var(--spacing-s) calc(var(--spacing-m) * -1);
       padding: 0 calc(var(--spacing-m) * 2);
       overflow-x: auto;
-      height: 200px;
 
       &::-webkit-scrollbar {
         display: none;
       }
 
       &.no-result {
-        height: auto;
+        padding: var(--spacing-m) calc(var(--spacing-m) * 2);
       }
     }
 

@@ -135,7 +135,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
                 setQuickFilters(values);
               }}
               className={`start__content__quick-filters${
-                !parksResult || parksResult.length < 1 ? ` no-result` : ''
+                !parksResult || parksResult.length < 10 ? ` no-result` : ''
               }`}
             />
             {parkDisplayType === ParkDisplayType.List ? (
