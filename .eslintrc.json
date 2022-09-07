@@ -36,6 +36,7 @@
   ],
   "rules": {
     "@typescript-eslint/no-unused-vars": ["error"],
+    "react-hooks/exhaustive-deps": "off",
     "no-var": "error",
     "no-empty-pattern": "error",
     "no-console": "error",

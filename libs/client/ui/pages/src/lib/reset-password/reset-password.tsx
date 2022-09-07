@@ -135,5 +135,3 @@ export const ResetPassword = inject(userStore.storeKey)(
     );
   })
 );
-
-export default ResetPassword;
