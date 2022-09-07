@@ -1,14 +1,21 @@
-version: "3"
+version: '3'
+
 services:
-  api:
-    build:
-      context: ./docker
-      dockerfile: Dockerfile.api
-    env_file:
-      - ./.env
   client:
-    build:
-      context: ./docker
-      dockerfile: Dockerfile.client
-    env_file:
-      - ./.env
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run dev:client
+    ports:
+      - 4200:4200
+
+  server:
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run dev:server
+    ports:
+      - 3333:3333
+
+volumes:
+  mono-node-modules: null

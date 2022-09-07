@@ -9,15 +9,15 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
-    "dev": "nx run-many --target=serve",
-    "dev:client": "nx run client:serve",
-    "dev:server": "nx run server:serve",
-    "dev:native:android": "nx run client:cap:android",
-    "build": "nx run-many --target=build",
-    "build:client": "nx run client:build",
-    "build:server": "nx run server:build",
-    "lint": "nx run-many --target=lint",
-    "test": "nx run-many --target=test",
+    "dev": "npx nx run-many --target=serve",
+    "dev:client": "npx nx run client:serve",
+    "dev:server": "npx nx run server:serve",
+    "dev:native:android": "npx nx run client:cap:android",
+    "build": "npx nx run-many --target=build",
+    "build:client": "npx nx run client:build",
+    "build:server": "npx nx run server:build",
+    "lint": "npx nx run-many --target=lint",
+    "test": "npx nx run-many --target=test",
     "prisma:format": "npx prisma format",
     "prisma:seed": "npx prisma db seed",
     "prisma:migrate": "npx prisma migrate dev",
@@ -25,7 +25,7 @@
     "prisma:db:push": "npx prisma db push",
     "prisma:studio": "npx prisma studio",
     "prisma": "npx prisma",
-    "nx": "nx"
+    "nx": "npx nx"
   },
   "private": true,
   "dependencies": {
