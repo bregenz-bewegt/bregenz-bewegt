@@ -20,8 +20,6 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
   className,
   onChange,
 }) => {
-  const [selection, setSelection] = useState<QuickFilterOption[]>(options);
-
   return (
     <div className={`quick-filter${className ? ` ${className}` : ''}`}>
       {options?.map((option, i) => {
@@ -32,8 +30,11 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
             color={option.active ? 'primary' : 'secondary'}
             onClick={() =>
               onChange([
-                ...options.filter((o) => o.key !== option.key),
-                { ...options[i], active: !options[i].active },
+                ...options.map((o) =>
+                  o.key === option.key
+                    ? ({ ...o, active: !o.active } as QuickFilterOption)
+                    : o
+                ),
               ])
             }
           >
