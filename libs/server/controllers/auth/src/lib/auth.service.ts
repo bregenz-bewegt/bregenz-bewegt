@@ -54,9 +54,10 @@ export class AuthService {
         },
       });
 
-      const tokens = await this.signTokens(newUser.id, newUser.email);
-      this.updateRefreshToken(newUser.id, tokens.refresh_token);
-      return tokens;
+      // const tokens = await this.signTokens(newUser.id, newUser.email);
+      // this.updateRefreshToken(newUser.id, tokens.refresh_token);
+      // return tokens;
+      return;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -71,6 +72,10 @@ export class AuthService {
 
       throw error;
     }
+  }
+
+  async registerVerify() {
+    //
   }
 
   async login(dto: LoginDto) {

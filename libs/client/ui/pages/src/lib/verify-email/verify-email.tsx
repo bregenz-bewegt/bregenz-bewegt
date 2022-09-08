@@ -38,12 +38,12 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
       };
 
       return (
-        <IonModal {...modalProps}>
+        <IonModal {...modalProps} canDismiss={false}>
           <IonHeader>
             <IonToolbar>
-              <IonTitle>Modal</IonTitle>
+              <IonTitle>Email Bestätigen</IonTitle>
               <IonButtons slot="end">
-                <IonButton onClick={() => modalDismiss()}>Close</IonButton>
+                <IonButton onClick={() => modalDismiss()}>Bestätigen</IonButton>
               </IonButtons>
             </IonToolbar>
           </IonHeader>

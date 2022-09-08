@@ -33,7 +33,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
     const page = useRef(null);
     const [verifyModalPresentingElement, setVerifyModalPresentingElement] =
       useState<HTMLElement | null>(null);
-    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(false);
+    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(true);
 
     const register = useFormik({
       initialValues: {
@@ -51,29 +51,28 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
           return setSubmitting(false);
         }
 
-        setIsVerifyModalOpen(true);
+        userStore
+          ?.register({
+            firstname: register.values.firstname || undefined,
+            lastname: register.values.lastname || undefined,
+            username: register.values.username,
+            email: register.values.email,
+            password: register.values.password,
+          })
+          .then(() => {
+            userStore.refreshProfile();
+            register.setSubmitting(false);
+            setIsVerifyModalOpen(true);
+          })
+          .catch((error) => {
+            register.setErrors(error.response.data);
+            register.setSubmitting(false);
+          });
       },
     });
 
-    const handleRegister = () => {
+    const handleRegisterVerify = () => {
       register.setSubmitting(true);
-
-      userStore
-        ?.register({
-          firstname: register.values.firstname || undefined,
-          lastname: register.values.lastname || undefined,
-          username: register.values.username,
-          email: register.values.email,
-          password: register.values.password,
-        })
-        .then(() => {
-          userStore.refreshProfile();
-          register.setSubmitting(false);
-        })
-        .catch((error) => {
-          register.setErrors(error.response.data);
-          register.setSubmitting(false);
-        });
     };
 
     useEffect(() => {
@@ -222,7 +221,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
             isOpen={isVerifyModalOpen}
             modalRef={verifyModal}
             modalPresentingElement={verifyModalPresentingElement!}
-            onVerifySuccess={() => handleRegister()}
+            onVerifySuccess={() => handleRegisterVerify()}
           />
         </IonContent>
       </IonPage>

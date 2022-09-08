@@ -40,8 +40,14 @@ export class AuthController {
 
   @Public()
   @Post('local/register')
-  register(@Body() dto: RegisterDto): Promise<Tokens> {
+  register(@Body() dto: RegisterDto) {
     return this.authService.register(dto);
+  }
+
+  @Public()
+  @Post('local/register-verify')
+  registerVerify() {
+    return this.authService.registerVerify();
   }
 
   @Public()
