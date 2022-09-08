@@ -5,5 +5,10 @@
 
   &__option {
     height: var(--spacing-l) !important;
+
+    ion-icon {
+      margin-left: var(--spacing-xxs);
+      margin-right: var(--spacing-xxs);
+    }
   }
 }
