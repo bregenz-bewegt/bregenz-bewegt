@@ -45,7 +45,13 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
         }
 
         userStore
-          ?.register(values.username, values.email, values.password)
+          ?.register({
+            firstname: values.firstname,
+            lastname: values.lastname,
+            username: values.username,
+            email: values.email,
+            password: values.password,
+          })
           .then(() => {
             userStore.refreshProfile();
             setSubmitting(false);
