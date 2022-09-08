@@ -2,6 +2,7 @@ import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
 import type { User } from '@bregenz-bewegt/client/types';
 import type {
+  LoginDto,
   PatchProfileDto,
   RegisterDto,
   Tokens,
@@ -39,10 +40,9 @@ export class UserStore implements Store {
     return data;
   }
 
-  @action async login(email: string, password: string) {
+  @action async login(dto: LoginDto) {
     const { data } = await http.post('/auth/local/login', {
-      email,
-      password,
+      ...dto,
     });
 
     await this.setTokens({

@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, FormikErrors } from 'formik';
 import { loginSchema } from '@bregenz-bewegt/client/common/validation';
-import { LoginCredentials } from '@bregenz-bewegt/client/types';
+import { LoginDto } from '@bregenz-bewegt/shared/types';
 
 export interface LoginProps {
   userStore?: UserStore;
@@ -28,7 +28,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     const [isGuestLoading, setIsGuestLoading] = useState<boolean>(false);
 
     const handleLocalLogin = (
-      credentials: LoginCredentials,
+      credentials: LoginDto,
       setErrors: (
         errors: FormikErrors<{
           email: string;
@@ -39,7 +39,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       setIsLoading(true);
 
       userStore
-        ?.login(credentials.email, credentials.password)
+        ?.login({ ...credentials })
         .then(() => {
           userStore.refreshProfile();
           setIsLoading(false);

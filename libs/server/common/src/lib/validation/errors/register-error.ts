@@ -1,6 +1,6 @@
-import { RegisterCredentials } from '@bregenz-bewegt/client/types';
+import { RegisterDto } from '@bregenz-bewegt/shared/types';
 
-export type RegisterErrorResponse = Partial<RegisterCredentials>;
+export type RegisterErrorResponse = Partial<RegisterDto>;
 export enum RegisterError {
   USER_NOT_FOUND = 'USER_NOT_FOUND',
   INVALID_CREDENTIALS = 'INVALID_CREDENTIALS',
