@@ -70,7 +70,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                   <IonSpinner name="crescent" />
                 </IonLabel>
               ) : (
-                'Email Verifizieren'
+                'Email Bestätigen'
               )}
             </IonButton>
           </IonContent>
