@@ -1,12 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 const prisma = new PrismaClient();
 import * as argon from 'argon2';
 
-const exercises = [];
-
 const createUsers = async () => {
   await prisma.user.deleteMany();
-  const password = await argon.hash('testtest');
   await prisma.user.createMany({
     data: [
       {
@@ -15,10 +12,20 @@ const createUsers = async () => {
         isEmailConfirmed: true,
         firstname: 'Simon',
         lastname: 'Ostini',
-        role: 'USER',
-        password: password,
+        role: Role.USER,
+        password: await argon.hash('testtest'),
         coins: 100,
       },
+      {
+        username: 'Vincentcool3',
+        email: 'stadelmann.timon@gmail.com',
+        isEmailConfirmed: false,
+        firstname: 'Timon',
+        lastname: 'Stadelmann',
+        role: Role.USER,
+        password: await argon.hash('timonovich'),
+        coins: 37448,
+      }
     ],
   });
 };
