@@ -18,7 +18,6 @@ export class UserStore implements Store {
   @action async guest() {
     const { data } = await http.post('/auth/local/guest');
 
-    console.log(data);
     return data;
   }
 
@@ -175,7 +174,6 @@ export class UserStore implements Store {
   @action async forgotPassword() {
     const { data } = await http.post('/auth/forgot-password');
 
-    console.log(data);
     return data;
   }
 

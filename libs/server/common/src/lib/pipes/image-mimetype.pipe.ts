@@ -1,18 +1,8 @@
-import {
-  ArgumentMetadata,
-  Injectable,
-  PipeTransform,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable, PipeTransform, BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class ImageMimeType implements PipeTransform {
-  transform(
-    files: Express.Multer.File | Express.Multer.File[],
-    metadata: ArgumentMetadata
-  ) {
-    const mimetype = 'image';
-
+  transform(files: Express.Multer.File | Express.Multer.File[]) {
     if (files === undefined || files === null) {
       throw new BadRequestException('Validation failed (file expected)');
     }

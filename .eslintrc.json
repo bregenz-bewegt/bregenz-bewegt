@@ -7,7 +7,7 @@
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
-          "error",
+          "warn",
           {
             "enforceBuildableLibDependency": true,
             "allow": [],
@@ -24,12 +24,38 @@
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nrwl/nx/typescript"],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "error"
+      }
     },
     {
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     }
-  ]
+  ],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "react-hooks/exhaustive-deps": "off",
+    "no-var": "error",
+    "no-empty-pattern": "error",
+    "no-console": "error",
+    "no-unused-vars": "error",
+    "camelcase": "warn",
+    "eqeqeq": "error",
+    "no-alert": "error",
+    "no-eval": "error",
+    "no-new": "error",
+    "no-proto": "error",
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error",
+    "prefer-spread": "error",
+    "spaced-comment": "error",
+    "comma-dangle": "error",
+    "key-spacing": "error",
+    "no-multi-spaces": "error",
+    "no-tabs": "error",
+    "no-trailing-spaces": "error"
+  }
 }

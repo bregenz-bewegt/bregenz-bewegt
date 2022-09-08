@@ -1,6 +1,5 @@
 import { Loading } from '@bregenz-bewegt/client-ui-pages';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
-import { IonSpinner } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { ReactElement } from 'react';
 import { Redirect } from 'react-router-dom';
@@ -22,5 +21,3 @@ export const RouteGuard: React.FC<RouteGuardProps> = inject(userStore.storeKey)(
     );
   })
 );
-
-export default RouteGuard;

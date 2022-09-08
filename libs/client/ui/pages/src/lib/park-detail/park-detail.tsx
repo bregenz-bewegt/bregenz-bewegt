@@ -1,5 +1,5 @@
 import './park-detail.scss';
-import { ExerciseCard, Header } from '@bregenz-bewegt/client-ui-components';
+import { ExerciseCard } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   ExerciseStore,
@@ -16,7 +16,6 @@ import {
   IonIcon,
   IonNote,
   IonPage,
-  IonRouterOutlet,
   IonText,
   IonTitle,
   IonToolbar,
@@ -61,8 +60,6 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
         setIsLoading(false);
       });
     }, [match.params.park]);
-
-    console.log(match.params);
 
     return isLoading ? (
       <Loading />

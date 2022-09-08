@@ -2,8 +2,14 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  overflow-y: hidden;
 
   &__option {
     height: var(--spacing-l) !important;
+
+    ion-icon {
+      margin-left: var(--spacing-xxs);
+      margin-right: calc(var(--spacing-xs) * -1);
+    }
   }
 }

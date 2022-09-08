@@ -1,5 +1,4 @@
 import { IonButton, IonIcon } from '@ionic/react';
-import { useState } from 'react';
 import './quick-filter.scss';
 import { close } from 'ionicons/icons';
 
@@ -22,9 +21,10 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
 }) => {
   return (
     <div className={`quick-filter${className ? ` ${className}` : ''}`}>
-      {options?.map((option, i) => {
+      {options?.map((option) => {
         return (
           <IonButton
+            mode="ios"
             className="quick-filter__option"
             size="small"
             color={option.active ? 'primary' : 'secondary'}
