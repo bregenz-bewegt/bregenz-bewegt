@@ -33,6 +33,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
     const page = useRef(null);
     const [verifyModalPresentingElement, setVerifyModalPresentingElement] =
       useState<HTMLElement | null>(null);
+    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(false);
 
     const register = useFormik({
       initialValues: {
@@ -50,24 +51,30 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
           return setSubmitting(false);
         }
 
-        userStore
-          ?.register({
-            firstname: values.firstname || undefined,
-            lastname: values.lastname || undefined,
-            username: values.username,
-            email: values.email,
-            password: values.password,
-          })
-          .then(() => {
-            userStore.refreshProfile();
-            setSubmitting(false);
-          })
-          .catch((error) => {
-            setErrors(error.response.data);
-            setSubmitting(false);
-          });
+        setIsVerifyModalOpen(true);
       },
     });
+
+    const handleRegister = () => {
+      register.setSubmitting(true);
+
+      userStore
+        ?.register({
+          firstname: register.values.firstname || undefined,
+          lastname: register.values.lastname || undefined,
+          username: register.values.username,
+          email: register.values.email,
+          password: register.values.password,
+        })
+        .then(() => {
+          userStore.refreshProfile();
+          register.setSubmitting(false);
+        })
+        .catch((error) => {
+          register.setErrors(error.response.data);
+          register.setSubmitting(false);
+        });
+    };
 
     useEffect(() => {
       setVerifyModalPresentingElement(page.current);
@@ -212,8 +219,10 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
             </div>
           </div>
           <VerifyEmail
+            isOpen={isVerifyModalOpen}
             modalRef={verifyModal}
             modalPresentingElement={verifyModalPresentingElement!}
+            onVerifySuccess={() => handleRegister()}
           />
         </IonContent>
       </IonPage>

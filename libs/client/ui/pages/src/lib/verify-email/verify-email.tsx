@@ -12,9 +12,11 @@ import { inject, observer } from 'mobx-react';
 import './verify-email.scss';
 
 export interface VerifyEmailProps {
+  isOpen: boolean;
   modalRef: React.Ref<HTMLIonModalElement>;
   modalPresentingElement: HTMLElement;
   modalDismiss?: any;
+  onVerifySuccess: () => void;
   userStore?: UserStore;
 }
 
@@ -23,17 +25,20 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
 )(
   observer(
     ({
+      isOpen,
       modalRef,
       modalPresentingElement,
       modalDismiss,
       userStore,
     }: VerifyEmailProps) => {
+      const modalProps = {
+        ref: modalRef,
+        presentingElement: modalPresentingElement,
+        isOpen: isOpen,
+      };
+
       return (
-        <IonModal
-          ref={modalRef}
-          trigger="open-modal"
-          presentingElement={modalPresentingElement}
-        >
+        <IonModal {...modalProps}>
           <IonHeader>
             <IonToolbar>
               <IonTitle>Modal</IonTitle>
