@@ -66,7 +66,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
               <IonText>
                 <h2>Registrieren</h2>
               </IonText>
-              <IonRow>
+              <IonRow className="register__content__wrapper__name-wrapper">
                 <Input
                   name="firstname"
                   placeholder="Vorname"

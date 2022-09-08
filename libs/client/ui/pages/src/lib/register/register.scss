@@ -20,6 +20,11 @@
         }
       }
 
+      &__name-wrapper {
+        flex-wrap: nowrap;
+        gap: var(--spacing-m);
+      }
+
       .email {
         margin-bottom: var(--spacing-s);
       }
