@@ -11,7 +11,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
         secure: true,
         auth: {
           user: process.env['NX_MAIL_USER'],
-          pass: process.env['NX_MAIL_PASSWORD'],
+          pass: process.env['NX_MAIL_AUTH'],
         },
       },
       defaults: {
