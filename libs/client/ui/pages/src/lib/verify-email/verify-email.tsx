@@ -4,10 +4,13 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonLabel,
   IonModal,
+  IonSpinner,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import './verify-email.scss';
 
@@ -37,17 +40,36 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
         isOpen: isOpen,
       };
 
+      const verify = useFormik({
+        initialValues: {
+          pin: null,
+        },
+        onSubmit: (values, { setSubmitting }) => {
+          setTimeout(() => {
+            setSubmitting(false);
+          }, 2000);
+        },
+      });
+
       return (
         <IonModal {...modalProps} canDismiss={false}>
           <IonHeader>
             <IonToolbar>
               <IonTitle>Email Bestätigen</IonTitle>
-              <IonButtons slot="end">
-                <IonButton onClick={() => modalDismiss()}>Bestätigen</IonButton>
-              </IonButtons>
+              <IonButtons slot="end"></IonButtons>
             </IonToolbar>
           </IonHeader>
-          <IonContent className="ion-padding">verify</IonContent>
+          <IonContent className="ion-padding">
+            <IonButton mode="ios" onClick={() => verify.submitForm()}>
+              {verify.isSubmitting ? (
+                <IonLabel>
+                  <IonSpinner name="crescent" />
+                </IonLabel>
+              ) : (
+                'Email Verifizieren'
+              )}
+            </IonButton>
+          </IonContent>
         </IonModal>
       );
     }
