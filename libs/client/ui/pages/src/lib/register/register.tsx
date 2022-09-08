@@ -46,8 +46,8 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
 
         userStore
           ?.register({
-            firstname: values.firstname,
-            lastname: values.lastname,
+            firstname: values.firstname || undefined,
+            lastname: values.lastname || undefined,
             username: values.username,
             email: values.email,
             password: values.password,
