@@ -27,9 +27,7 @@ export class UserStore implements Store {
   }
 
   @action async register(dto: RegisterDto) {
-    const { data } = await http.post('/auth/local/register', {
-      ...dto,
-    });
+    const { data } = await http.post('/auth/local/register', dto);
 
     await this.setTokens({
       access_token: data.access_token,
@@ -41,9 +39,7 @@ export class UserStore implements Store {
   }
 
   @action async login(dto: LoginDto) {
-    const { data } = await http.post('/auth/local/login', {
-      ...dto,
-    });
+    const { data } = await http.post('/auth/local/login', dto);
 
     await this.setTokens({
       access_token: data.access_token,
