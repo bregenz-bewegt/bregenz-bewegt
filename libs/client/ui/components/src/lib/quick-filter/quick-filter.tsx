@@ -1,6 +1,6 @@
 import { IonButton, IonIcon } from '@ionic/react';
 import './quick-filter.scss';
-import { close } from 'ionicons/icons';
+import { close, accessibility } from 'ionicons/icons';
 
 export type QuickFilterOption = {
   key: string | number;
