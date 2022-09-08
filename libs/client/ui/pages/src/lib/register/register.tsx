@@ -3,6 +3,7 @@ import {
   Input,
   TitleBanner,
 } from '@bregenz-bewegt/client-ui-components';
+import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import { registerSchema } from '@bregenz-bewegt/client/common/validation';
 import {
@@ -17,7 +18,7 @@ import {
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './register.scss';
 
 export interface RegisterProps {
@@ -28,6 +29,11 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const [acceptTos, setAcceptTos] = useState<boolean>(false);
     const [acceptTosValid, setAcceptTosValid] = useState<boolean>(true);
+    const verifyModal = useRef<HTMLIonModalElement>(null);
+    const page = useRef(null);
+    const [verifyModalPresentingElement, setVerifyModalPresentingElement] =
+      useState<HTMLElement | null>(null);
+
     const register = useFormik({
       initialValues: {
         firstname: '',
@@ -63,8 +69,12 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
       },
     });
 
+    useEffect(() => {
+      setVerifyModalPresentingElement(page.current);
+    }, []);
+
     return (
-      <IonPage className="register">
+      <IonPage className="register" ref={page}>
         <IonContent className="register__content" fullscreen>
           <div className="register__flex-wrapper">
             <TitleBanner />
@@ -201,6 +211,10 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
               </IonButton>
             </div>
           </div>
+          <VerifyEmail
+            modalRef={verifyModal}
+            modalPresentingElement={verifyModalPresentingElement!}
+          />
         </IonContent>
       </IonPage>
     );
