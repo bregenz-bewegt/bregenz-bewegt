@@ -8,7 +8,7 @@
 
     ion-icon {
       margin-left: var(--spacing-xxs);
-      margin-right: var(--spacing-xxs);
+      margin-right: calc(var(--spacing-xs) * -1);
     }
   }
 }
