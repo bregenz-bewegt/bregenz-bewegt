@@ -24,6 +24,7 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
       {options?.map((option) => {
         return (
           <IonButton
+            mode="ios"
             className="quick-filter__option"
             size="small"
             color={option.active ? 'primary' : 'secondary'}
