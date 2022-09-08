@@ -2,7 +2,7 @@ version: "3"
 
 services:
   nx-app-base:
-    # restart: always
+    restart: always
     build:
       context: ./docker
       dockerfile: Dockerfile
