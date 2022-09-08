@@ -60,7 +60,11 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
             </IonToolbar>
           </IonHeader>
           <IonContent className="ion-padding">
-            <IonButton mode="ios" onClick={() => verify.submitForm()}>
+            <IonButton
+              mode="ios"
+              expand="block"
+              onClick={() => verify.submitForm()}
+            >
               {verify.isSubmitting ? (
                 <IonLabel>
                   <IonSpinner name="crescent" />
