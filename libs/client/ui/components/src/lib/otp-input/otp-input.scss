@@ -1,0 +1,20 @@
+.otp-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  input {
+    border-radius: var(--spacing-s);
+    margin: var(--spacing-xs) 0;
+    border: 1px solid var(--ion-color-medium);
+    --padding-top: var(--spacing-s) !important;
+    --padding-bottom: var(--spacing-s) !important;
+    --padding-start: var(--spacing-s) !important;
+    --padding-end: var(--spacing-s) !important;
+    --background: var(--ion-color-light-tint) !important;
+
+    &.ion-invalid {
+      border: 1px solid var(--ion-color-danger);
+    }
+  }
+}
