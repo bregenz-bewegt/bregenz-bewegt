@@ -54,8 +54,6 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
         },
       });
 
-      console.log(verify.values.pin);
-
       return (
         <IonModal {...modalProps} canDismiss={false}>
           <IonHeader>
