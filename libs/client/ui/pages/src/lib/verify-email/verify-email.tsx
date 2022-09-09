@@ -8,6 +8,7 @@ import {
   IonLabel,
   IonModal,
   IonSpinner,
+  IonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
@@ -79,6 +80,9 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                 'Email Bestätigen'
               )}
             </IonButton>
+            <IonText onClick={() => modalDismiss()}>
+              <p>Abbrechen</p>
+            </IonText>
           </IonContent>
         </IonModal>
       );
