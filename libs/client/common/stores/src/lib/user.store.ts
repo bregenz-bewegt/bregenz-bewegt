@@ -36,8 +36,8 @@ export class UserStore implements Store {
     }
   }
 
-  @action async registerVerify() {
-    const { data } = await http.post('/auth/local/register-verify');
+  @action async verify() {
+    const { data } = await http.post('/auth/local/verify');
 
     await this.setTokens({
       access_token: data.access_token,

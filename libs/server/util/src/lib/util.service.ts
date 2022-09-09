@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import otp from 'otp-generator';
+import * as otp from 'otp-generator';
 
 @Injectable()
 export class UtilService {
@@ -8,6 +8,11 @@ export class UtilService {
   }
 
   async generateOtp() {
-    return otp.generate(6, { digits: true });
+    return otp.generate(6, {
+      digits: true,
+      lowerCaseAlphabets: false,
+      upperCaseAlphabets: false,
+      specialChars: false
+    });
   }
 }
