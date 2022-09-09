@@ -7,6 +7,7 @@ import {
   IonHeader,
   IonLabel,
   IonModal,
+  IonRow,
   IonSpinner,
   IonText,
   IonTitle,
@@ -80,9 +81,15 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                 'Email Bestätigen'
               )}
             </IonButton>
-            <IonText onClick={() => modalDismiss()}>
-              <p>Abbrechen</p>
-            </IonText>
+            <IonRow className="ion-justify-content-center">
+              <IonText
+                className="text-center"
+                color="primary"
+                onClick={() => modalDismiss()}
+              >
+                <p>Abbrechen</p>
+              </IonText>
+            </IonRow>
           </IonContent>
         </IonModal>
       );
