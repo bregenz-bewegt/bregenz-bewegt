@@ -67,7 +67,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
             <div className="flex-wrapper">
               <div className="flex-wrapper__content">
                 <IonRow className="ion-justify-content-center">
-                  <IonText className="text-center">
+                  <IonText className="verify-text">
                     <p>
                       Bitte bestätige deine E-Mail Adresse mit dem
                       Bestätigungscode, der an{' '}
