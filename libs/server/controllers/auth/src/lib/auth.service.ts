@@ -14,6 +14,7 @@ import {
   RegisterDto,
   ResetPasswordDto,
   Tokens,
+  VerifyDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   loginError,
@@ -21,6 +22,7 @@ import {
   RegisterErrorResponse,
 } from '@bregenz-bewegt/server/common';
 import { MailService } from '@bregenz-bewegt/server/mail';
+import * as nanoid from 'nanoid';
 
 @Injectable()
 export class AuthService {
@@ -46,7 +48,7 @@ export class AuthService {
     const hash = await argon.hash(password);
 
     try {
-      const newUser = await this.prismaService.user.create({
+      await this.prismaService.user.create({
         data: {
           ...rest,
           password: hash,
@@ -54,10 +56,8 @@ export class AuthService {
         },
       });
 
-      // const tokens = await this.signTokens(newUser.id, newUser.email);
-      // this.updateRefreshToken(newUser.id, tokens.refresh_token);
-      // return tokens;
-      return;
+      const pin = nanoid.customAlphabet('0123456789', 6);
+      return pin;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -74,8 +74,10 @@ export class AuthService {
     }
   }
 
-  async registerVerify() {
-    //
+  async verify(dto: VerifyDto) {
+    // const tokens = await this.signTokens(newUser.id, newUser.email);
+    // this.updateRefreshToken(newUser.id, tokens.refresh_token);
+    // return tokens;
   }
 
   async login(dto: LoginDto) {
