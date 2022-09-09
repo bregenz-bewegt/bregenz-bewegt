@@ -3,12 +3,12 @@ import Otp, { OtpInputProps as OtpProps } from 'react-otp-input';
 import { IonNote } from '@ionic/react';
 
 export interface OtpInputProps {
-  value?: number;
+  value: string;
   fieldsCount?: number;
   className?: string;
   disabled?: boolean;
   error?: string;
-  onChange: (value: number) => void;
+  onChange: (value: string) => void;
 }
 
 export const OtpInput: React.FC<OtpInputProps> = ({
@@ -21,7 +21,7 @@ export const OtpInput: React.FC<OtpInputProps> = ({
 }) => {
   const otpProps: Partial<OtpProps> = {
     isInputNum: true,
-    value: value ? `${value}` : undefined,
+    value: value,
     numInputs: fieldsCount,
     isDisabled: disabled,
   };
@@ -30,10 +30,7 @@ export const OtpInput: React.FC<OtpInputProps> = ({
     <div className={`otp-input${className ? ` ${className}` : ''}`}>
       <Otp
         {...otpProps}
-        onChange={(data: any) => {
-          console.log(data);
-          onChange(data);
-        }}
+        onChange={(value: string) => onChange(value)}
         className={error ? `error` : ''}
       />
       {error && (

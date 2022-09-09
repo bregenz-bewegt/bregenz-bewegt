@@ -45,7 +45,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
 
       const verify = useFormik({
         initialValues: {
-          pin: null,
+          pin: '',
         },
         onSubmit: (values, { setSubmitting }) => {
           setTimeout(() => {
