@@ -14,7 +14,7 @@ model User {
   id                 String       @id @default(cuid())
   username           String?      @unique
   email              String?      @unique
-  isEmailConfirmed   Boolean      @default(false)
+  active             Boolean      @default(false)
   firstname          String?
   lastname           String?
   role               Role
@@ -23,6 +23,7 @@ model User {
   password           String?
   refreshToken       String?
   passwordResetToken String?
+  activationOtp      String?
   profilePicture     String?
   coins              Int?         @default(0)
   preferences        Preferences?

@@ -59,8 +59,8 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
             email: register.values.email,
             password: register.values.password,
           })
-          .then((otp) => {
-            console.log(otp);
+          .then((user) => {
+            console.log(user);
             userStore.refreshProfile();
             register.setSubmitting(false);
             setIsVerifyModalOpen(true);

@@ -27,13 +27,9 @@ export class UserStore implements Store {
   }
 
   @action async register(dto: RegisterDto) {
-    try {
-      const { data } = await http.post('/auth/local/register', dto);
+    const { data } = await http.post('/auth/local/register', dto);
 
-      return data;
-    } catch (error) {
-      return null;
-    }
+    return data;
   }
 
   @action async verify() {

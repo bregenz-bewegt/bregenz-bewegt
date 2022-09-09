@@ -50,15 +50,16 @@ export class AuthService {
       const hash = await argon.hash(password);
       const otp = await this.utilService.generateOtp();
 
-      await this.prismaService.user.create({
+      const newUser = await this.prismaService.user.create({
         data: {
           ...rest,
           password: hash,
           role: 'USER',
+          activationOtp: otp,
         },
       });
 
-      return otp;
+      return newUser;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {

@@ -9,7 +9,6 @@ const createUsers = async () => {
       {
         username: 'simonostini',
         email: 'simonostini@gmail.com',
-        isEmailConfirmed: true,
         firstname: 'Simon',
         lastname: 'Ostini',
         role: Role.USER,
@@ -19,13 +18,12 @@ const createUsers = async () => {
       {
         username: 'Vincentcool3',
         email: 'stadelmann.timon@gmail.com',
-        isEmailConfirmed: false,
         firstname: 'Timon',
         lastname: 'Stadelmann',
         role: Role.USER,
         password: await argon.hash('timonovich'),
         coins: 37448,
-      }
+      },
     ],
   });
 };
