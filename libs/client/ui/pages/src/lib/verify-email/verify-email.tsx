@@ -54,6 +54,8 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
         },
       });
 
+      console.log(verify.values.pin);
+
       return (
         <IonModal {...modalProps} canDismiss={false}>
           <IonHeader>
@@ -63,9 +65,8 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
             </IonToolbar>
           </IonHeader>
           <IonContent className="ion-padding">
-            <OtpInput<'number'>
+            <OtpInput
               value={verify.values.pin ?? undefined}
-              inputType={'number'}
               onChange={(value) => verify.setFieldValue('pin', value)}
             />
             <IonButton
