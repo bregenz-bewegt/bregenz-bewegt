@@ -59,7 +59,7 @@ export class AuthService {
         },
       });
 
-      return newUser;
+      this.mailService.sendOtpActivationMail({ to: newUser.email, otp });
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -206,7 +206,7 @@ export class AuthService {
       throw new ForbiddenException('Access denied');
     }
 
-    return this.mailService.sendPasswordResetMail({
+    return this.mailService.sendPasswordResetmail({
       to: email,
       resetToken: token,
     });
