@@ -6,6 +6,7 @@ import type {
   PatchProfileDto,
   RegisterDto,
   Tokens,
+  VerifyDto,
 } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
@@ -32,8 +33,8 @@ export class UserStore implements Store {
     return data;
   }
 
-  @action async verify() {
-    const { data } = await http.post('/auth/local/verify');
+  @action async verify(dto: VerifyDto) {
+    const { data } = await http.post('/auth/local/verify', dto);
 
     await this.setTokens({
       access_token: data.access_token,

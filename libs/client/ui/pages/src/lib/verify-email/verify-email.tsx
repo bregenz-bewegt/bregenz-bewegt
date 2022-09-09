@@ -32,6 +32,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
 )(
   observer(
     ({
+      email,
       isOpen,
       modalRef,
       modalPresentingElement,
@@ -49,9 +50,14 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
           pin: '',
         },
         onSubmit: (values, { setSubmitting }) => {
-          setTimeout(() => {
-            setSubmitting(false);
-          }, 2000);
+          userStore
+            ?.verify({ email: email, pin: +values.pin })
+            .then(() => {
+              setSubmitting(false);
+            })
+            .catch(() => {
+              setSubmitting(false);
+            });
         },
       });
 

@@ -5,7 +5,7 @@ export class VerifyDto {
   @ApiProperty()
   @IsEmail()
   @IsNotEmpty()
-  email: number;
+  email: string;
 
   @ApiProperty()
   @IsNumber()
