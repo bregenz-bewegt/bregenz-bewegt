@@ -55,7 +55,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
       });
 
       return (
-        <IonModal {...modalProps} canDismiss={false}>
+        <IonModal {...modalProps}>
           <IonHeader>
             <IonToolbar>
               <IonTitle>Email Bestätigen</IonTitle>
@@ -85,10 +85,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
               <IonText
                 className="text-center"
                 color="primary"
-                onClick={() => {
-                  console.log('fired');
-                  modalDismiss();
-                }}
+                onClick={() => modalDismiss()}
               >
                 <p>Abbrechen</p>
               </IonText>
