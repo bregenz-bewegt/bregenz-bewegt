@@ -8,6 +8,7 @@ export interface OtpInputProps {
   className?: string;
   disabled?: boolean;
   error?: string;
+  placeholder?: string;
   onChange: (value: string) => void;
 }
 
@@ -18,12 +19,14 @@ export const OtpInput: React.FC<OtpInputProps> = ({
   disabled = false,
   onChange,
   error,
+  placeholder = '-',
 }) => {
   const otpProps: Partial<OtpProps> = {
     isInputNum: true,
     value: value,
     numInputs: fieldsCount,
     isDisabled: disabled,
+    placeholder,
   };
 
   return (
