@@ -19,7 +19,7 @@ export const OtpInput: React.FC<OtpInputProps> = ({
   disabled = false,
   onChange,
   error,
-  placeholder = '-',
+  placeholder,
 }) => {
   const otpProps: Partial<OtpProps> = {
     isInputNum: true,
@@ -27,7 +27,7 @@ export const OtpInput: React.FC<OtpInputProps> = ({
     numInputs: fieldsCount,
     isDisabled: disabled,
     onChange,
-    placeholder,
+    placeholder: new Array(fieldsCount).fill('-').join(),
   };
 
   return (
