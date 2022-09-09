@@ -7,8 +7,10 @@
     border-radius: var(--spacing-s);
     margin: var(--spacing-xs);
     border: 1px solid var(--ion-color-medium);
-    padding: var(--spacing-s) var(--spacing-m);
+    padding: var(--spacing-m);
     background: var(--ion-color-light-tint);
+    width: auto;
+    box-sizing: content-box;
 
     &.invalid {
       border: 1px solid var(--ion-color-danger);
