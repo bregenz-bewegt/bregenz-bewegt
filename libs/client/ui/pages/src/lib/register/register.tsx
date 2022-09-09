@@ -63,7 +63,6 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
             userStore.refreshProfile();
             register.setSubmitting(false);
             setIsVerifyModalOpen(true);
-            
           })
           .catch((error) => {
             register.setErrors(error.response.data);
@@ -219,6 +218,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
             </div>
           </div>
           <VerifyEmail
+            email={register.values.email}
             isOpen={isVerifyModalOpen}
             modalRef={verifyModal}
             modalPresentingElement={verifyModalPresentingElement!}

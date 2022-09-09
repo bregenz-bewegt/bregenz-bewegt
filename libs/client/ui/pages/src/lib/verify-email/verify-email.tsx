@@ -18,6 +18,7 @@ import { inject, observer } from 'mobx-react';
 import './verify-email.scss';
 
 export interface VerifyEmailProps {
+  email: string;
   isOpen: boolean;
   modalRef: React.Ref<HTMLIonModalElement>;
   modalPresentingElement: HTMLElement;
@@ -65,6 +66,13 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
           <IonContent className="ion-padding">
             <div className="flex-wrapper">
               <div className="flex-wrapper__content">
+                <IonText>
+                  <p>
+                    Bitte bestätige deine E-Mail Adresse mit dem
+                    Bestätigungscode, der an <IonText className="sent-email-address">{}</IonText> versandt
+                    wurde.{' '}
+                  </p>
+                </IonText>
                 <OtpInput
                   value={verify.values.pin ?? undefined}
                   onChange={(value) => verify.setFieldValue('pin', value)}
