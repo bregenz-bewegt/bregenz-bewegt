@@ -31,8 +31,8 @@ export class MailService {
   sendOtpActivationMail(options: { to: ISendMailOptions['to']; otp: string }) {
     return this.mailerService.sendMail({
       to: options.to,
-      subject: 'Passwort ändern',
-      text: `Dein Bestätigungscode lautet: ${options.otp} `,
+      subject: 'Bestätige deine E-Mail Adresse',
+      text: `Dein Bestätigungscode lautet: ${options.otp}`,
     });
   }
 }

@@ -33,7 +33,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
     const page = useRef(null);
     const [verifyModalPresentingElement, setVerifyModalPresentingElement] =
       useState<HTMLElement | null>(null);
-    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(true);
+    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(false);
 
     const register = useFormik({
       initialValues: {
@@ -60,9 +60,9 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
             password: register.values.password,
           })
           .then(() => {
-            userStore.refreshProfile();
-            register.setSubmitting(false);
+            // userStore.refreshProfile();
             setIsVerifyModalOpen(true);
+            register.setSubmitting(false);
           })
           .catch((error) => {
             register.setErrors(error.response.data);
