@@ -8,6 +8,7 @@
     padding-bottom: 80px;
 
     &__content {
+      width: 100%;
       flex: 1;
       display: flex;
       justify-content: center;
@@ -19,11 +20,12 @@
     }
 
     &__actions {
-    }
-  }
+      width: 100%;
 
-  ion-button.verify-button {
-    margin-top: var(--spacing-m);
-    width: 100%;
+      ion-button.verify-button {
+        margin-top: var(--spacing-m);
+        width: 100%;
+      }
+    }
   }
 }
