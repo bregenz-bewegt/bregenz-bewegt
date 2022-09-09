@@ -1,4 +1,4 @@
-import { OtpInput } from '@bregenz-bewegt/client-ui-components';
+import { OtpInput, TitleBanner } from '@bregenz-bewegt/client-ui-components';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonButton,
@@ -63,6 +63,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
             </IonToolbar>
           </IonHeader>
           <IonContent className="ion-padding">
+            <TitleBanner />
             <OtpInput
               value={verify.values.pin ?? undefined}
               onChange={(value) => verify.setFieldValue('pin', value)}
