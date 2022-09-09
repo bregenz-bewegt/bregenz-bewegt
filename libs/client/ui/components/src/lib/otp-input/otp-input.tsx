@@ -27,8 +27,10 @@ export const OtpInput: React.FC<OtpInputProps> = ({
     numInputs: fieldsCount,
     isDisabled: disabled,
     onChange,
-    placeholder: new Array(fieldsCount).fill('-').join(),
+    placeholder: '-'.repeat(fieldsCount),
   };
+
+  console.log(otpProps.placeholder);
 
   return (
     <div className={`otp-input${className ? ` ${className}` : ''}`}>
