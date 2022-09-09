@@ -45,10 +45,11 @@ export class AuthService {
   }
 
   async register(dto: RegisterDto) {
-    const { password, ...rest } = dto;
-    const hash = await argon.hash(password);
-
     try {
+      const { password, ...rest } = dto;
+      const hash = await argon.hash(password);
+      const otp = await this.utilService.generateOtp();
+
       await this.prismaService.user.create({
         data: {
           ...rest,
@@ -57,8 +58,6 @@ export class AuthService {
         },
       });
 
-      const otp = await this.utilService.generateOtp();
-      console.log(otp);
       return otp;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
