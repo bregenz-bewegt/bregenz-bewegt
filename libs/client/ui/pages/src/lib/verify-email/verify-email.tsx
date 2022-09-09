@@ -1,5 +1,6 @@
 import { OtpInput } from '@bregenz-bewegt/client-ui-components';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
+import { verifySchema } from '@bregenz-bewegt/client/common/validation';
 import {
   IonButton,
   IonButtons,
@@ -49,6 +50,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
         initialValues: {
           pin: '',
         },
+        validationSchema: verifySchema,
         onSubmit: (values, { setSubmitting }) => {
           userStore
             ?.verify({ email: email, pin: +values.pin })
