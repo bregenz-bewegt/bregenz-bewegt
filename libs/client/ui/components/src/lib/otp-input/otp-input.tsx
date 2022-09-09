@@ -30,8 +30,6 @@ export const OtpInput: React.FC<OtpInputProps> = ({
     placeholder: '-'.repeat(fieldsCount),
   };
 
-  console.log(otpProps.placeholder);
-
   return (
     <div className={`otp-input${className ? ` ${className}` : ''}`}>
       <Otp {...otpProps} className={error ? `error` : ''} />
