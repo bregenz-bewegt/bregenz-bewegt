@@ -55,7 +55,7 @@ export class AuthService {
         },
       });
 
-      const pin = '';
+      const pin = '2937';
       return pin;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
