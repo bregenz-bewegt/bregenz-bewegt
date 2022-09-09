@@ -191,7 +191,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             </IonRow>
             <IonRow className="ion-justify-content-center">
               <IonText
-                className="text-center"
+                className="verify-text"
                 color="primary"
                 onClick={() =>
                   presentActionSheet({
