@@ -3,6 +3,10 @@
   justify-content: center;
   align-items: center;
 
+  ion-button.verify-button {
+    margin-top: var(--spacing-m);
+  }
+
   input {
     border-radius: var(--spacing-s);
     margin: var(--spacing-xs);

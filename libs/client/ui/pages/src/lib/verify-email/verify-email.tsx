@@ -68,6 +68,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
               onChange={(value) => verify.setFieldValue('pin', value)}
             />
             <IonButton
+              className="verify-button"
               mode="ios"
               expand="block"
               onClick={() => verify.submitForm()}
@@ -84,7 +85,10 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
               <IonText
                 className="text-center"
                 color="primary"
-                onClick={() => modalDismiss()}
+                onClick={() => {
+                  console.log('fired');
+                  modalDismiss();
+                }}
               >
                 <p>Abbrechen</p>
               </IonText>
