@@ -2,11 +2,14 @@
   .flex-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
+    height: 100%;
+    padding-bottom: 80px;
   }
 
   ion-button.verify-button {
     margin-top: var(--spacing-m);
+    width: 100%;
   }
 }

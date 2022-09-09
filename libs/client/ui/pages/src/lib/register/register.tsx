@@ -63,6 +63,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
             userStore.refreshProfile();
             register.setSubmitting(false);
             setIsVerifyModalOpen(true);
+            
           })
           .catch((error) => {
             register.setErrors(error.response.data);
