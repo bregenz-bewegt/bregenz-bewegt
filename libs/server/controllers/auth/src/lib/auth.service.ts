@@ -75,6 +75,7 @@ export class AuthService {
   }
 
   async verify(dto: VerifyDto) {
+    console.log(dto);
     // const tokens = await this.signTokens(newUser.id, newUser.email);
     // this.updateRefreshToken(newUser.id, tokens.refresh_token);
     // return tokens;

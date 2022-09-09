@@ -27,17 +27,13 @@ export class UserStore implements Store {
   }
 
   @action async register(dto: RegisterDto) {
-    await http.post('/auth/local/register', dto);
+    try {
+      const { data } = await http.post('/auth/local/register', dto);
 
-    return;
-
-    // await this.setTokens({
-    //   access_token: data.access_token,
-    //   refresh_token: data.refresh_token,
-    // });
-    // this.setIsLoggedIn(true);
-
-    // return data;
+      return data;
+    } catch (error) {
+      return null;
+    }
   }
 
   @action async registerVerify() {
