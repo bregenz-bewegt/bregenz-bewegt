@@ -6,6 +6,16 @@
     align-items: center;
     height: 100%;
     padding-bottom: 80px;
+
+    &__content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__actions {
+    }
   }
 
   ion-button.verify-button {
