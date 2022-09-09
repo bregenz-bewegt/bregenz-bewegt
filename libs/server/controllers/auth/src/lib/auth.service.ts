@@ -22,6 +22,7 @@ import {
   RegisterErrorResponse,
 } from '@bregenz-bewegt/server/common';
 import { MailService } from '@bregenz-bewegt/server/mail';
+import { UtilService } from '@bregenz-bewegt/server/util';
 
 @Injectable()
 export class AuthService {
@@ -29,7 +30,8 @@ export class AuthService {
     private prismaService: PrismaService,
     private jwtService: JwtService,
     private configService: ConfigService,
-    private mailService: MailService
+    private mailService: MailService,
+    private utilService: UtilService
   ) {}
 
   async guest() {
@@ -55,8 +57,9 @@ export class AuthService {
         },
       });
 
-      const pin = '2937';
-      return pin;
+      const otp = await this.utilService.generateOtp();
+      console.log(otp);
+      return otp;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
