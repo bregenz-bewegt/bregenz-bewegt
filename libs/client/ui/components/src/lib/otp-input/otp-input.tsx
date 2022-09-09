@@ -4,7 +4,7 @@ import { IonNote } from '@ionic/react';
 
 export type OtpInputInputType = 'text' | 'number';
 export interface OtpInputProps<T extends OtpInputInputType> {
-  value: T extends 'text' ? string | null : number | null;
+  value?: T extends 'text' ? string : number;
   inputType: T;
   fieldsCount?: number;
   className?: string;
@@ -23,6 +23,7 @@ export const OtpInput = <T extends OtpInputInputType>({
   error,
 }: OtpInputProps<T>) => {
   const otpProps: Partial<OtpProps> = {
+    value: `${value}`,
     numInputs: fieldsCount,
     isInputNum: inputType === 'text' && true,
     isDisabled: disabled,
