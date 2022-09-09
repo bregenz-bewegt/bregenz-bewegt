@@ -26,16 +26,13 @@ export const OtpInput: React.FC<OtpInputProps> = ({
     value: value,
     numInputs: fieldsCount,
     isDisabled: disabled,
+    onChange,
     placeholder,
   };
 
   return (
     <div className={`otp-input${className ? ` ${className}` : ''}`}>
-      <Otp
-        {...otpProps}
-        onChange={(value: string) => onChange(value)}
-        className={error ? `error` : ''}
-      />
+      <Otp {...otpProps} className={error ? `error` : ''} />
       {error && (
         <IonNote color="danger" slot="error">
           {error}
