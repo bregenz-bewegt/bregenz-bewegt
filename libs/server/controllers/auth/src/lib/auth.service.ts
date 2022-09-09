@@ -22,7 +22,6 @@ import {
   RegisterErrorResponse,
 } from '@bregenz-bewegt/server/common';
 import { MailService } from '@bregenz-bewegt/server/mail';
-import * as nanoid from 'nanoid';
 
 @Injectable()
 export class AuthService {
@@ -56,7 +55,7 @@ export class AuthService {
         },
       });
 
-      const pin = nanoid.customAlphabet('0123456789', 6);
+      const pin = '';
       return pin;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
