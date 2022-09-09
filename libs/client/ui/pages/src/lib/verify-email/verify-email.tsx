@@ -55,7 +55,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
       });
 
       return (
-        <IonModal {...modalProps} className="very-email">
+        <IonModal {...modalProps} className="verify-email">
           <IonHeader>
             <IonToolbar>
               <IonTitle>Email Bestätigen</IonTitle>
