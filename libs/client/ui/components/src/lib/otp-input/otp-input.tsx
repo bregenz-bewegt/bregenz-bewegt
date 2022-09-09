@@ -1,5 +1,6 @@
 import './otp-input.scss';
 import Otp, { OtpInputProps as OtpProps } from 'react-otp-input';
+import { IonNote } from '@ionic/react';
 
 export type OtpInputInputType = 'text' | 'number';
 export interface OtpInputProps<T extends OtpInputInputType> {
@@ -8,6 +9,7 @@ export interface OtpInputProps<T extends OtpInputInputType> {
   fieldsCount?: number;
   className?: string;
   disabled?: boolean;
+  error?: string;
   onChange: (value: T extends 'text' ? string | null : number | null) => void;
 }
 
@@ -18,6 +20,7 @@ export const OtpInput = <T extends OtpInputInputType>({
   className,
   disabled = false,
   onChange,
+  error,
 }: OtpInputProps<T>) => {
   const otpProps: Partial<OtpProps> = {
     numInputs: fieldsCount,
@@ -28,7 +31,12 @@ export const OtpInput = <T extends OtpInputInputType>({
 
   return (
     <div className={`otp-input${className ? ` ${className}` : ''}`}>
-      <Otp {...otpProps} />
+      <Otp {...otpProps} className={error ? `error` : ''} />
+      {error && (
+        <IonNote color="danger" slot="error">
+          {error}
+        </IonNote>
+      )}
     </div>
   );
 };
