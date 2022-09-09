@@ -66,13 +66,16 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
           <IonContent className="ion-padding">
             <div className="flex-wrapper">
               <div className="flex-wrapper__content">
-                <IonText>
-                  <p>
-                    Bitte bestätige deine E-Mail Adresse mit dem
-                    Bestätigungscode, der an <IonText className="sent-email-address">{}</IonText> versandt
-                    wurde.{' '}
-                  </p>
-                </IonText>
+                <IonRow className="ion-justify-content-center">
+                  <IonText className="text-center">
+                    <p>
+                      Bitte bestätige deine E-Mail Adresse mit dem
+                      Bestätigungscode, der an{' '}
+                      <IonText className="sent-email-address">{}</IonText>{' '}
+                      versandt wurde.{' '}
+                    </p>
+                  </IonText>
+                </IonRow>
                 <OtpInput
                   value={verify.values.pin ?? undefined}
                   onChange={(value) => verify.setFieldValue('pin', value)}
