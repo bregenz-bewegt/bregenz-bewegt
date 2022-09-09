@@ -63,33 +63,35 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
             </IonToolbar>
           </IonHeader>
           <IonContent className="ion-padding">
-            <OtpInput
-              value={verify.values.pin ?? undefined}
-              onChange={(value) => verify.setFieldValue('pin', value)}
-            />
-            <IonButton
-              className="verify-button"
-              mode="ios"
-              expand="block"
-              onClick={() => verify.submitForm()}
-            >
-              {verify.isSubmitting ? (
-                <IonLabel>
-                  <IonSpinner name="crescent" />
-                </IonLabel>
-              ) : (
-                'Email Bestätigen'
-              )}
-            </IonButton>
-            <IonRow className="ion-justify-content-center">
-              <IonText
-                className="text-center"
-                color="primary"
-                onClick={() => modalDismiss()}
+            <div className="flex-wrapper">
+              <OtpInput
+                value={verify.values.pin ?? undefined}
+                onChange={(value) => verify.setFieldValue('pin', value)}
+              />
+              <IonButton
+                className="verify-button"
+                mode="ios"
+                expand="block"
+                onClick={() => verify.submitForm()}
               >
-                <p>Abbrechen</p>
-              </IonText>
-            </IonRow>
+                {verify.isSubmitting ? (
+                  <IonLabel>
+                    <IonSpinner name="crescent" />
+                  </IonLabel>
+                ) : (
+                  'Email Bestätigen'
+                )}
+              </IonButton>
+              <IonRow className="ion-justify-content-center">
+                <IonText
+                  className="text-center"
+                  color="primary"
+                  onClick={() => modalDismiss()}
+                >
+                  <p>Abbrechen</p>
+                </IonText>
+              </IonRow>
+            </div>
           </IonContent>
         </IonModal>
       );

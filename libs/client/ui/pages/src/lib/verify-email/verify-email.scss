@@ -1,4 +1,11 @@
 .verify-email {
+  .flex-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   ion-button.verify-button {
     margin-top: var(--spacing-m);
   }
