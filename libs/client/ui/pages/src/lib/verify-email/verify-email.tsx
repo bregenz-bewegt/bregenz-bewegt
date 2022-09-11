@@ -48,13 +48,14 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
 
       const verify = useFormik({
         initialValues: {
-          pin: '',
+          otp: '',
         },
         validationSchema: verifySchema,
         onSubmit: (values, { setSubmitting }) => {
           userStore
-            ?.verify({ email: email, pin: +values.pin })
+            ?.verify({ email: email, token: values.otp })
             .then(() => {
+              userStore.refreshProfile();
               setSubmitting(false);
             })
             .catch(() => {
@@ -85,7 +86,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                   </IonText>
                 </IonRow>
                 <OtpInput
-                  value={verify.values.pin ?? undefined}
+                  value={verify.values.otp ?? undefined}
                   onChange={(value) => verify.setFieldValue('pin', value)}
                 />
               </div>

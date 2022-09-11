@@ -23,7 +23,7 @@ model User {
   password           String?
   refreshToken       String?
   passwordResetToken String?
-  activationOtp      String?
+  activationSecret   String?
   profilePicture     String?
   coins              Int?         @default(0)
   preferences        Preferences?

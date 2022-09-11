@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
+import speakeasy from 'speakeasy';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
 import { Prisma, User } from '@prisma/client';
@@ -22,7 +23,7 @@ import {
   RegisterErrorResponse,
 } from '@bregenz-bewegt/server/common';
 import { MailService } from '@bregenz-bewegt/server/mail';
-import { UtilService } from '@bregenz-bewegt/server/util';
+import { UserService } from '@bregenz-bewegt/server-controllers-user';
 
 @Injectable()
 export class AuthService {
@@ -31,7 +32,7 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private mailService: MailService,
-    private utilService: UtilService
+    private userService: UserService
   ) {}
 
   async guest() {
@@ -48,14 +49,19 @@ export class AuthService {
     try {
       const { password, ...rest } = dto;
       const hash = await argon.hash(password);
-      const otp = await this.utilService.generateOtp();
+      const activationSecret = speakeasy.generateSecret().base32;
+      const otp = speakeasy.totp({
+        secret: activationSecret,
+        encoding: 'base32',
+        step: 60,
+      });
 
       const newUser = await this.prismaService.user.create({
         data: {
           ...rest,
           password: hash,
           role: 'USER',
-          activationOtp: otp,
+          activationSecret,
         },
       });
 
@@ -78,9 +84,35 @@ export class AuthService {
 
   async verify(dto: VerifyDto) {
     console.log(dto);
-    // const tokens = await this.signTokens(newUser.id, newUser.email);
-    // this.updateRefreshToken(newUser.id, tokens.refresh_token);
-    // return tokens;
+    try {
+      const user = await this.userService.getSingle({ email: dto.email });
+
+      if (!user) {
+        throw new ForbiddenException();
+      }
+
+      const verified = speakeasy.totp.verify({
+        secret: user.activationSecret,
+        encoding: 'base32',
+        token: dto.token,
+      });
+
+      if (verified) {
+        this.prismaService.user.update({
+          where: { email: user.email },
+          data: {
+            activationSecret: null,
+            active: true,
+          },
+        });
+      }
+
+      const tokens = await this.signTokens(user.id, user.email);
+      this.updateRefreshToken(user.id, tokens.refresh_token);
+      return tokens;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async login(dto: LoginDto) {
