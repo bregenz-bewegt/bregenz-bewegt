@@ -222,7 +222,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
             modalRef={verifyModal}
             modalPresentingElement={verifyModalPresentingElement!}
             onVerifySuccess={handleVerifySuccess}
-            modalDismiss={verifyModal.current?.dismiss}
+            modalDismiss={() => verifyModal.current?.dismiss()}
           />
         </IonContent>
       </IonPage>
