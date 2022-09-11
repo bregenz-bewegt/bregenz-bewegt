@@ -83,7 +83,7 @@ export class AuthService {
   }
 
   async verify(dto: VerifyDto) {
-    console.log(dto);
+    console.log(dtddo);
     try {
       const user = await this.userService.getSingle({ email: dto.email });
 

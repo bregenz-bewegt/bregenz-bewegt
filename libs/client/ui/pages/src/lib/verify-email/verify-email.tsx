@@ -53,7 +53,6 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
         },
         validationSchema: verifySchema,
         onSubmit: (values, { setSubmitting }) => {
-          console.log('fired1');
           userStore
             ?.verify({ email: email, token: values.otp })
             .then(() => {
@@ -67,7 +66,6 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
         },
       });
 
-      console.log(verify.errors);
 
       return (
         <IonModal {...modalProps} className="verify-email">
