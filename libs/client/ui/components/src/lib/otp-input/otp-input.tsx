@@ -34,7 +34,7 @@ export const OtpInput: React.FC<OtpInputProps> = ({
     <div className={`otp-input${className ? ` ${className}` : ''}`}>
       <Otp {...otpProps} className={error ? `error` : ''} />
       {error && (
-        <IonNote color="danger" slot="error">
+        <IonNote color="danger" slot="error" className="otp-input__error">
           {error}
         </IonNote>
       )}

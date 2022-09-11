@@ -22,4 +22,8 @@
       border: 1px solid var(--ion-color-danger);
     }
   }
+
+  &__error {
+    margin-top: var(--spacing-m);
+  }
 }
