@@ -5,6 +5,6 @@ export const verifySchema = yup.object().shape({
     .string()
     .matches(/^[0-9]+$/)
     .required()
-    .min(6)
-    .max(6),
+    .min(6, '')
+    .max(6, ''),
 });
