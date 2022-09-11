@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const verifySchema = yup.object().shape({
-  pin: yup
+  otp: yup
     .string()
     .matches(/^[0-9]+$/)
     .required()

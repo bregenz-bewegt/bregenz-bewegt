@@ -34,6 +34,7 @@ export class UserStore implements Store {
   }
 
   @action async verify(dto: VerifyDto) {
+    console.log('fired2');
     const { data } = await http.post('/auth/local/verify', dto);
     console.log(data);
 
