@@ -15,6 +15,7 @@ import {
   IonSpinner,
   IonNote,
   IonRow,
+  useIonRouter,
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
@@ -27,6 +28,7 @@ export interface RegisterProps {
 
 export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
+    const router = useIonRouter();
     const [acceptTos, setAcceptTos] = useState<boolean>(false);
     const [acceptTosValid, setAcceptTosValid] = useState<boolean>(true);
     const verifyModal = useRef<HTMLIonModalElement>(null);
@@ -70,8 +72,9 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
       },
     });
 
-    const handleRegisterVerify = () => {
-      register.setSubmitting(true);
+    const handleVerifySuccess = () => {
+      router.push('/start');
+      userStore?.refreshProfile();
     };
 
     useEffect(() => {
@@ -221,7 +224,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
             isOpen={isVerifyModalOpen}
             modalRef={verifyModal}
             modalPresentingElement={verifyModalPresentingElement!}
-            onVerifySuccess={() => handleRegisterVerify()}
+            onVerifySuccess={() => handleVerifySuccess()}
             modalDismiss={() => verifyModal.current?.dismiss()}
           />
         </IonContent>
