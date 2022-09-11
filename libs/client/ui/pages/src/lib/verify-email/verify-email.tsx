@@ -91,7 +91,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                 </IonRow>
                 <OtpInput
                   value={verify.values.otp ?? undefined}
-                  onChange={(value) => verify.setFieldValue('pin', value)}
+                  onChange={(value) => verify.setFieldValue('otp', value)}
                 />
               </div>
               <div className="flex-wrapper__actions">
