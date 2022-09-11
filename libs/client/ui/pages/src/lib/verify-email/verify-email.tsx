@@ -49,12 +49,12 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
 
       const verify = useFormik({
         initialValues: {
-          otp: '',
+          token: '',
         },
         validationSchema: verifySchema,
         onSubmit: (values, { setSubmitting, setErrors }) => {
           userStore
-            ?.verify({ email: email, token: values.otp })
+            ?.verify({ email: email, token: values.token })
             .then(() => {
               setSubmitting(false);
               onVerifySuccess();
@@ -62,8 +62,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
               userStore?.setIsLoggedIn(true);
             })
             .catch((error) => {
-              console.log(error);
-              setErrors(error.reponse.data);
+              setErrors(error.response.data);
               setSubmitting(false);
             });
         },
@@ -91,9 +90,9 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                   </IonText>
                 </IonRow>
                 <OtpInput
-                  value={verify.values.otp ?? undefined}
-                  onChange={(value) => verify.setValues({ otp: value })}
-                  error={verify.errors.otp}
+                  value={verify.values.token ?? undefined}
+                  onChange={(value) => verify.setValues({ token: value })}
+                  error={verify.errors.token}
                 />
               </div>
               <div className="flex-wrapper__actions">

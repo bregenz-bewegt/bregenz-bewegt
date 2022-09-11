@@ -84,37 +84,36 @@ export class AuthService {
   }
 
   async verify(dto: VerifyDto) {
-    try {
-      const user = await this.userService.getSingle({ email: dto.email });
+    const user = await this.userService.getSingle({ email: dto.email });
+    console.log(user);
 
-      if (!user) {
-        throw new ForbiddenException();
-      }
-
-      const verified = speakeasy.totp.verify({
-        secret: user.activationSecret,
-        encoding: 'base32',
-        token: dto.token,
-      });
-
-      if (!verified) {
-        throw new ForbiddenException(verifyError.INVALID_TOKEN);
-      }
-
-      await this.prismaService.user.update({
-        where: { email: user.email },
-        data: {
-          activationSecret: null,
-          active: true,
-        },
-      });
-
-      const tokens = await this.signTokens(user.id, user.email);
-      this.updateRefreshToken(user.id, tokens.refresh_token);
-      return tokens;
-    } catch (error) {
+    if (!user) {
       throw new ForbiddenException();
     }
+
+    const verified = speakeasy.totp.verify({
+      secret: user.activationSecret,
+      encoding: 'base32',
+      token: dto.token,
+    });
+
+    console.log(verified);
+
+    if (!verified) {
+      throw new ForbiddenException(verifyError.INVALID_TOKEN);
+    }
+
+    await this.prismaService.user.update({
+      where: { email: user.email },
+      data: {
+        activationSecret: null,
+        active: true,
+      },
+    });
+
+    const tokens = await this.signTokens(user.id, user.email);
+    this.updateRefreshToken(user.id, tokens.refresh_token);
+    return tokens;
   }
 
   async login(dto: LoginDto) {
