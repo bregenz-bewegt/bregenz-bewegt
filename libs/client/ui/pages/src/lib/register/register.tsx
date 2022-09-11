@@ -63,7 +63,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
           })
           .then(() => {
             setIsVerifyModalOpen(true);
-            register.setSubmitting(false);
+            setSubmitting(false);
           })
           .catch((error) => {
             setErrors(error.response.data);
@@ -73,8 +73,8 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
     });
 
     const handleVerifySuccess = () => {
-      router.push('/start');
       userStore?.refreshProfile();
+      router.push('/start');
     };
 
     useEffect(() => {
@@ -224,7 +224,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
             isOpen={isVerifyModalOpen}
             modalRef={verifyModal}
             modalPresentingElement={verifyModalPresentingElement!}
-            onVerifySuccess={() => handleVerifySuccess()}
+            onVerifySuccess={handleVerifySuccess}
             modalDismiss={() => verifyModal.current?.dismiss()}
           />
         </IonContent>

@@ -56,8 +56,8 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
           userStore
             ?.verify({ email: email, token: values.otp })
             .then(() => {
-              onVerifySuccess();
               setSubmitting(false);
+              onVerifySuccess();
             })
             .catch((error) => {
               console.log(error);
