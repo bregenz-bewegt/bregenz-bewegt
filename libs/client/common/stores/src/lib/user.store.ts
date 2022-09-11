@@ -40,6 +40,7 @@ export class UserStore implements Store {
       access_token: data.access_token,
       refresh_token: data.refresh_token,
     });
+    this.setIsLoggedIn(true);
 
     return data;
   }
