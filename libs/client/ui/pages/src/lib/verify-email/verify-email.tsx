@@ -23,7 +23,7 @@ export interface VerifyEmailProps {
   isOpen: boolean;
   modalRef: React.Ref<HTMLIonModalElement>;
   modalPresentingElement: HTMLElement;
-  modalDismiss?: any;
+  modalDismiss?: (data?: any, role?: string | undefined) => Promise<boolean>;
   onVerifySuccess: () => void;
   userStore?: UserStore;
 }
@@ -113,7 +113,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                   <IonText
                     className="text-center"
                     color="primary"
-                    onClick={() => modalDismiss()}
+                    onClick={() => modalDismiss && modalDismiss()}
                   >
                     <p>Abbrechen</p>
                   </IonText>
