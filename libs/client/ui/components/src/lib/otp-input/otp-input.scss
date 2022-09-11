@@ -23,7 +23,13 @@
     }
   }
 
-  &__error {
-    margin-top: var(--spacing-m);
+  &.error {
+    input {
+      border: 1px solid var(--ion-color-danger);
+    }
+
+    ion-note {
+      margin-top: var(--spacing-s);
+    }
   }
 }
