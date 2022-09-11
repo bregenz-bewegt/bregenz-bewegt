@@ -85,7 +85,6 @@ export class AuthService {
 
   async verify(dto: VerifyDto) {
     const user = await this.userService.getSingle({ email: dto.email });
-    console.log(user);
 
     if (!user) {
       throw new ForbiddenException();
@@ -96,8 +95,6 @@ export class AuthService {
       encoding: 'base32',
       token: dto.token,
     });
-
-    console.log(verified);
 
     if (!verified) {
       throw new ForbiddenException(verifyError.INVALID_TOKEN);
