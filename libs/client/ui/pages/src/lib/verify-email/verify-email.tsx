@@ -101,6 +101,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                   mode="ios"
                   expand="block"
                   onClick={() => verify.submitForm()}
+                  disabled={!verify.isValid || verify.isSubmitting}
                 >
                   {verify.isSubmitting ? (
                     <IonLabel>
