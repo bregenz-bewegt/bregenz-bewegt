@@ -89,7 +89,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                       Bitte bestätige deine E-Mail Adresse mit dem
                       Bestätigungscode, der an{' '}
                       <IonText className="sent-email-address" color="primary">
-                        {email}
+                        {email ?? 'deine E-Mail Addresse'}
                       </IonText>{' '}
                       versandt wurde.
                     </p>
