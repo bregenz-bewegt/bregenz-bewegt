@@ -38,6 +38,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
       modalRef,
       modalPresentingElement,
       modalDismiss,
+      onVerifySuccess,
       userStore,
     }: VerifyEmailProps) => {
       const modalProps = {
@@ -64,6 +65,8 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
             });
         },
       });
+
+      console.log(verify.values.otp);
 
       return (
         <IonModal {...modalProps} className="verify-email">

@@ -53,20 +53,19 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
 
         userStore
           ?.register({
-            firstname: register.values.firstname || undefined,
-            lastname: register.values.lastname || undefined,
-            username: register.values.username,
-            email: register.values.email,
-            password: register.values.password,
+            firstname: values.firstname || undefined,
+            lastname: values.lastname || undefined,
+            username: values.username,
+            email: values.email,
+            password: values.password,
           })
           .then(() => {
-            // userStore.refreshProfile();
             setIsVerifyModalOpen(true);
             register.setSubmitting(false);
           })
           .catch((error) => {
-            register.setErrors(error.response.data);
-            register.setSubmitting(false);
+            setErrors(error.response.data);
+            setSubmitting(false);
           });
       },
     });
