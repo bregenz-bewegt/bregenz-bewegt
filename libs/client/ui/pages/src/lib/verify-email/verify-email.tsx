@@ -51,6 +51,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
         initialValues: {
           token: '',
         },
+        isInitialValid: false,
         validationSchema: verifySchema,
         onSubmit: (values, { setSubmitting, setErrors }) => {
           userStore
@@ -101,9 +102,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                   mode="ios"
                   expand="block"
                   onClick={() => verify.submitForm()}
-                  disabled={
-                    !verify.isValid || verify.isSubmitting || !verify.touched
-                  }
+                  disabled={!verify.isValid || verify.isSubmitting}
                 >
                   {verify.isSubmitting ? (
                     <IonLabel>
