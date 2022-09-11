@@ -86,7 +86,7 @@ export class AuthService {
   async verify(dto: VerifyDto) {
     const user = await this.userService.getSingle({ email: dto.email });
 
-    if (!user || user.activationSecret) {
+    if (!user || !user.activationSecret) {
       throw new ForbiddenException();
     }
 
