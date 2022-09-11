@@ -13,7 +13,6 @@ import {
   IonText,
   IonTitle,
   IonToolbar,
-  useIonRouter,
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
@@ -25,6 +24,7 @@ export interface VerifyEmailProps {
   modalRef: React.Ref<HTMLIonModalElement>;
   modalPresentingElement: HTMLElement;
   modalDismiss?: any;
+  onVerifySuccess: () => void;
   userStore?: UserStore;
 }
 
@@ -38,6 +38,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
       modalRef,
       modalPresentingElement,
       modalDismiss,
+      onVerifySuccess,
       userStore,
     }: VerifyEmailProps) => {
       const modalProps = {
@@ -46,7 +47,6 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
         isOpen: isOpen,
       };
 
-      const router = useIonRouter();
       const verify = useFormik({
         initialValues: {
           otp: '',
@@ -56,11 +56,10 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
           userStore
             ?.verify({ email: email, token: values.otp })
             .then(() => {
-              console.log('success');
-
-              setSubmitting(false);
+              userStore?.setIsLoggedIn(true);
               userStore?.refreshProfile();
-              router.push('/start');
+              setSubmitting(false);
+              onVerifySuccess();
             })
             .catch((error) => {
               console.log(error);

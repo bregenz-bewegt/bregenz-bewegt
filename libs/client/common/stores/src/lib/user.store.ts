@@ -35,13 +35,11 @@ export class UserStore implements Store {
 
   @action async verify(dto: VerifyDto) {
     const { data } = await http.post('/auth/local/verify', dto);
-    console.log(data);
 
     await this.setTokens({
       access_token: data.access_token,
       refresh_token: data.refresh_token,
     });
-    this.setIsLoggedIn(true);
 
     return data;
   }

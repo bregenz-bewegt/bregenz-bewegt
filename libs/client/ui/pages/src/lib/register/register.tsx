@@ -70,6 +70,10 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
       },
     });
 
+    const handleVerifySuccess = () => {
+      setIsVerifyModalOpen(false);
+    };
+
     useEffect(() => {
       setVerifyModalPresentingElement(page.current);
     }, []);
