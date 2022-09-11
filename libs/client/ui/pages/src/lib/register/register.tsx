@@ -33,7 +33,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
     const page = useRef(null);
     const [verifyModalPresentingElement, setVerifyModalPresentingElement] =
       useState<HTMLElement | null>(null);
-    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(false);
+    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(true);
 
     const register = useFormik({
       initialValues: {

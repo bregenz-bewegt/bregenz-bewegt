@@ -58,7 +58,8 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
               userStore.refreshProfile();
               setSubmitting(false);
             })
-            .catch(() => {
+            .catch((error) => {
+              console.log(error);
               setSubmitting(false);
             });
         },
