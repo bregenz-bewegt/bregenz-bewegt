@@ -52,7 +52,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
           otp: '',
         },
         validationSchema: verifySchema,
-        onSubmit: (values, { setSubmitting }) => {
+        onSubmit: (values, { setSubmitting, setErrors }) => {
           userStore
             ?.verify({ email: email, token: values.otp })
             .then(() => {
@@ -63,6 +63,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
             })
             .catch((error) => {
               console.log(error);
+              setErrors(error.reponse.data);
               setSubmitting(false);
             });
         },
@@ -92,6 +93,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                 <OtpInput
                   value={verify.values.otp ?? undefined}
                   onChange={(value) => verify.setValues({ otp: value })}
+                  error={verify.errors.otp}
                 />
               </div>
               <div className="flex-wrapper__actions">

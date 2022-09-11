@@ -21,6 +21,7 @@ import {
   loginError,
   registerError,
   RegisterErrorResponse,
+  verifyError,
 } from '@bregenz-bewegt/server/common';
 import { MailService } from '@bregenz-bewegt/server/mail';
 import { UserService } from '@bregenz-bewegt/server-controllers-user';
@@ -83,7 +84,6 @@ export class AuthService {
   }
 
   async verify(dto: VerifyDto) {
-    console.log(dtddo);
     try {
       const user = await this.userService.getSingle({ email: dto.email });
 
@@ -97,21 +97,23 @@ export class AuthService {
         token: dto.token,
       });
 
-      if (verified) {
-        this.prismaService.user.update({
-          where: { email: user.email },
-          data: {
-            activationSecret: null,
-            active: true,
-          },
-        });
+      if (!verified) {
+        throw new ForbiddenException(verifyError.INVALID_TOKEN);
       }
+
+      await this.prismaService.user.update({
+        where: { email: user.email },
+        data: {
+          activationSecret: null,
+          active: true,
+        },
+      });
 
       const tokens = await this.signTokens(user.id, user.email);
       this.updateRefreshToken(user.id, tokens.refresh_token);
       return tokens;
     } catch (error) {
-      console.log(error);
+      throw new ForbiddenException();
     }
   }
 
