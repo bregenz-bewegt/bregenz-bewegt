@@ -61,7 +61,8 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
             ?.verify({ email: email, token: values.token })
             .then(() => {
               setSubmitting(false);
-              onVerifySuccess();
+              // onVerifySuccess();
+              modalDismiss();
               userStore?.refreshProfile();
               userStore?.setIsLoggedIn(true);
             })
