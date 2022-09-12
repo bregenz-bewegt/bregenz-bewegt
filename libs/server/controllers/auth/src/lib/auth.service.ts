@@ -54,7 +54,6 @@ export class AuthService {
       const otp = speakeasy.totp({
         secret: activationSecret,
         encoding: 'base32',
-        step: 60,
       });
 
       const newUser = await this.prismaService.user.create({
