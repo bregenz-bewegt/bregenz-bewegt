@@ -79,7 +79,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     }, []);
 
     return (
-      <IonPage className="login">
+      <IonPage className="login" ref={page}>
         <IonContent className="login__content" fullscreen>
           <div className="login__flex-wrapper">
             <TitleBanner />
