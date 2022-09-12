@@ -12,10 +12,11 @@ import {
   useIonRouter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { loginSchema } from '@bregenz-bewegt/client/common/validation';
+import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';
 
 export interface LoginProps {
   userStore?: UserStore;
@@ -25,6 +26,11 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const router = useIonRouter();
     const [isGuestLoading, setIsGuestLoading] = useState<boolean>(false);
+    const verifyModal = useRef<HTMLIonModalElement>(null);
+    const page = useRef(null);
+    const [verifyModalPresentingElement, setVerifyModalPresentingElement] =
+      useState<HTMLElement | null>(null);
+    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(false);
 
     const login = useFormik({
       initialValues: {
@@ -41,7 +47,11 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
             router.push('/start');
           })
           .catch((error) => {
-            setErrors(error.response.data);
+            if (error.response.data.email === 'Email noch nicht bestätigt') {
+              setIsVerifyModalOpen(true);
+            } else {
+              setErrors(error.response.data);
+            }
             setSubmitting(false);
           });
       },
@@ -58,6 +68,15 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
           setIsGuestLoading(false);
         });
     };
+
+    const handleVerifySuccess = async () => {
+      await verifyModal.current?.dismiss();
+      setIsVerifyModalOpen(false);
+    };
+
+    useEffect(() => {
+      setVerifyModalPresentingElement(page.current);
+    }, []);
 
     return (
       <IonPage className="login">
@@ -136,6 +155,17 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
               </IonButton>
             </div>
           </div>
+          <VerifyEmail
+            email={login.values.email}
+            isOpen={isVerifyModalOpen}
+            modalRef={verifyModal}
+            modalPresentingElement={verifyModalPresentingElement!}
+            onVerifySuccess={handleVerifySuccess}
+            modalDismiss={() => {
+              verifyModal.current?.dismiss();
+              setIsVerifyModalOpen(false);
+            }}
+          />
         </IonContent>
       </IonPage>
     );

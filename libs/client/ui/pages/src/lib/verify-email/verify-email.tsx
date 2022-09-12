@@ -23,10 +23,7 @@ export interface VerifyEmailProps {
   isOpen: boolean;
   modalRef: React.Ref<HTMLIonModalElement>;
   modalPresentingElement: HTMLElement;
-  modalDismiss: (
-    data?: any,
-    role?: string | undefined
-  ) => Promise<boolean> | undefined;
+  modalDismiss: () => void;
   onVerifySuccess: () => Promise<void>;
   userStore?: UserStore;
 }

@@ -130,6 +130,10 @@ export class AuthService {
       throw new ForbiddenException(loginError.INVALID_CREDENTIALS);
     }
 
+    if (!user.active) {
+      throw new ForbiddenException(loginError.EMAIL_NOT_VERIFIED);
+    }
+
     const tokens = await this.signTokens(user.id, user.email);
     this.updateRefreshToken(user.id, tokens.refresh_token);
     return tokens;
