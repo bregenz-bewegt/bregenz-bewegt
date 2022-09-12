@@ -94,6 +94,7 @@ export class AuthService {
       secret: user.activationSecret,
       encoding: 'base32',
       token: dto.token,
+      window: 2,
     });
 
     if (!verified) {
