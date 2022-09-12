@@ -27,7 +27,7 @@ export interface VerifyEmailProps {
     data?: any,
     role?: string | undefined
   ) => Promise<boolean> | undefined;
-  onVerifySuccess: () => void;
+  onVerifySuccess: () => Promise<void>;
   userStore?: UserStore;
 }
 
@@ -61,10 +61,10 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
             ?.verify({ email: email, token: values.token })
             .then(() => {
               setSubmitting(false);
-              // onVerifySuccess();
-              modalDismiss();
-              userStore?.refreshProfile();
-              userStore?.setIsLoggedIn(true);
+              onVerifySuccess().then(() => {
+                userStore?.refreshProfile();
+                userStore?.setIsLoggedIn(true);
+              });
             })
             .catch((error) => {
               setErrors(error.response.data);

@@ -70,8 +70,8 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
       },
     });
 
-    const handleVerifySuccess = () => {
-      setIsVerifyModalOpen(false);
+    const handleVerifySuccess = async () => {
+      await verifyModal.current?.dismiss();
     };
 
     useEffect(() => {
