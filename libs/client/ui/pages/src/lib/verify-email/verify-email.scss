@@ -27,9 +27,13 @@
     &__actions {
       width: 100%;
 
-      ion-button.verify-button {
+      ion-button {
         margin-top: var(--spacing-m);
         width: 100%;
+        transition: 0.5s;
+
+        &.verified {
+        }
       }
     }
   }
