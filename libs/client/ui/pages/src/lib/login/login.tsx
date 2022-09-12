@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { loginSchema } from '@bregenz-bewegt/client/common/validation';
 import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';
+import { loginError } from '@bregenz-bewegt/shared/errors';
 
 export interface LoginProps {
   userStore?: UserStore;
@@ -47,7 +48,9 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
             router.push('/start');
           })
           .catch((error) => {
-            if (error.response.data.email === 'Email noch nicht bestätigt') {
+            if (
+              error.response.data.email === loginError.EMAIL_NOT_VERIFIED.email
+            ) {
               setIsVerifyModalOpen(true);
             } else {
               setErrors(error.response.data);

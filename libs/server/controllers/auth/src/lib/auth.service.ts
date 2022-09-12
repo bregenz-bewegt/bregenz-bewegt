@@ -12,6 +12,7 @@ import { Prisma, User } from '@prisma/client';
 import {
   JwtPayload,
   LoginDto,
+  OtpWithSecret,
   RegisterDto,
   ResetPasswordDto,
   Tokens,
@@ -22,7 +23,7 @@ import {
   registerError,
   RegisterErrorResponse,
   verifyError,
-} from '@bregenz-bewegt/server/common';
+} from '@bregenz-bewegt/shared/errors';
 import { MailService } from '@bregenz-bewegt/server/mail';
 import { UserService } from '@bregenz-bewegt/server-controllers-user';
 
@@ -50,11 +51,7 @@ export class AuthService {
     try {
       const { password, ...rest } = dto;
       const hash = await argon.hash(password);
-      const activationSecret = speakeasy.generateSecret().base32;
-      const otp = speakeasy.totp({
-        secret: activationSecret,
-        encoding: 'base32',
-      });
+      const { token, secret: activationSecret } = this.generateOtpToken();
 
       const newUser = await this.prismaService.user.create({
         data: {
@@ -65,7 +62,7 @@ export class AuthService {
         },
       });
 
-      this.mailService.sendOtpActivationMail({ to: newUser.email, otp });
+      this.mailService.sendOtpActivationMail({ to: newUser.email, otp: token });
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -131,6 +128,21 @@ export class AuthService {
     }
 
     if (!user.active) {
+      const { token, secret: activationSecret } = this.generateOtpToken();
+
+      const updatedUser = await this.prismaService.user.update({
+        where: {
+          email: dto.email,
+        },
+        data: {
+          activationSecret,
+        },
+      });
+
+      this.mailService.sendOtpActivationMail({
+        to: updatedUser.email,
+        otp: token,
+      });
       throw new ForbiddenException(loginError.EMAIL_NOT_VERIFIED);
     }
 
@@ -223,6 +235,16 @@ export class AuthService {
     });
 
     return token;
+  }
+
+  generateOtpToken(): OtpWithSecret {
+    const secret = speakeasy.generateSecret().base32;
+    const token = speakeasy.totp({
+      secret: secret,
+      encoding: 'base32',
+    });
+
+    return { token, secret };
   }
 
   async forgotPassword(userId: User['id'], email: User['email']) {
