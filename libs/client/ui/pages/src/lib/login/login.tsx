@@ -9,10 +9,11 @@ import {
   IonLabel,
   IonSpinner,
   IonRow,
+  useIonRouter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { loginSchema } from '@bregenz-bewegt/client/common/validation';
 
@@ -22,8 +23,7 @@ export interface LoginProps {
 
 export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
-    const history = useHistory();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const router = useIonRouter();
     const [isGuestLoading, setIsGuestLoading] = useState<boolean>(false);
 
     const login = useFormik({
@@ -37,12 +37,12 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
           ?.login({ ...values })
           .then(() => {
             userStore.refreshProfile();
-            setIsLoading(false);
-            history.push('/start');
+            setSubmitting(false);
+            router.push('/start');
           })
           .catch((error) => {
             setErrors(error.response.data);
-            setIsLoading(false);
+            setSubmitting(false);
           });
       },
     });
@@ -115,7 +115,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 expand="block"
                 color="primary"
                 onClick={() => login.submitForm()}
-                disabled={isLoading}
+                disabled={login.isSubmitting}
               >
                 {login.isSubmitting ? (
                   <IonLabel>
