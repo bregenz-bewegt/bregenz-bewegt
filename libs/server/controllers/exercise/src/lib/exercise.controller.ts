@@ -7,7 +7,9 @@ export class ExerciseController {
   constructor(private exerciseService: ExerciseService) {}
 
   @Get(':id')
-  getExercise(@Param('id', ParseIntPipe) id: Exercise['id']) {
-    return this.exerciseService.getExercise(id);
+  getExercise(
+    @Param('id', ParseIntPipe) id: Exercise['id']
+  ): Promise<Exercise> {
+    return this.exerciseService.findById(id);
   }
 }

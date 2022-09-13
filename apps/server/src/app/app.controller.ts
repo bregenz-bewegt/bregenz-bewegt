@@ -7,7 +7,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Public()
-  getData() {
+  getData(): { message: string } {
     return this.appService.getData();
   }
 }

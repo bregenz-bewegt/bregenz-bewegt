@@ -6,7 +6,7 @@ import { Exercise } from '@prisma/client';
 export class ExerciseService {
   constructor(private prismaService: PrismaService) {}
 
-  getExercise(id: Exercise['id']) {
+  findById(id: Exercise['id']): Promise<Exercise> {
     return this.prismaService.exercise.findUnique({ where: { id: id } });
   }
 }

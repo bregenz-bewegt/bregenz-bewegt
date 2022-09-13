@@ -14,7 +14,7 @@ import {
   ValidationFilter,
 } from '@bregenz-bewegt/server/common';
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   const globalPrefix = 'api';

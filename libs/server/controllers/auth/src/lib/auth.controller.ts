@@ -35,19 +35,19 @@ export class AuthController {
   @Public()
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Post('local/guest')
-  guest() {
+  guest(): Promise<User> {
     return this.authService.guest();
   }
 
   @Public()
   @Post('local/register')
-  register(@Body() dto: RegisterDto) {
+  register(@Body() dto: RegisterDto): Promise<void> {
     return this.authService.register(dto);
   }
 
   @Public()
   @Post('local/verify')
-  verify(@Body() dto: VerifyDto) {
+  verify(@Body() dto: VerifyDto): Promise<Tokens> {
     return this.authService.verify(dto);
   }
 
@@ -76,7 +76,7 @@ export class AuthController {
   forgotPassword(
     @GetCurrentUser('email', 'sub') email: User['email'],
     @GetCurrentUser('sub') userId: User['id']
-  ) {
+  ): Promise<void> {
     return this.authService.forgotPassword(userId, email);
   }
 
@@ -87,7 +87,7 @@ export class AuthController {
     @Headers('authorization') authorization: string,
     @GetCurrentUser('email') email: string,
     @Body() dto: ResetPasswordDto
-  ) {
+  ): Promise<User> {
     const token = this.utilService.extractBearerToken(authorization);
     return this.authService.resetPassword(email, token, dto);
   }
