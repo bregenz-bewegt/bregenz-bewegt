@@ -25,6 +25,9 @@ interface MatchParams {
 }
 
 export interface ExerciseDetailProps extends RouteComponentProps<MatchParams> {
+  parkWithExercise: Park & {
+    exercises: Exercise[];
+  };
   parkStore?: ParkStore;
 }
 
@@ -40,15 +43,17 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [isLoadingExercises, setIsLoadingExercises] = useState<boolean>(true);
 
     useEffect(() => {
+      console.log(match.params);
       const parkId = +match.params.park;
       const exerciseId = +match.params.exercise;
       if (!exerciseId || !parkId) return;
 
-      parkStore?.getParkWithExercise(exerciseId, parkId).then((park) => {
+      parkStore?.getParkWithExercise(parkId, exerciseId).then((park) => {
+        console.log(park);
         setPark(park);
         setIsLoadingExercises(false);
       });
-    }, [match.params.exercise]);
+    }, [match.params.exercise, match.params.park]);
 
     console.log(park);
 
