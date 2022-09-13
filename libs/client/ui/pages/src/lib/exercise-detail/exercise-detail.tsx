@@ -67,20 +67,22 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         </IonHeader>
         <IonContent className="exercise-detail__content">
           <div className="exercise-detail__content__video-wrapper"></div>
-          <IonText>
-            <h1>{exercise?.name}</h1>
-          </IonText>
-          <IonNote>
-            <IonIcon icon={location} />
-            {exercise?.name}
-          </IonNote>
-          <IonText>
-            <h1>{exercise?.name}</h1>
-          </IonText>
-          <IonNote>
-            {/* <IonIcon icon={location} /> */}
-            {exercise?.name}
-          </IonNote>
+          <div className="exercise-detail__content__content">
+            <IonText>
+              <h1>{exercise?.name}</h1>
+            </IonText>
+            <IonNote>
+              <IonIcon icon={location} />
+              {exercise?.name}
+            </IonNote>
+            <IonText>
+              <h1>{exercise?.name}</h1>
+            </IonText>
+            <IonNote>
+              {/* <IonIcon icon={location} /> */}
+              {exercise?.name}
+            </IonNote>
+          </div>
         </IonContent>
       </IonPage>
     );

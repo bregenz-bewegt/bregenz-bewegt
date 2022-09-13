@@ -12,5 +12,10 @@
       background-color: var(--ion-color-secondary);
       border-radius: 0 0 var(--spacing-l) var(--spacing-l);
     }
+
+    &__content {
+      padding: var(--spacing-l) var(--spacing-m) var(--spacing-m)
+        var(--spacing-m);
+    }
   }
 }
