@@ -22,4 +22,12 @@ export class ParkController {
   getParkWithExercises(@Param('id', ParseIntPipe) id: number) {
     return this.parkService.getParkWithExercises(id);
   }
+
+  @Get(':park/exercises/:exercise')
+  getParkWithExercise(
+    @Param('park', ParseIntPipe) park: number,
+    @Param('exercise', ParseIntPipe) exercise: number
+  ) {
+    return this.parkService.getParkWithExercise(park, exercise);
+  }
 }

@@ -10,9 +10,4 @@ export class ExerciseController {
   getExercise(@Param('id', ParseIntPipe) id: Exercise['id']) {
     return this.exerciseService.getExercise(id);
   }
-
-  @Get(':id/park')
-  getExerciseWithPark(@Param('id', ParseIntPipe) id: Exercise['id']) {
-    return this.exerciseService.findByIdWithPark(id);
-  }
 }

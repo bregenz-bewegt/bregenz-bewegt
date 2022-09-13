@@ -11,6 +11,9 @@ export class ExerciseService {
   }
 
   findByIdWithPark(id: Exercise['id']) {
-    return this.prismaService.exercise.findUnique({ where: { id: id } });
+    return this.prismaService.exercise.findUnique({
+      where: { id: id },
+      include: { parks: true },
+    });
   }
 }

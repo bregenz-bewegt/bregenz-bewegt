@@ -12,42 +12,45 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
-import {
-  exerciseStore,
-  ExerciseStore,
-} from '@bregenz-bewegt/client/common/stores';
+import { ParkStore, parkStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Exercise } from '@bregenz-bewegt/client/types';
+import { Exercise, Park } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { location } from 'ionicons/icons';
 
 interface MatchParams {
+  park: string;
   exercise: string;
 }
 
 export interface ExerciseDetailProps extends RouteComponentProps<MatchParams> {
-  exerciseStore?: ExerciseStore;
+  parkStore?: ParkStore;
 }
 
 export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
-  exerciseStore.storeKey
+  parkStore.storeKey
 )(
-  observer(({ exerciseStore, match }) => {
-    const [exercise, setExercise] = useState<Exercise>();
+  observer(({ parkStore, match }) => {
+    const [park, setPark] = useState<
+      Park & {
+        exercises: Exercise[];
+      }
+    >();
     const [isLoadingExercises, setIsLoadingExercises] = useState<boolean>(true);
 
     useEffect(() => {
+      const parkId = +match.params.park;
       const exerciseId = +match.params.exercise;
-      if (!exerciseId) return;
+      if (!exerciseId || !parkId) return;
 
-      exerciseStore?.getExerciseWithPark(exerciseId).then((exercise) => {
-        setExercise(exercise);
+      parkStore?.getParkWithExercise(exerciseId, parkId).then((exercise) => {
+        setPark(exercise);
         setIsLoadingExercises(false);
       });
     }, [match.params.exercise]);
 
-    console.log(exercise);
+    console.log(park);
 
     return (
       <IonPage className="exercise-detail">
@@ -62,25 +65,25 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
                 text="Zurück"
               />
             </IonButtons>
-            <IonTitle>{exercise?.name}</IonTitle>
+            <IonTitle>{park?.name}</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent className="exercise-detail__content">
           <div className="exercise-detail__content__video-wrapper"></div>
           <div className="exercise-detail__content__content">
             <IonText>
-              <h1>{exercise?.name}</h1>
+              <h1>{park?.name}</h1>
             </IonText>
             <IonNote>
               <IonIcon icon={location} />
-              {exercise?.name}
+              {park?.name}
             </IonNote>
             <IonText>
-              <h1>{exercise?.name}</h1>
+              <h1>{park?.name}</h1>
             </IonText>
             <IonNote>
               {/* <IonIcon icon={location} /> */}
-              {exercise?.name}
+              {park?.name}
             </IonNote>
           </div>
         </IonContent>
