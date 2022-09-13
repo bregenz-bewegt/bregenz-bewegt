@@ -15,9 +15,10 @@ import { useEffect, useState } from 'react';
 import { ParkStore, parkStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Exercise, Park } from '@bregenz-bewegt/client/types';
+import { Difficulty, Exercise, Park } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { location } from 'ionicons/icons';
+import { DifficultyBadge } from '@bregenz-bewegt/client-ui-components';
 
 interface MatchParams {
   park: string;
@@ -81,6 +82,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             </IonNote>
             <IonText>
               <h2>{park?.exercises[0].name}</h2>
+              <DifficultyBadge difficulty={park!.exercises[0].difficulty} />
             </IonText>
           </div>
         </IonContent>
