@@ -296,7 +296,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 <IonSpinner name="crescent" />
               </IonLabel>
             ) : (
-              'Logout'
+              'Abmelden'
             )}
           </IonButton>
         </IonContent>
