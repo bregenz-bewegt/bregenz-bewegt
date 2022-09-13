@@ -15,6 +15,14 @@
 
     &__content {
       padding: 0 var(--spacing-l) var(--spacing-l) var(--spacing-l);
+
+      &__location {
+        ion-icon {
+          display: inline-block;
+          margin-right: var(--spacing-xs);
+          margin-bottom: calc(var(--spacing-xxs) * -1);
+        }
+      }
     }
   }
 }

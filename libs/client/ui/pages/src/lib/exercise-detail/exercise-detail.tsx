@@ -79,7 +79,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             <IonText>
               <h1>{park?.name}</h1>
             </IonText>
-            <IonNote>
+            <IonNote className="exercise-detail__content__content__location">
               <IonIcon icon={location} />
               {park?.name}
             </IonNote>
