@@ -18,6 +18,7 @@ export class ExerciseStore implements Store {
   @action async getExercise(id: Exercise['id']) {
     try {
       const { data } = await http.get(`exercises/${id}`);
+
       return data;
     } catch (error) {
       return null;

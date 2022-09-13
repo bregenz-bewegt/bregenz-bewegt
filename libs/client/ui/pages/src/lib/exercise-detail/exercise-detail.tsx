@@ -31,7 +31,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 )(
   observer(({ exerciseStore, match }) => {
     const [exercise, setExercise] = useState<Exercise>();
-    // const [isLoadingExercises, setIsLoadingExercises] = useState<boolean>(true);
+    const [isLoadingExercises, setIsLoadingExercises] = useState<boolean>(true);
 
     useEffect(() => {
       const exerciseId = +match.params.exercise;
@@ -39,6 +39,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
       exerciseStore?.getExercise(exerciseId).then((exercise) => {
         setExercise(exercise);
+        setIsLoadingExercises(false);
       });
     }, [match.params.exercise]);
 
@@ -58,7 +59,8 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             <IonTitle>{exercise?.name}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent>
+        <IonContent className="exercise-detail__content">
+          <div className="exercise-detail__content__video-wrapper"></div>
           <IonTitle>Test</IonTitle>
         </IonContent>
       </IonPage>
