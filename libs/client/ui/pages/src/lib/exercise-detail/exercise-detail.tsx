@@ -4,7 +4,10 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
+  IonNote,
   IonPage,
+  IonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
@@ -17,6 +20,7 @@ import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Exercise } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { location } from 'ionicons/icons';
 
 interface MatchParams {
   exercise: string;
@@ -37,11 +41,13 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       const exerciseId = +match.params.exercise;
       if (!exerciseId) return;
 
-      exerciseStore?.getExercise(exerciseId).then((exercise) => {
+      exerciseStore?.getExerciseWithPark(exerciseId).then((exercise) => {
         setExercise(exercise);
         setIsLoadingExercises(false);
       });
     }, [match.params.exercise]);
+
+    console.log(exercise);
 
     return (
       <IonPage className="exercise-detail">
@@ -61,7 +67,20 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         </IonHeader>
         <IonContent className="exercise-detail__content">
           <div className="exercise-detail__content__video-wrapper"></div>
-          <IonTitle>Test</IonTitle>
+          <IonText>
+            <h1>{exercise?.name}</h1>
+          </IonText>
+          <IonNote>
+            <IonIcon icon={location} />
+            {exercise?.name}
+          </IonNote>
+          <IonText>
+            <h1>{exercise?.name}</h1>
+          </IonText>
+          <IonNote>
+            {/* <IonIcon icon={location} /> */}
+            {exercise?.name}
+          </IonNote>
         </IonContent>
       </IonPage>
     );

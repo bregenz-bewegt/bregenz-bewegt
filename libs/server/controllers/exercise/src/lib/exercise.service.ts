@@ -9,4 +9,8 @@ export class ExerciseService {
   getExercise(id: Exercise['id']) {
     return this.prismaService.exercise.findUnique({ where: { id: id } });
   }
+
+  findByIdWithPark(id: Exercise['id']) {
+    return this.prismaService.exercise.findUnique({ where: { id: id } });
+  }
 }
