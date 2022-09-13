@@ -1,7 +1,12 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
 import type { User } from '@bregenz-bewegt/client/types';
-import type { PatchProfileDto, Tokens } from '@bregenz-bewegt/shared/types';
+import type {
+  LoginDto,
+  PatchProfileDto,
+  RegisterDto,
+  Tokens,
+} from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
 
@@ -21,12 +26,8 @@ export class UserStore implements Store {
     return data;
   }
 
-  @action async register(username: string, email: string, password: string) {
-    const { data } = await http.post('/auth/local/register', {
-      username,
-      email,
-      password,
-    });
+  @action async register(dto: RegisterDto) {
+    const { data } = await http.post('/auth/local/register', dto);
 
     await this.setTokens({
       access_token: data.access_token,
@@ -37,11 +38,8 @@ export class UserStore implements Store {
     return data;
   }
 
-  @action async login(email: string, password: string) {
-    const { data } = await http.post('/auth/local/login', {
-      email,
-      password,
-    });
+  @action async login(dto: LoginDto) {
+    const { data } = await http.post('/auth/local/login', dto);
 
     await this.setTokens({
       access_token: data.access_token,

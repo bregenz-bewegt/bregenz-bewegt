@@ -13,6 +13,7 @@ import {
   IonLabel,
   IonSpinner,
   IonNote,
+  IonRow,
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
@@ -29,6 +30,8 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
     const [acceptTosValid, setAcceptTosValid] = useState<boolean>(true);
     const register = useFormik({
       initialValues: {
+        firstname: '',
+        lastname: '',
         username: '',
         email: '',
         password: '',
@@ -42,7 +45,13 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
         }
 
         userStore
-          ?.register(values.username, values.email, values.password)
+          ?.register({
+            firstname: values.firstname || undefined,
+            lastname: values.lastname || undefined,
+            username: values.username,
+            email: values.email,
+            password: values.password,
+          })
           .then(() => {
             userStore.refreshProfile();
             setSubmitting(false);
@@ -63,6 +72,36 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
               <IonText>
                 <h2>Registrieren</h2>
               </IonText>
+              <IonRow className="register__content__wrapper__name-wrapper">
+                <Input
+                  name="firstname"
+                  placeholder="Vorname"
+                  value={register.values.firstname}
+                  error={
+                    register.touched.firstname
+                      ? register.errors.firstname
+                      : undefined
+                  }
+                  onChange={register.handleChange}
+                  onBlur={register.handleBlur}
+                  className="firstname"
+                  expand={false}
+                />
+                <Input
+                  name="lastname"
+                  placeholder="Nachname"
+                  value={register.values.lastname}
+                  error={
+                    register.touched.lastname
+                      ? register.errors.lastname
+                      : undefined
+                  }
+                  onChange={register.handleChange}
+                  onBlur={register.handleBlur}
+                  className="lastname"
+                  expand={false}
+                />
+              </IonRow>
               <Input
                 name="username"
                 placeholder="Benutzername"
@@ -75,7 +114,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 onChange={register.handleChange}
                 onBlur={register.handleBlur}
                 className="username"
-              ></Input>
+              />
               <Input
                 name="email"
                 placeholder="Email"
@@ -88,7 +127,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 onChange={register.handleChange}
                 onBlur={register.handleBlur}
                 className="email"
-              ></Input>
+              />
               <Input
                 name="password"
                 placeholder="Passwort"
@@ -102,7 +141,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 onChange={register.handleChange}
                 onBlur={register.handleBlur}
                 className="password"
-              ></Input>
+              />
               <Input
                 name="passwordConfirmation"
                 placeholder="Passwort bestätigen"
@@ -116,7 +155,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 onChange={register.handleChange}
                 onBlur={register.handleBlur}
                 className="password-confirmation"
-              ></Input>
+              />
               <Checkbox
                 name="accept-tos"
                 className="accept-tos"

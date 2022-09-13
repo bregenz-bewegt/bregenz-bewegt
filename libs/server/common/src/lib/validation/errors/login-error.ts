@@ -1,6 +1,6 @@
-import { LoginCredentials } from '@bregenz-bewegt/client/types';
+import { LoginDto } from '@bregenz-bewegt/shared/types';
 
-export type LoginErrorResponse = Partial<LoginCredentials>;
+export type LoginErrorResponse = Partial<LoginDto>;
 export enum LoginError {
   USER_NOT_FOUND = 'USER_NOT_FOUND',
   INVALID_CREDENTIALS = 'INVALID_CREDENTIALS',

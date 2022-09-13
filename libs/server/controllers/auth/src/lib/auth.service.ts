@@ -42,13 +42,13 @@ export class AuthService {
   }
 
   async register(dto: RegisterDto) {
-    const hash = await argon.hash(dto.password);
+    const { password, ...rest } = dto;
+    const hash = await argon.hash(password);
 
     try {
       const newUser = await this.prismaService.user.create({
         data: {
-          email: dto.email,
-          username: dto.username,
+          ...rest,
           password: hash,
           role: 'USER',
         },
