@@ -10,3 +10,4 @@ export * from './register/register';
 export * from './park-detail/park-detail';
 export * from './exercise-detail/exercise-detail';
 export * from './reset-password/reset-password';
+export * from './verify-email/verify-email';

@@ -23,6 +23,11 @@
       &__name-wrapper {
         flex-wrap: nowrap;
         gap: var(--spacing-m);
+
+        .firstname,
+        .lastname {
+          flex: 1;
+        }
       }
 
       .email {

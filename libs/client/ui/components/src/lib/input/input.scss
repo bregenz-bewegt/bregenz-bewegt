@@ -16,13 +16,13 @@
     }
 
     ion-input {
-      border-radius: 8px;
-      margin: 4px 0;
+      border-radius: var(--spacing-s);
+      margin: var(--spacing-xs) 0;
       border: 1px solid var(--ion-color-medium);
-      --padding-top: 8px !important;
-      --padding-bottom: 8px !important;
-      --padding-start: 8px !important;
-      --padding-end: 8px !important;
+      --padding-top: var(--spacing-s) !important;
+      --padding-bottom: var(--spacing-s) !important;
+      --padding-start: var(--spacing-s) !important;
+      --padding-end: var(--spacing-s) !important;
       --background: var(--ion-color-light-tint) !important;
 
       &.ion-invalid {

@@ -25,7 +25,8 @@
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {
-        "@typescript-eslint/no-unused-vars": "error"
+        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/no-explicit-any": "warn"
       }
     },
     {
@@ -35,8 +36,6 @@
     }
   ],
   "rules": {
-    "@typescript-eslint/no-unused-vars": ["error"],
-    "@typescript-eslint/no-explicit-any": "warn",
     "react-hooks/exhaustive-deps": "off",
     "no-var": "error",
     "no-empty-pattern": "error",

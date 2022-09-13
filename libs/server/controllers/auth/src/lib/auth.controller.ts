@@ -11,6 +11,7 @@ import {
   RegisterDto,
   ResetPasswordDto,
   Tokens,
+  VerifyDto,
 } from '@bregenz-bewegt/shared/types';
 import { AuthService } from './auth.service';
 
@@ -40,8 +41,14 @@ export class AuthController {
 
   @Public()
   @Post('local/register')
-  register(@Body() dto: RegisterDto): Promise<Tokens> {
+  register(@Body() dto: RegisterDto) {
     return this.authService.register(dto);
+  }
+
+  @Public()
+  @Post('local/verify')
+  verify(@Body() dto: VerifyDto) {
+    return this.authService.verify(dto);
   }
 
   @Public()

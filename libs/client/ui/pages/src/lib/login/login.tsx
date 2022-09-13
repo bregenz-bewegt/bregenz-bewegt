@@ -9,13 +9,15 @@ import {
   IonLabel,
   IonSpinner,
   IonRow,
+  useIonRouter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { Formik, FormikErrors } from 'formik';
+import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useFormik } from 'formik';
 import { loginSchema } from '@bregenz-bewegt/client/common/validation';
-import { LoginDto } from '@bregenz-bewegt/shared/types';
+import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';
+import { loginError } from '@bregenz-bewegt/shared/errors';
 
 export interface LoginProps {
   userStore?: UserStore;
@@ -23,33 +25,40 @@ export interface LoginProps {
 
 export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
-    const history = useHistory();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const router = useIonRouter();
     const [isGuestLoading, setIsGuestLoading] = useState<boolean>(false);
+    const verifyModal = useRef<HTMLIonModalElement>(null);
+    const page = useRef(null);
+    const [verifyModalPresentingElement, setVerifyModalPresentingElement] =
+      useState<HTMLElement | null>(null);
+    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(false);
 
-    const handleLocalLogin = (
-      credentials: LoginDto,
-      setErrors: (
-        errors: FormikErrors<{
-          email: string;
-          password: string;
-        }>
-      ) => void
-    ) => {
-      setIsLoading(true);
-
-      userStore
-        ?.login({ ...credentials })
-        .then(() => {
-          userStore.refreshProfile();
-          setIsLoading(false);
-          history.push('/start');
-        })
-        .catch((error) => {
-          setErrors(error.response.data);
-          setIsLoading(false);
-        });
-    };
+    const login = useFormik({
+      initialValues: {
+        email: '',
+        password: '',
+      },
+      validationSchema: loginSchema,
+      onSubmit: (values, { setSubmitting, setErrors }) => {
+        userStore
+          ?.login({ ...values })
+          .then(() => {
+            userStore.refreshProfile();
+            setSubmitting(false);
+            router.push('/start');
+          })
+          .catch((error) => {
+            if (
+              error.response.data.email === loginError.EMAIL_NOT_VERIFIED.email
+            ) {
+              setIsVerifyModalOpen(true);
+            } else {
+              setErrors(error.response.data);
+            }
+            setSubmitting(false);
+          });
+      },
+    });
 
     const handleGuestLogin = () => {
       setIsGuestLoading(true);
@@ -63,8 +72,17 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
         });
     };
 
+    const handleVerifySuccess = async () => {
+      await verifyModal.current?.dismiss();
+      setIsVerifyModalOpen(false);
+    };
+
+    useEffect(() => {
+      setVerifyModalPresentingElement(page.current);
+    }, []);
+
     return (
-      <IonPage className="login">
+      <IonPage className="login" ref={page}>
         <IonContent className="login__content" fullscreen>
           <div className="login__flex-wrapper">
             <TitleBanner />
@@ -89,77 +107,68 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                   )}
                 </IonButton>
               </IonRow>
-              <Formik
-                initialValues={{ email: '', password: '' }}
-                validationSchema={loginSchema}
-                onSubmit={(values, { setErrors }) => {
-                  handleLocalLogin(values, setErrors);
-                }}
+              <Input
+                name="email"
+                type="email"
+                inputMode="email"
+                placeholder="Email"
+                value={login.values.email}
+                error={login.touched.email ? login.errors.email : undefined}
+                onChange={login.handleChange}
+                onBlur={login.handleBlur}
+              ></Input>
+              <Input
+                name="password"
+                type="password"
+                inputMode="text"
+                placeholder="Passwort"
+                value={login.values.password}
+                error={
+                  login.touched.password ? login.errors.password : undefined
+                }
+                onChange={login.handleChange}
+                onBlur={login.handleBlur}
+              />
+              <Link className="login__content__login__forgot-password" to={'#'}>
+                Passwort vergessen?
+              </Link>
+              <IonButton
+                mode="ios"
+                expand="block"
+                color="primary"
+                onClick={() => login.submitForm()}
+                disabled={login.isSubmitting}
               >
-                {({
-                  values,
-                  errors,
-                  touched,
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                }) => (
-                  <form>
-                    <Input
-                      name="email"
-                      type="email"
-                      inputMode="email"
-                      placeholder="Email"
-                      value={values.email}
-                      error={touched.email ? errors.email : undefined}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    ></Input>
-                    <Input
-                      name="password"
-                      type="password"
-                      inputMode="text"
-                      placeholder="Passwort"
-                      value={values.password}
-                      error={touched.password ? errors.password : undefined}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    <Link
-                      className="login__content__login__forgot-password"
-                      to={'#'}
-                    >
-                      Passwort vergessen?
-                    </Link>
-                    <IonButton
-                      mode="ios"
-                      expand="block"
-                      color="primary"
-                      onClick={() => handleSubmit()}
-                      disabled={isLoading}
-                    >
-                      {isLoading ? (
-                        <IonLabel>
-                          <IonSpinner name="crescent" />
-                        </IonLabel>
-                      ) : (
-                        'Anmelden'
-                      )}
-                    </IonButton>
-                    <IonButton
-                      mode="ios"
-                      expand="block"
-                      color="primary"
-                      fill="outline"
-                      routerLink="/register"
-                    >
-                      Neu Registrieren
-                    </IonButton>
-                  </form>
+                {login.isSubmitting ? (
+                  <IonLabel>
+                    <IonSpinner name="crescent" />
+                  </IonLabel>
+                ) : (
+                  'Anmelden'
                 )}
-              </Formik>
+              </IonButton>
+              <IonButton
+                mode="ios"
+                expand="block"
+                color="primary"
+                fill="outline"
+                routerLink="/register"
+              >
+                Neu Registrieren
+              </IonButton>
             </div>
           </div>
+          <VerifyEmail
+            email={login.values.email}
+            isOpen={isVerifyModalOpen}
+            modalRef={verifyModal}
+            modalPresentingElement={verifyModalPresentingElement!}
+            onVerifySuccess={handleVerifySuccess}
+            modalDismiss={() => {
+              verifyModal.current?.dismiss();
+              setIsVerifyModalOpen(false);
+            }}
+          />
         </IonContent>
       </IonPage>
     );

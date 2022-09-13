@@ -1,0 +1,35 @@
+.otp-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  input {
+    border-radius: var(--spacing-s);
+    margin: var(--spacing-xs);
+    border: 1px solid var(--ion-color-medium);
+    padding: var(--spacing-s);
+    background: var(--ion-color-light-tint);
+    width: auto;
+    box-sizing: content-box;
+    outline: none;
+
+    &:focus {
+      border: 1px solid var(--ion-color-primary);
+    }
+
+    &.invalid {
+      border: 1px solid var(--ion-color-danger);
+    }
+  }
+
+  &.error {
+    input {
+      border: 1px solid var(--ion-color-danger);
+    }
+
+    ion-note {
+      margin-top: var(--spacing-s);
+    }
+  }
+}

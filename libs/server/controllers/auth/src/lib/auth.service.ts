@@ -5,22 +5,27 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
+import speakeasy from 'speakeasy';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
 import { Prisma, User } from '@prisma/client';
 import {
   JwtPayload,
   LoginDto,
+  OtpWithSecret,
   RegisterDto,
   ResetPasswordDto,
   Tokens,
+  VerifyDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   loginError,
   registerError,
   RegisterErrorResponse,
-} from '@bregenz-bewegt/server/common';
+  verifyError,
+} from '@bregenz-bewegt/shared/errors';
 import { MailService } from '@bregenz-bewegt/server/mail';
+import { UserService } from '@bregenz-bewegt/server-controllers-user';
 
 @Injectable()
 export class AuthService {
@@ -28,7 +33,8 @@ export class AuthService {
     private prismaService: PrismaService,
     private jwtService: JwtService,
     private configService: ConfigService,
-    private mailService: MailService
+    private mailService: MailService,
+    private userService: UserService
   ) {}
 
   async guest() {
@@ -42,21 +48,21 @@ export class AuthService {
   }
 
   async register(dto: RegisterDto) {
-    const { password, ...rest } = dto;
-    const hash = await argon.hash(password);
-
     try {
+      const { password, ...rest } = dto;
+      const hash = await argon.hash(password);
+      const { token, secret: activationSecret } = this.generateOtpToken();
+
       const newUser = await this.prismaService.user.create({
         data: {
           ...rest,
           password: hash,
           role: 'USER',
+          activationSecret,
         },
       });
 
-      const tokens = await this.signTokens(newUser.id, newUser.email);
-      this.updateRefreshToken(newUser.id, tokens.refresh_token);
-      return tokens;
+      this.mailService.sendOtpActivationMail({ to: newUser.email, otp: token });
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -71,6 +77,37 @@ export class AuthService {
 
       throw error;
     }
+  }
+
+  async verify(dto: VerifyDto) {
+    const user = await this.userService.getSingle({ email: dto.email });
+
+    if (!user || !user.activationSecret) {
+      throw new ForbiddenException();
+    }
+
+    const verified = speakeasy.totp.verify({
+      secret: user.activationSecret,
+      encoding: 'base32',
+      token: dto.token,
+      window: 2,
+    });
+
+    if (!verified) {
+      throw new ForbiddenException(verifyError.INVALID_TOKEN);
+    }
+
+    await this.prismaService.user.update({
+      where: { email: user.email },
+      data: {
+        activationSecret: null,
+        active: true,
+      },
+    });
+
+    const tokens = await this.signTokens(user.id, user.email);
+    this.updateRefreshToken(user.id, tokens.refresh_token);
+    return tokens;
   }
 
   async login(dto: LoginDto) {
@@ -88,6 +125,25 @@ export class AuthService {
 
     if (!passwordMatches) {
       throw new ForbiddenException(loginError.INVALID_CREDENTIALS);
+    }
+
+    if (!user.active) {
+      const { token, secret: activationSecret } = this.generateOtpToken();
+
+      const updatedUser = await this.prismaService.user.update({
+        where: {
+          email: dto.email,
+        },
+        data: {
+          activationSecret,
+        },
+      });
+
+      this.mailService.sendOtpActivationMail({
+        to: updatedUser.email,
+        otp: token,
+      });
+      throw new ForbiddenException(loginError.EMAIL_NOT_VERIFIED);
     }
 
     const tokens = await this.signTokens(user.id, user.email);
@@ -181,6 +237,16 @@ export class AuthService {
     return token;
   }
 
+  generateOtpToken(): OtpWithSecret {
+    const secret = speakeasy.generateSecret().base32;
+    const token = speakeasy.totp({
+      secret: secret,
+      encoding: 'base32',
+    });
+
+    return { token, secret };
+  }
+
   async forgotPassword(userId: User['id'], email: User['email']) {
     const token = await this.signPasswordResetToken(userId, email);
     const tokenHash = await argon.hash(token);
@@ -196,7 +262,7 @@ export class AuthService {
       throw new ForbiddenException('Access denied');
     }
 
-    return this.mailService.sendPasswordResetMail({
+    return this.mailService.sendPasswordResetmail({
       to: email,
       resetToken: token,
     });

@@ -4,7 +4,8 @@ export type User = {
   id: string;
   username?: string;
   email?: string;
-  isEmailConfirmed: boolean;
+  active: boolean;
+  activationOtp?: string;
   firstname?: string;
   lastname?: string;
   role: Role;

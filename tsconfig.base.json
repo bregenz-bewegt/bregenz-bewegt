@@ -13,6 +13,7 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
       "@bregenz-bewegt/client-ui-components": [
@@ -55,6 +56,7 @@
       "@bregenz-bewegt/server/mail": ["libs/server/mail/src/index.ts"],
       "@bregenz-bewegt/server/multer": ["libs/server/multer/src/index.ts"],
       "@bregenz-bewegt/server/util": ["libs/server/util/src/index.ts"],
+      "@bregenz-bewegt/shared/errors": ["libs/shared/errors/src/index.ts"],
       "@bregenz-bewegt/shared/types": ["libs/shared/types/src/index.ts"]
     }
   },

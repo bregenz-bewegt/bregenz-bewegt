@@ -3,12 +3,12 @@ import {
   IonFabButton,
   IonHeader,
   IonIcon,
+  IonRouterLink,
   IonSkeletonText,
   IonText,
 } from '@ionic/react';
 import './header.scss';
 import { notifications } from 'ionicons/icons';
-import { Link } from 'react-router-dom';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
@@ -25,7 +25,10 @@ export const Header: React.FC<HeaderProps> = inject(userStore.storeKey)(
     return (
       <IonHeader mode="ios" className="header">
         <div className="header__profile">
-          <Link to={tabRoutes.profile.route}>
+          <IonRouterLink
+            routerLink={tabRoutes.profile.route}
+            routerDirection="forward"
+          >
             <IonAvatar>
               <img
                 onLoad={() => setIsImageLoaded(true)}
@@ -35,7 +38,7 @@ export const Header: React.FC<HeaderProps> = inject(userStore.storeKey)(
               />
               {!isImageLoaded && <IonSkeletonText animated />}
             </IonAvatar>
-          </Link>
+          </IonRouterLink>
           <div className="header__profile__greeting">
             <IonText>
               {isImageLoaded ? 'Guten Tag' : <IonSkeletonText animated />}
