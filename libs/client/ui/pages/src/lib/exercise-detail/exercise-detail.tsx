@@ -40,18 +40,14 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         exercises: Exercise[];
       }
     >();
-    const [isLoadingExercises, setIsLoadingExercises] = useState<boolean>(true);
 
     useEffect(() => {
-      console.log(match.params);
       const parkId = +match.params.park;
       const exerciseId = +match.params.exercise;
       if (!exerciseId || !parkId) return;
 
       parkStore?.getParkWithExercise(parkId, exerciseId).then((park) => {
-        console.log(park);
         setPark(park);
-        setIsLoadingExercises(false);
       });
     }, [match.params.exercise, match.params.park]);
 
@@ -81,15 +77,11 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             </IonText>
             <IonNote className="exercise-detail__content__content__location">
               <IonIcon icon={location} />
-              {park?.name}
+              {park?.address}
             </IonNote>
             <IonText>
-              <h1>{park?.name}</h1>
+              <h2>{park?.exercises[0].name}</h2>
             </IonText>
-            <IonNote>
-              {/* <IonIcon icon={location} /> */}
-              {park?.name}
-            </IonNote>
           </div>
         </IonContent>
       </IonPage>
