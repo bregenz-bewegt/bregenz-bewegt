@@ -82,7 +82,9 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             </IonNote>
             <IonText>
               <h2>{park?.exercises[0].name}</h2>
-              <DifficultyBadge difficulty={park!.exercises[0].difficulty} />
+              {park?.exercises[0].difficulty && (
+                <DifficultyBadge difficulty={park?.exercises[0].difficulty} />
+              )}
             </IonText>
           </div>
         </IonContent>
