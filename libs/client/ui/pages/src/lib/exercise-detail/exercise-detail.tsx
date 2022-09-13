@@ -44,8 +44,8 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       const exerciseId = +match.params.exercise;
       if (!exerciseId || !parkId) return;
 
-      parkStore?.getParkWithExercise(exerciseId, parkId).then((exercise) => {
-        setPark(exercise);
+      parkStore?.getParkWithExercise(exerciseId, parkId).then((park) => {
+        setPark(park);
         setIsLoadingExercises(false);
       });
     }, [match.params.exercise]);
