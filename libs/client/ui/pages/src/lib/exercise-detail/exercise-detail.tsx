@@ -52,8 +52,6 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       });
     }, [match.params.exercise, match.params.park]);
 
-    console.log(park);
-
     return (
       <IonPage className="exercise-detail">
         {/* <Header /> */}
