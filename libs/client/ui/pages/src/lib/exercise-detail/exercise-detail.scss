@@ -16,6 +16,12 @@
     &__content {
       padding: 0 var(--spacing-l) var(--spacing-l) var(--spacing-l);
 
+      &__park-wrapper {
+      }
+
+      &__exercise-wrapper {
+      }
+
       &__location {
         ion-icon {
           display: inline-block;

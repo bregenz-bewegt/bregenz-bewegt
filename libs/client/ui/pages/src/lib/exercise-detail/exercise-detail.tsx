@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { ParkStore, parkStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Difficulty, Exercise, Park } from '@bregenz-bewegt/client/types';
+import { Exercise, Park } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { location } from 'ionicons/icons';
 import { DifficultyBadge } from '@bregenz-bewegt/client-ui-components';
@@ -73,18 +73,24 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         <IonContent className="exercise-detail__content">
           <div className="exercise-detail__content__video-wrapper"></div>
           <div className="exercise-detail__content__content">
-            <IonText>
-              <h1>{park?.name}</h1>
-            </IonText>
-            <IonNote className="exercise-detail__content__content__location">
-              <IonIcon icon={location} />
-              {park?.address}
-            </IonNote>
+            <div className="exercise-detail__content__content__park-wrapper">
+              <IonText>
+                <h1>{park?.name}</h1>
+              </IonText>
+              <IonNote className="exercise-detail__content__content__location">
+                <IonIcon icon={location} />
+                {park?.address}
+              </IonNote>
+            </div>
+            <div className="exercise-detail__content__content_exercise-wrapper"></div>
             <IonText>
               <h2>{park?.exercises[0].name}</h2>
               {park?.exercises[0].difficulty && (
                 <DifficultyBadge difficulty={park?.exercises[0].difficulty} />
               )}
+            </IonText>
+            <IonText>
+              <p>{park?.exercises[0].description}</p>
             </IonText>
           </div>
         </IonContent>
