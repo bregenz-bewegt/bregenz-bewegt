@@ -8,7 +8,7 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = (
 ) => {
   return (
     <div className="activity-slider">
-      <h1>Welcome to ActivitySlider!</h1>
+      <div className="activity-slider__handle"></div>
     </div>
   );
 };
