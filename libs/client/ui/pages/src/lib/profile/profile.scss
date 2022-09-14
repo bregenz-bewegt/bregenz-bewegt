@@ -5,6 +5,10 @@
       width: calc(var(--spacing-5xl) * 2);
     }
 
+    &__username {
+      margin: 0 0 13px 0;
+    }
+
     &__password-row {
       align-items: flex-end;
       justify-content: space-between;
