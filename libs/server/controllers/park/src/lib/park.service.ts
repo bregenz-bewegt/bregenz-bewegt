@@ -1,16 +1,16 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Park } from '@prisma/client';
+import { Exercise, Park } from '@prisma/client';
 
 @Injectable()
 export class ParkService {
   constructor(private prismaService: PrismaService) {}
 
-  async getParks() {
+  async findAll(): Promise<Park[]> {
     return this.prismaService.park.findMany();
   }
 
-  async getPark(id: Park['id']) {
+  async findById(id: Park['id']): Promise<Park> {
     return this.prismaService.park.findUnique({
       where: {
         id: id,
@@ -18,7 +18,11 @@ export class ParkService {
     });
   }
 
-  async getParkWithExercises(id: Park['id']) {
+  async findByIdWithExercises(id: Park['id']): Promise<
+    Park & {
+      exercises: Exercise[];
+    }
+  > {
     const park = await this.prismaService.park.findUnique({
       where: {
         id: id,

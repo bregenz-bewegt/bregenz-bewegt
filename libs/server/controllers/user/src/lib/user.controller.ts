@@ -19,6 +19,7 @@ import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import { Response } from 'express';
+import { User } from '@prisma/client';
 
 @Controller('users')
 export class UserController {
@@ -26,8 +27,8 @@ export class UserController {
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Get('profile')
-  getUser(@GetCurrentUser('sub') userId: string) {
-    return this.userService.getById(userId);
+  getUser(@GetCurrentUser('sub') userId: string): Promise<User> {
+    return this.userService.findById(userId);
   }
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
@@ -35,7 +36,7 @@ export class UserController {
   patchProfile(
     @GetCurrentUser('sub') userId: string,
     @Body() dto: PatchProfileDto
-  ) {
+  ): Promise<User> {
     return this.userService.patchProfile(userId, dto);
   }
 
@@ -60,12 +61,15 @@ export class UserController {
     //   validators: [new FileTypeValidator({ fileType: 'png' })],
     // })
     Express.Multer.File
-  ) {
+  ): Promise<User> {
     return this.userService.editProfilePicture(id, file);
   }
 
   @Get('profile-picture')
-  async getProfilePicture(@GetCurrentUser('sub') id, @Res() res: Response) {
+  async getProfilePicture(
+    @GetCurrentUser('sub') id,
+    @Res() res: Response
+  ): Promise<void> {
     return this.userService.getProfilePicture(id, res);
   }
 }
