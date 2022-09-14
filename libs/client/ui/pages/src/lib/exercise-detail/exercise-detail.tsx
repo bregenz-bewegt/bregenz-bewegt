@@ -18,7 +18,10 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Exercise, Park } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { location } from 'ionicons/icons';
-import { DifficultyBadge } from '@bregenz-bewegt/client-ui-components';
+import {
+  ActivitySlider,
+  DifficultyBadge,
+} from '@bregenz-bewegt/client-ui-components';
 
 interface MatchParams {
   park: string;
@@ -90,6 +93,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             <IonText>
               <p>{park?.exercises[0].description}</p>
             </IonText>
+            <ActivitySlider />
           </div>
         </IonContent>
       </IonPage>
