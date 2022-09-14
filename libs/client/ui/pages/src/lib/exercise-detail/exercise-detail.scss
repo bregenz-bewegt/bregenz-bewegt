@@ -17,6 +17,11 @@
       padding: 0 var(--spacing-l) var(--spacing-l) var(--spacing-l);
 
       &__park-wrapper {
+        ion-text {
+          h1 {
+            font-weight: 700;
+          }
+        }
       }
 
       &__exercise-wrapper {
