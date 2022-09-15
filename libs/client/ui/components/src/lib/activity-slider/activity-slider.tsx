@@ -1,5 +1,13 @@
 import './activity-slider.scss';
-import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
+import {
+  DndContext,
+  MouseSensor,
+  TouchSensor,
+  useDraggable,
+  useDroppable,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 
 /* eslint-disable-next-line */
 export interface ActivitySliderProps {}
@@ -7,9 +15,11 @@ export interface ActivitySliderProps {}
 export const ActivitySlider: React.FC<ActivitySliderProps> = (
   props: ActivitySliderProps
 ) => {
+  const sensors = useSensors(useSensor(TouchSensor), useSensor(MouseSensor));
+
   return (
     <div className="activity-slider">
-      <DndContext>
+      <DndContext {...sensors}>
         <Handle />
         <LockingSection />
       </DndContext>
@@ -18,7 +28,7 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = (
 };
 
 const Handle: React.FC = () => {
-  const { setNodeRef, transform } = useDraggable({
+  const { setNodeRef, transform, listeners, attributes } = useDraggable({
     id: 'draggable',
   });
   const style = transform
@@ -32,6 +42,8 @@ const Handle: React.FC = () => {
       ref={setNodeRef}
       style={style}
       className="activity-slider__handle"
+      {...listeners}
+      {...attributes}
     ></div>
   );
 };
