@@ -21,7 +21,8 @@
   &__locking-section {
     height: var(--spacing-xxl);
     width: var(--spacing-xxl);
-    background-color: red;
+    background-color: var(--ion-color-secondary);
+    border-radius: var(--spacing-xs);
     margin-left: auto;
   }
 }
