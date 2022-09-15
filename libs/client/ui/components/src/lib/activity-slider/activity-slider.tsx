@@ -2,6 +2,7 @@ import './activity-slider.scss';
 import {
   DndContext,
   DragEndEvent,
+  DragOverlay,
   DragStartEvent,
   MouseSensor,
   TouchSensor,
@@ -27,12 +28,13 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [isSliding, setIsSliding] = useState<boolean>(false);
   const sensors = useSensors(useSensor(TouchSensor), useSensor(MouseSensor));
+  const handleMarkup = <Handle />;
 
   const handleDragStart = (e: DragStartEvent) => {
     setIsSliding(true);
   };
   const handleDragEnd = (e: DragEndEvent) => {
-    setIsSliding(true);
+    setIsSliding(false);
 
     if (isLocked) return setIsLocked(false);
     if (e.over && e.over.id === lockingSectionId) {
@@ -49,26 +51,33 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
         modifiers={[restrictToParentElement]}
       >
         <div className="activity-slider__sliding-restrictor">
-          {!isLocked && <Handle isSliding={isSliding} />}
-          <LockingSection>{isLocked ? <Handle /> : null}</LockingSection>
+          {!isLocked && !isSliding && handleMarkup}
+          {!isLocked ? (
+            <DragOverlay
+              modifiers={[restrictToParentElement]}
+              dropAnimation={{
+                duration: 500,
+                easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
+              }}
+              transition={!isSliding ? 'transform 250ms ease' : undefined}
+            >
+              {handleMarkup}
+            </DragOverlay>
+          ) : null}
+          <LockingSection>{isLocked ? handleMarkup : null}</LockingSection>
         </div>
       </DndContext>
     </div>
   );
 };
 
-interface HandleProps {
-  isSliding?: boolean;
-}
-
-const Handle: React.FC<HandleProps> = ({ isSliding }) => {
+const Handle: React.FC = () => {
   const { setNodeRef, transform, listeners, attributes } = useDraggable({
     id: handleId,
   });
   const style = transform
     ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-        ...(!isSliding && { transition: 'transform 250ms ease' }),
       }
     : undefined;
 
@@ -93,7 +102,7 @@ const LockingSection: React.FC<LockingSectionProps> = ({ children }) => {
   });
 
   return (
-    <div ref={setNodeRef} className={`activity-slider__locking-section`}>
+    <div ref={setNodeRef} className="activity-slider__locking-section">
       {children}
     </div>
   );
