@@ -8,13 +8,15 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
+import { ActivityStore } from '@bregenz-bewegt/client/common/stores';
 
-/* eslint-disable-next-line */
-export interface ActivitySliderProps {}
+export interface ActivitySliderProps {
+  activityStore?: ActivityStore;
+}
 
-export const ActivitySlider: React.FC<ActivitySliderProps> = (
-  props: ActivitySliderProps
-) => {
+export const ActivitySlider: React.FC<ActivitySliderProps> = ({
+  activityStore,
+}) => {
   const sensors = useSensors(useSensor(TouchSensor), useSensor(MouseSensor));
 
   return (
