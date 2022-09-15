@@ -12,6 +12,8 @@ import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ActivityStore } from '@bregenz-bewegt/client/common/stores';
 import { ReactNode, useState } from 'react';
 
+const activitySliderHandleId = 'handle' as const;
+
 export interface ActivitySliderProps {
   activityStore?: ActivityStore;
 }
@@ -26,9 +28,17 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
 
   return (
     <div className="activity-slider">
-      <DndContext sensors={sensors} modifiers={[restrictToParentElement]}>
+      <DndContext
+        sensors={sensors}
+        modifiers={[restrictToParentElement]}
+        onDragEnd={(e) => {
+          if (e.over && e.over.id === activitySliderHandleId) {
+            setIsLocked(true);
+          }
+        }}
+      >
         <div className="activity-slider__sliding-restrictor">
-          {isLocked && handleMarkup}
+          {!isLocked && handleMarkup}
           <LockingSection>{isLocked && handleMarkup}</LockingSection>
         </div>
       </DndContext>
@@ -38,7 +48,7 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
 
 const Handle: React.FC = () => {
   const { setNodeRef, transform, listeners, attributes } = useDraggable({
-    id: 'draggable',
+    id: activitySliderHandleId,
   });
   const style = transform
     ? {
