@@ -2,7 +2,6 @@ import './activity-slider.scss';
 import {
   DndContext,
   DragEndEvent,
-  DragOverlay,
   DragStartEvent,
   MouseSensor,
   TouchSensor,
@@ -50,7 +49,7 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
         modifiers={[restrictToParentElement]}
       >
         <div className="activity-slider__sliding-restrictor">
-          <Handle />
+          {!isLocked && <Handle isSliding={isSliding} />}
           <LockingSection>{isLocked ? <Handle /> : null}</LockingSection>
         </div>
       </DndContext>
