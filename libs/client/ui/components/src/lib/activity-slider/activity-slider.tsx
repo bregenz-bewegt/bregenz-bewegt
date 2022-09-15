@@ -2,7 +2,6 @@ import './activity-slider.scss';
 import {
   DndContext,
   DragEndEvent,
-  DragOverlay,
   DragStartEvent,
   MouseSensor,
   TouchSensor,
@@ -68,12 +67,14 @@ const Handle: React.FC<HandleProps> = () => {
     useDraggable({
       id: handleId,
     });
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-        ...(!isDragging && { transition: 'transform 0.5s' }),
-      }
-    : undefined;
+  const style = {
+    ...(!isDragging && { transition: 'transform 0.5s' }),
+    ...(transform && {
+      transition: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+    }),
+  };
+
+  console.log(style);
 
   return (
     <div
