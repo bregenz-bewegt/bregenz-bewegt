@@ -73,7 +73,7 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
 };
 
 const Handle: React.FC = () => {
-  const { setNodeRef, transform, listeners, attributes, over } = useDraggable({
+  const { setNodeRef, transform, listeners, attributes } = useDraggable({
     id: handleId,
   });
   const style = transform
