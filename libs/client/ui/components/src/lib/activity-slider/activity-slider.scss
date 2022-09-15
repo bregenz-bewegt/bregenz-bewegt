@@ -4,11 +4,19 @@
   border: 1px solid var(--ion-color-secondary);
   border-radius: var(--spacing-s);
   padding: var(--spacing-s);
+  display: flex;
+  justify-content: space-between;
 
   &__handle {
     height: var(--spacing-xxl);
     width: var(--spacing-xxl);
     background-color: var(--ion-color-primary);
     border-radius: var(--spacing-xs);
+  }
+
+  &__locking-section {
+    height: var(--spacing-xxl);
+    width: var(--spacing-xxl);
+    background-color: red;
   }
 }
