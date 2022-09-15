@@ -48,17 +48,17 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
         sensors={sensors}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
+        modifiers={[restrictToParentElement]}
       >
         <div className="activity-slider__sliding-restrictor">
-          {!isLocked && !isSliding ? handleMarkup : null}
-          {!isSliding ? (
+          {!isLocked ? (
             <DragOverlay
               modifiers={[restrictToParentElement]}
               dropAnimation={{
                 duration: 500,
                 easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
               }}
-              transition={'transform 250ms ease'}
+              transition={!isSliding ? 'transform 250ms ease' : undefined}
             >
               {handleMarkup}
             </DragOverlay>
