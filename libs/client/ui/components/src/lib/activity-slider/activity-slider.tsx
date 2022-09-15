@@ -1,7 +1,6 @@
 import './activity-slider.scss';
 import {
   DndContext,
-  DragOverlay,
   MouseSensor,
   TouchSensor,
   useDraggable,
@@ -24,12 +23,10 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
   return (
     <div className="activity-slider">
       <DndContext sensors={sensors} modifiers={[restrictToParentElement]}>
-        <DragOverlay transition={'transform 250ms ease'}>
-          <div className="activity-slider__sliding-restrictor">
-            <Handle />
-            <LockingSection />
-          </div>
-        </DragOverlay>
+        <div className="activity-slider__sliding-restrictor">
+          <Handle />
+          <LockingSection />
+        </div>
       </DndContext>
     </div>
   );
