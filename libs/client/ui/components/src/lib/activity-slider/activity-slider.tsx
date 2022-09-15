@@ -34,7 +34,6 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
     setIsSliding(true);
   };
   const handleDragEnd = (e: DragEndEvent) => {
-    console.log(e);
     setIsSliding(true);
 
     if (isLocked) return setIsLocked(false);
@@ -82,8 +81,6 @@ const Handle: React.FC = () => {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
       }
     : undefined;
-
-  console.log(over);
 
   return (
     <div
