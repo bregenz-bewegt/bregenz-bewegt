@@ -1,6 +1,9 @@
 import './activity-slider.scss';
 import {
   DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
   MouseSensor,
   TouchSensor,
   useDraggable,
@@ -23,24 +26,44 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
   activityStore,
 }) => {
   const [isLocked, setIsLocked] = useState<boolean>(false);
+  const [isSliding, setIsSliding] = useState<boolean>(false);
   const sensors = useSensors(useSensor(TouchSensor), useSensor(MouseSensor));
-
   const handleMarkup = <Handle />;
+
+  const handleDragStart = (e: DragStartEvent) => {
+    setIsSliding(true);
+  };
+  const handleDragEnd = (e: DragEndEvent) => {
+    console.log(e);
+    setIsSliding(true);
+
+    if (isLocked) return setIsLocked(false);
+    if (e.over && e.over.id === lockingSectionId) {
+      return setIsLocked(true);
+    }
+  };
 
   return (
     <div className="activity-slider">
       <DndContext
         sensors={sensors}
         modifiers={[restrictToParentElement]}
-        onDragEnd={(e) => {
-          console.log(e);
-          if (e.over && e.over.id === lockingSectionId) {
-            setIsLocked(true);
-          }
-        }}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
       >
         <div className="activity-slider__sliding-restrictor">
-          {!isLocked && handleMarkup}
+          {(!isLocked || !isSliding) && handleMarkup}
+          {isSliding && (
+            <DragOverlay
+              dropAnimation={{
+                duration: 500,
+                easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
+              }}
+              transition={'transform 250ms ease'}
+            >
+              {handleMarkup}
+            </DragOverlay>
+          )}
           <LockingSection>{isLocked && handleMarkup}</LockingSection>
         </div>
       </DndContext>
