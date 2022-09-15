@@ -52,19 +52,21 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
         onDragEnd={handleDragEnd}
       >
         <div className="activity-slider__sliding-restrictor">
-          {(!isLocked || !isSliding) && handleMarkup}
-          {isSliding && (
+          {!isLocked || !isSliding ? handleMarkup : null}
+          {isSliding ? (
             <DragOverlay
               dropAnimation={{
                 duration: 500,
-                easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
+                easing: !isSliding
+                  ? 'cubic-bezier(0.18, 0.67, 0.6, 1.22)'
+                  : undefined,
               }}
               transition={'transform 250ms ease'}
             >
               {handleMarkup}
             </DragOverlay>
-          )}
-          <LockingSection>{isLocked && handleMarkup}</LockingSection>
+          ) : null}
+          <LockingSection>{isLocked ? handleMarkup : null}</LockingSection>
         </div>
       </DndContext>
     </div>
