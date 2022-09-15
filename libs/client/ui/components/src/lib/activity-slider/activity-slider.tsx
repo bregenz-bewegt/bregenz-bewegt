@@ -51,7 +51,7 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
         onDragEnd={handleDragEnd}
       >
         <div className="activity-slider__sliding-restrictor">
-          {!isLocked || !isSliding ? handleMarkup : null}
+          {!isLocked && !isSliding ? handleMarkup : null}
           {isSliding ? (
             <DragOverlay
               dropAnimation={{
