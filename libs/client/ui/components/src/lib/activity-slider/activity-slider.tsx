@@ -12,7 +12,8 @@ import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ActivityStore } from '@bregenz-bewegt/client/common/stores';
 import { ReactNode, useState } from 'react';
 
-const activitySliderHandleId = 'handle' as const;
+const handleId = 'handle' as const;
+const lockingSectionId = 'locking-section' as const;
 
 export interface ActivitySliderProps {
   activityStore?: ActivityStore;
@@ -32,7 +33,8 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
         sensors={sensors}
         modifiers={[restrictToParentElement]}
         onDragEnd={(e) => {
-          if (e.over && e.over.id === activitySliderHandleId) {
+          console.log(e);
+          if (e.over && e.over.id === lockingSectionId) {
             setIsLocked(true);
           }
         }}
@@ -47,14 +49,16 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
 };
 
 const Handle: React.FC = () => {
-  const { setNodeRef, transform, listeners, attributes } = useDraggable({
-    id: activitySliderHandleId,
+  const { setNodeRef, transform, listeners, attributes, over } = useDraggable({
+    id: handleId,
   });
   const style = transform
     ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
       }
     : undefined;
+
+  console.log(over);
 
   return (
     <div
@@ -73,7 +77,7 @@ interface LockingSectionProps {
 
 const LockingSection: React.FC<LockingSectionProps> = ({ children }) => {
   const { setNodeRef } = useDroppable({
-    id: 'locking-section',
+    id: lockingSectionId,
   });
 
   return (
