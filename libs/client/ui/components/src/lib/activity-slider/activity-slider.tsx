@@ -46,19 +46,17 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
     <div className="activity-slider">
       <DndContext
         sensors={sensors}
-        modifiers={[restrictToParentElement]}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
         <div className="activity-slider__sliding-restrictor">
           {!isLocked && !isSliding ? handleMarkup : null}
-          {isSliding ? (
+          {!isSliding ? (
             <DragOverlay
+              modifiers={[restrictToParentElement]}
               dropAnimation={{
                 duration: 500,
-                easing: !isSliding
-                  ? 'cubic-bezier(0.18, 0.67, 0.6, 1.22)'
-                  : undefined,
+                easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
               }}
               transition={'transform 250ms ease'}
             >
