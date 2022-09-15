@@ -70,7 +70,7 @@ const Handle: React.FC<HandleProps> = () => {
   const style = {
     ...(!isDragging && { transition: 'transform 0.5s' }),
     ...(transform && {
-      transition: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
     }),
   };
 
