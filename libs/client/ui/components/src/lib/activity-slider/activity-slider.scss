@@ -17,6 +17,15 @@
     width: var(--spacing-xxl);
     background-color: var(--ion-color-primary);
     border-radius: var(--spacing-xs);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    ion-icon {
+      height: var(--spacing-l);
+      width: var(--spacing-l);
+      color: var(--ion-color-primary-contrast);
+    }
   }
 
   &__locking-section {

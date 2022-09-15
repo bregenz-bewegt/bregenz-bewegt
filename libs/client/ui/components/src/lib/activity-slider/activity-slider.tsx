@@ -13,6 +13,8 @@ import {
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ActivityStore } from '@bregenz-bewegt/client/common/stores';
 import { ReactNode, useState } from 'react';
+import { IonIcon } from '@ionic/react';
+import { timer, man, stopCircle } from 'ionicons/icons';
 
 const handleId = 'handle' as const;
 const lockingSectionId = 'locking-section' as const;
@@ -25,16 +27,12 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
   activityStore,
 }) => {
   const [isLocked, setIsLocked] = useState<boolean>(false);
-  const [isSliding, setIsSliding] = useState<boolean>(false);
   const sensors = useSensors(useSensor(TouchSensor), useSensor(MouseSensor));
-  const handleMarkup = <Handle />;
 
   const handleDragStart = (e: DragStartEvent) => {
-    setIsSliding(true);
+    //
   };
   const handleDragEnd = (e: DragEndEvent) => {
-    setIsSliding(false);
-
     if (isLocked) return setIsLocked(false);
     if (e.over && e.over.id === lockingSectionId) {
       return setIsLocked(true);
@@ -50,8 +48,10 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
         modifiers={[restrictToParentElement]}
       >
         <div className="activity-slider__sliding-restrictor">
-          {!isLocked && handleMarkup}
-          <LockingSection>{isLocked ? handleMarkup : null}</LockingSection>
+          {!isLocked && <Handle icon={timer} />}
+          <LockingSection>
+            {isLocked ? <Handle icon={stopCircle} /> : null}
+          </LockingSection>
         </div>
       </DndContext>
     </div>
@@ -59,22 +59,21 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
 };
 
 interface HandleProps {
-  isSliding?: boolean;
+  icon: string;
 }
 
-const Handle: React.FC<HandleProps> = () => {
+const Handle: React.FC<HandleProps> = ({ icon }) => {
   const { setNodeRef, transform, listeners, attributes, isDragging } =
     useDraggable({
       id: handleId,
     });
   const style = {
-    ...(!isDragging && { transition: 'transform 0.5s' }),
+    transition: 'transform 0.5s',
+    ...(isDragging && { transition: undefined }),
     ...(transform && {
       transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
     }),
   };
-
-  console.log(style);
 
   return (
     <div
@@ -83,7 +82,9 @@ const Handle: React.FC<HandleProps> = () => {
       className="activity-slider__handle"
       {...listeners}
       {...attributes}
-    ></div>
+    >
+      <IonIcon icon={icon} />
+    </div>
   );
 };
 
