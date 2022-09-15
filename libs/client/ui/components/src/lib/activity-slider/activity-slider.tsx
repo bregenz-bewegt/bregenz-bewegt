@@ -8,6 +8,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
+import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ActivityStore } from '@bregenz-bewegt/client/common/stores';
 
 export interface ActivitySliderProps {
@@ -21,7 +22,10 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
 
   return (
     <div className="activity-slider">
-      <DndContext {...sensors}>
+      <DndContext sensors={sensors} modifiers={[restrictToParentElement]}>
+        <div className="activity-slider__sliding-restrictor">
+          
+        </div>
         <Handle />
         <LockingSection />
       </DndContext>

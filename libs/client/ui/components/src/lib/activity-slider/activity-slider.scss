@@ -4,8 +4,12 @@
   border: 1px solid var(--ion-color-secondary);
   border-radius: var(--spacing-s);
   padding: var(--spacing-s);
-  display: flex;
-  justify-content: space-between;
+
+  &__sliding-restrictor {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
 
   &__handle {
     height: var(--spacing-xxl);
