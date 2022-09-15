@@ -14,7 +14,7 @@ import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ActivityStore } from '@bregenz-bewegt/client/common/stores';
 import { ReactNode, useState } from 'react';
 import { IonIcon } from '@ionic/react';
-import { timer, man, stopCircle } from 'ionicons/icons';
+import { timer, stopCircle } from 'ionicons/icons';
 
 const handleId = 'handle' as const;
 const lockingSectionId = 'locking-section' as const;
