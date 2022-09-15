@@ -68,7 +68,7 @@ const Handle: React.FC<HandleProps> = ({ isSliding }) => {
   const style = transform
     ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-        ...(!isSliding && { transition: 'transform 250ms ease' }),
+        ...(!isSliding && { transition: '0.5s ease' }),
       }
     : undefined;
 
