@@ -35,4 +35,15 @@
     border-radius: var(--spacing-xs);
     margin-left: auto;
   }
+
+  &__arrows {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: var(--spacing-m);
+
+    ion-icon {
+      color: var(--ion-color-secondary);
+    }
+  }
 }
