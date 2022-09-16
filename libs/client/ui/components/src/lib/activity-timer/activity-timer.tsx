@@ -20,12 +20,14 @@ const handleId = 'handle' as const;
 const lockingSectionId = 'locking-section' as const;
 
 export interface ActivityTimerProps {
-  onTimerStart?: () => void;
-  onTimerStop?: () => void;
+  onTimerStart: () => void;
+  onTimerStop: () => void;
   activityStore?: ActivityStore;
 }
 
 export const ActivityTimer: React.FC<ActivityTimerProps> = ({
+  onTimerStart,
+  onTimerStop,
   activityStore,
 }) => {
   const [isLocked, setIsLocked] = useState<boolean>(false);
@@ -35,9 +37,15 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
     //
   };
   const handleDragEnd = (e: DragEndEvent) => {
-    if (isLocked) return setIsLocked(false);
+    if (isLocked) {
+      setIsLocked(false);
+      onTimerStop();
+      return;
+    }
     if (e.over && e.over.id === lockingSectionId) {
-      return setIsLocked(true);
+      setIsLocked(true);
+      onTimerStart();
+      return;
     }
   };
 
