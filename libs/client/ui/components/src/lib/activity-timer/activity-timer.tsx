@@ -14,7 +14,7 @@ import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ActivityStore } from '@bregenz-bewegt/client/common/stores';
 import { ReactNode, useState } from 'react';
 import { IonIcon } from '@ionic/react';
-import { timer, stopCircle, chevronForward } from 'ionicons/icons';
+import { timer, stopCircle, chevronForward, chevronBack } from 'ionicons/icons';
 
 const handleId = 'handle' as const;
 const lockingSectionId = 'locking-section' as const;
@@ -52,9 +52,15 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
         <div className="activity-timer__sliding-restrictor">
           {!isLocked && <Handle icon={timer} />}
           <div className="activity-timer__arrows">
-            {new Array(3).fill(null).map((_, i) => (
-              <IonIcon key={`arrow-pulse-${i}`} icon={chevronForward} />
-            ))}
+            {new Array(3)
+              .fill(null)
+              .map((_, i) =>
+                isLocked ? (
+                  <IonIcon key={`arrow-pulse-${i}`} icon={chevronBack} />
+                ) : (
+                  <IonIcon key={`arrow-pulse-${i}`} icon={chevronForward} />
+                )
+              )}
           </div>
           <LockingSection>
             {isLocked ? <Handle icon={stopCircle} /> : null}
