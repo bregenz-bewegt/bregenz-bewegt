@@ -1,4 +1,4 @@
-import './activity-slider.scss';
+import './activity-timer.scss';
 import {
   DndContext,
   DragEndEvent,
@@ -19,11 +19,13 @@ import { timer, stopCircle } from 'ionicons/icons';
 const handleId = 'handle' as const;
 const lockingSectionId = 'locking-section' as const;
 
-export interface ActivitySliderProps {
+export interface ActivityTimerProps {
+  onTimerStart?: () => void;
+  onTimerStop?: () => void;
   activityStore?: ActivityStore;
 }
 
-export const ActivitySlider: React.FC<ActivitySliderProps> = ({
+export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   activityStore,
 }) => {
   const [isLocked, setIsLocked] = useState<boolean>(false);
@@ -40,7 +42,7 @@ export const ActivitySlider: React.FC<ActivitySliderProps> = ({
   };
 
   return (
-    <div className="activity-slider">
+    <div className="activity-timer">
       <DndContext
         sensors={sensors}
         onDragStart={handleDragStart}

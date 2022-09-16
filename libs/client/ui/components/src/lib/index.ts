@@ -10,4 +10,4 @@ export * from './coin-depot/coin-depot';
 export * from './title-banner/title-banner';
 export * from './quick-filter/quick-filter';
 export * from './otp-input/otp-input';
-export * from './activity-slider/activity-slider';
+export * from './activity-timer/activity-timer';
