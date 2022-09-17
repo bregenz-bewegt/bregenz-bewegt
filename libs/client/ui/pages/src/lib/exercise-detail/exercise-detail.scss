@@ -71,7 +71,7 @@
     }
 
     &__timer {
-      padding: 0 var(--spacing-l);
+      padding: var(--spacing-m) var(--spacing-l) 0 var(--spacing-l);
     }
   }
 }
