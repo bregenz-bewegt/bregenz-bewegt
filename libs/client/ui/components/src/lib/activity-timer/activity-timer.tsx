@@ -84,7 +84,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
                   seconds: stopwatch.seconds,
                   minutes: stopwatch.minutes,
                   hours: stopwatch.hours,
-                }).format('hh:mm:ss')}
+                }).format('HH:mm:ss')}
               </IonText>
             </div>
           ) : (
