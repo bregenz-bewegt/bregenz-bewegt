@@ -65,8 +65,6 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
     }
   };
 
-  console.log(stopwatch);
-
   return (
     <div className="activity-timer">
       <DndContext
