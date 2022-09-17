@@ -32,7 +32,6 @@ import {
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
 import { play } from 'ionicons/icons';
-import { useStopwatch } from 'react-timer-hook';
 
 interface MatchParams {
   park: string;

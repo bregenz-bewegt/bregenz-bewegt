@@ -14,7 +14,13 @@ import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ActivityStore } from '@bregenz-bewegt/client/common/stores';
 import { ReactNode, useState } from 'react';
 import { IonIcon, IonText } from '@ionic/react';
-import { timer, stopCircle, chevronForward, chevronBack } from 'ionicons/icons';
+import {
+  timer,
+  stopCircle,
+  chevronForward,
+  chevronBack,
+  lockClosed,
+} from 'ionicons/icons';
 import { useStopwatch } from 'react-timer-hook';
 import moment from 'moment';
 
@@ -28,12 +34,14 @@ export interface ActivityTimerProps {
     minutes: number;
     hours: number;
   }) => void;
+  disabled?: boolean;
   activityStore?: ActivityStore;
 }
 
 export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   onTimerStart,
   onTimerStop,
+  disabled,
   activityStore,
 }) => {
   const [isLocked, setIsLocked] = useState<boolean>(false);
@@ -114,12 +122,14 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
 
 interface HandleProps {
   icon: string;
+  disabled?: ActivityTimerProps['disabled'];
 }
 
-const Handle: React.FC<HandleProps> = ({ icon }) => {
+const Handle: React.FC<HandleProps> = ({ icon, disabled }) => {
   const { setNodeRef, transform, listeners, attributes, isDragging } =
     useDraggable({
       id: handleId,
+      disabled,
     });
   const style = {
     transition: 'transform 0.5s',
@@ -139,7 +149,7 @@ const Handle: React.FC<HandleProps> = ({ icon }) => {
       {...listeners}
       {...attributes}
     >
-      <IonIcon icon={icon} />
+      <IonIcon icon={disabled ? lockClosed : icon} />
     </div>
   );
 };
