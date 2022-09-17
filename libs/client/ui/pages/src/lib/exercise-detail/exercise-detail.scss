@@ -69,5 +69,9 @@
         flex: 1;
       }
     }
+
+    &__timer {
+      padding: 0 var(--spacing-l);
+    }
   }
 }

@@ -112,10 +112,12 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
                 </IonText>
               </div>
             </div>
-            <ActivityTimer
-              onTimerStart={() => console.log('timer start')}
-              onTimerStop={() => console.log('timer stop')}
-            />
+            <div className="exercise-detail__content__timer">
+              <ActivityTimer
+                onTimerStart={() => console.log('timer start')}
+                onTimerStop={() => console.log('timer stop')}
+              />
+            </div>
           </div>
         </IonContent>
       </IonPage>
