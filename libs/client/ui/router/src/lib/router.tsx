@@ -130,16 +130,16 @@ export const Tabs: React.FC<TabsProps> = ({ tabStore }) => {
           </IonTabBar>
         )}
       </IonTabs>
-      {tabStore?.isShown && (
-        <IonFab vertical="bottom" horizontal="center" slot="fixed">
-          <IonFabButton
-            routerLink={tabRoutes.scan.route}
-            routerDirection="root"
-          >
-            <IonIcon icon={scan} />
-          </IonFabButton>
-        </IonFab>
-      )}
+      <IonFab
+        vertical="bottom"
+        horizontal="center"
+        slot="fixed"
+        hidden={tabStore?.isShown}
+      >
+        <IonFabButton routerLink={tabRoutes.scan.route} routerDirection="root">
+          <IonIcon icon={scan} />
+        </IonFabButton>
+      </IonFab>
     </>
   );
 };

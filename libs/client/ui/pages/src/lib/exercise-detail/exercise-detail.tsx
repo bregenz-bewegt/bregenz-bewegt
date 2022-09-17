@@ -12,7 +12,12 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
-import { ParkStore, parkStore } from '@bregenz-bewegt/client/common/stores';
+import {
+  ParkStore,
+  parkStore,
+  tabStore,
+  TabStore,
+} from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Exercise, Park } from '@bregenz-bewegt/client/types';
@@ -33,12 +38,14 @@ export interface ExerciseDetailProps extends RouteComponentProps<MatchParams> {
     exercises: Exercise[];
   };
   parkStore?: ParkStore;
+  tabStore?: TabStore;
 }
 
 export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
-  parkStore.storeKey
+  parkStore.storeKey,
+  tabStore.storeKey
 )(
-  observer(({ parkStore, match }) => {
+  observer(({ parkStore, tabStore, match }) => {
     const [park, setPark] = useState<
       Park & {
         exercises: Exercise[];
@@ -54,6 +61,11 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         setPark(park);
       });
     }, [match.params.exercise, match.params.park]);
+
+    useEffect(() => {
+      tabStore?.setIsShown(false);
+      return () => tabStore?.setIsShown(true);
+    }, []);
 
     return (
       <IonPage className="exercise-detail">
