@@ -58,11 +58,17 @@
 
   &__info {
     margin-left: var(--spacing-s);
+    color: var(--ion-color-secondary);
+    display: flex;
+    align-items: center;
   }
 
   &__time {
     font-weight: 600;
-    margin-left: var(--spacing-s);
+    margin-right: var(--spacing-s);
+    color: var(--ion-color-secondary);
+    display: flex;
+    align-items: center;
   }
 }
 
