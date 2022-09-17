@@ -3,7 +3,7 @@ import { action, makeAutoObservable, observable } from 'mobx';
 
 export class TabStore implements Store {
   storeKey = 'tabStore' as const;
-  @observable isShown = false;
+  @observable isShown = true;
 
   constructor() {
     makeAutoObservable(this);
