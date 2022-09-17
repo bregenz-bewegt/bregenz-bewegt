@@ -27,6 +27,7 @@ import {
   ActivityTimer,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
+import { play } from 'ionicons/icons';
 
 interface MatchParams {
   park: string;
@@ -84,7 +85,9 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           </IonToolbar>
         </IonHeader>
         <IonContent className="exercise-detail__content">
-          <div className="exercise-detail__content__video-wrapper"></div>
+          <div className="exercise-detail__content__video-wrapper">
+            <IonIcon icon={play} />
+          </div>
           <div className="exercise-detail__content__content">
             <div className="exercise-detail__content__content__park-wrapper">
               <IonText>
