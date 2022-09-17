@@ -108,7 +108,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabStore }) => {
             </Route>
           </Switch>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom" hidden={tabStore.isShown}>
+        <IonTabBar slot="bottom" hidden={tabStore?.isShown}>
           {Object.values(tabRoutes).map((page, i) => {
             if (page.label !== 'Scan') {
               return (
