@@ -16,6 +16,7 @@ import { ReactNode, useState } from 'react';
 import { IonIcon, IonText } from '@ionic/react';
 import { timer, stopCircle, chevronForward, chevronBack } from 'ionicons/icons';
 import { useStopwatch } from 'react-timer-hook';
+import moment from 'moment';
 
 const handleId = 'handle' as const;
 const lockingSectionId = 'locking-section' as const;
@@ -64,6 +65,8 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
     }
   };
 
+  console.log(stopwatch);
+
   return (
     <div className="activity-timer">
       <DndContext
@@ -77,8 +80,11 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
           {isLocked ? (
             <div className="activity-timer__time">
               <IonText>
-                {stopwatch.hours > 0 && `${stopwatch.hours}:`}
-                {stopwatch.minutes}:{stopwatch.seconds}
+                {moment({
+                  seconds: stopwatch.seconds,
+                  minutes: stopwatch.minutes,
+                  hours: stopwatch.hours,
+                }).format('hh:mm:ss')}
               </IonText>
             </div>
           ) : (
