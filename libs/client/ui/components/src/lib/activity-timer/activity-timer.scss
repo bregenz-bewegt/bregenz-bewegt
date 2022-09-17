@@ -32,7 +32,6 @@
   &__locking-section {
     height: var(--spacing-xxl);
     width: var(--spacing-xxl);
-    background-color: var(--ion-color-secondary);
     border-radius: var(--spacing-xs);
     margin-left: auto;
   }
@@ -55,6 +54,15 @@
         animation-delay: 2s;
       }
     }
+  }
+
+  &__info {
+    margin-left: var(--spacing-s);
+  }
+
+  &__time {
+    font-weight: 600;
+    margin-left: var(--spacing-s);
   }
 }
 

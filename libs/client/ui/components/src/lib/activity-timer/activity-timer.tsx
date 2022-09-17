@@ -59,16 +59,23 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
       >
         <div className="activity-timer__sliding-restrictor">
           {!isLocked && <Handle icon={timer} />}
-          <div className="activity-timer__arrows">
-            {new Array(3)
-              .fill(null)
-              .map((_, i) =>
-                isLocked ? (
-                  <IonIcon key={`arrow-pulse-${i}`} icon={chevronBack} />
-                ) : (
-                  <IonIcon key={`arrow-pulse-${i}`} icon={chevronForward} />
-                )
-              )}
+          {isLocked ? (
+            <div className="activity-timer__time">16:15</div>
+          ) : (
+            <div className="activity-timer__arrows">
+              {new Array(3)
+                .fill(null)
+                .map((_, i) =>
+                  isLocked ? (
+                    <IonIcon key={`arrow-pulse-${i}`} icon={chevronBack} />
+                  ) : (
+                    <IonIcon key={`arrow-pulse-${i}`} icon={chevronForward} />
+                  )
+                )}
+            </div>
+          )}
+          <div className="activity-timer__info">
+            {isLocked ? 'Halten um zu beenden' : 'Wischen um zu starten'}
           </div>
           <LockingSection>
             {isLocked ? <Handle icon={stopCircle} /> : null}
