@@ -20,7 +20,11 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Exercise, Park } from '@bregenz-bewegt/client/types';
+import {
+  Exercise,
+  Park,
+  ActivityTimerResult,
+} from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { location } from 'ionicons/icons';
 import {
@@ -28,6 +32,7 @@ import {
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
 import { play } from 'ionicons/icons';
+import { useStopwatch } from 'react-timer-hook';
 
 interface MatchParams {
   park: string;
@@ -67,6 +72,13 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       tabStore?.setIsShown(false);
       return () => tabStore?.setIsShown(true);
     }, []);
+
+    const handleTimerStart = () => {
+      console.log('start timer');
+    };
+    const handleTimerStop = (time: ActivityTimerResult) => {
+      console.log(time);
+    };
 
     return (
       <IonPage className="exercise-detail">
@@ -114,8 +126,8 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             </div>
             <div className="exercise-detail__content__timer">
               <ActivityTimer
-                onTimerStart={() => console.log('timer start')}
-                onTimerStop={() => console.log('timer stop')}
+                onTimerStart={handleTimerStart}
+                onTimerStop={handleTimerStop}
               />
             </div>
           </div>

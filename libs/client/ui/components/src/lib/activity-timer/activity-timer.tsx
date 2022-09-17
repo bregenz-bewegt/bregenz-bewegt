@@ -15,13 +15,18 @@ import { ActivityStore } from '@bregenz-bewegt/client/common/stores';
 import { ReactNode, useState } from 'react';
 import { IonIcon, IonText } from '@ionic/react';
 import { timer, stopCircle, chevronForward, chevronBack } from 'ionicons/icons';
+import { useStopwatch } from 'react-timer-hook';
 
 const handleId = 'handle' as const;
 const lockingSectionId = 'locking-section' as const;
 
 export interface ActivityTimerProps {
   onTimerStart: () => void;
-  onTimerStop: () => void;
+  onTimerStop: (time: {
+    seconds: number;
+    minutes: number;
+    hours: number;
+  }) => void;
   activityStore?: ActivityStore;
 }
 
@@ -32,6 +37,10 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
 }) => {
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const sensors = useSensors(useSensor(TouchSensor), useSensor(MouseSensor));
+  const stopwatch = useStopwatch({
+    autoStart: false,
+    offsetTimestamp: new Date(),
+  });
 
   const handleDragStart = (e: DragStartEvent) => {
     //
@@ -39,11 +48,17 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   const handleDragEnd = (e: DragEndEvent) => {
     if (isLocked) {
       setIsLocked(false);
-      onTimerStop();
+      stopwatch.reset();
+      onTimerStop({
+        seconds: stopwatch.seconds,
+        minutes: stopwatch.minutes,
+        hours: stopwatch.hours,
+      });
       return;
     }
     if (e.over && e.over.id === lockingSectionId) {
       setIsLocked(true);
+      stopwatch.start();
       onTimerStart();
       return;
     }
@@ -61,7 +76,10 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
           {!isLocked && <Handle icon={timer} />}
           {isLocked ? (
             <div className="activity-timer__time">
-              <IonText>16:15</IonText>
+              <IonText>
+                {stopwatch.hours > 0 && `${stopwatch.hours}:`}
+                {stopwatch.minutes}:{stopwatch.seconds}
+              </IonText>
             </div>
           ) : (
             <div className="activity-timer__arrows">
