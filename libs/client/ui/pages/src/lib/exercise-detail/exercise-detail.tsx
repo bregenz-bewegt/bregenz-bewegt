@@ -73,11 +73,11 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     }, []);
 
     const handleTimerStart = () => {
-      console.log('start timer');
+      //
     };
 
     const handleTimerStop = (time: ActivityTimerResult) => {
-      console.log(time);
+      //
     };
 
     return (

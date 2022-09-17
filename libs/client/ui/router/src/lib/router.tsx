@@ -9,7 +9,7 @@ import {
   IonFabButton,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from './tabs';
 import { scan } from 'ionicons/icons';
 import {
@@ -64,51 +64,51 @@ export const Tabs: React.FC<TabsProps> = inject(tabStore.storeKey)(
       <>
         <IonTabs>
           <IonRouterOutlet>
-            <Switch>
-              <Route
-                exact
-                path={'/reset-password/:token'}
-                component={ResetPassword}
-              ></Route>
-              <Route
-                exact
-                path={`${tabRoutes.start.route}/:park/:exercise`}
-                component={ExerciseDetail}
-              />
-              <Route
-                exact
-                path={`${tabRoutes.start.route}/:park`}
-                component={ParkDetail}
-              />
-              <Route
-                exact
-                path={tabRoutes.start.route}
-                component={tabRoutes.start.component}
-              ></Route>
-              <Route
-                exact
-                path={tabRoutes.leaderboard.route}
-                component={tabRoutes.leaderboard.component}
-              ></Route>
-              <Route
-                exact
-                path={tabRoutes.scan.route}
-                component={tabRoutes.scan.component}
-              ></Route>
-              <Route
-                exact
-                path={tabRoutes.analytics.route}
-                component={tabRoutes.analytics.component}
-              ></Route>
-              <Route
-                exact
-                path={tabRoutes.profile.route}
-                component={tabRoutes.profile.component}
-              ></Route>
-              <Route path="">
-                <Redirect to="/start" />
-              </Route>
-            </Switch>
+            {/* <Switch> */}
+            <Route
+              exact
+              path={'/reset-password/:token'}
+              component={ResetPassword}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.start.route}/:park/:exercise`}
+              component={ExerciseDetail}
+            />
+            <Route
+              exact
+              path={`${tabRoutes.start.route}/:park`}
+              component={ParkDetail}
+            />
+            <Route
+              exact
+              path={tabRoutes.start.route}
+              component={tabRoutes.start.component}
+            ></Route>
+            <Route
+              exact
+              path={tabRoutes.leaderboard.route}
+              component={tabRoutes.leaderboard.component}
+            ></Route>
+            <Route
+              exact
+              path={tabRoutes.scan.route}
+              component={tabRoutes.scan.component}
+            ></Route>
+            <Route
+              exact
+              path={tabRoutes.analytics.route}
+              component={tabRoutes.analytics.component}
+            ></Route>
+            <Route
+              exact
+              path={tabRoutes.profile.route}
+              component={tabRoutes.profile.component}
+            ></Route>
+            <Route path="">
+              <Redirect to="/start" />
+            </Route>
+            {/* </Switch> */}
           </IonRouterOutlet>
           <IonTabBar slot="bottom" hidden={!tabStore?.isShown}>
             {Object.values(tabRoutes).map((page, i) => {
