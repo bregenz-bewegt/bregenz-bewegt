@@ -60,8 +60,6 @@ export interface TabsProps {
 
 export const Tabs: React.FC<TabsProps> = inject(tabStore.storeKey)(
   observer(({ tabStore }) => {
-    console.log(tabStore?.isShown);
-
     return (
       <>
         <IonTabs>

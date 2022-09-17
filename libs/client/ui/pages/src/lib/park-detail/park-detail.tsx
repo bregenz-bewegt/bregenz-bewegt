@@ -66,12 +66,11 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     ) : (
       <IonPage className="park-detail">
         {/* <Header /> */}
-        <IonHeader>
+        <IonHeader mode="ios">
           <IonToolbar>
             <IonButtons>
               <IonBackButton
                 color="primary"
-                mode="ios"
                 defaultHref={tabRoutes.start.route}
                 text="Zurück"
               />

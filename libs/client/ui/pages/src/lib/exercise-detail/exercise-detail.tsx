@@ -71,12 +71,11 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     return (
       <IonPage className="exercise-detail">
         {/* <Header /> */}
-        <IonHeader>
+        <IonHeader mode="ios">
           <IonToolbar>
             <IonButtons>
               <IonBackButton
                 color="primary"
-                mode="ios"
                 defaultHref={tabRoutes.start.route}
                 text="Zurück"
               />
