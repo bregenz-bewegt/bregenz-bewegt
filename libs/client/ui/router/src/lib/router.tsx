@@ -108,27 +108,25 @@ export const Tabs: React.FC<TabsProps> = ({ tabStore }) => {
             </Route>
           </Switch>
         </IonRouterOutlet>
-        {tabStore?.isShown && (
-          <IonTabBar slot="bottom">
-            {Object.values(tabRoutes).map((page, i) => {
-              if (page.label !== 'Scan') {
-                return (
-                  <IonTabButton
-                    mode="ios"
-                    tab={page.route}
-                    href={page.route}
-                    key={i}
-                  >
-                    <IonIcon icon={page.icon} />
-                    <IonLabel>{page.label}</IonLabel>
-                  </IonTabButton>
-                );
-              } else {
-                return <IonTabButton disabled tab={page.route}></IonTabButton>;
-              }
-            })}
-          </IonTabBar>
-        )}
+        <IonTabBar slot="bottom" hidden={tabStore.isShown}>
+          {Object.values(tabRoutes).map((page, i) => {
+            if (page.label !== 'Scan') {
+              return (
+                <IonTabButton
+                  mode="ios"
+                  tab={page.route}
+                  href={page.route}
+                  key={i}
+                >
+                  <IonIcon icon={page.icon} />
+                  <IonLabel>{page.label}</IonLabel>
+                </IonTabButton>
+              );
+            } else {
+              return <IonTabButton disabled tab={page.route}></IonTabButton>;
+            }
+          })}
+        </IonTabBar>
       </IonTabs>
       <IonFab
         vertical="bottom"
