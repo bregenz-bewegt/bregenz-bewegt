@@ -125,7 +125,9 @@ const Handle: React.FC<HandleProps> = ({ icon }) => {
     transition: 'transform 0.5s',
     ...(isDragging && { transition: undefined }),
     ...(transform && {
-      transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      transform: `${
+        transform && `translate3d(${transform.x}px, ${transform.y}px, 0)`
+      }${isDragging && ` scale(.9)`}`,
     }),
   };
 

@@ -44,7 +44,7 @@
 
     ion-icon {
       color: var(--ion-color-secondary);
-      animation: arrow-pulse 3s ease infinite;
+      animation: arrow-pulse 3s ease-out infinite;
 
       &:nth-of-type(2) {
         animation-delay: 1s;
