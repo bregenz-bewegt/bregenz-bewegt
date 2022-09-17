@@ -84,29 +84,34 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           </IonToolbar>
         </IonHeader>
         <IonContent className="exercise-detail__content">
-          <div className="exercise-detail__content__video-wrapper">
-            <IonIcon icon={play} />
-          </div>
-          <div className="exercise-detail__content__content">
-            <div className="exercise-detail__content__content__park-wrapper">
-              <IonText>
-                <h1>{park?.name}</h1>
-              </IonText>
-              <IonNote className="exercise-detail__content__content__location">
-                <IonIcon icon={location} />
-                {park?.address}
-              </IonNote>
+          <div className="exercise-detail__content__flex-wrapper">
+            <div className="exercise-detail__content__video-wrapper">
+              <IonIcon icon={play} />
             </div>
-            <div className="exercise-detail__content__content_exercise-wrapper"></div>
-            <IonText>
-              <h2>{park?.exercises[0].name}</h2>
-              {park?.exercises[0].difficulty && (
-                <DifficultyBadge difficulty={park?.exercises[0].difficulty} />
-              )}
-            </IonText>
-            <IonText>
-              <p>{park?.exercises[0].description}</p>
-            </IonText>
+            <div className="exercise-detail__content__content">
+              <div className="exercise-detail__content__content__park-wrapper">
+                <IonText>
+                  <h1>{park?.name}</h1>
+                </IonText>
+                <IonNote className="exercise-detail__content__content__location">
+                  <IonIcon icon={location} />
+                  {park?.address}
+                </IonNote>
+              </div>
+              <div className="exercise-detail__content__content__exercise-wrapper">
+                <IonText>
+                  <h2>{park?.exercises[0].name}</h2>
+                  {park?.exercises[0].difficulty && (
+                    <DifficultyBadge
+                      difficulty={park?.exercises[0].difficulty}
+                    />
+                  )}
+                </IonText>
+                <IonText>
+                  <p>{park?.exercises[0].description}</p>
+                </IonText>
+              </div>
+            </div>
             <ActivityTimer
               onTimerStart={() => console.log('timer start')}
               onTimerStop={() => console.log('timer stop')}
