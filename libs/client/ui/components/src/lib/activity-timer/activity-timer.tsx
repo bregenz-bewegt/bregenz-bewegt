@@ -82,7 +82,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
         modifiers={[restrictToParentElement]}
       >
         <div className="activity-timer__sliding-restrictor">
-          {!isLocked && <Handle icon={timer} />}
+          {!isLocked && <Handle disabled={disabled} icon={timer} />}
           {isLocked ? (
             <div className="activity-timer__time">
               <IonText>
@@ -108,11 +108,15 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
           )}
           <div className="activity-timer__info">
             <IonText>
-              {isLocked ? 'Halten um zu beenden' : 'Übung starten'}
+              {disabled
+                ? 'Übung gesperrt'
+                : isLocked
+                ? 'Halten um zu beenden'
+                : 'Übung starten'}
             </IonText>
           </div>
           <LockingSection>
-            {isLocked ? <Handle icon={stopCircle} /> : null}
+            {isLocked ? <Handle disabled={disabled} icon={stopCircle} /> : null}
           </LockingSection>
         </div>
       </DndContext>
