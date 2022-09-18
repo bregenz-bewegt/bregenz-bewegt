@@ -1,6 +1,6 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { Injectable } from '@nestjs/common';
-import { Exercise, Park, Prisma } from '@prisma/client';
+import { Exercise, Park } from '@prisma/client';
 
 @Injectable()
 export class ExerciseService {
@@ -10,12 +10,10 @@ export class ExerciseService {
     return this.prismaService.exercise.findUnique({ where: { id: id } });
   }
 
-  findByIdWithPark(id: Exercise['id']): Prisma.Prisma__ExerciseClient<
-    Exercise & {
-      parks: Park[];
-    }
-  > {
-    return this.prismaService.exercise.findUnique({
+  async findByIdWithPark(
+    id: Exercise['id']
+  ): Promise<Exercise & { parks: Park[] }> {
+    return await this.prismaService.exercise.findUnique({
       where: { id: id },
       include: { parks: true },
     });
