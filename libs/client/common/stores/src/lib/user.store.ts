@@ -2,6 +2,7 @@ import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
 import type { User } from '@bregenz-bewegt/client/types';
 import type {
+  ForgotPasswordDto,
   LoginDto,
   PatchProfileDto,
   RegisterDto,
@@ -173,8 +174,13 @@ export class UserStore implements Store {
     return { access_token, refresh_token };
   }
 
-  async forgotPassword() {
-    const { data } = await http.post('/auth/forgot-password');
+  async changePassword() {
+    const { data } = await http.post('/auth/change-password');
+    return data;
+  }
+
+  async forgotPassword(dto: ForgotPasswordDto) {
+    const { data } = await http.post('/auth/forgot-password', dto);
     return data;
   }
 

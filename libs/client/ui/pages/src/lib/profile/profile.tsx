@@ -82,7 +82,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     });
     const handleChangePassword = () => {
       userStore
-        ?.forgotPassword()
+        ?.changePassword()
         .then(() => {
           presentAlert({
             header: 'Passwort zurücksetzen',
