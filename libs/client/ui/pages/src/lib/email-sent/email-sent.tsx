@@ -14,7 +14,7 @@ export const EmailSent: React.FC<EmailSentProps> = () => {
           <TitleBanner />
           <div className="email-sent__content__email-sent">
             <IonText>
-              <h2>Passwort vergessen</h2>
+              <h2>E-Mail gesendet</h2>
             </IonText>
             <IonButton
               mode="ios"
