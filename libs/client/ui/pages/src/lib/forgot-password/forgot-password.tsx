@@ -9,6 +9,7 @@ import {
   IonPage,
   IonSpinner,
   IonText,
+  useIonRouter,
   useIonToast,
 } from '@ionic/react';
 import { useFormik } from 'formik';
@@ -24,19 +25,23 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
   userStore.storeKey
 )(
   observer(({ userStore }) => {
+    const router = useIonRouter();
     const [presentToast] = useIonToast();
     const forgot = useFormik({
       initialValues: {
         email: '',
       },
       validationSchema: forgotPasswordSchema,
-      onSubmit: (values, { setSubmitting, setErrors }) => {
+      onSubmit: (values, { setSubmitting }) => {
         userStore
           ?.forgotPassword({ email: values.email })
           .then((data) => {
+            router.push('/email-sent');
+            setSubmitting(false);
             console.log(data);
           })
           .catch(() => {
+            setSubmitting(false);
             presentToast({
               message: 'Etwas ist schiefgelaufen',
               icon: closeCircleOutline,
