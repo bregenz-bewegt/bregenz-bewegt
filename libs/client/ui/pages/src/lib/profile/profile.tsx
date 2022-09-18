@@ -179,6 +179,13 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         <IonContent fullscreen className="profile__content">
           <IonGrid>
             <IonRow className="ion-justify-content-center">
+              <IonText>
+                <h1 className="profile__content__username">
+                  {userStore?.user?.username}
+                </h1>
+              </IonText>
+            </IonRow>
+            <IonRow className="ion-justify-content-center">
               <IonAvatar>
                 <img
                   onLoad={() => setIsImageLoaded(true)}
@@ -250,13 +257,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 onChange={profile.handleChange}
                 onBlur={profile.handleBlur}
                 disabled={!isImageLoaded}
-              />
-            </IonRow>
-            <IonRow>
-              <Input
-                label="Benutzername"
-                value={userStore?.user?.username}
-                disabled
               />
             </IonRow>
             <IonRow className="profile__content__password-row">
