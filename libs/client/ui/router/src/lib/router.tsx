@@ -20,6 +20,7 @@ import {
   ParkDetail,
   ExerciseDetail,
   ResetPassword,
+  ForgotPassword,
 } from '@bregenz-bewegt/client-ui-pages';
 import { inject, observer } from 'mobx-react';
 import {
@@ -152,6 +153,7 @@ export const PublicRouterOutlet: React.FC = () => {
   return (
     <IonRouterOutlet>
       <Route exact path={'/intro'} component={Intro}></Route>
+      <Route exact path={'/forgot-password'} component={ForgotPassword}></Route>
       <Route exact path={'/login'} component={Login}></Route>
       <Route exact path={'/register'} component={Register}></Route>
       <Route path="">

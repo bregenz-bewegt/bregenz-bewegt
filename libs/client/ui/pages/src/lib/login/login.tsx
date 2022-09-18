@@ -129,7 +129,10 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 onChange={login.handleChange}
                 onBlur={login.handleBlur}
               />
-              <Link className="login__content__login__forgot-password" to={'#'}>
+              <Link
+                className="login__content__login__forgot-password"
+                to={'/forgot-password'}
+              >
                 Passwort vergessen?
               </Link>
               <IonButton
