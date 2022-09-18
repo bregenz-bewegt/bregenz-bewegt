@@ -9,10 +9,11 @@ import {
   IonPage,
   IonSpinner,
   IonText,
+  useIonToast,
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
-import { chevronBack } from 'ionicons/icons';
+import { chevronBack, closeCircleOutline } from 'ionicons/icons';
 import './forgot-password.scss';
 
 export interface ForgotPasswordProps {
@@ -23,13 +24,28 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
   userStore.storeKey
 )(
   observer(({ userStore }) => {
+    const [presentToast] = useIonToast();
     const forgot = useFormik({
       initialValues: {
         email: '',
       },
       validationSchema: forgotPasswordSchema,
       onSubmit: (values, { setSubmitting, setErrors }) => {
-        //
+        userStore
+          ?.forgotPassword({ email: values.email })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch(() => {
+            presentToast({
+              message: 'Etwas ist schiefgelaufen',
+              icon: closeCircleOutline,
+              duration: 2000,
+              position: 'top',
+              mode: 'ios',
+              color: 'danger',
+            });
+          });
       },
     });
 
