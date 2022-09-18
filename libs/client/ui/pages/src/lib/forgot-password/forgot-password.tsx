@@ -48,6 +48,10 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
                 onChange={forgot.handleChange}
                 onBlur={forgot.handleBlur}
               ></Input>
+              <IonText className="forgot-password__content__forgot-password__info">
+                Es wird ein Link zum Zurücksetzen deines Passworts an deine
+                E-Mail Adresse gesandt.
+              </IonText>
               <IonButton
                 mode="ios"
                 expand="block"
