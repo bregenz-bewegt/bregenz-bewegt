@@ -72,6 +72,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
                 color="primary"
                 fill="outline"
                 routerLink="/login"
+                routerDirection="back"
               >
                 Anmelden
               </IonButton>
