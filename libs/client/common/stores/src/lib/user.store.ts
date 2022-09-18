@@ -1,7 +1,7 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
 import type { User } from '@bregenz-bewegt/client/types';
-import type {
+import {
   ForgotPasswordDto,
   LoginDto,
   PatchProfileDto,
