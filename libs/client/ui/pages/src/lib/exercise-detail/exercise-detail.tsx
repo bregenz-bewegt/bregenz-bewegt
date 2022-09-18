@@ -39,9 +39,6 @@ interface MatchParams {
 }
 
 export interface ExerciseDetailProps extends RouteComponentProps<MatchParams> {
-  parkWithExercise: Park & {
-    exercises: Exercise[];
-  };
   parkStore?: ParkStore;
   tabStore?: TabStore;
 }
