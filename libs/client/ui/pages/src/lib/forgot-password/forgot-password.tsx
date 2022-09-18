@@ -4,6 +4,7 @@ import { forgotPasswordSchema } from '@bregenz-bewegt/client/common/validation';
 import {
   IonButton,
   IonContent,
+  IonIcon,
   IonLabel,
   IonPage,
   IonSpinner,
@@ -11,6 +12,7 @@ import {
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
+import { chevronBack } from 'ionicons/icons';
 import './forgot-password.scss';
 
 export interface ForgotPasswordProps {
@@ -74,7 +76,8 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
                 routerLink="/login"
                 routerDirection="back"
               >
-                Anmelden
+                <IonIcon icon={chevronBack} slot="start" />
+                Zurück
               </IonButton>
             </div>
           </div>
