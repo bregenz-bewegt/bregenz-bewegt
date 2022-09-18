@@ -82,7 +82,6 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
     return (
       <IonPage className="exercise-detail">
-        {/* <Header /> */}
         <IonHeader mode="ios">
           <IonToolbar>
             <IonButtons>
