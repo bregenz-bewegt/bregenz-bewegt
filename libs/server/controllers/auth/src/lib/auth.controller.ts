@@ -80,6 +80,7 @@ export class AuthController {
     return this.authService.changePassword(email);
   }
 
+  @Public()
   @Post('forgot-password')
   forgotPassword(@Body() dto: ForgotPasswordDto): Promise<void> {
     return this.authService.changePassword(dto.email);
