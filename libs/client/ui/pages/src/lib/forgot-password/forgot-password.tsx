@@ -68,7 +68,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
                 expand="block"
                 color="primary"
                 fill="outline"
-                routerLink="/register"
+                routerLink="/login"
               >
                 Anmelden
               </IonButton>
