@@ -7,6 +7,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import {
+  ForgotPasswordDto,
   LoginDto,
   RegisterDto,
   ResetPasswordDto,
@@ -72,12 +73,16 @@ export class AuthController {
     return this.authService.refreshTokens(userId, refreshToken);
   }
 
-  @Post('forgot-password')
-  forgotPassword(
-    @GetCurrentUser('email', 'sub') email: User['email'],
-    @GetCurrentUser('sub') userId: User['id']
+  @Post('change-password')
+  changePassword(
+    @GetCurrentUser('email', 'sub') email: User['email']
   ): Promise<void> {
-    return this.authService.forgotPassword(userId, email);
+    return this.authService.changePassword(email);
+  }
+
+  @Post('forgot-password')
+  forgotPassword(@Body() dto: ForgotPasswordDto): Promise<void> {
+    return this.authService.changePassword(dto.email);
   }
 
   @Public()

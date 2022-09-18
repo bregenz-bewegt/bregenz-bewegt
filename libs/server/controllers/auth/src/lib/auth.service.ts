@@ -250,22 +250,29 @@ export class AuthService {
     return { token, secret };
   }
 
-  async forgotPassword(
-    userId: User['id'],
-    email: User['email']
-  ): Promise<void> {
-    const token = await this.signPasswordResetToken(userId, email);
+  async changePassword(email: User['email']): Promise<void> {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) {
+      throw new ForbiddenException();
+    }
+
+    const token = await this.signPasswordResetToken(user.id, email);
     const tokenHash = await argon.hash(token);
 
-    const user = await this.prismaService.user.update({
-      where: { id: userId },
+    const updatedUser = await this.prismaService.user.update({
+      where: { id: user.id },
       data: {
         passwordResetToken: tokenHash,
       },
     });
 
-    if (!user || !user.passwordResetToken) {
-      throw new ForbiddenException('Access denied');
+    if (!updatedUser.passwordResetToken) {
+      throw new ForbiddenException();
     }
 
     return this.mailService.sendPasswordResetmail({
