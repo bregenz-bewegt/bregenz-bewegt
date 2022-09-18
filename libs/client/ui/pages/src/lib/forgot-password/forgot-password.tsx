@@ -1,5 +1,6 @@
 import { TitleBanner, Input } from '@bregenz-bewegt/client-ui-components';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
+import { forgotPasswordSchema } from '@bregenz-bewegt/client/common/validation';
 import {
   IonButton,
   IonContent,
@@ -24,6 +25,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
       initialValues: {
         email: '',
       },
+      validationSchema: forgotPasswordSchema,
       onSubmit: (values, { setSubmitting, setErrors }) => {
         //
       },
@@ -54,6 +56,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
                 color="primary"
                 onClick={() => forgot.submitForm()}
                 disabled={forgot.isSubmitting}
+                className="forgot-password__content__forgot-password__button"
               >
                 {forgot.isSubmitting ? (
                   <IonLabel>

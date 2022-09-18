@@ -1,6 +1,6 @@
 import { Input, TitleBanner } from '@bregenz-bewegt/client-ui-components';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
-import { passwordResetSchema } from '@bregenz-bewegt/client/common/validation';
+import { resetPasswordSchema } from '@bregenz-bewegt/client/common/validation';
 import {
   IonButton,
   IonContent,
@@ -37,7 +37,7 @@ export const ResetPassword = inject(userStore.storeKey)(
         password: '',
         passwordConfirmation: '',
       },
-      validationSchema: passwordResetSchema,
+      validationSchema: resetPasswordSchema,
       onSubmit: (values, { setSubmitting }) => {
         userStore
           .resetPassword(values.password, match.params.token ?? '')
