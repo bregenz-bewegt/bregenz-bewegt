@@ -20,11 +20,7 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import {
-  Exercise,
-  Park,
-  ActivityTimerResult,
-} from '@bregenz-bewegt/client/types';
+import { Park, ActivityTimerResult } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { location } from 'ionicons/icons';
 import {
@@ -48,11 +44,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
   tabStore.storeKey
 )(
   observer(({ parkStore, tabStore, match }) => {
-    const [park, setPark] = useState<
-      Park & {
-        exercises: Exercise[];
-      }
-    >();
+    const [park, setPark] = useState<Required<Park>>();
 
     useEffect(() => {
       const parkId = +match.params.park;
