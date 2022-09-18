@@ -36,7 +36,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
             <TitleBanner />
             <div className="forgot-password__content__forgot-password">
               <IonText>
-                <h2>Passwort zurücksetzen</h2>
+                <h2>Passwort vergessen</h2>
               </IonText>
               <Input
                 name="email"
