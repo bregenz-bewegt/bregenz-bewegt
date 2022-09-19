@@ -27,12 +27,8 @@ export const EmailSent: React.FC<EmailSentProps> = () => {
               </IonText>
               <IonText>
                 <p>
-                  Bitte überprüfe dein E-Mail Postfach{' '}
-                  <IonText
-                    className="sent-email-address"
-                    color="primary"
-                  ></IonText>{' '}
-                  versandt wurde.
+                  Bitte überprüfe dein Postfach Eine E-Mail zum Zurücksetzen
+                  deines Passworts wurde versandt.
                 </p>
               </IonText>
             </IonRow>
