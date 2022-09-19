@@ -27,4 +27,12 @@ export class ParkController {
   > {
     return this.parkService.findByIdWithExercises(id);
   }
+
+  @Get(':park/exercises/:exercise')
+  getParkWithExercise(
+    @Param('park', ParseIntPipe) park: number,
+    @Param('exercise', ParseIntPipe) exercise: number
+  ): Promise<Park & { exercises: Exercise[] }> {
+    return this.parkService.getParkWithExercise(park, exercise);
+  }
 }

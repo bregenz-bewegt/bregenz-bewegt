@@ -173,7 +173,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       <IonPage className="profile">
         <IonHeader>
           <IonToolbar>
-            <IonTitle>Profile</IonTitle>
+            <IonTitle>Profil</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen className="profile__content">

@@ -21,15 +21,13 @@ export class UserStore implements Store {
     makeAutoObservable(this);
   }
 
-  @action async guest() {
+  async guest() {
     const { data } = await http.post('/auth/local/guest');
-
     return data;
   }
 
-  @action async register(dto: RegisterDto) {
+  async register(dto: RegisterDto) {
     const { data } = await http.post('/auth/local/register', dto);
-
     return data;
   }
 
@@ -52,6 +50,7 @@ export class UserStore implements Store {
       refresh_token: data.refresh_token,
     });
     this.setIsLoggedIn(true);
+
     return data;
   }
 
@@ -67,7 +66,6 @@ export class UserStore implements Store {
   async fetchProfile() {
     try {
       const { data } = await http.get('/users/profile');
-
       return data;
     } catch (error) {
       return;
@@ -80,7 +78,7 @@ export class UserStore implements Store {
     return <User>data;
   }
 
-  @action async editProfilePicture(picture: globalThis.File) {
+  async editProfilePicture(picture: globalThis.File) {
     const { data } = await http.post(
       '/users/profile-picture',
       {
@@ -175,9 +173,8 @@ export class UserStore implements Store {
     return { access_token, refresh_token };
   }
 
-  @action async forgotPassword() {
+  async forgotPassword() {
     const { data } = await http.post('/auth/forgot-password');
-
     return data;
   }
 

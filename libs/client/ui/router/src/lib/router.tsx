@@ -9,7 +9,7 @@ import {
   IonFabButton,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from './tabs';
 import { scan } from 'ionicons/icons';
 import {
@@ -22,7 +22,12 @@ import {
   ResetPassword,
 } from '@bregenz-bewegt/client-ui-pages';
 import { inject, observer } from 'mobx-react';
-import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
+import {
+  tabStore,
+  TabStore,
+  UserStore,
+  userStore,
+} from '@bregenz-bewegt/client/common/stores';
 import { useEffect } from 'react';
 
 export interface RouterProps {
@@ -49,12 +54,17 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
   })
 );
 
-export const Tabs: React.FC = () => {
-  return (
-    <>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Switch>
+export interface TabsProps {
+  tabStore?: TabStore;
+}
+
+export const Tabs: React.FC<TabsProps> = inject(tabStore.storeKey)(
+  observer(({ tabStore }) => {
+    return (
+      <>
+        <IonTabs>
+          <IonRouterOutlet>
+            {/* <Switch> */}
             <Route
               exact
               path={'/reset-password/:token'}
@@ -98,36 +108,45 @@ export const Tabs: React.FC = () => {
             <Route path="">
               <Redirect to="/start" />
             </Route>
-          </Switch>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          {Object.values(tabRoutes).map((page, i) => {
-            if (page.label !== 'Scan') {
-              return (
-                <IonTabButton
-                  mode="ios"
-                  tab={page.route}
-                  href={page.route}
-                  key={i}
-                >
-                  <IonIcon icon={page.icon} />
-                  <IonLabel>{page.label}</IonLabel>
-                </IonTabButton>
-              );
-            } else {
-              return <IonTabButton disabled tab={page.route}></IonTabButton>;
-            }
-          })}
-        </IonTabBar>
-      </IonTabs>
-      <IonFab vertical="bottom" horizontal="center" slot="fixed">
-        <IonFabButton routerLink={tabRoutes.scan.route} routerDirection="root">
-          <IonIcon icon={scan} />
-        </IonFabButton>
-      </IonFab>
-    </>
-  );
-};
+            {/* </Switch> */}
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom" hidden={!tabStore?.isShown}>
+            {Object.values(tabRoutes).map((page, i) => {
+              if (page.label !== 'Scan') {
+                return (
+                  <IonTabButton
+                    mode="ios"
+                    tab={page.route}
+                    href={page.route}
+                    key={i}
+                  >
+                    <IonIcon icon={page.icon} />
+                    <IonLabel>{page.label}</IonLabel>
+                  </IonTabButton>
+                );
+              } else {
+                return <IonTabButton disabled tab={page.route}></IonTabButton>;
+              }
+            })}
+          </IonTabBar>
+        </IonTabs>
+        <IonFab
+          vertical="bottom"
+          horizontal="center"
+          slot="fixed"
+          hidden={!tabStore?.isShown}
+        >
+          <IonFabButton
+            routerLink={tabRoutes.scan.route}
+            routerDirection="root"
+          >
+            <IonIcon icon={scan} />
+          </IonFabButton>
+        </IonFab>
+      </>
+    );
+  })
+);
 
 export const PublicRouterOutlet: React.FC = () => {
   return (

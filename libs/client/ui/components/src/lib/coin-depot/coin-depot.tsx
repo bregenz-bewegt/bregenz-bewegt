@@ -40,6 +40,7 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
           <IonButton
             expand="block"
             routerLink={tabRoutes.start.route}
+            routerDirection="back"
             mode="ios"
           >
             <IonIcon slot="start" icon={add} />
