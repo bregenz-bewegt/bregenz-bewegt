@@ -7,7 +7,7 @@ import {
   IonRow,
   IonText,
 } from '@ionic/react';
-import { chevronBack } from 'ionicons/icons';
+import { chevronBack, mailOpen } from 'ionicons/icons';
 import './email-sent.scss';
 
 /* eslint-disable-next-line */
@@ -21,6 +21,7 @@ export const EmailSent: React.FC<EmailSentProps> = () => {
           <TitleBanner />
           <div className="email-sent__content__email-sent">
             <IonRow className="ion-justify-content-center">
+              <IonIcon icon={mailOpen} />
               <IonText>
                 <h2>E-Mail gesendet</h2>
               </IonText>
