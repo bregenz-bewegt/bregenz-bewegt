@@ -35,7 +35,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
       onSubmit: (values, { setSubmitting }) => {
         userStore
           ?.forgotPassword({ email: values.email })
-          .then((data) => {
+          .then(() => {
             router.push('/email-sent');
             setSubmitting(false);
           })
