@@ -10,11 +10,10 @@ import {
   IonSpinner,
   IonText,
   useIonRouter,
-  useIonToast,
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
-import { chevronBack, closeCircleOutline } from 'ionicons/icons';
+import { chevronBack } from 'ionicons/icons';
 import './forgot-password.scss';
 
 export interface ForgotPasswordProps {
@@ -26,29 +25,21 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
 )(
   observer(({ userStore }) => {
     const router = useIonRouter();
-    const [presentToast] = useIonToast();
     const forgot = useFormik({
       initialValues: {
         email: '',
       },
       validationSchema: forgotPasswordSchema,
-      onSubmit: (values, { setSubmitting }) => {
+      onSubmit: (values, { setSubmitting, setErrors }) => {
         userStore
           ?.forgotPassword({ email: values.email })
           .then(() => {
             router.push('/email-sent');
             setSubmitting(false);
           })
-          .catch(() => {
+          .catch((error) => {
+            setErrors(error.response.data);
             setSubmitting(false);
-            presentToast({
-              message: 'Etwas ist schiefgelaufen',
-              icon: closeCircleOutline,
-              duration: 2000,
-              position: 'top',
-              mode: 'ios',
-              color: 'danger',
-            });
           });
       },
     });

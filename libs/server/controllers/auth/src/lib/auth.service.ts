@@ -19,6 +19,7 @@ import {
   VerifyDto,
 } from '@bregenz-bewegt/shared/types';
 import {
+  forgotPasswordError,
   loginError,
   registerError,
   RegisterErrorResponse,
@@ -258,22 +259,18 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new ForbiddenException();
+      throw new ForbiddenException(forgotPasswordError.USER_NOT_FOUND);
     }
 
     const token = await this.signPasswordResetToken(user.id, email);
     const tokenHash = await argon.hash(token);
 
-    const updatedUser = await this.prismaService.user.update({
+    await this.prismaService.user.update({
       where: { id: user.id },
       data: {
         passwordResetToken: tokenHash,
       },
     });
-
-    if (!updatedUser.passwordResetToken) {
-      throw new ForbiddenException();
-    }
 
     return this.mailService.sendPasswordResetmail({
       to: email,
