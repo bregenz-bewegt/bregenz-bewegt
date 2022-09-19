@@ -6,14 +6,18 @@
       justify-content: flex-end;
       flex-direction: column;
       flex: 1;
-      align-items: center;
 
       ion-row {
         display: flex;
-        justify-content: flex-end;
         flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
         flex: 1;
         text-align: center;
+      }
+
+      ion-button {
+        width: 100%;
       }
     }
   }

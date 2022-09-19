@@ -21,7 +21,7 @@ export const EmailSent: React.FC<EmailSentProps> = () => {
           <TitleBanner />
           <div className="email-sent__content__email-sent">
             <IonRow className="ion-justify-content-center">
-              <IonIcon icon={mailOpen} />
+              <IonIcon icon={mailOpen} size="large" />
               <IonText>
                 <h2>E-Mail gesendet</h2>
               </IonText>
