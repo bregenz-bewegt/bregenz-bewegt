@@ -1,5 +1,12 @@
 import { TitleBanner } from '@bregenz-bewegt/client-ui-components';
-import { IonButton, IonContent, IonIcon, IonPage, IonText } from '@ionic/react';
+import {
+  IonButton,
+  IonContent,
+  IonIcon,
+  IonPage,
+  IonRow,
+  IonText,
+} from '@ionic/react';
 import { chevronBack } from 'ionicons/icons';
 import './email-sent.scss';
 
@@ -13,9 +20,21 @@ export const EmailSent: React.FC<EmailSentProps> = () => {
         <div className="email-sent__flex-wrapper">
           <TitleBanner />
           <div className="email-sent__content__email-sent">
-            <IonText>
-              <h2>E-Mail gesendet</h2>
-            </IonText>
+            <IonRow className="ion-justify-content-center">
+              <IonText>
+                <h2>E-Mail gesendet</h2>
+              </IonText>
+              <IonText>
+                <p>
+                  Bitte überprüfe dein E-Mail Postfach{' '}
+                  <IonText
+                    className="sent-email-address"
+                    color="primary"
+                  ></IonText>{' '}
+                  versandt wurde.
+                </p>
+              </IonText>
+            </IonRow>
             <IonButton
               mode="ios"
               expand="block"

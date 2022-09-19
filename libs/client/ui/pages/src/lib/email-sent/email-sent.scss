@@ -2,9 +2,17 @@
   &__content {
     &__email-sent {
       width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      flex-direction: column;
+      flex: 1;
 
-      &__button {
-        margin-top: var(--spacing-m);
+      ion-row {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+        flex: 1;
+        text-align: center;
       }
     }
   }
