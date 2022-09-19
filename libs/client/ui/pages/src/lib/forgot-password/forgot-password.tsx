@@ -38,7 +38,6 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
           .then((data) => {
             router.push('/email-sent');
             setSubmitting(false);
-            console.log(data);
           })
           .catch(() => {
             setSubmitting(false);
