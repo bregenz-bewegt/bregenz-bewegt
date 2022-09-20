@@ -6,6 +6,8 @@ import {
   IonTitle,
   IonToolbar,
   useIonRouter,
+  useIonViewDidLeave,
+  useIonViewWillLeave,
 } from '@ionic/react';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner';
 import { QrReader } from 'react-qr-reader';
@@ -14,7 +16,7 @@ import { Capacitor } from '@capacitor/core';
 
 export const Scan: React.FC = () => {
   const router = useIonRouter();
-  const [scanResult, setScanResult] = useState<string>();
+  const [scanResult, setScanResult] = useState<string | null>(null);
   const [isNative, setIsNative] = useState<boolean>();
 
   const openNativeScanner = async () => {
@@ -37,12 +39,17 @@ export const Scan: React.FC = () => {
     try {
       url = new URL(scanResult ?? '');
     } catch (error) {
-      return setScanResult(undefined);
+      return setScanResult(null);
     }
 
     url && router.push(url.pathname);
-    return () => setScanResult(undefined);
   }, [scanResult]);
+
+  useIonViewDidLeave(() => {
+    setScanResult(null);
+  });
+
+  console.log(scanResult);
 
   return (
     <IonPage className="scan">
