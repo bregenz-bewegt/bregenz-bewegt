@@ -32,8 +32,16 @@ export const Scan: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log(scanResult);
-    scanResult && router.push(scanResult, 'none');
+    let url;
+
+    try {
+      url = new URL(scanResult ?? '');
+    } catch (error) {
+      return setScanResult(undefined);
+    }
+
+    url && router.push(url.pathname);
+    return () => setScanResult(undefined);
   }, [scanResult]);
 
   return (
@@ -48,12 +56,10 @@ export const Scan: React.FC = () => {
           className="web-scanner"
           constraints={{}}
           onResult={(result, error) => {
-            const text = result?.getText();
+            if (error) return;
+            const text = result?.getText() ?? '';
             if (error || !text) return;
-
-            if (result) {
-              setScanResult(result.getText());
-            }
+            setScanResult(text);
           }}
           videoContainerStyle={
             { paddingTop: 0, height: '100%', display: 'flex' } as CSSProperties
