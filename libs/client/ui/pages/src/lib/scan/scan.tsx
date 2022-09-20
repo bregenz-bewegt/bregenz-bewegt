@@ -43,8 +43,8 @@ export const Scan: React.FC = () => {
           onResult={(result, error) => {
             console.log(result, error);
           }}
-          videoContainerStyle={{ paddingTop: 0 }}
-          videoStyle={{ width: 'auto', height: '100%' }}
+          videoContainerStyle={{ paddingTop: 0, height: '100%' }}
+          videoStyle={{ width: 'auto' }}
         />
       </IonContent>
     </IonPage>
