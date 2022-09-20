@@ -16,7 +16,7 @@ export class UserStore implements Store {
   storeKey = 'userStore' as const;
   @observable user?: User;
   @observable isLoggedIn = false;
-  @observable isLoadingLoginState = false;
+  @observable isLoadingLoggedIn = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -116,7 +116,7 @@ export class UserStore implements Store {
   }
 
   @action setIsloadingLoginState(value: boolean) {
-    this.isLoadingLoginState = value;
+    this.isLoadingLoggedIn = value;
   }
 
   @action async initUser() {

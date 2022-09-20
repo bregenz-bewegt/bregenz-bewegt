@@ -12,7 +12,7 @@ export interface RouteGuardProps {
 
 export const RouteGuard: React.FC<RouteGuardProps> = inject(userStore.storeKey)(
   observer(({ children, userStore }: RouteGuardProps) => {
-    return userStore?.isLoadingLoginState ? (
+    return userStore?.isLoadingLoggedIn ? (
       <Loading />
     ) : userStore?.isLoggedIn ? (
       children

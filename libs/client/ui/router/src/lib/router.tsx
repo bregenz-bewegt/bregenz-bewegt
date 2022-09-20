@@ -18,7 +18,7 @@ export const Router: React.FC<RouterProps> = inject(userStore.storeKey)(
 
     return (
       <IonReactRouter>
-        {userStore?.isLoadingLoginState ? (
+        {userStore?.isLoadingLoggedIn ? (
           <Loading />
         ) : userStore?.isLoggedIn ? (
           <PrivateTabsOutlet />
