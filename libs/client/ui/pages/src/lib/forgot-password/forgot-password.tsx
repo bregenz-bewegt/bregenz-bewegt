@@ -15,6 +15,8 @@ import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { chevronBack } from 'ionicons/icons';
 import './forgot-password.scss';
+import { useLocation } from 'react-router';
+import { ForgotPasswordDto } from '@bregenz-bewegt/shared/types';
 
 export interface ForgotPasswordProps {
   userStore?: UserStore;
@@ -25,9 +27,12 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
 )(
   observer(({ userStore }) => {
     const router = useIonRouter();
+    const location = useLocation();
     const forgot = useFormik({
       initialValues: {
-        email: '',
+        email: ((state: ForgotPasswordDto) => (state.email ? state.email : ''))(
+          (location.state as ForgotPasswordDto) ?? {}
+        ),
       },
       validationSchema: forgotPasswordSchema,
       onSubmit: (values, { setSubmitting, setErrors }) => {

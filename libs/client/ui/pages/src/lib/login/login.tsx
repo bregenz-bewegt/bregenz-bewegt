@@ -18,6 +18,7 @@ import { useFormik } from 'formik';
 import { loginSchema } from '@bregenz-bewegt/client/common/validation';
 import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';
 import { loginError } from '@bregenz-bewegt/shared/errors';
+import { ForgotPasswordDto } from '@bregenz-bewegt/shared/types';
 
 export interface LoginProps {
   userStore?: UserStore;
@@ -131,7 +132,10 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
               />
               <Link
                 className="login__content__login__forgot-password"
-                to={'/forgot-password'}
+                to={{
+                  pathname: '/forgot-password',
+                  state: { email: login.values.email } as ForgotPasswordDto,
+                }}
               >
                 Passwort vergessen?
               </Link>
