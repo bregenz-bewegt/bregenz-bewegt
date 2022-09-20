@@ -8,7 +8,6 @@ import {
   IonPage,
   IonSpinner,
   IonText,
-  useIonAlert,
   useIonToast,
 } from '@ionic/react';
 import { useFormik } from 'formik';
@@ -16,6 +15,7 @@ import { inject, observer } from 'mobx-react';
 import { useEffect } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { closeCircleOutline } from 'ionicons/icons';
+import { checkmark } from 'ionicons/icons';
 import './reset-password.scss';
 
 interface MatchParams {
@@ -31,7 +31,6 @@ export const ResetPassword = inject(userStore.storeKey)(
     const navigateBacktoLogin = () => history.push(`/login`);
     const history = useHistory();
     const [presentToast] = useIonToast();
-    const [presentAlert] = useIonAlert();
     const reset = useFormik({
       initialValues: {
         password: '',
@@ -43,19 +42,15 @@ export const ResetPassword = inject(userStore.storeKey)(
           .resetPassword(values.password, match.params.token ?? '')
           .then(() => {
             setSubmitting(false);
-            presentAlert({
-              header: 'Passwort erfolgreich zurückgesetzt',
-              message: `Bitte melde dich erneut an`,
-              backdropDismiss: false,
-              buttons: [
-                {
-                  text: 'OK',
-                  handler: () => {
-                    userStore.logout();
-                  },
-                },
-              ],
+            presentToast({
+              message: 'Passwort erfolgreich geändert',
+              icon: checkmark,
+              duration: 2000,
+              position: 'top',
+              mode: 'ios',
+              color: 'success',
             });
+            navigateBacktoLogin();
           })
           .catch(() => {
             setSubmitting(false);
@@ -76,6 +71,10 @@ export const ResetPassword = inject(userStore.storeKey)(
       if (!match.params.token) {
         navigateBacktoLogin();
       }
+
+      userStore
+        .validateResetPassword(match.params.token)
+        .catch(() => navigateBacktoLogin());
     }, [match.params.token]);
 
     return (

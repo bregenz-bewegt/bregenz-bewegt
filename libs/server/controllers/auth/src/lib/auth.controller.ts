@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Headers,
   Post,
   UseGuards,
@@ -84,6 +85,17 @@ export class AuthController {
   @Post('forgot-password')
   forgotPassword(@Body() dto: ForgotPasswordDto): Promise<void> {
     return this.authService.changePassword(dto.email);
+  }
+
+  @Public()
+  @UseGuards(PasswordResetTokenGuard)
+  @Get('validate-reset-password')
+  validateResetPassword(
+    @Headers('authorization') authorization: string,
+    @GetCurrentUser('email') email: string
+  ): Promise<void> {
+    const token = this.utilService.extractBearerToken(authorization);
+    return this.authService.validateResetPassword(email, token);
   }
 
   @Public()

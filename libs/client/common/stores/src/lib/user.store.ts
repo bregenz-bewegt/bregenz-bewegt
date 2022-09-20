@@ -184,6 +184,14 @@ export class UserStore implements Store {
     return data;
   }
 
+  @action async validateResetPassword(resetToken: string) {
+    await http.get(`/auth/validate-reset-password`, {
+      headers: {
+        authorization: `Bearer ${resetToken}`,
+      },
+    });
+  }
+
   @action async resetPassword(newPassword: string, resetToken: string) {
     await http.post(
       `/auth/reset-password`,
