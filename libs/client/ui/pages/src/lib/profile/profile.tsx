@@ -56,7 +56,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               firstname: result.firstname ?? '',
               lastname: result.lastname ?? '',
             });
-
             setSubmitting(false);
             presentToast({
               message: 'Änderungen gespeichert',
