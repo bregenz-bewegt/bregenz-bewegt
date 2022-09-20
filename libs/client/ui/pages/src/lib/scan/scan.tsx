@@ -5,6 +5,7 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
+  useIonRouter,
 } from '@ionic/react';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner';
 import { QrReader } from 'react-qr-reader';
@@ -12,12 +13,13 @@ import { CSSProperties, useEffect, useState } from 'react';
 import { Capacitor } from '@capacitor/core';
 
 export const Scan: React.FC = () => {
-  const [qrResult, setQrResult] = useState<string>('');
+  const router = useIonRouter();
+  const [scanResult, setScanResult] = useState<string>();
   const [isNative, setIsNative] = useState<boolean>();
 
   const openNativeScanner = async () => {
     const data = await BarcodeScanner.scan();
-    setQrResult(data.text ?? 'test');
+    setScanResult(data.text ?? 'test');
   };
 
   useEffect(() => {
@@ -28,6 +30,11 @@ export const Scan: React.FC = () => {
       openNativeScanner();
     }
   }, []);
+
+  useEffect(() => {
+    console.log(scanResult);
+    scanResult && router.push(scanResult, 'none');
+  }, [scanResult]);
 
   return (
     <IonPage className="scan">
@@ -41,7 +48,12 @@ export const Scan: React.FC = () => {
           className="web-scanner"
           constraints={{}}
           onResult={(result, error) => {
-            console.log(result, error);
+            const text = result?.getText();
+            if (error || !text) return;
+
+            if (result) {
+              setScanResult(result.getText());
+            }
           }}
           videoContainerStyle={
             { paddingTop: 0, height: '100%', display: 'flex' } as CSSProperties
