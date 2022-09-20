@@ -8,7 +8,7 @@ import {
 } from '@ionic/react';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner';
 import { QrReader } from 'react-qr-reader';
-import { useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import { Capacitor } from '@capacitor/core';
 
 export const Scan: React.FC = () => {
@@ -43,8 +43,16 @@ export const Scan: React.FC = () => {
           onResult={(result, error) => {
             console.log(result, error);
           }}
-          videoContainerStyle={{ paddingTop: 0, height: '100%' }}
-          videoStyle={{ width: 'auto' }}
+          videoContainerStyle={
+            { paddingTop: 0, height: '100%', display: 'flex' } as CSSProperties
+          }
+          videoStyle={
+            {
+              width: 'auto',
+              objectFit: 'cover',
+              position: 'initial',
+            } as CSSProperties
+          }
         />
       </IonContent>
     </IonPage>
