@@ -134,7 +134,9 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 className="login__content__login__forgot-password"
                 to={{
                   pathname: '/forgot-password',
-                  state: { email: login.values.email } as ForgotPasswordDto,
+                  state: {
+                    email: login.values.email,
+                  } as ForgotPasswordDto,
                 }}
               >
                 Passwort vergessen?

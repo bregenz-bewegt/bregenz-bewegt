@@ -27,12 +27,11 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
 )(
   observer(({ userStore }) => {
     const router = useIonRouter();
-    const location = useLocation();
+    const location = useLocation<ForgotPasswordDto>();
+    console.log(location)
     const forgot = useFormik({
       initialValues: {
-        email: ((state: ForgotPasswordDto) => (state.email ? state.email : ''))(
-          (location.state as ForgotPasswordDto) ?? {}
-        ),
+        email: location.state.email ? location.state.email : '',
       },
       validationSchema: forgotPasswordSchema,
       onSubmit: (values, { setSubmitting, setErrors }) => {
