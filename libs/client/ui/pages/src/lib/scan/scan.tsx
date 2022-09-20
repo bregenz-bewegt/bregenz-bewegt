@@ -38,7 +38,7 @@ export const Scan: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         <QrReader
-          className="scan__web-scanner"
+          className="web-scanner"
           constraints={{}}
           onResult={(result, error) => {
             console.log(result, error);
