@@ -32,18 +32,6 @@ export const Scan: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    let url;
-
-    try {
-      url = new URL(scanResult ?? '');
-    } catch (error) {
-      return setScanResult(null);
-    }
-
-    url && router.push(url.pathname);
-  }, [scanResult]);
-
   useIonViewDidLeave(() => {
     setScanResult(null);
   });
@@ -65,7 +53,17 @@ export const Scan: React.FC = () => {
                 if (error) return;
                 const text = result?.getText() ?? '';
                 if (error || !text) return;
-                setScanResult(text);
+
+                let url;
+                try {
+                  url = new URL(scanResult ?? '');
+                } catch (error) {
+                  setScanResult(null);
+                }
+                if (!url) return setScanResult(null);
+
+                setScanResult(url.pathname);
+                url && router.push(url.pathname);
               }}
               videoContainerStyle={
                 {
@@ -82,9 +80,7 @@ export const Scan: React.FC = () => {
                 } as CSSProperties
               }
             />
-            <div className="scan__indicator">
-              
-            </div>
+            <div className="scan__indicator"></div>
           </>
         )}
       </IonContent>
