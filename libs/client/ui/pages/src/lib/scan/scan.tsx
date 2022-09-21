@@ -36,6 +36,8 @@ export const Scan: React.FC = () => {
     setScanResult(null);
   });
 
+  console.log(scanResult);
+
   return (
     <IonPage className="scan">
       <IonHeader>
@@ -50,10 +52,13 @@ export const Scan: React.FC = () => {
               className="web-scanner"
               constraints={{}}
               onResult={(result, error) => {
+                console.log(1, result, error);
                 if (error) return;
+                console.log(2, result, error);
                 const text = result?.getText() ?? '';
-                if (error || !text) return;
+                if (!text) return;
 
+                console.log(3, result, error);
                 let url;
                 try {
                   url = new URL(scanResult ?? '');
@@ -61,7 +66,7 @@ export const Scan: React.FC = () => {
                   setScanResult(null);
                 }
                 if (!url) return setScanResult(null);
-                console.log(url);
+                console.log(4, url);
 
                 setScanResult(url.pathname);
                 router.push(url.pathname);
