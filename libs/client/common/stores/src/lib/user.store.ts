@@ -107,7 +107,6 @@ export class UserStore implements Store {
       return reader.result;
     } catch (error) {
       this.setAvatarProfilePicture();
-      return;
     }
   }
 
