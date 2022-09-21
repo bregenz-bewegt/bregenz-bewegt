@@ -59,23 +59,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       onSubmit: (values, { setSubmitting, setValues }) => {
         setSubmitting(true);
         userStore
-          ?.patchProfile(values)
+          ?.patchProfile((({ email, ...fl }) => fl)(values))
           .then((result) => {
+            if (values.email !== result.email) setIsVerifyModalOpen(true);
             setValues({
               firstname: result.firstname ?? '',
               lastname: result.lastname ?? '',
               email: result.email ?? '',
             });
-            setIsVerifyModalOpen(true);
             setSubmitting(false);
-            presentToast({
-              message: 'Änderungen gespeichert',
-              icon: checkmark,
-              duration: 2000,
-              position: 'top',
-              mode: 'ios',
-              color: 'success',
-            });
           })
           .catch(() => {
             setSubmitting(false);
@@ -93,6 +85,33 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     const handleVerifySuccess = async () => {
       await verifyModal.current?.dismiss();
+      userStore
+        ?.patchProfile({ email: profile.values.email })
+        .then((result) => {
+          profile.setValues({
+            firstname: result.firstname ?? '',
+            lastname: result.lastname ?? '',
+            email: result.email ?? '',
+          });
+        })
+        .catch(() => {
+          presentToast({
+            message: 'Etwas ist schiefgelaufen',
+            icon: closeCircleOutline,
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'danger',
+          });
+        });
+      presentToast({
+        message: 'Änderungen gespeichert',
+        icon: checkmark,
+        duration: 2000,
+        position: 'top',
+        mode: 'ios',
+        color: 'success',
+      });
     };
 
     const handleChangePassword = () => {
