@@ -69,7 +69,10 @@
       width: 100%;
       background-color: var(--ion-color-primary);
       margin-top: 15%;
-      animation: move-scan-indicator-bar 2s ease-in-out infinite alternate;
+      box-shadow: 0 0 70px 20px #18c89b;
+      clip-path: inset(0);
+      animation: move-scan-indicator-bar 2s ease-in-out infinite alternate,
+        fade-scan-indicator-bar 4s ease-in-out infinite alternate;
     }
   }
 
@@ -87,5 +90,16 @@
   }
   100% {
     margin-top: 85%;
+  }
+}
+@keyframes fade-scan-indicator-bar {
+  33% {
+    clip-path: inset(0 0 0 -100px);
+  }
+  50% {
+    clip-path: inset(0 0 0 0);
+  }
+  83% {
+    clip-path: inset(0 -100px 0 0);
   }
 }
