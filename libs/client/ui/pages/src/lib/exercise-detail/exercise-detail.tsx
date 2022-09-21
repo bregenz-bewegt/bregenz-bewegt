@@ -4,62 +4,121 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
+  IonNote,
   IonPage,
+  IonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import {
-  exerciseStore,
-  ExerciseStore,
+  ParkStore,
+  parkStore,
+  tabStore,
+  TabStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Exercise } from '@bregenz-bewegt/client/types';
+import { Park, ActivityTimerResult } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { location } from 'ionicons/icons';
+import {
+  ActivityTimer,
+  DifficultyBadge,
+} from '@bregenz-bewegt/client-ui-components';
+import { play } from 'ionicons/icons';
 
 interface MatchParams {
+  park: string;
   exercise: string;
 }
 
 export interface ExerciseDetailProps extends RouteComponentProps<MatchParams> {
-  exerciseStore?: ExerciseStore;
+  parkStore?: ParkStore;
+  tabStore?: TabStore;
 }
 
 export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
-  exerciseStore.storeKey
+  parkStore.storeKey,
+  tabStore.storeKey
 )(
-  observer(({ exerciseStore, match }) => {
-    const [exercise, setExercise] = useState<Exercise>();
-    // const [isLoadingExercises, setIsLoadingExercises] = useState<boolean>(true);
+  observer(({ parkStore, tabStore, match }) => {
+    const [park, setPark] = useState<Required<Park>>();
 
     useEffect(() => {
+      const parkId = +match.params.park;
       const exerciseId = +match.params.exercise;
-      if (!exerciseId) return;
+      if (!exerciseId || !parkId) return;
 
-      exerciseStore?.getExercise(exerciseId).then((exercise) => {
-        setExercise(exercise);
+      parkStore?.getParkWithExercise(parkId, exerciseId).then((park) => {
+        setPark(park);
       });
-    }, [match.params.exercise]);
+    }, [match.params.exercise, match.params.park]);
+
+    useEffect(() => {
+      tabStore?.setIsShown(false);
+      return () => tabStore?.setIsShown(true);
+    }, []);
+
+    const handleTimerStart = () => {
+      //
+    };
+
+    const handleTimerStop = (time: ActivityTimerResult) => {
+      //
+    };
 
     return (
       <IonPage className="exercise-detail">
-        {/* <Header /> */}
-        <IonHeader>
+        <IonHeader mode="ios">
           <IonToolbar>
             <IonButtons>
               <IonBackButton
                 color="primary"
-                mode="ios"
                 defaultHref={tabRoutes.start.route}
                 text="Zurück"
               />
             </IonButtons>
-            <IonTitle>{exercise?.name}</IonTitle>
+            <IonTitle>{park?.name}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent>
-          <IonTitle>Test</IonTitle>
+        <IonContent className="exercise-detail__content">
+          <div className="exercise-detail__content__flex-wrapper">
+            <div className="exercise-detail__content__video-wrapper">
+              <IonIcon icon={play} />
+            </div>
+            <div className="exercise-detail__content__content">
+              <div className="exercise-detail__content__content__park-wrapper">
+                <IonText>
+                  <h1>{park?.name}</h1>
+                </IonText>
+                <IonNote className="exercise-detail__content__content__location">
+                  <IonIcon icon={location} />
+                  {park?.address}
+                </IonNote>
+              </div>
+              <div className="exercise-detail__content__content__exercise-wrapper">
+                <IonText>
+                  <h2>{park?.exercises[0].name}</h2>
+                  {park?.exercises[0].difficulty && (
+                    <DifficultyBadge
+                      difficulty={park?.exercises[0].difficulty}
+                    />
+                  )}
+                </IonText>
+                <IonText>
+                  <p>{park?.exercises[0].description}</p>
+                </IonText>
+              </div>
+            </div>
+            <div className="exercise-detail__content__timer">
+              <ActivityTimer
+                onTimerStart={handleTimerStart}
+                onTimerStop={handleTimerStop}
+              />
+            </div>
+          </div>
         </IonContent>
       </IonPage>
     );

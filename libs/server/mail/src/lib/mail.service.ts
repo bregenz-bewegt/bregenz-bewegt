@@ -13,15 +13,15 @@ export class MailService {
     return this.mailerService.sendMail(options);
   }
 
-  sendPasswordResetmail(options: {
+  async sendPasswordResetmail(options: {
     to: ISendMailOptions['to'];
     resetToken: string;
-  }) {
+  }): Promise<void> {
     const resetLink = `${this.configService.get(
       'NX_CLIENT_BASE_URL'
     )}/reset-password/${options.resetToken}`;
 
-    return this.mailerService.sendMail({
+    await this.mailerService.sendMail({
       to: options.to,
       subject: 'Passwort ändern',
       text: `Besuche den folgenden Link, um dein Passwort zu ändern: ${resetLink} Der Link läuft in 15 Minuten ab.`,

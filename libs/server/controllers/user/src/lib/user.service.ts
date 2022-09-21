@@ -14,25 +14,27 @@ export class UserService {
     private multerService: MulterService
   ) {}
 
-  async getAll() {
+  async findAll(): Promise<User[]> {
     return this.prismaService.user.findMany();
   }
 
-  async getSingle(userWhereUniqueInput: Prisma.UserWhereUniqueInput) {
+  async findSingle(
+    userWhereUniqueInput: Prisma.UserWhereUniqueInput
+  ): Promise<User> {
     return this.prismaService.user.findUnique({
       where: userWhereUniqueInput,
     });
   }
 
-  async getByEmail(email: User['email']) {
+  async findByEmail(email: User['email']): Promise<User> {
     return this.prismaService.user.findUnique({ where: { email: email } });
   }
 
-  async getById(id: User['id']) {
+  async findById(id: User['id']): Promise<User> {
     return this.prismaService.user.findUnique({ where: { id: id } });
   }
 
-  async patchProfile(id: User['id'], fields: PatchProfileDto) {
+  async patchProfile(id: User['id'], fields: PatchProfileDto): Promise<User> {
     return this.prismaService.user.update({
       where: {
         id: id,
@@ -43,8 +45,11 @@ export class UserService {
     });
   }
 
-  async editProfilePicture(id: User['id'], file: Express.Multer.File) {
-    const user = await this.getById(id);
+  async editProfilePicture(
+    id: User['id'],
+    file: Express.Multer.File
+  ): Promise<User> {
+    const user = await this.findById(id);
 
     if (this.uploadedProfilePictureExists(user.profilePicture)) {
       await this.multerService.deleteProfilePicture(user.profilePicture);
@@ -60,8 +65,8 @@ export class UserService {
     });
   }
 
-  async getProfilePicture(id: User['id'], res: Response) {
-    const user = await this.getById(id);
+  async getProfilePicture(id: User['id'], res: Response): Promise<void> {
+    const user = await this.findById(id);
 
     if (!this.uploadedProfilePictureExists(user.profilePicture)) {
       throw new NotFoundException();
@@ -74,7 +79,7 @@ export class UserService {
     return res.sendFile(filePath);
   }
 
-  uploadedProfilePictureExists(filename: string) {
+  uploadedProfilePictureExists(filename: string): boolean {
     if (!filename) return false;
 
     const filePath = this.multerService.getProfilePicturePath(filename);
