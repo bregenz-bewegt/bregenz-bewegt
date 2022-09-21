@@ -11,7 +11,7 @@
     left: 50%;
     top: 50%;
     translate: -50% -50%;
-    width: 100%;
+    width: calc(100% - var(--spacing-l));
     aspect-ratio: 1/1;
     margin: var(--spacing-m);
     background: linear-gradient(to right, black 4px, transparent 4px) 0 0,
