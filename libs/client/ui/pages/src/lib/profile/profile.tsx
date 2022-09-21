@@ -22,12 +22,14 @@ import {
   useIonViewDidLeave,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
 import { closeCircleOutline } from 'ionicons/icons';
+import { profileSchema } from '@bregenz-bewegt/client/common/validation';
+import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -42,11 +44,18 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+    const verifyModal = useRef<HTMLIonModalElement>(null);
+    const page = useRef(null);
+    const [verifyModalPresentingElement, setVerifyModalPresentingElement] =
+      useState<HTMLElement | null>(null);
+    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(false);
     const profile = useFormik({
       initialValues: {
         firstname: userStore?.user?.firstname ?? '',
         lastname: userStore?.user?.lastname ?? '',
+        email: userStore?.user?.email ?? '',
       },
+      validationSchema: profileSchema,
       onSubmit: (values, { setSubmitting, setValues }) => {
         setSubmitting(true);
         userStore
@@ -55,8 +64,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             setValues({
               firstname: result.firstname ?? '',
               lastname: result.lastname ?? '',
+              email: result.email ?? '',
             });
 
+            setIsVerifyModalOpen(true);
             setSubmitting(false);
             presentToast({
               message: 'Änderungen gespeichert',
@@ -80,6 +91,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           });
       },
     });
+
+    const handleVerifySuccess = async () => {
+      await verifyModal.current?.dismiss();
+    };
+
     const handleChangePassword = () => {
       userStore
         ?.forgotPassword()
@@ -164,13 +180,19 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         values: {
           firstname: userStore?.user?.firstname ?? '',
           lastname: userStore?.user?.lastname ?? '',
+          email: userStore?.user?.email ?? '',
         },
       });
       userStore?.refreshProfile().then(() => setIsImageLoaded(true));
-    }, [userStore?.user?.firstname, userStore?.user?.lastname]);
+      setVerifyModalPresentingElement(page.current);
+    }, [
+      userStore?.user?.firstname,
+      userStore?.user?.lastname,
+      userStore?.user?.email,
+    ]);
 
     return (
-      <IonPage className="profile">
+      <IonPage className="profile" ref={page}>
         <IonHeader>
           <IonToolbar>
             <IonTitle>Profile</IonTitle>
@@ -254,9 +276,16 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             </IonRow>
             <IonRow>
               <Input
-                label="Benutzername"
-                value={userStore?.user?.username}
-                disabled
+                name="email"
+                label="Email"
+                type="email" // ?
+                inputMode="email" // ?
+                placeholder="Email"
+                value={profile.values.email}
+                error={profile.touched.email ? profile.errors.email : undefined}
+                onChange={profile.handleChange}
+                onBlur={profile.handleBlur}
+                disabled={!isImageLoaded}
               />
             </IonRow>
             <IonRow className="profile__content__password-row">
@@ -275,30 +304,50 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 Ändern
               </IonButton>
             </IonRow>
+            <IonRow>
+              <IonButton
+                disabled={!profile.dirty || profile.isSubmitting}
+                onClick={() => profile.submitForm()}
+                expand="block"
+                mode="ios"
+              >
+                {profile.isSubmitting ? (
+                  <IonLabel>
+                    <IonSpinner name="crescent" />
+                  </IonLabel>
+                ) : (
+                  'Änderungen Speichern'
+                )}
+              </IonButton>
+            </IonRow>
+            <IonRow>
+              <IonButton
+                onClick={() => handleLogout()}
+                expand="block"
+                mode="ios"
+              >
+                {isLoggingOut ? (
+                  <IonLabel>
+                    <IonSpinner name="crescent" />
+                  </IonLabel>
+                ) : (
+                  'Abmelden'
+                )}
+              </IonButton>
+            </IonRow>
           </IonGrid>
-          <IonButton
-            disabled={!profile.dirty || profile.isSubmitting}
-            onClick={() => profile.submitForm()}
-            expand="block"
-            mode="ios"
-          >
-            {profile.isSubmitting ? (
-              <IonLabel>
-                <IonSpinner name="crescent" />
-              </IonLabel>
-            ) : (
-              'Änderungen Speichern'
-            )}
-          </IonButton>
-          <IonButton onClick={() => handleLogout()} expand="block" mode="ios">
-            {isLoggingOut ? (
-              <IonLabel>
-                <IonSpinner name="crescent" />
-              </IonLabel>
-            ) : (
-              'Abmelden'
-            )}
-          </IonButton>
+
+          <VerifyEmail
+            email={profile.values.email}
+            isOpen={isVerifyModalOpen}
+            modalRef={verifyModal}
+            modalPresentingElement={verifyModalPresentingElement!}
+            onVerifySuccess={handleVerifySuccess}
+            modalDismiss={() => {
+              verifyModal.current?.dismiss();
+              setIsVerifyModalOpen(false);
+            }}
+          />
         </IonContent>
       </IonPage>
     );
