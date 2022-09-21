@@ -6,7 +6,9 @@ import {
   IonTitle,
   IonToolbar,
   useIonRouter,
+  useIonViewDidEnter,
   useIonViewDidLeave,
+  useIonViewWillEnter,
 } from '@ionic/react';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner';
 import { QrReader } from 'react-qr-reader';
@@ -16,27 +18,30 @@ import { Capacitor } from '@capacitor/core';
 export const Scan: React.FC = () => {
   const router = useIonRouter();
   const [scanResult, setScanResult] = useState<string | null>(null);
-  const [isNative, setIsNative] = useState<boolean>();
+  const [showWebScanner, setShowWebScanner] = useState<boolean>();
 
   const openNativeScanner = async () => {
     const data = await BarcodeScanner.scan();
     setScanResult(data.text ?? 'test');
   };
 
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     const isNativePlatform = Capacitor.isNativePlatform();
-    setIsNative(isNativePlatform);
+    setShowWebScanner(!isNativePlatform);
 
     if (isNativePlatform) {
       openNativeScanner();
+    } else {
+      setShowWebScanner(true);
     }
-  }, []);
+  });
 
   useIonViewDidLeave(() => {
     setScanResult(null);
+    setShowWebScanner(false);
   });
 
-  console.log(scanResult);
+  console.log(scanResult, showWebScanner);
 
   return (
     <IonPage className="scan">
@@ -46,7 +51,7 @@ export const Scan: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {!isNative && (
+        {showWebScanner && (
           <>
             <QrReader
               className="web-scanner"
