@@ -61,9 +61,10 @@ export const Scan: React.FC = () => {
                   setScanResult(null);
                 }
                 if (!url) return setScanResult(null);
+                console.log(url);
 
                 setScanResult(url.pathname);
-                url && router.push(url.pathname);
+                router.push(url.pathname);
               }}
               videoContainerStyle={
                 {
