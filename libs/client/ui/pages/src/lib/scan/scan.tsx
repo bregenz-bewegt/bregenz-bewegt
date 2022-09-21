@@ -41,8 +41,6 @@ export const Scan: React.FC = () => {
     setShowWebScanner(false);
   });
 
-  console.log(scanResult, showWebScanner);
-
   return (
     <IonPage className="scan">
       <IonHeader>
