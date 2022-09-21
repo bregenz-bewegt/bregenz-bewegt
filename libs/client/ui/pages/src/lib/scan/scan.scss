@@ -94,12 +94,12 @@
 }
 @keyframes fade-scan-indicator-bar {
   33% {
-    clip-path: inset(0 0 0 -100px);
+    clip-path: inset(-100px 0 0 0);
   }
   50% {
     clip-path: inset(0 0 0 0);
   }
   83% {
-    clip-path: inset(0 -100px 0 0);
+    clip-path: inset(0 0 0 -100px);
   }
 }
