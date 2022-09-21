@@ -11,3 +11,5 @@ export * from './park-detail/park-detail';
 export * from './exercise-detail/exercise-detail';
 export * from './reset-password/reset-password';
 export * from './verify-email/verify-email';
+export * from './forgot-password/forgot-password';
+export * from './email-sent/email-sent';

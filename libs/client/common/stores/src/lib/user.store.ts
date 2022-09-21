@@ -2,6 +2,7 @@ import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
 import type { User } from '@bregenz-bewegt/client/types';
 import type {
+  ForgotPasswordDto,
   LoginDto,
   PatchProfileDto,
   RegisterDto,
@@ -15,7 +16,7 @@ export class UserStore implements Store {
   storeKey = 'userStore' as const;
   @observable user?: User;
   @observable isLoggedIn = false;
-  @observable isLoadingLoginState = false;
+  @observable isLoadingLoggedIn = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -115,7 +116,7 @@ export class UserStore implements Store {
   }
 
   @action setIsloadingLoginState(value: boolean) {
-    this.isLoadingLoginState = value;
+    this.isLoadingLoggedIn = value;
   }
 
   @action async initUser() {
@@ -173,9 +174,22 @@ export class UserStore implements Store {
     return { access_token, refresh_token };
   }
 
-  async forgotPassword() {
-    const { data } = await http.post('/auth/forgot-password');
+  async changePassword() {
+    const { data } = await http.post('/auth/change-password');
     return data;
+  }
+
+  async forgotPassword(dto: ForgotPasswordDto) {
+    const { data } = await http.post('/auth/forgot-password', dto);
+    return data;
+  }
+
+  @action async validateResetPassword(resetToken: string) {
+    await http.get(`/auth/validate-reset-password`, {
+      headers: {
+        authorization: `Bearer ${resetToken}`,
+      },
+    });
   }
 
   @action async resetPassword(newPassword: string, resetToken: string) {

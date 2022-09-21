@@ -1,12 +1,14 @@
 import {
   Body,
   Controller,
+  Get,
   Headers,
   Post,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import {
+  ForgotPasswordDto,
   LoginDto,
   RegisterDto,
   ResetPasswordDto,
@@ -72,12 +74,28 @@ export class AuthController {
     return this.authService.refreshTokens(userId, refreshToken);
   }
 
-  @Post('forgot-password')
-  forgotPassword(
-    @GetCurrentUser('email', 'sub') email: User['email'],
-    @GetCurrentUser('sub') userId: User['id']
+  @Post('change-password')
+  changePassword(
+    @GetCurrentUser('email', 'sub') email: User['email']
   ): Promise<void> {
-    return this.authService.forgotPassword(userId, email);
+    return this.authService.changePassword(email);
+  }
+
+  @Public()
+  @Post('forgot-password')
+  forgotPassword(@Body() dto: ForgotPasswordDto): Promise<void> {
+    return this.authService.changePassword(dto.email);
+  }
+
+  @Public()
+  @UseGuards(PasswordResetTokenGuard)
+  @Get('validate-reset-password')
+  validateResetPassword(
+    @Headers('authorization') authorization: string,
+    @GetCurrentUser('email') email: string
+  ): Promise<void> {
+    const token = this.utilService.extractBearerToken(authorization);
+    return this.authService.validateResetPassword(email, token);
   }
 
   @Public()

@@ -56,7 +56,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               firstname: result.firstname ?? '',
               lastname: result.lastname ?? '',
             });
-
             setSubmitting(false);
             presentToast({
               message: 'Änderungen gespeichert',
@@ -82,7 +81,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     });
     const handleChangePassword = () => {
       userStore
-        ?.forgotPassword()
+        ?.changePassword()
         .then(() => {
           presentAlert({
             header: 'Passwort zurücksetzen',
