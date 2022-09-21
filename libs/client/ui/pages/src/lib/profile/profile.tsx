@@ -93,6 +93,14 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             lastname: result.lastname ?? '',
             email: result.email ?? '',
           });
+          presentToast({
+            message: 'Änderungen gespeichert',
+            icon: checkmark,
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'success',
+          });
         })
         .catch(() => {
           presentToast({
@@ -104,14 +112,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             color: 'danger',
           });
         });
-      presentToast({
-        message: 'Änderungen gespeichert',
-        icon: checkmark,
-        duration: 2000,
-        position: 'top',
-        mode: 'ios',
-        color: 'success',
-      });
     };
 
     const handleChangePassword = () => {
