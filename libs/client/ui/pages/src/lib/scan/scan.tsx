@@ -57,30 +57,35 @@ export const Scan: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         {!isNative && (
-          <QrReader
-            className="web-scanner"
-            constraints={{}}
-            onResult={(result, error) => {
-              if (error) return;
-              const text = result?.getText() ?? '';
-              if (error || !text) return;
-              setScanResult(text);
-            }}
-            videoContainerStyle={
-              {
-                paddingTop: 0,
-                height: '100%',
-                display: 'flex',
-              } as CSSProperties
-            }
-            videoStyle={
-              {
-                width: 'auto',
-                objectFit: 'cover',
-                position: 'initial',
-              } as CSSProperties
-            }
-          />
+          <>
+            <QrReader
+              className="web-scanner"
+              constraints={{}}
+              onResult={(result, error) => {
+                if (error) return;
+                const text = result?.getText() ?? '';
+                if (error || !text) return;
+                setScanResult(text);
+              }}
+              videoContainerStyle={
+                {
+                  paddingTop: 0,
+                  height: '100%',
+                  display: 'flex',
+                } as CSSProperties
+              }
+              videoStyle={
+                {
+                  width: 'auto',
+                  objectFit: 'cover',
+                  position: 'initial',
+                } as CSSProperties
+              }
+            />
+            <div className="scan__indicator">
+              
+            </div>
+          </>
         )}
       </IonContent>
     </IonPage>
