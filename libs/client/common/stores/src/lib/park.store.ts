@@ -1,7 +1,7 @@
 import { Store } from './store';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { http } from '@bregenz-bewegt/client/common/http';
-import { Park } from '@bregenz-bewegt/client/types';
+import { Exercise, Park } from '@bregenz-bewegt/client/types';
 
 export class ParkStore implements Store {
   storeKey = 'parkStore' as const;
@@ -37,6 +37,18 @@ export class ParkStore implements Store {
   async getParkWithExercises(id: Park['id']) {
     try {
       const { data } = await http.get(`/parks/${id}/exercises`);
+      return data;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async getParkWithExercise(parkId: Park['id'], exerciseId: Exercise['id']) {
+    try {
+      const { data } = await http.get(
+        `/parks/${parkId}/exercises/${exerciseId}`
+      );
+
       return data;
     } catch (error) {
       return null;

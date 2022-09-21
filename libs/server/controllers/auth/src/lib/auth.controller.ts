@@ -1,12 +1,14 @@
 import {
   Body,
   Controller,
+  Get,
   Headers,
   Post,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import {
+  ForgotPasswordDto,
   LoginDto,
   RegisterDto,
   ResetPasswordDto,
@@ -35,19 +37,19 @@ export class AuthController {
   @Public()
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Post('local/guest')
-  guest() {
+  guest(): Promise<User> {
     return this.authService.guest();
   }
 
   @Public()
   @Post('local/register')
-  register(@Body() dto: RegisterDto) {
+  register(@Body() dto: RegisterDto): Promise<void> {
     return this.authService.register(dto);
   }
 
   @Public()
   @Post('local/verify')
-  verify(@Body() dto: VerifyDto) {
+  verify(@Body() dto: VerifyDto): Promise<Tokens> {
     return this.authService.verify(dto);
   }
 
@@ -72,12 +74,28 @@ export class AuthController {
     return this.authService.refreshTokens(userId, refreshToken);
   }
 
+  @Post('change-password')
+  changePassword(
+    @GetCurrentUser('email', 'sub') email: User['email']
+  ): Promise<void> {
+    return this.authService.changePassword(email);
+  }
+
+  @Public()
   @Post('forgot-password')
-  forgotPassword(
-    @GetCurrentUser('email', 'sub') email: User['email'],
-    @GetCurrentUser('sub') userId: User['id']
-  ) {
-    return this.authService.forgotPassword(userId, email);
+  forgotPassword(@Body() dto: ForgotPasswordDto): Promise<void> {
+    return this.authService.changePassword(dto.email);
+  }
+
+  @Public()
+  @UseGuards(PasswordResetTokenGuard)
+  @Get('validate-reset-password')
+  validateResetPassword(
+    @Headers('authorization') authorization: string,
+    @GetCurrentUser('email') email: string
+  ): Promise<void> {
+    const token = this.utilService.extractBearerToken(authorization);
+    return this.authService.validateResetPassword(email, token);
   }
 
   @Public()
@@ -87,7 +105,7 @@ export class AuthController {
     @Headers('authorization') authorization: string,
     @GetCurrentUser('email') email: string,
     @Body() dto: ResetPasswordDto
-  ) {
+  ): Promise<User> {
     const token = this.utilService.extractBearerToken(authorization);
     return this.authService.resetPassword(email, token, dto);
   }

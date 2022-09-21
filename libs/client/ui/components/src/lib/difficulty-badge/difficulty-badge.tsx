@@ -11,7 +11,7 @@ export const DifficultyBadge: React.FC<DifficultyBadgeProps> = ({
   difficulty,
 }) => {
   return (
-    <IonBadge className="difficulty-badge" color="secondary">
+    <IonBadge className="difficulty-badge" color="secondary" mode="ios">
       {difficultyDisplayTexts[difficulty]}
     </IonBadge>
   );

@@ -4,7 +4,7 @@
 	"webDir": "../../dist/apps/client",
 	"bundledWebRuntime": false,
 	"server": {
-		"url": "http://192.168.79.1:4200",
+		"url": "http://192.168.0.24:4200",
 		"cleartext": true
 	}
 }

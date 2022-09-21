@@ -66,7 +66,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               lastname: result.lastname ?? '',
               email: result.email ?? '',
             });
-
             setIsVerifyModalOpen(true);
             setSubmitting(false);
             presentToast({
@@ -98,7 +97,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     const handleChangePassword = () => {
       userStore
-        ?.forgotPassword()
+        ?.changePassword()
         .then(() => {
           presentAlert({
             header: 'Passwort zurücksetzen',
@@ -195,11 +194,18 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       <IonPage className="profile" ref={page}>
         <IonHeader>
           <IonToolbar>
-            <IonTitle>Profile</IonTitle>
+            <IonTitle>Profil</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen className="profile__content">
           <IonGrid>
+            <IonRow className="ion-justify-content-center">
+              <IonText>
+                <h1 className="profile__content__username">
+                  {userStore?.user?.username}
+                </h1>
+              </IonText>
+            </IonRow>
             <IonRow className="ion-justify-content-center">
               <IonAvatar>
                 <img

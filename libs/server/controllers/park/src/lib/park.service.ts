@@ -1,16 +1,16 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Park } from '@prisma/client';
+import { Injectable } from '@nestjs/common';
+import { Exercise, Park } from '@prisma/client';
 
 @Injectable()
 export class ParkService {
   constructor(private prismaService: PrismaService) {}
 
-  async getParks() {
+  async findAll(): Promise<Park[]> {
     return this.prismaService.park.findMany();
   }
 
-  async getPark(id: Park['id']) {
+  async findById(id: Park['id']): Promise<Park> {
     return this.prismaService.park.findUnique({
       where: {
         id: id,
@@ -18,8 +18,12 @@ export class ParkService {
     });
   }
 
-  async getParkWithExercises(id: Park['id']) {
-    const park = await this.prismaService.park.findUnique({
+  async findByIdWithExercises(id: Park['id']): Promise<
+    Park & {
+      exercises: Exercise[];
+    }
+  > {
+    return this.prismaService.park.findUnique({
       where: {
         id: id,
       },
@@ -27,8 +31,21 @@ export class ParkService {
         exercises: true,
       },
     });
+  }
 
-    if (!park) throw new NotFoundException();
-    return park;
+  async getParkWithExercise(
+    parkId: Park['id'],
+    exerciseId: Exercise['id']
+  ): Promise<Park & { exercises: Exercise[] }> {
+    return this.prismaService.park.findUnique({
+      where: {
+        id: parkId,
+      },
+      include: {
+        exercises: {
+          where: { id: exerciseId },
+        },
+      },
+    });
   }
 }

@@ -5,12 +5,16 @@ import {
   parkStore,
   userStore,
   exerciseStore,
+  activityStore,
+  tabStore,
 } from '@bregenz-bewegt/client/common/stores';
 
 const stores = {
   parkStore,
   userStore,
   exerciseStore,
+  activityStore,
+  tabStore,
 };
 
 interface StoreProviderProps {

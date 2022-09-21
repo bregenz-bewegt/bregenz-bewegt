@@ -19,6 +19,7 @@ import {
   VerifyDto,
 } from '@bregenz-bewegt/shared/types';
 import {
+  forgotPasswordError,
   loginError,
   registerError,
   RegisterErrorResponse,
@@ -37,7 +38,7 @@ export class AuthService {
     private userService: UserService
   ) {}
 
-  async guest() {
+  async guest(): Promise<User> {
     const newGuest = await this.prismaService.user.create({
       data: {
         role: 'GUEST',
@@ -47,7 +48,7 @@ export class AuthService {
     return newGuest;
   }
 
-  async register(dto: RegisterDto) {
+  async register(dto: RegisterDto): Promise<void> {
     try {
       const { password, ...rest } = dto;
       const hash = await argon.hash(password);
@@ -79,8 +80,8 @@ export class AuthService {
     }
   }
 
-  async verify(dto: VerifyDto) {
-    const user = await this.userService.getSingle({ email: dto.email });
+  async verify(dto: VerifyDto): Promise<Tokens> {
+    const user = await this.userService.findSingle({ email: dto.email });
 
     if (!user || !user.activationSecret) {
       throw new ForbiddenException();
@@ -110,7 +111,7 @@ export class AuthService {
     return tokens;
   }
 
-  async login(dto: LoginDto) {
+  async login(dto: LoginDto): Promise<Tokens> {
     const user = await this.prismaService.user.findUnique({
       where: {
         email: dto.email,
@@ -151,7 +152,7 @@ export class AuthService {
     return tokens;
   }
 
-  async logout(userId: string) {
+  async logout(userId: string): Promise<void> {
     await this.prismaService.user.updateMany({
       where: {
         id: userId,
@@ -188,7 +189,7 @@ export class AuthService {
     };
   }
 
-  async refreshTokens(userId: string, refreshToken: string) {
+  async refreshTokens(userId: string, refreshToken: string): Promise<Tokens> {
     const user = await this.prismaService.user.findUnique({
       where: {
         id: userId,
@@ -210,7 +211,10 @@ export class AuthService {
     return tokens;
   }
 
-  async updateRefreshToken(userId: string, refreshToken: string) {
+  async updateRefreshToken(
+    userId: string,
+    refreshToken: string
+  ): Promise<void> {
     const hash = await argon.hash(refreshToken);
 
     await this.prismaService.user.update({
@@ -223,7 +227,7 @@ export class AuthService {
     });
   }
 
-  async signPasswordResetToken(userId: string, email: string) {
+  async signPasswordResetToken(userId: string, email: string): Promise<string> {
     const jwtPayload: JwtPayload = {
       sub: userId,
       email,
@@ -247,20 +251,26 @@ export class AuthService {
     return { token, secret };
   }
 
-  async forgotPassword(userId: User['id'], email: User['email']) {
-    const token = await this.signPasswordResetToken(userId, email);
+  async changePassword(email: User['email']): Promise<void> {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) {
+      throw new ForbiddenException(forgotPasswordError.USER_NOT_FOUND);
+    }
+
+    const token = await this.signPasswordResetToken(user.id, email);
     const tokenHash = await argon.hash(token);
 
-    const user = await this.prismaService.user.update({
-      where: { id: userId },
+    await this.prismaService.user.update({
+      where: { id: user.id },
       data: {
         passwordResetToken: tokenHash,
       },
     });
-
-    if (!user || !user.passwordResetToken) {
-      throw new ForbiddenException('Access denied');
-    }
 
     return this.mailService.sendPasswordResetmail({
       to: email,
@@ -268,18 +278,30 @@ export class AuthService {
     });
   }
 
-  async resetPassword(email: string, token: string, dto: ResetPasswordDto) {
+  async validateResetPassword(email: string, token: string): Promise<void> {
     const user = await this.prismaService.user.findUnique({
       where: {
         email: email,
       },
     });
 
-    const tokenValid = await argon.verify(user.passwordResetToken, token);
-
-    if (!user || !user.passwordResetToken || !tokenValid) {
+    if (!user || !user.passwordResetToken) {
       throw new ForbiddenException('Access denied');
     }
+
+    const tokenValid = await argon.verify(user.passwordResetToken, token);
+
+    if (!tokenValid) {
+      throw new ForbiddenException('Access denied');
+    }
+  }
+
+  async resetPassword(
+    email: string,
+    token: string,
+    dto: ResetPasswordDto
+  ): Promise<User> {
+    await this.validateResetPassword(email, token);
 
     const passwordHash = await argon.hash(dto.password);
     return this.prismaService.user.update({

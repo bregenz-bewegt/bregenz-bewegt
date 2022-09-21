@@ -2,6 +2,7 @@ import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
 import type { User } from '@bregenz-bewegt/client/types';
 import type {
+  ForgotPasswordDto,
   LoginDto,
   PatchProfileDto,
   RegisterDto,
@@ -15,21 +16,19 @@ export class UserStore implements Store {
   storeKey = 'userStore' as const;
   @observable user?: User;
   @observable isLoggedIn = false;
-  @observable isLoadingLoginState = false;
+  @observable isLoadingLoggedIn = false;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  @action async guest() {
+  async guest() {
     const { data } = await http.post('/auth/local/guest');
-
     return data;
   }
 
-  @action async register(dto: RegisterDto) {
+  async register(dto: RegisterDto) {
     const { data } = await http.post('/auth/local/register', dto);
-
     return data;
   }
 
@@ -52,6 +51,7 @@ export class UserStore implements Store {
       refresh_token: data.refresh_token,
     });
     this.setIsLoggedIn(true);
+
     return data;
   }
 
@@ -67,7 +67,6 @@ export class UserStore implements Store {
   async fetchProfile() {
     try {
       const { data } = await http.get('/users/profile');
-
       return data;
     } catch (error) {
       return;
@@ -80,7 +79,7 @@ export class UserStore implements Store {
     return <User>data;
   }
 
-  @action async editProfilePicture(picture: globalThis.File) {
+  async editProfilePicture(picture: globalThis.File) {
     const { data } = await http.post(
       '/users/profile-picture',
       {
@@ -117,7 +116,7 @@ export class UserStore implements Store {
   }
 
   @action setIsloadingLoginState(value: boolean) {
-    this.isLoadingLoginState = value;
+    this.isLoadingLoggedIn = value;
   }
 
   @action async initUser() {
@@ -175,10 +174,22 @@ export class UserStore implements Store {
     return { access_token, refresh_token };
   }
 
-  @action async forgotPassword() {
-    const { data } = await http.post('/auth/forgot-password');
-
+  async changePassword() {
+    const { data } = await http.post('/auth/change-password');
     return data;
+  }
+
+  async forgotPassword(dto: ForgotPasswordDto) {
+    const { data } = await http.post('/auth/forgot-password', dto);
+    return data;
+  }
+
+  @action async validateResetPassword(resetToken: string) {
+    await http.get(`/auth/validate-reset-password`, {
+      headers: {
+        authorization: `Bearer ${resetToken}`,
+      },
+    });
   }
 
   @action async resetPassword(newPassword: string, resetToken: string) {
