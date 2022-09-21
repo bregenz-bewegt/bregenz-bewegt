@@ -80,7 +80,9 @@ export const Scan: React.FC = () => {
                 } as CSSProperties
               }
             />
-            <div className="scan__indicator"></div>
+            <div className="scan__indicator">
+              <div className="scan__indicator__bar"></div>
+            </div>
           </>
         )}
       </IonContent>

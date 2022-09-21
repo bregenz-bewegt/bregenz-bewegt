@@ -61,9 +61,16 @@
           transparent var(--spacing-xs)
         )
         100% 100%;
-
     background-repeat: no-repeat;
     background-size: var(--spacing-l) var(--spacing-l);
+
+    &__bar {
+      height: var(--spacing-xs);
+      width: 100%;
+      background-color: var(--ion-color-primary);
+      margin-top: 15%;
+      animation: move-scan-indicator-bar 2s ease-in-out infinite alternate;
+    }
   }
 
   .web-scanner {
@@ -71,5 +78,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+@keyframes move-scan-indicator-bar {
+  0% {
+    margin-top: 15%;
+  }
+  100% {
+    margin-top: 85%;
   }
 }
