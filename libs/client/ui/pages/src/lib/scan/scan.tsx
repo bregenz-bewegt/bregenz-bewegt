@@ -7,7 +7,6 @@ import {
   IonToolbar,
   useIonRouter,
   useIonViewDidLeave,
-  useIonViewWillLeave,
 } from '@ionic/react';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner';
 import { QrReader } from 'react-qr-reader';
@@ -49,8 +48,6 @@ export const Scan: React.FC = () => {
     setScanResult(null);
   });
 
-  console.log(scanResult);
-
   return (
     <IonPage className="scan">
       <IonHeader>
@@ -59,26 +56,32 @@ export const Scan: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <QrReader
-          className="web-scanner"
-          constraints={{}}
-          onResult={(result, error) => {
-            if (error) return;
-            const text = result?.getText() ?? '';
-            if (error || !text) return;
-            setScanResult(text);
-          }}
-          videoContainerStyle={
-            { paddingTop: 0, height: '100%', display: 'flex' } as CSSProperties
-          }
-          videoStyle={
-            {
-              width: 'auto',
-              objectFit: 'cover',
-              position: 'initial',
-            } as CSSProperties
-          }
-        />
+        {!isNative && (
+          <QrReader
+            className="web-scanner"
+            constraints={{}}
+            onResult={(result, error) => {
+              if (error) return;
+              const text = result?.getText() ?? '';
+              if (error || !text) return;
+              setScanResult(text);
+            }}
+            videoContainerStyle={
+              {
+                paddingTop: 0,
+                height: '100%',
+                display: 'flex',
+              } as CSSProperties
+            }
+            videoStyle={
+              {
+                width: 'auto',
+                objectFit: 'cover',
+                position: 'initial',
+              } as CSSProperties
+            }
+          />
+        )}
       </IonContent>
     </IonPage>
   );
