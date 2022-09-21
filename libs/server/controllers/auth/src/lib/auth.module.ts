@@ -12,6 +12,7 @@ import {
 } from './passport/strategies';
 import { MailModule } from '@bregenz-bewegt/server/mail';
 import { UtilModule } from '@bregenz-bewegt/server/util';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UtilModule } from '@bregenz-bewegt/server/util';
     JwtModule.register({}),
     MailModule,
     UtilModule,
+    MailerModule,
   ],
   controllers: [AuthController],
   providers: [
