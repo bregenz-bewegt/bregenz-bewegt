@@ -218,7 +218,8 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       },
                       {
                         text: 'Bild entfernen',
-                        handler: () => handleImageRemove(),
+                        handler: () =>
+                          userStore?.isProfilePictureSet && handleImageRemove(),
                         icon: trash,
                         role: 'destructive',
                       },
