@@ -6,6 +6,7 @@ import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Patch,
   Post,
@@ -38,6 +39,12 @@ export class UserController {
     @Body() dto: PatchProfileDto
   ): Promise<User> {
     return this.userService.patchProfile(userId, dto);
+  }
+
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Delete('profile')
+  deleteProfile(@GetCurrentUser('sub') userId: string): Promise<User> {
+    return this.userService.deleteProfile(userId);
   }
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)

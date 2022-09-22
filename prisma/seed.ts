@@ -23,6 +23,24 @@ const createUsers = async () => {
         role: Role.USER,
         password: await argon.hash('timonovich'),
         coins: 37448,
+        active: true,
+      },
+    ],
+  });
+};
+
+const createActivities = async () => {
+  await prisma.activity.createMany({
+    data: [
+      {
+        startedAt: new Date().toISOString().slice(0, 19).concat('Z'),
+        endedAt: new Date().toISOString().slice(0, 19).concat('Z'),
+        exerciseId: await prisma.exercise
+          .findFirst({ where: { name: 'Plank' } })
+          .then((e) => e?.id ?? 0),
+        userId: await prisma.user
+          .findFirst({ where: { username: 'Vincentcool3' } })
+          .then((u) => u?.id),
       },
     ],
   });
@@ -97,7 +115,6 @@ const createParks = async () => {
 };
 
 const createExercises = async () => {
-  await prisma.exercise.deleteMany();
   const parks = await prisma.park.findMany();
   const exercises = [
     {
@@ -152,9 +169,13 @@ const createExercises = async () => {
 };
 
 const main = async () => {
+  await prisma.activity.deleteMany();
+  await prisma.exercise.deleteMany();
+
+  await createExercises();
   await createUsers();
   await createParks();
-  await createExercises();
+  await createActivities();
 };
 
 main()

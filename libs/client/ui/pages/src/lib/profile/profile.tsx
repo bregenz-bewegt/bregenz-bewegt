@@ -153,6 +153,34 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       });
     };
 
+    const handleDelete = () => {
+      presentAlert({
+        header: 'Account löschen',
+        message: `Der Account sowie alle zugehörigen Daten werden gelöscht. Wollen Sie fortfahren?`,
+        backdropDismiss: false,
+        buttons: [
+          { text: 'Abbrechen', role: 'cancel' },
+          {
+            text: 'Ja',
+            role: 'OK',
+            handler: () => {
+              userStore?.deleteProfile().then(() => {
+                handleLogout();
+                presentToast({
+                  message: 'Account gelöscht',
+                  icon: checkmark,
+                  duration: 2000,
+                  position: 'top',
+                  mode: 'ios',
+                  color: 'success',
+                });
+              });
+            },
+          },
+        ],
+      });
+    };
+
     useIonViewDidLeave(() => {
       profile.resetForm();
     });
@@ -274,30 +302,47 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 Ändern
               </IonButton>
             </IonRow>
+            <IonRow>
+              <IonButton
+                disabled={!profile.dirty || profile.isSubmitting}
+                onClick={() => profile.submitForm()}
+                expand="block"
+                mode="ios"
+              >
+                {profile.isSubmitting ? (
+                  <IonLabel>
+                    <IonSpinner name="crescent" />
+                  </IonLabel>
+                ) : (
+                  'Änderungen Speichern'
+                )}
+              </IonButton>
+            </IonRow>
+            <IonRow>
+              <IonButton
+                onClick={() => handleLogout()}
+                expand="block"
+                mode="ios"
+              >
+                {isLoggingOut ? (
+                  <IonLabel>
+                    <IonSpinner name="crescent" />
+                  </IonLabel>
+                ) : (
+                  'Abmelden'
+                )}
+              </IonButton>
+            </IonRow>
+            <IonRow>
+              <IonButton
+                onClick={() => handleDelete()}
+                expand="block"
+                mode="ios"
+              >
+                Account Löschen
+              </IonButton>
+            </IonRow>
           </IonGrid>
-          <IonButton
-            disabled={!profile.dirty || profile.isSubmitting}
-            onClick={() => profile.submitForm()}
-            expand="block"
-            mode="ios"
-          >
-            {profile.isSubmitting ? (
-              <IonLabel>
-                <IonSpinner name="crescent" />
-              </IonLabel>
-            ) : (
-              'Änderungen Speichern'
-            )}
-          </IonButton>
-          <IonButton onClick={() => handleLogout()} expand="block" mode="ios">
-            {isLoggingOut ? (
-              <IonLabel>
-                <IonSpinner name="crescent" />
-              </IonLabel>
-            ) : (
-              'Abmelden'
-            )}
-          </IonButton>
         </IonContent>
       </IonPage>
     );

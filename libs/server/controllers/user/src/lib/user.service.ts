@@ -45,6 +45,22 @@ export class UserService {
     });
   }
 
+  async deleteProfile(id: User['id']): Promise<User> {
+    this.prismaService.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        activities: null,
+      },
+    });
+    return this.prismaService.user.delete({
+      where: {
+        id: id,
+      },
+    });
+  }
+
   async editProfilePicture(
     id: User['id'],
     file: Express.Multer.File
