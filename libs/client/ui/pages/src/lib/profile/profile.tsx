@@ -29,6 +29,7 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
 import { closeCircleOutline } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
+import { toJS } from 'mobx';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -105,6 +106,8 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         })
         .catch(() => showFailureToast());
     };
+
+    console.log(toJS(userStore?.user));
 
     const handleImageChange = async (source: CameraSource) => {
       try {
