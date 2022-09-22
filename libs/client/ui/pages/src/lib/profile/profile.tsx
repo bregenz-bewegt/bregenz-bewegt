@@ -130,7 +130,9 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         userStore
           ?.editProfilePicture(file)
           .then(() =>
-            userStore.fetchProfilePicture().then(() => dismissLoading())
+            userStore.fetchProfilePicture().then(() => {
+              dismissLoading().then(() => showSuccessToast());
+            })
           )
           .catch(() => {
             showFailureToast();
