@@ -213,13 +213,16 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                         handler: () => handleImageChange(CameraSource.Camera),
                         icon: camera,
                       },
-                      {
-                        text: 'Bild entfernen',
-                        handler: () =>
-                          userStore?.isProfilePictureSet && handleImageRemove(),
-                        icon: trash,
-                        role: 'destructive',
-                      },
+                      ...(userStore?.isProfilePictureSet
+                        ? [
+                            {
+                              text: 'Bild entfernen',
+                              handler: () => handleImageRemove(),
+                              icon: trash,
+                              role: 'destructive',
+                            },
+                          ]
+                        : []),
                       {
                         text: 'Abbrechen',
                         role: 'cancel',
