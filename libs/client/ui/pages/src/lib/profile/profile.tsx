@@ -20,6 +20,10 @@ import {
   useIonLoading,
   useIonToast,
   useIonViewDidLeave,
+  IonSelect,
+  IonSelectOption,
+  IonCheckbox,
+  IonItem,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
@@ -28,6 +32,8 @@ import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
 import { closeCircleOutline } from 'ionicons/icons';
+import { Difficulty } from '@bregenz-bewegt/client/types';
+import { Preferences } from '@prisma/client';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -42,6 +48,9 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+    const [selecPreference, setSelecPreference] = useState<Difficulty[]>(
+      Object.values(Difficulty)
+    );
     const profile = useFormik({
       initialValues: {
         firstname: userStore?.user?.firstname ?? '',
@@ -273,6 +282,33 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               >
                 Ändern
               </IonButton>
+            </IonRow>
+            <IonRow className="profile__content__preferences">
+              <IonItem>
+                <IonLabel>Präferenzen</IonLabel>
+                <IonSelect
+                  multiple={true}
+                  value={selecPreference}
+                  selectedText=" "
+                  onIonChange={(e) => setSelecPreference(e.detail.value)}
+                >
+                  <IonSelectOption value={Difficulty.ADVANCED}>
+                    Fortgeschritten
+                  </IonSelectOption>
+                  <IonSelectOption value={Difficulty.BEGINNER}>
+                    Anfänger
+                  </IonSelectOption>
+                  <IonSelectOption value={Difficulty.GAME}>
+                    Spiele
+                  </IonSelectOption>
+                </IonSelect>
+              </IonItem>
+            </IonRow>
+            <IonRow className="profile__content__rankcheck">
+              <IonItem>
+                <IonCheckbox slot="start"></IonCheckbox>
+                <IonLabel>Auf der Rangliste angezeigt werden</IonLabel>
+              </IonItem>
             </IonRow>
           </IonGrid>
           <IonButton

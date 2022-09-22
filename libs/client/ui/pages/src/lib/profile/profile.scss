@@ -18,5 +18,13 @@
         margin-right: 8px;
       }
     }
+
+    &__preferences {
+      margin-top: var(--spacing-m);
+    }
+
+    &__rankcheck {
+      margin: var(--spacing-s) 0;
+    }
   }
 }
