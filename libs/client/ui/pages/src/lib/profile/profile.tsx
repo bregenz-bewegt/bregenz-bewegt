@@ -303,8 +303,8 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               <Input
                 name="email"
                 label="Email"
-                type="email" // ?
-                inputMode="email" // ?
+                type="email"
+                inputMode="email"
                 placeholder="Email"
                 value={profile.values.email}
                 error={profile.touched.email ? profile.errors.email : undefined}
