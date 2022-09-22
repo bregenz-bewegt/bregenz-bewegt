@@ -33,7 +33,6 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
 import { closeCircleOutline } from 'ionicons/icons';
 import { Difficulty } from '@bregenz-bewegt/client/types';
-import { Preferences } from '@prisma/client';
 
 export interface ProfileProps {
   userStore?: UserStore;
