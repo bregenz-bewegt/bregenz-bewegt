@@ -94,6 +94,12 @@ export class UserStore implements Store {
     return data;
   }
 
+  async removeProfilePicture() {
+    const { data } = await http.delete('/users/profile-picture');
+    this.setAvatarProfilePicture();
+    return data;
+  }
+
   @action async fetchProfilePicture() {
     try {
       const { data } = await http.get('/users/profile-picture', {

@@ -28,6 +28,7 @@ import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
 import { closeCircleOutline } from 'ionicons/icons';
+import { trash, image, camera } from 'ionicons/icons';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -42,6 +43,31 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+
+    const showFailureToast = () => {
+      dismissLoading();
+      presentToast({
+        message: 'Etwas ist schiefgelaufen',
+        icon: closeCircleOutline,
+        duration: 2000,
+        position: 'top',
+        mode: 'ios',
+        color: 'danger',
+      });
+    };
+
+    const showSuccessToast = () => {
+      dismissLoading();
+      presentToast({
+        message: 'Änderungen gespeichert',
+        icon: checkmark,
+        duration: 2000,
+        position: 'top',
+        mode: 'ios',
+        color: 'success',
+      });
+    };
+
     const profile = useFormik({
       initialValues: {
         firstname: userStore?.user?.firstname ?? '',
@@ -57,28 +83,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               lastname: result.lastname ?? '',
             });
             setSubmitting(false);
-            presentToast({
-              message: 'Änderungen gespeichert',
-              icon: checkmark,
-              duration: 2000,
-              position: 'top',
-              mode: 'ios',
-              color: 'success',
-            });
+            showSuccessToast();
           })
           .catch(() => {
             setSubmitting(false);
-            presentToast({
-              message: 'Etwas ist schiefgelaufen',
-              icon: closeCircleOutline,
-              duration: 2000,
-              position: 'top',
-              mode: 'ios',
-              color: 'danger',
-            });
+            showFailureToast();
           });
       },
     });
+
     const handleChangePassword = () => {
       userStore
         ?.changePassword()
@@ -90,31 +103,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             buttons: [{ text: 'OK' }],
           });
         })
-        .catch(() => {
-          presentToast({
-            message: 'Etwas ist schiefgelaufen',
-            icon: closeCircleOutline,
-            duration: 2000,
-            position: 'top',
-            mode: 'ios',
-            color: 'danger',
-          });
-        });
+        .catch(() => showFailureToast());
     };
 
     const handleImageChange = async (source: CameraSource) => {
-      const handleFailure = () => {
-        dismissLoading();
-        presentToast({
-          message: 'Etwas ist schiefgelaufen',
-          icon: closeCircleOutline,
-          duration: 2000,
-          position: 'top',
-          mode: 'ios',
-          color: 'danger',
-        });
-      };
-
       try {
         const photo = await Camera.getPhoto({
           resultType: CameraResultType.Uri,
@@ -138,11 +130,18 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             userStore.fetchProfilePicture().then(() => dismissLoading())
           )
           .catch(() => {
-            handleFailure();
+            showFailureToast();
           });
       } catch (error) {
-        handleFailure();
+        showFailureToast();
       }
+    };
+
+    const handleImageRemove = () => {
+      userStore
+        ?.removeProfilePicture()
+        .then(() => showSuccessToast())
+        .catch(() => showFailureToast());
     };
 
     const handleLogout = () => {
@@ -205,10 +204,18 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       {
                         text: 'Aus Gallerie wählen',
                         handler: () => handleImageChange(CameraSource.Photos),
+                        icon: image,
                       },
                       {
                         text: 'Bild aufnehmen',
                         handler: () => handleImageChange(CameraSource.Camera),
+                        icon: camera,
+                      },
+                      {
+                        text: 'Bild entfernen',
+                        handler: () => handleImageRemove(),
+                        icon: trash,
+                        role: 'destructive',
                       },
                       {
                         text: 'Abbrechen',
