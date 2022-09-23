@@ -1,1 +1,1 @@
-export * from './file-mimetype.filter';
+export * from './profile-picture.filter';

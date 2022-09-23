@@ -29,6 +29,8 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
 import { closeCircleOutline } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
+// import { valideMimeTypes } from '@bregenz-bewegt/shared/types';
+// import type { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -123,6 +125,13 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
         const res = await fetch(photo.webPath);
         const blob = await res.blob();
+        if (
+          !['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].includes(
+            blob.type as any
+          )
+        ) {
+          return showFailureToast();
+        }
         const file = await new File([blob], `file.${photo.format}`);
         userStore
           ?.editProfilePicture(file)

@@ -1,5 +1,6 @@
 import {
   GetCurrentUser,
+  ProfilePictureValidationPipe,
   RemoveSensitiveFieldsInterceptor,
 } from '@bregenz-bewegt/server/common';
 import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
@@ -8,6 +9,7 @@ import {
   Controller,
   Delete,
   Get,
+  ParseFilePipe,
   Patch,
   Post,
   Res,
@@ -45,9 +47,7 @@ export class UserController {
     RemoveSensitiveFieldsInterceptor,
     FileInterceptor('file', {
       storage: MulterService.getStorage((req, file, cb) => {
-        const filename = `${path
-          .parse(file.originalname)
-          .name.replace(/\s/g, '')}_${uuidv4()}`;
+        const filename = `${uuidv4()}`;
         const extension = path.parse(file.originalname).ext;
 
         cb(null, `${filename}${extension}`);
@@ -57,11 +57,8 @@ export class UserController {
   @Post('profile-picture')
   editProfilePicture(
     @GetCurrentUser('sub') userId: User['id'],
-    @UploadedFile()
-    file: // new ParseFilePipe({
-    //   validators: [new FileTypeValidator({ fileType: 'png' })],
-    // })
-    Express.Multer.File
+    @UploadedFile(ParseFilePipe, ProfilePictureValidationPipe)
+    file: Express.Multer.File
   ): Promise<User> {
     return this.userService.editProfilePicture(userId, file);
   }
