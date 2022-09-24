@@ -45,7 +45,7 @@ export class AuthService {
     const guest = await this.prismaService.user.create({
       data: {
         role: 'GUEST',
-        username: dto.visitorId,
+        username: `Gast#${dto.visitorId}`,
         active: true,
       },
     });
