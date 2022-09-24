@@ -8,7 +8,6 @@
     display: flex;
     justify-content: flex-start;
     width: calc(100% - var(--spacing-3xl) - var(--spacing-l));
-    flex: 1;
 
     ion-avatar {
       display: inline-block;
@@ -26,12 +25,10 @@
       ion-text {
         margin: 2px 0;
         display: block;
-        // width: calc(var(--spacing-xxl) * 2);
       }
 
       &__username {
         font-weight: bold;
-        // width: calc(var(--spacing-3xl) * 2) !important;
       }
     }
   }
