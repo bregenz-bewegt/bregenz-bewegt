@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import {
   ForgotPasswordDto,
+  GuestDto,
   LoginDto,
   RegisterDto,
   ResetPasswordDto,
@@ -37,8 +38,8 @@ export class AuthController {
   @Public()
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Post('local/guest')
-  guest(): Promise<User> {
-    return this.authService.guest();
+  guest(@Body() dto: GuestDto): Promise<User> {
+    return this.authService.guest(dto);
   }
 
   @Public()

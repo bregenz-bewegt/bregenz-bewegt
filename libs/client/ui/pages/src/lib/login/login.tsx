@@ -69,7 +69,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
 
       setIsGuestLoading(true);
       userStore
-        ?.guest()
+        ?.guest({ visitorId })
         .then(() => {
           setTimeout(() => {
             setIsGuestLoading(false);

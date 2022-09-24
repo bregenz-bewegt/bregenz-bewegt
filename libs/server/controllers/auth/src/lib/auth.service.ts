@@ -10,6 +10,7 @@ import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
 import { Prisma, User } from '@prisma/client';
 import {
+  GuestDto,
   JwtPayload,
   LoginDto,
   OtpWithSecret,
@@ -38,7 +39,8 @@ export class AuthService {
     private userService: UserService
   ) {}
 
-  async guest(): Promise<User> {
+  async guest(dto: GuestDto): Promise<User> {
+    console.log(dto);
     const newGuest = await this.prismaService.user.create({
       data: {
         role: 'GUEST',

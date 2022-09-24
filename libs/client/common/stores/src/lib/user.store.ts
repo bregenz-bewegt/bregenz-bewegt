@@ -3,6 +3,7 @@ import { storage } from '@bregenz-bewegt/client/common/storage';
 import type { User } from '@bregenz-bewegt/client/types';
 import type {
   ForgotPasswordDto,
+  GuestDto,
   LoginDto,
   PatchProfileDto,
   RegisterDto,
@@ -22,7 +23,7 @@ export class UserStore implements Store {
     makeAutoObservable(this);
   }
 
-  async guest() {
+  async guest(dto: GuestDto) {
     const { data } = await http.post('/auth/local/guest');
     return data;
   }
