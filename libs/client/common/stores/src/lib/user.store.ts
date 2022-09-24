@@ -24,7 +24,7 @@ export class UserStore implements Store {
   }
 
   async guest(dto: GuestDto) {
-    const { data } = await http.post('/auth/local/guest');
+    const { data } = await http.post('/auth/local/guest', dto);
     return data;
   }
 
