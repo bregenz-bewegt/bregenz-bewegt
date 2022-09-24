@@ -64,8 +64,8 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
 
     const handleGuestLogin = async () => {
       const agent = await fingerprint.load();
-      const id = await agent.get();
-      console.log(id);
+      const { visitorId } = await agent.get();
+      console.log(visitorId);
 
       setIsGuestLoading(true);
       userStore
