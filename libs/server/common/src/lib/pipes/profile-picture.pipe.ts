@@ -6,8 +6,8 @@ import {
 import * as path from 'path';
 import 'multer';
 import {
-  valideMimeTypes,
-  validFileExtensions,
+  validProfilePictureMimeTypes,
+  validProfilePictureFileExtensions,
   ValidProfilePictureFileExtension,
   ValidProfilePictureMimeType,
 } from '@bregenz-bewegt/shared/types';
@@ -28,13 +28,13 @@ export class ProfilePictureValidationPipe
 
   private validateMimeType(file: Express.Multer.File): boolean {
     // return file.mimetype.match(/^(image\/(jpeg|jpg|png|gif))$/)
-    return valideMimeTypes.includes(
+    return validProfilePictureMimeTypes.includes(
       file.mimetype as ValidProfilePictureMimeType
     );
   }
 
   private validFileExtension(file: Express.Multer.File): boolean {
-    return validFileExtensions.includes(
+    return validProfilePictureFileExtensions.includes(
       path
         .extname(file.originalname)
         .replace('.', '') as ValidProfilePictureFileExtension
