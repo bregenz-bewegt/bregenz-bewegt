@@ -19,6 +19,7 @@ import { loginSchema } from '@bregenz-bewegt/client/common/validation';
 import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';
 import { loginError } from '@bregenz-bewegt/shared/errors';
 import { ForgotPasswordDto } from '@bregenz-bewegt/shared/types';
+import fingerprint from '@fingerprintjs/fingerprintjs';
 
 export interface LoginProps {
   userStore?: UserStore;
@@ -61,7 +62,11 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       },
     });
 
-    const handleGuestLogin = () => {
+    const handleGuestLogin = async () => {
+      const agent = await fingerprint.load();
+      const id = await agent.get();
+      console.log(id);
+
       setIsGuestLoading(true);
       userStore
         ?.guest()
