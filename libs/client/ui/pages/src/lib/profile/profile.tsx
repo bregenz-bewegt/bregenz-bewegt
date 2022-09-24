@@ -29,6 +29,8 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
 import { closeCircleOutline } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
+import { validProfilePictureFileExtensions } from '@bregenz-bewegt/shared/constants';
+import { ValidProfilePictureFileExtension } from '@bregenz-bewegt/shared/types';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -124,8 +126,8 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         const res = await fetch(photo.webPath);
         const blob = await res.blob();
         if (
-          !['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].includes(
-            blob.type as any
+          !validProfilePictureFileExtensions.includes(
+            blob.type as ValidProfilePictureFileExtension
           )
         ) {
           return showFailureToast();

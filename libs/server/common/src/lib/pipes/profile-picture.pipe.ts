@@ -6,11 +6,13 @@ import {
 import * as path from 'path';
 import 'multer';
 import {
-  validProfilePictureMimeTypes,
-  validProfilePictureFileExtensions,
   ValidProfilePictureFileExtension,
   ValidProfilePictureMimeType,
 } from '@bregenz-bewegt/shared/types';
+import {
+  validProfilePictureMimeTypes,
+  validProfilePictureFileExtensions,
+} from '@bregenz-bewegt/shared/constants';
 
 @Injectable()
 export class ProfilePictureValidationPipe
