@@ -27,6 +27,7 @@ export interface LoginProps {
 export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const router = useIonRouter();
+    const [isGuestLoading, setIsGuestLoading] = useState<boolean>(false);
     const verifyModal = useRef<HTMLIonModalElement>(null);
     const page = useRef(null);
     const [verifyModalPresentingElement, setVerifyModalPresentingElement] =
@@ -61,14 +62,14 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     });
 
     const handleGuestLogin = () => {
-      login.setSubmitting(false);
+      setIsGuestLoading(true);
       userStore
         ?.guest()
         .then(() => {
-          login.setSubmitting(false);
+          setIsGuestLoading(false);
         })
         .catch(() => {
-          login.setSubmitting(false);
+          setIsGuestLoading(false);
         });
     };
 
@@ -96,10 +97,9 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                   color="primary"
                   fill="outline"
                   className="login__content__login__socials__guest"
-                  onClick={() => handleGuestLogin()}
-                  disabled={login.isSubmitting}
+                  onClick={handleGuestLogin}
                 >
-                  {login.isSubmitting ? (
+                  {isGuestLoading ? (
                     <IonLabel>
                       <IonSpinner name="crescent" />
                     </IonLabel>
