@@ -1,5 +1,6 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
+import { Role } from '@bregenz-bewegt/client/types';
 import type { User } from '@bregenz-bewegt/client/types';
 import type {
   ForgotPasswordDto,
@@ -25,6 +26,12 @@ export class UserStore implements Store {
 
   async guest(dto: GuestDto) {
     const { data } = await http.post('/auth/local/guest', dto);
+
+    await this.setTokens({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+    });
+
     return data;
   }
 
@@ -149,7 +156,9 @@ export class UserStore implements Store {
 
   @action setAvatarProfilePicture() {
     if (this.user) {
-      this.user.profilePicture = `https://avatars.dicebear.com/api/initials/${this.user.email}.svg`;
+      this.user.profilePicture = `https://avatars.dicebear.com/api/initials/${
+        this.user.role === Role.USER ? this.user.email : 'BB'
+      }.svg`;
     }
   }
 

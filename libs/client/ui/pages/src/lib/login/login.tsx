@@ -45,6 +45,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
         userStore
           ?.login({ ...values })
           .then(() => {
+            userStore.setIsLoggedIn(true);
             userStore.refreshProfile();
             setSubmitting(false);
             router.push('/start');
@@ -65,20 +66,18 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     const handleGuestLogin = async () => {
       const agent = await fingerprint.load();
       const { visitorId } = await agent.get();
-      console.log(visitorId);
 
       setIsGuestLoading(true);
       userStore
         ?.guest({ visitorId })
         .then(() => {
-          setTimeout(() => {
-            setIsGuestLoading(false);
-          }, 2000);
+          userStore.setIsLoggedIn(true);
+          userStore.refreshProfile();
+          setIsGuestLoading(false);
+          router.push('/start');
         })
         .catch(() => {
-          setTimeout(() => {
-            setIsGuestLoading(false);
-          }, 2000);
+          setIsGuestLoading(false);
         });
     };
 

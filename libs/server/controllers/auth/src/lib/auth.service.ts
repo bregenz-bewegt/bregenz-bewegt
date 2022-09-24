@@ -12,6 +12,8 @@ import { Prisma, User } from '@prisma/client';
 import {
   GuestDto,
   JwtPayload,
+  JwtPayloadWithoutEmail,
+  JwtPayloadWithoutRole,
   LoginDto,
   OtpWithSecret,
   RegisterDto,
@@ -39,15 +41,21 @@ export class AuthService {
     private userService: UserService
   ) {}
 
-  async guest(dto: GuestDto): Promise<User> {
-    console.log(dto);
-    const newGuest = await this.prismaService.user.create({
+  async guest(dto: GuestDto): Promise<Tokens> {
+    const guest = await this.prismaService.user.create({
       data: {
         role: 'GUEST',
+        username: dto.visitorId,
+        active: true,
       },
     });
 
-    return newGuest;
+    const tokens = await this.signTokens<JwtPayloadWithoutEmail>({
+      sub: guest.id,
+      role: guest.role,
+    });
+    this.updateRefreshToken(guest.id, tokens.refresh_token);
+    return tokens;
   }
 
   async register(dto: RegisterDto): Promise<void> {
@@ -108,7 +116,11 @@ export class AuthService {
       },
     });
 
-    const tokens = await this.signTokens(user.id, user.email);
+    const tokens = await this.signTokens({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    });
     this.updateRefreshToken(user.id, tokens.refresh_token);
     return tokens;
   }
@@ -149,7 +161,11 @@ export class AuthService {
       throw new ForbiddenException(loginError.EMAIL_NOT_VERIFIED);
     }
 
-    const tokens = await this.signTokens(user.id, user.email);
+    const tokens = await this.signTokens({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    });
     this.updateRefreshToken(user.id, tokens.refresh_token);
     return tokens;
   }
@@ -168,10 +184,11 @@ export class AuthService {
     });
   }
 
-  async signTokens(userId: string, email: string): Promise<Tokens> {
-    const jwtPayload: JwtPayload = {
-      sub: userId,
-      email,
+  async signTokens<
+    PayloadType extends JwtPayload | JwtPayloadWithoutEmail = JwtPayload
+  >(payload: PayloadType): Promise<Tokens> {
+    const jwtPayload: PayloadType = {
+      ...payload,
     };
 
     const [access_token, refresh_token] = await Promise.all([
@@ -208,7 +225,11 @@ export class AuthService {
 
     if (!refreshTokenMatches) throw new ForbiddenException('Access denied');
 
-    const tokens = await this.signTokens(user.id, user.email);
+    const tokens = await this.signTokens({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    });
     this.updateRefreshToken(user.id, tokens.refresh_token);
     return tokens;
   }
@@ -230,7 +251,7 @@ export class AuthService {
   }
 
   async signPasswordResetToken(userId: string, email: string): Promise<string> {
-    const jwtPayload: JwtPayload = {
+    const jwtPayload: JwtPayloadWithoutRole = {
       sub: userId,
       email,
     };
