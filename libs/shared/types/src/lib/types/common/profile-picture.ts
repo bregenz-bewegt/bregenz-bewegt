@@ -10,5 +10,3 @@ export const validProfilePictureMimeTypes: ValidProfilePictureMimeType[] = [
   'image/png',
   'image/gif',
 ];
-
-export const x = '';

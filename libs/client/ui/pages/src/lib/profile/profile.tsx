@@ -29,11 +29,6 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
 import { closeCircleOutline } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
-import { x } from '@bregenz-bewegt/shared/types';
-// import { valideMimeTypes } from '@bregenz-bewegt/shared/types';
-// import type { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
-
-console.log(x);
 
 export interface ProfileProps {
   userStore?: UserStore;
