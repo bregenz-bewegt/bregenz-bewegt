@@ -23,8 +23,11 @@
       width: 80%;
 
       ion-text {
-        margin: 2px 0;
+        margin: var(--spacing-xxs) 0;
         display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
       &__username {
