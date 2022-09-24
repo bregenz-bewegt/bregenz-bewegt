@@ -71,10 +71,14 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       userStore
         ?.guest()
         .then(() => {
-          setIsGuestLoading(false);
+          setTimeout(() => {
+            setIsGuestLoading(false);
+          }, 2000);
         })
         .catch(() => {
-          setIsGuestLoading(false);
+          setTimeout(() => {
+            setIsGuestLoading(false);
+          }, 2000);
         });
     };
 
