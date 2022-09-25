@@ -40,22 +40,36 @@ export class AuthService {
     private mailService: MailService,
     private userService: UserService
   ) {}
+  private readonly guestUsernamePrefix = 'Gast#';
 
   async guest(dto: GuestDto): Promise<Tokens> {
-    const guest = await this.prismaService.user.create({
+    const returnTokens = async (
+      payload: JwtPayloadWithoutEmail
+    ): Promise<Tokens> => {
+      const tokens = await this.signTokens<JwtPayloadWithoutEmail>(payload);
+      this.updateRefreshToken(payload.sub, tokens.refresh_token);
+      return tokens;
+    };
+
+    const guest = await this.prismaService.user.findUnique({
+      where: {
+        username: `${this.guestUsernamePrefix}${dto.visitorId}`,
+      },
+    });
+
+    if (guest) {
+      return returnTokens({ sub: guest.id, role: guest.role });
+    }
+
+    const newGuest = await this.prismaService.user.create({
       data: {
         role: 'GUEST',
-        username: `Gast#${dto.visitorId}`,
+        username: `${this.guestUsernamePrefix}${dto.visitorId}`,
         active: true,
       },
     });
 
-    const tokens = await this.signTokens<JwtPayloadWithoutEmail>({
-      sub: guest.id,
-      role: guest.role,
-    });
-    this.updateRefreshToken(guest.id, tokens.refresh_token);
-    return tokens;
+    return returnTokens({ sub: newGuest.id, role: newGuest.role });
   }
 
   async register(dto: RegisterDto): Promise<void> {
