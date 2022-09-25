@@ -178,10 +178,8 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         <IonContent fullscreen className="profile__content">
           <IonGrid>
             <IonRow className="ion-justify-content-center">
-              <IonText>
-                <h1 className="profile__content__username">
-                  {userStore?.user?.username}
-                </h1>
+              <IonText className="profile__content__username">
+                <h1>{userStore?.user?.username}</h1>
               </IonText>
             </IonRow>
             <IonRow className="ion-justify-content-center">

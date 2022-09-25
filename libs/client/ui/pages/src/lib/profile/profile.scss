@@ -6,7 +6,15 @@
     }
 
     &__username {
-      margin: 0 0 var(--spacing-m) 0;
+      max-width: 100%;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      h1 {
+        margin: 0 0 var(--spacing-m) 0;
+      }
     }
 
     &__password-row {
