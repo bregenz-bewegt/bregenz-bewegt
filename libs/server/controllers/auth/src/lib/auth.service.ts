@@ -8,11 +8,10 @@ import * as argon from 'argon2';
 import speakeasy from 'speakeasy';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
-import { Prisma, User } from '@prisma/client';
+import { Prisma, Role, User } from '@prisma/client';
 import {
   GuestDto,
   JwtPayload,
-  JwtPayloadWithoutEmail,
   JwtPayloadWithoutRole,
   LoginDto,
   OtpWithSecret,
@@ -44,9 +43,9 @@ export class AuthService {
 
   async guest(dto: GuestDto): Promise<Tokens> {
     const returnTokens = async (
-      payload: JwtPayloadWithoutEmail
+      payload: JwtPayload<'GUEST'>
     ): Promise<Tokens> => {
-      const tokens = await this.signTokens<JwtPayloadWithoutEmail>(payload);
+      const tokens = await this.signTokens<'GUEST'>(payload);
       this.updateRefreshToken(payload.sub, tokens.refresh_token);
       return tokens;
     };
@@ -198,10 +197,8 @@ export class AuthService {
     });
   }
 
-  async signTokens<
-    PayloadType extends JwtPayload | JwtPayloadWithoutEmail = JwtPayload
-  >(payload: PayloadType): Promise<Tokens> {
-    const jwtPayload: PayloadType = {
+  async signTokens<R extends Role>(payload: JwtPayload<R>): Promise<Tokens> {
+    const jwtPayload: JwtPayload<R> = {
       ...payload,
     };
 

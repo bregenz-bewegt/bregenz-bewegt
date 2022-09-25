@@ -1,11 +1,21 @@
-import { Role } from '.prisma/client';
+import { Role, User } from '.prisma/client';
 
-export type JwtPayload = {
-  sub: string;
-  email: string;
-  role: Role;
-};
+export type JwtPayload<R extends Role = 'USER'> = R extends 'USER'
+  ? {
+      sub: User['id'];
+      email: User['email'];
+      role: Role;
+    }
+  : {
+      sub: User['id'];
+      role: Role;
+    };
 
-export type JwtPayloadWithRefreshToken = JwtPayload & { refreshToken: string };
-export type JwtPayloadWithoutRole = Omit<JwtPayload, 'role'>;
-export type JwtPayloadWithoutEmail = Omit<JwtPayload, 'email'>;
+export type JwtPayloadWithRefreshToken<R extends Role = 'USER'> =
+  JwtPayload<R> & {
+    refreshToken: string;
+  };
+export type JwtPayloadWithoutRole<R extends Role = 'USER'> = Omit<
+  JwtPayload<R>,
+  'role'
+>;
