@@ -1,5 +1,9 @@
 .profile {
   &__content {
+    ion-grid {
+      position: relative;
+    }
+
     ion-avatar {
       height: calc(var(--spacing-5xl) * 2);
       width: calc(var(--spacing-5xl) * 2);
@@ -31,28 +35,20 @@
     .guest-lock {
       position: relative;
       pointer-events: none;
+      filter: blur(var(--spacing-m));
+    }
 
-      &__blur {
-        position: aboslute;
-        filter: blur(var(--spacing-m));
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
+    .guest-lock-hint {
+      position: absolute;
+      width: 100%;
 
-      &__hint {
-        position: absolute;
-        width: 100%;
+      ion-grid {
+        ion-row {
+          justify-content: center;
 
-        ion-grid {
-          ion-row {
-            justify-content: center;
-
-            .lock-icon {
-              width: var(--spacing-xl);
-              height: var(--spacing-xl);
-            }
+          .lock-icon {
+            width: var(--spacing-3xl);
+            height: var(--spacing-3xl);
           }
         }
       }
