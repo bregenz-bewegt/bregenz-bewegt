@@ -189,11 +189,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         </IonHeader>
         <IonContent fullscreen className="profile__content">
           <IonGrid>
-            <IonRow className="ion-justify-content-center">
-              <IonText className="profile__content__username">
-                <h1>{userStore?.user?.username}</h1>
-              </IonText>
-            </IonRow>
             {userStore?.user?.role === Role.GUEST && (
               <div className="guest-lock-hint">
                 <IonGrid>
@@ -217,6 +212,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 userStore?.user?.role === Role.GUEST ? 'guest-lock' : ''
               }
             >
+              <IonRow className="ion-justify-content-center">
+                <IonText className="profile__content__username">
+                  <h1>{userStore?.user?.username}</h1>
+                </IonText>
+              </IonRow>
               <IonRow className="ion-justify-content-center">
                 <IonAvatar>
                   <img
