@@ -78,6 +78,8 @@ export class UserController {
     return this.userService.getProfilePicture(userId, res);
   }
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @Delete('profile-picture')
   deleteProfilePicture(
     @GetCurrentUser('sub') userId: User['id']

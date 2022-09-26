@@ -324,30 +324,36 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             </div>
           </IonGrid>
           {userStore?.user?.role === Role.USER && (
-            <IonButton
-              disabled={!profile.dirty || profile.isSubmitting}
-              onClick={() => profile.submitForm()}
-              expand="block"
-              mode="ios"
-            >
-              {profile.isSubmitting ? (
-                <IonLabel>
-                  <IonSpinner name="crescent" />
-                </IonLabel>
-              ) : (
-                'Änderungen Speichern'
-              )}
-            </IonButton>
+            <>
+              <IonButton
+                disabled={!profile.dirty || profile.isSubmitting}
+                onClick={() => profile.submitForm()}
+                expand="block"
+                mode="ios"
+              >
+                {profile.isSubmitting ? (
+                  <IonLabel>
+                    <IonSpinner name="crescent" />
+                  </IonLabel>
+                ) : (
+                  'Änderungen Speichern'
+                )}
+              </IonButton>
+              <IonButton
+                onClick={() => handleLogout()}
+                expand="block"
+                mode="ios"
+              >
+                {isLoggingOut ? (
+                  <IonLabel>
+                    <IonSpinner name="crescent" />
+                  </IonLabel>
+                ) : (
+                  'Abmelden'
+                )}
+              </IonButton>
+            </>
           )}
-          <IonButton onClick={() => handleLogout()} expand="block" mode="ios">
-            {isLoggingOut ? (
-              <IonLabel>
-                <IonSpinner name="crescent" />
-              </IonLabel>
-            ) : (
-              'Abmelden'
-            )}
-          </IonButton>
         </IonContent>
       </IonPage>
     );
