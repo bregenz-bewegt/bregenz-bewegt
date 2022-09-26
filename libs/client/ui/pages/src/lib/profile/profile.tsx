@@ -200,7 +200,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     />
                   </IonRow>
                   <IonRow>
-                    <IonButton expand="block" mode="ios">
+                    <IonButton expand="block" mode="ios" fill="outline">
                       Konto erstellen
                     </IonButton>
                   </IonRow>
