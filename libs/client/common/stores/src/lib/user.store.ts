@@ -17,6 +17,7 @@ export class UserStore implements Store {
   @observable user?: User;
   @observable isLoggedIn = false;
   @observable isLoadingLoggedIn = false;
+  @observable isProfilePictureSet = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -74,7 +75,7 @@ export class UserStore implements Store {
   }
 
   @action async patchProfile(dto: PatchProfileDto) {
-    const { data } = await http.patch('/users/profile', { ...dto });
+    const { data } = await http.patch('/users/profile', dto);
     this.setUser(data);
     return <User>data;
   }
@@ -94,6 +95,14 @@ export class UserStore implements Store {
     return data;
   }
 
+  async removeProfilePicture() {
+    if (!this.isProfilePictureSet) return;
+
+    const { data } = await http.delete('/users/profile-picture');
+    this.setAvatarProfilePicture();
+    return data;
+  }
+
   @action async fetchProfilePicture() {
     try {
       const { data } = await http.get('/users/profile-picture', {
@@ -103,6 +112,7 @@ export class UserStore implements Store {
       reader.readAsDataURL(data);
       reader.onload = () => {
         this.setProfilePicture(`${reader.result}`);
+        this.setIsProfilePictureSet(true);
       };
       return reader.result;
     } catch (error) {
@@ -146,9 +156,14 @@ export class UserStore implements Store {
     }
   }
 
+  @action setIsProfilePictureSet(value: boolean) {
+    this.isProfilePictureSet = value;
+  }
+
   @action setAvatarProfilePicture() {
     if (this.user) {
       this.user.profilePicture = `https://avatars.dicebear.com/api/initials/${this.user.email}.svg`;
+      this.setIsProfilePictureSet(false);
     }
   }
 
