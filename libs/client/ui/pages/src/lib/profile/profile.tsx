@@ -194,6 +194,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonText>
             </IonRow>
             <div className="guest-lock">
+              <div className="guest-lock__blur"></div>
               <div className="guest-lock__hint">
                 <IonGrid>
                   <IonRow>

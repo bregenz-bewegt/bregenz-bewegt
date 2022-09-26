@@ -30,8 +30,16 @@
 
     .guest-lock {
       position: relative;
-      filter: blur(var(--spacing-m));
       pointer-events: none;
+
+      &__blur {
+        position: aboslute;
+        filter: blur(var(--spacing-m));
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
 
       &__hint {
         position: absolute;
