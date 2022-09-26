@@ -18,7 +18,7 @@ import {
 export class ProfilePictureValidationPipe
   implements PipeTransform<Express.Multer.File>
 {
-  private readonly maxFileSize = 10 * 1000 * 1000;
+  private readonly maxFileSize = 10 * 1024 ** 2;
 
   async transform(file: Express.Multer.File) {
     if (this.validFileExtension(file) && this.validateFileSize(file)) {

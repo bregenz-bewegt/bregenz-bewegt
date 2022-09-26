@@ -1,1 +1,1 @@
-export * from './profile-picture.filter';
+export {};
