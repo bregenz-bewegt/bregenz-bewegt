@@ -194,23 +194,29 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 <h1>{userStore?.user?.username}</h1>
               </IonText>
             </IonRow>
-            <div className="guest-lock-hint">
-              <IonGrid>
-                <IonRow>
-                  <IonIcon
-                    className="lock-icon"
-                    icon={lockClosed}
-                    color="primary"
-                  />
-                </IonRow>
-                <IonRow>
-                  <IonButton expand="block" mode="ios">
-                    Konto erstellen
-                  </IonButton>
-                </IonRow>
-              </IonGrid>
-            </div>
-            <div className="guest-lock">
+            {userStore?.user?.role === Role.GUEST && (
+              <div className="guest-lock-hint">
+                <IonGrid>
+                  <IonRow>
+                    <IonIcon
+                      className="lock-icon"
+                      icon={lockClosed}
+                      color="primary"
+                    />
+                  </IonRow>
+                  <IonRow>
+                    <IonButton expand="block" mode="ios">
+                      Konto erstellen
+                    </IonButton>
+                  </IonRow>
+                </IonGrid>
+              </div>
+            )}
+            <div
+              className={
+                userStore?.user?.role === Role.GUEST ? 'guest-lock' : ''
+              }
+            >
               <IonRow className="ion-justify-content-center">
                 <IonAvatar>
                   <img
