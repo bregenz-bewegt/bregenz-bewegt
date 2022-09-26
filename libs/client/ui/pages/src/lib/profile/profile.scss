@@ -43,6 +43,10 @@
       width: 100%;
 
       ion-grid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
         ion-row {
           justify-content: center;
 
