@@ -72,6 +72,7 @@ export const Scan: React.FC = () => {
                   paddingTop: 0,
                   height: '100%',
                   display: 'flex',
+                  scale: '-1 1',
                 } as CSSProperties
               }
               videoStyle={
@@ -79,7 +80,7 @@ export const Scan: React.FC = () => {
                   width: 'auto',
                   objectFit: 'cover',
                   position: 'initial',
-                  transform: 'scale(-1, 1)',
+                  scale: '-1 1',
                 } as CSSProperties
               }
             />
