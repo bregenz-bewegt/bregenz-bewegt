@@ -157,10 +157,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         .catch(() => showFailureToast());
     };
 
-    const handleLogout = () => {
+    const handleLogout = (redirect: string) => {
       setIsLoggingOut(true);
       userStore?.logout().then(() => {
-        history.push('/login');
+        history.push(redirect);
         setIsLoggingOut(false);
       });
     };
@@ -200,7 +200,12 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     />
                   </IonRow>
                   <IonRow>
-                    <IonButton expand="block" mode="ios" fill="outline">
+                    <IonButton
+                      expand="block"
+                      mode="ios"
+                      fill="outline"
+                      onClick={() => handleLogout('/register')}
+                    >
                       Konto erstellen
                     </IonButton>
                   </IonRow>
@@ -340,7 +345,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 )}
               </IonButton>
               <IonButton
-                onClick={() => handleLogout()}
+                onClick={() => handleLogout('/login')}
                 expand="block"
                 mode="ios"
               >
