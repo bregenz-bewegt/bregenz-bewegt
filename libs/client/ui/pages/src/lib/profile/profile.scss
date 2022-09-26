@@ -27,5 +27,26 @@
         margin-right: 8px;
       }
     }
+
+    .guest-lock {
+      position: relative;
+      filter: blur(var(--spacing-m));
+      pointer-events: none;
+
+      &__hint {
+        position: absolute;
+
+        ion-grid {
+          ion-row {
+            justify-content: center;
+
+            .lock-icon {
+              width: var(--spacing-xl);
+              height: var(--spacing-xl);
+            }
+          }
+        }
+      }
+    }
   }
 }

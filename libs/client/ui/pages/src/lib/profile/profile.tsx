@@ -7,6 +7,7 @@ import {
   IonContent,
   IonGrid,
   IonHeader,
+  IonIcon,
   IonLabel,
   IonPage,
   IonRow,
@@ -27,7 +28,7 @@ import { useHistory } from 'react-router-dom';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
-import { closeCircleOutline } from 'ionicons/icons';
+import { closeCircleOutline, lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
 import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
@@ -192,108 +193,124 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 <h1>{userStore?.user?.username}</h1>
               </IonText>
             </IonRow>
-            <IonRow className="ion-justify-content-center">
-              <IonAvatar>
-                <img
-                  onLoad={() => setIsImageLoaded(true)}
-                  src={userStore?.user?.profilePicture}
-                  alt="profile"
-                  style={{ display: isImageLoaded ? 'initial' : 'none' }}
+            <div className="guest-lock">
+              <div className="guest-lock__hint">
+                <IonGrid>
+                  <IonRow>
+                    <IonIcon className="lock-icon" icon={lockClosed} />
+                  </IonRow>
+                  <IonRow>
+                    <IonButton expand="block" mode="ios">
+                      Konto erstellen
+                    </IonButton>
+                  </IonRow>
+                </IonGrid>
+              </div>
+              <IonRow className="ion-justify-content-center">
+                <IonAvatar>
+                  <img
+                    onLoad={() => setIsImageLoaded(true)}
+                    src={userStore?.user?.profilePicture}
+                    alt="profile"
+                    style={{ display: isImageLoaded ? 'initial' : 'none' }}
+                  />
+                  {!isImageLoaded && <IonSkeletonText animated />}
+                </IonAvatar>
+              </IonRow>
+              <IonRow className="ion-justify-content-center">
+                <IonText
+                  className="text-center"
+                  color="primary"
+                  onClick={() =>
+                    presentActionSheet({
+                      buttons: [
+                        {
+                          text: 'Aus Gallerie wählen',
+                          handler: () => handleImageChange(CameraSource.Photos),
+                          icon: image,
+                        },
+                        {
+                          text: 'Bild aufnehmen',
+                          handler: () => handleImageChange(CameraSource.Camera),
+                          icon: camera,
+                        },
+                        ...(userStore?.isProfilePictureSet
+                          ? [
+                              {
+                                text: 'Bild entfernen',
+                                handler: () => handleImageRemove(),
+                                icon: trash,
+                                role: 'destructive',
+                              },
+                            ]
+                          : []),
+                        {
+                          text: 'Abbrechen',
+                          role: 'cancel',
+                          handler: () => dismissActionSheet(),
+                        },
+                      ],
+                      header: 'Profilbild',
+                    })
+                  }
+                >
+                  <p>Ändern</p>
+                </IonText>
+              </IonRow>
+              <IonRow>
+                <IonText>
+                  <h2>Profil</h2>
+                </IonText>
+              </IonRow>
+              <IonRow>
+                <Input
+                  name="firstname"
+                  placeholder="Vorname"
+                  label="Vorname"
+                  value={profile.values.firstname}
+                  error={
+                    profile.touched.firstname
+                      ? profile.errors.firstname
+                      : undefined
+                  }
+                  onChange={profile.handleChange}
+                  onBlur={profile.handleBlur}
+                  disabled={!isImageLoaded}
                 />
-                {!isImageLoaded && <IonSkeletonText animated />}
-              </IonAvatar>
-            </IonRow>
-            <IonRow className="ion-justify-content-center">
-              <IonText
-                className="text-center"
-                color="primary"
-                onClick={() =>
-                  presentActionSheet({
-                    buttons: [
-                      {
-                        text: 'Aus Gallerie wählen',
-                        handler: () => handleImageChange(CameraSource.Photos),
-                        icon: image,
-                      },
-                      {
-                        text: 'Bild aufnehmen',
-                        handler: () => handleImageChange(CameraSource.Camera),
-                        icon: camera,
-                      },
-                      ...(userStore?.isProfilePictureSet
-                        ? [
-                            {
-                              text: 'Bild entfernen',
-                              handler: () => handleImageRemove(),
-                              icon: trash,
-                              role: 'destructive',
-                            },
-                          ]
-                        : []),
-                      {
-                        text: 'Abbrechen',
-                        role: 'cancel',
-                        handler: () => dismissActionSheet(),
-                      },
-                    ],
-                    header: 'Profilbild',
-                  })
-                }
-              >
-                <p>Ändern</p>
-              </IonText>
-            </IonRow>
-            <IonRow>
-              <IonText>
-                <h2>Profil</h2>
-              </IonText>
-            </IonRow>
-            <IonRow>
-              <Input
-                name="firstname"
-                placeholder="Vorname"
-                label="Vorname"
-                value={profile.values.firstname}
-                error={
-                  profile.touched.firstname
-                    ? profile.errors.firstname
-                    : undefined
-                }
-                onChange={profile.handleChange}
-                onBlur={profile.handleBlur}
-                disabled={!isImageLoaded}
-              />
-            </IonRow>
-            <IonRow>
-              <Input
-                name="lastname"
-                placeholder="Nachname"
-                label="Nachname"
-                value={profile.values.lastname}
-                error={
-                  profile.touched.lastname ? profile.errors.lastname : undefined
-                }
-                onChange={profile.handleChange}
-                onBlur={profile.handleBlur}
-                disabled={!isImageLoaded}
-              />
-            </IonRow>
-            <IonRow className="profile__content__password-row">
-              <Input
-                className="profile__content__password-row__input"
-                expand={false}
-                label="Passwort"
-                disabled
-                value={'*'.repeat(11)}
-              />
-              <IonButton
-                onClick={() => handleChangePassword()}
-                size="small"
-                mode="ios"
-              >
-                Ändern
-              </IonButton>
-            </IonRow>
+              </IonRow>
+              <IonRow>
+                <Input
+                  name="lastname"
+                  placeholder="Nachname"
+                  label="Nachname"
+                  value={profile.values.lastname}
+                  error={
+                    profile.touched.lastname
+                      ? profile.errors.lastname
+                      : undefined
+                  }
+                  onChange={profile.handleChange}
+                  onBlur={profile.handleBlur}
+                  disabled={!isImageLoaded}
+                />
+              </IonRow>
+              <IonRow className="profile__content__password-row">
+                <Input
+                  className="profile__content__password-row__input"
+                  expand={false}
+                  label="Passwort"
+                  disabled
+                  value={'*'.repeat(11)}
+                />
+                <IonButton
+                  onClick={() => handleChangePassword()}
+                  size="small"
+                  mode="ios"
+                >
+                  Ändern
+                </IonButton>
+              </IonRow>
+            </div>
           </IonGrid>
           <IonButton
             disabled={!profile.dirty || profile.isSubmitting}
