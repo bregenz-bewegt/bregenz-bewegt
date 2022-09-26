@@ -1,4 +1,5 @@
 import { UnsupportedMediaTypeException } from '@nestjs/common';
+import 'multer';
 
 export function fileMimetypeFilter(...mimetypes: string[]) {
   return (
