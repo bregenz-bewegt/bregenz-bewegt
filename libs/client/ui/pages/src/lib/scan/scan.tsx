@@ -3,38 +3,90 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonRow,
   IonTitle,
   IonToolbar,
+  useIonRouter,
+  useIonViewDidLeave,
+  useIonViewWillEnter,
 } from '@ionic/react';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner';
-import { useEffect, useState } from 'react';
+import { QrReader } from 'react-qr-reader';
+import { CSSProperties, useState } from 'react';
+import { Capacitor } from '@capacitor/core';
 
 export const Scan: React.FC = () => {
-  const [qrResult, setQrResult] = useState<string>('');
-  const openScanner = async () => {
+  const router = useIonRouter();
+  const [, setScanResult] = useState<string | null>(null);
+  const [showWebScanner, setShowWebScanner] = useState<boolean>();
+
+  const openNativeScanner = async () => {
     const data = await BarcodeScanner.scan();
-    setQrResult(data.text ?? 'test');
+    setScanResult(data.text ?? 'test');
   };
 
-  useEffect(() => {
-    openScanner();
-  }, []);
+  useIonViewWillEnter(() => {
+    const isNativePlatform = Capacitor.isNativePlatform();
+    setShowWebScanner(!isNativePlatform);
+
+    if (isNativePlatform) {
+      openNativeScanner();
+    } else {
+      setShowWebScanner(true);
+    }
+  });
+
+  useIonViewDidLeave(() => {
+    setScanResult(null);
+    setShowWebScanner(false);
+  });
 
   return (
-    <IonPage>
+    <IonPage className="scan">
       <IonHeader>
         <IonToolbar>
           <IonTitle>Scan</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Scan</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonRow>{qrResult}</IonRow>
+        {showWebScanner && (
+          <>
+            <QrReader
+              className="web-scanner"
+              constraints={{}}
+              onResult={(result, error) => {
+                try {
+                  if (error) return;
+                  const text = result?.getText() ?? '';
+                  if (!text) return;
+                  const url = new URL(text ?? '');
+                  if (!url) return setScanResult(null);
+
+                  setScanResult(url.pathname);
+                  router.push(url.pathname);
+                } catch (error) {
+                  setScanResult(null);
+                }
+              }}
+              videoContainerStyle={
+                {
+                  paddingTop: 0,
+                  height: '100%',
+                  display: 'flex',
+                } as CSSProperties
+              }
+              videoStyle={
+                {
+                  width: 'auto',
+                  objectFit: 'cover',
+                  position: 'initial',
+                } as CSSProperties
+              }
+            />
+            <div className="scan__indicator">
+              <div className="scan__indicator__bar"></div>
+            </div>
+          </>
+        )}
       </IonContent>
     </IonPage>
   );

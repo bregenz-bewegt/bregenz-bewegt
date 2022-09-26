@@ -1,1 +1,1 @@
-export * from './image-mimetype.pipe';
+export * from './profile-picture.pipe';
