@@ -32,6 +32,7 @@ import { closeCircleOutline, lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
 import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
+import { Role } from '@bregenz-bewegt/client/types';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -316,20 +317,22 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonRow>
             </div>
           </IonGrid>
-          <IonButton
-            disabled={!profile.dirty || profile.isSubmitting}
-            onClick={() => profile.submitForm()}
-            expand="block"
-            mode="ios"
-          >
-            {profile.isSubmitting ? (
-              <IonLabel>
-                <IonSpinner name="crescent" />
-              </IonLabel>
-            ) : (
-              'Änderungen Speichern'
-            )}
-          </IonButton>
+          {userStore?.user?.role === Role.USER && (
+            <IonButton
+              disabled={!profile.dirty || profile.isSubmitting}
+              onClick={() => profile.submitForm()}
+              expand="block"
+              mode="ios"
+            >
+              {profile.isSubmitting ? (
+                <IonLabel>
+                  <IonSpinner name="crescent" />
+                </IonLabel>
+              ) : (
+                'Änderungen Speichern'
+              )}
+            </IonButton>
+          )}
           <IonButton onClick={() => handleLogout()} expand="block" mode="ios">
             {isLoggingOut ? (
               <IonLabel>
