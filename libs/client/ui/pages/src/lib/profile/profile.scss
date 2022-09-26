@@ -41,9 +41,11 @@
     .guest-lock-hint {
       position: absolute;
       width: 100%;
+      z-index: 5;
 
       ion-grid {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
 
