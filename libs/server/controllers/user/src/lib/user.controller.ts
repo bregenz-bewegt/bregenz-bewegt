@@ -48,6 +48,12 @@ export class UserController {
     return this.userService.patchProfile(userId, dto);
   }
 
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Delete('profile')
+  deleteProfile(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
+    return this.userService.deleteProfile(userId);
+  }
+
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(

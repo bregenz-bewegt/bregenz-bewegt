@@ -32,6 +32,16 @@
       }
     }
 
+    &__danger-row {
+      ion-col.delete {
+        padding-inline-start: 0;
+      }
+
+      ion-col.logout {
+        padding-inline-end: 0;
+      }
+    }
+
     .guest-lock {
       position: relative;
       pointer-events: none;

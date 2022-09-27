@@ -4,6 +4,7 @@ import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonAvatar,
   IonButton,
+  IonCol,
   IonContent,
   IonGrid,
   IonHeader,
@@ -166,6 +167,37 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         userRole === Role.USER
           ? setIsLoggingOut(false)
           : userStore?.setIsLoadingLoggedIn(false);
+      });
+    };
+
+    const handleDelete = () => {
+      presentAlert({
+        header: 'Account löschen',
+        message: `Der Account sowie alle zugehörigen Daten werden gelöscht. Wollen Sie fortfahren?`,
+        backdropDismiss: false,
+        buttons: [
+          { text: 'Abbrechen', role: 'cancel' },
+          {
+            text: 'Ja',
+            role: 'OK',
+            handler: () => {
+              userStore
+                ?.deleteProfile()
+                .then(() => {
+                  handleLogout('/login', userStore?.user?.role);
+                  presentToast({
+                    message: 'Account gelöscht',
+                    icon: checkmark,
+                    duration: 2000,
+                    position: 'top',
+                    mode: 'ios',
+                    color: 'success',
+                  });
+                })
+                .catch(() => showFailureToast());
+            },
+          },
+        ],
       });
     };
 
@@ -362,19 +394,35 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   'Änderungen Speichern'
                 )}
               </IonButton>
-              <IonButton
-                onClick={() => handleLogout('/login', userStore.user?.role)}
-                expand="block"
-                mode="ios"
-              >
-                {isLoggingOut ? (
-                  <IonLabel>
-                    <IonSpinner name="crescent" />
-                  </IonLabel>
-                ) : (
-                  'Abmelden'
-                )}
-              </IonButton>
+              <IonRow className="profile__content__danger-row">
+                <IonCol className="delete">
+                  <IonButton
+                    onClick={() => handleDelete()}
+                    expand="block"
+                    mode="ios"
+                    color="danger"
+                  >
+                    Account Löschen
+                  </IonButton>
+                </IonCol>
+                <IonCol className="logout">
+                  <IonButton
+                    onClick={() =>
+                      handleLogout('/login', userStore?.user?.role)
+                    }
+                    expand="block"
+                    mode="ios"
+                  >
+                    {isLoggingOut ? (
+                      <IonLabel>
+                        <IonSpinner name="crescent" />
+                      </IonLabel>
+                    ) : (
+                      'Abmelden'
+                    )}
+                  </IonButton>
+                </IonCol>
+              </IonRow>
             </>
           )}
         </IonContent>
