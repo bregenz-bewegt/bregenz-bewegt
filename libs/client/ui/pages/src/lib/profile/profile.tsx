@@ -157,7 +157,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         .catch(() => showFailureToast());
     };
 
-    const handleLogout = (redirect: string, userRole: Role) => {
+    const handleLogout = (redirect: string, userRole?: Role) => {
       userRole === Role.USER
         ? setIsLoggingOut(true)
         : userStore?.setIsLoadingLoggedIn(true);
