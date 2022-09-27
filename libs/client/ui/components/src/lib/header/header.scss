@@ -7,7 +7,8 @@
 
   &__profile {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    width: calc(100% - var(--spacing-3xl) - var(--spacing-l));
 
     ion-avatar {
       display: inline-block;
@@ -20,23 +21,25 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      width: 80%;
 
       ion-text {
-        margin: 2px 0;
+        margin: var(--spacing-xxs) 0;
         display: block;
-        width: calc(var(--spacing-xxl) * 2);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
       &__username {
         font-weight: bold;
-        width: calc(var(--spacing-3xl) * 2) !important;
       }
     }
   }
 
   &__fab-button {
-    height: 48px;
-    width: 48px;
+    height: var(--spacing-3xl);
+    width: var(--spacing-3xl);
     --background: var(--ion-color-light-tint);
     --box-shadow: none;
     --background-activated: none;

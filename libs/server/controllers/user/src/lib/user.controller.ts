@@ -1,7 +1,9 @@
 import {
   GetCurrentUser,
+  HasRole,
   ProfilePictureValidationPipe,
   RemoveSensitiveFieldsInterceptor,
+  RoleGuard,
 } from '@bregenz-bewegt/server/common';
 import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
 import {
@@ -14,6 +16,7 @@ import {
   Post,
   Res,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -22,7 +25,7 @@ import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import { Response } from 'express';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 
 @Controller('users')
 export class UserController {
@@ -34,6 +37,8 @@ export class UserController {
     return this.userService.findById(userId);
   }
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Patch('profile')
   patchProfile(
@@ -45,10 +50,12 @@ export class UserController {
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Delete('profile')
-  deleteProfile(@GetCurrentUser('sub') userId: string): Promise<User> {
+  deleteProfile(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
     return this.userService.deleteProfile(userId);
   }
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
     FileInterceptor('file', {
@@ -77,6 +84,8 @@ export class UserController {
     return this.userService.getProfilePicture(userId, res);
   }
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @Delete('profile-picture')
   deleteProfilePicture(
     @GetCurrentUser('sub') userId: User['id']
