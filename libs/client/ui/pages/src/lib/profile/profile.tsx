@@ -159,11 +159,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     const handleLogout = (redirect: string) => {
       setIsLoggingOut(true);
-      // userStore?.setIsLoadingLoggedIn(true);
+      userStore?.setIsLoadingLoggedIn(true);
       userStore?.logout().then(() => {
         router.push(redirect);
-        // userStore?.setIsLoadingLoggedIn(false);
         setIsLoggingOut(false);
+        userStore?.setIsLoadingLoggedIn(false);
       });
     };
 
@@ -208,7 +208,13 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       fill="outline"
                       onClick={() => handleLogout('/register')}
                     >
-                      Konto erstellen
+                      {isLoggingOut ? (
+                        <IonLabel>
+                          <IonSpinner name="crescent" />
+                        </IonLabel>
+                      ) : (
+                        'Konto erstellen'
+                      )}
                     </IonButton>
                   </IonRow>
                 </IonGrid>
