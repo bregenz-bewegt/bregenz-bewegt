@@ -161,7 +161,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       setIsLoggingOut(true);
       // userStore?.setIsLoadingLoggedIn(true);
       userStore?.logout().then(() => {
-        router.push(redirect, 'back');
+        router.push(redirect);
         // userStore?.setIsLoadingLoggedIn(false);
         setIsLoggingOut(false);
       });
