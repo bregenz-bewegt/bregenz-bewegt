@@ -133,19 +133,19 @@ export class UserStore implements Store {
     this.isLoggedIn = value;
   }
 
-  @action setIsloadingLoginState(value: boolean) {
+  @action setIsLoadingLoggedIn(value: boolean) {
     this.isLoadingLoggedIn = value;
   }
 
   @action async initUser() {
-    this.setIsloadingLoginState(true);
+    this.setIsLoadingLoggedIn(true);
     const tokens = await this.getTokens();
 
     if (tokens.access_token) {
       this.refreshProfile();
       this.setIsLoggedIn(true);
     }
-    this.setIsloadingLoginState(false);
+    this.setIsLoadingLoggedIn(false);
   }
 
   @action async setTokens(tokens: Tokens) {

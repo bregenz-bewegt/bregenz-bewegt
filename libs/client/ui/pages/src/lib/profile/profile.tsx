@@ -158,14 +158,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     };
 
     const handleLogout = (redirect: string) => {
-      // setIsLoggingOut(true);
-      userStore?.setIsloadingLoginState(true);
-      // presentLoading();
+      setIsLoggingOut(true);
       userStore?.logout().then(() => {
         history.push(redirect);
-        userStore?.setIsloadingLoginState(false);
-        // setIsLoggingOut(false);
-        // dismissLoading();
+        setIsLoggingOut(false);
       });
     };
 
