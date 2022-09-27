@@ -2,8 +2,14 @@ import { PrismaClient, Role } from '@prisma/client';
 const prisma = new PrismaClient();
 import * as argon from 'argon2';
 
-const createUsers = async () => {
+const purgeDatabase = async () => {
+  await prisma.activity.deleteMany();
+  await prisma.exercise.deleteMany();
+  await prisma.park.deleteMany();
   await prisma.user.deleteMany();
+};
+
+const createUsers = async () => {
   await prisma.user.createMany({
     data: [
       {
@@ -29,25 +35,7 @@ const createUsers = async () => {
   });
 };
 
-const createActivities = async () => {
-  await prisma.activity.createMany({
-    data: [
-      {
-        startedAt: new Date().toISOString().slice(0, 19).concat('Z'),
-        endedAt: new Date().toISOString().slice(0, 19).concat('Z'),
-        exerciseId: await prisma.exercise
-          .findFirst({ where: { name: 'Plank' } })
-          .then((e) => e?.id ?? 0),
-        userId: await prisma.user
-          .findFirst({ where: { username: 'Vincentcool3' } })
-          .then((u) => u?.id),
-      },
-    ],
-  });
-};
-
 const createParks = async () => {
-  await prisma.park.deleteMany();
   await prisma.park.createMany({
     data: [
       {
@@ -168,13 +156,37 @@ const createExercises = async () => {
   ]);
 };
 
-const main = async () => {
-  await prisma.activity.deleteMany();
-  await prisma.exercise.deleteMany();
+const createActivities = async () => {
+  const users = await prisma.user.findMany();
+  const exercises = await prisma.exercise.findMany();
 
-  await createExercises();
+  await Promise.all([
+    users.map(async (user) => {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          activities: {
+            createMany: {
+              data: await Promise.all(
+                exercises.map(async (exercise) => ({
+                  startedAt: new Date(),
+                  endedAt: new Date(),
+                  exerciseId: exercise.id,
+                }))
+              ),
+            },
+          },
+        },
+      });
+    }),
+  ]);
+};
+
+const main = async () => {
+  await purgeDatabase();
   await createUsers();
   await createParks();
+  await createExercises();
   await createActivities();
 };
 
