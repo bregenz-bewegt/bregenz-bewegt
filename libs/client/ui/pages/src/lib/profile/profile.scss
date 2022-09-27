@@ -18,5 +18,15 @@
         margin-right: 8px;
       }
     }
+
+    &__danger-row {
+      ion-col.delete {
+        padding-inline-start: 0;
+      }
+
+      ion-col.logout {
+        padding-inline-end: 0;
+      }
+    }
   }
 }

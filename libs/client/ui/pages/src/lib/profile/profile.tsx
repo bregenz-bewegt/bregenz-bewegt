@@ -4,6 +4,7 @@ import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonAvatar,
   IonButton,
+  IonCol,
   IonContent,
   IonGrid,
   IonHeader,
@@ -302,23 +303,33 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 Ändern
               </IonButton>
             </IonRow>
-            <IonRow>
+          </IonGrid>
+          <IonButton
+            disabled={!profile.dirty || profile.isSubmitting}
+            onClick={() => profile.submitForm()}
+            expand="block"
+            mode="ios"
+          >
+            {profile.isSubmitting ? (
+              <IonLabel>
+                <IonSpinner name="crescent" />
+              </IonLabel>
+            ) : (
+              'Änderungen Speichern'
+            )}
+          </IonButton>
+          <IonRow className="profile__content__danger-row">
+            <IonCol className="delete">
               <IonButton
-                disabled={!profile.dirty || profile.isSubmitting}
-                onClick={() => profile.submitForm()}
+                onClick={() => handleDelete()}
                 expand="block"
                 mode="ios"
+                color="danger"
               >
-                {profile.isSubmitting ? (
-                  <IonLabel>
-                    <IonSpinner name="crescent" />
-                  </IonLabel>
-                ) : (
-                  'Änderungen Speichern'
-                )}
+                Account Löschen
               </IonButton>
-            </IonRow>
-            <IonRow>
+            </IonCol>
+            <IonCol className="logout">
               <IonButton
                 onClick={() => handleLogout()}
                 expand="block"
@@ -332,17 +343,8 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   'Abmelden'
                 )}
               </IonButton>
-            </IonRow>
-            <IonRow>
-              <IonButton
-                onClick={() => handleDelete()}
-                expand="block"
-                mode="ios"
-              >
-                Account Löschen
-              </IonButton>
-            </IonRow>
-          </IonGrid>
+            </IonCol>
+          </IonRow>
         </IonContent>
       </IonPage>
     );
