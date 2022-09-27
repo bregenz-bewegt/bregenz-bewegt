@@ -197,11 +197,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               <div className="guest-lock-hint">
                 <IonGrid>
                   <IonRow>
-                    <IonIcon
-                      className="lock-icon"
-                      icon={lockClosed}
-                      color="primary"
-                    />
+                    <IonIcon className="lock-icon" icon={lockClosed} />
+                  </IonRow>
+                  <IonRow className="info">
+                    Erstelle ein Konto, um auf dein Profil zugreifen zu können.
                   </IonRow>
                   <IonRow>
                     <IonButton
