@@ -15,6 +15,12 @@
       align-items: center;
       flex-direction: column;
 
+      ion-icon {
+        height: var(--spacing-xxl);
+        width: var(--spacing-xxl);
+        color: var(--ion-color-primary);
+      }
+
       .verify-text {
         text-align: center;
       }

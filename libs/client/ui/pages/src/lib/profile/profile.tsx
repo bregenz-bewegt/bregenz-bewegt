@@ -103,7 +103,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         .then(() => {
           presentAlert({
             header: 'Passwort zurücksetzen',
-            message: `Eine Email zum Zurücksetzen deines Passworts wurde an ${userStore.user?.email} versandt`,
+            message: `Eine Email zum Zurücksetzen deines Passworts wurde an ${userStore.user?.email} versendet`,
             backdropDismiss: false,
             buttons: [{ text: 'OK' }],
           });
