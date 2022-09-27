@@ -19,12 +19,12 @@ import {
   useIonActionSheet,
   useIonAlert,
   useIonLoading,
+  useIonRouter,
   useIonToast,
   useIonViewDidLeave,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
@@ -40,7 +40,7 @@ export interface ProfileProps {
 
 export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
-    const history = useHistory();
+    const router = useIonRouter();
     const [presentToast] = useIonToast();
     const [presentAlert] = useIonAlert();
     const [presentLoading, dismissLoading] = useIonLoading();
@@ -161,7 +161,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       // setIsLoggingOut(true);
       userStore?.setIsLoadingLoggedIn(true);
       userStore?.logout().then(() => {
-        history.push(redirect);
+        router.push(redirect, 'back');
         userStore?.setIsLoadingLoggedIn(false);
         // setIsLoggingOut(false);
       });
