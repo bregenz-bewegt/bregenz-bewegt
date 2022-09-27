@@ -181,17 +181,20 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             text: 'Ja',
             role: 'OK',
             handler: () => {
-              userStore?.deleteProfile().then(() => {
-                handleLogout('/login', userStore?.user?.role);
-                presentToast({
-                  message: 'Account gelöscht',
-                  icon: checkmark,
-                  duration: 2000,
-                  position: 'top',
-                  mode: 'ios',
-                  color: 'success',
-                });
-              });
+              userStore
+                ?.deleteProfile()
+                .then(() => {
+                  handleLogout('/login', userStore?.user?.role);
+                  presentToast({
+                    message: 'Account gelöscht',
+                    icon: checkmark,
+                    duration: 2000,
+                    position: 'top',
+                    mode: 'ios',
+                    color: 'success',
+                  });
+                })
+                .catch(() => showFailureToast());
             },
           },
         ],

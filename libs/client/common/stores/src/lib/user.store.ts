@@ -89,12 +89,8 @@ export class UserStore implements Store {
   }
 
   async deleteProfile() {
-    try {
-      const { data } = await http.delete('/users/profile');
-      return data;
-    } catch (error) {
-      return;
-    }
+    const { data } = await http.delete('/users/profile');
+    return data;
   }
 
   async editProfilePicture(picture: globalThis.File) {
