@@ -109,7 +109,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 >
                   {isGuestLoading ? (
                     <IonLabel>
-                      <IonSpinner name="crescent" />
+                      <IonSpinner name="crescent" color="light" />
                     </IonLabel>
                   ) : (
                     'Als Gast beitreten'
