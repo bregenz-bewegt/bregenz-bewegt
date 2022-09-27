@@ -157,13 +157,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         .catch(() => showFailureToast());
     };
 
-    const handleLogout = (redirect: string) => {
-      setIsLoggingOut(true);
-      userStore?.setIsLoadingLoggedIn(true);
+    const handleLogout = (redirect: string, userRole: Role) => {
+      userRole === Role.USER
+        ? setIsLoggingOut(true)
+        : userStore?.setIsLoadingLoggedIn(true);
       userStore?.logout().then(() => {
         router.push(redirect);
-        setIsLoggingOut(false);
-        userStore?.setIsLoadingLoggedIn(false);
+        userRole === Role.USER
+          ? setIsLoggingOut(false)
+          : userStore?.setIsLoadingLoggedIn(false);
       });
     };
 
@@ -206,7 +208,9 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       expand="block"
                       mode="ios"
                       fill="outline"
-                      onClick={() => handleLogout('/register')}
+                      onClick={() =>
+                        handleLogout('/register', userStore.user?.role)
+                      }
                     >
                       {isLoggingOut ? (
                         <IonLabel>
@@ -353,7 +357,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 )}
               </IonButton>
               <IonButton
-                onClick={() => handleLogout('/login')}
+                onClick={() => handleLogout('/login', userStore.user?.role)}
                 expand="block"
                 mode="ios"
               >
