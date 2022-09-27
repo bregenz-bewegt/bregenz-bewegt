@@ -29,6 +29,9 @@ import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
 import { closeCircleOutline } from 'ionicons/icons';
+import { trash, image, camera } from 'ionicons/icons';
+import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
+import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -43,6 +46,31 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+
+    const showFailureToast = () => {
+      dismissLoading();
+      presentToast({
+        message: 'Etwas ist schiefgelaufen',
+        icon: closeCircleOutline,
+        duration: 2000,
+        position: 'top',
+        mode: 'ios',
+        color: 'danger',
+      });
+    };
+
+    const showSuccessToast = () => {
+      dismissLoading();
+      presentToast({
+        message: 'Änderungen gespeichert',
+        icon: checkmark,
+        duration: 2000,
+        position: 'top',
+        mode: 'ios',
+        color: 'success',
+      });
+    };
+
     const profile = useFormik({
       initialValues: {
         firstname: userStore?.user?.firstname ?? '',
@@ -58,28 +86,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               lastname: result.lastname ?? '',
             });
             setSubmitting(false);
-            presentToast({
-              message: 'Änderungen gespeichert',
-              icon: checkmark,
-              duration: 2000,
-              position: 'top',
-              mode: 'ios',
-              color: 'success',
-            });
+            showSuccessToast();
           })
           .catch(() => {
             setSubmitting(false);
-            presentToast({
-              message: 'Etwas ist schiefgelaufen',
-              icon: closeCircleOutline,
-              duration: 2000,
-              position: 'top',
-              mode: 'ios',
-              color: 'danger',
-            });
+            showFailureToast();
           });
       },
     });
+
     const handleChangePassword = () => {
       userStore
         ?.changePassword()
@@ -91,31 +106,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             buttons: [{ text: 'OK' }],
           });
         })
-        .catch(() => {
-          presentToast({
-            message: 'Etwas ist schiefgelaufen',
-            icon: closeCircleOutline,
-            duration: 2000,
-            position: 'top',
-            mode: 'ios',
-            color: 'danger',
-          });
-        });
+        .catch(() => showFailureToast());
     };
 
     const handleImageChange = async (source: CameraSource) => {
-      const handleFailure = () => {
-        dismissLoading();
-        presentToast({
-          message: 'Etwas ist schiefgelaufen',
-          icon: closeCircleOutline,
-          duration: 2000,
-          position: 'top',
-          mode: 'ios',
-          color: 'danger',
-        });
-      };
-
       try {
         const photo = await Camera.getPhoto({
           resultType: CameraResultType.Uri,
@@ -132,18 +126,34 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
         const res = await fetch(photo.webPath);
         const blob = await res.blob();
+        if (
+          !validProfilePictureMimeTypes.includes(
+            blob.type as ValidProfilePictureMimeType
+          )
+        ) {
+          return showFailureToast();
+        }
         const file = await new File([blob], `file.${photo.format}`);
         userStore
           ?.editProfilePicture(file)
           .then(() =>
-            userStore.fetchProfilePicture().then(() => dismissLoading())
+            userStore.fetchProfilePicture().then(() => {
+              dismissLoading().then(() => showSuccessToast());
+            })
           )
           .catch(() => {
-            handleFailure();
+            showFailureToast();
           });
       } catch (error) {
-        handleFailure();
+        showFailureToast();
       }
+    };
+
+    const handleImageRemove = () => {
+      userStore
+        ?.removeProfilePicture()
+        .then(() => showSuccessToast())
+        .catch(() => showFailureToast());
     };
 
     const handleLogout = () => {
@@ -234,11 +244,23 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       {
                         text: 'Aus Gallerie wählen',
                         handler: () => handleImageChange(CameraSource.Photos),
+                        icon: image,
                       },
                       {
-                        text: 'Bild Aufnehmen',
+                        text: 'Bild aufnehmen',
                         handler: () => handleImageChange(CameraSource.Camera),
+                        icon: camera,
                       },
+                      ...(userStore?.isProfilePictureSet
+                        ? [
+                            {
+                              text: 'Bild entfernen',
+                              handler: () => handleImageRemove(),
+                              icon: trash,
+                              role: 'destructive',
+                            },
+                          ]
+                        : []),
                       {
                         text: 'Abbrechen',
                         role: 'cancel',

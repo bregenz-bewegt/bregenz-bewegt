@@ -95,6 +95,25 @@ export class UserService {
     return res.sendFile(filePath);
   }
 
+  async deleteProfilePicture(id: User['id']): Promise<User> {
+    const user = await this.findById(id);
+
+    if (!this.uploadedProfilePictureExists(user.profilePicture)) {
+      throw new NotFoundException();
+    }
+
+    await this.multerService.deleteProfilePicture(user.profilePicture);
+
+    return this.prismaService.user.update({
+      where: {
+        id,
+      },
+      data: {
+        profilePicture: null,
+      },
+    });
+  }
+
   uploadedProfilePictureExists(filename: string): boolean {
     if (!filename) return false;
 

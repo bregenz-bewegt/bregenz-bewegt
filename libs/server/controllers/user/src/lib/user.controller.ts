@@ -1,5 +1,6 @@
 import {
   GetCurrentUser,
+  ProfilePictureValidationPipe,
   RemoveSensitiveFieldsInterceptor,
 } from '@bregenz-bewegt/server/common';
 import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
@@ -8,6 +9,7 @@ import {
   Controller,
   Delete,
   Get,
+  ParseFilePipe,
   Patch,
   Post,
   Res,
@@ -28,14 +30,14 @@ export class UserController {
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Get('profile')
-  getUser(@GetCurrentUser('sub') userId: string): Promise<User> {
+  getUser(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
     return this.userService.findById(userId);
   }
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Patch('profile')
   patchProfile(
-    @GetCurrentUser('sub') userId: string,
+    @GetCurrentUser('sub') userId: User['id'],
     @Body() dto: PatchProfileDto
   ): Promise<User> {
     return this.userService.patchProfile(userId, dto);
@@ -47,13 +49,11 @@ export class UserController {
     return this.userService.deleteProfile(userId);
   }
 
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
     FileInterceptor('file', {
       storage: MulterService.getStorage((req, file, cb) => {
-        const filename = `${path
-          .parse(file.originalname)
-          .name.replace(/\s/g, '')}_${uuidv4()}`;
+        const filename = `${uuidv4()}`;
         const extension = path.parse(file.originalname).ext;
 
         cb(null, `${filename}${extension}`);
@@ -62,21 +62,25 @@ export class UserController {
   )
   @Post('profile-picture')
   editProfilePicture(
-    @GetCurrentUser('sub') id,
-    @UploadedFile()
-    file: // new ParseFilePipe({
-    //   validators: [new FileTypeValidator({ fileType: 'png' })],
-    // })
-    Express.Multer.File
+    @GetCurrentUser('sub') userId: User['id'],
+    @UploadedFile(ParseFilePipe, ProfilePictureValidationPipe)
+    file: Express.Multer.File
   ): Promise<User> {
-    return this.userService.editProfilePicture(id, file);
+    return this.userService.editProfilePicture(userId, file);
   }
 
   @Get('profile-picture')
-  async getProfilePicture(
-    @GetCurrentUser('sub') id,
+  getProfilePicture(
+    @GetCurrentUser('sub') userId: User['id'],
     @Res() res: Response
   ): Promise<void> {
-    return this.userService.getProfilePicture(id, res);
+    return this.userService.getProfilePicture(userId, res);
+  }
+
+  @Delete('profile-picture')
+  deleteProfilePicture(
+    @GetCurrentUser('sub') userId: User['id']
+  ): Promise<User> {
+    return this.userService.deleteProfilePicture(userId);
   }
 }
