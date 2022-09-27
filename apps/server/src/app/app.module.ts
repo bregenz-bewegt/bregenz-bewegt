@@ -8,7 +8,7 @@ import { UserModule } from '@bregenz-bewegt/server-controllers-user';
 import { PrismaModule } from '@bregenz-bewegt/server-prisma';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AccessTokenGuard } from '@bregenz-bewegt/server/common';
+import { AccessTokenGuard, RoleGuard } from '@bregenz-bewegt/server/common';
 import { ParkModule } from 'libs/server/controllers/park/src';
 import { MulterModule } from '@bregenz-bewegt/server/multer';
 import { ExerciseModule } from '@bregenz-bewegt/server/controllers/exercise';
@@ -55,6 +55,10 @@ import { MailerModule } from '@nestjs-modules/mailer';
     {
       provide: APP_GUARD,
       useClass: AccessTokenGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
     },
   ],
 })

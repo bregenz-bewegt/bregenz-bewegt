@@ -1,12 +1,25 @@
 .profile {
   &__content {
+    ion-grid {
+      position: relative;
+    }
+
     ion-avatar {
       height: calc(var(--spacing-5xl) * 2);
       width: calc(var(--spacing-5xl) * 2);
     }
 
     &__username {
-      margin: 0 0 var(--spacing-m) 0;
+      max-width: 80%;
+
+      h1 {
+        margin: 0 0 var(--spacing-m) 0;
+        display: block;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
 
     &__password-row {
@@ -16,6 +29,42 @@
       &__input {
         flex: 1;
         margin-right: 8px;
+      }
+    }
+
+    .guest-lock {
+      position: relative;
+      pointer-events: none;
+      filter: blur(var(--spacing-m));
+    }
+
+    .guest-lock-hint {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+
+      ion-grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+
+        ion-row {
+          justify-content: center;
+
+          .lock-icon {
+            width: var(--spacing-3xl);
+            height: var(--spacing-3xl);
+            margin-bottom: var(--spacing-s);
+          }
+
+          &.info {
+            text-align: center;
+            margin-bottom: var(--spacing-l);
+          }
+        }
       }
     }
   }

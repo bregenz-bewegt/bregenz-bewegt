@@ -79,6 +79,7 @@ export const Scan: React.FC = () => {
                   width: 'auto',
                   objectFit: 'cover',
                   position: 'initial',
+                  scale: '-1 1',
                 } as CSSProperties
               }
             />

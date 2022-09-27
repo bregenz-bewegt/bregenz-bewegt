@@ -1,8 +1,10 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
+import { Role } from '@bregenz-bewegt/client/types';
 import type { User } from '@bregenz-bewegt/client/types';
 import type {
   ForgotPasswordDto,
+  GuestDto,
   LoginDto,
   PatchProfileDto,
   RegisterDto,
@@ -23,8 +25,14 @@ export class UserStore implements Store {
     makeAutoObservable(this);
   }
 
-  async guest() {
-    const { data } = await http.post('/auth/local/guest');
+  async guest(dto: GuestDto) {
+    const { data } = await http.post('/auth/local/guest', dto);
+
+    await this.setTokens({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+    });
+
     return data;
   }
 
@@ -125,19 +133,19 @@ export class UserStore implements Store {
     this.isLoggedIn = value;
   }
 
-  @action setIsloadingLoginState(value: boolean) {
+  @action setIsLoadingLoggedIn(value: boolean) {
     this.isLoadingLoggedIn = value;
   }
 
   @action async initUser() {
-    this.setIsloadingLoginState(true);
+    this.setIsLoadingLoggedIn(true);
     const tokens = await this.getTokens();
 
     if (tokens.access_token) {
       this.refreshProfile();
       this.setIsLoggedIn(true);
     }
-    this.setIsloadingLoginState(false);
+    this.setIsLoadingLoggedIn(false);
   }
 
   @action async setTokens(tokens: Tokens) {
@@ -162,7 +170,9 @@ export class UserStore implements Store {
 
   @action setAvatarProfilePicture() {
     if (this.user) {
-      this.user.profilePicture = `https://avatars.dicebear.com/api/initials/${this.user.email}.svg`;
+      this.user.profilePicture = `https://avatars.dicebear.com/api/initials/${
+        this.user.role === Role.USER ? this.user.email : 'BB'
+      }.svg`;
       this.setIsProfilePictureSet(false);
     }
   }
