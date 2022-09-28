@@ -14,6 +14,10 @@
         align-items: center;
         flex: 1;
         text-align: center;
+
+        .sent-email-address {
+          font-weight: bold;
+        }
       }
 
       ion-button {
