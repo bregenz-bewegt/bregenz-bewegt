@@ -45,6 +45,22 @@ export class UserService {
     });
   }
 
+  async deleteProfile(id: User['id']): Promise<User> {
+    this.prismaService.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        activities: null,
+      },
+    });
+    return this.prismaService.user.delete({
+      where: {
+        id: id,
+      },
+    });
+  }
+
   async editProfilePicture(
     id: User['id'],
     file: Express.Multer.File
@@ -77,6 +93,25 @@ export class UserService {
     );
 
     return res.sendFile(filePath);
+  }
+
+  async deleteProfilePicture(id: User['id']): Promise<User> {
+    const user = await this.findById(id);
+
+    if (!this.uploadedProfilePictureExists(user.profilePicture)) {
+      throw new NotFoundException();
+    }
+
+    await this.multerService.deleteProfilePicture(user.profilePicture);
+
+    return this.prismaService.user.update({
+      where: {
+        id,
+      },
+      data: {
+        profilePicture: null,
+      },
+    });
   }
 
   uploadedProfilePictureExists(filename: string): boolean {

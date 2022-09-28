@@ -77,7 +77,7 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             </Route>
             {/* </Switch> */}
           </IonRouterOutlet>
-          <IonTabBar slot="bottom" hidden={!tabStore?.isShown}>
+          <IonTabBar slot="bottom" mode="md" hidden={!tabStore?.isShown}>
             {Object.values(tabRoutes).map((page, i) => {
               if (page.label !== 'Scan') {
                 return (

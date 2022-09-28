@@ -1,16 +1,22 @@
 import {
   GetCurrentUser,
+  HasRole,
+  ProfilePictureValidationPipe,
   RemoveSensitiveFieldsInterceptor,
+  RoleGuard,
 } from '@bregenz-bewegt/server/common';
 import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  ParseFilePipe,
   Patch,
   Post,
   Res,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -19,7 +25,7 @@ import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import { Response } from 'express';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 
 @Controller('users')
 export class UserController {
@@ -27,26 +33,34 @@ export class UserController {
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Get('profile')
-  getUser(@GetCurrentUser('sub') userId: string): Promise<User> {
+  getUser(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
     return this.userService.findById(userId);
   }
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Patch('profile')
   patchProfile(
-    @GetCurrentUser('sub') userId: string,
+    @GetCurrentUser('sub') userId: User['id'],
     @Body() dto: PatchProfileDto
   ): Promise<User> {
     return this.userService.patchProfile(userId, dto);
   }
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Delete('profile')
+  deleteProfile(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
+    return this.userService.deleteProfile(userId);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
     FileInterceptor('file', {
       storage: MulterService.getStorage((req, file, cb) => {
-        const filename = `${path
-          .parse(file.originalname)
-          .name.replace(/\s/g, '')}_${uuidv4()}`;
+        const filename = `${uuidv4()}`;
         const extension = path.parse(file.originalname).ext;
 
         cb(null, `${filename}${extension}`);
@@ -55,21 +69,27 @@ export class UserController {
   )
   @Post('profile-picture')
   editProfilePicture(
-    @GetCurrentUser('sub') id,
-    @UploadedFile()
-    file: // new ParseFilePipe({
-    //   validators: [new FileTypeValidator({ fileType: 'png' })],
-    // })
-    Express.Multer.File
+    @GetCurrentUser('sub') userId: User['id'],
+    @UploadedFile(ParseFilePipe, ProfilePictureValidationPipe)
+    file: Express.Multer.File
   ): Promise<User> {
-    return this.userService.editProfilePicture(id, file);
+    return this.userService.editProfilePicture(userId, file);
   }
 
   @Get('profile-picture')
-  async getProfilePicture(
-    @GetCurrentUser('sub') id,
+  getProfilePicture(
+    @GetCurrentUser('sub') userId: User['id'],
     @Res() res: Response
   ): Promise<void> {
-    return this.userService.getProfilePicture(id, res);
+    return this.userService.getProfilePicture(userId, res);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @Delete('profile-picture')
+  deleteProfilePicture(
+    @GetCurrentUser('sub') userId: User['id']
+  ): Promise<User> {
+    return this.userService.deleteProfilePicture(userId);
   }
 }

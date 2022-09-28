@@ -27,7 +27,7 @@ export const EmailSent: React.FC<EmailSentProps> = () => {
               </IonText>
               <IonText>
                 <p>
-                  Eine E-Mail zum Zurücksetzen deines Passworts wurde versandt.
+                  Eine E-Mail zum Zurücksetzen deines Passworts wurde versendet.
                   Bitte überprüfe dein Postfach.
                 </p>
               </IonText>

@@ -12,6 +12,7 @@ import { inject, observer } from 'mobx-react';
 import { add } from 'ionicons/icons';
 import './coin-depot.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { Role } from '@bregenz-bewegt/client/types';
 
 export interface CoinDepotProps {
   userStore?: UserStore;
@@ -37,15 +38,26 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
           </div>
         </IonCardHeader>
         <IonCardContent>
-          <IonButton
-            expand="block"
-            routerLink={tabRoutes.start.route}
-            routerDirection="back"
-            mode="ios"
-          >
-            <IonIcon slot="start" icon={add} />
-            Mehr Coins verdienen
-          </IonButton>
+          {userStore?.user?.role === Role.USER ? (
+            <IonButton
+              expand="block"
+              routerLink={tabRoutes.start.route}
+              routerDirection="back"
+              mode="ios"
+            >
+              <IonIcon slot="start" icon={add} />
+              Mehr Coins verdienen
+            </IonButton>
+          ) : (
+            <IonButton
+              expand="block"
+              routerLink={tabRoutes.start.route}
+              routerDirection="back"
+              mode="ios"
+            >
+              Anmelden um Coins zu verdienen
+            </IonButton>
+          )}
         </IonCardContent>
       </IonCard>
     );
