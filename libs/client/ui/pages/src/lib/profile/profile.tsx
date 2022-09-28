@@ -33,17 +33,13 @@ import { useEffect, useState } from 'react';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
-<<<<<<< HEAD
-import { closeCircleOutline } from 'ionicons/icons';
 import { Difficulty } from '@bregenz-bewegt/client/types';
 import { Preferences } from '@prisma/client';
-=======
 import { closeCircleOutline, lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
 import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
->>>>>>> main
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -58,11 +54,9 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
-<<<<<<< HEAD
     const [selecPreference, setSelecPreference] = useState<Difficulty[]>(
       Object.values(Difficulty)
     );
-=======
 
     const showFailureToast = () => {
       dismissLoading();
@@ -88,7 +82,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       });
     };
 
->>>>>>> main
     const profile = useFormik({
       initialValues: {
         firstname: userStore?.user?.firstname ?? '',
@@ -392,6 +385,33 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   Ändern
                 </IonButton>
               </IonRow>
+              <IonRow className="profile__content__preferences">
+                <IonItem>
+                  <IonLabel>Präferenzen</IonLabel>
+                  <IonSelect
+                    multiple={true}
+                    value={selecPreference}
+                    selectedText=" "
+                    onIonChange={(e) => setSelecPreference(e.detail.value)}
+                  >
+                    <IonSelectOption value={Difficulty.ADVANCED}>
+                      Fortgeschritten
+                    </IonSelectOption>
+                    <IonSelectOption value={Difficulty.BEGINNER}>
+                      Anfänger
+                    </IonSelectOption>
+                    <IonSelectOption value={Difficulty.GAME}>
+                      Spiele
+                    </IonSelectOption>
+                  </IonSelect>
+                </IonItem>
+              </IonRow>
+              <IonRow className="profile__content__rankcheck">
+                <IonItem>
+                  <IonCheckbox slot="start"></IonCheckbox>
+                  <IonLabel>Auf der Rangliste angezeigt werden</IonLabel>
+                </IonItem>
+              </IonRow>
             </div>
           </IonGrid>
           {userStore?.user?.role === Role.USER && (
@@ -410,60 +430,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   'Änderungen Speichern'
                 )}
               </IonButton>
-<<<<<<< HEAD
-            </IonRow>
-            <IonRow className="profile__content__preferences">
-              <IonItem>
-                <IonLabel>Präferenzen</IonLabel>
-                <IonSelect
-                  multiple={true}
-                  value={selecPreference}
-                  selectedText=" "
-                  onIonChange={(e) => setSelecPreference(e.detail.value)}
-                >
-                  <IonSelectOption value={Difficulty.ADVANCED}>
-                    Fortgeschritten
-                  </IonSelectOption>
-                  <IonSelectOption value={Difficulty.BEGINNER}>
-                    Anfänger
-                  </IonSelectOption>
-                  <IonSelectOption value={Difficulty.GAME}>
-                    Spiele
-                  </IonSelectOption>
-                </IonSelect>
-              </IonItem>
-            </IonRow>
-            <IonRow className="profile__content__rankcheck">
-              <IonItem>
-                <IonCheckbox slot="start"></IonCheckbox>
-                <IonLabel>Auf der Rangliste angezeigt werden</IonLabel>
-              </IonItem>
-            </IonRow>
-          </IonGrid>
-          <IonButton
-            disabled={!profile.dirty || profile.isSubmitting}
-            onClick={() => profile.submitForm()}
-            expand="block"
-            mode="ios"
-          >
-            {profile.isSubmitting ? (
-              <IonLabel>
-                <IonSpinner name="crescent" />
-              </IonLabel>
-            ) : (
-              'Änderungen Speichern'
-            )}
-          </IonButton>
-          <IonButton onClick={() => handleLogout()} expand="block" mode="ios">
-            {isLoggingOut ? (
-              <IonLabel>
-                <IonSpinner name="crescent" />
-              </IonLabel>
-            ) : (
-              'Abmelden'
-            )}
-          </IonButton>
-=======
               <IonRow className="profile__content__danger-row">
                 <IonCol className="delete">
                   <IonButton
@@ -495,7 +461,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonRow>
             </>
           )}
->>>>>>> main
         </IonContent>
       </IonPage>
     );
