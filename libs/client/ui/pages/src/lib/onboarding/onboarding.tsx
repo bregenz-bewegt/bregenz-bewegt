@@ -1,7 +1,6 @@
-import { IonPage, IonContent, IonSlide, IonSlides } from '@ionic/react';
+import { IonPage, IonContent, IonSlides } from '@ionic/react';
 import './onboarding.scss';
-import { Preferences } from './slides';
-import { Intro } from './slides/intro/intro';
+import { Earn, Intro, Preferences, Rewards } from './slides';
 
 /* eslint-disable-next-line */
 export interface IntroProps {}
@@ -18,10 +17,9 @@ export const Onboarding: React.FC = (props: IntroProps) => {
           }}
         >
           <Intro />
+          <Earn />
+          <Rewards />
           <Preferences />
-          <IonSlide>
-            <h1>Slide 3</h1>
-          </IonSlide>
         </IonSlides>
       </IonContent>
     </IonPage>
