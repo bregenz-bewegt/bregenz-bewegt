@@ -16,7 +16,7 @@ export interface IntroProps {}
 
 export const Onboarding: React.FC = (props: IntroProps) => {
   return (
-    <IonPage>
+    <IonPage className="onboarding">
       <IonContent fullscreen>
         <IonSlides
           pager={true}
@@ -30,7 +30,7 @@ export const Onboarding: React.FC = (props: IntroProps) => {
           <Rewards />
           <Preferences />
         </IonSlides>
-        <IonRow>
+        <IonRow className="skip-row">
           <IonCol className="ion-justify-content-end">
             <IonButton fill="clear" size="small">
               Überspringen

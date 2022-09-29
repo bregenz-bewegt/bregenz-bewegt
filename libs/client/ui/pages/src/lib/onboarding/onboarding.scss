@@ -1,3 +1,15 @@
-ion-slides {
-  height: 100%;
+.onboarding {
+  ion-content {
+    ion-slides {
+      height: 100%;
+    }
+
+    .skip-row {
+      position: fixed;
+      bottom: 0;
+      justify-content: flex-end;
+      right: 0;
+      margin-bottom: var(--spacing-m);
+    }
+  }
 }
