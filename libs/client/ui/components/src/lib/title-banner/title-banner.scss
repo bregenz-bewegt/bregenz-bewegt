@@ -1,13 +1,15 @@
 .title-banner {
   h1 {
     font-size: 2.5em;
-    background: -webkit-linear-gradient(
-      0deg,
+    background: linear-gradient(
+      to right,
       var(--ion-color-primary),
-      var(--ion-color-secondary)
+      var(--ion-color-secondary),
+      var(--ion-color-primary)
     );
     display: inline-block;
     background-clip: text;
+    background-size: 200% auto;
     text-fill-color: transparent;
     -webkit-text-fill-color: transparent;
 

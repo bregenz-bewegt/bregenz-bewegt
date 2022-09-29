@@ -15,14 +15,14 @@ export interface IntroProps {}
 
 export const Intro: React.FC<IntroProps> = (props: IntroProps) => {
   return (
-    <IonSlide>
+    <IonSlide className="intro">
       <IonGrid>
-        <IonRow>
+        <IonRow className="ion-align-items-center">
           <IonCol>
             <TitleBanner animated />
           </IonCol>
         </IonRow>
-        <IonRow>
+        <IonRow className="ion-align-items-end ion-padding-bottom">
           <IonCol>
             <IonButton fill="clear">
               Weiter
