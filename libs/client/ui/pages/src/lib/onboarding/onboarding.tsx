@@ -17,7 +17,7 @@ export interface IntroProps {}
 export const Onboarding: React.FC = (props: IntroProps) => {
   return (
     <IonPage className="onboarding">
-      <IonContent fullscreen>
+      <IonContent fullscreen scrollY={false}>
         <IonSlides
           pager={true}
           options={{
