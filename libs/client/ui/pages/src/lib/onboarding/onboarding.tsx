@@ -1,5 +1,7 @@
 import { IonPage, IonContent, IonSlide, IonSlides } from '@ionic/react';
 import './onboarding.scss';
+import { Preferences } from './slides';
+import { Intro } from './slides/intro/intro';
 
 /* eslint-disable-next-line */
 export interface IntroProps {}
@@ -15,12 +17,8 @@ export const Onboarding: React.FC = (props: IntroProps) => {
             speed: 400,
           }}
         >
-          <IonSlide>
-            <h1>Slide 1</h1>
-          </IonSlide>
-          <IonSlide>
-            <h1>Slide 2</h1>
-          </IonSlide>
+          <Intro />
+          <Preferences />
           <IonSlide>
             <h1>Slide 3</h1>
           </IonSlide>
