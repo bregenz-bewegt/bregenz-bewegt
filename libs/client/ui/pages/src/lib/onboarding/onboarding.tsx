@@ -1,6 +1,15 @@
-import { IonPage, IonContent, IonSlides } from '@ionic/react';
+import {
+  IonPage,
+  IonContent,
+  IonSlides,
+  IonButton,
+  IonCol,
+  IonIcon,
+  IonRow,
+} from '@ionic/react';
 import './onboarding.scss';
 import { Earn, Intro, Preferences, Rewards } from './slides';
+import { chevronForward } from 'ionicons/icons';
 
 /* eslint-disable-next-line */
 export interface IntroProps {}
@@ -21,6 +30,14 @@ export const Onboarding: React.FC = (props: IntroProps) => {
           <Rewards />
           <Preferences />
         </IonSlides>
+        <IonRow>
+          <IonCol className="ion-justify-content-end">
+            <IonButton fill="clear" size="small">
+              Überspringen
+              <IonIcon slot="end" icon={chevronForward} />
+            </IonButton>
+          </IonCol>
+        </IonRow>
       </IonContent>
     </IonPage>
   );
