@@ -17,7 +17,7 @@ export const Intro: React.FC<IntroProps> = (props: IntroProps) => {
             <TitleBanner animated />
           </IonCol>
         </IonRow>
-        <IonRow className="ion-align-items-end">
+        <IonRow className="ion-align-items-center">
           <IonCol>
             <IonButton size="large" expand="block">
               Starten
