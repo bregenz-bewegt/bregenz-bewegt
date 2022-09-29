@@ -8,6 +8,17 @@
     );
     display: inline-block;
     background-clip: text;
+    text-fill-color: transparent;
     -webkit-text-fill-color: transparent;
+
+    .animated {
+      animation: gradient-movement 3s infinite;
+    }
+  }
+}
+
+@keyframes gradient-movement {
+  to {
+    background-position: 200% center;
   }
 }

@@ -19,7 +19,7 @@ export const Intro: React.FC<IntroProps> = (props: IntroProps) => {
       <IonGrid>
         <IonRow>
           <IonCol>
-            <TitleBanner />
+            <TitleBanner animated />
           </IonCol>
         </IonRow>
         <IonRow>
