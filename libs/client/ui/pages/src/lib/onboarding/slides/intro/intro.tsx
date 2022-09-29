@@ -17,8 +17,8 @@ export const Intro: React.FC<IntroProps> = (props: IntroProps) => {
   return (
     <IonSlide className="intro">
       <IonGrid>
-        <IonRow className="ion-align-items-center">
-          <IonCol className="ion-justify-content-end">
+        <IonRow className="ion-align-items-end">
+          <IonCol>
             <TitleBanner animated />
           </IonCol>
         </IonRow>
