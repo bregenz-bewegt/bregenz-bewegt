@@ -1,5 +1,13 @@
 import { TitleBanner } from '@bregenz-bewegt/client-ui-components';
-import { IonButton, IonCol, IonGrid, IonRow, IonSlide } from '@ionic/react';
+import {
+  IonButton,
+  IonCol,
+  IonGrid,
+  IonIcon,
+  IonRow,
+  IonSlide,
+} from '@ionic/react';
+import { chevronForward } from 'ionicons/icons';
 import './intro.scss';
 
 /* eslint-disable-next-line */
@@ -10,14 +18,15 @@ export const Intro: React.FC<IntroProps> = (props: IntroProps) => {
     <IonSlide className="intro">
       <IonGrid>
         <IonRow className="ion-align-items-center">
-          <IonCol>
+          <IonCol className="ion-justify-content-end">
             <TitleBanner animated />
           </IonCol>
         </IonRow>
         <IonRow className="ion-align-items-center">
           <IonCol>
-            <IonButton size="large" expand="block">
+            <IonButton expand="block" fill="clear">
               Starten
+              <IonIcon slot="end" icon={chevronForward} />
             </IonButton>
           </IonCol>
         </IonRow>
