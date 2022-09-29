@@ -27,7 +27,7 @@ export const PublicOutlet: React.FC = () => {
       <Route exact path={'/login'} component={Login}></Route>
       <Route exact path={'/register'} component={Register}></Route>
       <Route path="">
-        <Redirect to="/login" />
+        <Redirect to="/onboarding" />
       </Route>
     </IonRouterOutlet>
   );
