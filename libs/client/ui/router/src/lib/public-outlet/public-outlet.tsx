@@ -1,5 +1,5 @@
 import {
-  Intro,
+  Onboarding,
   ForgotPassword,
   Login,
   Register,
@@ -12,7 +12,7 @@ import { Route, Redirect } from 'react-router-dom';
 export const PublicOutlet: React.FC = () => {
   return (
     <IonRouterOutlet>
-      <Route exact path={'/intro'} component={Intro}></Route>
+      <Route exact path={'/onboarding'} component={Onboarding}></Route>
       <Route exact path={'/forgot-password'} component={ForgotPassword}></Route>
       <Route
         exact

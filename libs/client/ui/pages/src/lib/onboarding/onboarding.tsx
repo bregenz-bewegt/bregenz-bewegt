@@ -1,14 +1,31 @@
-import './onboarding.css';
+import { IonPage, IonContent, IonSlide, IonSlides } from '@ionic/react';
+import './onboarding.scss';
 
 /* eslint-disable-next-line */
-export interface OnboardingProps {}
+export interface IntroProps {}
 
-export function Onboarding(props: OnboardingProps) {
+export const Onboarding: React.FC = (props: IntroProps) => {
   return (
-    <div>
-      <h1>Welcome to Onboarding!</h1>
-    </div>
+    <IonPage>
+      <IonContent fullscreen>
+        <IonSlides
+          pager={true}
+          options={{
+            initialSlide: 0,
+            speed: 400,
+          }}
+        >
+          <IonSlide>
+            <h1>Slide 1</h1>
+          </IonSlide>
+          <IonSlide>
+            <h1>Slide 2</h1>
+          </IonSlide>
+          <IonSlide>
+            <h1>Slide 3</h1>
+          </IonSlide>
+        </IonSlides>
+      </IonContent>
+    </IonPage>
   );
-}
-
-export default Onboarding;
+};
