@@ -11,7 +11,7 @@
     text-fill-color: transparent;
     -webkit-text-fill-color: transparent;
 
-    .animated {
+    &.animated {
       animation: gradient-movement 3s infinite;
     }
   }
