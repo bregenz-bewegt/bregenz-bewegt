@@ -10,7 +10,12 @@ export const Intro: React.FC<IntroProps> = (props: IntroProps) => {
     <IonSlide className="intro">
       <IonGrid>
         <IonRow className="ion-align-items-center">
-          <IonCol>{/* <img src={bregenzView} alt="Bregenz Stadt" /> */}</IonCol>
+          <IonCol>
+            <img
+              src="https://www.bregenzerwald.at/wp-content/uploads/2017/09/Bregenz_2011_Curt_Huber-1920x1080.jpg"
+              alt="Bregenz Stadt"
+            />
+          </IonCol>
         </IonRow>
         <IonRow className="ion-align-items-center">
           <IonCol>
