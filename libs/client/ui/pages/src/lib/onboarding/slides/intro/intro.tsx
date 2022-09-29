@@ -1,13 +1,5 @@
 import { TitleBanner } from '@bregenz-bewegt/client-ui-components';
-import {
-  IonButton,
-  IonCol,
-  IonGrid,
-  IonIcon,
-  IonRow,
-  IonSlide,
-} from '@ionic/react';
-import { chevronForward } from 'ionicons/icons';
+import { IonCol, IonGrid, IonRow, IonSlide } from '@ionic/react';
 import './intro.scss';
 
 /* eslint-disable-next-line */
