@@ -10,11 +10,14 @@ import {
 import './onboarding.scss';
 import { Earn, Intro, Preferences, Rewards } from './slides';
 import { chevronForward } from 'ionicons/icons';
+import { useState } from 'react';
 
 /* eslint-disable-next-line */
 export interface IntroProps {}
 
 export const Onboarding: React.FC = (props: IntroProps) => {
+  const [showSkipButton, setShowSkipButton] = useState<boolean>(false);
+
   return (
     <IonPage className="onboarding">
       <IonContent fullscreen>
@@ -29,15 +32,17 @@ export const Onboarding: React.FC = (props: IntroProps) => {
           <Earn />
           <Rewards />
           <Preferences />
-        </IonSlides>
-        <IonRow className="skip-row">
-          <IonCol className="ion-justify-content-end">
-            <IonButton fill="clear" size="small">
-              Überspringen
-              <IonIcon slot="end" icon={chevronForward} />
-            </IonButton>
-          </IonCol>
-        </IonRow>
+        </IonSlides>{' '}
+        {showSkipButton && (
+          <IonRow className="skip-row">
+            <IonCol className="ion-justify-content-end">
+              <IonButton fill="clear" size="small">
+                Überspringen
+                <IonIcon slot="end" icon={chevronForward} />
+              </IonButton>
+            </IonCol>
+          </IonRow>
+        )}
       </IonContent>
     </IonPage>
   );
