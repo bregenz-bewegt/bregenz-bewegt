@@ -10,7 +10,7 @@ export const Intro: React.FC<IntroProps> = (props: IntroProps) => {
     <IonSlide className="intro">
       <IonGrid>
         <IonRow className="ion-align-items-center">
-          <IonCol>
+          <IonCol className="ion-justify-content-start">
             <TitleBanner animated />
           </IonCol>
         </IonRow>

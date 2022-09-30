@@ -1,4 +1,3 @@
-import { TitleBanner } from '@bregenz-bewegt/client-ui-components';
 import { IonSlide, IonGrid, IonRow, IonCol, IonText } from '@ionic/react';
 import './rewards.scss';
 
@@ -10,9 +9,7 @@ export const Rewards: React.FC<RewardsProps> = (props: RewardsProps) => {
     <IonSlide className="rewards">
       <IonGrid>
         <IonRow>
-          <IonCol>
-            <TitleBanner animated />
-          </IonCol>
+          <IonCol></IonCol>
         </IonRow>
         <IonRow>
           <IonCol>
