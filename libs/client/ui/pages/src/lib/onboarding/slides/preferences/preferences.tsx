@@ -11,7 +11,7 @@ export const Preferences: React.FC<PreferencesProps> = (
     <IonSlide className="preferences">
       <IonGrid>
         <IonRow>
-          <IonCol>
+          <IonCol className="ion-align-items-end">
             <IonText>
               <h2>Präferenzen auswählen</h2>
             </IonText>
