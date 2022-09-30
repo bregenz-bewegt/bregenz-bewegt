@@ -29,7 +29,9 @@ export const Preferences: React.FC<PreferencesProps> = (
         </IonRow>
         <IonRow>
           <IonCol>
-            <IonButton expand="block">Speichern und Starten</IonButton>
+            <IonButton expand="block" href={'/login'}>
+              Speichern und Starten
+            </IonButton>
           </IonCol>
         </IonRow>
       </IonGrid>
