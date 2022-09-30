@@ -1,4 +1,11 @@
-import { IonCol, IonGrid, IonRow, IonSlide, IonText } from '@ionic/react';
+import {
+  IonButton,
+  IonCol,
+  IonGrid,
+  IonRow,
+  IonSlide,
+  IonText,
+} from '@ionic/react';
 import './preferences.scss';
 
 /* eslint-disable-next-line */
@@ -21,7 +28,9 @@ export const Preferences: React.FC<PreferencesProps> = (
           </IonCol>
         </IonRow>
         <IonRow>
-          <IonCol></IonCol>
+          <IonCol>
+            <IonButton expand="block">Speichern und Starten</IonButton>
+          </IonCol>
         </IonRow>
       </IonGrid>
     </IonSlide>
