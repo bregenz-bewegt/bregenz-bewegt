@@ -11,5 +11,7 @@
 
   &__coin {
     margin: auto;
+    box-shadow: var(--spacing-xs) var(--spacing-xs) var(--spacing-3xl)
+      var(--ion-color-medium-tint);
   }
 }
