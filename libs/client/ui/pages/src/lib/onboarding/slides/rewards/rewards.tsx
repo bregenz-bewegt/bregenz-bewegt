@@ -1,14 +1,30 @@
+import { TitleBanner } from '@bregenz-bewegt/client-ui-components';
+import { IonSlide, IonGrid, IonRow, IonCol, IonText } from '@ionic/react';
 import './rewards.scss';
 
 /* eslint-disable-next-line */
 export interface RewardsProps {}
 
-export function Rewards(props: RewardsProps) {
+export const Rewards: React.FC<RewardsProps> = (props: RewardsProps) => {
   return (
-    <div>
-      <h1>Welcome to Rewards!</h1>
-    </div>
+    <IonSlide className="rewards">
+      <IonGrid>
+        <IonRow>
+          <IonCol>
+            <TitleBanner animated />
+          </IonCol>
+        </IonRow>
+        <IonRow>
+          <IonCol>
+            <IonText>
+              <h2>Belohnungen verdienen</h2>
+            </IonText>
+            <IonText>
+              <p>Tausche Bregenz bewegt Coins gegen tolle Belohnungen ein.</p>
+            </IonText>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+    </IonSlide>
   );
-}
-
-export default Rewards;
+};
