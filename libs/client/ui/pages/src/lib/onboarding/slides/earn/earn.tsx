@@ -1,3 +1,4 @@
+import { Coin } from '@bregenz-bewegt/client-ui-components';
 import { IonCol, IonGrid, IonRow, IonSlide, IonText } from '@ionic/react';
 import './earn.scss';
 
@@ -6,10 +7,12 @@ export interface EarnProps {}
 
 export const Earn: React.FC<EarnProps> = (props: EarnProps) => {
   return (
-    <IonSlide className="intro">
+    <IonSlide className="earn">
       <IonGrid>
-        <IonRow>
-          <IonCol></IonCol>
+        <IonRow className="ion-align-items-center">
+          <IonCol className="ion-justify-content-center">
+            <Coin className="earn__coin" />
+          </IonCol>
         </IonRow>
         <IonRow>
           <IonCol>
