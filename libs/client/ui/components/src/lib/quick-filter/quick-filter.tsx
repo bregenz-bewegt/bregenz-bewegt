@@ -1,12 +1,7 @@
 import { IonButton, IonIcon } from '@ionic/react';
 import './quick-filter.scss';
 import { close } from 'ionicons/icons';
-
-export type QuickFilterOption = {
-  key: string | number;
-  label: string;
-  active: boolean;
-};
+import { QuickFilterOption } from './quick-filter-option';
 
 export interface QuickFilterProps {
   options: QuickFilterOption[];

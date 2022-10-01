@@ -10,6 +10,6 @@ export * from './medal/medal';
 export * from './coin/coin';
 export * from './coin-depot/coin-depot';
 export * from './title-banner/title-banner';
-export * from './quick-filter/quick-filter';
+export * from './quick-filter';
 export * from './otp-input/otp-input';
 export * from './activity-timer/activity-timer';
