@@ -33,8 +33,10 @@ $neutral-medal: #d1d7da;
     }
 
     &--gold {
-      box-shadow: inset 0 0 0 darken($gold-medal, 15%),
-        2px 2px 0 rgba(0, 0, 0, 0.08);
+      // box-shadow: inset 0 0 0 darken($gold-medal, 15%),
+      //   2px 2px 0 rgba(0, 0, 0, 0.08);
+      box-shadow: var(--spacing-xs) var(--spacing-xs) var(--spacing-3xl)
+        var(--ion-color-medium-tint);
       border-color: lighten(adjust-hue($gold-medal, 10), 10%);
       text-shadow: 0 0 4px darken($gold-medal, 20%);
       background: linear-gradient(
