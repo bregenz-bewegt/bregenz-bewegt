@@ -6,9 +6,11 @@
 
     ion-row {
       flex: 1;
-
-      ion-col {
-      }
     }
+  }
+
+  &__medal {
+    box-shadow: var(--spacing-xs) var(--spacing-xs) var(--spacing-3xl)
+      var(--ion-color-medium-tint);
   }
 }

@@ -11,7 +11,7 @@ export const Rewards: React.FC<RewardsProps> = (props: RewardsProps) => {
       <IonGrid>
         <IonRow className="ion-align-items-center">
           <IonCol className="ion-justify-content-center">
-            <Medal />
+            <Medal className="rewards__medal" />
           </IonCol>
         </IonRow>
         <IonRow>
