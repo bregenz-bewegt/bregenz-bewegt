@@ -13,7 +13,6 @@
     "client-ui-components": "libs/client/ui/components",
     "client-ui-pages": "libs/client/ui/pages",
     "client-ui-router": "libs/client/ui/router",
-    "client-ui-shared-assets": "libs/client/ui/shared/assets",
     "client-ui-shared-content": "libs/client/ui/shared/content",
     "server": "apps/server",
     "server-common": "libs/server/common",
