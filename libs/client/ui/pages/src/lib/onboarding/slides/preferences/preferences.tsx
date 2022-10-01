@@ -41,7 +41,7 @@ export const Preferences: React.FC<PreferencesProps> = (
               <h2>Präferenzen auswählen</h2>
             </IonText>
             <IonText>
-              <p>Setze deine persönlichen Präferenzen</p>
+              <p>Wähle deine bevorzugten Übungskategorien</p>
             </IonText>
           </IonCol>
         </IonRow>
