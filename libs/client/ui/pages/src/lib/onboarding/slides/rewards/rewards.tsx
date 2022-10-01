@@ -1,3 +1,4 @@
+import { Medal } from '@bregenz-bewegt/client-ui-components';
 import { IonSlide, IonGrid, IonRow, IonCol, IonText } from '@ionic/react';
 import './rewards.scss';
 
@@ -8,8 +9,10 @@ export const Rewards: React.FC<RewardsProps> = (props: RewardsProps) => {
   return (
     <IonSlide className="rewards">
       <IonGrid>
-        <IonRow>
-          <IonCol></IonCol>
+        <IonRow className="ion-align-items-center">
+          <IonCol className="ion-justify-content-center">
+            <Medal />
+          </IonCol>
         </IonRow>
         <IonRow>
           <IonCol>
