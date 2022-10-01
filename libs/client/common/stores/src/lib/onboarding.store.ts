@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
 import { QuickFilterOption } from '@bregenz-bewegt/client-ui-components';
 import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
@@ -15,6 +15,10 @@ export class OnboardingStore implements Store {
         active: false,
       } as QuickFilterOption)
   );
+
+  constructor() {
+    makeAutoObservable(this);
+  }
 
   @action setPreferences(value: QuickFilterOption[]) {
     this.preferences = value;

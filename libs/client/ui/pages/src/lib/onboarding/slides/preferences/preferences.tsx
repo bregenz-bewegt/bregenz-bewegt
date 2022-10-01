@@ -39,7 +39,7 @@ export const Preferences: React.FC<PreferencesProps> = inject(
             <IonCol>
               <QuickFilter
                 options={onboardingStore?.preferences ?? []}
-                onChange={(values) => onboardingStore?.setPreferences(values)}
+                onChange={(value) => onboardingStore?.setPreferences(value)}
                 className="preferences__quick-filter"
               />
             </IonCol>
