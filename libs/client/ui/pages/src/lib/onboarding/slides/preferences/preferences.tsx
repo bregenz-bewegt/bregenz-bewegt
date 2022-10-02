@@ -1,8 +1,12 @@
-import { QuickFilter } from '@bregenz-bewegt/client-ui-components';
+import {
+  QuickFilter,
+  QuickFilterOption,
+} from '@bregenz-bewegt/client-ui-components';
 import {
   OnboardingStore,
   onboardingStore,
 } from '@bregenz-bewegt/client/common/stores';
+import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 import {
   IonButton,
   IonCol,
@@ -12,6 +16,7 @@ import {
   IonText,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
+import { useState } from 'react';
 import './preferences.scss';
 
 export interface PreferencesProps {
@@ -22,6 +27,22 @@ export const Preferences: React.FC<PreferencesProps> = inject(
   onboardingStore.storeKey
 )(
   observer(({ onboardingStore }) => {
+    const [selectedPreferences, setSelectedPreferences] = useState<
+      QuickFilterOption[]
+    >(
+      Object.values(difficultyDisplayTexts).map(
+        (text, i) =>
+          ({
+            key: i,
+            label: text,
+            active: false,
+          } as QuickFilterOption)
+      )
+    );
+
+    const handleSavePreferences = () =>
+      onboardingStore?.setPreferences(selectedPreferences);
+
     return (
       <IonSlide className="preferences">
         <IonGrid>
@@ -38,15 +59,19 @@ export const Preferences: React.FC<PreferencesProps> = inject(
           <IonRow>
             <IonCol>
               <QuickFilter
-                options={onboardingStore?.preferences ?? []}
-                onChange={(value) => onboardingStore?.setPreferences(value)}
+                options={selectedPreferences}
+                onChange={(value) => setSelectedPreferences(value)}
                 className="preferences__quick-filter"
               />
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonButton expand="block" href={'/login'}>
+              <IonButton
+                expand="block"
+                href={'/login'}
+                onClick={handleSavePreferences}
+              >
                 Speichern und Starten
               </IonButton>
             </IonCol>
