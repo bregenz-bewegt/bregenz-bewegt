@@ -29,7 +29,7 @@ export const Onboarding: React.FC = (props: IntroProps) => {
           <Earn />
           <Rewards />
           <Preferences />
-        </IonSlides>{' '}
+        </IonSlides>
         <IonRow className="skip-row">
           <IonCol className="ion-justify-content-end">
             <IonButton fill="clear" size="small" href="/login">
