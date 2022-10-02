@@ -1,0 +1,11 @@
+.rewards {
+  ion-grid {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    ion-row {
+      flex: 1;
+    }
+  }
+}

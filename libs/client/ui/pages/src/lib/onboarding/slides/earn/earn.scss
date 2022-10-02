@@ -1,0 +1,17 @@
+.earn {
+  ion-grid {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    ion-row {
+      flex: 1;
+    }
+  }
+
+  &__coin {
+    margin: auto;
+    box-shadow: var(--spacing-xs) var(--spacing-xs) var(--spacing-3xl)
+      var(--ion-color-medium-tint);
+  }
+}

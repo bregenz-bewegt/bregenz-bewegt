@@ -11,19 +11,21 @@ import {
 } from '@ionic/react';
 import { chevronBack, mailOpen } from 'ionicons/icons';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router';
-import './email-sent.scss';
+import { useHistory } from 'react-router';
+import './forgot-password-email-sent.scss';
 
 /* eslint-disable-next-line */
-export interface EmailSentProps {}
+export interface ForgotPasswordEmailSentProps {}
 
-export const EmailSent: React.FC<EmailSentProps> = () => {
+export const ForgotPasswordEmailSent: React.FC<
+  ForgotPasswordEmailSentProps
+> = () => {
   const router = useIonRouter();
-  const location = useLocation<ForgotPasswordDto>();
+  const history = useHistory<ForgotPasswordDto>();
 
   useEffect(() => {
     const navigateBackToLogin = () => router.push('/login', 'none');
-    if (!location?.state?.email) navigateBackToLogin();
+    if (!history.location?.state?.email) navigateBackToLogin();
   }, []);
 
   return (
@@ -40,9 +42,9 @@ export const EmailSent: React.FC<EmailSentProps> = () => {
               <IonText>
                 <p>
                   Eine E-Mail zum Zurücksetzen deines Passworts wurde an{' '}
-                  {location?.state?.email ? (
+                  {history.location?.state?.email ? (
                     <IonText className="sent-email-address" color="primary">
-                      {location.state.email}
+                      {history.location.state.email}
                     </IonText>
                   ) : (
                     'dich'
