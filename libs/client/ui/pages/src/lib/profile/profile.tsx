@@ -249,7 +249,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     <IonButton
                       expand="block"
                       mode="ios"
-                      fill="outline"
+                      fill="solid"
                       onClick={() =>
                         handleLogout('/register', userStore.user?.role)
                       }
