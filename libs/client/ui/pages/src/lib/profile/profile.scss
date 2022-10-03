@@ -76,19 +76,19 @@
           justify-content: center;
           width: 100%;
 
-          ion-button {
-            width: 100%;
-          }
-
           .lock-icon {
             width: var(--spacing-3xl);
             height: var(--spacing-3xl);
-            margin-bottom: var(--spacing-s);
+            margin: var(--spacing-s) 0 var(--spacing-m) 0;
           }
 
           &.info {
             text-align: center;
-            margin: var(--spacing-l) 0;
+            margin-bottom: var(--spacing-m);
+          }
+
+          ion-button {
+            width: 100%;
           }
         }
       }
