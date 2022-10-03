@@ -1,5 +1,11 @@
 .profile {
   &__content {
+    &__locked {
+      &::part(background) {
+        filter: brightness(85%);
+      }
+    }
+
     ion-grid {
       position: relative;
     }
@@ -48,21 +54,27 @@
       filter: blur(var(--spacing-m));
     }
 
-    .guest-lock-hint {
+    .guest-lock-modal {
       position: absolute;
-      width: 100%;
       height: 100%;
       z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       ion-grid {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 100%;
+        background-color: var(--ion-color-primary-contrast);
+        border-radius: var(--spacing-m);
+        padding: var(--spacing-l) var(--spacing-l) var(--spacing-s)
+          var(--spacing-l);
 
         ion-row {
           justify-content: center;
+          width: 100%;
 
           .lock-icon {
             width: var(--spacing-3xl);
@@ -72,7 +84,7 @@
 
           &.info {
             text-align: center;
-            margin-bottom: var(--spacing-l);
+            margin: var(--spacing-l) 0;
           }
         }
       }

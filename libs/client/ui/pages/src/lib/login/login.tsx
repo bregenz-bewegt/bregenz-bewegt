@@ -92,7 +92,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage className="login" ref={page}>
-        <IonContent className="login__content" fullscreen>
+        <IonContent className="login__content" fullscreen scrollY={false}>
           <div className="login__flex-wrapper">
             <TitleBanner />
             <div className="login__content__login">
@@ -109,7 +109,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 >
                   {isGuestLoading ? (
                     <IonLabel>
-                      <IonSpinner name="crescent" color="light" />
+                      <IonSpinner name="crescent" />
                     </IonLabel>
                   ) : (
                     'Als Gast beitreten'
