@@ -49,8 +49,7 @@ export const ParkCard: React.FC<ParkCardProps> = ({
         <IonCardSubtitle>
           {isLoaded ? (
             <>
-              <IonIcon icon={locationIcon} />
-              {location}
+              <IonIcon icon={locationIcon} /> {location}
             </>
           ) : (
             <IonSkeletonText animated />
