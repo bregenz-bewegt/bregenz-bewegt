@@ -9,6 +9,7 @@ import {
   IonGrid,
   IonHeader,
   IonIcon,
+  IonItemDivider,
   IonLabel,
   IonPage,
   IonRow,
@@ -378,6 +379,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonRow>
             </div>
           </IonGrid>
+          <IonItemDivider />
           {userStore?.user?.role === Role.USER && (
             <>
               <IonButton
