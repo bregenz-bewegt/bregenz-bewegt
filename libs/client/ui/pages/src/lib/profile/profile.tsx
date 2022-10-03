@@ -223,7 +223,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             <IonTitle>Profil</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen className="profile__content">
+        <IonContent
+          fullscreen
+          className="profile__content"
+          scrollY={userStore?.user?.role === Role.USER}
+        >
           <IonGrid>
             {userStore?.user?.role === Role.GUEST && (
               <div className="guest-lock-hint">
