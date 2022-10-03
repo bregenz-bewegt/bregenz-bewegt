@@ -69,12 +69,16 @@
         align-items: center;
         background-color: var(--ion-color-primary-contrast);
         border-radius: var(--spacing-m);
-        padding: var(--spacing-l) var(--spacing-l) var(--spacing-s)
-          var(--spacing-l);
+        padding: var(--spacing-l) var(--spacing-m) var(--spacing-m)
+          var(--spacing-m);
 
         ion-row {
           justify-content: center;
           width: 100%;
+
+          ion-button {
+            width: 100%;
+          }
 
           .lock-icon {
             width: var(--spacing-3xl);
