@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from '@prisma/client';
+import { PrismaClient, Role, DifficultyType } from '@prisma/client';
 const prisma = new PrismaClient();
 import * as argon from 'argon2';
 
@@ -7,6 +7,7 @@ const purgeDatabase = async () => {
   await prisma.exercise.deleteMany();
   await prisma.park.deleteMany();
   await prisma.user.deleteMany();
+  await prisma.difficulty.deleteMany();
 };
 
 const createUsers = async () => {
@@ -104,39 +105,64 @@ const createParks = async () => {
 
 const createExercises = async () => {
   const parks = await prisma.park.findMany();
+  const difficulties = await prisma.difficulty.findMany();
   const exercises = [
     {
       name: 'Sit-Up',
       description: 'Some description',
-      difficulty: 'BEGINNER',
+      difficulty: {
+        connect: {
+          id: difficulties.find((d) => d.difficulty == DifficultyType.BEGINNER)
+            ?.id,
+        },
+      },
       points: 10,
       video: 'not-yet-defined',
     },
     {
       name: 'Liegestütze',
       description: 'Some description',
-      difficulty: 'BEGINNER',
+      difficulty: {
+        connect: {
+          id: difficulties.find((d) => d.difficulty == DifficultyType.BEGINNER)
+            ?.id,
+        },
+      },
       points: 10,
       video: 'not-yet-defined',
     },
     {
       name: 'Plank',
       description: 'Some description',
-      difficulty: 'ADVANCED',
+      difficulty: {
+        connect: {
+          id: difficulties.find((d) => d.difficulty == DifficultyType.ADVANCED)
+            ?.id,
+        },
+      },
       points: 10,
       video: 'not-yet-defined',
     },
     {
       name: 'Squat',
       description: 'Some description',
-      difficulty: 'BEGINNER',
+      difficulty: {
+        connect: {
+          id: difficulties.find((d) => d.difficulty == DifficultyType.BEGINNER)
+            ?.id,
+        },
+      },
       points: 10,
       video: 'not-yet-defined',
     },
     {
       name: 'Versteinerte Hexe',
       description: 'Some description',
-      difficulty: 'GAME',
+      difficulty: {
+        connect: {
+          id: difficulties.find((d) => d.difficulty == DifficultyType.GAME)?.id,
+        },
+      },
       points: 10,
       video: 'not-yet-defined',
     },
@@ -182,8 +208,21 @@ const createActivities = async () => {
   ]);
 };
 
+const createDifficulties = async () => {
+  await Promise.all([
+    Object.keys(DifficultyType).map(async (key) => {
+      await prisma.difficulty.create({
+        data: {
+          difficulty: DifficultyType[key as DifficultyType],
+        },
+      });
+    }),
+  ]);
+};
+
 const main = async () => {
   await purgeDatabase();
+  await createDifficulties();
   await createUsers();
   await createParks();
   await createExercises();

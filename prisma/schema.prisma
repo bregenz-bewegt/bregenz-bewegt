@@ -33,10 +33,24 @@ model User {
 }
 
 model Preferences {
-  id         Int         @id @default(autoincrement())
-  difficulty Difficulty?
-  user       User        @relation(fields: [userId], references: [id])
-  userId     String      @unique
+  id           Int          @id @default(autoincrement())
+  difficulty   Difficulty[]
+  user         User         @relation(fields: [userId], references: [id])
+  userId       String       @unique
+  difficultyId Int?
+}
+
+enum DifficultyType {
+  BEGINNER
+  ADVANCED
+  GAME
+}
+
+model Difficulty {
+  id          Int            @id @default(autoincrement())
+  difficulty  DifficultyType @unique
+  Exercise    Exercise[]
+  Preferences Preferences[]
 }
 
 enum Role {
@@ -73,19 +87,14 @@ model Activity {
   userId     String?
 }
 
-enum Difficulty {
-  BEGINNER
-  ADVANCED
-  GAME
-}
-
 model Exercise {
-  id          Int        @id @default(autoincrement())
-  name        String
-  description String
-  video       String
-  points      Int
-  difficulty  Difficulty
-  parks       Park[]
-  Activity    Activity[]
+  id           Int        @id @default(autoincrement())
+  name         String
+  description  String
+  video        String
+  points       Int
+  difficulty   Difficulty @relation(fields: [difficultyId], references: [id])
+  parks        Park[]
+  Activity     Activity[]
+  difficultyId Int
 }

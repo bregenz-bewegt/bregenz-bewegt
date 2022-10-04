@@ -1,5 +1,5 @@
 import './profile.scss';
-import { Input } from '@bregenz-bewegt/client-ui-components';
+import { Checkbox, Input } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonAvatar,
@@ -27,6 +27,7 @@ import {
   IonSelectOption,
   IonCheckbox,
   IonItem,
+  IonNote,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
@@ -411,6 +412,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   <IonCheckbox slot="start"></IonCheckbox>
                   <IonLabel>Auf der Rangliste angezeigt werden</IonLabel>
                 </IonItem>
+                <Checkbox
+                  name="accept-tos"
+                  className="accept-tos"
+                  checked={acceptTos}
+                  label={<IonNote mode="md">Öffentliches Profil</IonNote>}
+                  onChange={(e: any) => {
+                    setAcceptTos(e.currentTarget.checked);
+                  }}
+                />
               </IonRow>
             </div>
           </IonGrid>
