@@ -73,6 +73,8 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       });
     };
 
+    const isGuest = userStore?.user?.role === Role.GUEST;
+
     const profile = useFormik({
       initialValues: {
         firstname: userStore?.user?.firstname ?? '',
@@ -223,10 +225,16 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             <IonTitle>Profil</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen className="profile__content">
+        <IonContent
+          fullscreen
+          className={`profile__content ${
+            isGuest ? `profile__content__locked` : ''
+          }`}
+          scrollY={!isGuest}
+        >
           <IonGrid>
-            {userStore?.user?.role === Role.GUEST && (
-              <div className="guest-lock-hint">
+            {isGuest && (
+              <div className="guest-lock-modal">
                 <IonGrid>
                   <IonRow>
                     <IonIcon
@@ -245,7 +253,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     <IonButton
                       expand="block"
                       mode="ios"
-                      fill="outline"
+                      fill="solid"
                       onClick={() =>
                         handleLogout('/register', userStore.user?.role)
                       }
@@ -262,11 +270,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 </IonGrid>
               </div>
             )}
-            <div
-              className={
-                userStore?.user?.role === Role.GUEST ? 'guest-lock' : ''
-              }
-            >
+            <div className={isGuest ? 'guest-lock' : ''}>
               <IonRow className="ion-justify-content-center">
                 <IonText className="profile__content__username">
                   <h1>{userStore?.user?.username}</h1>
@@ -378,7 +382,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonRow>
             </div>
           </IonGrid>
-          {userStore?.user?.role === Role.USER && (
+          {!isGuest && (
             <>
               <IonButton
                 disabled={!profile.dirty || profile.isSubmitting}
