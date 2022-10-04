@@ -13,6 +13,7 @@ import { add } from 'ionicons/icons';
 import './coin-depot.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { Role } from '@bregenz-bewegt/client/types';
+import { Coin } from '@bregenz-bewegt/client-ui-components';
 
 export interface CoinDepotProps {
   userStore?: UserStore;
@@ -23,9 +24,7 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
     return (
       <IonCard className="coin-depot" color="secondary" mode="ios">
         <IonCardHeader>
-          <div className="bb-coin">
-            <h1>BB</h1>
-          </div>
+          <Coin className="coin-depot__coin" />
           <div className="coin-stats">
             <IonRow>
               <IonText>Du hast</IonText>

@@ -9,13 +9,12 @@ import {
   IonPage,
   IonSpinner,
   IonText,
-  useIonRouter,
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { chevronBack } from 'ionicons/icons';
 import './forgot-password.scss';
-import { useLocation } from 'react-router';
+import { useLocation, useHistory } from 'react-router';
 import { ForgotPasswordDto } from '@bregenz-bewegt/shared/types';
 
 export interface ForgotPasswordProps {
@@ -26,7 +25,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
   userStore.storeKey
 )(
   observer(({ userStore }) => {
-    const router = useIonRouter();
+    const router = useHistory();
     const location = useLocation<ForgotPasswordDto>();
     const forgot = useFormik({
       initialValues: {
@@ -39,7 +38,9 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
         userStore
           ?.forgotPassword({ email: values.email })
           .then(() => {
-            router.push('/email-sent');
+            router.push('/email-sent', {
+              email: values.email,
+            } as ForgotPasswordDto);
             setSubmitting(false);
           })
           .catch((error) => {
