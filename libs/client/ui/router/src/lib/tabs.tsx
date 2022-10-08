@@ -34,13 +34,13 @@ export const tabRoutes: TabRoutes = {
     component: Start,
     route: '/start',
     label: 'Start',
-    icon: () => <Home2 variant="Bold" />,
+    icon: () => <Home2 variant="Bold" size={32} />,
   },
   leaderboard: {
     component: Leaderboard,
     route: '/leaderboard',
     label: 'Rangliste',
-    icon: () => <Ranking variant="Bold" />,
+    icon: () => <Ranking variant="Bold" size={32} />,
   },
   scan: {
     component: Scan,
@@ -52,12 +52,12 @@ export const tabRoutes: TabRoutes = {
     component: Analytics,
     route: '/analytics',
     label: 'Statistik',
-    icon: () => <Chart21 variant="Bold" />,
+    icon: () => <Chart21 variant="Bold" size={32} />,
   },
   profile: {
     component: Profile,
     route: '/profile',
     label: 'Profil',
-    icon: () => <ProfileIcon variant="Bold" />,
+    icon: () => <ProfileIcon variant="Bold" size={32} />,
   },
 };
