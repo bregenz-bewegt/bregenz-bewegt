@@ -5,7 +5,13 @@ import {
   Analytics,
   Profile,
 } from '@bregenz-bewegt/client-ui-pages';
-import { home, podium, scan, analytics, person } from 'ionicons/icons';
+import {
+  Home2,
+  Ranking,
+  ScanBarcode,
+  Chart21,
+  Profile as ProfileIcon,
+} from 'iconsax-react';
 
 export type _TabRoutes =
   | 'start'
@@ -19,7 +25,7 @@ export type TabRoutes = {
     component: React.FC;
     route: string;
     label: string;
-    icon: string;
+    icon: React.FC;
   };
 };
 
@@ -28,30 +34,30 @@ export const tabRoutes: TabRoutes = {
     component: Start,
     route: '/start',
     label: 'Start',
-    icon: home,
+    icon: () => <Home2 variant="Bold" />,
   },
   leaderboard: {
     component: Leaderboard,
     route: '/leaderboard',
     label: 'Rangliste',
-    icon: podium,
+    icon: () => <Ranking variant="Bold" />,
   },
   scan: {
     component: Scan,
     route: '/scan',
     label: 'Scan',
-    icon: scan,
+    icon: () => <ScanBarcode variant="Bold" />,
   },
   analytics: {
     component: Analytics,
     route: '/analytics',
     label: 'Statistik',
-    icon: analytics,
+    icon: () => <Chart21 variant="Bold" />,
   },
   profile: {
     component: Profile,
     route: '/profile',
     label: 'Profil',
-    icon: person,
+    icon: () => <ProfileIcon variant="Bold" />,
   },
 };
