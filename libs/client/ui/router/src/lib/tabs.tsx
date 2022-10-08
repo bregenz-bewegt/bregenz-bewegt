@@ -7,7 +7,6 @@ import {
 } from '@bregenz-bewegt/client-ui-pages';
 import {
   Home2,
-  Ranking,
   ScanBarcode,
   Diagram,
   Profile as ProfileIcon,
