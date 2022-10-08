@@ -9,7 +9,7 @@ import {
   Home2,
   Ranking,
   ScanBarcode,
-  Chart21,
+  Diagram,
   Profile as ProfileIcon,
 } from 'iconsax-react';
 
@@ -52,7 +52,7 @@ export const tabRoutes: TabRoutes = {
     component: Analytics,
     route: '/analytics',
     label: 'Statistik',
-    icon: () => <Chart21 variant="Bold" size={32} />,
+    icon: () => <Diagram variant="Bold" size={32} />,
   },
   profile: {
     component: Profile,
