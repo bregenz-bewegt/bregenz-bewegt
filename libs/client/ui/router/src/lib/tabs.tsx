@@ -11,6 +11,7 @@ import {
   ScanBarcode,
   Diagram,
   Profile as ProfileIcon,
+  MedalStar,
 } from 'iconsax-react';
 
 export type _TabRoutes =
@@ -40,7 +41,7 @@ export const tabRoutes: TabRoutes = {
     component: Leaderboard,
     route: '/leaderboard',
     label: 'Rangliste',
-    icon: () => <Ranking variant="Bold" size={32} />,
+    icon: () => <MedalStar variant="Bold" size={32} />,
   },
   scan: {
     component: Scan,
