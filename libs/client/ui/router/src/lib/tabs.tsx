@@ -13,15 +13,15 @@ import {
   MedalStar,
 } from 'iconsax-react';
 
-export type _TabRoutes =
+export type TabRoutes =
   | 'start'
   | 'leaderboard'
   | 'scan'
   | 'analytics'
   | 'profile';
 
-export type TabRoutes = {
-  [K in _TabRoutes]: {
+export type Tabs = {
+  [K in TabRoutes]: {
     component: React.FC;
     route: string;
     label: string;
@@ -29,7 +29,7 @@ export type TabRoutes = {
   };
 };
 
-export const tabRoutes: TabRoutes = {
+export const tabRoutes: Tabs = {
   start: {
     component: Start,
     route: '/start',
