@@ -52,7 +52,7 @@ export const tabRoutes: TabRoutes = {
     component: Analytics,
     route: '/analytics',
     label: 'Statistik',
-    icon: () => <Diagram variant="Bold" size={32} />,
+    icon: () => <Diagram variant="Bold" size={24} />,
   },
   profile: {
     component: Profile,
