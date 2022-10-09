@@ -239,7 +239,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             position="top"
             mode="ios"
             buttons={[
-              { icon: checkmark, handler: () => void 0 },
+              { icon: checkmark, handler: () => profile.submitForm() },
               { icon: close, handler: () => void 0 },
             ]}
           />
