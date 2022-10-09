@@ -23,12 +23,12 @@ export const Leaderboard: React.FC = () => {
       <IonContent className="leaderboard" fullscreen>
         <CoinDepot />
         <IonRow>
-          <IonCol>
+          <IonCol className="ion-align-center">
             <IonText>
               <h2>Rangliste</h2>
             </IonText>
           </IonCol>
-          <IonCol>
+          <IonCol className="ion-align-center">
             <IonSelect
               interface="popover"
               value={timespan}
