@@ -1,6 +1,7 @@
 .leaderboard {
   &__timespan {
-    display: grid;
-    padding-top: var(--spacing-s);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 }
