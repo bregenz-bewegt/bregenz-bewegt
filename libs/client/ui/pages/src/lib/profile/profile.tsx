@@ -16,6 +16,7 @@ import {
   IonSpinner,
   IonText,
   IonTitle,
+  IonToast,
   IonToolbar,
   useIonActionSheet,
   useIonAlert,
@@ -26,7 +27,7 @@ import {
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
-import { checkmark } from 'ionicons/icons';
+import { checkmark, close } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
 import { closeCircleOutline, lockClosed } from 'ionicons/icons';
@@ -232,6 +233,16 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           }`}
           scrollY={!isGuest}
         >
+          <IonToast
+            isOpen={profile.dirty}
+            message="Änderungen speichern?"
+            position="top"
+            mode="ios"
+            buttons={[
+              { icon: checkmark, handler: () => void 0 },
+              { icon: close, handler: () => void 0 },
+            ]}
+          />
           <IonGrid>
             {isGuest && (
               <div className="guest-lock-modal">
