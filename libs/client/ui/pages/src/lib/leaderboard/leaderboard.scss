@@ -9,13 +9,21 @@
   &__table {
     &__head {
       font-weight: 600;
-      border-bottom: 1px solid var(--ion-color-medium);
 
       &__user {
-        border-right: 1px solid var(--ion-color-medium);
       }
 
       &__coins {
+      }
+    }
+
+    ion-row {
+      border-bottom: 1px solid var(--ion-color-medium);
+
+      ion-col {
+        &:first-of-type {
+          border-right: 1px solid var(--ion-color-medium);
+        }
       }
     }
   }
