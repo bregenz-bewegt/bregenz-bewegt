@@ -52,7 +52,7 @@ export const Leaderboard: React.FC = () => {
             </IonCol>
             <IonCol
               className="leaderboard__table__head__coins align-center"
-              size="2"
+              size="4"
             >
               Coins
             </IonCol>
