@@ -27,7 +27,7 @@ import {
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
-import { checkmark, close } from 'ionicons/icons';
+import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
 import { closeCircleOutline, lockClosed } from 'ionicons/icons';
