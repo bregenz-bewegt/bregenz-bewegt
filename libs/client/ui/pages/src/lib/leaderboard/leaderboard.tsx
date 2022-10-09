@@ -20,7 +20,7 @@ export const Leaderboard: React.FC = () => {
   return (
     <IonPage className="leaderboard">
       <Header />
-      <IonContent className="leaderboard" fullscreen>
+      <IonContent fullscreen>
         <CoinDepot />
         <IonRow>
           <IonCol className="ion-align-center">
@@ -28,11 +28,11 @@ export const Leaderboard: React.FC = () => {
               <h2>Rangliste</h2>
             </IonText>
           </IonCol>
-          <IonCol className="ion-align-center">
+          <IonCol className="ion-align-center leaderboard__timespan">
             <IonSelect
               interface="popover"
               value={timespan}
-              className="leaderboard__timespan-select"
+              className="leaderboard__timespan__select"
               onIonChange={(e) => setTimespan(e.detail.value)}
             >
               <IonSelectOption value={LeaderboardTimespan.AllTime}>
