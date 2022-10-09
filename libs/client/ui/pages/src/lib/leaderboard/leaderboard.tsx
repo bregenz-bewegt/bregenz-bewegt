@@ -3,6 +3,7 @@ import { LeaderboardTimespan } from '@bregenz-bewegt/client/types';
 import {
   IonCol,
   IonContent,
+  IonGrid,
   IonPage,
   IonRow,
   IonSelect,
@@ -44,6 +45,12 @@ export const Leaderboard: React.FC = () => {
             </IonSelect>
           </IonCol>
         </IonRow>
+        <IonGrid className="leaderboard__table">
+          <IonRow className="leaderboard__table__head">
+            <IonCol className="leaderboard__table__head__user">Benutzer</IonCol>
+            <IonCol className="leaderboard__table__head__coins">Coins</IonCol>
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
