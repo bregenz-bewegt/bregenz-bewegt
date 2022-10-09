@@ -238,13 +238,13 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             message="Änderungen speichern?"
             position="top"
             mode="ios"
+            color="primary"
             buttons={[
               {
                 icon: checkmark,
                 role: 'save',
                 handler: () => profile.submitForm(),
               },
-              { icon: close, role: 'cancel', handler: () => void 0 },
             ]}
           />
           <IonGrid>
@@ -399,20 +399,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           </IonGrid>
           {!isGuest && (
             <>
-              <IonButton
-                disabled={!profile.dirty || profile.isSubmitting}
-                onClick={() => profile.submitForm()}
-                expand="block"
-                mode="ios"
-              >
-                {profile.isSubmitting ? (
-                  <IonLabel>
-                    <IonSpinner name="crescent" />
-                  </IonLabel>
-                ) : (
-                  'Änderungen Speichern'
-                )}
-              </IonButton>
               <IonRow className="profile__content__danger-row">
                 <IonCol className="delete">
                   <IonButton
