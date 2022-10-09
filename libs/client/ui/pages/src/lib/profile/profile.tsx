@@ -398,37 +398,33 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             </div>
           </IonGrid>
           {!isGuest && (
-            <>
-              <IonRow className="profile__content__danger-row">
-                <IonCol className="delete">
-                  <IonButton
-                    onClick={() => handleDelete()}
-                    expand="block"
-                    mode="ios"
-                    color="danger"
-                  >
-                    Account Löschen
-                  </IonButton>
-                </IonCol>
-                <IonCol className="logout">
-                  <IonButton
-                    onClick={() =>
-                      handleLogout('/login', userStore?.user?.role)
-                    }
-                    expand="block"
-                    mode="ios"
-                  >
-                    {isLoggingOut ? (
-                      <IonLabel>
-                        <IonSpinner name="crescent" />
-                      </IonLabel>
-                    ) : (
-                      'Abmelden'
-                    )}
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-            </>
+            <IonRow className="profile__content__danger-row">
+              <IonCol className="delete">
+                <IonButton
+                  onClick={() => handleDelete()}
+                  expand="block"
+                  mode="ios"
+                  color="danger"
+                >
+                  Account Löschen
+                </IonButton>
+              </IonCol>
+              <IonCol className="logout">
+                <IonButton
+                  onClick={() => handleLogout('/login', userStore?.user?.role)}
+                  expand="block"
+                  mode="ios"
+                >
+                  {isLoggingOut ? (
+                    <IonLabel>
+                      <IonSpinner name="crescent" />
+                    </IonLabel>
+                  ) : (
+                    'Abmelden'
+                  )}
+                </IonButton>
+              </IonCol>
+            </IonRow>
           )}
         </IonContent>
       </IonPage>
