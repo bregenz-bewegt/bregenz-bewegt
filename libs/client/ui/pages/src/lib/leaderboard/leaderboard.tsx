@@ -47,8 +47,12 @@ export const Leaderboard: React.FC = () => {
         </IonRow>
         <IonGrid className="leaderboard__table">
           <IonRow className="leaderboard__table__head">
-            <IonCol className="leaderboard__table__head__user">Benutzer</IonCol>
-            <IonCol className="leaderboard__table__head__coins">Coins</IonCol>
+            <IonCol className="leaderboard__table__head__user" size="6">
+              Benutzer
+            </IonCol>
+            <IonCol className="leaderboard__table__head__coins" size="2">
+              Coins
+            </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
