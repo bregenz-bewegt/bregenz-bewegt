@@ -239,8 +239,12 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             position="top"
             mode="ios"
             buttons={[
-              { icon: checkmark, handler: () => profile.submitForm() },
-              { icon: close, handler: () => void 0 },
+              {
+                icon: checkmark,
+                role: 'save',
+                handler: () => profile.submitForm(),
+              },
+              { icon: close, role: 'cancel', handler: () => void 0 },
             ]}
           />
           <IonGrid>
