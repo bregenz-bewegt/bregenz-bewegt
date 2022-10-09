@@ -10,7 +10,7 @@ export const Leaderboard: React.FC = () => {
         <CoinDepot />
         <IonRow>
           <IonText>
-            <h1>Rangliste</h1>
+            <h2>Rangliste</h2>
           </IonText>
         </IonRow>
       </IonContent>
