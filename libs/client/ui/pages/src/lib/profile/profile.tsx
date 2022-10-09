@@ -406,7 +406,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     mode="ios"
                     color="danger"
                   >
-                    Account Löschen
+                    Konto Löschen
                   </IonButton>
                 </IonCol>
                 <IonCol className="logout">
