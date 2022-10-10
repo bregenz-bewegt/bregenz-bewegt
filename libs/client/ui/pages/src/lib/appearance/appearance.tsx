@@ -1,4 +1,5 @@
 import {
+  IonBackButton,
   IonContent,
   IonHeader,
   IonPage,
@@ -15,6 +16,7 @@ export const Appearance = (props: AppearanceProps) => {
     <IonPage className="appearance">
       <IonHeader>
         <IonToolbar>
+          <IonBackButton>Zurück</IonBackButton>
           <IonTitle>Aussehen</IonTitle>
         </IonToolbar>
       </IonHeader>
