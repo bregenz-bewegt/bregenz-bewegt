@@ -1,5 +1,5 @@
 import './profile.scss';
-import { Input } from '@bregenz-bewegt/client-ui-components';
+import { Input, ItemGroup } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonAvatar,
