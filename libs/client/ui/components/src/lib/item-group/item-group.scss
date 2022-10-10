@@ -1,8 +1,10 @@
 .item-group {
+  margin: var(--spacing-m) 0;
   border-radius: var(--spacing-s);
-  background-color: red;
+  background-color: var(--ion-color-light);
 
   ion-item {
-    padding-left: 0;
+    --background: transparent;
+    border-radius: var(--spacing-s);
   }
 }
