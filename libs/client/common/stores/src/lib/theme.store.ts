@@ -8,12 +8,19 @@ export class ThemeStore implements Store {
 
   constructor() {
     makeAutoObservable(this);
+    this.load();
   }
 
-  private enableTheme() {}
+  private load() {
+    window.document.body.classList.toggle(
+      'dark',
+      [ColorTheme.Dark, ColorTheme.System].includes(this.theme)
+    );
+  }
 
   @action setTheme(value: ColorTheme) {
     this.theme = value;
+    this.load();
   }
 }
 
