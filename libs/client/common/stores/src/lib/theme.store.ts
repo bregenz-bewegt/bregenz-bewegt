@@ -10,6 +10,8 @@ export class ThemeStore implements Store {
     makeAutoObservable(this);
   }
 
+  private enableTheme() {}
+
   @action setTheme(value: ColorTheme) {
     this.theme = value;
   }

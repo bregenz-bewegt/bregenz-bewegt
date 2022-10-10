@@ -42,8 +42,8 @@ export const Appearance = inject(themeStore.storeKey)(
         <IonContent fullscreen>
           <ItemGroup>
             <IonRadioGroup
-              value={ColorTheme.System}
-              onIonChange={(e) => themeStore.setTheme(e.detail.value)}
+              value={themeStore?.theme}
+              onIonChange={(e) => themeStore?.setTheme(e.detail.value)}
             >
               {Object.values(ColorTheme).map((option, i, a) => (
                 <IonItem lines={i === a.length - 1 ? 'none' : 'full'}>
