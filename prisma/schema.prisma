@@ -33,11 +33,11 @@ model User {
 }
 
 model Preferences {
-  id           Int          @id @default(autoincrement())
-  difficulty   Difficulty[]
-  user         User         @relation(fields: [userId], references: [id])
-  userId       String       @unique
-  difficultyId Int?
+  id         Int          @id @default(autoincrement())
+  difficulty Difficulty[]
+  public     Boolean      @default(true)
+  user       User         @relation(fields: [userId], references: [id])
+  userId     String       @unique
 }
 
 enum DifficultyType {

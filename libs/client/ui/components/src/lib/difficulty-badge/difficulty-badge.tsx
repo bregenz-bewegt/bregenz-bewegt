@@ -1,10 +1,10 @@
 import './difficulty-badge.scss';
-import { Difficulty } from '@bregenz-bewegt/client/types';
+import { DifficultyType } from '@bregenz-bewegt/client/types';
 import { IonBadge } from '@ionic/react';
 import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
 export interface DifficultyBadgeProps {
-  difficulty: Difficulty;
+  difficulty: DifficultyType;
 }
 
 export const DifficultyBadge: React.FC<DifficultyBadgeProps> = ({

@@ -34,12 +34,13 @@ import { useEffect, useState } from 'react';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
-import { Difficulty } from '@bregenz-bewegt/client/types';
+import { DifficultyType } from '@bregenz-bewegt/client/types';
 import { closeCircleOutline, lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
 import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
+import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -54,8 +55,9 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
-    const [selecPreference, setSelecPreference] = useState<Difficulty[]>(
-      Object.values(Difficulty)
+    const [publicProfile, setPublicProfile] = useState<boolean>(false);
+    const [selecPreference, setSelecPreference] = useState<DifficultyType[]>(
+      Object.values(DifficultyType)
     );
 
     const showFailureToast = () => {
@@ -105,6 +107,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           });
       },
     });
+
+    const handleChangePublicProfile = () => {
+      // userStore?.
+    };
 
     const handleChangePassword = () => {
       userStore
@@ -394,30 +400,22 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     selectedText=" "
                     onIonChange={(e) => setSelecPreference(e.detail.value)}
                   >
-                    <IonSelectOption value={Difficulty.ADVANCED}>
-                      Fortgeschritten
-                    </IonSelectOption>
-                    <IonSelectOption value={Difficulty.BEGINNER}>
-                      Anfänger
-                    </IonSelectOption>
-                    <IonSelectOption value={Difficulty.GAME}>
-                      Spiele
-                    </IonSelectOption>
+                    {Object.keys(difficultyDisplayTexts).map((d, i) => (
+                      <IonSelectOption value={d} key={i}>
+                        {difficultyDisplayTexts[d as DifficultyType]}
+                      </IonSelectOption>
+                    ))}
                   </IonSelect>
                 </IonItem>
               </IonRow>
               <IonRow className="profile__content__rankcheck">
-                <IonItem>
-                  <IonCheckbox slot="start"></IonCheckbox>
-                  <IonLabel>Auf der Rangliste angezeigt werden</IonLabel>
-                </IonItem>
                 <Checkbox
-                  name="accept-tos"
-                  className="accept-tos"
-                  checked={acceptTos}
+                  name="public-profile"
+                  checked={publicProfile}
                   label={<IonNote mode="md">Öffentliches Profil</IonNote>}
                   onChange={(e: any) => {
-                    setAcceptTos(e.currentTarget.checked);
+                    setPublicProfile(e.currentTarget.checked);
+                    handleChangePublicProfile();
                   }}
                 />
               </IonRow>

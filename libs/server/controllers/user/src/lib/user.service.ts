@@ -1,3 +1,4 @@
+import { Preferences } from './../../../../../client/ui/pages/src/lib/onboarding/slides/preferences/preferences';
 import * as fs from 'fs';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { MulterService } from '@bregenz-bewegt/server/multer';
@@ -52,6 +53,7 @@ export class UserService {
       },
       data: {
         activities: null,
+        preferences: null,
       },
     });
     return this.prismaService.user.delete({
@@ -60,6 +62,8 @@ export class UserService {
       },
     });
   }
+
+  // async getPreferences
 
   async editProfilePicture(
     id: User['id'],
