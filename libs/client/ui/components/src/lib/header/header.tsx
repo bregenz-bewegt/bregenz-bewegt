@@ -2,17 +2,16 @@ import {
   IonAvatar,
   IonFabButton,
   IonHeader,
-  IonIcon,
   IonRouterLink,
   IonSkeletonText,
   IonText,
 } from '@ionic/react';
 import './header.scss';
-import { notifications } from 'ionicons/icons';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
+import { Notification } from 'iconsax-react';
 
 export interface HeaderProps {
   userStore?: UserStore;
@@ -53,11 +52,7 @@ export const Header: React.FC<HeaderProps> = inject(userStore.storeKey)(
           </div>
         </div>
         <IonFabButton className="header__fab-button">
-          <IonIcon
-            className="header__fab__button__icon"
-            icon={notifications}
-            color="primary"
-          />
+          <Notification variant="Bold" className="header__fab-button__icon" />
         </IonFabButton>
       </IonHeader>
     );

@@ -16,6 +16,7 @@ import {
   IonSpinner,
   IonText,
   IonTitle,
+  IonToast,
   IonToolbar,
   useIonActionSheet,
   useIonAlert,
@@ -232,6 +233,20 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           }`}
           scrollY={!isGuest}
         >
+          <IonToast
+            isOpen={profile.dirty}
+            message="Änderungen speichern?"
+            position="top"
+            mode="ios"
+            color="primary"
+            buttons={[
+              {
+                icon: checkmark,
+                role: 'save',
+                handler: () => profile.submitForm(),
+              },
+            ]}
+          />
           <IonGrid>
             {isGuest && (
               <div className="guest-lock-modal">
@@ -383,51 +398,33 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             </div>
           </IonGrid>
           {!isGuest && (
-            <>
-              <IonButton
-                disabled={!profile.dirty || profile.isSubmitting}
-                onClick={() => profile.submitForm()}
-                expand="block"
-                mode="ios"
-              >
-                {profile.isSubmitting ? (
-                  <IonLabel>
-                    <IonSpinner name="crescent" />
-                  </IonLabel>
-                ) : (
-                  'Änderungen Speichern'
-                )}
-              </IonButton>
-              <IonRow className="profile__content__danger-row">
-                <IonCol className="delete">
-                  <IonButton
-                    onClick={() => handleDelete()}
-                    expand="block"
-                    mode="ios"
-                    color="danger"
-                  >
-                    Account Löschen
-                  </IonButton>
-                </IonCol>
-                <IonCol className="logout">
-                  <IonButton
-                    onClick={() =>
-                      handleLogout('/login', userStore?.user?.role)
-                    }
-                    expand="block"
-                    mode="ios"
-                  >
-                    {isLoggingOut ? (
-                      <IonLabel>
-                        <IonSpinner name="crescent" />
-                      </IonLabel>
-                    ) : (
-                      'Abmelden'
-                    )}
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-            </>
+            <IonRow className="profile__content__danger-row">
+              <IonCol className="delete">
+                <IonButton
+                  onClick={() => handleDelete()}
+                  expand="block"
+                  mode="ios"
+                  color="danger"
+                >
+                  Account Löschen
+                </IonButton>
+              </IonCol>
+              <IonCol className="logout">
+                <IonButton
+                  onClick={() => handleLogout('/login', userStore?.user?.role)}
+                  expand="block"
+                  mode="ios"
+                >
+                  {isLoggingOut ? (
+                    <IonLabel>
+                      <IonSpinner name="crescent" />
+                    </IonLabel>
+                  ) : (
+                    'Abmelden'
+                  )}
+                </IonButton>
+              </IonCol>
+            </IonRow>
           )}
         </IonContent>
       </IonPage>
