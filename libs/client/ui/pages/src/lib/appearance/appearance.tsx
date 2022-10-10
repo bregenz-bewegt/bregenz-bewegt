@@ -1,5 +1,7 @@
 import { ItemGroup } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { ColorTheme } from '@bregenz-bewegt/client/types';
+import { themeDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 import {
   IonBackButton,
   IonButtons,
@@ -8,19 +10,17 @@ import {
   IonItem,
   IonLabel,
   IonPage,
+  IonRadio,
+  IonRadioGroup,
   IonTitle,
-  IonToggle,
   IonToolbar,
 } from '@ionic/react';
-import { useState } from 'react';
 import './appearance.scss';
 
 /* eslint-disable-next-line */
 export interface AppearanceProps {}
 
 export const Appearance = (props: AppearanceProps) => {
-  const [darkmodeEnabled, setDarkmodeEnabled] = useState<boolean>(false);
-
   return (
     <IonPage className="appearance">
       <IonHeader>
@@ -37,14 +37,17 @@ export const Appearance = (props: AppearanceProps) => {
       </IonHeader>
       <IonContent fullscreen>
         <ItemGroup>
-          <IonItem lines="none">
-            <IonLabel>Farbthema</IonLabel>
-            <IonToggle
-              slot="end"
-              checked={darkmodeEnabled}
-              onIonChange={(e) => setDarkmodeEnabled(e.detail.checked)}
-            ></IonToggle>
-          </IonItem>
+          <IonRadioGroup
+            value={ColorTheme.System}
+            onIonChange={(e) => console.log(e)}
+          >
+            {Object.values(ColorTheme).map((option, i, a) => (
+              <IonItem lines={i === a.length - 1 ? 'none' : 'full'}>
+                <IonLabel>{themeDisplayTexts[option]}</IonLabel>
+                <IonRadio slot="end" value={option}></IonRadio>
+              </IonItem>
+            ))}
+          </IonRadioGroup>
         </ItemGroup>
       </IonContent>
     </IonPage>
