@@ -396,9 +396,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   Ändern
                 </IonButton>
               </IonRow>
-              <IonItem button>
-                <IonLabel>Test</IonLabel>
-              </IonItem>
+              <ItemGroup>
+                <IonItem button>
+                  <IonLabel>Test</IonLabel>
+                </IonItem>
+              </ItemGroup>
             </div>
           </IonGrid>
           {!isGuest && (
