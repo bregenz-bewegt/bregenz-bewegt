@@ -9,6 +9,7 @@ import {
   IonGrid,
   IonHeader,
   IonIcon,
+  IonItem,
   IonLabel,
   IonPage,
   IonRow,
@@ -395,6 +396,9 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   Ändern
                 </IonButton>
               </IonRow>
+              <IonItem button>
+                <IonLabel>Test</IonLabel>
+              </IonItem>
             </div>
           </IonGrid>
           {!isGuest && (
