@@ -7,7 +7,7 @@ export interface AppearanceProps {}
 export const Appearance = (props: AppearanceProps) => {
   return (
     <IonPage className="appearance">
-      <IonContent fullscreen></IonContent>
+      <IonContent fullscreen>Appearance</IonContent>
     </IonPage>
   );
 };

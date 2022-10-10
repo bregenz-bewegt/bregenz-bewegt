@@ -36,6 +36,7 @@ import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
 import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -397,7 +398,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 </IonButton>
               </IonRow>
               <ItemGroup>
-                <IonItem button>
+                <IonItem button href={`${tabRoutes.profile.route}/appearance`}>
                   <IonLabel>Aussehen</IonLabel>
                 </IonItem>
                 <IonItem button>
