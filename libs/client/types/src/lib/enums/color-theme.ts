@@ -1,5 +1,5 @@
 export enum ColorTheme {
-  Dark = 'Dark',
   Light = 'Light',
+  Dark = 'Dark',
   System = 'System',
 }
