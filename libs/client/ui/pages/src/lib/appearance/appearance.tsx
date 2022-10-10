@@ -1,9 +1,12 @@
+import { ItemGroup } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
+  IonItem,
+  IonLabel,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -28,7 +31,13 @@ export const Appearance = (props: AppearanceProps) => {
           <IonTitle>Aussehen</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>Appearance</IonContent>
+      <IonContent fullscreen>
+        <ItemGroup>
+          <IonItem>
+            <IonLabel>Farbdesign</IonLabel>
+          </IonItem>
+        </ItemGroup>
+      </IonContent>
     </IonPage>
   );
 };
