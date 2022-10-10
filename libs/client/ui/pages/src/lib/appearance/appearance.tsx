@@ -9,14 +9,18 @@ import {
   IonLabel,
   IonPage,
   IonTitle,
+  IonToggle,
   IonToolbar,
 } from '@ionic/react';
+import { useState } from 'react';
 import './appearance.scss';
 
 /* eslint-disable-next-line */
 export interface AppearanceProps {}
 
 export const Appearance = (props: AppearanceProps) => {
+  const [darkmodeEnabled, setDarkmodeEnabled] = useState<boolean>(false);
+
   return (
     <IonPage className="appearance">
       <IonHeader>
@@ -33,8 +37,13 @@ export const Appearance = (props: AppearanceProps) => {
       </IonHeader>
       <IonContent fullscreen>
         <ItemGroup>
-          <IonItem>
+          <IonItem lines="none">
             <IonLabel>Farbthema</IonLabel>
+            <IonToggle
+              slot="end"
+              checked={darkmodeEnabled}
+              onIonChange={(e) => setDarkmodeEnabled(e.detail.checked)}
+            ></IonToggle>
           </IonItem>
         </ItemGroup>
       </IonContent>
