@@ -1,6 +1,7 @@
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   IonBackButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonPage,
@@ -17,11 +18,13 @@ export const Appearance = (props: AppearanceProps) => {
     <IonPage className="appearance">
       <IonHeader>
         <IonToolbar>
-          <IonBackButton
-            color="primary"
-            defaultHref={tabRoutes.start.route}
-            text="Zurück"
-          />
+          <IonButtons>
+            <IonBackButton
+              color="primary"
+              defaultHref={tabRoutes.profile.route}
+              text="Zurück"
+            />
+          </IonButtons>
           <IonTitle>Aussehen</IonTitle>
         </IonToolbar>
       </IonHeader>
