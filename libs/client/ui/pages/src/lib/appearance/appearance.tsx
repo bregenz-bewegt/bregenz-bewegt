@@ -34,7 +34,7 @@ export const Appearance = (props: AppearanceProps) => {
       <IonContent fullscreen>
         <ItemGroup>
           <IonItem>
-            <IonLabel>Farbdesign</IonLabel>
+            <IonLabel>Farbthema</IonLabel>
           </IonItem>
         </ItemGroup>
       </IonContent>
