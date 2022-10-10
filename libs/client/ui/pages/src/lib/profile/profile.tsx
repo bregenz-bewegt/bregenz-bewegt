@@ -36,8 +36,6 @@ import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
 import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
-import { CloudSunny } from 'iconsax-react';
-import { sunny } from 'ionicons/icons';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -400,7 +398,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonRow>
               <ItemGroup>
                 <IonItem button>
-                  <IonIcon icon={sunny} />
                   <IonLabel>Aussehen</IonLabel>
                 </IonItem>
                 <IonItem button>
