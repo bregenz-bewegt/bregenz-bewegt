@@ -13,3 +13,4 @@ export * from './reset-password/reset-password';
 export * from './verify-email/verify-email';
 export * from './forgot-password/forgot-password';
 export * from './forgot-password-email-sent/forgot-password-email-sent';
+export * from './onboarding/onboarding';

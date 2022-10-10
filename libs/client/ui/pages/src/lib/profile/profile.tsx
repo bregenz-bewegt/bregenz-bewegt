@@ -400,7 +400,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 <IonItem button>
                   <IonLabel>Aussehen</IonLabel>
                 </IonItem>
-                <IonItem button lines="none">
+                <IonItem button>
                   <IonLabel>Option 1</IonLabel>
                 </IonItem>
                 <IonItem button lines="none">
