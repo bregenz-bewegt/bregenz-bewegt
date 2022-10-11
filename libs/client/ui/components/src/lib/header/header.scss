@@ -3,6 +3,7 @@
   --box-shadow: none;
   display: flex;
   justify-content: space-between;
+  background-color: var(--ion-background-color);
 
   &__profile {
     display: flex;
