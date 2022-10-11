@@ -17,6 +17,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
+import { useEffect, useState } from 'react';
 import './appearance.scss';
 
 export interface AppearanceProps {
@@ -25,6 +26,12 @@ export interface AppearanceProps {
 
 export const Appearance = inject(themeStore.storeKey)(
   observer(({ themeStore }: AppearanceProps) => {
+    const [theme, setTheme] = useState<ColorTheme>();
+
+    useEffect(() => {
+      themeStore?.getTheme((value) => setTheme(value));
+    });
+
     return (
       <IonPage className="appearance">
         <IonHeader>
@@ -42,7 +49,7 @@ export const Appearance = inject(themeStore.storeKey)(
         <IonContent fullscreen>
           <ItemGroup>
             <IonRadioGroup
-              value={themeStore?.theme}
+              value={theme}
               onIonChange={(e) => themeStore?.setTheme(e.detail.value)}
             >
               {Object.values(ColorTheme).map((option, i, a) => (
