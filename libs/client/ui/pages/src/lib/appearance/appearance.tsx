@@ -29,8 +29,14 @@ export const Appearance = inject(themeStore.storeKey)(
     const [theme, setTheme] = useState<ColorTheme>();
 
     useEffect(() => {
-      themeStore?.getTheme((value) => setTheme(value));
-    });
+      themeStore?.getTheme((value) => {
+        setTheme(value);
+      });
+    }, []);
+
+    useEffect(() => {
+      themeStore?.setTheme(theme ?? themeStore.defaultTheme);
+    }, [theme]);
 
     return (
       <IonPage className="appearance">
@@ -50,7 +56,7 @@ export const Appearance = inject(themeStore.storeKey)(
           <ItemGroup>
             <IonRadioGroup
               value={theme}
-              onIonChange={(e) => themeStore?.setTheme(e.detail.value)}
+              onIonChange={(e) => setTheme(e.detail.value)}
             >
               {Object.values(ColorTheme).map((option, i, a) => (
                 <IonItem lines={i === a.length - 1 ? 'none' : 'full'}>

@@ -5,6 +5,7 @@ import { Store } from './store';
 
 export class ThemeStore implements Store {
   storeKey = `themeStore` as const;
+  defaultTheme: ColorTheme = ColorTheme.System;
   private themeKey = 'theme' as const;
   private darkMediaQueryList = window.matchMedia(
     '(prefers-color-scheme: dark)'
@@ -33,18 +34,27 @@ export class ThemeStore implements Store {
   }
 
   getTheme(callback: (theme: ColorTheme) => void) {
-    storage.get(this.themeKey).then((theme: ColorTheme) => callback(theme));
+    storage.get(this.themeKey).then((theme: ColorTheme) => {
+      if (!theme) {
+        storage.set(this.themeKey, this.defaultTheme);
+        callback(this.defaultTheme);
+        return;
+      }
+
+      callback(theme);
+    });
   }
 
   setTheme(value: ColorTheme) {
-    storage.set(this.themeKey, value);
-    this.load(
-      value === ColorTheme.System
-        ? this.darkMediaQueryList.matches
-          ? ColorTheme.Dark
-          : ColorTheme.Light
-        : value
-    );
+    storage.set(this.themeKey, value).then((value) => {
+      this.load(
+        value === ColorTheme.System
+          ? this.darkMediaQueryList.matches
+            ? ColorTheme.Dark
+            : ColorTheme.Light
+          : value
+      );
+    });
   }
 
   private load(theme: Exclude<ColorTheme, ColorTheme.System>) {
