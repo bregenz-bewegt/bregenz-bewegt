@@ -1,12 +1,13 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
-import { Role } from '@bregenz-bewegt/client/types';
+import { Preferences, Role } from '@bregenz-bewegt/client/types';
 import type { User } from '@bregenz-bewegt/client/types';
 import type {
   ForgotPasswordDto,
   GuestDto,
   LoginDto,
   PatchProfileDto,
+  PatchPreferencesDto,
   RegisterDto,
   Tokens,
   VerifyDto,
@@ -91,6 +92,21 @@ export class UserStore implements Store {
   async deleteProfile() {
     const { data } = await http.delete('/users/profile');
     return data;
+  }
+
+  async fetchPreferences() {
+    try {
+      const { data } = await http.get('/users/preferences');
+      return data;
+    } catch (error) {
+      return;
+    }
+  }
+
+  @action async patchPreferences(dto: PatchPreferencesDto) {
+    const { data } = await http.patch('/users/preferences', dto);
+    if (this.user) this.user.preferences = data;
+    return <Preferences>data;
   }
 
   async editProfilePicture(picture: globalThis.File) {

@@ -25,7 +25,6 @@ import {
   useIonViewDidLeave,
   IonSelect,
   IonSelectOption,
-  IonCheckbox,
   IonItem,
   IonNote,
 } from '@ionic/react';
@@ -38,7 +37,10 @@ import { DifficultyType } from '@bregenz-bewegt/client/types';
 import { closeCircleOutline, lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
-import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
+import {
+  PatchProfileDto,
+  ValidProfilePictureMimeType,
+} from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
 import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
@@ -56,7 +58,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
     const [publicProfile, setPublicProfile] = useState<boolean>(false);
-    const [selecPreference, setSelecPreference] = useState<DifficultyType[]>(
+    const [selectPreference, setSelectPreference] = useState<DifficultyType[]>(
       Object.values(DifficultyType)
     );
 
@@ -108,9 +110,19 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       },
     });
 
-    const handleChangePublicProfile = () => {
-      // userStore?.
-    };
+    // const handleChangePublicProfile = () => {
+    //   userStore?.patchPreferences({
+    //     public: publicProfile,
+    //     preferences: selectPreference,
+    //   } as PatchPreferenceDto);
+    // };
+
+    // const handleSelectPreference = () => {
+    //   userStore?.patchPreferences({
+    //     public: publicProfile,
+    //     preferences: selectPreference,
+    //   } as PatchPreferenceDto);
+    // };
 
     const handleChangePassword = () => {
       userStore
@@ -396,9 +408,12 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   <IonLabel>Präferenzen</IonLabel>
                   <IonSelect
                     multiple={true}
-                    value={selecPreference}
+                    value={selectPreference}
                     selectedText=" "
-                    onIonChange={(e) => setSelecPreference(e.detail.value)}
+                    onIonChange={(e) => {
+                      setSelectPreference(e.detail.value);
+                      handleSelectPreference();
+                    }}
                   >
                     {Object.keys(difficultyDisplayTexts).map((d, i) => (
                       <IonSelectOption value={d} key={i}>

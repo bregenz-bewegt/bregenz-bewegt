@@ -1,10 +1,12 @@
-import { Preferences } from './../../../../../client/ui/pages/src/lib/onboarding/slides/preferences/preferences';
 import * as fs from 'fs';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { MulterService } from '@bregenz-bewegt/server/multer';
-import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
+import {
+  PatchPreferencesDto,
+  PatchProfileDto,
+} from '@bregenz-bewegt/shared/types';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Preferences, User } from '@prisma/client';
 import { Response } from 'express';
 import { Prisma } from '@prisma/client';
 
@@ -63,7 +65,23 @@ export class UserService {
     });
   }
 
-  // async getPreferences
+  async getPreferences(id: User['id']): Promise<Preferences> {
+    return this.prismaService.preferences.findUnique({ where: { userId: id } });
+  }
+
+  async patchPreferences(
+    id: User['id'],
+    fields: PatchPreferencesDto
+  ): Promise<Preferences> {
+    return this.prismaService.preferences.update({
+      where: {
+        userId: id,
+      },
+      data: {
+        ...fields,
+      },
+    });
+  }
 
   async editProfilePicture(
     id: User['id'],
