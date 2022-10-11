@@ -1,3 +1,10 @@
+body.dark {
+  .header {
+    background-color: unset;
+    color: unset;
+  }
+}
+
 .header {
   padding: 24px 16px;
   --box-shadow: none;
@@ -5,11 +12,6 @@
   justify-content: space-between;
   background-color: var(--ion-color-primary-contrast);
   color: var(--ion-color-light-contrast);
-
-  @media (prefers-color-scheme: dark) {
-    background-color: unset;
-    color: unset;
-  }
 
   &__profile {
     display: flex;
