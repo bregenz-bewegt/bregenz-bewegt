@@ -5,22 +5,41 @@ import { Store } from './store';
 export class ThemeStore implements Store {
   storeKey = `themeStore` as const;
   @observable theme: ColorTheme = ColorTheme.System;
+  private darkMediaQueryList = window.matchMedia(
+    '(prefers-color-scheme: dark)'
+  );
 
   constructor() {
     makeAutoObservable(this);
-    this.load();
+    this.load(
+      this.theme === ColorTheme.System
+        ? this.darkMediaQueryList.matches
+          ? ColorTheme.Dark
+          : ColorTheme.Light
+        : this.theme
+    );
+
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', (e) => {
+        this.theme === ColorTheme.System &&
+          this.load(e.matches ? ColorTheme.Dark : ColorTheme.Light);
+      });
   }
 
-  private load() {
-    window.document.body.classList.toggle(
-      'dark',
-      [ColorTheme.Dark, ColorTheme.System].includes(this.theme)
-    );
+  private load(theme: Exclude<ColorTheme, ColorTheme.System>) {
+    window.document.body.classList.toggle('dark', theme === ColorTheme.Dark);
   }
 
   @action setTheme(value: ColorTheme) {
     this.theme = value;
-    this.load();
+    this.load(
+      value === ColorTheme.System
+        ? this.darkMediaQueryList.matches
+          ? ColorTheme.Dark
+          : ColorTheme.Light
+        : value
+    );
   }
 }
 
