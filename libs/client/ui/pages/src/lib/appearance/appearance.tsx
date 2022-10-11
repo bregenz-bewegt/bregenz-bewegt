@@ -52,7 +52,7 @@ export const Appearance = inject(themeStore.storeKey)(
             <IonTitle>Aussehen</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen>
+        <IonContent fullscreen scrollY={false}>
           <ItemGroup>
             <IonRadioGroup
               value={theme}
