@@ -401,8 +401,8 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 <IonItem
                   button
                   routerLink={`${tabRoutes.profile.route}/appearance`}
+                  lines="none"
                 >
-                  <IonIcon icon={moon} />
                   <IonLabel>Darstellung</IonLabel>
                 </IonItem>
               </ItemGroup>
