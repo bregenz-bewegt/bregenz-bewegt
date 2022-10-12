@@ -15,6 +15,7 @@ import { ExerciseModule } from '@bregenz-bewegt/server/controllers/exercise';
 import { MailModule } from '@bregenz-bewegt/server/mail';
 import { UtilModule } from '@bregenz-bewegt/server/util';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { LeaderboardModule } from '@bregenz-bewegt/server/controllers/leaderboard';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
     UserModule,
     ParkModule,
     ExerciseModule,
+    LeaderboardModule,
   ],
   controllers: [AppController],
   providers: [

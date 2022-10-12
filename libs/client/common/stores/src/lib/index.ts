@@ -6,3 +6,4 @@ export * from './activity.store';
 export * from './tab.store';
 export * from './onboarding.store';
 export * from './theme.store';
+export * from './leaderboard.store';
