@@ -2,6 +2,7 @@ import {
   ResetPassword,
   ExerciseDetail,
   ParkDetail,
+  Appearance,
 } from '@bregenz-bewegt/client-ui-pages';
 import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
 import {
@@ -69,6 +70,11 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
               exact
               path={tabRoutes.profile.route}
               component={tabRoutes.profile.component}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/appearance`}
+              component={Appearance}
             ></Route>
             <Route path="">
               <Redirect to="/start" />

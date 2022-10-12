@@ -1,5 +1,5 @@
 import './profile.scss';
-import { Input } from '@bregenz-bewegt/client-ui-components';
+import { Input, ItemGroup } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonAvatar,
@@ -9,6 +9,7 @@ import {
   IonGrid,
   IonHeader,
   IonIcon,
+  IonItem,
   IonLabel,
   IonPage,
   IonRow,
@@ -35,6 +36,7 @@ import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
 import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -395,6 +397,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   Ändern
                 </IonButton>
               </IonRow>
+              <ItemGroup>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/appearance`}
+                  lines="none"
+                >
+                  <IonLabel>Darstellung</IonLabel>
+                </IonItem>
+              </ItemGroup>
             </div>
           </IonGrid>
           {!isGuest && (
