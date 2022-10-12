@@ -78,7 +78,14 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                 Coins
               </IonCol>
             </IonRow>
-            {JSON.stringify(leaderboard)}
+            {leaderboard?.map((competitor) => (
+              <IonRow>
+                <IonCol className="align-center">{competitor.username}</IonCol>
+                <IonCol className="align-center" size="4">
+                  {competitor.coins}
+                </IonCol>
+              </IonRow>
+            ))}
           </IonGrid>
         </IonContent>
       </IonPage>
