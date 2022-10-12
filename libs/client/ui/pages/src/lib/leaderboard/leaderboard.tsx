@@ -36,7 +36,9 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       leaderboardStore
         ?.fetch()
         .then((data) => setLeaderboard(data))
-        .catch(() => {});
+        .catch(() => {
+          setLeaderboard([]);
+        });
     }, []);
 
     return (
@@ -78,14 +80,18 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                 Coins
               </IonCol>
             </IonRow>
-            {leaderboard?.map((competitor) => (
-              <IonRow>
-                <IonCol className="align-center">{competitor.username}</IonCol>
-                <IonCol className="align-center" size="4">
-                  {competitor.coins}
-                </IonCol>
-              </IonRow>
-            ))}
+            {leaderboard &&
+              leaderboard?.length < 0 &&
+              leaderboard?.map((competitor) => (
+                <IonRow>
+                  <IonCol className="align-center">
+                    {competitor.username}
+                  </IonCol>
+                  <IonCol className="align-center" size="4">
+                    {competitor.coins}
+                  </IonCol>
+                </IonRow>
+              ))}
           </IonGrid>
         </IonContent>
       </IonPage>
