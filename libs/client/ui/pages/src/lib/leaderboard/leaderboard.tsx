@@ -37,7 +37,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     useEffect(() => {
       leaderboardStore
         ?.fetch()
-        .then((data) => setLeaderboard(data))
+        .then((data) => setLeaderboard([...data, ...data]))
         .catch(() => {
           setLeaderboard([]);
         });
@@ -47,7 +47,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       setTimeout(() => {
         setLeaderboard((prev) => [...prev, ...prev]);
         e.target.complete();
-      }, 2000);
+      }, 1000);
     };
 
     return (
