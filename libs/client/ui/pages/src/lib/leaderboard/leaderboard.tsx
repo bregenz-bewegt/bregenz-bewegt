@@ -37,7 +37,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     useEffect(() => {
       leaderboardStore
         ?.fetch()
-        .then((data) => setLeaderboard([...data, ...data]))
+        .then((data) => setLeaderboard(data))
         .catch(() => {
           setLeaderboard([]);
         });
