@@ -402,6 +402,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   button
                   routerLink={`${tabRoutes.profile.route}/appearance`}
                   lines="none"
+                  mode="ios"
                 >
                   <IonLabel>Darstellung</IonLabel>
                 </IonItem>
