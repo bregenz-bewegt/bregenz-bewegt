@@ -46,7 +46,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     return (
       <IonPage className="leaderboard">
         <Header />
-        <IonContent fullscreen scrollY={false}>
+        <IonContent fullscreen>
           <CoinDepot />
           <IonRow>
             <IonCol className="ion-align-center">
