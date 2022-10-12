@@ -32,16 +32,23 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     const [timespan, setTimespan] = useState<LeaderboardTimespan>(
       LeaderboardTimespan.AllTime
     );
-    const [leaderboard, setLeaderboard] = useState<Competitor[]>();
+    const [leaderboard, setLeaderboard] = useState<Competitor[]>([]);
 
     useEffect(() => {
       leaderboardStore
         ?.fetch()
-        .then((data) => setLeaderboard([...data, ...data, ...data]))
+        .then((data) => setLeaderboard(data))
         .catch(() => {
           setLeaderboard([]);
         });
     }, []);
+
+    const loadInfinite = (e: any) => {
+      setTimeout(() => {
+        setLeaderboard((prev) => [...prev, ...prev]);
+        e.target.complete();
+      }, 2000);
+    };
 
     return (
       <IonPage className="leaderboard">
@@ -98,10 +105,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                 </IonRow>
               ))}
           </IonGrid>
-          <IonInfiniteScroll
-            onIonInfinite={() => setTimeout(() => void 0, 1000)}
-            threshold="100px"
-          >
+          <IonInfiniteScroll onIonInfinite={loadInfinite} threshold="100px">
             <IonInfiniteScrollContent
               loadingSpinner="crescent"
               loadingText="Mehr Benutzer laden.."
