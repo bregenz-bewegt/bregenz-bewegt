@@ -1,5 +1,5 @@
 import './profile.scss';
-import { Input } from '@bregenz-bewegt/client-ui-components';
+import { Input, ItemGroup } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonAvatar,
@@ -9,6 +9,7 @@ import {
   IonGrid,
   IonHeader,
   IonIcon,
+  IonItem,
   IonLabel,
   IonPage,
   IonRow,
@@ -16,6 +17,7 @@ import {
   IonSpinner,
   IonText,
   IonTitle,
+  IonToast,
   IonToolbar,
   useIonActionSheet,
   useIonAlert,
@@ -34,6 +36,7 @@ import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
 import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -220,7 +223,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage className="profile">
-        <IonHeader>
+        <IonHeader mode="ios">
           <IonToolbar>
             <IonTitle>Profil</IonTitle>
           </IonToolbar>
@@ -232,6 +235,20 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           }`}
           scrollY={!isGuest}
         >
+          <IonToast
+            isOpen={profile.dirty}
+            message="Änderungen speichern?"
+            position="top"
+            mode="ios"
+            color="primary"
+            buttons={[
+              {
+                icon: checkmark,
+                role: 'save',
+                handler: () => profile.submitForm(),
+              },
+            ]}
+          />
           <IonGrid>
             {isGuest && (
               <div className="guest-lock-modal">
@@ -380,54 +397,46 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   Ändern
                 </IonButton>
               </IonRow>
+              <ItemGroup>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/appearance`}
+                  lines="none"
+                  mode="ios"
+                >
+                  <IonLabel>Darstellung</IonLabel>
+                </IonItem>
+              </ItemGroup>
             </div>
           </IonGrid>
           {!isGuest && (
-            <>
-              <IonButton
-                disabled={!profile.dirty || profile.isSubmitting}
-                onClick={() => profile.submitForm()}
-                expand="block"
-                mode="ios"
-              >
-                {profile.isSubmitting ? (
-                  <IonLabel>
-                    <IonSpinner name="crescent" />
-                  </IonLabel>
-                ) : (
-                  'Änderungen Speichern'
-                )}
-              </IonButton>
-              <IonRow className="profile__content__danger-row">
-                <IonCol className="delete">
-                  <IonButton
-                    onClick={() => handleDelete()}
-                    expand="block"
-                    mode="ios"
-                    color="danger"
-                  >
-                    Account Löschen
-                  </IonButton>
-                </IonCol>
-                <IonCol className="logout">
-                  <IonButton
-                    onClick={() =>
-                      handleLogout('/login', userStore?.user?.role)
-                    }
-                    expand="block"
-                    mode="ios"
-                  >
-                    {isLoggingOut ? (
-                      <IonLabel>
-                        <IonSpinner name="crescent" />
-                      </IonLabel>
-                    ) : (
-                      'Abmelden'
-                    )}
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-            </>
+            <IonRow className="profile__content__danger-row">
+              <IonCol className="delete">
+                <IonButton
+                  onClick={() => handleDelete()}
+                  expand="block"
+                  mode="ios"
+                  color="danger"
+                >
+                  Konto Löschen
+                </IonButton>
+              </IonCol>
+              <IonCol className="logout">
+                <IonButton
+                  onClick={() => handleLogout('/login', userStore?.user?.role)}
+                  expand="block"
+                  mode="ios"
+                >
+                  {isLoggingOut ? (
+                    <IonLabel>
+                      <IonSpinner name="crescent" />
+                    </IonLabel>
+                  ) : (
+                    'Abmelden'
+                  )}
+                </IonButton>
+              </IonCol>
+            </IonRow>
           )}
         </IonContent>
       </IonPage>
