@@ -9,6 +9,8 @@ import {
   IonCol,
   IonContent,
   IonGrid,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
   IonPage,
   IonRow,
   IonSelect,
@@ -44,7 +46,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     return (
       <IonPage className="leaderboard">
         <Header />
-        <IonContent fullscreen>
+        <IonContent fullscreen scrollY={false}>
           <CoinDepot />
           <IonRow>
             <IonCol className="ion-align-center">
@@ -68,6 +70,15 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
               </IonSelect>
             </IonCol>
           </IonRow>
+          <IonInfiniteScroll
+            onIonInfinite={() => setTimeout(() => void 0, 1000)}
+            threshold="100px"
+          >
+            <IonInfiniteScrollContent
+              loadingSpinner="crescent"
+              loadingText="Mehr Benutzer laden.."
+            ></IonInfiniteScrollContent>
+          </IonInfiniteScroll>
           <IonGrid className="leaderboard__table">
             <IonRow className="leaderboard__table__head">
               <IonCol
