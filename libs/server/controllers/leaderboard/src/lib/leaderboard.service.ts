@@ -9,6 +9,7 @@ export class LeaderboardService {
   async getLeaderboard(): Promise<Competitor[]> {
     return this.prismaService.user.findMany({
       select: { username: true, coins: true },
+      orderBy: { coins: 'desc' },
     });
   }
 }
