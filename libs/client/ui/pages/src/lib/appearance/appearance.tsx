@@ -40,7 +40,7 @@ export const Appearance = inject(themeStore.storeKey)(
 
     return (
       <IonPage className="appearance">
-        <IonHeader>
+        <IonHeader mode="ios">
           <IonToolbar>
             <IonButtons>
               <IonBackButton

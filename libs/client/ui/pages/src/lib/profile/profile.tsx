@@ -223,7 +223,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage className="profile">
-        <IonHeader>
+        <IonHeader mode="ios">
           <IonToolbar>
             <IonTitle>Profil</IonTitle>
           </IonToolbar>
