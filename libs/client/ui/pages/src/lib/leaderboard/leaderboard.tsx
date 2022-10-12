@@ -92,8 +92,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                 Coins
               </IonCol>
             </IonRow>
-            {leaderboard &&
-              leaderboard?.length > 0 &&
+            {leaderboard?.length > 0 &&
               leaderboard?.map((competitor) => (
                 <IonRow>
                   <IonCol size="8" className="align-center">
