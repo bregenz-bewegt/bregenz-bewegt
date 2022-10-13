@@ -21,6 +21,9 @@ import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import './leaderboard.scss';
 
+const DEFAULT_COMPETIORS_RELOAD_CHUNK_SIZE = 10;
+const MAX_SHOWN_COMPETITORS = 10;
+
 export interface LeaderboardProps {
   leaderboardStore?: LeaderboardStore;
 }
@@ -29,7 +32,6 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
   leaderboardStore.storeKey
 )(
   observer(({ leaderboardStore }) => {
-    const defaultCompetitorsChunkSize = 10;
     const [timespan, setTimespan] = useState<LeaderboardTimespan>(
       LeaderboardTimespan.AllTime
     );
@@ -37,7 +39,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
 
     useEffect(() => {
       leaderboardStore
-        ?.fetch({ skip: 0, take: defaultCompetitorsChunkSize })
+        ?.fetch({ skip: 0, take: DEFAULT_COMPETIORS_RELOAD_CHUNK_SIZE })
         .then((data) => setLeaderboard(data))
         .catch(() => {
           setLeaderboard([]);
@@ -45,12 +47,13 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     }, []);
 
     const loadInfinite = (e: any) => {
-      if (leaderboard.length === 100) return e.target.complete();
+      if (leaderboard.length === MAX_SHOWN_COMPETITORS)
+        return e.target.complete();
 
       leaderboardStore
         ?.fetch({
           skip: leaderboard.length,
-          take: defaultCompetitorsChunkSize,
+          take: DEFAULT_COMPETIORS_RELOAD_CHUNK_SIZE,
         })
         .then((data) => {
           setLeaderboard((prev) => orderLeaderboardDesc([...prev, ...data]));
