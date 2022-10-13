@@ -71,6 +71,16 @@ const createUsers = async () => {
         coins: 120,
         active: true,
       },
+      {
+        username: 'tonipolster',
+        email: 'tonipolster@gmail.com',
+        firstname: 'Toni',
+        lastname: 'Polster',
+        role: Role.USER,
+        password: await argon.hash('testtest'),
+        coins: 300,
+        active: true,
+      },
     ],
   });
 };
