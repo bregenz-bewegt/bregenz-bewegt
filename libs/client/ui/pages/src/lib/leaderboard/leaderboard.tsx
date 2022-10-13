@@ -29,6 +29,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
   leaderboardStore.storeKey
 )(
   observer(({ leaderboardStore }) => {
+    const defaultCompetitorsChunkSize = 2;
     const [timespan, setTimespan] = useState<LeaderboardTimespan>(
       LeaderboardTimespan.AllTime
     );
@@ -36,7 +37,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
 
     useEffect(() => {
       leaderboardStore
-        ?.fetch()
+        ?.fetch({ skip: 0, take: defaultCompetitorsChunkSize })
         .then((data) => setLeaderboard(data))
         .catch(() => {
           setLeaderboard([]);
@@ -44,10 +45,22 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     }, []);
 
     const loadInfinite = (e: any) => {
-      setTimeout(() => {
-        setLeaderboard((prev) => [...prev, ...prev]);
-        e.target.complete();
-      }, 1000);
+      leaderboardStore
+        ?.fetch({
+          skip: leaderboard.length,
+          take: defaultCompetitorsChunkSize,
+        })
+        .then((data) => {
+          setLeaderboard((prev) => orderLeaderboardDesc([...prev, ...data]));
+          e.target.complete();
+        })
+        .catch(() => {
+          setLeaderboard([]);
+        });
+    };
+
+    const orderLeaderboardDesc = (list: Competitor[]) => {
+      return list.sort((a, b) => (b.coins ?? 0) - (a.coins ?? 0));
     };
 
     return (
