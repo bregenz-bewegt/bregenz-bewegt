@@ -41,6 +41,16 @@ const createUsers = async () => {
         coins: 50,
         active: true,
       },
+      {
+        username: 'johnny3',
+        email: 'jonas.mayrhofer@hak-bregenz.at',
+        firstname: 'Jonas',
+        lastname: 'Mayrhofer',
+        role: Role.USER,
+        password: await argon.hash('testtest'),
+        coins: 20,
+        active: true,
+      },
     ],
   });
 };
