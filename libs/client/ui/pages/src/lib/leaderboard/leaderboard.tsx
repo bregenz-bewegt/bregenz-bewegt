@@ -115,11 +115,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
             </IonRow>
             {leaderboard?.length > 0 &&
               leaderboard?.map((competitor, i) => (
-                <IonRow
-                  className={`rank-${i + 1} ${
-                    i === 2 ? `leaderboard__table__podium-divider` : ''
-                  }`}
-                >
+                <IonRow className={`rank-${i + 1}`}>
                   <IonCol size="2" className="align-center">
                     {i + 1}
                   </IonCol>
