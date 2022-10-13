@@ -41,7 +41,7 @@
       ion-col {
         padding: var(--spacing-s);
 
-        &:first-of-type {
+        &:not(:last-of-type) {
           border-right: 1px solid var(--ion-color-light);
         }
       }
