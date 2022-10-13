@@ -2,6 +2,8 @@ import { CoinDepot, Header } from '@bregenz-bewegt/client-ui-components';
 import {
   leaderboardStore,
   LeaderboardStore,
+  userStore,
+  UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { LeaderboardTimespan } from '@bregenz-bewegt/client/types';
 import { Competitor } from '@bregenz-bewegt/shared/types';
@@ -26,12 +28,14 @@ const MAX_SHOWN_COMPETITORS = 100;
 
 export interface LeaderboardProps {
   leaderboardStore?: LeaderboardStore;
+  userStore?: UserStore;
 }
 
 export const Leaderboard: React.FC<LeaderboardProps> = inject(
-  leaderboardStore.storeKey
+  leaderboardStore.storeKey,
+  userStore.storeKey
 )(
-  observer(({ leaderboardStore }) => {
+  observer(({ leaderboardStore, userStore }) => {
     const [timespan, setTimespan] = useState<LeaderboardTimespan>(
       LeaderboardTimespan.AllTime
     );
@@ -119,7 +123,13 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
             </IonRow>
             {leaderboard?.length > 0 &&
               leaderboard?.map((competitor, i) => (
-                <IonRow className={`rank-${i + 1}`}>
+                <IonRow
+                  className={`rank-${i + 1} ${
+                    competitor.username === userStore?.user?.username
+                      ? 'self'
+                      : ''
+                  }`}
+                >
                   <IonCol size="2" className="align-center">
                     {i + 1}
                   </IonCol>

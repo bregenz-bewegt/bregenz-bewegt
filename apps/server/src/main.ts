@@ -17,6 +17,8 @@ import {
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  app.enableCors({ origin: true });
+
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
@@ -34,7 +36,6 @@ async function bootstrap(): Promise<void> {
       },
     })
   );
-  app.enableCors({ origin: true });
 
   const document = SwaggerModule.createDocument(
     app,

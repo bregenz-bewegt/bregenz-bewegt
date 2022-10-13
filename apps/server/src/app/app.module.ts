@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
@@ -6,6 +7,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from '@bregenz-bewegt/server-controllers-auth';
 import { UserModule } from '@bregenz-bewegt/server-controllers-user';
 import { PrismaModule } from '@bregenz-bewegt/server-prisma';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AccessTokenGuard, RoleGuard } from '@bregenz-bewegt/server/common';
@@ -40,6 +42,9 @@ import { LeaderboardModule } from '@bregenz-bewegt/server/controllers/leaderboar
       //     strict: true,
       //   },
       // },
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve('../public'),
     }),
     MailModule,
     PrismaModule,
