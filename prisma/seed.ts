@@ -51,6 +51,26 @@ const createUsers = async () => {
         coins: 20,
         active: true,
       },
+      {
+        username: 'ralle',
+        email: 'raphael.posch@hak-bregenz.at',
+        firstname: 'Raphael',
+        lastname: 'Posch',
+        role: Role.USER,
+        password: await argon.hash('testtest'),
+        coins: 80,
+        active: true,
+      },
+      {
+        username: 'alessandro',
+        email: 'alessandro.petrovic@hak-bregenz.at',
+        firstname: 'Alessandro',
+        lastname: 'Petrovic',
+        role: Role.USER,
+        password: await argon.hash('testtest'),
+        coins: 120,
+        active: true,
+      },
     ],
   });
 };
