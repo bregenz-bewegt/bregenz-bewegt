@@ -6,14 +6,10 @@
     align-items: center;
   }
 
-  ion-grid,
-  ion-row {
-    height: 100%;
-    overflow-y: scroll;
-  }
-
   &__table {
     padding: 0;
+    height: 100%;
+    overflow-y: scroll;
 
     &__head {
       font-weight: 600;
