@@ -76,6 +76,11 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /** rank **/
+  $--ion-color-gold: #f9ad0e;
+  $--ion-color-silver: #d1d7da;
+  $--ion-color-bronze: #df7e08;
 }
 
 @media (prefers-color-scheme: dark) {
