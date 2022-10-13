@@ -26,6 +26,12 @@
     ion-row {
       border-bottom: 1px solid var(--ion-color-light);
 
+      .rank-1,
+      .rank-2,
+      .rank-3 {
+        font-size: bold;
+      }
+
       ion-col {
         padding: var(--spacing-s);
 
