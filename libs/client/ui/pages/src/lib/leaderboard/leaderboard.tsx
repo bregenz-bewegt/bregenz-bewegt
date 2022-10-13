@@ -63,6 +63,8 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       return list.sort((a, b) => (b.coins ?? 0) - (a.coins ?? 0));
     };
 
+    console.log(leaderboard);
+
     return (
       <IonPage className="leaderboard">
         <Header />
