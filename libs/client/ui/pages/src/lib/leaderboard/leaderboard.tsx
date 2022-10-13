@@ -22,7 +22,7 @@ import { useEffect, useState } from 'react';
 import './leaderboard.scss';
 
 const DEFAULT_COMPETIORS_RELOAD_CHUNK_SIZE = 10;
-const MAX_SHOWN_COMPETITORS = 10;
+const MAX_SHOWN_COMPETITORS = 100;
 
 export interface LeaderboardProps {
   leaderboardStore?: LeaderboardStore;
