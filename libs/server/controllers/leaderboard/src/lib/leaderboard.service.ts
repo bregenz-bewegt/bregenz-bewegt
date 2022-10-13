@@ -1,7 +1,7 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import {
   Competitor,
-  LeaderboardPaginationDto,
+  LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { Role } from '@prisma/client';
@@ -13,7 +13,7 @@ export class LeaderboardService {
   async getLeaderboard({
     skip,
     take,
-  }: LeaderboardPaginationDto): Promise<Competitor[]> {
+  }: LeaderboardPaginationQueryDto): Promise<Competitor[]> {
     return this.prismaService.user.findMany({
       skip,
       take,

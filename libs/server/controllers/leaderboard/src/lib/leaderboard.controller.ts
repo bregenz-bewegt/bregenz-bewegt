@@ -1,6 +1,6 @@
 import {
   Competitor,
-  LeaderboardPaginationDto,
+  LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import { Controller, Get, Query, ValidationPipe } from '@nestjs/common';
 import { LeaderboardService } from './leaderboard.service';
@@ -18,7 +18,7 @@ export class LeaderboardController {
         forbidNonWhitelisted: true,
       })
     )
-    dto: LeaderboardPaginationDto
+    dto: LeaderboardPaginationQueryDto
   ): Promise<Competitor[]> {
     console.log(dto);
     return this.leaderboardService.getLeaderboard(dto);

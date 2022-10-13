@@ -1,11 +1,10 @@
-import { IsNumber, Min } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber } from 'class-validator';
 
-export class LeaderboardPaginationDto {
+export class LeaderboardPaginationQueryDto {
   @IsNumber()
-  @Min(0)
   skip: number;
 
   @IsNumber()
-  @Min(1)
   take: number;
 }
