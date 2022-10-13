@@ -1,6 +1,7 @@
 import { PrismaClient, Role } from '@prisma/client';
 const prisma = new PrismaClient();
 import * as argon from 'argon2';
+import { faker } from '@faker-js/faker';
 
 const purgeDatabase = async () => {
   await prisma.activity.deleteMany();
@@ -19,7 +20,7 @@ const createUsers = async () => {
         lastname: 'Ostini',
         role: Role.USER,
         password: await argon.hash('testtest'),
-        coins: 100,
+        coins: 990,
       },
       {
         username: 'Vincentcool3',
@@ -28,9 +29,21 @@ const createUsers = async () => {
         lastname: 'Stadelmann',
         role: Role.USER,
         password: await argon.hash('timonovich'),
-        coins: 200,
+        coins: 1000,
         active: true,
       },
+      ...(await Promise.all([
+        ...new Array(100).fill(null).map(async () => ({
+          username: faker.internet.userName(),
+          email: faker.internet.email(),
+          firstname: faker.name.firstName(),
+          lastname: faker.name.lastName(),
+          role: Role.USER,
+          password: await argon.hash('testtest'),
+          coins: Math.floor(Math.random() * (100 + 1)) * 10,
+          active: true,
+        })),
+      ])),
     ],
   });
 };
