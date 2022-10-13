@@ -19,8 +19,8 @@
       }
     }
 
-    .podium-divider {
-      border-bottom: 2px solid red;
+    &__podium-divider {
+      border-bottom: 2px solid var(--ion-color-primary);
     }
 
     ion-row {
