@@ -45,6 +45,8 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     }, []);
 
     const loadInfinite = (e: any) => {
+      if (leaderboard.length === 100) return e.target.complete();
+
       leaderboardStore
         ?.fetch({
           skip: leaderboard.length,
@@ -56,14 +58,13 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
         })
         .catch(() => {
           setLeaderboard([]);
+          e.target.complete();
         });
     };
 
     const orderLeaderboardDesc = (list: Competitor[]) => {
       return list.sort((a, b) => (b.coins ?? 0) - (a.coins ?? 0));
     };
-
-    console.log(leaderboard);
 
     return (
       <IonPage className="leaderboard">
