@@ -29,7 +29,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
   leaderboardStore.storeKey
 )(
   observer(({ leaderboardStore }) => {
-    const defaultCompetitorsChunkSize = 2;
+    const defaultCompetitorsChunkSize = 10;
     const [timespan, setTimespan] = useState<LeaderboardTimespan>(
       LeaderboardTimespan.AllTime
     );
@@ -63,6 +63,8 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       return list.sort((a, b) => (b.coins ?? 0) - (a.coins ?? 0));
     };
 
+    console.log(leaderboard);
+
     return (
       <IonPage className="leaderboard">
         <Header />
@@ -93,7 +95,13 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
           <IonGrid className="leaderboard__table">
             <IonRow className="leaderboard__table__head">
               <IonCol
-                size="8"
+                size="2"
+                className="leaderboard__table__head__rank align-center"
+              >
+                Rang
+              </IonCol>
+              <IonCol
+                size="6"
                 className="leaderboard__table__head__user align-center"
               >
                 Benutzer
@@ -106,9 +114,12 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
               </IonCol>
             </IonRow>
             {leaderboard?.length > 0 &&
-              leaderboard?.map((competitor) => (
-                <IonRow>
-                  <IonCol size="8" className="align-center">
+              leaderboard?.map((competitor, i) => (
+                <IonRow className={`rank-${i + 1}`}>
+                  <IonCol size="2" className="align-center">
+                    {i + 1}
+                  </IonCol>
+                  <IonCol size="6" className="align-center">
                     {competitor.username}
                   </IonCol>
                   <IonCol size="4" className="align-center">
