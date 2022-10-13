@@ -20,7 +20,6 @@ export class LeaderboardController {
     )
     dto: LeaderboardPaginationQueryDto
   ): Promise<Competitor[]> {
-    console.log(dto);
     return this.leaderboardService.getLeaderboard(dto);
   }
 }
