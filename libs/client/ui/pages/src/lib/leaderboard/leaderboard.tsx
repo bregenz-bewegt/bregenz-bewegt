@@ -29,7 +29,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
   leaderboardStore.storeKey
 )(
   observer(({ leaderboardStore }) => {
-    const defaultCompetitorsChunkSize = 2;
+    const defaultCompetitorsChunkSize = 10;
     const [timespan, setTimespan] = useState<LeaderboardTimespan>(
       LeaderboardTimespan.AllTime
     );
