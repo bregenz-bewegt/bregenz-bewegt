@@ -95,6 +95,12 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
           <IonGrid className="leaderboard__table">
             <IonRow className="leaderboard__table__head">
               <IonCol
+                size="2"
+                className="leaderboard__table__head__rank align-center"
+              >
+                Rang
+              </IonCol>
+              <IonCol
                 size="8"
                 className="leaderboard__table__head__user align-center"
               >
@@ -108,8 +114,11 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
               </IonCol>
             </IonRow>
             {leaderboard?.length > 0 &&
-              leaderboard?.map((competitor) => (
+              leaderboard?.map((competitor, i) => (
                 <IonRow>
+                  <IonCol size="2" className="align-center">
+                    {i + 1}
+                  </IonCol>
                   <IonCol size="8" className="align-center">
                     {competitor.username}
                   </IonCol>
