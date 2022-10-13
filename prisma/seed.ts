@@ -28,7 +28,17 @@ const createUsers = async () => {
         lastname: 'Stadelmann',
         role: Role.USER,
         password: await argon.hash('timonovich'),
-        coins: 37448,
+        coins: 200,
+        active: true,
+      },
+      {
+        username: 'anika',
+        email: 'anika.dibowski@hak-bregenz.at',
+        firstname: 'Anika',
+        lastname: 'Dibowski',
+        role: Role.USER,
+        password: await argon.hash('anika2022'),
+        coins: 50,
         active: true,
       },
     ],
@@ -39,60 +49,70 @@ const createParks = async () => {
   await prisma.park.createMany({
     data: [
       {
+        id: 1,
         name: 'Parkourpark Remise',
         address: 'Badgässele',
         image: 'https://picsum.photos/400/200',
         qr: 'not-yet-defined-0',
       },
       {
+        id: 2,
         name: 'Schulsportplatz MS Start',
         address: 'Rotfarbgasse 14a, 6900 Bregenz',
         image: 'https://picsum.photos/400/200',
         qr: 'not-yet-defined-1',
       },
       {
+        id: 3,
         name: 'Jugenplatz Spielfeld 3',
         address: 'Achstraße',
         image: 'https://picsum.photos/400/200',
         qr: 'not-yet-defined-2',
       },
       {
+        id: 4,
         name: 'Generationen Park Mariahilf',
         address: 'Rotfarbgasse 14a, 6900 Bregenz',
         image: 'https://picsum.photos/400/200',
         qr: 'not-yet-defined-3',
       },
       {
+        id: 5,
         name: 'Schulsportplatz VS Weidach',
         address: 'Rotfarbgasse 14a, 6900 Bregenz',
         image: 'https://picsum.photos/400/200',
         qr: 'not-yet-defined-4',
       },
       {
+        id: 6,
         name: 'Schlossberg Trail',
         address: 'Rotfarbgasse 14a, 6900 Bregenz',
         image: 'https://picsum.photos/400/200',
         qr: 'not-yet-defined-5',
       },
       {
+        id: 7,
         name: 'Tschutterplatz beim Stadion',
         address: 'Rotfarbgasse 14a, 6900 Bregenz',
         image: 'https://picsum.photos/400/200',
         qr: 'not-yet-defined-6',
       },
       {
+        id: 8,
         name: 'Schulsportplatz VS Augasse',
         address: 'Rotfarbgasse 14a, 6900 Bregenz',
         image: 'https://picsum.photos/400/200',
         qr: 'not-yet-defined-7',
       },
       {
+        id: 9,
         name: 'Schulplatz VS Rieden',
         address: 'Rotfarbgasse 14a, 6900 Bregenz',
         image: 'https://picsum.photos/400/200',
         qr: 'not-yet-defined-8',
       },
       {
+        id: 10,
         name: 'Schulsportplatz MS Schendlingen',
         address: 'Rotfarbgasse 14a, 6900 Bregenz',
         image: 'https://picsum.photos/400/200',
@@ -106,6 +126,7 @@ const createExercises = async () => {
   const parks = await prisma.park.findMany();
   const exercises = [
     {
+      id: 1,
       name: 'Sit-Up',
       description: 'Some description',
       difficulty: 'BEGINNER',
@@ -113,6 +134,7 @@ const createExercises = async () => {
       video: 'not-yet-defined',
     },
     {
+      id: 2,
       name: 'Liegestütze',
       description: 'Some description',
       difficulty: 'BEGINNER',
@@ -120,6 +142,7 @@ const createExercises = async () => {
       video: 'not-yet-defined',
     },
     {
+      id: 3,
       name: 'Plank',
       description: 'Some description',
       difficulty: 'ADVANCED',
@@ -127,6 +150,7 @@ const createExercises = async () => {
       video: 'not-yet-defined',
     },
     {
+      id: 4,
       name: 'Squat',
       description: 'Some description',
       difficulty: 'BEGINNER',
@@ -134,6 +158,7 @@ const createExercises = async () => {
       video: 'not-yet-defined',
     },
     {
+      id: 5,
       name: 'Versteinerte Hexe',
       description: 'Some description',
       difficulty: 'GAME',
