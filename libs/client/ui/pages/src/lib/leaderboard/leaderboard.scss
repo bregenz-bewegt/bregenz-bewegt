@@ -11,6 +11,7 @@
 
     ion-row {
       border-radius: var(--spacing-s);
+      margin: var(--ion-spacing-s) 0;
 
       &.self {
         border: 1px solid var(--ion-color-primary);
