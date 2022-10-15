@@ -133,7 +133,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                   <div className={`rank-medal`}>X</div>
                 </IonCol>
                 <IonCol size="8" className="align-center">
-                  {userStore?.user?.username}
+                  Guest 1
                 </IonCol>
                 <IonCol size="2" className="align-center">
                   {userStore?.user?.coins}
