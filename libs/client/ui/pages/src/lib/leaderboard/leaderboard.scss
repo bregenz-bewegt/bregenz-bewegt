@@ -29,6 +29,12 @@
           place-items: center;
           font-weight: 600;
 
+          &.rank-1,
+          &.rank-2,
+          &.rank-3 {
+            color: var(--ion-color-primary-contrast);
+          }
+
           &.rank-1 {
             background-color: var(--ion-color-gold);
           }

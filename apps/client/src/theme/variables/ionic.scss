@@ -78,9 +78,9 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-tint: #f5f6f9;
 
   /** rank **/
-  --ion-color-gold: #f7d895;
-  --ion-color-silver: #e8eef1;
-  --ion-color-bronze: #d8c0a3;
+  --ion-color-gold: #f1c057;
+  --ion-color-silver: #cacaca;
+  --ion-color-bronze: #b38751;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -160,9 +160,13 @@ body.dark {
   --ion-color-light-tint: #383a3e;
 
   /** rank **/
-  --ion-color-gold: #f7d895;
-  --ion-color-silver: #e8eef1;
-  --ion-color-bronze: #d8c0a3;
+  // --ion-color-gold: #f7d895;
+  // --ion-color-silver: #e8eef1;
+  // --ion-color-bronze: #d8c0a3;
+
+  --ion-color-gold: #f1c057;
+  --ion-color-silver: #cacaca;
+  --ion-color-bronze: #b38751;
 }
 
 /*
