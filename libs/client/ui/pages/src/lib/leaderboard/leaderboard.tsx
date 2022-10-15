@@ -122,6 +122,21 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                 </IonRow>
               ))}
           </IonGrid>
+          {leaderboard.some(
+            (competitor) => competitor.username === userStore?.user?.username
+          ) && (
+            <IonRow className={``}>
+              <IonCol size="2" className={`align-center`}>
+                <div className={`rank-medal`}>X</div>
+              </IonCol>
+              <IonCol size="8" className="align-center">
+                {userStore?.user?.username}
+              </IonCol>
+              <IonCol size="2" className="align-center">
+                {userStore?.user?.coins}
+              </IonCol>
+            </IonRow>
+          )}
           <IonInfiniteScroll onIonInfinite={loadInfinite} threshold="100px">
             <IonInfiniteScrollContent
               loadingSpinner="crescent"
