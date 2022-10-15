@@ -43,7 +43,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       // },
     }),
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', 'assets'),
+      rootPath: path.join(__dirname, '..', '..', 'public'),
     }),
     MailModule,
     PrismaModule,
