@@ -20,7 +20,7 @@
     }
 
     ion-row {
-      border-bottom: 1px solid var(--ion-color-light);
+      // border-bottom: 1px solid var(--ion-color-light);
       border-radius: var(--spacing-s);
 
       &.self {
@@ -53,7 +53,7 @@
         }
 
         &:not(:last-of-type) {
-          border-right: 1px solid var(--ion-color-light);
+          // border-right: 1px solid var(--ion-color-light);
         }
       }
     }
