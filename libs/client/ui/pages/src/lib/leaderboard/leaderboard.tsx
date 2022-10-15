@@ -121,7 +121,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                   </IonCol>
                 </IonRow>
               ))}
-            {leaderboard.some(
+            {!leaderboard.some(
               (competitor) => competitor.username === userStore?.user?.username
             ) && (
               <IonRow className={`self__snack-not-in-top`}>
