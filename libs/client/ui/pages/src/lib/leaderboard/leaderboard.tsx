@@ -5,7 +5,6 @@ import {
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { LeaderboardTimespan } from '@bregenz-bewegt/client/types';
 import { Competitor } from '@bregenz-bewegt/shared/types';
 import {
   IonCol,
@@ -36,9 +35,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
   userStore.storeKey
 )(
   observer(({ leaderboardStore, userStore }) => {
-    const [timespan, setTimespan] = useState<LeaderboardTimespan>(
-      LeaderboardTimespan.AllTime
-    );
+    const [timespan, setTimespan] = useState<string>();
     const [leaderboard, setLeaderboard] = useState<Competitor[]>([]);
 
     useEffect(() => {
@@ -94,13 +91,9 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                 value={timespan}
                 className="leaderboard__timespan__select"
                 onIonChange={(e) => setTimespan(e.detail.value)}
+                placeholder="Jahr"
               >
-                <IonSelectOption value={LeaderboardTimespan.AllTime}>
-                  Allzeit
-                </IonSelectOption>
-                <IonSelectOption value={LeaderboardTimespan.Yearly}>
-                  Jahr
-                </IonSelectOption>
+                <IonSelectOption value={'2022'}>2022</IonSelectOption>
               </IonSelect>
             </IonCol>
           </IonRow>
