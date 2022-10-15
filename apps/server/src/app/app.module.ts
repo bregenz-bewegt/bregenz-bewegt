@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
@@ -15,6 +16,7 @@ import { ExerciseModule } from '@bregenz-bewegt/server/controllers/exercise';
 import { MailModule } from '@bregenz-bewegt/server/mail';
 import { UtilModule } from '@bregenz-bewegt/server/util';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -39,6 +41,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
       //     strict: true,
       //   },
       // },
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', 'assets'),
     }),
     MailModule,
     PrismaModule,
