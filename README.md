@@ -17,22 +17,27 @@
    ```sh
    git clone https://github.com/bregenz-bewegt/bregenz-bewegt.git
    ```
-2. Install NPM packages
+2. Install [nvm][nvm-url] and set node version to `14.20.0`
+   ```sh
+   nvm install 14.20.0
+   nvm use 14.20.0
+   ```
+3. Install npm packages
    ```sh
    npm i
    ```
-3. Setup [Android Studio][android-studio-url] (Windows), [XCode][xcode-url] (Mac) or another mobile emulator of your choice
-4. Install [MySQL][mysql-url]
-5. Initialize database
+4. Setup [Android Studio][android-studio-url] (Windows), [XCode][xcode-url] (Mac) or another mobile emulator of your choice
+5. Install [MySQL][mysql-url]
+6. Initialize database
    ```sh
    npm run prisma:db:push
    ```
-6. Feed database with mock data
+7. Feed database with mock data
    ```sh
    npm run prisma:seed
    ```
-7. Configure environment variables in `.env` file (view `.example.env` for more information)
-8. Run app (view `package.json` scripts for more information)
+8. Configure environment variables in `.env` file (view `.example.env` for more information)
+9. Run app (view `package.json` scripts for more information)
    ```sh
    npm run dev
    ```
@@ -60,3 +65,4 @@
 [android-studio-url]: https://developer.android.com/studio
 [xcode-url]: https://developer.apple.com/xcode/
 [mysql-url]: https://www.mysql.com/
+[nvm-url]: https://github.com/nvm-sh/nvm
