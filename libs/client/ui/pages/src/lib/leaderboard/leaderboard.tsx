@@ -109,14 +109,14 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                 Rang
               </IonCol>
               <IonCol
-                size="6"
+                size="8"
                 className="leaderboard__table__head__user align-center"
               >
                 Benutzer
               </IonCol>
               <IonCol
                 className="leaderboard__table__head__coins align-center"
-                size="4"
+                size="2"
               >
                 Coins
               </IonCol>
@@ -133,10 +133,10 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                   <IonCol size="2" className={`align-center`}>
                     <div className={`rank-medal rank-${i + 1}`}>{i + 1}</div>
                   </IonCol>
-                  <IonCol size="6" className="align-center">
+                  <IonCol size="8" className="align-center">
                     {competitor.username}
                   </IonCol>
-                  <IonCol size="4" className="align-center">
+                  <IonCol size="2" className="align-center">
                     {competitor.coins}
                   </IonCol>
                 </IonRow>
