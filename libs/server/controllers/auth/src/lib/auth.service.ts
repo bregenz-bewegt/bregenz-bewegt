@@ -343,6 +343,7 @@ export class AuthService {
         email: email,
       },
       data: {
+        passwordResetToken: null,
         password: passwordHash,
       },
     });
