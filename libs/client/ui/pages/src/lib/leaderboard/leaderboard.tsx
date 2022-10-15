@@ -23,8 +23,8 @@ import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import './leaderboard.scss';
 
-const DEFAULT_COMPETIORS_RELOAD_CHUNK_SIZE = 10;
-const MAX_SHOWN_COMPETITORS = 100;
+const COMPETIORS_RELOAD_CHUNK_SIZE = 10;
+const MAX_SHOWN_COMPETITORS = COMPETIORS_RELOAD_CHUNK_SIZE * 10;
 
 export interface LeaderboardProps {
   leaderboardStore?: LeaderboardStore;
@@ -43,7 +43,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
 
     useEffect(() => {
       leaderboardStore
-        ?.fetch({ skip: 0, take: DEFAULT_COMPETIORS_RELOAD_CHUNK_SIZE })
+        ?.fetch({ skip: 0, take: COMPETIORS_RELOAD_CHUNK_SIZE })
         .then((data) => setLeaderboard(data))
         .catch(() => {
           setLeaderboard([]);
@@ -57,7 +57,11 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       leaderboardStore
         ?.fetch({
           skip: leaderboard.length,
-          take: DEFAULT_COMPETIORS_RELOAD_CHUNK_SIZE,
+          take:
+            leaderboard.length + COMPETIORS_RELOAD_CHUNK_SIZE <
+            MAX_SHOWN_COMPETITORS
+              ? MAX_SHOWN_COMPETITORS - leaderboard.length
+              : COMPETIORS_RELOAD_CHUNK_SIZE,
         })
         .then((data) => {
           setLeaderboard((prev) => orderLeaderboardDesc([...prev, ...data]));
