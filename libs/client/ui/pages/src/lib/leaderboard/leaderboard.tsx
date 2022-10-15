@@ -58,7 +58,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
         ?.fetch({
           skip: leaderboard.length,
           take:
-            leaderboard.length + COMPETIORS_RELOAD_CHUNK_SIZE <
+            leaderboard.length + COMPETIORS_RELOAD_CHUNK_SIZE >
             MAX_SHOWN_COMPETITORS
               ? MAX_SHOWN_COMPETITORS - leaderboard.length
               : COMPETIORS_RELOAD_CHUNK_SIZE,
