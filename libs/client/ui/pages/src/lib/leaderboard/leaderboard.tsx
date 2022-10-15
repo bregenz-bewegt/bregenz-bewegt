@@ -124,14 +124,14 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
             {leaderboard?.length > 0 &&
               leaderboard?.map((competitor, i) => (
                 <IonRow
-                  className={`rank-${i + 1} ${
+                  className={`${
                     competitor.username === userStore?.user?.username
                       ? 'self'
                       : ''
                   }`}
                 >
-                  <IonCol size="2" className="align-center">
-                    {i + 1}
+                  <IonCol size="2" className={`align-center`}>
+                    <div className={`rank-medal rank-${i + 1}`}>{i + 1}</div>
                   </IonCol>
                   <IonCol size="6" className="align-center">
                     {competitor.username}
