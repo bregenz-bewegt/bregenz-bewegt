@@ -23,15 +23,17 @@
       border-bottom: 1px solid var(--ion-color-light);
 
       &.self {
-        background-color: var(--ion-color-secondary-tint);
+        border: 1px solid var(--ion-color-primary);
       }
 
       ion-col {
         padding: var(--spacing-s);
+        display: flex;
+        align-items: center;
 
         .rank-medal {
           border-radius: 50%;
-          width: 50%;
+          width: 75%;
           aspect-ratio: 1/1;
           display: grid;
           place-items: center;
