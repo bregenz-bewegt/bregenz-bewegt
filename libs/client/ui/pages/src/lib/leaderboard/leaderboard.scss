@@ -21,6 +21,11 @@
         background-color: var(--ion-color-primary-tint);
         color: var(--ion-color-primary-contrast);
         border-radius: 0;
+
+        &__snack-not-in-top {
+          position: fixed;
+          bottom: 0;
+        }
       }
 
       ion-col {
@@ -56,13 +61,5 @@
         }
       }
     }
-  }
-
-  .self-snack-not-in-top {
-    background-color: var(--ion-color-primary-tint);
-    color: var(--ion-color-primary-contrast);
-    border-radius: var(--spacing-s);
-    border-radius: 0;
-    padding: 0 var(--spacing-m);
   }
 }
