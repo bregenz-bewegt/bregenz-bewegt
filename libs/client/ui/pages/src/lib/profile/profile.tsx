@@ -110,20 +110,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       },
     });
 
-    // const handleChangePublicProfile = () => {
-    //   userStore?.patchPreferences({
-    //     public: publicProfile,
-    //     preferences: selectPreference,
-    //   } as PatchPreferenceDto);
-    // };
-
-    // const handleSelectPreference = () => {
-    //   userStore?.patchPreferences({
-    //     public: publicProfile,
-    //     preferences: selectPreference,
-    //   } as PatchPreferenceDto);
-    // };
-
     const handleChangePassword = () => {
       userStore
         ?.changePassword()
@@ -412,7 +398,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     selectedText=" "
                     onIonChange={(e) => {
                       setSelectPreference(e.detail.value);
-                      handleSelectPreference();
+                      // handleSelectPreference();
                     }}
                   >
                     {Object.keys(difficultyDisplayTexts).map((d, i) => (
@@ -430,7 +416,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   label={<IonNote mode="md">Öffentliches Profil</IonNote>}
                   onChange={(e: any) => {
                     setPublicProfile(e.currentTarget.checked);
-                    handleChangePublicProfile();
+                    // handleChangePublicProfile();
                   }}
                 />
               </IonRow>
