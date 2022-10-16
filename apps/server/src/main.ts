@@ -25,6 +25,7 @@ async function bootstrap(): Promise<void> {
   app.useGlobalFilters(new ValidationFilter());
   app.useGlobalPipes(
     new ValidationPipe({
+      transform: true,
       whitelist: true,
       skipMissingProperties: false,
       exceptionFactory: (errors: ValidationError[]) => {

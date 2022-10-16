@@ -20,7 +20,8 @@ const createUsers = async () => {
         lastname: 'Ostini',
         role: Role.USER,
         password: await argon.hash('testtest'),
-        coins: 950,
+        coins: 10,
+        active: true,
       },
       {
         username: 'Vincentcool3',
@@ -33,7 +34,7 @@ const createUsers = async () => {
         active: true,
       },
       ...(await Promise.all([
-        ...new Array(100).fill(null).map(async () => ({
+        ...new Array(200).fill(null).map(async () => ({
           username: faker.internet.userName(),
           email: faker.internet.email(),
           firstname: faker.name.firstName(),

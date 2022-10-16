@@ -16,6 +16,7 @@ import {
   IonRow,
   IonSelect,
   IonSelectOption,
+  IonSkeletonText,
   IonText,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
@@ -36,14 +37,35 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
 )(
   observer(({ leaderboardStore, userStore }) => {
     const [timespan, setTimespan] = useState<string>();
-    const [leaderboard, setLeaderboard] = useState<Competitor[]>([]);
+    const [leaderboard, setLeaderboard] = useState<Competitor[]>(
+      Array<Competitor>(10).fill({ username: null, coins: null })
+    );
+    const [competitor, setCompetitor] = useState<Competitor>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
       leaderboardStore
-        ?.fetch({ skip: 0, take: COMPETIORS_RELOAD_CHUNK_SIZE })
-        .then((data) => setLeaderboard(data))
+        ?.getLeaderboard({
+          skip: 0,
+          take: COMPETIORS_RELOAD_CHUNK_SIZE,
+          year: 2022,
+        })
+        .then((data) => {
+          setLeaderboard(data);
+          leaderboardStore
+            ?.getCompetitor()
+            .then((data) => {
+              setCompetitor(data);
+              setIsLoading(false);
+            })
+            .catch(() => {
+              setCompetitor(undefined);
+              setIsLoading(false);
+            });
+        })
         .catch(() => {
           setLeaderboard([]);
+          setIsLoading(false);
         });
     }, []);
 
@@ -52,13 +74,14 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
         return e.target.complete();
 
       leaderboardStore
-        ?.fetch({
+        ?.getLeaderboard({
           skip: leaderboard.length,
           take:
             leaderboard.length + COMPETIORS_RELOAD_CHUNK_SIZE >
             MAX_SHOWN_COMPETITORS
               ? MAX_SHOWN_COMPETITORS - leaderboard.length
               : COMPETIORS_RELOAD_CHUNK_SIZE,
+          year: 2022,
         })
         .then((data) => {
           setLeaderboard((prev) => orderLeaderboardDesc([...prev, ...data]));
@@ -98,7 +121,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
             </IonCol>
           </IonRow>
           <IonGrid className="leaderboard__table">
-            {leaderboard?.length > 0 &&
+            {leaderboard.length > 0 &&
               leaderboard?.map((competitor, i) => (
                 <IonRow
                   className={`${
@@ -108,33 +131,54 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                   }`}
                 >
                   <IonCol size="2" className={`align-center`}>
-                    <div className={`rank-medal rank-${i + 1}`}>{i + 1}</div>
+                    <div className={`rank-medal rank-${i + 1}`}>
+                      {isLoading ? (
+                        <IonSkeletonText style={{ height: '100%' }} animated />
+                      ) : (
+                        i + 1
+                      )}
+                    </div>
                   </IonCol>
                   <IonCol size="8" className="align-center">
-                    {competitor.username}
+                    {isLoading ? (
+                      <IonSkeletonText animated />
+                    ) : (
+                      competitor.username
+                    )}
                   </IonCol>
                   <IonCol size="2" className="align-center">
-                    {competitor.coins}
+                    {isLoading ? (
+                      <IonSkeletonText animated />
+                    ) : (
+                      competitor.coins
+                    )}
                   </IonCol>
                 </IonRow>
               ))}
-            {!leaderboard.some(
-              (competitor) => competitor.username === userStore?.user?.username
-            ) && (
-              <IonRow className={`self snack-bottom`}>
-                <IonCol size="2" className={`align-center`}>
-                  <div className={`rank-medal`}>X</div>
-                </IonCol>
-                <IonCol size="8" className="align-center">
-                  Guest 1
-                </IonCol>
-                <IonCol size="2" className="align-center">
-                  {userStore?.user?.coins}
-                </IonCol>
-              </IonRow>
-            )}
+            {!isLoading &&
+              !leaderboard.some(
+                (c) => c.username === userStore?.user?.username
+              ) && (
+                <IonRow className={`self snack-bottom`}>
+                  <IonCol size="2" className={`align-center`}>
+                    <div className={`rank-medal`}>
+                      {isLoading ? <IonSkeletonText /> : competitor?.rank}
+                    </div>
+                  </IonCol>
+                  <IonCol size="8" className="align-center">
+                    {isLoading ? <IonSkeletonText /> : competitor?.username}
+                  </IonCol>
+                  <IonCol size="2" className="align-center">
+                    {isLoading ? <IonSkeletonText /> : competitor?.coins}
+                  </IonCol>
+                </IonRow>
+              )}
           </IonGrid>
-          <IonInfiniteScroll onIonInfinite={loadInfinite} threshold="100px">
+          <IonInfiniteScroll
+            onIonInfinite={loadInfinite}
+            threshold="100px"
+            className="leaderboard__infinite-scroll-loading"
+          >
             <IonInfiniteScrollContent
               loadingSpinner="crescent"
               loadingText="Mehr Benutzer laden.."

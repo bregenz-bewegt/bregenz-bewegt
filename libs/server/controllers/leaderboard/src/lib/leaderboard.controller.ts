@@ -1,8 +1,20 @@
 import {
+  GetCurrentUser,
+  HasRole,
+  RoleGuard,
+} from '@bregenz-bewegt/server/common';
+import {
   Competitor,
   LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
-import { Controller, Get, Query, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  UseGuards,
+  ValidationPipe,
+} from '@nestjs/common';
+import { Role, User } from '@prisma/client';
 import { LeaderboardService } from './leaderboard.service';
 
 @Controller('leaderboard')
@@ -10,6 +22,8 @@ export class LeaderboardController {
   constructor(private leaderboardService: LeaderboardService) {}
 
   @Get()
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   getLeaderboard(
     @Query(
       new ValidationPipe({
@@ -21,5 +35,12 @@ export class LeaderboardController {
     dto: LeaderboardPaginationQueryDto
   ): Promise<Competitor[]> {
     return this.leaderboardService.getLeaderboard(dto);
+  }
+
+  @Get('competitor')
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  getCompetitor(@GetCurrentUser('sub') id: User['id']): Promise<Competitor> {
+    return this.leaderboardService.getCompetitor(id);
   }
 }

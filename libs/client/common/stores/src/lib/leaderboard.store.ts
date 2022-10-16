@@ -8,9 +8,16 @@ import { Store } from './store';
 export class LeaderboardStore implements Store {
   storeKey = 'leaderboardStore' as const;
 
-  async fetch(params: LeaderboardPaginationQueryDto): Promise<Competitor[]> {
+  async getLeaderboard(
+    params: LeaderboardPaginationQueryDto
+  ): Promise<Competitor[]> {
     const { data } = await http.get(`/leaderboard`, { params });
-    return data;
+    return <Competitor[]>data;
+  }
+
+  async getCompetitor(): Promise<Competitor> {
+    const { data } = await http.get(`/leaderboard/competitor`);
+    return <Competitor>data;
   }
 }
 

@@ -59,7 +59,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       },
     ]);
     const [parksResult, setParksResult] = useState<Park[]>(
-      Array(10).fill({ id: 0, name: '', address: '', image: '', qr: '' })
+      Array<Park>(10).fill({ id: 0, name: '', address: '', image: '', qr: '' })
     );
     const [parkDisplayType, setParkDisplayType] = useState<ParkDisplayType>(
       ParkDisplayType.List

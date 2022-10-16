@@ -1,16 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
+import { IsNumber, IsPositive, Min } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class LeaderboardPaginationQueryDto {
-  @ApiProperty({ required: false })
-  @IsOptional()
-  skip?: number;
+  @ApiProperty()
+  @Transform(({ value }) => +value)
+  @IsNumber()
+  @Min(0)
+  skip: number;
 
-  @ApiProperty({ required: false })
-  @IsOptional()
-  take?: number;
+  @ApiProperty()
+  @Transform(({ value }) => +value)
+  @IsNumber()
+  @IsPositive()
+  @Min(0)
+  take: number;
 
-  @ApiProperty({ required: false })
-  @IsOptional()
-  year?: string;
+  @ApiProperty()
+  @Transform(({ value }) => +value)
+  @IsNumber()
+  year: number;
 }
