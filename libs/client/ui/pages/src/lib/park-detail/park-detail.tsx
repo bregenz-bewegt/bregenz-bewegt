@@ -50,7 +50,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       const parkId = +match.params.park;
 
       if (!parkId) {
-        navigateBackToStart();
+        return navigateBackToStart();
       }
 
       parkStore.getParkWithExercises(parkId).then((park) => {

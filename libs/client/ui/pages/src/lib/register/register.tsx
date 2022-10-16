@@ -80,7 +80,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage className="register" ref={page}>
-        <IonContent className="register__content" fullscreen>
+        <IonContent className="register__content" fullscreen scrollY={false}>
           <div className="register__flex-wrapper">
             <TitleBanner />
             <div className="register__content__wrapper">
