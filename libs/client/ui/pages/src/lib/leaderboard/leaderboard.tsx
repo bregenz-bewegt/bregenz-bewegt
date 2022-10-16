@@ -146,7 +146,10 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                       competitor.username
                     )}
                   </IonCol>
-                  <IonCol size="2" className="align-center ion-justify-end">
+                  <IonCol
+                    size="2"
+                    className="align-center ion-justify-content-end"
+                  >
                     {isLoading ? (
                       <IonSkeletonText animated />
                     ) : (
