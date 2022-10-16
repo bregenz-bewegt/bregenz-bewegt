@@ -5,7 +5,7 @@ import {
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { Competitor } from '@bregenz-bewegt/shared/types';
+import { Competitor, CompetitorWithRank } from '@bregenz-bewegt/shared/types';
 import {
   IonCol,
   IonContent,
@@ -40,7 +40,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     const [leaderboard, setLeaderboard] = useState<Competitor[]>(
       Array<Competitor>(10).fill({ username: null, coins: null })
     );
-    const [competitor, setCompetitor] = useState<Competitor>();
+    const [competitor, setCompetitor] = useState<CompetitorWithRank>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {

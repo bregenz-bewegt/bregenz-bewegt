@@ -1,6 +1,7 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import {
   Competitor,
+  CompetitorWithRank,
   LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import { Store } from './store';
@@ -15,9 +16,9 @@ export class LeaderboardStore implements Store {
     return <Competitor[]>data;
   }
 
-  async getCompetitor(): Promise<Competitor> {
+  async getCompetitor(): Promise<CompetitorWithRank> {
     const { data } = await http.get(`/leaderboard/competitor`);
-    return <Competitor>data;
+    return <CompetitorWithRank>data;
   }
 }
 

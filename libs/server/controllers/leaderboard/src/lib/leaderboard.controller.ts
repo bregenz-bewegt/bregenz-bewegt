@@ -5,6 +5,7 @@ import {
 } from '@bregenz-bewegt/server/common';
 import {
   Competitor,
+  CompetitorWithRank,
   LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import {
@@ -40,7 +41,9 @@ export class LeaderboardController {
   @Get('competitor')
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  getCompetitor(@GetCurrentUser('sub') id: User['id']): Promise<Competitor> {
+  getCompetitor(
+    @GetCurrentUser('sub') id: User['id']
+  ): Promise<CompetitorWithRank> {
     return this.leaderboardService.getCompetitor(id);
   }
 }
