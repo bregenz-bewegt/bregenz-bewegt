@@ -9,4 +9,8 @@ export class LeaderboardPaginationQueryDto {
   @ApiProperty({ required: false })
   @IsOptional()
   take?: number;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  year?: string;
 }
