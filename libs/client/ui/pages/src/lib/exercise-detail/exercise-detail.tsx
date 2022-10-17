@@ -84,7 +84,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       activityStore.endActivity().then(() => {
         presentToast({
           message: 'Übung beendet',
-          icon: StopCircle,
+          icon: stopCircle,
           duration: 2000,
           position: 'top',
           mode: 'ios',
