@@ -135,17 +135,15 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
           </IonRow>
           <IonGrid className="leaderboard__table">
             {leaderboard.length > 0 &&
-              leaderboard?.map((competitor, i) => (
+              leaderboard?.map((user, i) => (
                 <IonRow
                   ref={
-                    competitor.username === userStore?.user?.username
+                    user.username === userStore?.user?.username
                       ? competitorRowRef
                       : null
                   }
                   className={`${
-                    competitor.username === userStore?.user?.username
-                      ? 'self'
-                      : ''
+                    user.username === userStore?.user?.username ? 'self' : ''
                   }`}
                 >
                   <IonCol size="2" className={`align-center`}>
@@ -158,21 +156,13 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                     </div>
                   </IonCol>
                   <IonCol size="8" className="align-center">
-                    {isLoading ? (
-                      <IonSkeletonText animated />
-                    ) : (
-                      competitor.username
-                    )}
+                    {isLoading ? <IonSkeletonText animated /> : user.username}
                   </IonCol>
                   <IonCol
                     size="2"
                     className="align-center ion-justify-content-end"
                   >
-                    {isLoading ? (
-                      <IonSkeletonText animated />
-                    ) : (
-                      competitor.coins
-                    )}
+                    {isLoading ? <IonSkeletonText animated /> : user.coins}
                   </IonCol>
                 </IonRow>
               ))}
