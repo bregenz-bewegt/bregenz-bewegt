@@ -73,7 +73,6 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       });
     };
 
-    // TODO improve this with a fuzzy search algorithm
     const handleSearch = (
       e: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
     ) => {
