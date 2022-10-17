@@ -1,7 +1,10 @@
+import * as argon from 'argon2';
+import * as util from 'util';
+import * as fs from 'fs';
+import * as path from 'path';
+import { faker } from '@faker-js/faker';
 import { PrismaClient, Role } from '@prisma/client';
 const prisma = new PrismaClient();
-import * as argon from 'argon2';
-import { faker } from '@faker-js/faker';
 
 const purgeDatabase = async () => {
   await prisma.activity.deleteMany();
@@ -32,6 +35,7 @@ const createUsers = async () => {
         password: await argon.hash('timonovich'),
         coins: 1000,
         active: true,
+        profilePicture: '6dad6d66-02b7-450b-9248-94a8c30563a6.jpeg',
       },
       ...(await Promise.all([
         ...new Array(200).fill(null).map(async () => ({
@@ -211,12 +215,38 @@ const createActivities = async () => {
   ]);
 };
 
+const deleteUnusedProfileImg = async () => {
+  const imgPath = path.join(
+    process.cwd(),
+    `${process.env['NX_API_UPLOADS_FOLDER']}/profile-pictures`
+  );
+
+  const usedImg = (
+    await prisma.user.findMany({
+      where: { profilePicture: { not: null } },
+      select: { profilePicture: true },
+    })
+  ).map((p) => p.profilePicture ?? '');
+
+  const allImg = await util.promisify(fs.readdir)(imgPath);
+
+  console.log(usedImg);
+  console.log(allImg);
+
+  allImg.forEach(
+    async (f) =>
+      usedImg.indexOf(f) === -1 &&
+      (await util.promisify(fs.unlink)(path.join(imgPath, f)))
+  );
+};
+
 const main = async () => {
   await purgeDatabase();
   await createUsers();
   await createParks();
   await createExercises();
   await createActivities();
+  await deleteUnusedProfileImg();
 };
 
 main()
