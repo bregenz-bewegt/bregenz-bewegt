@@ -1,9 +1,5 @@
 import './profile.scss';
-import {
-  Checkbox,
-  Input,
-  ItemGroup,
-} from '@bregenz-bewegt/client-ui-components';
+import { Input, ItemGroup } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonAvatar,
@@ -11,7 +7,6 @@ import {
   IonCol,
   IonContent,
   IonGrid,
-  IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
@@ -20,31 +15,24 @@ import {
   IonSkeletonText,
   IonSpinner,
   IonText,
-  IonTitle,
   IonToast,
-  IonToolbar,
   useIonActionSheet,
   useIonAlert,
   useIonLoading,
   useIonRouter,
   useIonToast,
   useIonViewDidLeave,
-  IonSelect,
-  IonSelectOption,
-  IonNote,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
-import { DifficultyType } from '@bregenz-bewegt/client/types';
 import { closeCircleOutline, lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
 import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
-import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 export interface ProfileProps {
@@ -60,10 +48,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
-    const [publicProfile, setPublicProfile] = useState<boolean>(false);
-    const [selectPreference, setSelectPreference] = useState<DifficultyType[]>(
-      Object.values(DifficultyType)
-    );
 
     const showFailureToast = () => {
       dismissLoading();
@@ -236,11 +220,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage className="profile">
-        {/* <IonHeader mode="ios">
-          <IonToolbar>
-            <IonTitle>Profil</IonTitle>
-          </IonToolbar>
-        </IonHeader> */}
         <IonContent
           fullscreen
           className={`profile__content ${
@@ -449,14 +428,14 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               <ItemGroup>
                 <IonItem
                   button
-                  routerLink={`${tabRoutes.profile.route}/appearance`}
+                  routerLink={`${tabRoutes.profile.route}/public-profile`}
                   mode="ios"
                 >
                   <IonLabel>Öffentliches Profil</IonLabel>
                 </IonItem>
                 <IonItem
                   button
-                  routerLink={`${tabRoutes.profile.route}/appearance`}
+                  routerLink={`${tabRoutes.profile.route}/difficulty`}
                   mode="ios"
                 >
                   <IonLabel>Bevorzugte Übungen</IonLabel>
