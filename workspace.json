@@ -16,6 +16,7 @@
     "client-ui-shared-content": "libs/client/ui/shared/content",
     "server": "apps/server",
     "server-common": "libs/server/common",
+    "server-controllers-activity": "libs/server/controllers/activity",
     "server-controllers-auth": "libs/server/controllers/auth",
     "server-controllers-exercise": "libs/server/controllers/exercise",
     "server-controllers-leaderboard": "libs/server/controllers/leaderboard",

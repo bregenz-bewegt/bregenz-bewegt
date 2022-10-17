@@ -151,7 +151,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                       {isLoading ? (
                         <IonSkeletonText style={{ height: '100%' }} animated />
                       ) : (
-                        i + 1
+                        <>#{i + 1}</>
                       )}
                     </div>
                   </IonCol>
@@ -170,7 +170,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
               <IonRow className={`self snack-bottom`}>
                 <IonCol size="2" className={`align-center`}>
                   <div className={`rank-medal`}>
-                    {isLoading ? <IonSkeletonText /> : competitor?.rank}
+                    {isLoading ? <IonSkeletonText /> : <>#{competitor?.rank}</>}
                   </div>
                 </IonCol>
                 <IonCol size="8" className="align-center">

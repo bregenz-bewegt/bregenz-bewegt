@@ -10,9 +10,12 @@ import {
   IonText,
   IonTitle,
   IonToolbar,
+  useIonToast,
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import {
+  ActivityStore,
+  activityStore,
   ParkStore,
   parkStore,
   tabStore,
@@ -27,7 +30,7 @@ import {
   ActivityTimer,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
-import { play } from 'ionicons/icons';
+import { play, timer, stopCircle } from 'ionicons/icons';
 
 interface MatchParams {
   park: string;
@@ -37,13 +40,16 @@ interface MatchParams {
 export interface ExerciseDetailProps extends RouteComponentProps<MatchParams> {
   parkStore?: ParkStore;
   tabStore?: TabStore;
+  activityStore?: ActivityStore;
 }
 
 export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
   parkStore.storeKey,
-  tabStore.storeKey
+  tabStore.storeKey,
+  activityStore.storeKey
 )(
   observer(({ parkStore, tabStore, match }) => {
+    const [presentToast] = useIonToast();
     const [park, setPark] = useState<Required<Park>>();
 
     useEffect(() => {
@@ -62,11 +68,29 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     }, []);
 
     const handleTimerStart = () => {
-      //
+      activityStore.startActivity().then(() => {
+        presentToast({
+          message: 'Übung gestartet',
+          icon: timer,
+          duration: 2000,
+          position: 'top',
+          mode: 'ios',
+          color: 'primary',
+        });
+      });
     };
 
     const handleTimerStop = (time: ActivityTimerResult) => {
-      //
+      activityStore.endActivity().then(() => {
+        presentToast({
+          message: 'Übung beendet',
+          icon: StopCircle,
+          duration: 2000,
+          position: 'top',
+          mode: 'ios',
+          color: 'primary',
+        });
+      });
     };
 
     return (
