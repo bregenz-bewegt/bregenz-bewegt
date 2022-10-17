@@ -1,7 +1,7 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import {
   Competitor,
-  CompetitorWithRank,
+  Leaderboard,
   LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
@@ -15,7 +15,7 @@ export class LeaderboardService {
   async getLeaderboard({
     skip,
     take,
-  }: LeaderboardPaginationQueryDto): Promise<Competitor[]> {
+  }: LeaderboardPaginationQueryDto): Promise<Leaderboard> {
     if (skip + take > this.leaderboardLimit) {
       take = 0;
     }
@@ -29,7 +29,7 @@ export class LeaderboardService {
     });
   }
 
-  async getCompetitor(userId: User['id']): Promise<CompetitorWithRank> {
+  async getCompetitor(userId: User['id']): Promise<Competitor> {
     const leaderboard: User[] = await this.prismaService.user.findMany({
       where: { role: { not: Role.GUEST } },
       orderBy: { coins: 'desc' },
@@ -37,7 +37,7 @@ export class LeaderboardService {
     const index = leaderboard.findIndex((user) => user.id === userId);
     const competitor = leaderboard[index];
 
-    return <CompetitorWithRank>{
+    return <Competitor>{
       username: competitor.username,
       coins: competitor.coins,
       rank: index + 1,

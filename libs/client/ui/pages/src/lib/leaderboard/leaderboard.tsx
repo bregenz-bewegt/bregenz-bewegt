@@ -5,7 +5,10 @@ import {
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { Competitor, CompetitorWithRank } from '@bregenz-bewegt/shared/types';
+import {
+  Competitor,
+  Leaderboard as LeaderboardType,
+} from '@bregenz-bewegt/shared/types';
 import {
   IonCol,
   IonContent,
@@ -38,10 +41,13 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
 )(
   observer(({ leaderboardStore, userStore }) => {
     const [timespan, setTimespan] = useState<string>();
-    const [leaderboard, setLeaderboard] = useState<Competitor[]>(
-      Array<Competitor>(10).fill({ username: null, coins: null })
+    const [leaderboard, setLeaderboard] = useState<LeaderboardType>(
+      Array<LeaderboardType extends readonly (infer T)[] ? T : never>(10).fill({
+        username: null,
+        coins: null,
+      })
     );
-    const [competitor, setCompetitor] = useState<CompetitorWithRank>();
+    const [competitor, setCompetitor] = useState<Competitor>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const competitorRowRef = useRef(null);
     const competitorRowIntersection = useIntersection(competitorRowRef, {
@@ -100,7 +106,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
         });
     };
 
-    const orderLeaderboardDesc = (list: Competitor[]) => {
+    const orderLeaderboardDesc = (list: LeaderboardType) => {
       return list.sort((a, b) => (b.coins ?? 0) - (a.coins ?? 0));
     };
 

@@ -1,7 +1,7 @@
-import { User } from '@prisma/client';
+import { Leaderboard } from './leaderboard';
 
-export type Competitor = Pick<User, 'username' | 'coins'>;
-
-export type CompetitorWithRank = Competitor & {
+export type Competitor = (Leaderboard extends readonly (infer T)[]
+  ? T
+  : never) & {
   rank: number;
 };
