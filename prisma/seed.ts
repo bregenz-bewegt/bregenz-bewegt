@@ -20,7 +20,7 @@ const createUsers = async () => {
         lastname: 'Ostini',
         role: Role.USER,
         password: await argon.hash('testtest'),
-        coins: 10,
+        coins: 800,
         active: true,
       },
       {
