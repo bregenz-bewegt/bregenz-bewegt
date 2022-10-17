@@ -236,11 +236,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage className="profile">
-        <IonHeader mode="ios">
+        {/* <IonHeader mode="ios">
           <IonToolbar>
             <IonTitle>Profil</IonTitle>
           </IonToolbar>
-        </IonHeader>
+        </IonHeader> */}
         <IonContent
           fullscreen
           className={`profile__content ${
@@ -410,7 +410,12 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   Ändern
                 </IonButton>
               </IonRow>
-              <IonRow className="profile__content__preferences">
+              <IonRow>
+                <IonText>
+                  <h2>Präferenzen</h2>
+                </IonText>
+              </IonRow>
+              {/* <IonRow className="profile__content__preferences">
                 <IonItem>
                   <IonLabel>Präferenzen</IonLabel>
                   <IonSelect
@@ -440,8 +445,22 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     // handleChangePublicProfile();
                   }}
                 />
-              </IonRow>
+              </IonRow> */}
               <ItemGroup>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/appearance`}
+                  mode="ios"
+                >
+                  <IonLabel>Öffentliches Profil</IonLabel>
+                </IonItem>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/appearance`}
+                  mode="ios"
+                >
+                  <IonLabel>Bevorzugte Übungen</IonLabel>
+                </IonItem>
                 <IonItem
                   button
                   routerLink={`${tabRoutes.profile.route}/appearance`}
@@ -462,7 +481,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   mode="ios"
                   color="danger"
                 >
-                  Konto Löschen
+                  Konto löschen
                 </IonButton>
               </IonCol>
               <IonCol className="logout">

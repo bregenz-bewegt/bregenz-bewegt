@@ -112,7 +112,7 @@ const createExercises = async () => {
       description: 'Some description',
       difficulty: {
         connect: {
-          id: difficulties.find((d) => d.difficulty == DifficultyType.BEGINNER)
+          id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
             ?.id,
         },
       },
@@ -124,7 +124,7 @@ const createExercises = async () => {
       description: 'Some description',
       difficulty: {
         connect: {
-          id: difficulties.find((d) => d.difficulty == DifficultyType.BEGINNER)
+          id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
             ?.id,
         },
       },
@@ -136,7 +136,7 @@ const createExercises = async () => {
       description: 'Some description',
       difficulty: {
         connect: {
-          id: difficulties.find((d) => d.difficulty == DifficultyType.ADVANCED)
+          id: difficulties.find((d) => d.difficulty === DifficultyType.ADVANCED)
             ?.id,
         },
       },
@@ -148,7 +148,7 @@ const createExercises = async () => {
       description: 'Some description',
       difficulty: {
         connect: {
-          id: difficulties.find((d) => d.difficulty == DifficultyType.BEGINNER)
+          id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
             ?.id,
         },
       },
@@ -160,7 +160,8 @@ const createExercises = async () => {
       description: 'Some description',
       difficulty: {
         connect: {
-          id: difficulties.find((d) => d.difficulty == DifficultyType.GAME)?.id,
+          id: difficulties.find((d) => d.difficulty === DifficultyType.GAME)
+            ?.id,
         },
       },
       points: 10,

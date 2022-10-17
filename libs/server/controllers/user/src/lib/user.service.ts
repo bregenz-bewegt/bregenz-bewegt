@@ -73,12 +73,19 @@ export class UserService {
     id: User['id'],
     fields: PatchPreferencesDto
   ): Promise<Preferences> {
+    const difficulties = await this.prismaService.difficulty.findMany();
+
     return this.prismaService.preferences.update({
       where: {
         userId: id,
       },
       data: {
-        ...fields,
+        public: fields.public,
+        difficulties: {
+          connect: fields.difficulties.map((difficulty) => ({
+            id: difficulties.find((d) => d.difficulty === difficulty)?.id,
+          })),
+        },
       },
     });
   }
