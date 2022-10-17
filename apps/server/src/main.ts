@@ -17,12 +17,15 @@ import {
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  app.enableCors({ origin: true });
+
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
   app.useGlobalFilters(new ValidationFilter());
   app.useGlobalPipes(
     new ValidationPipe({
+      transform: true,
       whitelist: true,
       skipMissingProperties: false,
       exceptionFactory: (errors: ValidationError[]) => {
@@ -34,7 +37,6 @@ async function bootstrap(): Promise<void> {
       },
     })
   );
-  app.enableCors({ origin: true });
 
   const document = SwaggerModule.createDocument(
     app,

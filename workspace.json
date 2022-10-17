@@ -18,6 +18,7 @@
     "server-common": "libs/server/common",
     "server-controllers-auth": "libs/server/controllers/auth",
     "server-controllers-exercise": "libs/server/controllers/exercise",
+    "server-controllers-leaderboard": "libs/server/controllers/leaderboard",
     "server-controllers-park": "libs/server/controllers/park",
     "server-controllers-user": "libs/server/controllers/user",
     "server-mail": "libs/server/mail",
