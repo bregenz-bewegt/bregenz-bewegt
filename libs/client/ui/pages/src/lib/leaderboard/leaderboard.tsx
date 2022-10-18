@@ -110,6 +110,8 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       return list.sort((a, b) => (b.coins ?? 0) - (a.coins ?? 0));
     };
 
+    console.log(competitorRowIntersection);
+
     return (
       <IonPage className="leaderboard">
         <Header />
@@ -167,7 +169,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                 </IonRow>
               ))}
             {!isLoading && !competitorRowIntersection?.isIntersecting && (
-              <IonRow className={`self snack-bottom`}>
+              <IonRow className={`self sticky-snack`}>
                 <IonCol size="2" className={`align-center`}>
                   <div className={`rank-medal`}>
                     {isLoading ? <IonSkeletonText /> : competitor?.rank}

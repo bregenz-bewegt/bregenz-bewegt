@@ -22,11 +22,19 @@
         color: var(--ion-color-primary-contrast);
         border-radius: 0;
 
-        &.snack-bottom {
+        &.sticky-snack {
           position: fixed;
           bottom: 0;
           width: 100%;
           z-index: 2;
+
+          &__bottom {
+            bottom: 0;
+          }
+
+          &__top {
+            top: 100px;
+          }
         }
       }
 
