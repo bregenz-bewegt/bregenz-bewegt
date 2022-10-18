@@ -230,12 +230,9 @@ const deleteUnusedProfileImg = async () => {
 
   const allImg = await util.promisify(fs.readdir)(imgPath);
 
-  console.log(usedImg);
-  console.log(allImg);
-
   allImg.forEach(
     async (f) =>
-      usedImg.indexOf(f) === -1 &&
+      !usedImg.includes(f) &&
       (await util.promisify(fs.unlink)(path.join(imgPath, f)))
   );
 };
