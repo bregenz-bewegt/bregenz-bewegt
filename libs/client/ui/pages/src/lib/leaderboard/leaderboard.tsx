@@ -90,17 +90,13 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
           year: 2022,
         })
         .then((data) => {
-          setLeaderboard((prev) => orderLeaderboardDesc([...prev, ...data]));
+          setLeaderboard((prev) => [...prev, ...data]);
           e.target.complete();
         })
         .catch(() => {
           setLeaderboard([]);
           e.target.complete();
         });
-    };
-
-    const orderLeaderboardDesc = (list: LeaderboardType) => {
-      return list.sort((a, b) => (b.coins ?? 0) - (a.coins ?? 0));
     };
 
     return (
