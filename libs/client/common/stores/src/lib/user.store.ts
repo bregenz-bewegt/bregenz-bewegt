@@ -96,6 +96,7 @@ export class UserStore implements Store {
 
   async fetchPreferences() {
     const { data } = await http.get('/users/preferences');
+    console.log(data);
     return <Preferences>data;
   }
 
