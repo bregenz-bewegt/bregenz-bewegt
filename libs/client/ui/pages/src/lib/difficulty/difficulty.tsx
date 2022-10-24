@@ -1,7 +1,7 @@
 import { Checkbox, ItemGroup } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { themeStore, UserStore } from '@bregenz-bewegt/client/common/stores';
-import { Preferences } from '@bregenz-bewegt/client/types';
+import { DifficultyType, Preferences } from '@bregenz-bewegt/client/types';
 import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 import {
   IonBackButton,
@@ -13,7 +13,6 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { DifficultyType } from '@prisma/client';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 
@@ -58,16 +57,14 @@ export const Difficulty = inject(themeStore.storeKey)(
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
           <ItemGroup>
-            {Object.keys(difficultyDisplayTexts).map((d, i, a) => (
+            {Object.values(DifficultyType).map((d, i, a) => (
               <IonItem lines={i === a.length - 1 ? 'none' : 'full'}>
                 <Checkbox
-                  checked={difficulties.includes(d as DifficultyType)}
+                  checked={difficulties.includes(d)}
                   key={i}
                   name="public-profile"
-                  onChange={(e: any) =>
-                    handleSelectChange(e.detail.checked, d as DifficultyType)
-                  }
-                  label={difficultyDisplayTexts[d as DifficultyType]}
+                  onChange={(e: any) => handleSelectChange(e.detail.checked, d)}
+                  label={difficultyDisplayTexts[d]}
                 />
               </IonItem>
             ))}
