@@ -73,6 +73,8 @@ export class UserService {
     id: User['id'],
     fields: PatchPreferencesDto
   ): Promise<Preferences> {
+    console.log(fields);
+
     const { preferences } = await this.prismaService.user.update({
       where: {
         id: id,

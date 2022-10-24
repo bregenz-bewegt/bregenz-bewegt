@@ -13,6 +13,7 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
+  useIonToast,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
@@ -23,6 +24,7 @@ export interface DifficultyProps {
 
 export const Difficulty = inject(userStore.storeKey)(
   observer(({ userStore }: DifficultyProps) => {
+    const [presentToast] = useIonToast();
     const [difficulties, setDifficulties] = useState<DifficultyType[]>([]);
 
     useEffect(() => {
@@ -30,8 +32,6 @@ export const Difficulty = inject(userStore.storeKey)(
         ?.fetchPreferences()
         .then((p) => p.difficulties && setDifficulties(p.difficulties));
     }, []);
-
-    console.log(difficulties);
 
     const handleSelectChange = (
       difficulty: DifficultyType,
@@ -41,13 +41,11 @@ export const Difficulty = inject(userStore.storeKey)(
 
       selected
         ? !tempDifficulties.includes(difficulty) &&
-          (tempDifficulties = [...tempDifficulties, difficulty])
+          tempDifficulties.push(difficulty)
         : tempDifficulties.includes(difficulty) &&
           (tempDifficulties = tempDifficulties.filter(
             (oldD) => oldD !== difficulty
           ));
-
-      console.log(tempDifficulties);
 
       userStore
         ?.patchPreferences({ difficulties: tempDifficulties })
@@ -56,6 +54,14 @@ export const Difficulty = inject(userStore.storeKey)(
         })
         .catch((e) => {
           console.log(e);
+          presentToast({
+            message: 'Etwas ist schiefgelaufen',
+            icon: closeCircleOutline,
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'danger',
+          });
         });
     };
 
