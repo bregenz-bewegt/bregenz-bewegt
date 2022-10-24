@@ -73,7 +73,7 @@ export class UserService {
     id: User['id'],
     fields: PatchPreferencesDto
   ): Promise<Preferences> {
-    return <any>this.prismaService.user.update({
+    const { preferences } = await this.prismaService.user.update({
       where: {
         id: id,
       },
@@ -94,7 +94,14 @@ export class UserService {
           },
         },
       },
+      select: {
+        preferences: {
+          select: { id: true, public: true, difficulties: true, userId: true },
+        },
+      },
     });
+
+    return preferences;
   }
 
   async editProfilePicture(

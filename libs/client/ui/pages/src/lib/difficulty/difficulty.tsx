@@ -43,9 +43,11 @@ export const Difficulty = inject(userStore.storeKey)(
         ? !tempDifficulties.includes(difficulty) &&
           (tempDifficulties = [...tempDifficulties, difficulty])
         : tempDifficulties.includes(difficulty) &&
-          (tempDifficulties = difficulties.filter(
+          (tempDifficulties = tempDifficulties.filter(
             (oldD) => oldD !== difficulty
           ));
+
+      console.log(tempDifficulties);
 
       userStore
         ?.patchPreferences({ difficulties: tempDifficulties })
