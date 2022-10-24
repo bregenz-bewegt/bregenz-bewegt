@@ -66,7 +66,16 @@ export class UserService {
   }
 
   async getPreferences(id: User['id']): Promise<Preferences> {
-    return this.prismaService.preferences.findUnique({ where: { userId: id } });
+    const { preferences } = await this.prismaService.user.findUnique({
+      where: { id },
+      select: {
+        preferences: {
+          select: { id: true, public: true, difficulties: true, userId: true },
+        },
+      },
+    });
+
+    return preferences;
   }
 
   async patchPreferences(
