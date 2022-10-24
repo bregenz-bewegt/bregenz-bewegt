@@ -95,12 +95,8 @@ export class UserStore implements Store {
   }
 
   async fetchPreferences() {
-    try {
-      const { data } = await http.get('/users/preferences');
-      return data;
-    } catch (error) {
-      return;
-    }
+    const { data } = await http.get('/users/preferences');
+    return <Preferences>data;
   }
 
   @action async patchPreferences(dto: PatchPreferencesDto) {

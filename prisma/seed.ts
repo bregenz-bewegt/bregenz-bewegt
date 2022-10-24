@@ -6,8 +6,8 @@ const purgeDatabase = async () => {
   await prisma.activity.deleteMany();
   await prisma.exercise.deleteMany();
   await prisma.park.deleteMany();
-  await prisma.user.deleteMany();
   await prisma.difficulty.deleteMany();
+  await prisma.user.deleteMany();
 };
 
 const createUsers = async () => {
@@ -21,6 +21,7 @@ const createUsers = async () => {
         role: Role.USER,
         password: await argon.hash('testtest'),
         coins: 100,
+        active: true,
       },
       {
         username: 'Vincentcool3',
@@ -211,10 +212,11 @@ const createActivities = async () => {
 
 const createDifficulties = async () => {
   await Promise.all([
-    Object.keys(DifficultyType).map(async (key) => {
+    Object.values(DifficultyType).map(async (difficulty, i) => {
       await prisma.difficulty.create({
         data: {
-          difficulty: DifficultyType[key as DifficultyType],
+          id: i + 1,
+          difficulty,
         },
       });
     }),

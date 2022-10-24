@@ -10,6 +10,6 @@ export class PatchPreferencesDto {
 
   @ApiProperty()
   @IsOptional()
-  @IsString()
+  @IsString({ each: true })
   difficulties?: DifficultyType[];
 }
