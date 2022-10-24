@@ -17,6 +17,7 @@ import {
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
+import { closeCircleOutline } from 'ionicons/icons';
 
 export interface DifficultyProps {
   userStore?: UserStore;
