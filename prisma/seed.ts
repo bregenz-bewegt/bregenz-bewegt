@@ -35,7 +35,6 @@ const createUsers = async () => {
         password: await argon.hash('timonovich'),
         coins: 1000,
         active: true,
-        profilePicture: '6dad6d66-02b7-450b-9248-94a8c30563a6.jpeg',
       },
       ...(await Promise.all([
         ...new Array(200).fill(null).map(async () => ({
