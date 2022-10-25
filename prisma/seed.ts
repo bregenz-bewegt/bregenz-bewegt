@@ -133,7 +133,6 @@ const createExercises = async () => {
   const difficulties = await prisma.difficulty.findMany();
   const exercises = [
     {
-      id: 1,
       name: 'Sit-Up',
       description: 'Some description',
       difficulty: {
@@ -146,7 +145,6 @@ const createExercises = async () => {
       video: 'not-yet-defined',
     },
     {
-      id: 2,
       name: 'Liegestütze',
       description: 'Some description',
       difficulty: {
@@ -159,7 +157,6 @@ const createExercises = async () => {
       video: 'not-yet-defined',
     },
     {
-      id: 3,
       name: 'Plank',
       description: 'Some description',
       difficulty: {
@@ -172,7 +169,6 @@ const createExercises = async () => {
       video: 'not-yet-defined',
     },
     {
-      id: 4,
       name: 'Squat',
       description: 'Some description',
       difficulty: {
@@ -185,7 +181,6 @@ const createExercises = async () => {
       video: 'not-yet-defined',
     },
     {
-      id: 5,
       name: 'Versteinerte Hexe',
       description: 'Some description',
       difficulty: {
@@ -202,7 +197,7 @@ const createExercises = async () => {
   await Promise.all([
     exercises.map(async (exercise) => {
       await prisma.exercise.create({
-        data: <any>{
+        data: {
           ...exercise,
           parks: {
             connect: parks.map((park) => ({ id: park.id })),
