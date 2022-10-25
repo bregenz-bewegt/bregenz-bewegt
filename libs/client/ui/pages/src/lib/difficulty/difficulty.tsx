@@ -38,7 +38,7 @@ export const Difficulty = inject(userStore.storeKey)(
       difficulty: DifficultyType,
       selected: boolean
     ) => {
-      let tempDifficulties: DifficultyType[] = difficulties;
+      let tempDifficulties = difficulties;
 
       selected
         ? !tempDifficulties.includes(difficulty) &&
@@ -48,13 +48,10 @@ export const Difficulty = inject(userStore.storeKey)(
             (oldD) => oldD !== difficulty
           ));
 
+      setDifficulties(tempDifficulties);
       userStore
         ?.patchPreferences({ difficulties: tempDifficulties })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((e) => {
-          console.log(e);
+        .catch(() => {
           presentToast({
             message: 'Etwas ist schiefgelaufen',
             icon: closeCircleOutline,

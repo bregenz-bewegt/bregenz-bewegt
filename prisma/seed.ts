@@ -7,6 +7,7 @@ const purgeDatabase = async () => {
   await prisma.exercise.deleteMany();
   await prisma.park.deleteMany();
   await prisma.difficulty.deleteMany();
+  await prisma.preferences.deleteMany();
   await prisma.user.deleteMany();
 };
 
