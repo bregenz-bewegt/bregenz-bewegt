@@ -8,6 +8,6 @@
   }
 
   ion-toggle {
-    width: 90px;
+    width: calc(var(--spacing-xxl) * 2);
   }
 }

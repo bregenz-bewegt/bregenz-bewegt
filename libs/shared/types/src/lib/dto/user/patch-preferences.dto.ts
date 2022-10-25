@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { DifficultyType } from '@prisma/client';
-import { IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class PatchPreferencesDto {
   @ApiProperty()
   @IsOptional()
-  @IsString()
+  @IsBoolean()
   public?: boolean;
 
   @ApiProperty()

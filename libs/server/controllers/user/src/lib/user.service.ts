@@ -49,19 +49,21 @@ export class UserService {
   }
 
   async deleteProfile(id: User['id']): Promise<User> {
-    this.prismaService.user.update({
+    await this.prismaService.user.update({
       where: {
         id: id,
       },
       data: {
-        activities: null,
-        preferences: null,
+        activities: {
+          set: [],
+        },
       },
     });
     return this.prismaService.user.delete({
       where: {
         id: id,
       },
+      include: { preferences: true },
     });
   }
 
@@ -91,27 +93,37 @@ export class UserService {
         preferences: {
           upsert: {
             create: {
-              public: fields.public,
-              difficulties: {
-                connect: (
-                  await this.prismaService.difficulty.findMany({
-                    where: { difficulty: { in: fields.difficulties } },
-                  })
-                ).map((d) => ({ id: d.id })),
-              },
+              ...(fields.public !== undefined && {
+                public: fields.public,
+              }),
+              ...(fields.difficulties !== undefined && {
+                difficulties: {
+                  connect: (
+                    await this.prismaService.difficulty.findMany({
+                      where: { difficulty: { in: fields.difficulties } },
+                    })
+                  ).map((d) => ({ id: d.id })),
+                },
+              }),
             },
             update: {
-              public: fields.public,
-              difficulties: {
-                disconnect: (
-                  await this.prismaService.difficulty.findMany()
-                ).map((d) => ({ id: d.id })),
-                connect: (
-                  await this.prismaService.difficulty.findMany({
-                    where: { difficulty: { in: fields.difficulties } },
-                  })
-                ).map((d) => ({ id: d.id })),
-              },
+              ...(fields.public !== undefined && {
+                public: fields.public,
+              }),
+              ...(fields.difficulties !== undefined && {
+                difficulties: {
+                  connect: (
+                    await this.prismaService.difficulty.findMany({
+                      where: { difficulty: { in: fields.difficulties } },
+                    })
+                  ).map((d) => ({ id: d.id })),
+                  disconnect: (
+                    await this.prismaService.difficulty.findMany({
+                      where: { difficulty: { notIn: fields.difficulties } },
+                    })
+                  ).map((d) => ({ id: d.id })),
+                },
+              }),
             },
           },
         },

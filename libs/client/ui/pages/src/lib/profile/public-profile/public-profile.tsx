@@ -1,6 +1,6 @@
 import { ItemGroup, Toggle } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
-import { themeStore, UserStore } from '@bregenz-bewegt/client/common/stores';
+import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import { Preferences } from '@bregenz-bewegt/client/types';
 import {
   IonBackButton,
@@ -10,16 +10,19 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
+  useIonToast,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
+import { closeCircleOutline } from 'ionicons/icons';
 
 export interface PupblicProfileProps {
   userStore?: UserStore;
 }
 
-export const PublicProfile = inject(themeStore.storeKey)(
+export const PublicProfile = inject(userStore.storeKey)(
   observer(({ userStore }: PupblicProfileProps) => {
+    const [presentToast] = useIonToast();
     const [publicProfile, setPublicProfile] = useState<boolean>(false);
 
     useEffect(() => {
@@ -30,7 +33,16 @@ export const PublicProfile = inject(themeStore.storeKey)(
 
     const handlePublicChange = (c: boolean) => {
       setPublicProfile(c);
-      userStore?.patchPreferences({ public: c });
+      userStore?.patchPreferences({ public: c }).catch(() => {
+        presentToast({
+          message: 'Etwas ist schiefgelaufen',
+          icon: closeCircleOutline,
+          duration: 2000,
+          position: 'top',
+          mode: 'ios',
+          color: 'danger',
+        });
+      });
     };
 
     return (
@@ -44,7 +56,7 @@ export const PublicProfile = inject(themeStore.storeKey)(
                 text="Zurück"
               />
             </IonButtons>
-            <IonTitle>Öffnetliches Profil</IonTitle>
+            <IonTitle>Öffentliches Profil</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
@@ -55,7 +67,7 @@ export const PublicProfile = inject(themeStore.storeKey)(
               onChange={(e: any) => {
                 handlePublicChange(e.currentTarget.checked);
               }}
-              label="Profil öffentlich für andere unter Rangliste sichtbar machen"
+              label="Öffentlich sichtbar in Rangliste erscheinen"
             />
           </ItemGroup>
         </IonContent>
