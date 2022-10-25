@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
@@ -6,6 +7,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from '@bregenz-bewegt/server-controllers-auth';
 import { UserModule } from '@bregenz-bewegt/server-controllers-user';
 import { PrismaModule } from '@bregenz-bewegt/server-prisma';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AccessTokenGuard, RoleGuard } from '@bregenz-bewegt/server/common';
@@ -15,6 +17,7 @@ import { ExerciseModule } from '@bregenz-bewegt/server/controllers/exercise';
 import { MailModule } from '@bregenz-bewegt/server/mail';
 import { UtilModule } from '@bregenz-bewegt/server/util';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { LeaderboardModule } from '@bregenz-bewegt/server/controllers/leaderboard';
 
 @Module({
   imports: [
@@ -40,6 +43,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
       //   },
       // },
     }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve('../public'),
+    }),
     MailModule,
     PrismaModule,
     MulterModule,
@@ -48,6 +54,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
     UserModule,
     ParkModule,
     ExerciseModule,
+    LeaderboardModule,
   ],
   controllers: [AppController],
   providers: [

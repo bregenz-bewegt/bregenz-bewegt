@@ -31,7 +31,7 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
             </IonRow>
             <IonRow>
               <IonText>
-                <h2>{userStore?.user?.coins} Coins</h2>
+                <h2>{userStore?.user?.coins} B-Bucks</h2>
               </IonText>
             </IonRow>
           </div>

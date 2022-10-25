@@ -104,7 +104,6 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
                     key={i}
                   >
                     <page.icon />
-                    {/* <IonLabel>{page.label}</IonLabel> */}
                   </IonTabButton>
                 );
               } else {
