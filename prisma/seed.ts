@@ -14,7 +14,6 @@ const purgeDatabase = async () => {
 
 const createUsers = async () => {
   const difficulties = await prisma.difficulty.findMany();
-  console.log(difficulties);
   const users = [
     {
       username: 'simonostini',
