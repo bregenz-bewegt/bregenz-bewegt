@@ -394,37 +394,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   <h2>Präferenzen</h2>
                 </IonText>
               </IonRow>
-              {/* <IonRow className="profile__content__preferences">
-                <IonItem>
-                  <IonLabel>Präferenzen</IonLabel>
-                  <IonSelect
-                    multiple={true}
-                    value={selectPreference}
-                    selectedText=" "
-                    onIonChange={(e) => {
-                      setSelectPreference(e.detail.value);
-                      // handleSelectPreference();
-                    }}
-                  >
-                    {Object.keys(difficultyDisplayTexts).map((d, i) => (
-                      <IonSelectOption value={d} key={i}>
-                        {difficultyDisplayTexts[d as DifficultyType]}
-                      </IonSelectOption>
-                    ))}
-                  </IonSelect>
-                </IonItem>
-              </IonRow>
-              <IonRow className="profile__content__rankcheck">
-                <Checkbox
-                  name="public-profile"
-                  checked={publicProfile}
-                  label={<IonNote mode="md">Öffentliches Profil</IonNote>}
-                  onChange={(e: any) => {
-                    setPublicProfile(e.currentTarget.checked);
-                    // handleChangePublicProfile();
-                  }}
-                />
-              </IonRow> */}
               <ItemGroup>
                 <IonItem
                   button
