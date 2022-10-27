@@ -1,9 +1,12 @@
 import * as fs from 'fs';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { MulterService } from '@bregenz-bewegt/server/multer';
-import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
+import {
+  PatchPreferencesDto,
+  PatchProfileDto,
+} from '@bregenz-bewegt/shared/types';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { DifficultyType, Preferences, User } from '@prisma/client';
 import { Response } from 'express';
 import { Prisma } from '@prisma/client';
 
@@ -46,19 +49,96 @@ export class UserService {
   }
 
   async deleteProfile(id: User['id']): Promise<User> {
-    this.prismaService.user.update({
+    await this.prismaService.user.update({
       where: {
         id: id,
       },
       data: {
-        activities: null,
+        activities: {
+          set: [],
+        },
       },
     });
     return this.prismaService.user.delete({
       where: {
         id: id,
       },
+      include: { preferences: true },
     });
+  }
+
+  async getPreferences(
+    id: User['id']
+  ): Promise<Preferences & { difficulties: DifficultyType[] }> {
+    const preferences = await this.prismaService.preferences.findUnique({
+      where: { userId: id },
+      include: { difficulties: { select: { difficulty: true } } },
+    });
+
+    return {
+      ...preferences,
+      difficulties: preferences.difficulties.map((d) => d.difficulty),
+    };
+  }
+
+  async patchPreferences(
+    id: User['id'],
+    fields: PatchPreferencesDto
+  ): Promise<Preferences & { difficulties: DifficultyType[] }> {
+    const { preferences } = await this.prismaService.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        preferences: {
+          upsert: {
+            create: {
+              ...(fields.public !== undefined && {
+                public: fields.public,
+              }),
+              ...(fields.difficulties !== undefined && {
+                difficulties: {
+                  connect: (
+                    await this.prismaService.difficulty.findMany({
+                      where: { difficulty: { in: fields.difficulties } },
+                    })
+                  ).map((d) => ({ id: d.id })),
+                },
+              }),
+            },
+            update: {
+              ...(fields.public !== undefined && {
+                public: fields.public,
+              }),
+              ...(fields.difficulties !== undefined && {
+                difficulties: {
+                  connect: (
+                    await this.prismaService.difficulty.findMany({
+                      where: { difficulty: { in: fields.difficulties } },
+                    })
+                  ).map((d) => ({ id: d.id })),
+                  disconnect: (
+                    await this.prismaService.difficulty.findMany({
+                      where: { difficulty: { notIn: fields.difficulties } },
+                    })
+                  ).map((d) => ({ id: d.id })),
+                },
+              }),
+            },
+          },
+        },
+      },
+      select: {
+        preferences: {
+          select: { id: true, public: true, difficulties: true, userId: true },
+        },
+      },
+    });
+
+    return {
+      ...preferences,
+      difficulties: preferences.difficulties.map((d) => d.difficulty),
+    };
   }
 
   async editProfilePicture(

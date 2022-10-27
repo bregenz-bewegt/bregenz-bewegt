@@ -5,7 +5,10 @@ import {
   RemoveSensitiveFieldsInterceptor,
   RoleGuard,
 } from '@bregenz-bewegt/server/common';
-import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
+import {
+  PatchPreferencesDto,
+  PatchProfileDto,
+} from '@bregenz-bewegt/shared/types';
 import {
   Body,
   Controller,
@@ -25,7 +28,7 @@ import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import { Response } from 'express';
-import { Role, User } from '@prisma/client';
+import { Role, User, Preferences } from '@prisma/client';
 
 @Controller('users')
 export class UserController {
@@ -52,6 +55,27 @@ export class UserController {
   @Delete('profile')
   deleteProfile(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
     return this.userService.deleteProfile(userId);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Get('preferences')
+  getPreferences(
+    @GetCurrentUser('sub') userId: User['id']
+  ): Promise<Preferences> {
+    return this.userService.getPreferences(userId);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Patch('preferences')
+  patchPreferences(
+    @GetCurrentUser('sub') userId: User['id'],
+    @Body() dto: PatchPreferencesDto
+  ): Promise<Preferences> {
+    return this.userService.patchPreferences(userId, dto);
   }
 
   @HasRole(Role.USER)

@@ -83,6 +83,16 @@ export class AuthService {
           password: hash,
           role: 'USER',
           activationSecret,
+          preferences: {
+            create: {
+              public: true,
+              difficulties: {
+                connect: (
+                  await this.prismaService.difficulty.findMany()
+                ).map((d) => ({ id: d.id })),
+              },
+            },
+          },
         },
       });
 
