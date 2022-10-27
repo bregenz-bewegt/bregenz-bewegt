@@ -13,7 +13,6 @@ const purgeDatabase = async () => {
 };
 
 const createUsers = async () => {
-  const difficulties = await prisma.difficulty.findMany();
   const users = [
     {
       username: 'simonostini',
@@ -58,7 +57,9 @@ const createUsers = async () => {
             create: {
               public: true,
               difficulties: {
-                connect: difficulties.map((d) => ({ id: d.id })),
+                connect: (
+                  await prisma.difficulty.findMany()
+                ).map((d) => ({ id: d.id })),
               },
             },
           },
