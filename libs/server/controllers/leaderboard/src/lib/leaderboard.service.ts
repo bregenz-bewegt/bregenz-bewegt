@@ -21,7 +21,10 @@ export class LeaderboardService {
     }
 
     return this.prismaService.user.findMany({
-      where: { role: { not: Role.GUEST } },
+      where: {
+        role: { not: Role.GUEST },
+        AND: { preferences: { public: true } },
+      },
       select: { username: true, coins: true },
       orderBy: { coins: 'desc' },
       skip,
