@@ -33,9 +33,10 @@ export class LeaderboardController {
         forbidNonWhitelisted: true,
       })
     )
-    dto: LeaderboardPaginationQueryDto
+    dto: LeaderboardPaginationQueryDto,
+    @GetCurrentUser('sub') id: User['id']
   ): Promise<Leaderboard> {
-    return this.leaderboardService.getLeaderboard(dto);
+    return this.leaderboardService.getLeaderboard(id, dto);
   }
 
   @Get('competitor')

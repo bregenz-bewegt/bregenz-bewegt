@@ -12,18 +12,29 @@ export class LeaderboardService {
   private leaderboardLimit = 100;
   constructor(private prismaService: PrismaService) {}
 
-  async getLeaderboard({
-    skip,
-    take,
-  }: LeaderboardPaginationQueryDto): Promise<Leaderboard> {
+  async getLeaderboard(
+    userId: User['id'],
+    { skip, take }: LeaderboardPaginationQueryDto
+  ): Promise<Leaderboard> {
     if (skip + take > this.leaderboardLimit) {
       take = 0;
     }
 
     return this.prismaService.user.findMany({
       where: {
-        role: { not: Role.GUEST },
-        AND: { preferences: { public: true } },
+        OR: [
+          { id: userId },
+          {
+            AND: [
+              {
+                role: { not: Role.GUEST },
+              },
+              {
+                preferences: { public: true },
+              },
+            ],
+          },
+        ],
       },
       select: { username: true, coins: true },
       orderBy: { coins: 'desc' },
