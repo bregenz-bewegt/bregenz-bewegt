@@ -76,6 +76,9 @@
       "configurations": {
         "android": {
           "cmd": "run android -l --external --consolelogs"
+        },
+        "ios": {
+          "cmd": "run ios -l --external --consolelogs"
         }
       }
     },

@@ -13,6 +13,7 @@
     "dev:client": "npx nx run client:serve",
     "dev:server": "npx nx run server:serve",
     "dev:native:android": "npx nx run client:cap:android",
+    "dev:native:ios": "npx nx run client:cap:ios",
     "build": "npx nx run-many --target=build",
     "build:client": "npx nx run client:build",
     "build:server": "npx nx run server:build",
