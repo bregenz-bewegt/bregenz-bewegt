@@ -42,8 +42,8 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     const [timespan, setTimespan] = useState<string>();
     const [leaderboard, setLeaderboard] = useState<LeaderboardType>(
       Array<LeaderboardType extends readonly (infer T)[] ? T : never>(10).fill({
-        username: null,
-        coins: null,
+        username: '',
+        coins: 0,
       })
     );
     const [competitor, setCompetitor] = useState<Competitor>();

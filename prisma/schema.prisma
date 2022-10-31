@@ -25,7 +25,6 @@ model User {
   passwordResetToken String?
   activationSecret   String?
   profilePicture     String?
-  coins              Int?         @default(0)
   preferences        Preferences?
   activities         Activity[]
 
@@ -35,7 +34,7 @@ model User {
 model Preferences {
   id         Int         @id @default(autoincrement())
   difficulty Difficulty?
-  user       User        @relation(fields: [userId], references: [id])
+  User       User        @relation(fields: [userId], references: [id])
   userId     String      @unique
 }
 
@@ -59,7 +58,7 @@ model Coordinates {
   latitude        Float
   longitude       Float
   toleranceRadius Int   @default(50)
-  park            Park  @relation(fields: [parkId], references: [id])
+  Park            Park  @relation(fields: [parkId], references: [id])
   parkId          Int   @unique
 }
 
@@ -84,7 +83,7 @@ model Exercise {
   name        String
   description String
   video       String
-  points      Int
+  coins       Int
   difficulty  Difficulty
   parks       Park[]
   Activity    Activity[]

@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { MulterService } from '@bregenz-bewegt/server/multer';
-import { PatchProfileDto } from '@bregenz-bewegt/shared/types';
+import { PatchProfileDto, WithCoins } from '@bregenz-bewegt/shared/types';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import { Response } from 'express';
 import { Prisma } from '@prisma/client';
 

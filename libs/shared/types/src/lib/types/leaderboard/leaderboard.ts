@@ -1,3 +1,4 @@
-import { User } from '@prisma/client';
+import { User } from '@bregenz-bewegt/client/types';
+import { WithCoins } from '../user';
 
-export type Leaderboard = Pick<User, 'username' | 'coins'>[];
+export type Leaderboard = Pick<WithCoins<User>, 'username' | 'coins'>[];

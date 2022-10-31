@@ -1,6 +1,7 @@
 import { Store } from './store';
 import { makeAutoObservable } from 'mobx';
 import { http } from '@bregenz-bewegt/client/common/http';
+import { EndActivityDto, StartActivityDto } from '@bregenz-bewegt/shared/types';
 
 export class ActivityStore implements Store {
   storeKey = 'activityStore' as const;
@@ -9,13 +10,13 @@ export class ActivityStore implements Store {
     makeAutoObservable(this);
   }
 
-  async startActivity() {
-    const { data } = await http.post('/activity/start');
+  async startActivity(dto: StartActivityDto) {
+    const { data } = await http.post('/activity/start', dto);
     return data;
   }
 
-  async endActivity() {
-    const { data } = await http.post('/activity/end');
+  async endActivity(dto: EndActivityDto) {
+    const { data } = await http.post('/activity/end', dto);
     return data;
   }
 }

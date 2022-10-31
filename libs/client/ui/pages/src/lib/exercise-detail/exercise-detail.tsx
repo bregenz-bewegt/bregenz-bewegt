@@ -58,6 +58,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       if (!exerciseId || !parkId) return;
 
       parkStore?.getParkWithExercise(parkId, exerciseId).then((park) => {
+        console.log(park);
         setPark(park);
       });
     }, [match.params.exercise, match.params.park]);
@@ -68,7 +69,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     }, []);
 
     const handleTimerStart = () => {
-      activityStore.startActivity().then(() => {
+      activityStore.startActivity({ parkId: 0, exerciseId: 0 }).then(() => {
         presentToast({
           message: 'Übung gestartet',
           icon: timer,
@@ -81,7 +82,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     };
 
     const handleTimerStop = (time: ActivityTimerResult) => {
-      activityStore.endActivity().then(() => {
+      activityStore.endActivity({ parkId: 0, exerciseId: 0 }).then(() => {
         presentToast({
           message: 'Übung beendet',
           icon: stopCircle,
