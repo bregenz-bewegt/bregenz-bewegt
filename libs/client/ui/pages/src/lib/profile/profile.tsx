@@ -7,7 +7,6 @@ import {
   IonCol,
   IonContent,
   IonGrid,
-  IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
@@ -16,9 +15,7 @@ import {
   IonSkeletonText,
   IonSpinner,
   IonText,
-  IonTitle,
   IonToast,
-  IonToolbar,
   useIonActionSheet,
   useIonAlert,
   useIonLoading,
@@ -223,11 +220,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage className="profile">
-        <IonHeader mode="ios">
-          <IonToolbar>
-            <IonTitle>Profil</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <IonContent
           fullscreen
           className={`profile__content ${
@@ -397,7 +389,26 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   Ändern
                 </IonButton>
               </IonRow>
+              <IonRow>
+                <IonText>
+                  <h2>Präferenzen</h2>
+                </IonText>
+              </IonRow>
               <ItemGroup>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/public-profile`}
+                  mode="ios"
+                >
+                  <IonLabel>Öffentliches Profil</IonLabel>
+                </IonItem>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/difficulty`}
+                  mode="ios"
+                >
+                  <IonLabel>Bevorzugte Übungen</IonLabel>
+                </IonItem>
                 <IonItem
                   button
                   routerLink={`${tabRoutes.profile.route}/appearance`}
@@ -418,7 +429,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   mode="ios"
                   color="danger"
                 >
-                  Konto Löschen
+                  Konto löschen
                 </IonButton>
               </IonCol>
               <IonCol className="logout">

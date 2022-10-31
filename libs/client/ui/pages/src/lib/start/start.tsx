@@ -14,7 +14,7 @@ import {
   IonText,
 } from '@ionic/react';
 import {
-  Difficulty,
+  DifficultyType,
   Park,
   ParkDisplayType,
 } from '@bregenz-bewegt/client/types';
@@ -39,17 +39,17 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
     const [quickFilters, setQuickFilters] = useState<QuickFilterOption[]>([
       {
         key: 0,
-        label: difficultyDisplayTexts[Difficulty.BEGINNER],
+        label: difficultyDisplayTexts[DifficultyType.BEGINNER],
         active: false,
       },
       {
         key: 1,
-        label: difficultyDisplayTexts[Difficulty.ADVANCED],
+        label: difficultyDisplayTexts[DifficultyType.ADVANCED],
         active: false,
       },
       {
         key: 2,
-        label: difficultyDisplayTexts[Difficulty.GAME],
+        label: difficultyDisplayTexts[DifficultyType.GAME],
         active: false,
       },
       {

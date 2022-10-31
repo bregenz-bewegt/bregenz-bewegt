@@ -38,6 +38,14 @@
       }
     }
 
+    &__preferences {
+      margin-top: var(--spacing-m);
+    }
+
+    &__rankcheck {
+      margin: var(--spacing-s) 0;
+    }
+
     &__danger-row {
       ion-col.delete {
         padding-inline-start: 0;
