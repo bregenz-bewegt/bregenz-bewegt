@@ -168,7 +168,7 @@ const createExercises = async () => {
     },
   ];
 
-  await Promise.all([
+  await Promise.all(
     exercises.map(async (exercise) => {
       await prisma.exercise.create({
         data: <any>{
@@ -178,8 +178,8 @@ const createExercises = async () => {
           },
         },
       });
-    }),
-  ]);
+    })
+  );
 };
 
 const createActivities = async () => {
@@ -193,13 +193,11 @@ const createActivities = async () => {
         data: {
           activities: {
             createMany: {
-              data: await Promise.all(
-                exercises.map(async (exercise) => ({
-                  startedAt: new Date(),
-                  endedAt: new Date(),
-                  exerciseId: exercise.id,
-                }))
-              ),
+              data: exercises.map((exercise) => ({
+                startedAt: new Date(),
+                endedAt: new Date(),
+                exerciseId: exercise.id,
+              })),
             },
           },
         },
