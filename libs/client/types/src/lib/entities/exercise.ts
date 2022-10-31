@@ -1,4 +1,4 @@
-import { Difficulty } from './difficulty';
+import { DifficultyType } from './difficulty';
 
 export type Exercise = {
   id: number;
@@ -6,5 +6,5 @@ export type Exercise = {
   description: string;
   video: string;
   points: number;
-  difficulty: Difficulty;
+  difficulty: DifficultyType;
 };

@@ -1,0 +1,13 @@
+.toggle {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+
+  ion-label {
+    white-space: pre-wrap !important;
+  }
+
+  ion-toggle {
+    width: calc(var(--spacing-xxl) * 2);
+  }
+}

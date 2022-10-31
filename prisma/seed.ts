@@ -3,53 +3,73 @@ import * as util from 'util';
 import * as fs from 'fs';
 import * as path from 'path';
 import { faker } from '@faker-js/faker';
-import { PrismaClient, Role } from '@prisma/client';
+import { PrismaClient, Role, DifficultyType } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const purgeDatabase = async () => {
   await prisma.activity.deleteMany();
   await prisma.exercise.deleteMany();
   await prisma.park.deleteMany();
+  await prisma.difficulty.deleteMany();
+  await prisma.preferences.deleteMany();
   await prisma.user.deleteMany();
 };
 
 const createUsers = async () => {
-  await prisma.user.createMany({
-    data: [
-      {
-        username: 'simonostini',
-        email: 'simonostini@gmail.com',
-        firstname: 'Simon',
-        lastname: 'Ostini',
+  const users = [
+    {
+      username: 'simonostini',
+      email: 'simonostini@gmail.com',
+      firstname: 'Simon',
+      lastname: 'Ostini',
+      role: Role.USER,
+      password: await argon.hash('testtest'),
+      coins: 800,
+      active: true,
+    },
+    {
+      username: 'Vincentcool3',
+      email: 'stadelmann.timon@gmail.com',
+      firstname: 'Timon',
+      lastname: 'Stadelmann',
+      role: Role.USER,
+      password: await argon.hash('timonovich'),
+      coins: 1000,
+      active: true,
+    },
+    ...(await Promise.all([
+      ...new Array(200).fill(null).map(async () => ({
+        username: faker.internet.userName(),
+        email: faker.internet.email(),
+        firstname: faker.name.firstName(),
+        lastname: faker.name.lastName(),
         role: Role.USER,
         password: await argon.hash('testtest'),
-        coins: 800,
+        coins: Math.floor(Math.random() * (100 + 1)) * 10,
         active: true,
-      },
-      {
-        username: 'Vincentcool3',
-        email: 'stadelmann.timon@gmail.com',
-        firstname: 'Timon',
-        lastname: 'Stadelmann',
-        role: Role.USER,
-        password: await argon.hash('timonovich'),
-        coins: 1000,
-        active: true,
-      },
-      ...(await Promise.all([
-        ...new Array(200).fill(null).map(async () => ({
-          username: faker.internet.userName(),
-          email: faker.internet.email(),
-          firstname: faker.name.firstName(),
-          lastname: faker.name.lastName(),
-          role: Role.USER,
-          password: await argon.hash('testtest'),
-          coins: Math.floor(Math.random() * (100 + 1)) * 10,
-          active: true,
-        })),
-      ])),
-    ],
-  });
+      })),
+    ])),
+  ];
+
+  await Promise.all([
+    users.map(async (user) => {
+      await prisma.user.create({
+        data: {
+          ...user,
+          preferences: {
+            create: {
+              public: true,
+              difficulties: {
+                connect: (
+                  await prisma.difficulty.findMany()
+                ).map((d) => ({ id: d.id })),
+              },
+            },
+          },
+        },
+      });
+    }),
+  ]);
 };
 
 const createParks = async () => {
@@ -131,44 +151,65 @@ const createParks = async () => {
 
 const createExercises = async () => {
   const parks = await prisma.park.findMany();
+  const difficulties = await prisma.difficulty.findMany();
   const exercises = [
     {
-      id: 1,
       name: 'Sit-Up',
       description: 'Some description',
-      difficulty: 'BEGINNER',
+      difficulty: {
+        connect: {
+          id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
+            ?.id,
+        },
+      },
       points: 10,
       video: 'not-yet-defined',
     },
     {
-      id: 2,
       name: 'Liegestütze',
       description: 'Some description',
-      difficulty: 'BEGINNER',
+      difficulty: {
+        connect: {
+          id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
+            ?.id,
+        },
+      },
       points: 10,
       video: 'not-yet-defined',
     },
     {
-      id: 3,
       name: 'Plank',
       description: 'Some description',
-      difficulty: 'ADVANCED',
+      difficulty: {
+        connect: {
+          id: difficulties.find((d) => d.difficulty === DifficultyType.ADVANCED)
+            ?.id,
+        },
+      },
       points: 10,
       video: 'not-yet-defined',
     },
     {
-      id: 4,
       name: 'Squat',
       description: 'Some description',
-      difficulty: 'BEGINNER',
+      difficulty: {
+        connect: {
+          id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
+            ?.id,
+        },
+      },
       points: 10,
       video: 'not-yet-defined',
     },
     {
-      id: 5,
       name: 'Versteinerte Hexe',
       description: 'Some description',
-      difficulty: 'GAME',
+      difficulty: {
+        connect: {
+          id: difficulties.find((d) => d.difficulty === DifficultyType.GAME)
+            ?.id,
+        },
+      },
       points: 10,
       video: 'not-yet-defined',
     },
@@ -177,7 +218,7 @@ const createExercises = async () => {
   await Promise.all([
     exercises.map(async (exercise) => {
       await prisma.exercise.create({
-        data: <any>{
+        data: {
           ...exercise,
           parks: {
             connect: parks.map((park) => ({ id: park.id })),
@@ -214,6 +255,7 @@ const createActivities = async () => {
   ]);
 };
 
+
 const deleteUnusedProfileImg = async () => {
   const imgPath = path.join(
     __dirname,
@@ -234,15 +276,29 @@ const deleteUnusedProfileImg = async () => {
       !usedImg.includes(f) &&
       (await util.promisify(fs.unlink)(path.join(imgPath, f)))
   );
+
+const createDifficulties = async () => {
+  await Promise.all([
+    Object.values(DifficultyType).map(async (difficulty, i) => {
+      await prisma.difficulty.create({
+        data: {
+          id: i + 1,
+          difficulty,
+        },
+      });
+    }),
+  ]);
 };
 
 const main = async () => {
   await purgeDatabase();
-  await createUsers();
-  await createParks();
-  await createExercises();
-  await createActivities();
-  await deleteUnusedProfileImg();
+  createDifficulties().then(async () => {
+    await createUsers();
+    await createParks();
+    await createExercises();
+    await createActivities();
+    await deleteUnusedProfileImg();
+  });
 };
 
 main()
