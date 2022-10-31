@@ -21,7 +21,7 @@ export class LeaderboardService {
       take = 0;
     }
 
-    const users = await this.getRankedUsersWithCoins();
+    const users = await this.getRankedUsersWithCoins({ skip, take });
 
     return users.map((user) => ({
       username: user.username,
@@ -41,12 +41,17 @@ export class LeaderboardService {
     };
   }
 
-  async getRankedUsersWithCoins(): Promise<WithCoins<User>[]> {
+  async getRankedUsersWithCoins(options?: {
+    skip?: number;
+    take?: number;
+  }): Promise<WithCoins<User>[]> {
     const users = await this.prismaService.user.findMany({
       where: { role: { not: Role.GUEST } },
       include: {
         activities: { select: { exercise: { select: { coins: true } } } },
       },
+      ...(options?.skip !== undefined ? { skip: options.skip } : {}),
+      ...(options?.skip !== undefined ? { take: options.take } : {}),
     });
 
     return users
