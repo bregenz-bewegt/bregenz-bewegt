@@ -6,6 +6,7 @@ import {
   IonButton,
   IonCol,
   IonContent,
+  IonFooter,
   IonGrid,
   IonIcon,
   IonItem,
@@ -449,6 +450,14 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonCol>
             </IonRow>
           )}
+          <IonFooter>
+            <IonRow className="ion-justify-content-center">
+              <IonText color="medium">
+                Konto erstellt am
+                {JSON.stringify(userStore?.user?.registratedAt)}
+              </IonText>
+            </IonRow>
+          </IonFooter>
         </IonContent>
       </IonPage>
     );
