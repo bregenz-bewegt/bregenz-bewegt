@@ -101,6 +101,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     console.log(leaderboard.length);
 
     const loadInfinite = (e: any) => {
+      console.log('infinite');
       if (leaderboard.length === MAX_SHOWN_COMPETITORS)
         return e.target.complete();
 
