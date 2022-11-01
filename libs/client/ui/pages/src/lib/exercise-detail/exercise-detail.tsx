@@ -58,7 +58,6 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       if (!exerciseId || !parkId) return;
 
       parkStore?.getParkWithExercise(parkId, exerciseId).then((park) => {
-        console.log(park);
         setPark(park);
       });
     }, [match.params.exercise, match.params.park]);
@@ -69,29 +68,39 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     }, []);
 
     const handleTimerStart = () => {
-      activityStore.startActivity({ parkId: 0, exerciseId: 0 }).then(() => {
-        presentToast({
-          message: 'Übung gestartet',
-          icon: timer,
-          duration: 2000,
-          position: 'top',
-          mode: 'ios',
-          color: 'primary',
+      activityStore
+        .startActivity({
+          parkId: park?.id ?? -1,
+          exerciseId: park?.exercises[0].id ?? -1,
+        })
+        .then(() => {
+          presentToast({
+            message: 'Übung gestartet',
+            icon: timer,
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'primary',
+          });
         });
-      });
     };
 
     const handleTimerStop = (time: ActivityTimerResult) => {
-      activityStore.endActivity({ parkId: 0, exerciseId: 0 }).then(() => {
-        presentToast({
-          message: 'Übung beendet',
-          icon: stopCircle,
-          duration: 2000,
-          position: 'top',
-          mode: 'ios',
-          color: 'primary',
+      activityStore
+        .endActivity({
+          parkId: park?.id ?? 0,
+          exerciseId: park?.exercises[0].id ?? 0,
+        })
+        .then(() => {
+          presentToast({
+            message: 'Übung beendet',
+            icon: stopCircle,
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'primary',
+          });
         });
-      });
     };
 
     return (
