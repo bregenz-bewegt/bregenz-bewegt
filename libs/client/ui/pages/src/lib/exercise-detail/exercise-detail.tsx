@@ -102,7 +102,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     };
 
     const handleTimerStop = (time: ActivityTimerResult) => {
-      activityStore.endActivity({ activityId: 0 }).then(() => {
+      activityStore.endActivity({ activityId: activity?.id ?? '' }).then(() => {
         presentToast({
           message: 'Übung beendet',
           icon: stopCircle,
