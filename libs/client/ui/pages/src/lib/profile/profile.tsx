@@ -456,7 +456,11 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 Konto erstellt am{' '}
                 {new Date(
                   userStore?.user?.registratedAt as any
-                ).toLocaleDateString()}
+                ).toLocaleDateString('de-DE', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                })}
               </IonText>
             </IonRow>
           </IonFooter>
