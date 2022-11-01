@@ -14,13 +14,15 @@ import './coin-depot.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { Role } from '@bregenz-bewegt/client/types';
 import { Coin } from '@bregenz-bewegt/client-ui-components';
+import { Competitor } from '@bregenz-bewegt/shared/types';
 
 export interface CoinDepotProps {
+  competitor?: Competitor;
   userStore?: UserStore;
 }
 
 export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
-  observer(({ userStore }) => {
+  observer(({ competitor, userStore }) => {
     return (
       <IonCard className="coin-depot" color="secondary" mode="ios">
         <IonCardHeader>
@@ -31,7 +33,7 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
             </IonRow>
             <IonRow>
               <IonText>
-                <h2>{userStore?.user?.coins} B-Bucks</h2>
+                <h2>{competitor?.coins} B-Bucks</h2>
               </IonText>
             </IonRow>
           </div>

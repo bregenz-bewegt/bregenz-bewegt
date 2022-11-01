@@ -103,7 +103,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       <IonPage className="leaderboard">
         <Header />
         <IonContent fullscreen>
-          <CoinDepot />
+          <CoinDepot competitor={competitor} />
           <IonRow>
             <IonCol className="ion-align-center">
               <IonText>
