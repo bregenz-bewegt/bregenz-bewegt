@@ -34,7 +34,13 @@ import {
   ActivityTimer,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
-import { play, timer, stopCircle, closeCircleOutline } from 'ionicons/icons';
+import {
+  play,
+  timer,
+  stopCircle,
+  closeCircleOutline,
+  close,
+} from 'ionicons/icons';
 
 interface MatchParams {
   park: string;
@@ -87,6 +93,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             position: 'top',
             mode: 'ios',
             color: 'primary',
+            buttons: [{ icon: close, role: 'cancel' }],
           });
         })
         .catch(() => {
@@ -110,6 +117,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           position: 'top',
           mode: 'ios',
           color: 'primary',
+          buttons: [{ icon: close, role: 'cancel' }],
         });
       });
     };

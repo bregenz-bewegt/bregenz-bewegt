@@ -8,6 +8,7 @@ import {
 import {
   Competitor,
   Leaderboard as LeaderboardType,
+  LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   IonCol,
@@ -50,12 +51,16 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     const [competitor, setCompetitor] = useState<Competitor>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    useEffect(() => {
+    const fetchLeaderboardWithCompetitor = ({
+      skip,
+      take,
+      year,
+    }: LeaderboardPaginationQueryDto) => {
       leaderboardStore
         ?.getLeaderboard({
-          skip: 0,
-          take: COMPETIORS_RELOAD_CHUNK_SIZE,
-          year: 2022,
+          skip,
+          take,
+          year,
         })
         .then((data) => {
           setLeaderboard(data);
@@ -74,32 +79,22 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
           setLeaderboard([]);
           setIsLoading(false);
         });
+    };
+
+    useEffect(() => {
+      fetchLeaderboardWithCompetitor({
+        skip: 0,
+        take: COMPETIORS_RELOAD_CHUNK_SIZE,
+        year: 2022,
+      });
     }, []);
 
     useIonViewDidEnter(() => {
-      leaderboardStore
-        ?.getLeaderboard({
-          skip: 0,
-          take: leaderboard.length,
-          year: 2022,
-        })
-        .then((data) => {
-          setLeaderboard(data);
-          leaderboardStore
-            ?.getCompetitor()
-            .then((data) => {
-              setCompetitor(data);
-              setIsLoading(false);
-            })
-            .catch(() => {
-              setCompetitor(undefined);
-              setIsLoading(false);
-            });
-        })
-        .catch(() => {
-          setLeaderboard([]);
-          setIsLoading(false);
-        });
+      fetchLeaderboardWithCompetitor({
+        skip: 0,
+        take: leaderboard.length,
+        year: 2022,
+      });
     }, []);
 
     const loadInfinite = (e: any) => {
