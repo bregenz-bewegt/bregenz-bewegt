@@ -262,12 +262,11 @@ const createDifficulties = async () => {
 
 const main = async () => {
   await purgeDatabase();
-  createDifficulties().then(async () => {
-    await createUsers();
-    await createParks();
-    await createExercises();
-    await createActivities();
-  });
+  await createDifficulties();
+  await createUsers();
+  await createParks();
+  await createExercises();
+  await createActivities();
 };
 
 main()
