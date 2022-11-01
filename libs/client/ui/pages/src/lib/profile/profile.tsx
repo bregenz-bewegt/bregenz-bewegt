@@ -453,8 +453,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           <IonFooter>
             <IonRow className="ion-justify-content-center">
               <IonText color="medium">
-                Konto erstellt am
-                {JSON.stringify(userStore?.user)}
+                Konto erstellt am{' '}
+                {new Date(
+                  userStore?.user?.registratedAt as any
+                ).toLocaleDateString()}
               </IonText>
             </IonRow>
           </IonFooter>
