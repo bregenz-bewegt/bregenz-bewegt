@@ -451,7 +451,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             </IonRow>
           )}
           <IonFooter>
-            <IonRow className="ion-justify-content-center">
+            <IonRow className="ion-justify-content-center account-created">
               <IonText color="medium">
                 Konto erstellt am{' '}
                 {new Date(

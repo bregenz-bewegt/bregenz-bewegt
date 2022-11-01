@@ -101,5 +101,11 @@
         }
       }
     }
+
+    ion-footer {
+      .account-created {
+        padding: var(--spacing-m) 0;
+      }
+    }
   }
 }
