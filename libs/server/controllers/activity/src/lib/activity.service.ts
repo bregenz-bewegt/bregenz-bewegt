@@ -17,7 +17,10 @@ export class ActivityService {
     });
   }
 
-  async endActivity(userId: User['id'], dto: EndActivityDto) {
-    console.log(userId, dto);
+  async endActivity(dto: EndActivityDto) {
+    return this.prismaService.activity.update({
+      where: { id: dto.activityId },
+      data: { endedAt: new Date() },
+    });
   }
 }

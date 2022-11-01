@@ -17,10 +17,7 @@ export class ActivityController {
   }
 
   @Post('end')
-  endActivity(
-    @GetCurrentUser('sub') userId: User['id'],
-    @Body() dto: EndActivityDto
-  ) {
-    return this.activityService.endActivity(userId, dto);
+  endActivity(@Body() dto: EndActivityDto) {
+    return this.activityService.endActivity(dto);
   }
 }
