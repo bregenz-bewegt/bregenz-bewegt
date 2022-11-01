@@ -23,14 +23,18 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Park, ActivityTimerResult } from '@bregenz-bewegt/client/types';
+import {
+  Park,
+  ActivityTimerResult,
+  Activity,
+} from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { location } from 'ionicons/icons';
 import {
   ActivityTimer,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
-import { play, timer, stopCircle } from 'ionicons/icons';
+import { play, timer, stopCircle, closeCircleOutline } from 'ionicons/icons';
 
 interface MatchParams {
   park: string;
@@ -51,6 +55,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
   observer(({ parkStore, tabStore, match }) => {
     const [presentToast] = useIonToast();
     const [park, setPark] = useState<Required<Park>>();
+    const [activity, setActivity] = useState<Activity>();
 
     useEffect(() => {
       const parkId = +match.params.park;
@@ -73,7 +78,8 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           parkId: park?.id ?? -1,
           exerciseId: park?.exercises[0].id ?? -1,
         })
-        .then(() => {
+        .then((activity) => {
+          setActivity(activity);
           presentToast({
             message: 'Übung gestartet',
             icon: timer,
@@ -82,25 +88,30 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             mode: 'ios',
             color: 'primary',
           });
+        })
+        .catch(() => {
+          presentToast({
+            message: 'Etwas ist schiefgelaufen',
+            icon: closeCircleOutline,
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'danger',
+          });
         });
     };
 
     const handleTimerStop = (time: ActivityTimerResult) => {
-      activityStore
-        .endActivity({
-          parkId: park?.id ?? 0,
-          exerciseId: park?.exercises[0].id ?? 0,
-        })
-        .then(() => {
-          presentToast({
-            message: 'Übung beendet',
-            icon: stopCircle,
-            duration: 2000,
-            position: 'top',
-            mode: 'ios',
-            color: 'primary',
-          });
+      activityStore.endActivity({ activityId: 0 }).then(() => {
+        presentToast({
+          message: 'Übung beendet',
+          icon: stopCircle,
+          duration: 2000,
+          position: 'top',
+          mode: 'ios',
+          color: 'primary',
         });
+      });
     };
 
     return (
