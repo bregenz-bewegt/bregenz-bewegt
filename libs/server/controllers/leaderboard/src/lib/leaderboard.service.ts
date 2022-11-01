@@ -56,13 +56,13 @@ export class LeaderboardService {
 
     return users
       .map((user) => {
-        const { activities } = user;
+        const { activities, ...rest } = user;
 
         return {
-          ...user,
+          ...rest,
           coins: activities.reduce((acc, curr) => acc + curr.exercise.coins, 0),
         };
       })
-      .sort((a, b) => a.coins - b.coins);
+      .sort((a, b) => b.coins - a.coins);
   }
 }
