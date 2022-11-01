@@ -79,6 +79,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           exerciseId: park?.exercises[0].id ?? -1,
         })
         .then((activity) => {
+          console.log(activity);
           setActivity(activity);
           presentToast({
             message: 'Übung gestartet',

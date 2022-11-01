@@ -10,6 +10,7 @@
 -- AlterTable
 ALTER TABLE `activity` DROP PRIMARY KEY,
     MODIFY `id` VARCHAR(191) NOT NULL,
+    MODIFY `endedAt` DATETIME(3) NULL,
     ADD PRIMARY KEY (`id`);
 
 -- AlterTable

@@ -77,12 +77,12 @@ model Coordinates {
 }
 
 model Activity {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   startedAt  DateTime
-  endedAt    DateTime
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  endedAt    DateTime?
+  exercise   Exercise  @relation(fields: [exerciseId], references: [id])
   exerciseId Int
-  user       User?    @relation(fields: [userId], references: [id])
+  user       User?     @relation(fields: [userId], references: [id])
   userId     String?
 }
 

@@ -8,7 +8,19 @@ export class ActivityService {
   constructor(private prismaService: PrismaService) {}
 
   async startActivity(userId: User['id'], dto: StartActivityDto) {
-    console.log(userId, dto);
+    this.prismaService.user.update({
+      where: { id: userId },
+      data: {
+        activities: {
+          create: [
+            {
+              exercise: { connect: { id: dto.exerciseId } },
+              startedAt: new Date(),
+            },
+          ],
+        },
+      },
+    });
   }
 
   async endActivity(userId: User['id'], dto: EndActivityDto) {
