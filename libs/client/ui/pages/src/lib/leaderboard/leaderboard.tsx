@@ -90,18 +90,14 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     }, []);
 
     useIonViewWillEnter(() => {
-      console.log('view', leaderboard.length);
       fetchLeaderboardWithCompetitor({
         skip: 0,
         take: leaderboard.length,
         year: 2022,
       });
-    }, []);
-
-    console.log(leaderboard.length);
+    }, [leaderboard.length]);
 
     const loadInfinite = (e: any) => {
-      console.log('infinite');
       if (leaderboard.length === MAX_SHOWN_COMPETITORS)
         return e.target.complete();
 
