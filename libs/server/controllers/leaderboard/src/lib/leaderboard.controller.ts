@@ -26,6 +26,7 @@ export class LeaderboardController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   getLeaderboard(
+    @GetCurrentUser('sub') userId: User['id'],
     @Query(
       new ValidationPipe({
         transform: true,
@@ -35,13 +36,15 @@ export class LeaderboardController {
     )
     dto: LeaderboardPaginationQueryDto
   ): Promise<Leaderboard> {
-    return this.leaderboardService.getLeaderboard(dto);
+    return this.leaderboardService.getLeaderboard(userId, dto);
   }
 
   @Get('competitor')
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  getCompetitor(@GetCurrentUser('sub') id: User['id']): Promise<Competitor> {
-    return this.leaderboardService.getCompetitor(id);
+  getCompetitor(
+    @GetCurrentUser('sub') userId: User['id']
+  ): Promise<Competitor> {
+    return this.leaderboardService.getCompetitor(userId);
   }
 }

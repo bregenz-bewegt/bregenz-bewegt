@@ -13,15 +13,15 @@ export class LeaderboardService {
   private leaderboardLimit = 100;
   constructor(private prismaService: PrismaService) {}
 
-  async getLeaderboard({
-    skip,
-    take,
-  }: LeaderboardPaginationQueryDto): Promise<Leaderboard> {
+  async getLeaderboard(
+    userId: User['id'],
+    { skip, take }: LeaderboardPaginationQueryDto
+  ): Promise<Leaderboard> {
     if (skip + take > this.leaderboardLimit) {
       take = 0;
     }
 
-    const users = await this.getRankedUsersWithCoins({ skip, take });
+    const users = await this.getRankedUsersWithCoins(userId, { skip, take });
 
     return users.map((user) => ({
       username: user.username,
@@ -30,7 +30,7 @@ export class LeaderboardService {
   }
 
   async getCompetitor(userId: User['id']): Promise<Competitor> {
-    const users = await this.getRankedUsersWithCoins();
+    const users = await this.getRankedUsersWithCoins(userId);
     const index = users.findIndex((user) => user.id === userId);
     const competitor = users[index];
 
@@ -41,12 +41,29 @@ export class LeaderboardService {
     };
   }
 
-  async getRankedUsersWithCoins(options?: {
-    skip?: number;
-    take?: number;
-  }): Promise<WithCoins<User>[]> {
+  async getRankedUsersWithCoins(
+    userId: User['id'],
+    options?: {
+      skip?: number;
+      take?: number;
+    }
+  ): Promise<WithCoins<User>[]> {
     const users = await this.prismaService.user.findMany({
-      where: { role: { not: Role.GUEST } },
+      where: {
+        OR: [
+          { id: userId },
+          {
+            AND: [
+              {
+                role: { not: Role.GUEST },
+              },
+              {
+                preferences: { public: true },
+              },
+            ],
+          },
+        ],
+      },
       include: {
         activities: { select: { exercise: { select: { coins: true } } } },
       },

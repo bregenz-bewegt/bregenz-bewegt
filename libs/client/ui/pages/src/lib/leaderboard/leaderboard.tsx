@@ -21,6 +21,7 @@ import {
   IonSelectOption,
   IonSkeletonText,
   IonText,
+  useIonViewDidEnter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
@@ -54,6 +55,32 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
         ?.getLeaderboard({
           skip: 0,
           take: COMPETIORS_RELOAD_CHUNK_SIZE,
+          year: 2022,
+        })
+        .then((data) => {
+          setLeaderboard(data);
+          leaderboardStore
+            ?.getCompetitor()
+            .then((data) => {
+              setCompetitor(data);
+              setIsLoading(false);
+            })
+            .catch(() => {
+              setCompetitor(undefined);
+              setIsLoading(false);
+            });
+        })
+        .catch(() => {
+          setLeaderboard([]);
+          setIsLoading(false);
+        });
+    }, []);
+
+    useIonViewDidEnter(() => {
+      leaderboardStore
+        ?.getLeaderboard({
+          skip: 0,
+          take: leaderboard.length,
           year: 2022,
         })
         .then((data) => {
