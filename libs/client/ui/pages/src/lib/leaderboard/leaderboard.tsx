@@ -82,6 +82,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     };
 
     useEffect(() => {
+      console.log('effect');
       fetchLeaderboardWithCompetitor({
         skip: 0,
         take: COMPETIORS_RELOAD_CHUNK_SIZE,
