@@ -90,6 +90,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     }, []);
 
     useIonViewDidEnter(() => {
+      console.log(leaderboard.length);
       fetchLeaderboardWithCompetitor({
         skip: 0,
         take: leaderboard.length,
