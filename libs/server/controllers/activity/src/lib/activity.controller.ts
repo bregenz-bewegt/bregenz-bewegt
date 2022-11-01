@@ -13,7 +13,7 @@ export class ActivityController {
     @GetCurrentUser('sub') userId: User['id'],
     @Body() dto: StartActivityDto
   ) {
-    this.activityService.startActivity(userId, dto);
+    return this.activityService.startActivity(userId, dto);
   }
 
   @Post('end')
@@ -21,6 +21,6 @@ export class ActivityController {
     @GetCurrentUser('sub') userId: User['id'],
     @Body() dto: EndActivityDto
   ) {
-    this.activityService.endActivity(userId, dto);
+    return this.activityService.endActivity(userId, dto);
   }
 }
