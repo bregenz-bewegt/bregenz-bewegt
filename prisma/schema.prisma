@@ -77,7 +77,7 @@ model Coordinates {
 }
 
 model Activity {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(cuid())
   startedAt  DateTime
   endedAt    DateTime
   exercise   Exercise @relation(fields: [exerciseId], references: [id])
