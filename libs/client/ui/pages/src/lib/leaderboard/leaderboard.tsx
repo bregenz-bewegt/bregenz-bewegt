@@ -22,7 +22,7 @@ import {
   IonSelectOption,
   IonSkeletonText,
   IonText,
-  useIonViewDidEnter,
+  useIonViewWillEnter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
@@ -82,7 +82,6 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     };
 
     useEffect(() => {
-      console.log('effect');
       fetchLeaderboardWithCompetitor({
         skip: 0,
         take: COMPETIORS_RELOAD_CHUNK_SIZE,
@@ -90,7 +89,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       });
     }, []);
 
-    useIonViewDidEnter(() => {
+    useIonViewWillEnter(() => {
       console.log('view', leaderboard.length);
       fetchLeaderboardWithCompetitor({
         skip: 0,
