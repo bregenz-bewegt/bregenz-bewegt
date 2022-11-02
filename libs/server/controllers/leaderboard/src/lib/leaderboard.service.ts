@@ -51,14 +51,24 @@ export class LeaderboardService {
   }
 
   async getFilterTimespans(): Promise<LeaderboardFilterTimespans> {
-    const span = await this.prismaService.activity.aggregate({
+    const { _min, _max } = await this.prismaService.activity.aggregate({
       _min: { endedAt: true },
       _max: { endedAt: true },
     });
 
-    console.log(span);
+    const range = [_max.endedAt.getFullYear(), _min.endedAt.getFullYear()];
+    const diff = range[0] - range[1];
+    const timespans =
+      diff > 1
+        ? [
+            range[0],
+            ...Array(diff)
+              .fill(null)
+              .map((_, i) => range[0] - (i + 1)),
+          ]
+        : [...new Set(range)];
 
-    return [2022, 2021, 2020];
+    return timespans;
   }
 
   async getRankedUsersWithCoins(
