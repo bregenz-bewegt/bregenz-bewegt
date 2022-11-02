@@ -99,6 +99,14 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       });
     }, []);
 
+    useEffect(() => {
+      fetchLeaderboardWithCompetitor({
+        skip: 0,
+        take: leaderboard.length,
+        year: timespan,
+      });
+    }, [timespan]);
+
     useIonViewWillEnter(() => {
       fetchLeaderboardWithCompetitor({
         skip: 0,
