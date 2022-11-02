@@ -139,8 +139,6 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
         });
     };
 
-    console.log(timespan, filterTimespans);
-
     return (
       <IonPage className="leaderboard">
         <Header />
