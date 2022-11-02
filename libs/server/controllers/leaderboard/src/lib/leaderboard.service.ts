@@ -1,7 +1,9 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import {
   Competitor,
+  GetCompetitorDto,
   Leaderboard,
+  LeaderboardFilterTimespans,
   LeaderboardPaginationQueryDto,
   WithCoins,
 } from '@bregenz-bewegt/shared/types';
@@ -15,13 +17,17 @@ export class LeaderboardService {
 
   async getLeaderboard(
     userId: User['id'],
-    { skip, take }: LeaderboardPaginationQueryDto
+    { skip, take, year }: LeaderboardPaginationQueryDto
   ): Promise<Leaderboard> {
     if (skip + take > this.leaderboardLimit) {
       take = 0;
     }
 
-    const users = await this.getRankedUsersWithCoins(userId, { skip, take });
+    const users = await this.getRankedUsersWithCoins(userId, {
+      skip,
+      take,
+      year,
+    });
 
     return users.map((user) => ({
       username: user.username,
@@ -29,8 +35,11 @@ export class LeaderboardService {
     }));
   }
 
-  async getCompetitor(userId: User['id']): Promise<Competitor> {
-    const users = await this.getRankedUsersWithCoins(userId);
+  async getCompetitor(
+    userId: User['id'],
+    { year }: GetCompetitorDto
+  ): Promise<Competitor> {
+    const users = await this.getRankedUsersWithCoins(userId, { year });
     const index = users.findIndex((user) => user.id === userId);
     const competitor = users[index];
 
@@ -41,11 +50,23 @@ export class LeaderboardService {
     };
   }
 
+  async getFilterTimespans(): Promise<LeaderboardFilterTimespans> {
+    const span = await this.prismaService.activity.aggregate({
+      _min: { endedAt: true },
+      _max: { endedAt: true },
+    });
+
+    console.log(span);
+
+    return [2022, 2021, 2020];
+  }
+
   async getRankedUsersWithCoins(
     userId: User['id'],
     options?: {
       skip?: number;
       take?: number;
+      year?: number;
     }
   ): Promise<WithCoins<User>[]> {
     const users = await this.prismaService.user.findMany({
@@ -65,7 +86,23 @@ export class LeaderboardService {
         ],
       },
       include: {
-        activities: { select: { exercise: { select: { coins: true } } } },
+        activities: {
+          ...(options?.year !== undefined
+            ? {
+                where: {
+                  AND: [
+                    {
+                      endedAt: { gte: new Date(options.year, 0, 1) },
+                    },
+                    {
+                      endedAt: { lte: new Date(options.year, 11, 31) },
+                    },
+                  ],
+                },
+              }
+            : {}),
+          select: { exercise: { select: { coins: true } } },
+        },
       },
       ...(options?.skip !== undefined ? { skip: options.skip } : {}),
       ...(options?.skip !== undefined ? { take: options.take } : {}),

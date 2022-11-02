@@ -1,7 +1,9 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import {
   Competitor,
+  GetCompetitorDto,
   Leaderboard,
+  LeaderboardFilterTimespans,
   LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import { Store } from './store';
@@ -16,9 +18,14 @@ export class LeaderboardStore implements Store {
     return <Leaderboard>data;
   }
 
-  async getCompetitor(): Promise<Competitor> {
-    const { data } = await http.get(`/leaderboard/competitor`);
+  async getCompetitor(params: GetCompetitorDto): Promise<Competitor> {
+    const { data } = await http.get(`/leaderboard/competitor`, { params });
     return <Competitor>data;
+  }
+
+  async getFilterTimespans(): Promise<LeaderboardFilterTimespans> {
+    const { data } = await http.get(`/leaderboard/filter-timespans`);
+    return <LeaderboardFilterTimespans>data;
   }
 }
 

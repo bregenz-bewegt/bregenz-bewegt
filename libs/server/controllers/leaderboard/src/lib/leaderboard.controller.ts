@@ -5,7 +5,9 @@ import {
 } from '@bregenz-bewegt/server/common';
 import {
   Competitor,
+  GetCompetitorDto,
   Leaderboard,
+  LeaderboardFilterTimespans,
   LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import {
@@ -43,8 +45,23 @@ export class LeaderboardController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   getCompetitor(
-    @GetCurrentUser('sub') userId: User['id']
+    @GetCurrentUser('sub') userId: User['id'],
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
+        forbidNonWhitelisted: true,
+      })
+    )
+    dto: GetCompetitorDto
   ): Promise<Competitor> {
-    return this.leaderboardService.getCompetitor(userId);
+    return this.leaderboardService.getCompetitor(userId, dto);
+  }
+
+  @Get('filter-timespans')
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  getFilterableTimespans(): Promise<LeaderboardFilterTimespans> {
+    return this.leaderboardService.getFilterTimespans();
   }
 }

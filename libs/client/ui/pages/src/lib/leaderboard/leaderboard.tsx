@@ -8,6 +8,7 @@ import {
 import {
   Competitor,
   Leaderboard as LeaderboardType,
+  LeaderboardFilterTimespans,
   LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import {
@@ -41,7 +42,6 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
   userStore.storeKey
 )(
   observer(({ leaderboardStore, userStore }) => {
-    const [timespan, setTimespan] = useState<string>();
     const [leaderboard, setLeaderboard] = useState<LeaderboardType>(
       Array<LeaderboardType extends readonly (infer T)[] ? T : never>(10).fill({
         username: '',
@@ -50,6 +50,11 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     );
     const [competitor, setCompetitor] = useState<Competitor>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [filterTimespans, setFilterTimespans] =
+      useState<LeaderboardFilterTimespans>();
+    const [timespan, setTimespan] = useState<
+      LeaderboardFilterTimespans[number]
+    >(new Date().getFullYear());
 
     const fetchLeaderboardWithCompetitor = ({
       skip,
@@ -65,7 +70,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
         .then((data) => {
           setLeaderboard(data);
           leaderboardStore
-            ?.getCompetitor()
+            ?.getCompetitor({ year })
             .then((data) => {
               setCompetitor(data);
               setIsLoading(false);
@@ -82,10 +87,15 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     };
 
     useEffect(() => {
+      leaderboardStore
+        ?.getFilterTimespans()
+        .then((data) => setFilterTimespans(data))
+        .catch(() => setFilterTimespans([]));
+
       fetchLeaderboardWithCompetitor({
         skip: 0,
         take: COMPETIORS_RELOAD_CHUNK_SIZE,
-        year: 2022,
+        year: timespan,
       });
     }, []);
 
@@ -93,7 +103,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       fetchLeaderboardWithCompetitor({
         skip: 0,
         take: leaderboard.length,
-        year: 2022,
+        year: timespan,
       });
     }, [leaderboard.length]);
 
@@ -109,7 +119,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
             MAX_SHOWN_COMPETITORS
               ? MAX_SHOWN_COMPETITORS - leaderboard.length
               : COMPETIORS_RELOAD_CHUNK_SIZE,
-          year: 2022,
+          year: timespan,
         })
         .then((data) => {
           setLeaderboard((prev) => [...prev, ...data]);
@@ -120,6 +130,8 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
           e.target.complete();
         });
     };
+
+    console.log(timespan, filterTimespans);
 
     return (
       <IonPage className="leaderboard">
@@ -140,7 +152,9 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                 onIonChange={(e) => setTimespan(e.detail.value)}
                 placeholder="Jahr"
               >
-                <IonSelectOption value={'2022'}>2022</IonSelectOption>
+                {filterTimespans?.map((span) => (
+                  <IonSelectOption value={span}>{span}</IonSelectOption>
+                ))}
               </IonSelect>
             </IonCol>
           </IonRow>
