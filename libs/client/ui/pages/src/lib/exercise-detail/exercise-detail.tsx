@@ -34,13 +34,8 @@ import {
   ActivityTimer,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
-import {
-  play,
-  timer,
-  stopCircle,
-  closeCircleOutline,
-  close,
-} from 'ionicons/icons';
+import { play, timer, stopCircle, close } from 'ionicons/icons';
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 
 interface MatchParams {
   park: string;
@@ -60,6 +55,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 )(
   observer(({ parkStore, tabStore, match }) => {
     const [presentToast] = useIonToast();
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [park, setPark] = useState<Required<Park>>();
     const [activity, setActivity] = useState<Activity>();
 
@@ -96,30 +92,24 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             buttons: [{ icon: close, role: 'cancel' }],
           });
         })
-        .catch(() => {
-          presentToast({
-            message: 'Etwas ist schiefgelaufen',
-            icon: closeCircleOutline,
-            duration: 2000,
-            position: 'top',
-            mode: 'ios',
-            color: 'danger',
-          });
-        });
+        .catch(() => presentDefaultErrorToast());
     };
 
     const handleTimerStop = (time: ActivityTimerResult) => {
-      activityStore.endActivity({ activityId: activity?.id ?? '' }).then(() => {
-        presentToast({
-          message: 'Übung beendet',
-          icon: stopCircle,
-          duration: 2000,
-          position: 'top',
-          mode: 'ios',
-          color: 'primary',
-          buttons: [{ icon: close, role: 'cancel' }],
-        });
-      });
+      activityStore
+        .endActivity({ activityId: activity?.id ?? '' })
+        .then(() => {
+          presentToast({
+            message: 'Übung beendet',
+            icon: stopCircle,
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'primary',
+            buttons: [{ icon: close, role: 'cancel' }],
+          });
+        })
+        .catch(() => presentDefaultErrorToast());
     };
 
     return (

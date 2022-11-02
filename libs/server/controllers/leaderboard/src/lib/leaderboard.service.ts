@@ -110,7 +110,7 @@ export class LeaderboardService {
                   ],
                 },
               }
-            : {}),
+            : { where: { NOT: { endedAt: null } } }),
           select: { exercise: { select: { coins: true } } },
         },
       },

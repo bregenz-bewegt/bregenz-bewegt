@@ -29,12 +29,13 @@ import { useEffect, useState } from 'react';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
-import { closeCircleOutline, lockClosed } from 'ionicons/icons';
+import { lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
 import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -44,6 +45,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const router = useIonRouter();
     const [presentToast] = useIonToast();
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [presentAlert] = useIonAlert();
     const [presentLoading, dismissLoading] = useIonLoading();
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
@@ -52,14 +54,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     const showFailureToast = () => {
       dismissLoading();
-      presentToast({
-        message: 'Etwas ist schiefgelaufen',
-        icon: closeCircleOutline,
-        duration: 2000,
-        position: 'top',
-        mode: 'ios',
-        color: 'danger',
-      });
+      presentDefaultErrorToast();
     };
 
     const showSuccessToast = () => {

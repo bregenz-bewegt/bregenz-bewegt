@@ -10,11 +10,10 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  useIonToast,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
-import { closeCircleOutline } from 'ionicons/icons';
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 
 export interface PupblicProfileProps {
   userStore?: UserStore;
@@ -22,7 +21,8 @@ export interface PupblicProfileProps {
 
 export const PublicProfile = inject(userStore.storeKey)(
   observer(({ userStore }: PupblicProfileProps) => {
-    const [presentToast] = useIonToast();
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
+
     const [publicProfile, setPublicProfile] = useState<boolean>(false);
 
     useEffect(() => {
@@ -33,16 +33,9 @@ export const PublicProfile = inject(userStore.storeKey)(
 
     const handlePublicChange = (c: boolean) => {
       setPublicProfile(c);
-      userStore?.patchPreferences({ public: c }).catch(() => {
-        presentToast({
-          message: 'Etwas ist schiefgelaufen',
-          icon: closeCircleOutline,
-          duration: 2000,
-          position: 'top',
-          mode: 'ios',
-          color: 'danger',
-        });
-      });
+      userStore
+        ?.patchPreferences({ public: c })
+        .catch(() => presentDefaultErrorToast());
     };
 
     return (
