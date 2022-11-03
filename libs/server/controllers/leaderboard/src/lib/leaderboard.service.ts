@@ -60,12 +60,7 @@ export class LeaderboardService {
     const diff = range[0] - range[1];
     const timespans =
       diff > 1
-        ? [
-            range[0],
-            ...Array(diff)
-              .fill(null)
-              .map((_, i) => range[0] - (i + 1)),
-          ]
+        ? [...Array(diff + 1).keys()].map((x) => range[0] - x)
         : [...new Set(range)];
 
     return timespans;
@@ -115,7 +110,7 @@ export class LeaderboardService {
         },
       },
       ...(options?.skip !== undefined ? { skip: options.skip } : {}),
-      ...(options?.skip !== undefined ? { take: options.take } : {}),
+      ...(options?.take !== undefined ? { take: options.take } : {}),
     });
 
     return users
