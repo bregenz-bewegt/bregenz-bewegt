@@ -11,8 +11,9 @@ export class ActivityService {
     return this.prismaService.activity.create({
       data: {
         user: { connect: { id: userId } },
-        exercise: { connect: { id: dto.exerciseId } },
         startedAt: new Date(),
+        exercise: { connect: { id: dto.exerciseId } },
+        park: { connect: { id: dto.parkId } },
       },
     });
   }
