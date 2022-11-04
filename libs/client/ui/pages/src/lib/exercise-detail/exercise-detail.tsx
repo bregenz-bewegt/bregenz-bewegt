@@ -11,6 +11,8 @@ import {
   IonTitle,
   IonToolbar,
   useIonToast,
+  useIonViewWillEnter,
+  useIonViewWillLeave,
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import {
@@ -69,9 +71,12 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       });
     }, [match.params.exercise, match.params.park]);
 
-    useEffect(() => {
+    useIonViewWillEnter(() => {
       tabStore?.setIsShown(false);
-      return () => tabStore?.setIsShown(true);
+    }, []);
+
+    useIonViewWillLeave(() => {
+      tabStore?.setIsShown(true);
     }, []);
 
     const handleTimerStart = () => {
