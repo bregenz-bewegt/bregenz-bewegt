@@ -156,7 +156,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                   interface="popover"
                   value={timespan}
                   className="leaderboard__timespan__select"
-                  onIonChange={(e) => setTimespan(e.detail.value.id)}
+                  onIonChange={(e) => setTimespan(e.detail.value)}
                   placeholder="Jahr"
                 >
                   {filterTimespans?.map((span) => (
