@@ -4,7 +4,9 @@ import {
   IonCard,
   IonCardContent,
   IonCardHeader,
+  IonChip,
   IonIcon,
+  IonItem,
   IonRow,
   IonText,
 } from '@ionic/react';
@@ -40,15 +42,26 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
         </IonCardHeader>
         <IonCardContent>
           {userStore?.user?.role === Role.USER ? (
-            <IonButton
-              expand="block"
-              routerLink={tabRoutes.start.route}
-              routerDirection="back"
-              mode="ios"
-            >
-              <IonIcon slot="start" icon={add} />
-              Mehr Coins verdienen
-            </IonButton>
+            <>
+              <IonText>
+                <h2>
+                  Jählich werden am 31.12. Preise an die Top 10 Sportler
+                  verliehen.
+                  <br />
+                  Sei dabei und verdien dir einen Preis!
+                </h2>
+              </IonText>
+              <IonButton
+                expand="block"
+                routerLink={tabRoutes.start.route}
+                routerDirection="back"
+                mode="ios"
+                className="coin-depot__content-button"
+              >
+                <IonIcon slot="start" icon={add} />
+                Mehr Coins verdienen
+              </IonButton>
+            </>
           ) : (
             <IonButton
               expand="block"
