@@ -13,11 +13,10 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  useIonToast,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
-import { closeCircleOutline } from 'ionicons/icons';
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 
 export interface DifficultyProps {
   userStore?: UserStore;
@@ -25,7 +24,7 @@ export interface DifficultyProps {
 
 export const Difficulty = inject(userStore.storeKey)(
   observer(({ userStore }: DifficultyProps) => {
-    const [presentToast] = useIonToast();
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [difficulties, setDifficulties] = useState<DifficultyType[]>([]);
 
     useEffect(() => {
@@ -51,16 +50,7 @@ export const Difficulty = inject(userStore.storeKey)(
       setDifficulties(tempDifficulties);
       userStore
         ?.patchPreferences({ difficulties: tempDifficulties })
-        .catch(() => {
-          presentToast({
-            message: 'Etwas ist schiefgelaufen',
-            icon: closeCircleOutline,
-            duration: 2000,
-            position: 'top',
-            mode: 'ios',
-            color: 'danger',
-          });
-        });
+        .catch(() => presentDefaultErrorToast());
     };
 
     return (

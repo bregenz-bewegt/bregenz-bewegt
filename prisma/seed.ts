@@ -24,7 +24,6 @@ const createUsers = async () => {
       lastname: 'Ostini',
       role: Role.USER,
       password: await argon.hash('testtest'),
-      coins: 800,
       active: true,
     },
     {
@@ -34,7 +33,6 @@ const createUsers = async () => {
       lastname: 'Stadelmann',
       role: Role.USER,
       password: await argon.hash('timonovich'),
-      coins: 1000,
       active: true,
     },
     ...(await Promise.all([
@@ -45,7 +43,6 @@ const createUsers = async () => {
         lastname: faker.name.lastName(),
         role: Role.USER,
         password: await argon.hash('testtest'),
-        coins: Math.floor(Math.random() * (100 + 1)) * 10,
         active: true,
       })),
     ])),
@@ -150,72 +147,72 @@ const createParks = async () => {
 };
 
 const createExercises = async () => {
-  const parks = await prisma.park.findMany();
   const difficulties = await prisma.difficulty.findMany();
+  const parks = await prisma.park.findMany();
   const exercises = [
     {
       name: 'Sit-Up',
       description: 'Some description',
+      coins: 10,
       difficulty: {
         connect: {
           id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
             ?.id,
         },
       },
-      points: 10,
       video: 'not-yet-defined',
     },
     {
       name: 'Liegestütze',
       description: 'Some description',
+      coins: 10,
       difficulty: {
         connect: {
           id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
             ?.id,
         },
       },
-      points: 10,
       video: 'not-yet-defined',
     },
     {
       name: 'Plank',
       description: 'Some description',
+      coins: 10,
       difficulty: {
         connect: {
           id: difficulties.find((d) => d.difficulty === DifficultyType.ADVANCED)
             ?.id,
         },
       },
-      points: 10,
       video: 'not-yet-defined',
     },
     {
       name: 'Squat',
       description: 'Some description',
+      coins: 10,
       difficulty: {
         connect: {
           id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
             ?.id,
         },
       },
-      points: 10,
       video: 'not-yet-defined',
     },
     {
       name: 'Versteinerte Hexe',
       description: 'Some description',
+      coins: 10,
       difficulty: {
         connect: {
           id: difficulties.find((d) => d.difficulty === DifficultyType.GAME)
             ?.id,
         },
       },
-      points: 10,
       video: 'not-yet-defined',
     },
   ];
 
-  await Promise.all([
+  await Promise.all(
     exercises.map(async (exercise) => {
       await prisma.exercise.create({
         data: {
@@ -225,36 +222,33 @@ const createExercises = async () => {
           },
         },
       });
-    }),
-  ]);
+    })
+  );
 };
 
 const createActivities = async () => {
   const users = await prisma.user.findMany();
   const exercises = await prisma.exercise.findMany();
 
-  await Promise.all([
+  await Promise.all(
     users.map(async (user) => {
       await prisma.user.update({
         where: { id: user.id },
         data: {
           activities: {
             createMany: {
-              data: await Promise.all(
-                exercises.map(async (exercise) => ({
-                  startedAt: new Date(),
-                  endedAt: new Date(),
-                  exerciseId: exercise.id,
-                }))
-              ),
+              data: exercises.map((exercise) => ({
+                startedAt: new Date(),
+                endedAt: new Date(),
+                exerciseId: exercise.id,
+              })),
             },
           },
         },
       });
-    }),
-  ]);
+    })
+  );
 };
-
 
 const deleteUnusedProfileImg = async () => {
   const imgPath = path.join(
@@ -276,9 +270,10 @@ const deleteUnusedProfileImg = async () => {
       !usedImg.includes(f) &&
       (await util.promisify(fs.unlink)(path.join(imgPath, f)))
   );
+};
 
 const createDifficulties = async () => {
-  await Promise.all([
+  await Promise.all(
     Object.values(DifficultyType).map(async (difficulty, i) => {
       await prisma.difficulty.create({
         data: {
@@ -286,19 +281,18 @@ const createDifficulties = async () => {
           difficulty,
         },
       });
-    }),
-  ]);
+    })
+  );
 };
 
 const main = async () => {
   await purgeDatabase();
-  createDifficulties().then(async () => {
-    await createUsers();
-    await createParks();
-    await createExercises();
-    await createActivities();
-    await deleteUnusedProfileImg();
-  });
+  await createDifficulties();
+  await createUsers();
+  await createParks();
+  await createExercises();
+  await createActivities();
+  await deleteUnusedProfileImg();
 };
 
 main()

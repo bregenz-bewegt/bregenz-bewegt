@@ -8,6 +8,8 @@ import {
 import {
   Competitor,
   Leaderboard as LeaderboardType,
+  LeaderboardFilterTimespans,
+  LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   IonCol,
@@ -21,6 +23,7 @@ import {
   IonSelectOption,
   IonSkeletonText,
   IonText,
+  useIonViewWillEnter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
@@ -39,27 +42,35 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
   userStore.storeKey
 )(
   observer(({ leaderboardStore, userStore }) => {
-    const [timespan, setTimespan] = useState<string>();
     const [leaderboard, setLeaderboard] = useState<LeaderboardType>(
       Array<LeaderboardType extends readonly (infer T)[] ? T : never>(10).fill({
-        username: null,
-        coins: null,
+        username: '',
+        coins: 0,
       })
     );
     const [competitor, setCompetitor] = useState<Competitor>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [filterTimespans, setFilterTimespans] =
+      useState<LeaderboardFilterTimespans>();
+    const [timespan, setTimespan] = useState<
+      LeaderboardFilterTimespans[number]
+    >(new Date().getFullYear());
 
-    useEffect(() => {
+    const fetchLeaderboardWithCompetitor = ({
+      skip,
+      take,
+      year,
+    }: LeaderboardPaginationQueryDto) => {
       leaderboardStore
         ?.getLeaderboard({
-          skip: 0,
-          take: COMPETIORS_RELOAD_CHUNK_SIZE,
-          year: 2022,
+          skip,
+          take,
+          year,
         })
         .then((data) => {
           setLeaderboard(data);
           leaderboardStore
-            ?.getCompetitor()
+            ?.getCompetitor({ year })
             .then((data) => {
               setCompetitor(data);
               setIsLoading(false);
@@ -73,7 +84,36 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
           setLeaderboard([]);
           setIsLoading(false);
         });
+    };
+
+    useEffect(() => {
+      leaderboardStore
+        ?.getFilterTimespans()
+        .then((data) => setFilterTimespans(data))
+        .catch(() => setFilterTimespans([]));
+
+      fetchLeaderboardWithCompetitor({
+        skip: 0,
+        take: COMPETIORS_RELOAD_CHUNK_SIZE,
+        year: timespan,
+      });
     }, []);
+
+    useEffect(() => {
+      fetchLeaderboardWithCompetitor({
+        skip: 0,
+        take: leaderboard.length,
+        year: timespan,
+      });
+    }, [timespan]);
+
+    useIonViewWillEnter(() => {
+      fetchLeaderboardWithCompetitor({
+        skip: 0,
+        take: leaderboard.length,
+        year: timespan,
+      });
+    }, [leaderboard.length]);
 
     const loadInfinite = (e: any) => {
       if (leaderboard.length === MAX_SHOWN_COMPETITORS)
@@ -87,10 +127,10 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
             MAX_SHOWN_COMPETITORS
               ? MAX_SHOWN_COMPETITORS - leaderboard.length
               : COMPETIORS_RELOAD_CHUNK_SIZE,
-          year: 2022,
+          year: timespan,
         })
         .then((data) => {
-          setLeaderboard((prev) => orderLeaderboardDesc([...prev, ...data]));
+          setLeaderboard((prev) => [...prev, ...data]);
           e.target.complete();
         })
         .catch(() => {
@@ -99,15 +139,11 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
         });
     };
 
-    const orderLeaderboardDesc = (list: LeaderboardType) => {
-      return list.sort((a, b) => (b.coins ?? 0) - (a.coins ?? 0));
-    };
-
     return (
       <IonPage className="leaderboard">
         <Header />
         <IonContent fullscreen>
-          <CoinDepot />
+          <CoinDepot competitor={competitor} />
           <IonRow>
             <IonCol className="ion-align-center">
               <IonText>
@@ -122,7 +158,9 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                 onIonChange={(e) => setTimespan(e.detail.value)}
                 placeholder="Jahr"
               >
-                <IonSelectOption value={'2022'}>2022</IonSelectOption>
+                {filterTimespans?.map((span) => (
+                  <IonSelectOption value={span}>{span}</IonSelectOption>
+                ))}
               </IonSelect>
             </IonCol>
           </IonRow>
@@ -139,7 +177,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                       {isLoading ? (
                         <IonSkeletonText style={{ height: '100%' }} animated />
                       ) : (
-                        i + 1
+                        <>#{i + 1}</>
                       )}
                     </div>
                   </IonCol>
@@ -160,7 +198,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
               ) && (
                 <IonRow className={`self snack-bottom`}>
                   <IonCol size="2" className={`align-center`}>
-                    <div className={`rank-medal`}>{competitor?.rank}</div>
+                    <div className={`rank-medal`}>#{competitor?.rank}</div>
                   </IonCol>
                   <IonCol size="8" className="align-center">
                     {competitor?.username}

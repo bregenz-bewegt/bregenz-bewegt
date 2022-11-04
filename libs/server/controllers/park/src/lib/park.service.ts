@@ -33,10 +33,10 @@ export class ParkService {
     });
   }
 
-  async getParkWithExercise(
+  async findByIdWithExercise(
     parkId: Park['id'],
     exerciseId: Exercise['id']
-  ): Promise<Park & { exercises: Exercise[] }> {
+  ): Promise<Park & { exercises: [Exercise] }> {
     return this.prismaService.park.findUnique({
       where: {
         id: parkId,
@@ -46,6 +46,6 @@ export class ParkService {
           where: { id: exerciseId },
         },
       },
-    });
+    }) as unknown as Park & { exercises: [Exercise] };
   }
 }
