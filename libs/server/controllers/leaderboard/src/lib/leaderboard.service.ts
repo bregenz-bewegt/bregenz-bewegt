@@ -58,9 +58,7 @@ export class LeaderboardService {
 
     const range = [_max.endedAt.getFullYear(), _min.endedAt.getFullYear()];
     const diff = range[0] - range[1];
-    const timespans = [
-      ...new Set([...Array(diff + 1).keys()].map((x) => range[0] - x)),
-    ];
+    const timespans = [...Array(diff + 1).keys()].map((x) => range[0] - x);
 
     return timespans;
   }
