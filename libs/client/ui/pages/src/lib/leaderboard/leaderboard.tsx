@@ -151,17 +151,19 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
               </IonText>
             </IonCol>
             <IonCol className="ion-align-center leaderboard__timespan">
-              <IonSelect
-                interface="popover"
-                value={timespan}
-                className="leaderboard__timespan__select"
-                onIonChange={(e) => setTimespan(e.detail.value)}
-                placeholder="Jahr"
-              >
-                {filterTimespans?.map((span) => (
-                  <IonSelectOption value={span}>{span}</IonSelectOption>
-                ))}
-              </IonSelect>
+              {filterTimespans && (
+                <IonSelect
+                  interface="popover"
+                  value={timespan}
+                  className="leaderboard__timespan__select"
+                  onIonChange={(e) => setTimespan(e.detail.value)}
+                  placeholder="Jahr"
+                >
+                  {filterTimespans?.map((span) => (
+                    <IonSelectOption value={span}>{span}</IonSelectOption>
+                  ))}
+                </IonSelect>
+              )}
             </IonCol>
           </IonRow>
           <IonGrid className="leaderboard__table">
