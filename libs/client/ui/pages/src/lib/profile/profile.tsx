@@ -75,6 +75,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       initialValues: {
         firstname: userStore?.user?.firstname ?? '',
         lastname: userStore?.user?.lastname ?? '',
+        email: userStore?.user?.email ?? '',
       },
       onSubmit: (values, { setSubmitting, setValues }) => {
         setSubmitting(true);
@@ -84,6 +85,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             setValues({
               firstname: result.firstname ?? '',
               lastname: result.lastname ?? '',
+              email: result.email ?? '',
             });
             setSubmitting(false);
             showSuccessToast();
@@ -209,10 +211,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         values: {
           firstname: userStore?.user?.firstname ?? '',
           lastname: userStore?.user?.lastname ?? '',
+          email: userStore?.user?.email ?? '',
         },
       });
       userStore?.refreshProfile().then(() => setIsImageLoaded(true));
-    }, [userStore?.user?.firstname, userStore?.user?.lastname]);
+    }, [
+      userStore?.user?.firstname,
+      userStore?.user?.lastname,
+      userStore?.user?.email,
+    ]);
 
     return (
       <IonPage className="profile">
@@ -363,6 +370,20 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     profile.touched.lastname
                       ? profile.errors.lastname
                       : undefined
+                  }
+                  onChange={profile.handleChange}
+                  onBlur={profile.handleBlur}
+                  disabled={!isImageLoaded}
+                />
+              </IonRow>
+              <IonRow>
+                <Input
+                  name="email"
+                  placeholder="Email"
+                  label="Email"
+                  value={profile.values.email}
+                  error={
+                    profile.touched.email ? profile.errors.email : undefined
                   }
                   onChange={profile.handleChange}
                   onBlur={profile.handleBlur}
