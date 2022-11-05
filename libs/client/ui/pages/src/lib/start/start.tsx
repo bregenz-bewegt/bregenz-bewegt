@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react';
-import {
-  Header,
-  ParkCard,
-  TransitionBlock,
-} from '@bregenz-bewegt/client-ui-components';
+import { Header, Map, ParkList } from '@bregenz-bewegt/client-ui-components';
 import {
   IonContent,
   IonPage,
-  IonSearchbar,
   IonSegment,
   IonSegmentButton,
   IonText,
@@ -16,11 +11,6 @@ import { Park, ParkDisplayType } from '@bregenz-bewegt/client/types';
 import './start.scss';
 import { parkStore, ParkStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
-import {
-  IonSearchbarCustomEvent,
-  SearchbarChangeEventDetail,
-} from '@ionic/core';
-import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 interface StartProps {
   parkStore?: ParkStore;
@@ -29,8 +19,7 @@ interface StartProps {
 export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
   observer(({ parkStore }) => {
     const [isLoadingParks, setIsLoadingParks] = useState<boolean>(false);
-    const [searchText, setSearchText] = useState<string>('');
-    const [parksResult, setParksResult] = useState<Park[]>(
+    const [parks, setParks] = useState<Park[]>(
       Array<Park>(10).fill({ id: 0, name: '', address: '', image: '', qr: '' })
     );
     const [parkDisplayType, setParkDisplayType] = useState<ParkDisplayType>(
@@ -39,27 +28,10 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
 
     const fetchParks = async () => {
       setIsLoadingParks(true);
-      parkStore?.getParks().then((parks) => {
-        setParksResult(parks ?? []);
+      parkStore?.getParks().then((newParks) => {
+        newParks && setParks(newParks);
         setIsLoadingParks(false);
       });
-    };
-
-    const handleSearch = (
-      e: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
-    ) => {
-      setSearchText(e.detail.value ?? searchText);
-
-      const query = e.detail.value?.trim().toLowerCase();
-      if (!query) return setParksResult(parkStore?.parks ?? parksResult);
-
-      const queriedParks = parkStore?.parks.filter(
-        (park) =>
-          park.name.toLowerCase().includes(query) ||
-          park.address.toLowerCase().includes(query)
-      );
-
-      setParksResult(queriedParks ?? parksResult);
     };
 
     useEffect(() => {
@@ -88,32 +60,11 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
               Karte
             </IonSegmentButton>
           </IonSegment>
-          {parksResult.length > 0 ? (
+          {parks.length > 0 ? (
             parkDisplayType === ParkDisplayType.List ? (
-              <>
-                <IonSearchbar
-                  mode="ios"
-                  value={searchText}
-                  onIonChange={(e) => handleSearch(e)}
-                  debounce={250}
-                  placeholder="Suche nach Spielplätzen"
-                  className="start__content__searchbar"
-                ></IonSearchbar>
-                <div className="start__content__parks-list">
-                  <TransitionBlock />
-                  {parksResult.map((park) => (
-                    <ParkCard
-                      isLoading={isLoadingParks}
-                      title={park.name}
-                      location={park.address}
-                      image={park.image}
-                      link={`${tabRoutes.start.route}/${park.id}`}
-                    />
-                  ))}
-                </div>
-              </>
+              <ParkList isLoadingParks={isLoadingParks} parks={parks} />
             ) : (
-              <IonText>Map</IonText>
+              <Map parks={parks} />
             )
           ) : (
             <IonText className="start__content__no-results">
