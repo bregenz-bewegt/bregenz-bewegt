@@ -32,7 +32,10 @@ import { useFormik } from 'formik';
 import { lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
-import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
+import {
+  PatchProfileDto,
+  ValidProfilePictureMimeType,
+} from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
@@ -77,11 +80,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         lastname: userStore?.user?.lastname ?? '',
         email: userStore?.user?.email ?? '',
       },
-      validationSchema: profileSchema,
       onSubmit: (values, { setSubmitting, setValues }) => {
         setSubmitting(true);
+        const emailChanged = values.email !== userStore?.user?.email;
         userStore
-          ?.patchProfile((({ email, ...fl }) => fl)(values))
+          ?.patchProfile(
+            emailChanged
+              ? ({ ...values, active: false } as PatchProfileDto)
+              : values
+          )
           .then((result) => {
             setValues({
               firstname: result.firstname ?? '',
@@ -90,6 +97,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             });
             setSubmitting(false);
             showSuccessToast();
+            emailChanged && handleLogout('/login', userStore?.user?.role);
           })
           .catch(() => {
             setSubmitting(false);
