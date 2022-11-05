@@ -65,7 +65,7 @@ model Park {
   image       String
   coordinates Coordinates?
   exercises   Exercise[]
-  Activity    Activity[]
+  activities  Activity[]
 }
 
 model Coordinates {
