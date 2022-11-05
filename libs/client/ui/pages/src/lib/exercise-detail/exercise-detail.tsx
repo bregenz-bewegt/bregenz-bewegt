@@ -58,7 +58,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
   observer(({ parkStore, tabStore, match }) => {
     const [presentToast] = useIonToast();
     const [presentDefaultErrorToast] = useDefaultErrorToast();
-    const [park, setPark] = useState<Required<Park>>();
+    const [park, setPark] = useState<Park>();
     const [activity, setActivity] = useState<Activity>();
 
     useEffect(() => {
@@ -83,7 +83,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       activityStore
         .startActivity({
           parkId: park?.id ?? -1,
-          exerciseId: park?.exercises[0].id ?? -1,
+          exerciseId: park?.exercises ? park?.exercises[0].id : -1,
         })
         .then((activity) => {
           setActivity(activity);
@@ -148,15 +148,15 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
               </div>
               <div className="exercise-detail__content__content__exercise-wrapper">
                 <IonText>
-                  <h2>{park?.exercises[0].name}</h2>
-                  {park?.exercises[0].difficulty && (
+                  <h2>{park?.exercises && park?.exercises[0].name}</h2>
+                  {park?.exercises && park?.exercises[0].difficulty && (
                     <DifficultyBadge
                       difficulty={park?.exercises[0].difficulty}
                     />
                   )}
                 </IonText>
                 <IonText>
-                  <p>{park?.exercises[0].description}</p>
+                  <p>{park?.exercises && park?.exercises[0].description}</p>
                 </IonText>
               </div>
             </div>

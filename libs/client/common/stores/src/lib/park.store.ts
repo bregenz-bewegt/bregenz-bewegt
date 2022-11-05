@@ -48,7 +48,7 @@ export class ParkStore implements Store {
   async getParkWithExercise(
     parkId: Park['id'],
     exerciseId: Exercise['id']
-  ): Promise<(Park & { exercises: [Exercise] }) | undefined> {
+  ): Promise<Park | undefined> {
     try {
       const { data } = await http.get(
         `/parks/${parkId}/exercises/${exerciseId}`

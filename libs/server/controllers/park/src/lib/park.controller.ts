@@ -1,6 +1,6 @@
 import { Public } from '@bregenz-bewegt/server/common';
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
-import { DifficultyType, Exercise, Park } from '@prisma/client';
+import { Coordinates, DifficultyType, Exercise, Park } from '@prisma/client';
 import { ParkService } from './park.service';
 
 @Controller('parks')
@@ -9,7 +9,7 @@ export class ParkController {
 
   @Public()
   @Get()
-  getParks(): Promise<Park[]> {
+  getParks(): Promise<(Park & { coordinates: Coordinates })[]> {
     return this.parkService.findAll();
   }
 

@@ -1,16 +1,14 @@
-import { map } from 'rxjs';
 import { DifficultyType } from './../../../../../client/types/src/lib/entities/difficulty';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { Injectable } from '@nestjs/common';
-import { Difficulty, Exercise, Park } from '@prisma/client';
-import e from 'express';
+import { Coordinates, Exercise, Park } from '@prisma/client';
 
 @Injectable()
 export class ParkService {
   constructor(private prismaService: PrismaService) {}
 
-  async findAll(): Promise<Park[]> {
-    return this.prismaService.park.findMany();
+  async findAll(): Promise<(Park & { coordinates: Coordinates })[]> {
+    return this.prismaService.park.findMany({ include: { coordinates: true } });
   }
 
   async findById(id: Park['id']): Promise<Park> {

@@ -20,7 +20,15 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
   observer(({ parkStore }) => {
     const [isLoadingParks, setIsLoadingParks] = useState<boolean>(false);
     const [parks, setParks] = useState<Park[]>(
-      Array<Park>(10).fill({ id: 0, name: '', address: '', image: '', qr: '' })
+      Array<Park>(10).fill({
+        id: 0,
+        name: '',
+        address: '',
+        image: '',
+        qr: '',
+        coordinates: { id: 0, latitude: 0, longitude: 0, toleranceRadius: 0 },
+        exercises: [],
+      })
     );
     const [parkDisplayType, setParkDisplayType] = useState<ParkDisplayType>(
       ParkDisplayType.List
