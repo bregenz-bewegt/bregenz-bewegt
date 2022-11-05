@@ -228,7 +228,9 @@ const createExercises = async () => {
 
 const createActivities = async () => {
   const users = await prisma.user.findMany();
-  const exercises = await prisma.exercise.findMany();
+  const exercises = await prisma.exercise.findMany({
+    include: { parks: true },
+  });
 
   await Promise.all(
     users.map(async (user) => {
@@ -241,6 +243,7 @@ const createActivities = async () => {
                 startedAt: new Date(),
                 endedAt: new Date(),
                 exerciseId: exercise.id,
+                parkId: exercise.parks[0].id,
               })),
             },
           },

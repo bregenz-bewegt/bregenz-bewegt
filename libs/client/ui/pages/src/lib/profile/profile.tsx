@@ -417,48 +417,52 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             </div>
           </IonGrid>
           {!isGuest && (
-            <IonRow className="profile__content__danger-row">
-              <IonCol className="delete">
-                <IonButton
-                  onClick={() => handleDelete()}
-                  expand="block"
-                  mode="ios"
-                  color="danger"
-                >
-                  Konto löschen
-                </IonButton>
-              </IonCol>
-              <IonCol className="logout">
-                <IonButton
-                  onClick={() => handleLogout('/login', userStore?.user?.role)}
-                  expand="block"
-                  mode="ios"
-                >
-                  {isLoggingOut ? (
-                    <IonLabel>
-                      <IonSpinner name="crescent" />
-                    </IonLabel>
-                  ) : (
-                    'Abmelden'
-                  )}
-                </IonButton>
-              </IonCol>
-            </IonRow>
+            <>
+              <IonRow className="profile__content__danger-row">
+                <IonCol className="delete">
+                  <IonButton
+                    onClick={() => handleDelete()}
+                    expand="block"
+                    mode="ios"
+                    color="danger"
+                  >
+                    Konto löschen
+                  </IonButton>
+                </IonCol>
+                <IonCol className="logout">
+                  <IonButton
+                    onClick={() =>
+                      handleLogout('/login', userStore?.user?.role)
+                    }
+                    expand="block"
+                    mode="ios"
+                  >
+                    {isLoggingOut ? (
+                      <IonLabel>
+                        <IonSpinner name="crescent" />
+                      </IonLabel>
+                    ) : (
+                      'Abmelden'
+                    )}
+                  </IonButton>
+                </IonCol>
+              </IonRow>
+              <IonFooter>
+                <IonRow className="ion-justify-content-center account-created">
+                  <IonText color="medium">
+                    Konto erstellt am{' '}
+                    {new Date(
+                      userStore?.user?.registratedAt as any
+                    ).toLocaleDateString('de-DE', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </IonText>
+                </IonRow>
+              </IonFooter>
+            </>
           )}
-          <IonFooter>
-            <IonRow className="ion-justify-content-center account-created">
-              <IonText color="medium">
-                Konto erstellt am{' '}
-                {new Date(
-                  userStore?.user?.registratedAt as any
-                ).toLocaleDateString('de-DE', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric',
-                })}
-              </IonText>
-            </IonRow>
-          </IonFooter>
         </IonContent>
       </IonPage>
     );
