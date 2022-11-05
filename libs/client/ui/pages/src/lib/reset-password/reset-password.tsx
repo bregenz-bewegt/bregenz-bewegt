@@ -14,7 +14,7 @@ import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { useEffect } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { closeCircleOutline } from 'ionicons/icons';
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import { checkmark } from 'ionicons/icons';
 import './reset-password.scss';
 
@@ -31,6 +31,7 @@ export const ResetPassword = inject(userStore.storeKey)(
     const navigateBacktoLogin = () => history.push(`/login`);
     const history = useHistory();
     const [presentToast] = useIonToast();
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
     const reset = useFormik({
       initialValues: {
         password: '',
@@ -54,14 +55,7 @@ export const ResetPassword = inject(userStore.storeKey)(
           })
           .catch(() => {
             setSubmitting(false);
-            presentToast({
-              message: 'Etwas ist schiefgelaufen',
-              icon: closeCircleOutline,
-              duration: 2000,
-              position: 'top',
-              mode: 'ios',
-              color: 'danger',
-            });
+            presentDefaultErrorToast();
             navigateBacktoLogin();
           });
       },

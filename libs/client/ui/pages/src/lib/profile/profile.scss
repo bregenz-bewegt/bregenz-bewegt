@@ -1,12 +1,31 @@
 .profile {
   &__content {
+    &__locked {
+      &::part(background) {
+        filter: brightness(85%);
+      }
+    }
+
+    ion-grid {
+      position: relative;
+    }
+
     ion-avatar {
       height: calc(var(--spacing-5xl) * 2);
       width: calc(var(--spacing-5xl) * 2);
     }
 
     &__username {
-      margin: 0 0 var(--spacing-m) 0;
+      max-width: 80%;
+
+      h1 {
+        margin: 0 0 var(--spacing-m) 0;
+        display: block;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
 
     &__password-row {
@@ -16,6 +35,79 @@
       &__input {
         flex: 1;
         margin-right: 8px;
+      }
+    }
+
+    &__preferences {
+      margin-top: var(--spacing-m);
+    }
+
+    &__rankcheck {
+      margin: var(--spacing-s) 0;
+    }
+
+    &__danger-row {
+      ion-col.delete {
+        padding-inline-start: 0;
+      }
+
+      ion-col.logout {
+        padding-inline-end: 0;
+      }
+    }
+
+    .guest-lock {
+      position: relative;
+      pointer-events: none;
+      filter: blur(var(--spacing-m));
+    }
+
+    .guest-lock-modal {
+      position: absolute;
+      height: 100%;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      ion-grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--ion-color-primary-contrast);
+        border-radius: var(--spacing-m);
+        padding: var(--spacing-l) var(--spacing-m) var(--spacing-m)
+          var(--spacing-m);
+
+        ion-row {
+          justify-content: center;
+          width: 100%;
+
+          .lock-icon {
+            width: var(--spacing-3xl);
+            height: var(--spacing-3xl);
+            margin: var(--spacing-s) 0 var(--spacing-m) 0;
+          }
+
+          &.info {
+            text-align: center;
+            margin: 0 0 var(--spacing-m) 0;
+          }
+
+          ion-button {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    ion-footer {
+      margin-top: var(--spacing-m);
+
+      .account-created {
+        padding: var(--spacing-s) 0;
+        font-size: small;
       }
     }
   }

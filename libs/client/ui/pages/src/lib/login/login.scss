@@ -18,9 +18,10 @@
       &__socials {
         margin-bottom: var(--spacing-m);
 
-        // &__guest {
-        //   margin-left: auto;
-        // }
+        &__guest {
+          // margin-left: auto;
+          flex: 0.5;
+        }
       }
 
       &__forgot-password {

@@ -25,7 +25,6 @@ model User {
   passwordResetToken String?
   activationSecret   String?
   profilePicture     String?
-  coins              Int?         @default(0)
   preferences        Preferences?
   activities         Activity[]
 
@@ -33,10 +32,24 @@ model User {
 }
 
 model Preferences {
-  id         Int         @id @default(autoincrement())
-  difficulty Difficulty?
-  user       User        @relation(fields: [userId], references: [id])
-  userId     String      @unique
+  id           Int          @id @default(autoincrement())
+  difficulties Difficulty[]
+  public       Boolean      @default(true)
+  user         User?        @relation(fields: [userId], references: [id])
+  userId       String?      @unique
+}
+
+enum DifficultyType {
+  BEGINNER
+  ADVANCED
+  GAME
+}
+
+model Difficulty {
+  id          Int            @id @default(autoincrement())
+  difficulty  DifficultyType @unique
+  exercises   Exercise[]
+  preferences Preferences[]
 }
 
 enum Role {
@@ -52,6 +65,7 @@ model Park {
   image       String
   coordinates Coordinates?
   exercises   Exercise[]
+  activities  Activity[]
 }
 
 model Coordinates {
@@ -64,28 +78,25 @@ model Coordinates {
 }
 
 model Activity {
-  id         Int      @id @default(autoincrement())
+  id         String    @id @default(cuid())
   startedAt  DateTime
-  endedAt    DateTime
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  endedAt    DateTime?
+  exercise   Exercise  @relation(fields: [exerciseId], references: [id])
   exerciseId Int
-  User       User?    @relation(fields: [userId], references: [id])
+  park       Park      @relation(fields: [parkId], references: [id])
+  parkId     Int
+  user       User?     @relation(fields: [userId], references: [id])
   userId     String?
 }
 
-enum Difficulty {
-  BEGINNER
-  ADVANCED
-  GAME
-}
-
 model Exercise {
-  id          Int        @id @default(autoincrement())
-  name        String
-  description String
-  video       String
-  points      Int
-  difficulty  Difficulty
-  parks       Park[]
-  Activity    Activity[]
+  id           Int        @id @default(autoincrement())
+  name         String
+  description  String
+  video        String
+  coins        Int
+  difficulty   Difficulty @relation(fields: [difficultyId], references: [id])
+  difficultyId Int
+  parks        Park[]
+  activities   Activity[]
 }

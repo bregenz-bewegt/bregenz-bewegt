@@ -2,6 +2,9 @@ import {
   ResetPassword,
   ExerciseDetail,
   ParkDetail,
+  Appearance,
+  PublicProfile,
+  Difficulty,
 } from '@bregenz-bewegt/client-ui-pages';
 import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
 import {
@@ -9,15 +12,13 @@ import {
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonIcon,
-  IonLabel,
   IonFab,
   IonFabButton,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from '../tabs';
-import { scan } from 'ionicons/icons';
+import { ScanBarcode } from 'iconsax-react';
 
 export interface PrivateTabsOutletProps {
   tabStore?: TabStore;
@@ -72,12 +73,27 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
               path={tabRoutes.profile.route}
               component={tabRoutes.profile.component}
             ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/appearance`}
+              component={Appearance}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/public-profile`}
+              component={PublicProfile}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/difficulty`}
+              component={Difficulty}
+            ></Route>
             <Route path="">
               <Redirect to="/start" />
             </Route>
             {/* </Switch> */}
           </IonRouterOutlet>
-          <IonTabBar slot="bottom" hidden={!tabStore?.isShown}>
+          <IonTabBar slot="bottom" mode="md" hidden={!tabStore?.isShown}>
             {Object.values(tabRoutes).map((page, i) => {
               if (page.label !== 'Scan') {
                 return (
@@ -87,8 +103,7 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
                     href={page.route}
                     key={i}
                   >
-                    <IonIcon icon={page.icon} />
-                    <IonLabel>{page.label}</IonLabel>
+                    <page.icon />
                   </IonTabButton>
                 );
               } else {
@@ -107,7 +122,7 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             routerLink={tabRoutes.scan.route}
             routerDirection="root"
           >
-            <IonIcon icon={scan} />
+            <ScanBarcode size={24} variant="Bold" />
           </IonFabButton>
         </IonFab>
       </>

@@ -6,6 +6,10 @@
   border-radius: var(--spacing-s);
   padding: var(--spacing-s);
 
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--ion-color-light);
+  }
+
   &__sliding-restrictor {
     width: 100%;
     display: flex;

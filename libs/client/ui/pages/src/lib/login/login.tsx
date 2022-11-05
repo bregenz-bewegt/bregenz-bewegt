@@ -19,6 +19,7 @@ import { loginSchema } from '@bregenz-bewegt/client/common/validation';
 import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';
 import { loginError } from '@bregenz-bewegt/shared/errors';
 import { ForgotPasswordDto } from '@bregenz-bewegt/shared/types';
+import fingerprint from '@fingerprintjs/fingerprintjs';
 
 export interface LoginProps {
   userStore?: UserStore;
@@ -44,6 +45,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
         userStore
           ?.login({ ...values })
           .then(() => {
+            userStore.setIsLoggedIn(true);
             userStore.refreshProfile();
             setSubmitting(false);
             router.push('/start');
@@ -61,12 +63,18 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
       },
     });
 
-    const handleGuestLogin = () => {
+    const handleGuestLogin = async () => {
+      const agent = await fingerprint.load();
+      const { visitorId } = await agent.get();
+
       setIsGuestLoading(true);
       userStore
-        ?.guest()
+        ?.guest({ visitorId })
         .then(() => {
+          userStore.setIsLoggedIn(true);
+          userStore.refreshProfile();
           setIsGuestLoading(false);
+          router.push('/start');
         })
         .catch(() => {
           setIsGuestLoading(false);
@@ -84,7 +92,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage className="login" ref={page}>
-        <IonContent className="login__content" fullscreen>
+        <IonContent className="login__content" fullscreen scrollY={false}>
           <div className="login__flex-wrapper">
             <TitleBanner />
             <div className="login__content__login">
@@ -97,7 +105,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                   color="primary"
                   fill="outline"
                   className="login__content__login__socials__guest"
-                  onClick={() => handleGuestLogin()}
+                  onClick={handleGuestLogin}
                 >
                   {isGuestLoading ? (
                     <IonLabel>
@@ -163,7 +171,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 fill="outline"
                 routerLink="/register"
               >
-                Neu Registrieren
+                Registrieren
               </IonButton>
             </div>
           </div>

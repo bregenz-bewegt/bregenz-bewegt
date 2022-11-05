@@ -8,9 +8,11 @@ import * as argon from 'argon2';
 import speakeasy from 'speakeasy';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
-import { Prisma, User } from '@prisma/client';
+import { Prisma, Role, User } from '@prisma/client';
 import {
+  GuestDto,
   JwtPayload,
+  JwtPayloadWithoutRole,
   LoginDto,
   OtpWithSecret,
   RegisterDto,
@@ -37,15 +39,36 @@ export class AuthService {
     private mailService: MailService,
     private userService: UserService
   ) {}
+  private readonly guestUsernamePrefix = 'Gast#';
 
-  async guest(): Promise<User> {
-    const newGuest = await this.prismaService.user.create({
-      data: {
-        role: 'GUEST',
+  async guest(dto: GuestDto): Promise<Tokens> {
+    const returnTokens = async (
+      payload: JwtPayload<'GUEST'>
+    ): Promise<Tokens> => {
+      const tokens = await this.signTokens<'GUEST'>(payload);
+      this.updateRefreshToken(payload.sub, tokens.refresh_token);
+      return tokens;
+    };
+
+    const guest = await this.prismaService.user.findUnique({
+      where: {
+        username: `${this.guestUsernamePrefix}${dto.visitorId}`,
       },
     });
 
-    return newGuest;
+    if (guest) {
+      return returnTokens({ sub: guest.id, role: guest.role });
+    }
+
+    const newGuest = await this.prismaService.user.create({
+      data: {
+        role: 'GUEST',
+        username: `${this.guestUsernamePrefix}${dto.visitorId}`,
+        active: true,
+      },
+    });
+
+    return returnTokens({ sub: newGuest.id, role: newGuest.role });
   }
 
   async register(dto: RegisterDto): Promise<void> {
@@ -60,6 +83,16 @@ export class AuthService {
           password: hash,
           role: 'USER',
           activationSecret,
+          preferences: {
+            create: {
+              public: true,
+              difficulties: {
+                connect: (
+                  await this.prismaService.difficulty.findMany()
+                ).map((d) => ({ id: d.id })),
+              },
+            },
+          },
         },
       });
 
@@ -106,7 +139,11 @@ export class AuthService {
       },
     });
 
-    const tokens = await this.signTokens(user.id, user.email);
+    const tokens = await this.signTokens({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    });
     this.updateRefreshToken(user.id, tokens.refresh_token);
     return tokens;
   }
@@ -147,7 +184,11 @@ export class AuthService {
       throw new ForbiddenException(loginError.EMAIL_NOT_VERIFIED);
     }
 
-    const tokens = await this.signTokens(user.id, user.email);
+    const tokens = await this.signTokens({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    });
     this.updateRefreshToken(user.id, tokens.refresh_token);
     return tokens;
   }
@@ -166,10 +207,9 @@ export class AuthService {
     });
   }
 
-  async signTokens(userId: string, email: string): Promise<Tokens> {
-    const jwtPayload: JwtPayload = {
-      sub: userId,
-      email,
+  async signTokens<R extends Role>(payload: JwtPayload<R>): Promise<Tokens> {
+    const jwtPayload: JwtPayload<R> = {
+      ...payload,
     };
 
     const [access_token, refresh_token] = await Promise.all([
@@ -206,7 +246,11 @@ export class AuthService {
 
     if (!refreshTokenMatches) throw new ForbiddenException('Access denied');
 
-    const tokens = await this.signTokens(user.id, user.email);
+    const tokens = await this.signTokens({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    });
     this.updateRefreshToken(user.id, tokens.refresh_token);
     return tokens;
   }
@@ -228,7 +272,7 @@ export class AuthService {
   }
 
   async signPasswordResetToken(userId: string, email: string): Promise<string> {
-    const jwtPayload: JwtPayload = {
+    const jwtPayload: JwtPayloadWithoutRole = {
       sub: userId,
       email,
     };
@@ -309,6 +353,7 @@ export class AuthService {
         email: email,
       },
       data: {
+        passwordResetToken: null,
         password: passwordHash,
       },
     });

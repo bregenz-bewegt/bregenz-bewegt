@@ -1,10 +1,13 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
+import { Preferences, Role } from '@bregenz-bewegt/client/types';
 import type { User } from '@bregenz-bewegt/client/types';
 import type {
   ForgotPasswordDto,
+  GuestDto,
   LoginDto,
   PatchProfileDto,
+  PatchPreferencesDto,
   RegisterDto,
   Tokens,
   VerifyDto,
@@ -17,13 +20,20 @@ export class UserStore implements Store {
   @observable user?: User;
   @observable isLoggedIn = false;
   @observable isLoadingLoggedIn = false;
+  @observable isProfilePictureSet = false;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  async guest() {
-    const { data } = await http.post('/auth/local/guest');
+  async guest(dto: GuestDto) {
+    const { data } = await http.post('/auth/local/guest', dto);
+
+    await this.setTokens({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+    });
+
     return data;
   }
 
@@ -74,9 +84,26 @@ export class UserStore implements Store {
   }
 
   @action async patchProfile(dto: PatchProfileDto) {
-    const { data } = await http.patch('/users/profile', { ...dto });
+    const { data } = await http.patch('/users/profile', dto);
     this.setUser(data);
     return <User>data;
+  }
+
+  async deleteProfile() {
+    const { data } = await http.delete('/users/profile');
+    return data;
+  }
+
+  async fetchPreferences() {
+    const { data } = await http.get('/users/preferences');
+    if (this.user) this.user.preferences = data;
+    return <Preferences>data;
+  }
+
+  @action async patchPreferences(dto: PatchPreferencesDto) {
+    const { data } = await http.patch('/users/preferences', dto);
+    if (this.user) this.user.preferences = data;
+    return <Preferences>data;
   }
 
   async editProfilePicture(picture: globalThis.File) {
@@ -94,6 +121,14 @@ export class UserStore implements Store {
     return data;
   }
 
+  async removeProfilePicture() {
+    if (!this.isProfilePictureSet) return;
+
+    const { data } = await http.delete('/users/profile-picture');
+    this.setAvatarProfilePicture();
+    return data;
+  }
+
   @action async fetchProfilePicture() {
     try {
       const { data } = await http.get('/users/profile-picture', {
@@ -103,6 +138,7 @@ export class UserStore implements Store {
       reader.readAsDataURL(data);
       reader.onload = () => {
         this.setProfilePicture(`${reader.result}`);
+        this.setIsProfilePictureSet(true);
       };
       return reader.result;
     } catch (error) {
@@ -115,19 +151,19 @@ export class UserStore implements Store {
     this.isLoggedIn = value;
   }
 
-  @action setIsloadingLoginState(value: boolean) {
+  @action setIsLoadingLoggedIn(value: boolean) {
     this.isLoadingLoggedIn = value;
   }
 
   @action async initUser() {
-    this.setIsloadingLoginState(true);
+    this.setIsLoadingLoggedIn(true);
     const tokens = await this.getTokens();
 
     if (tokens.access_token) {
       this.refreshProfile();
       this.setIsLoggedIn(true);
     }
-    this.setIsloadingLoginState(false);
+    this.setIsLoadingLoggedIn(false);
   }
 
   @action async setTokens(tokens: Tokens) {
@@ -146,9 +182,16 @@ export class UserStore implements Store {
     }
   }
 
+  @action setIsProfilePictureSet(value: boolean) {
+    this.isProfilePictureSet = value;
+  }
+
   @action setAvatarProfilePicture() {
     if (this.user) {
-      this.user.profilePicture = `https://avatars.dicebear.com/api/initials/${this.user.email}.svg`;
+      this.user.profilePicture = `https://avatars.dicebear.com/api/initials/${
+        this.user.role === Role.USER ? this.user.email : 'BB'
+      }.svg`;
+      this.setIsProfilePictureSet(false);
     }
   }
 

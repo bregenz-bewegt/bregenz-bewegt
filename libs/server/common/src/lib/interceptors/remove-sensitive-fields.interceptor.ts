@@ -16,11 +16,15 @@ export class RemoveSensitiveFieldsInterceptor implements NestInterceptor {
               ...item,
               password: undefined,
               refreshToken: undefined,
+              passwordResetToken: undefined,
+              activationSecret: undefined,
             }))
           : {
               ...value,
               password: undefined,
               refreshToken: undefined,
+              passwordResetToken: undefined,
+              activationSecret: undefined,
             }
       )
     );

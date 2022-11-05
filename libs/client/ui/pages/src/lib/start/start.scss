@@ -31,7 +31,6 @@
       }
 
       .searchbar-input {
-        border: 1px solid var(--ion-color-medium);
       }
     }
 
@@ -50,6 +49,7 @@
     &__parks-list {
       overflow-y: scroll;
       flex-grow: 1;
+      padding-top: var(--spacing-m);
 
       ion-card:first-of-type {
         margin-top: 0;

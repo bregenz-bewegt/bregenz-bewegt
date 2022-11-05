@@ -14,7 +14,7 @@ import {
   IonText,
 } from '@ionic/react';
 import {
-  Difficulty,
+  DifficultyType,
   Park,
   ParkDisplayType,
 } from '@bregenz-bewegt/client/types';
@@ -39,17 +39,17 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
     const [quickFilters, setQuickFilters] = useState<QuickFilterOption[]>([
       {
         key: 0,
-        label: difficultyDisplayTexts[Difficulty.BEGINNER],
+        label: difficultyDisplayTexts[DifficultyType.BEGINNER],
         active: false,
       },
       {
         key: 1,
-        label: difficultyDisplayTexts[Difficulty.ADVANCED],
+        label: difficultyDisplayTexts[DifficultyType.ADVANCED],
         active: false,
       },
       {
         key: 2,
-        label: difficultyDisplayTexts[Difficulty.GAME],
+        label: difficultyDisplayTexts[DifficultyType.GAME],
         active: false,
       },
       {
@@ -59,7 +59,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       },
     ]);
     const [parksResult, setParksResult] = useState<Park[]>(
-      Array(10).fill({ id: 0, name: '', address: '', image: '', qr: '' })
+      Array<Park>(10).fill({ id: 0, name: '', address: '', image: '', qr: '' })
     );
     const [parkDisplayType, setParkDisplayType] = useState<ParkDisplayType>(
       ParkDisplayType.List
@@ -73,7 +73,6 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       });
     };
 
-    // TODO improve this with a fuzzy search algorithm
     const handleSearch = (
       e: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
     ) => {

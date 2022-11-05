@@ -4,14 +4,16 @@ import './title-banner.scss';
 /* eslint-disable-next-line */
 export interface TitleBannerProps {
   textSegments?: string[];
+  animated?: boolean;
 }
 
 export const TitleBanner: React.FC<TitleBannerProps> = ({
   textSegments = ['Bregenz', 'Bewegt'],
+  animated = false,
 }) => {
   return (
     <IonText className="title-banner">
-      <h1>
+      <h1 className={`${animated ? `animated` : ``}`}>
         {textSegments.map((segment, i, arr) => {
           return i === arr.length - 1 ? (
             segment

@@ -18,7 +18,7 @@ import {
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
-import { checkmark } from 'ionicons/icons';
+import { checkmark, mailOpen } from 'ionicons/icons';
 import './verify-email.scss';
 
 export interface VerifyEmailProps {
@@ -91,15 +91,20 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
           <IonContent className="ion-padding">
             <div className="flex-wrapper">
               <div className="flex-wrapper__content">
+                <IonIcon icon={mailOpen} size="large" />
                 <IonRow className="ion-justify-content-center">
                   <IonText className="verify-text">
                     <p>
                       Bitte bestätige deine E-Mail Adresse mit dem
                       Bestätigungscode, der an{' '}
-                      <IonText className="sent-email-address" color="primary">
-                        {email ?? 'deine E-Mail Addresse'}
-                      </IonText>{' '}
-                      versandt wurde.
+                      {email ? (
+                        <IonText className="sent-email-address" color="primary">
+                          {email}
+                        </IonText>
+                      ) : (
+                        'dich'
+                      )}{' '}
+                      versendet wurde.
                     </p>
                   </IonText>
                 </IonRow>

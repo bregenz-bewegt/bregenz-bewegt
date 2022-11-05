@@ -7,6 +7,9 @@ import {
   exerciseStore,
   activityStore,
   tabStore,
+  onboardingStore,
+  themeStore,
+  leaderboardStore,
 } from '@bregenz-bewegt/client/common/stores';
 
 const stores = {
@@ -15,6 +18,9 @@ const stores = {
   exerciseStore,
   activityStore,
   tabStore,
+  onboardingStore,
+  themeStore,
+  leaderboardStore,
 };
 
 interface StoreProviderProps {

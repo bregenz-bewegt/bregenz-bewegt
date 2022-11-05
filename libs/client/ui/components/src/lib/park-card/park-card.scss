@@ -1,5 +1,10 @@
 .park-card {
+  padding: var(--spacing-s) var(--spacing-s) 0 var(--spacing-s);
+
   ion-card-header {
+    padding-inline: var(--spacing-s);
+    padding-top: var(--spacing-s);
+
     ion-card-title {
       margin-bottom: var(--spacing-s);
     }
@@ -9,5 +14,6 @@
     object-fit: cover;
     width: 100%;
     height: 100px;
+    border-radius: var(--spacing-s);
   }
 }

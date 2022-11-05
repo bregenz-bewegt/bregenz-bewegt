@@ -1,0 +1,17 @@
+.item-group {
+  margin: var(--spacing-m) 0;
+  border-radius: var(--spacing-s);
+  background-color: var(--ion-color-light);
+
+  ion-item {
+    --background: transparent;
+
+    &:first-of-type {
+      border-radius: var(--spacing-s) var(--spacing-s) 0 0;
+    }
+
+    &:last-of-type {
+      border-radius: 0 0 var(--spacing-s) var(--spacing-s);
+    }
+  }
+}

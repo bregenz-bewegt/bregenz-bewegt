@@ -10,9 +10,14 @@ import {
   IonText,
   IonTitle,
   IonToolbar,
+  useIonToast,
+  useIonViewWillEnter,
+  useIonViewWillLeave,
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import {
+  ActivityStore,
+  activityStore,
   ParkStore,
   parkStore,
   tabStore,
@@ -20,14 +25,19 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Park, ActivityTimerResult } from '@bregenz-bewegt/client/types';
+import {
+  Park,
+  ActivityTimerResult,
+  Activity,
+} from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { location } from 'ionicons/icons';
 import {
   ActivityTimer,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
-import { play } from 'ionicons/icons';
+import { play, timer, stopCircle, close } from 'ionicons/icons';
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 
 interface MatchParams {
   park: string;
@@ -37,14 +47,19 @@ interface MatchParams {
 export interface ExerciseDetailProps extends RouteComponentProps<MatchParams> {
   parkStore?: ParkStore;
   tabStore?: TabStore;
+  activityStore?: ActivityStore;
 }
 
 export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
   parkStore.storeKey,
-  tabStore.storeKey
+  tabStore.storeKey,
+  activityStore.storeKey
 )(
   observer(({ parkStore, tabStore, match }) => {
+    const [presentToast] = useIonToast();
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [park, setPark] = useState<Required<Park>>();
+    const [activity, setActivity] = useState<Activity>();
 
     useEffect(() => {
       const parkId = +match.params.park;
@@ -56,17 +71,50 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       });
     }, [match.params.exercise, match.params.park]);
 
-    useEffect(() => {
+    useIonViewWillEnter(() => {
       tabStore?.setIsShown(false);
-      return () => tabStore?.setIsShown(true);
+    }, []);
+
+    useIonViewWillLeave(() => {
+      tabStore?.setIsShown(true);
     }, []);
 
     const handleTimerStart = () => {
-      //
+      activityStore
+        .startActivity({
+          parkId: park?.id ?? -1,
+          exerciseId: park?.exercises[0].id ?? -1,
+        })
+        .then((activity) => {
+          setActivity(activity);
+          presentToast({
+            message: 'Übung gestartet',
+            icon: timer,
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'primary',
+            buttons: [{ icon: close, role: 'cancel' }],
+          });
+        })
+        .catch(() => presentDefaultErrorToast());
     };
 
     const handleTimerStop = (time: ActivityTimerResult) => {
-      //
+      activityStore
+        .endActivity({ activityId: activity?.id ?? '' })
+        .then(() => {
+          presentToast({
+            message: 'Übung beendet',
+            icon: stopCircle,
+            duration: 2000,
+            position: 'top',
+            mode: 'ios',
+            color: 'primary',
+            buttons: [{ icon: close, role: 'cancel' }],
+          });
+        })
+        .catch(() => presentDefaultErrorToast());
     };
 
     return (

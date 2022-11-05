@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import {
   ForgotPasswordDto,
+  GuestDto,
   LoginDto,
   RegisterDto,
   ResetPasswordDto,
@@ -16,15 +17,16 @@ import {
   VerifyDto,
 } from '@bregenz-bewegt/shared/types';
 import { AuthService } from './auth.service';
-
 import {
   GetCurrentUser,
+  HasRole,
   PasswordResetTokenGuard,
   Public,
   RefreshTokenGuard,
   RemoveSensitiveFieldsInterceptor,
+  RoleGuard,
 } from '@bregenz-bewegt/server/common';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import { UtilService } from '@bregenz-bewegt/server/util';
 
 @Controller('auth')
@@ -37,8 +39,8 @@ export class AuthController {
   @Public()
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Post('local/guest')
-  guest(): Promise<User> {
-    return this.authService.guest();
+  guest(@Body() dto: GuestDto): Promise<Tokens> {
+    return this.authService.guest(dto);
   }
 
   @Public()
@@ -74,10 +76,10 @@ export class AuthController {
     return this.authService.refreshTokens(userId, refreshToken);
   }
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @Post('change-password')
-  changePassword(
-    @GetCurrentUser('email', 'sub') email: User['email']
-  ): Promise<void> {
+  changePassword(@GetCurrentUser('email') email: User['email']): Promise<void> {
     return this.authService.changePassword(email);
   }
 
