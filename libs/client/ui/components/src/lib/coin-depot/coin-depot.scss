@@ -5,6 +5,10 @@
     margin-right: var(--spacing-m);
   }
 
+  &__content-button {
+    margin-top: var(--spacing-m);
+  }
+
   ion-card-header {
     display: flex;
     align-items: center;
