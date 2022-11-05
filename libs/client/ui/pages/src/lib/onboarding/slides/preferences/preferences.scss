@@ -11,5 +11,15 @@
 
   &__quick-filter {
     flex-direction: column;
+
+    ion-chip {
+      height: 50px;
+      width: 100%;
+      font-size: large;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }

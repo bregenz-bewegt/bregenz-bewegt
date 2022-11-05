@@ -1,19 +1,23 @@
 import './park-detail.scss';
-import { ExerciseCard } from '@bregenz-bewegt/client-ui-components';
+import {
+  ExerciseCard,
+  QuickFilter,
+  QuickFilterOption,
+  TransitionBlock,
+} from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   ExerciseStore,
   parkStore,
-  UserStore,
   userStore,
+  UserStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { Park } from '@bregenz-bewegt/client/types';
+import { DifficultyType, Park, Exercise } from '@bregenz-bewegt/client/types';
 import {
   IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
-  IonIcon,
   IonNote,
   IonPage,
   IonText,
@@ -24,25 +28,28 @@ import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Loading } from '../loading/loading';
-import { location } from 'ionicons/icons';
+import { Location } from 'iconsax-react';
+import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
 interface MatchParams {
   park: string;
 }
 
 export interface ParkDetail extends RouteComponentProps<MatchParams> {
-  userStore?: UserStore;
   parkStore?: ExerciseStore;
+  userStore?: UserStore;
 }
 
 export const ParkDetail: React.FC<ParkDetail> = inject(
-  userStore.storeKey,
-  parkStore.storeKey
+  parkStore.storeKey,
+  userStore.storeKey
 )(
-  observer(({ userStore, match }) => {
+  observer(({ match }) => {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [park, setPark] = useState<Park>();
+    const [exercises, setExercises] = useState<Exercise[]>();
+    const [quickFilters, setQuickFilters] = useState<QuickFilterOption[]>();
 
     useEffect(() => {
       const navigateBackToStart = () =>
@@ -53,13 +60,39 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
         return navigateBackToStart();
       }
 
-      parkStore.getParkWithExercises(parkId).then((park) => {
-        if (!park) return navigateBackToStart();
+      parkStore.getParkWithExercises(parkId).then((parkNew) => {
+        if (!parkNew) return navigateBackToStart();
 
-        setPark(park);
+        setPark(parkNew);
+        setExercises(parkNew.exercises);
+
+        userStore?.fetchPreferences().then((p) =>
+          handleFilterChange(
+            Object.values(DifficultyType).map(
+              (d) =>
+                ({
+                  key: d,
+                  label: difficultyDisplayTexts[d],
+                  active: p.difficulties?.includes(d),
+                } as QuickFilterOption)
+            ),
+            parkNew
+          )
+        );
+
         setIsLoading(false);
       });
     }, [match.params.park]);
+
+    const handleFilterChange = (v: QuickFilterOption[], p?: Park) => {
+      setQuickFilters(v);
+      setExercises(
+        (p ?? park)?.exercises?.filter(
+          (e) =>
+            v.find((qf) => (qf.key as DifficultyType) === e.difficulty)?.active
+        )
+      );
+    };
 
     return isLoading ? (
       <Loading />
@@ -77,29 +110,33 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
             <IonTitle>{park?.name}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen>
-          <div className="park-detail__scroll-wrapper">
-            <div className="park-detail__scroll-wrapper__header-wrapper">
-              <IonText>
-                <h1>{park?.name}</h1>
-              </IonText>
-              <IonNote>
-                <IonIcon icon={location} />
-                {park?.address}
-              </IonNote>
-            </div>
-            <div className="park-detail__scroll-wrapper__exercises">
-              {park?.exercises &&
-                park.exercises.length > 0 &&
-                park.exercises.map((exercise) => {
-                  return (
-                    <ExerciseCard
-                      {...exercise}
-                      link={`${tabRoutes.start.route}/${park.id}/${exercise.id}`}
-                    />
-                  );
-                })}
-            </div>
+        <IonContent fullscreen scrollY={false}>
+          <div className="park-detail__header-wrapper">
+            <IonText>
+              <h1>{park?.name}</h1>
+            </IonText>
+            <IonNote>
+              <Location variant="Bold" size={16} />
+              {park?.address}
+            </IonNote>
+            <QuickFilter
+              options={quickFilters ?? []}
+              onChange={(v) => handleFilterChange(v)}
+              className={`park-detail__header-wrapper__quick-filters`}
+            />
+          </div>
+          <div className="park-detail__exercises">
+            <TransitionBlock />
+            {exercises &&
+              park?.id &&
+              exercises.map((e) => {
+                return (
+                  <ExerciseCard
+                    {...e}
+                    link={`${tabRoutes.start.route}/${park?.id}/${e.id}`}
+                  />
+                );
+              })}
           </div>
         </IonContent>
       </IonPage>

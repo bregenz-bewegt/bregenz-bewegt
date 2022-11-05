@@ -1,67 +1,36 @@
 .start {
   &__content {
-    &::part(scroll) {
-      padding-bottom: 0;
-      overflow: hidden;
-    }
-
-    &__display-type-select {
-      margin-left: auto;
-      margin-bottom: 4px;
-    }
-
-    &__scroll-wrapper {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    &__title-wrapper {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin: 0 var(--spacing-m);
-    }
-
-    &__searchbar-wrapper {
-      margin: 0 var(--spacing-m);
-
-      ion-searchbar {
-        padding: var(--spacing-s) 0 var(--spacing-xs) 0;
-      }
-
-      .searchbar-input {
+    &__title {
+      h2 {
+        margin-top: 0;
       }
     }
 
-    &__quick-filters {
-      margin: 0 calc(var(--spacing-m) * -1) var(--spacing-m)
-        calc(var(--spacing-m) * -1);
-      padding: 0 calc(var(--spacing-m) * 2);
-      overflow-x: auto;
-      min-height: var(--spacing-l);
+    &__segment {
+      min-height: 35px;
 
-      &::-webkit-scrollbar {
-        display: none;
+      ion-segment-button {
+        font-size: medium;
       }
+    }
+
+    &__searchbar {
+      padding: 10px 0 0 0;
+      height: 50px;
     }
 
     &__parks-list {
       overflow-y: scroll;
-      flex-grow: 1;
-      padding-top: var(--spacing-m);
+      height: 100%;
+      padding-bottom: 120px;
 
       ion-card:first-of-type {
-        margin-top: 0;
-      }
-
-      &__no-results {
-        padding: 0 var(--spacing-m);
+        margin-top: var(--spacing-xl);
       }
     }
 
-    &__parks-map {
-      //
+    &__no-results {
+      padding-top: var(--spacing-m);
     }
   }
 }

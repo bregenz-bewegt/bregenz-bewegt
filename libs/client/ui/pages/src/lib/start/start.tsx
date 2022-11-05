@@ -2,22 +2,17 @@ import { useEffect, useState } from 'react';
 import {
   Header,
   ParkCard,
-  QuickFilter,
-  QuickFilterOption,
+  TransitionBlock,
 } from '@bregenz-bewegt/client-ui-components';
 import {
   IonContent,
   IonPage,
   IonSearchbar,
-  IonSelect,
-  IonSelectOption,
+  IonSegment,
+  IonSegmentButton,
   IonText,
 } from '@ionic/react';
-import {
-  DifficultyType,
-  Park,
-  ParkDisplayType,
-} from '@bregenz-bewegt/client/types';
+import { Park, ParkDisplayType } from '@bregenz-bewegt/client/types';
 import './start.scss';
 import { parkStore, ParkStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
@@ -26,7 +21,6 @@ import {
   SearchbarChangeEventDetail,
 } from '@ionic/core';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
-import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
 interface StartProps {
   parkStore?: ParkStore;
@@ -36,28 +30,6 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
   observer(({ parkStore }) => {
     const [isLoadingParks, setIsLoadingParks] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
-    const [quickFilters, setQuickFilters] = useState<QuickFilterOption[]>([
-      {
-        key: 0,
-        label: difficultyDisplayTexts[DifficultyType.BEGINNER],
-        active: false,
-      },
-      {
-        key: 1,
-        label: difficultyDisplayTexts[DifficultyType.ADVANCED],
-        active: false,
-      },
-      {
-        key: 2,
-        label: difficultyDisplayTexts[DifficultyType.GAME],
-        active: false,
-      },
-      {
-        key: 3,
-        label: 'In meiner Nähe',
-        active: false,
-      },
-    ]);
     const [parksResult, setParksResult] = useState<Park[]>(
       Array<Park>(10).fill({ id: 0, name: '', address: '', image: '', qr: '' })
     );
@@ -98,65 +70,56 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
       <IonPage className="start">
         <Header />
         <IonContent className="start__content" scrollY={false}>
-          <div className="start__content__scroll-wrapper">
-            <div className="start__content__title-wrapper">
-              <IonText>
-                <h2>Spielplätze</h2>
-              </IonText>
-              <IonSelect
-                interface="popover"
-                value={parkDisplayType}
-                className="start__content__display-type-select"
-                onIonChange={(e) => setParkDisplayType(e.detail.value)}
-              >
-                <IonSelectOption value={ParkDisplayType.List}>
-                  Listenansicht
-                </IonSelectOption>
-                <IonSelectOption value={ParkDisplayType.Map}>
-                  Kartenansicht
-                </IonSelectOption>
-              </IonSelect>
-            </div>
-            <div className="start__content__searchbar-wrapper">
-              <IonSearchbar
-                mode="ios"
-                value={searchText}
-                onIonChange={(e) => handleSearch(e)}
-                debounce={250}
-                placeholder="Suche nach Spielplätzen"
-              ></IonSearchbar>
-            </div>
-            <QuickFilter
-              options={quickFilters}
-              onChange={(values) => {
-                setQuickFilters(values);
-              }}
-              className={`start__content__quick-filters`}
-            />
-            {parkDisplayType === ParkDisplayType.List ? (
-              <div className="start__content__parks-list">
-                {parksResult.length > 0 ? (
-                  parksResult.map((park) => {
-                    return (
-                      <ParkCard
-                        isLoading={isLoadingParks}
-                        title={park.name}
-                        location={park.address}
-                        image={park.image}
-                        link={`${tabRoutes.start.route}/${park.id}`}
-                      />
-                    );
-                  })
-                ) : (
-                  <IonText className="start__content__parks-list__no-results">
-                    Keine Spielplätze gefunden
-                  </IonText>
-                )}
-              </div>
+          <IonText className="start__content__title">
+            <h2>Spielplätze</h2>
+          </IonText>
+          <IonSegment
+            value={parkDisplayType}
+            onIonChange={(e) =>
+              setParkDisplayType(e.detail.value as ParkDisplayType)
+            }
+            mode="ios"
+            className="start__content__segment"
+          >
+            <IonSegmentButton value={ParkDisplayType.List}>
+              Liste
+            </IonSegmentButton>
+            <IonSegmentButton value={ParkDisplayType.Map}>
+              Karte
+            </IonSegmentButton>
+          </IonSegment>
+          {parksResult.length > 0 ? (
+            parkDisplayType === ParkDisplayType.List ? (
+              <>
+                <IonSearchbar
+                  mode="ios"
+                  value={searchText}
+                  onIonChange={(e) => handleSearch(e)}
+                  debounce={250}
+                  placeholder="Suche nach Spielplätzen"
+                  className="start__content__searchbar"
+                ></IonSearchbar>
+                <div className="start__content__parks-list">
+                  <TransitionBlock />
+                  {parksResult.map((park) => (
+                    <ParkCard
+                      isLoading={isLoadingParks}
+                      title={park.name}
+                      location={park.address}
+                      image={park.image}
+                      link={`${tabRoutes.start.route}/${park.id}`}
+                    />
+                  ))}
+                </div>
+              </>
             ) : (
               <IonText>Map</IonText>
-            )}
-          </div>
+            )
+          ) : (
+            <IonText className="start__content__no-results">
+              <p>Keine Spielplätze gefunden</p>
+            </IonText>
+          )}
         </IonContent>
       </IonPage>
     );

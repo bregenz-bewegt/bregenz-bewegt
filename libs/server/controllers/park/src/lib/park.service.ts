@@ -1,6 +1,9 @@
+import { map } from 'rxjs';
+import { DifficultyType } from './../../../../../client/types/src/lib/entities/difficulty';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { Injectable } from '@nestjs/common';
-import { Exercise, Park } from '@prisma/client';
+import { Difficulty, Exercise, Park } from '@prisma/client';
+import e from 'express';
 
 @Injectable()
 export class ParkService {
@@ -20,17 +23,27 @@ export class ParkService {
 
   async findByIdWithExercises(id: Park['id']): Promise<
     Park & {
-      exercises: Exercise[];
+      exercises: (Exercise & { difficulty: DifficultyType })[];
     }
   > {
-    return this.prismaService.park.findUnique({
+    const park = await this.prismaService.park.findUnique({
       where: {
         id: id,
       },
       include: {
-        exercises: true,
+        exercises: {
+          include: { difficulty: true },
+        },
       },
     });
+
+    return {
+      ...park,
+      exercises: park.exercises.map((e) => ({
+        ...e,
+        difficulty: e.difficulty.difficulty,
+      })) as (Exercise & { difficulty: DifficultyType })[],
+    };
   }
 
   async findByIdWithExercise(

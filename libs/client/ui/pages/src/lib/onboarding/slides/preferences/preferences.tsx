@@ -15,8 +15,9 @@ import {
   IonSlide,
   IonText,
 } from '@ionic/react';
+import { DifficultyType } from '@prisma/client';
 import { inject, observer } from 'mobx-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './preferences.scss';
 
 export interface PreferencesProps {
@@ -30,18 +31,19 @@ export const Preferences: React.FC<PreferencesProps> = inject(
     const [selectedPreferences, setSelectedPreferences] = useState<
       QuickFilterOption[]
     >(
-      Object.values(difficultyDisplayTexts).map(
-        (text, i) =>
+      Object.values(DifficultyType).map(
+        (d) =>
           ({
-            key: i,
-            label: text,
+            key: d,
+            label: difficultyDisplayTexts[d],
             active: false,
           } as QuickFilterOption)
       )
     );
 
-    const handleSavePreferences = () =>
-      onboardingStore?.setPreferences(selectedPreferences);
+    useEffect(() => {
+      onboardingStore?.getPreferences((p) => p && setSelectedPreferences(p));
+    }, []);
 
     return (
       <IonSlide className="preferences">
@@ -62,6 +64,7 @@ export const Preferences: React.FC<PreferencesProps> = inject(
                 options={selectedPreferences}
                 onChange={(value) => setSelectedPreferences(value)}
                 className="preferences__quick-filter"
+                iconSize={32}
               />
             </IonCol>
           </IonRow>
@@ -70,7 +73,10 @@ export const Preferences: React.FC<PreferencesProps> = inject(
               <IonButton
                 expand="block"
                 href={'/login'}
-                onClick={handleSavePreferences}
+                mode="ios"
+                onClick={(e) => {
+                  onboardingStore?.setPreferences(selectedPreferences);
+                }}
               >
                 Speichern und Starten
               </IonButton>

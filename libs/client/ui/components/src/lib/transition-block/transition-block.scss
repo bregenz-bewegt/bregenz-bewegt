@@ -1,0 +1,37 @@
+.transition-block {
+  width: 100%;
+  left: 0;
+  z-index: 2;
+  display: block;
+  position: fixed;
+
+  // Generated width cssgradient.io
+  background: rgb(var(--ion-background-color-rgb));
+  background: -moz-linear-gradient(
+    0deg,
+    rgba(var(--ion-background-color-rgb), 0) 0%,
+    rgba(var(--ion-background-color-rgb), 0.5046393557422969) 25%,
+    rgba(var(--ion-background-color-rgb), 0.7455357142857143) 40%,
+    rgba(var(--ion-background-color-rgb), 0.8995973389355743) 60%,
+    rgba(var(--ion-background-color-rgb), 0.9528186274509804) 75%,
+    rgba(var(--ion-background-color-rgb), 1) 90%
+  );
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(var(--ion-background-color-rgb), 0) 0%,
+    rgba(var(--ion-background-color-rgb), 0.5046393557422969) 25%,
+    rgba(var(--ion-background-color-rgb), 0.7455357142857143) 40%,
+    rgba(var(--ion-background-color-rgb), 0.8995973389355743) 60%,
+    rgba(var(--ion-background-color-rgb), 0.9528186274509804) 75%,
+    rgba(var(--ion-background-color-rgb), 1) 90%
+  );
+  background: linear-gradient(
+    0deg,
+    rgba(var(--ion-background-color-rgb), 0) 0%,
+    rgba(var(--ion-background-color-rgb), 0.5046393557422969) 25%,
+    rgba(var(--ion-background-color-rgb), 0.7455357142857143) 40%,
+    rgba(var(--ion-background-color-rgb), 0.8995973389355743) 60%,
+    rgba(var(--ion-background-color-rgb), 0.9528186274509804) 75%,
+    rgba(var(--ion-background-color-rgb), 1) 90%
+  );
+}
