@@ -126,6 +126,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                     ? register.errors.username
                     : undefined
                 }
+                required
                 onChange={register.handleChange}
                 onBlur={register.handleBlur}
                 className="username"
@@ -139,6 +140,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                 error={
                   register.touched.email ? register.errors.email : undefined
                 }
+                required
                 onChange={register.handleChange}
                 onBlur={register.handleBlur}
                 className="email"
@@ -153,6 +155,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                     ? register.errors.password
                     : undefined
                 }
+                required
                 onChange={register.handleChange}
                 onBlur={register.handleBlur}
                 className="password"
@@ -167,6 +170,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
                     ? register.errors.passwordConfirmation
                     : undefined
                 }
+                required
                 onChange={register.handleChange}
                 onBlur={register.handleBlur}
                 className="password-confirmation"

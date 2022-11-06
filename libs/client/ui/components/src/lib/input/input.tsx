@@ -53,7 +53,7 @@ export const Input: React.FC<InputProps> = ({
     value,
     type,
     inputMode,
-    placeholder,
+    placeholder: required ? `${placeholder}*` : placeholder,
     name,
     required,
     disabled,
