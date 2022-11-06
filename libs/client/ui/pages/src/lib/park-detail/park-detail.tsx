@@ -20,6 +20,7 @@ import {
   IonHeader,
   IonNote,
   IonPage,
+  IonRouterLink,
   IonText,
   IonTitle,
   IonToolbar,
@@ -116,8 +117,17 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
               <h1>{park?.name}</h1>
             </IonText>
             <IonNote>
-              <Location variant="Bold" size={16} />
-              {park?.address}
+              <IonRouterLink
+                color={'dark'}
+                href={
+                  'https://www.google.com/maps/search/?api=1&query=' +
+                  encodeURIComponent(park?.address ?? '')
+                }
+                target="_blank"
+              >
+                <Location variant="Bold" size={16} />
+                {park?.address}
+              </IonRouterLink>
             </IonNote>
             <QuickFilter
               options={quickFilters ?? []}

@@ -3,7 +3,13 @@ import * as util from 'util';
 import * as fs from 'fs';
 import * as path from 'path';
 import { faker } from '@faker-js/faker';
-import { PrismaClient, Role, DifficultyType } from '@prisma/client';
+import {
+  PrismaClient,
+  Role,
+  DifficultyType,
+  Coordinates,
+  Park,
+} from '@prisma/client';
 const prisma = new PrismaClient();
 
 const purgeDatabase = async () => {
@@ -72,87 +78,147 @@ const createUsers = async () => {
 
 const createParks = async () => {
   const parks = [
-    {
-      id: 1,
-      name: 'Parkourpark Remise',
-      address: 'Badgässele',
-      image: 'https://picsum.photos/400/200',
-      qr: 'not-yet-defined-0',
-    },
-    {
-      id: 2,
-      name: 'Schulsportplatz MS Start',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
-      qr: 'not-yet-defined-1',
-    },
-    {
-      id: 3,
-      name: 'Jugenplatz Spielfeld 3',
-      address: 'Achstraße',
-      image: 'https://picsum.photos/400/200',
-      qr: 'not-yet-defined-2',
-    },
-    {
-      id: 4,
-      name: 'Generationen Park Mariahilf',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
-      qr: 'not-yet-defined-3',
-    },
-    {
-      id: 5,
-      name: 'Schulsportplatz VS Weidach',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
-      qr: 'not-yet-defined-4',
-    },
-    {
-      id: 6,
-      name: 'Schlossberg Trail',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
-      qr: 'not-yet-defined-5',
-    },
-    {
-      id: 7,
-      name: 'Tschutterplatz beim Stadion',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
-      qr: 'not-yet-defined-6',
-    },
-    {
-      id: 8,
-      name: 'Schulsportplatz VS Augasse',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
-      qr: 'not-yet-defined-7',
-    },
-    {
-      id: 9,
-      name: 'Schulplatz VS Rieden',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
-      qr: 'not-yet-defined-8',
-    },
-    {
-      id: 10,
-      name: 'Schulsportplatz MS Schendlingen',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
-      qr: 'not-yet-defined-9',
-    },
+    [
+      {
+        id: 1,
+        name: 'Parkourpark Remise',
+        address: 'Badgässele',
+        image: 'https://picsum.photos/400/200',
+        qr: 'not-yet-defined-0',
+      },
+      {
+        latitude: 47.498273,
+        longitude: 9.703772,
+      },
+    ],
+    [
+      {
+        id: 2,
+        name: 'Schulsportplatz MS Start',
+        address: 'Rotfarbgasse 14a, 6900 Bregenz',
+        image: 'https://picsum.photos/400/200',
+        qr: 'not-yet-defined-1',
+      },
+      {
+        latitude: 47.505646,
+        longitude: 9.751746,
+      },
+    ],
+    [
+      {
+        id: 3,
+        name: 'Jugendplatz Spielfeld 3',
+        address: 'Achstraße',
+        image: 'https://picsum.photos/400/200',
+        qr: 'not-yet-defined-2',
+      },
+      {
+        latitude: 47.501583,
+        longitude: 9.738889,
+      },
+    ],
+    [
+      {
+        id: 4,
+        name: 'Generationen Park Mariahilf',
+        address: 'Rotfarbgasse 14a, 6900 Bregenz',
+        image: 'https://picsum.photos/400/200',
+        qr: 'not-yet-defined-3',
+      },
+      {
+        latitude: 47.495515,
+        longitude: 9.746912,
+      },
+    ],
+    [
+      {
+        id: 5,
+        name: 'Schulsportplatz VS Weidach',
+        address: 'Rotfarbgasse 14a, 6900 Bregenz',
+        image: 'https://picsum.photos/400/200',
+        qr: 'not-yet-defined-4',
+      },
+      {
+        latitude: 47.491353,
+        longitude: 9.739731,
+      },
+    ],
+    [
+      {
+        id: 6,
+        name: 'Schlossberg Trail',
+        address: 'Rotfarbgasse 14a, 6900 Bregenz',
+        image: 'https://picsum.photos/400/200',
+        qr: 'not-yet-defined-5',
+      },
+      {
+        latitude: 47.866375,
+        longitude: 12.174553,
+      },
+    ],
+    [
+      {
+        id: 7,
+        name: 'Tschutterplatz beim Stadion',
+        address: 'Rotfarbgasse 14a, 6900 Bregenz',
+        image: 'https://picsum.photos/400/200',
+        qr: 'not-yet-defined-6',
+      },
+      {
+        latitude: 47.503531,
+        longitude: 9.734675,
+      },
+    ],
+    [
+      {
+        id: 8,
+        name: 'Schulsportplatz VS Augasse',
+        address: 'Rotfarbgasse 14a, 6900 Bregenz',
+        image: 'https://picsum.photos/400/200',
+        qr: 'not-yet-defined-7',
+      },
+      {
+        latitude: 47.500276,
+        longitude: 9.738716,
+      },
+    ],
+    [
+      {
+        id: 9,
+        name: 'Schulplatz VS Rieden',
+        address: 'Rotfarbgasse 14a, 6900 Bregenz',
+        image: 'https://picsum.photos/400/200',
+        qr: 'not-yet-defined-8',
+      },
+      {
+        latitude: 47.49278,
+        longitude: 9.723823,
+      },
+    ],
+    [
+      {
+        id: 10,
+        name: 'Schulsportplatz MS Schendlingen',
+        address: 'Rotfarbgasse 14a, 6900 Bregenz',
+        image: 'https://picsum.photos/400/200',
+        qr: 'not-yet-defined-9',
+      },
+      {
+        latitude: 47.492634,
+        longitude: 9.715304,
+      },
+    ],
   ];
 
   await Promise.all(
     parks.map(async (park) => {
       await prisma.park.create({
         data: {
-          ...park,
+          ...(park[0] as Park),
           coordinates: {
             create: {
-              longitude: 0,
-              latitude: 0,
+              latitude: park[1].latitude ?? 0,
+              longitude: park[1].longitude ?? 0,
             },
           },
         },
