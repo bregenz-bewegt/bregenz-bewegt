@@ -152,8 +152,8 @@ const createParks = async () => {
         qr: 'not-yet-defined-5',
       },
       {
-        latitude: 47.866375,
-        longitude: 12.174553,
+        latitude: 47.506375,
+        longitude: 9.7387,
       },
     ],
     [

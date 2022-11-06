@@ -1,7 +1,6 @@
-import { DifficultyType } from './../../../../../client/types/src/lib/entities/difficulty';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { Injectable } from '@nestjs/common';
-import { Coordinates, Exercise, Park } from '@prisma/client';
+import { Coordinates, DifficultyType, Exercise, Park } from '@prisma/client';
 
 @Injectable()
 export class ParkService {
