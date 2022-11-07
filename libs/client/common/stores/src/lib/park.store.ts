@@ -28,7 +28,6 @@ export class ParkStore implements Store {
   async getPark(id: Park['id']): Promise<Park | undefined> {
     try {
       const { data } = await http.get(`/parks/${id}`);
-      console.log(data);
       return data;
     } catch (error) {
       return;
