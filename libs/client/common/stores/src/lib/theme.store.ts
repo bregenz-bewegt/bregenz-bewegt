@@ -7,7 +7,7 @@ export class ThemeStore implements Store {
   storeKey = `themeStore` as const;
   defaultTheme: ColorTheme = ColorTheme.System;
   private themeKey = 'theme' as const;
-  private darkMediaQueryList = window.matchMedia(
+  private darkMediaQueryList = window!.matchMedia(
     '(prefers-color-scheme: dark)'
   );
 
