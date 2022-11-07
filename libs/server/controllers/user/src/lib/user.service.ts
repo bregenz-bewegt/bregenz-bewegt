@@ -72,7 +72,7 @@ export class UserService {
   ): Promise<Preferences & { difficulties: DifficultyType[] }> {
     const preferences = await this.prismaService.preferences.findUnique({
       where: { userId: id },
-      include: { difficulties: true,
+      include: { difficulties: true },
     });
 
     return {
