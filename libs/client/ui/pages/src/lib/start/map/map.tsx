@@ -11,10 +11,12 @@ import {
 } from 'react-leaflet';
 import { Loading } from '@bregenz-bewegt/client-ui-pages';
 import { closeCircleOutline } from 'ionicons/icons';
-import { IonButton, useIonToast } from '@ionic/react';
-import { LocationEvent } from 'leaflet';
+import { IonButton, IonCard, IonRouterLink, useIonToast } from '@ionic/react';
+import { Control, icon, LocationEvent } from 'leaflet';
 import { Gps, GpsSlash } from 'iconsax-react';
 import './map.scss';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import pin from './img/Location-Bold-32px.png';
 
 export interface MapProps {
   parks: Park[];
@@ -46,11 +48,11 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
       },
     });
 
-    map.locate();
+    map.locate({ enableHighAccuracy: true, watch: true });
 
     return location?.latlng ? (
       <Circle center={location.latlng} radius={location.accuracy}>
-        <Popup>You are here</Popup>
+        <Popup>Du bist hier</Popup>
       </Circle>
     ) : null;
   }
@@ -59,13 +61,28 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
     const map = useMap();
     return (
       <IonButton
-        onClick={() => location && map.flyTo(location.latlng, map.getZoom())}
+        onClick={() => location && map.flyTo(location.latlng, 15)}
         disabled={!location?.latlng}
+        className="start__content__map__gotolocation"
+        shape="round"
       >
-        {location?.latlng ? <Gps /> : <GpsSlash />}
+        <span slot="icon-only">
+          {location?.latlng ? (
+            <Gps variant="Linear" size={32} />
+          ) : (
+            <GpsSlash variant="Linear" size={32} />
+          )}
+        </span>
       </IonButton>
     );
   };
+
+  const customPin = icon({
+    iconUrl: pin,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -20],
+  });
 
   return (
     <div className="start__content__map">
@@ -80,7 +97,7 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
           url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
           attribution='&copy; <a href="https://www.google.com/intl/de_at/help/terms_maps/">Google Maps</a>'
           maxZoom={18}
-          minZoom={12}
+          minZoom={11}
           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
         />
         {parkPins.map(
@@ -88,8 +105,17 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
             p.coordinates && (
               <Marker
                 position={[p.coordinates?.latitude, p.coordinates?.longitude]}
+                icon={customPin}
               >
-                <Popup>{p.name}</Popup>
+                <Popup>
+                  <IonRouterLink
+                    routerLink={`${tabRoutes.start.route}/${p.id}`}
+                    routerDirection="forward"
+                  >
+                    <img src={p.image} alt={'Bild des Parkes ' + p.name} />
+                    {p.name}
+                  </IonRouterLink>
+                </Popup>
               </Marker>
             )
         )}

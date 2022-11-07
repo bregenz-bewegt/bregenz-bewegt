@@ -2,11 +2,45 @@
 
 .start__content {
   &__map {
+    height: 100%;
+    &__gotolocation {
+      z-index: 800;
+      position: relative;
+      top: 100%;
+      transform: translateY(-100%);
+      margin: -10px 0 0 10px;
+      height: 50px;
+      width: 50px;
+    }
     .leaflet-container {
-      height: 67vh;
+      height: calc(100% - 66px);
       width: 100%;
       margin-top: 10px;
-      border-radius: 10px;
+      border-radius: 10px 10px 0 0;
+      .leaflet-bar {
+        border: none;
+
+        .leaflet-control-zoom-in {
+          margin-bottom: 5px;
+        }
+
+        .leaflet-control-zoom-in,
+        .leaflet-control-zoom-out {
+          border-radius: 50% !important;
+          background-color: var(--ion-color-primary);
+          color: white;
+        }
+
+        .leaflet-control-zoom-in.leaflet-disabled,
+        .leaflet-control-zoom-out.leaflet-disabled {
+          background-color: var(--ion-color-secondary);
+        }
+      }
+
+      .leaflet-control-attribution {
+        font-size: smaller;
+        transform: translateX(45%) rotate(-90deg) translateX(44%);
+      }
     }
   }
 }
