@@ -417,28 +417,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonRow>
               <IonRow>
                 <IonText>
-                  <h2>Sicherheit</h2>
-                </IonText>
-              </IonRow>
-              <ItemGroup>
-                <IonItem
-                  button
-                  routerLink={`${tabRoutes.profile.route}/email`}
-                  mode="ios"
-                >
-                  <IonLabel>E-Mail Adresse ändern</IonLabel>
-                </IonItem>
-                <IonItem
-                  button
-                  routerLink={`${tabRoutes.profile.route}/password`}
-                  mode="ios"
-                  lines="none"
-                >
-                  <IonLabel>Passwort ändern</IonLabel>
-                </IonItem>
-              </ItemGroup>
-              <IonRow>
-                <IonText>
                   <h2>Präferenzen</h2>
                 </IonText>
               </IonRow>
@@ -464,6 +442,28 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   mode="ios"
                 >
                   <IonLabel>Darstellung</IonLabel>
+                </IonItem>
+              </ItemGroup>
+              <IonRow>
+                <IonText>
+                  <h2>Sicherheit</h2>
+                </IonText>
+              </IonRow>
+              <ItemGroup>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/email`}
+                  mode="ios"
+                >
+                  <IonLabel>E-Mail Adresse ändern</IonLabel>
+                </IonItem>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/password`}
+                  mode="ios"
+                  lines="none"
+                >
+                  <IonLabel>Passwort ändern</IonLabel>
                 </IonItem>
               </ItemGroup>
             </div>

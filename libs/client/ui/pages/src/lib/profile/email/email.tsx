@@ -57,7 +57,6 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
                 name="email"
                 placeholder="E-Mail"
                 label="E-Mail"
-                disabled
                 value={email.values.email}
                 error={email.touched.email ? email.errors.email : undefined}
                 onChange={email.handleChange}
@@ -69,7 +68,7 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
               expand="block"
               color="primary"
               onClick={() => email.submitForm()}
-              disabled={email.isSubmitting}
+              disabled={email.isSubmitting || !email.dirty}
               className="ion-margin-top"
             >
               {email.isSubmitting ? (
