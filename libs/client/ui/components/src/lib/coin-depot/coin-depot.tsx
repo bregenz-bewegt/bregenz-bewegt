@@ -4,9 +4,7 @@ import {
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonChip,
   IonIcon,
-  IonItem,
   IonRow,
   IonText,
 } from '@ionic/react';
