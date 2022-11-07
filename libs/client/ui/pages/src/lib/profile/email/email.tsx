@@ -64,23 +64,22 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
                 onBlur={email.handleBlur}
               />
             </IonRow>
-            <IonRow>
-              <IonButton
-                mode="ios"
-                expand="block"
-                color="primary"
-                onClick={() => email.submitForm()}
-                disabled={email.isSubmitting}
-              >
-                {email.isSubmitting ? (
-                  <IonLabel>
-                    <IonSpinner name="crescent" />
-                  </IonLabel>
-                ) : (
-                  'Ändern'
-                )}
-              </IonButton>
-            </IonRow>
+            <IonButton
+              mode="ios"
+              expand="block"
+              color="primary"
+              onClick={() => email.submitForm()}
+              disabled={email.isSubmitting}
+              className="ion-margin-top"
+            >
+              {email.isSubmitting ? (
+                <IonLabel>
+                  <IonSpinner name="crescent" />
+                </IonLabel>
+              ) : (
+                'Ändern'
+              )}
+            </IonButton>
           </IonGrid>
         </IonContent>
       </IonPage>
