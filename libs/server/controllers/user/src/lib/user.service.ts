@@ -85,53 +85,31 @@ export class UserService {
     id: User['id'],
     fields: PatchPreferencesDto
   ): Promise<Preferences & { difficulties: DifficultyType[] }> {
-    const { preferences } = await this.prismaService.user.update({
+    const preferences = await this.prismaService.preferences.update({
       where: {
-        id: id,
+        userId: id,
       },
       data: {
-        preferences: {
-          upsert: {
-            create: {
-              ...(fields.public !== undefined && {
-                public: fields.public,
-              }),
-              ...(fields.difficulties !== undefined && {
-                difficulties: {
-                  connect: (
-                    await this.prismaService.difficulty.findMany({
-                      where: { difficulty: { in: fields.difficulties } },
-                    })
-                  ).map((d) => ({ id: d.id })),
-                },
-              }),
-            },
-            update: {
-              ...(fields.public !== undefined && {
-                public: fields.public,
-              }),
-              ...(fields.difficulties !== undefined && {
-                difficulties: {
-                  connect: (
-                    await this.prismaService.difficulty.findMany({
-                      where: { difficulty: { in: fields.difficulties } },
-                    })
-                  ).map((d) => ({ id: d.id })),
-                  disconnect: (
-                    await this.prismaService.difficulty.findMany({
-                      where: { difficulty: { notIn: fields.difficulties } },
-                    })
-                  ).map((d) => ({ id: d.id })),
-                },
-              }),
-            },
+        ...(fields.public !== undefined && {
+          public: fields.public,
+        }),
+        ...(fields.difficulties !== undefined && {
+          difficulties: {
+            connect: (
+              await this.prismaService.difficulty.findMany({
+                where: { difficulty: { in: fields.difficulties } },
+              })
+            ).map((d) => ({ id: d.id })),
+            disconnect: (
+              await this.prismaService.difficulty.findMany({
+                where: { difficulty: { notIn: fields.difficulties } },
+              })
+            ).map((d) => ({ id: d.id })),
           },
-        },
+        }),
       },
-      select: {
-        preferences: {
-          select: { id: true, public: true, difficulties: true, userId: true },
-        },
+      include: {
+        difficulties: true,
       },
     });
 
