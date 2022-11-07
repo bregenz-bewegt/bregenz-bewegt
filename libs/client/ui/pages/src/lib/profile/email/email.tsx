@@ -1,6 +1,8 @@
+import React from 'react';
 import { Input } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
+import { changeEmailSchema } from '@bregenz-bewegt/client/common/validation';
 import {
   IonPage,
   IonHeader,
@@ -11,9 +13,12 @@ import {
   IonContent,
   IonGrid,
   IonRow,
+  IonButton,
+  IonLabel,
+  IonSpinner,
 } from '@ionic/react';
+import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
-import React from 'react';
 
 export interface EmailProps {
   userStore?: UserStore;
@@ -21,6 +26,16 @@ export interface EmailProps {
 
 export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
+    const email = useFormik({
+      initialValues: {
+        email: userStore?.user?.email,
+      },
+      validationSchema: changeEmailSchema,
+      onSubmit: (values, { setSubmitting, setErrors }) => {
+        console.log(values);
+      },
+    });
+
     return (
       <IonPage>
         <IonHeader mode="ios">
@@ -42,9 +57,29 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
                 name="email"
                 placeholder="E-Mail"
                 label="E-Mail"
-                value={userStore?.user?.email}
                 disabled
+                value={email.values.email}
+                error={email.touched.email ? email.errors.email : undefined}
+                onChange={email.handleChange}
+                onBlur={email.handleBlur}
               />
+            </IonRow>
+            <IonRow>
+              <IonButton
+                mode="ios"
+                expand="block"
+                color="primary"
+                onClick={() => email.submitForm()}
+                disabled={email.isSubmitting}
+              >
+                {email.isSubmitting ? (
+                  <IonLabel>
+                    <IonSpinner name="crescent" />
+                  </IonLabel>
+                ) : (
+                  'Ändern'
+                )}
+              </IonButton>
             </IonRow>
           </IonGrid>
         </IonContent>

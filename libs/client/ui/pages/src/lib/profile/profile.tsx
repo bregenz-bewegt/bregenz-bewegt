@@ -417,7 +417,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               </IonRow>
               <IonRow>
                 <IonText>
-                  <h2>Kontoinformationen</h2>
+                  <h2>Sicherheit</h2>
                 </IonText>
               </IonRow>
               <ItemGroup>
