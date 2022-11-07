@@ -11,8 +11,8 @@ import {
 } from 'react-leaflet';
 import { Loading } from '@bregenz-bewegt/client-ui-pages';
 import { closeCircleOutline } from 'ionicons/icons';
-import { IonButton, IonCard, IonRouterLink, useIonToast } from '@ionic/react';
-import { Control, icon, LocationEvent } from 'leaflet';
+import { IonButton, IonRouterLink, useIonToast } from '@ionic/react';
+import { icon, LocationEvent } from 'leaflet';
 import { Gps, GpsSlash } from 'iconsax-react';
 import './map.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
