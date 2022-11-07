@@ -388,8 +388,8 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               <IonRow>
                 <Input
                   name="email"
-                  placeholder="Email"
-                  label="Email"
+                  placeholder="E-Mail"
+                  label="E-Mail"
                   value={profile.values.email}
                   error={
                     profile.touched.email ? profile.errors.email : undefined
@@ -415,6 +415,28 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   Ändern
                 </IonButton>
               </IonRow>
+              <IonRow>
+                <IonText>
+                  <h2>Kontoinformationen</h2>
+                </IonText>
+              </IonRow>
+              <ItemGroup>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/email`}
+                  mode="ios"
+                >
+                  <IonLabel>E-Mail Adresse ändern</IonLabel>
+                </IonItem>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/password`}
+                  mode="ios"
+                  lines="none"
+                >
+                  <IonLabel>Passwort ändern</IonLabel>
+                </IonItem>
+              </ItemGroup>
               <IonRow>
                 <IonText>
                   <h2>Präferenzen</h2>

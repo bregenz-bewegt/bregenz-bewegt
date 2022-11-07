@@ -132,7 +132,7 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
               />
               <Input
                 name="email"
-                placeholder="Email"
+                placeholder="E-Mail"
                 type="email"
                 inputMode="email"
                 value={register.values.email}
