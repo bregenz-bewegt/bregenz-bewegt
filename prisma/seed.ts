@@ -1,16 +1,9 @@
-import { Coordinates } from './../libs/client/types/src/lib/entities/coordinates';
 import * as argon from 'argon2';
 import * as util from 'util';
 import * as fs from 'fs';
 import * as path from 'path';
 import { faker } from '@faker-js/faker';
-import {
-  PrismaClient,
-  Role,
-  DifficultyType,
-  Coordinates,
-  Park,
-} from '@prisma/client';
+import { PrismaClient, Role, DifficultyType, Park } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const purgeDatabase = async () => {
