@@ -77,6 +77,7 @@ export const Preferences: React.FC<PreferencesProps> = inject(
                 onClick={(e) => {
                   onboardingStore?.setPreferences(selectedPreferences);
                 }}
+                disabled={selectedPreferences.every((p) => !p.active)}
               >
                 Speichern und Starten
               </IonButton>
