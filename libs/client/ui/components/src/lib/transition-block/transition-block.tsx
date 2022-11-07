@@ -12,7 +12,7 @@ export const TransitionBlock: React.FC<TransitionBlockProps> = ({
   return (
     <span
       className={`transition-block${className ? ` ${className}` : ''}`}
-      style={{ height: height ?? 40 }}
+      style={{ height: height ?? 16 }}
     ></span>
   );
 };

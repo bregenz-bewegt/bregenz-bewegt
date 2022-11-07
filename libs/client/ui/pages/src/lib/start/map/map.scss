@@ -1,0 +1,12 @@
+@import url(https://unpkg.com/leaflet@1.9.2/dist/leaflet.css);
+
+.start__content {
+  &__map {
+    .leaflet-container {
+      height: 67vh;
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+  }
+}

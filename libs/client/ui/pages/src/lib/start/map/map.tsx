@@ -1,6 +1,5 @@
 import { Park } from '@bregenz-bewegt/client/types';
 import { useEffect, useState } from 'react';
-import './map.scss';
 import {
   Circle,
   MapContainer,
@@ -15,6 +14,7 @@ import { closeCircleOutline } from 'ionicons/icons';
 import { IonButton, useIonToast } from '@ionic/react';
 import { LocationEvent } from 'leaflet';
 import { Gps, GpsSlash } from 'iconsax-react';
+import './map.scss';
 
 export interface MapProps {
   parks: Park[];
@@ -68,13 +68,13 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
   };
 
   return (
-    <div className="map">
+    <div className="start__content__map">
       <MapContainer
         center={[47.497262, 9.727287]}
         zoom={13}
         scrollWheelZoom={false}
         placeholder={<Loading />}
-        zoomControl={false}
+        touchZoom={true}
       >
         <TileLayer
           url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"

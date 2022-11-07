@@ -4,7 +4,7 @@ import {
   TransitionBlock,
 } from '@bregenz-bewegt/client-ui-components';
 import { IonSearchbar, IonText } from '@ionic/react';
-import './park-list.scss';
+import './list.scss';
 import {
   IonSearchbarCustomEvent,
   SearchbarChangeEventDetail,
@@ -12,15 +12,15 @@ import {
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { Park } from '@bregenz-bewegt/client/types';
 
-export interface ParkListProps {
+export interface ListProps {
   isLoadingParks: boolean;
   parks: Park[];
 }
 
-export const ParkList: React.FC<ParkListProps> = ({
+export const List: React.FC<ListProps> = ({
   isLoadingParks,
   parks,
-}: ParkListProps) => {
+}: ListProps) => {
   const [searchText, setSearchText] = useState<string>('');
   const [searchResult, setSearchResult] = useState<Park[]>(parks);
 
@@ -53,9 +53,9 @@ export const ParkList: React.FC<ParkListProps> = ({
         onIonChange={(e) => handleSearch(e)}
         debounce={250}
         placeholder="Suche nach Spielplätzen"
-        className="park-list__searchbar"
+        className="start__content__list__searchbar"
       ></IonSearchbar>
-      <div className="park-list__list">
+      <div className="start__content__list__parks">
         {searchResult.length > 0 ? (
           <>
             <TransitionBlock />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Header, Map, ParkList } from '@bregenz-bewegt/client-ui-components';
+import { Header } from '@bregenz-bewegt/client-ui-components';
 import {
   IonContent,
   IonPage,
@@ -11,6 +11,8 @@ import { Park, ParkDisplayType } from '@bregenz-bewegt/client/types';
 import './start.scss';
 import { parkStore, ParkStore } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
+import { Map } from './map/map';
+import { List } from './list/list';
 
 interface StartProps {
   parkStore?: ParkStore;
@@ -70,7 +72,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
           </IonSegment>
           {parks.length > 0 ? (
             parkDisplayType === ParkDisplayType.List ? (
-              <ParkList isLoadingParks={isLoadingParks} parks={parks} />
+              <List isLoadingParks={isLoadingParks} parks={parks} />
             ) : (
               <Map parks={parks} />
             )
