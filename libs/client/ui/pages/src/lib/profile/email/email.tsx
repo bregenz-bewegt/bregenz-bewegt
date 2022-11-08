@@ -19,7 +19,6 @@ import {
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
-import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 
 export interface EmailProps {
   userStore?: UserStore;
@@ -27,23 +26,20 @@ export interface EmailProps {
 
 export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
-    const [presentDefaultErrorToast] = useDefaultErrorToast();
     const email = useFormik({
       initialValues: {
         email: userStore?.user?.email ?? '',
       },
       validationSchema: changeEmailSchema,
       onSubmit: (values, { setSubmitting, setErrors }) => {
-        console.log(values);
-
         userStore
-          ?.updateEmail({ email: values.email })
+          ?.resetEmail({ email: values.email })
           .then(() => {
             setSubmitting(false);
           })
-          .catch(() => {
+          .catch((error) => {
+            setErrors(error.response.data);
             setSubmitting(false);
-            presentDefaultErrorToast();
           });
       },
     });

@@ -10,11 +10,11 @@ export class UtilService {
 
   generateOtpToken(): OtpWithSecret {
     const secret = speakeasy.generateSecret().base32;
-    const token = speakeasy.totp({
+    const otpToken = speakeasy.totp({
       secret: secret,
       encoding: 'base32',
     });
 
-    return { token, secret };
+    return { token: otpToken, secret };
   }
 }

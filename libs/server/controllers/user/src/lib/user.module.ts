@@ -4,11 +4,13 @@ import { MulterModule } from '@nestjs/platform-express';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { UtilService } from '@bregenz-bewegt/server/util';
+import { JwtService } from '@nestjs/jwt';
+import { MailService } from '@bregenz-bewegt/server/mail';
 
 @Module({
   imports: [MulterModule],
   controllers: [UserController],
-  providers: [UserService, UtilService, MulterService],
+  providers: [UserService, UtilService, MulterService, JwtService, MailService],
   exports: [UserService],
 })
 export class UserModule {}

@@ -1,14 +1,18 @@
 import {
+  EmailResetTokenGuard,
   GetCurrentUser,
   HasRole,
   ProfilePictureValidationPipe,
+  Public,
   RemoveSensitiveFieldsInterceptor,
   RoleGuard,
 } from '@bregenz-bewegt/server/common';
 import {
+  EmailResetToken,
   PatchPreferencesDto,
   PatchProfileDto,
-  UpdateEmailDto,
+  ResetEmailDto,
+  VerifyResetEmailDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   Body,
@@ -17,12 +21,13 @@ import {
   Get,
   ParseFilePipe,
   Patch,
-  Post,
+  Post as Post,
   Put,
   Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
+  Headers,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -31,10 +36,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import { Response } from 'express';
 import { Role, User, Preferences } from '@prisma/client';
+import { UtilService } from '@bregenz-bewegt/server/util';
 
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private utilService: UtilService
+  ) {}
 
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Get('profile')
@@ -82,13 +91,25 @@ export class UserController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Put('email')
-  updateEmail(
+  resetEmail(
     @GetCurrentUser('sub') userId: User['id'],
-    @Body() dto: UpdateEmailDto
-  ): Promise<any> {
-    return this.userService.updateEmail(userId, dto);
+    @Body() dto: ResetEmailDto
+  ): Promise<EmailResetToken> {
+    return this.userService.resetEmail(userId, dto);
+  }
+
+  @Public()
+  @UseGuards(EmailResetTokenGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Post('email/verify')
+  verifyResetEmail(
+    @Headers('authorization') authorization: string,
+    @GetCurrentUser('sub') id: User['id'],
+    @Body() dto: VerifyResetEmailDto
+  ): Promise<User> {
+    const token = this.utilService.extractBearerToken(authorization);
+    return this.userService.verifyResetEmail(id, token, dto);
   }
 
   @HasRole(Role.USER)

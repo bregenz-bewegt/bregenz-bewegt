@@ -98,7 +98,10 @@ export class AuthService {
         },
       });
 
-      this.mailService.sendOtpActivationMail({ to: newUser.email, otp: token });
+      this.mailService.sendOtpActivationMail({
+        to: newUser.email,
+        otp: token,
+      });
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {

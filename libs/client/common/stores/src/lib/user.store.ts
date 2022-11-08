@@ -11,7 +11,8 @@ import type {
   RegisterDto,
   Tokens,
   VerifyDto,
-  UpdateEmailDto,
+  EmailResetToken,
+  ResetEmailDto,
 } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
@@ -218,8 +219,13 @@ export class UserStore implements Store {
     return { access_token, refresh_token };
   }
 
-  async updateEmail(dto: UpdateEmailDto) {
+  async resetEmail(dto: ResetEmailDto): Promise<EmailResetToken> {
     const { data } = await http.put('/users/email', dto);
+    return data;
+  }
+
+  async verifyResetEmail(dto: ResetEmailDto): Promise<User> {
+    const { data } = await http.post('/users/email', dto);
     return data;
   }
 
