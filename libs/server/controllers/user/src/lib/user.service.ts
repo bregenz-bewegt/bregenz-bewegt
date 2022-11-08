@@ -4,16 +4,19 @@ import { MulterService } from '@bregenz-bewegt/server/multer';
 import {
   PatchPreferencesDto,
   PatchProfileDto,
+  UpdateEmailDto,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DifficultyType, Preferences, User } from '@prisma/client';
 import { Response } from 'express';
 import { Prisma } from '@prisma/client';
+import { UtilService } from '@bregenz-bewegt/server/util';
 
 @Injectable()
 export class UserService {
   constructor(
     private prismaService: PrismaService,
+    private utilService: UtilService,
     private multerService: MulterService
   ) {}
 
@@ -139,6 +142,18 @@ export class UserService {
       ...preferences,
       difficulties: preferences.difficulties.map((d) => d.difficulty),
     };
+  }
+
+  async updateEmail(userId: User['id'], dto: UpdateEmailDto): Promise<string> {
+    const { token, secret: activationSecret } =
+      this.utilService.generateOtpToken();
+
+    await this.prismaService.user.update({
+      where: { id: userId },
+      data: { activationSecret },
+    });
+
+    return token;
   }
 
   async editProfilePicture(

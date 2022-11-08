@@ -8,6 +8,7 @@ import {
 import {
   PatchPreferencesDto,
   PatchProfileDto,
+  UpdateEmailDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   Body,
@@ -17,6 +18,7 @@ import {
   ParseFilePipe,
   Patch,
   Post,
+  Put,
   Res,
   UploadedFile,
   UseGuards,
@@ -76,6 +78,17 @@ export class UserController {
     @Body() dto: PatchPreferencesDto
   ): Promise<Preferences> {
     return this.userService.patchPreferences(userId, dto);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Put('email')
+  updateEmail(
+    @GetCurrentUser('sub') userId: User['id'],
+    @Body() dto: UpdateEmailDto
+  ): Promise<any> {
+    return this.userService.updateEmail(userId, dto);
   }
 
   @HasRole(Role.USER)
