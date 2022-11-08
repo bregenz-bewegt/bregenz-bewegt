@@ -3,6 +3,7 @@
 .start__content {
   &__map {
     height: 100%;
+
     &__gotolocation {
       z-index: 800;
       position: relative;
@@ -12,35 +13,68 @@
       height: 50px;
       width: 50px;
     }
+
+    &__popup {
+      &__link {
+        color: black;
+
+        img {
+          display: block;
+          border-radius: 12px 12px 0 0;
+        }
+        div {
+          padding: 7px 0;
+          width: fit-content;
+          margin: 0 auto;
+        }
+      }
+      .leaflet-popup-close-button {
+        background-color: white !important;
+        border-radius: 50%;
+        margin: 5px;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .leaflet-popup-content-wrapper {
+        padding: 0;
+
+        .leaflet-popup-content {
+          margin: 0;
+        }
+      }
+    }
+
     .leaflet-container {
       height: calc(100% - 66px);
       width: 100%;
       margin-top: 10px;
       border-radius: 10px 10px 0 0;
-      .leaflet-bar {
-        border: none;
+    }
 
-        .leaflet-control-zoom-in {
-          margin-bottom: 5px;
-        }
+    .leaflet-bar {
+      border: none;
 
-        .leaflet-control-zoom-in,
-        .leaflet-control-zoom-out {
-          border-radius: 50% !important;
-          background-color: var(--ion-color-primary);
-          color: white;
-        }
-
-        .leaflet-control-zoom-in.leaflet-disabled,
-        .leaflet-control-zoom-out.leaflet-disabled {
-          background-color: var(--ion-color-secondary);
-        }
+      .leaflet-control-zoom-in {
+        margin-bottom: 5px;
       }
 
-      .leaflet-control-attribution {
-        font-size: smaller;
-        transform: translateX(45%) rotate(-90deg) translateX(44%);
+      .leaflet-control-zoom-in,
+      .leaflet-control-zoom-out {
+        border-radius: 50% !important;
+        background-color: var(--ion-color-primary);
+        color: white;
+        -webkit-tap-highlight-color: transparent;
       }
+
+      .leaflet-control-zoom-in.leaflet-disabled,
+      .leaflet-control-zoom-out.leaflet-disabled {
+        background-color: var(--ion-color-secondary);
+      }
+    }
+
+    .leaflet-control-attribution {
+      font-size: smaller;
+      transform: translateX(45%) rotate(-90deg) translateX(44%);
     }
   }
 }

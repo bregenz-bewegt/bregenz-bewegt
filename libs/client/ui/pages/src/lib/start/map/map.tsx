@@ -16,7 +16,7 @@ import { icon, LocationEvent } from 'leaflet';
 import { Gps, GpsSlash } from 'iconsax-react';
 import './map.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
-import pin from './img/Location-Bold-32px.png';
+import pin from './img/location-sharp.png';
 
 export interface MapProps {
   parks: Park[];
@@ -107,13 +107,18 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
                 position={[p.coordinates?.latitude, p.coordinates?.longitude]}
                 icon={customPin}
               >
-                <Popup>
+                <Popup
+                  className="start__content__map__popup"
+                  minWidth={200}
+                  maxWidth={200}
+                >
                   <IonRouterLink
                     routerLink={`${tabRoutes.start.route}/${p.id}`}
                     routerDirection="forward"
+                    className="start__content__map__popup__link"
                   >
                     <img src={p.image} alt={'Bild des Parkes ' + p.name} />
-                    {p.name}
+                    <div>{p.name}</div>
                   </IonRouterLink>
                 </Popup>
               </Marker>
