@@ -96,7 +96,11 @@ export class AuthService {
         },
       });
 
-      this.mailService.sendOtpActivationMail({ to: newUser.email, otp: token });
+      this.mailService.sendOtpActivationMail({
+        to: newUser.email,
+        otp: token,
+        name: newUser.firstname ?? newUser.username,
+      });
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -180,6 +184,7 @@ export class AuthService {
       this.mailService.sendOtpActivationMail({
         to: updatedUser.email,
         otp: token,
+        name: updatedUser.firstname ?? updatedUser.username,
       });
       throw new ForbiddenException(loginError.EMAIL_NOT_VERIFIED);
     }

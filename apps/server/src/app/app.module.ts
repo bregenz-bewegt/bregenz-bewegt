@@ -2,7 +2,7 @@ import * as path from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
-// import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
 import { AuthModule } from '@bregenz-bewegt/server-controllers-auth';
 import { UserModule } from '@bregenz-bewegt/server-controllers-user';
@@ -36,13 +36,14 @@ import { ActivityModule } from '@bregenz-bewegt/server/controllers/activity';
       defaults: {
         from: process.env['NX_MAIL_FROM'],
       },
-      // template: {
-      //   dir: __dirname + './templates',
-      //   adapter: new HandlebarsAdapter(),
-      //   options: {
-      //     strict: true,
-      //   },
-      // },
+      template: {
+        dir: __dirname + './templates',
+        adapter: new HandlebarsAdapter(),
+        options: {
+          strict: true,
+        },
+      },
+      preview: true, // only for testing
     }),
     ServeStaticModule.forRoot({
       rootPath: path.resolve('../public'),

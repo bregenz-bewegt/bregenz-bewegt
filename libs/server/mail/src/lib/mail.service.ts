@@ -23,16 +23,22 @@ export class MailService {
 
     await this.mailerService.sendMail({
       to: options.to,
-      subject: 'Passwort ändern',
+      subject: 'Passwort ändern | Bregenz bewegt',
       text: `Besuche den folgenden Link, um dein Passwort zu ändern: ${resetLink} Der Link läuft in 15 Minuten ab.`,
     });
   }
 
-  sendOtpActivationMail(options: { to: ISendMailOptions['to']; otp: string }) {
+  sendOtpActivationMail(options: {
+    to: ISendMailOptions['to'];
+    otp: string;
+    name: string;
+  }) {
     return this.mailerService.sendMail({
       to: options.to,
-      subject: 'Bestätige deine E-Mail Adresse',
+      subject: 'E-Mail Adresse bestätigen | Bregenz bewegt',
       text: `Dein Bestätigungscode lautet: ${options.otp}`,
+      template: '',
+      context: { name: options.name },
     });
   }
 }
