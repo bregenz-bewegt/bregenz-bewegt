@@ -5,9 +5,11 @@
   overflow-y: hidden;
 
   &__option {
-    height: var(--spacing-l) !important;
+    height: var(--spacing-l);
+    display: flex;
+    justify-content: space-between;
 
-    ion-icon {
+    svg {
       margin-left: var(--spacing-xxs);
       margin-right: calc(var(--spacing-xs) * -1);
     }
