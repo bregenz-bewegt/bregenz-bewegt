@@ -106,11 +106,9 @@ export class LeaderboardService {
           select: { exercise: { select: { coins: true } } },
         },
       },
-      ...(options?.skip !== undefined ? { skip: options.skip } : {}),
-      ...(options?.take !== undefined ? { take: options.take } : {}),
     });
 
-    return users
+    const sorted = users
       .map((user) => {
         const { activities, ...rest } = user;
 
@@ -120,5 +118,7 @@ export class LeaderboardService {
         };
       })
       .sort((a, b) => b.coins - a.coins);
+
+    return sorted.splice(options?.skip, options?.take || Infinity);
   }
 }
