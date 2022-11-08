@@ -15,3 +15,4 @@ export * from './quick-filter';
 export * from './otp-input/otp-input';
 export * from './activity-timer/activity-timer';
 export * from './transition-block/transition-block';
+export * from './item-group/item-group';
