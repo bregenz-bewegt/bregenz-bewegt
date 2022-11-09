@@ -1,7 +1,6 @@
 import {
   Checkbox,
   Input,
-  QuickFilterOption,
   TitleBanner,
 } from '@bregenz-bewegt/client-ui-components';
 import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';

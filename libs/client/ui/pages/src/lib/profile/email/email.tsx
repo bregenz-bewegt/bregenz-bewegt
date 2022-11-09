@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Input } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
@@ -19,6 +19,8 @@ import {
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
+import { VerifyEmail } from '../../verify-email/verify-email';
+import { EmailResetToken } from '@bregenz-bewegt/shared/types';
 
 export interface EmailProps {
   userStore?: UserStore;
@@ -26,6 +28,12 @@ export interface EmailProps {
 
 export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
+    const verifyModal = useRef<HTMLIonModalElement>(null);
+    const page = useRef(null);
+    const [verifyModalPresentingElement, setVerifyModalPresentingElement] =
+      useState<HTMLElement | null>(null);
+    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(false);
+    const [resetToken, setResetToken] = useState<EmailResetToken>();
     const email = useFormik({
       initialValues: {
         email: userStore?.user?.email ?? '',
@@ -34,8 +42,11 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
       onSubmit: (values, { setSubmitting, setErrors }) => {
         userStore
           ?.resetEmail({ email: values.email })
-          .then(() => {
+          .then((token) => {
+            console.log(token);
             setSubmitting(false);
+            setResetToken(token);
+            setIsVerifyModalOpen(true);
           })
           .catch((error) => {
             setErrors(error.response.data);
@@ -44,12 +55,24 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
       },
     });
 
+    const handleVerifySuccess = async () => {
+      setIsVerifyModalOpen(false);
+    };
+
     useEffect(() => {
-      email.setValues({ email: userStore?.user?.email ?? '' });
+      email.resetForm({
+        values: {
+          email: userStore?.user?.email ?? '',
+        },
+      });
     }, [userStore?.user?.email]);
 
+    useEffect(() => {
+      setVerifyModalPresentingElement(page.current);
+    }, []);
+
     return (
-      <IonPage>
+      <IonPage ref={page}>
         <IonHeader mode="ios">
           <IonToolbar>
             <IonButtons>
@@ -92,6 +115,14 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
               )}
             </IonButton>
           </IonGrid>
+          <VerifyEmail
+            email={email.values.email}
+            isOpen={isVerifyModalOpen}
+            modalRef={verifyModal}
+            modalPresentingElement={verifyModalPresentingElement!}
+            onVerifySuccess={handleVerifySuccess}
+            modalDismiss={() => verifyModal.current?.dismiss()}
+          />
         </IonContent>
       </IonPage>
     );
