@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
@@ -43,6 +43,10 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
           });
       },
     });
+
+    useEffect(() => {
+      email.setValues({ email: userStore?.user?.email ?? '' });
+    }, [userStore?.user?.email]);
 
     return (
       <IonPage>
