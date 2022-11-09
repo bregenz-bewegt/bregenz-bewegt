@@ -1,28 +1,28 @@
-import { IonButton, IonIcon } from '@ionic/react';
+import { IonChip, IonLabel } from '@ionic/react';
 import './quick-filter.scss';
-import { close } from 'ionicons/icons';
 import { QuickFilterOption } from './quick-filter-option';
+import { Add, CloseCircle } from 'iconsax-react';
 
 export interface QuickFilterProps {
   options: QuickFilterOption[];
   className?: string;
   onChange: (values: QuickFilterOption[]) => void;
+  iconSize?: number;
 }
 
 export const QuickFilter: React.FC<QuickFilterProps> = ({
   options,
   className,
   onChange,
+  iconSize,
 }) => {
   return (
     <div className={`quick-filter${className ? ` ${className}` : ''}`}>
       {options?.map((option) => {
         return (
-          <IonButton
-            mode="ios"
+          <IonChip
             className="quick-filter__option"
-            size="small"
-            color={option.active ? 'primary' : 'secondary'}
+            color={option.active ? 'primary' : 'medium'}
             onClick={() =>
               onChange([
                 ...options.map((o) =>
@@ -33,8 +33,13 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
               ])
             }
           >
-            {option.label} {option.active && <IonIcon icon={close} />}
-          </IonButton>
+            <IonLabel>{option.label}</IonLabel>
+            {option.active ? (
+              <CloseCircle variant="Bold" size={iconSize ?? 16} />
+            ) : (
+              <Add variant="Linear" size={iconSize ?? 16} />
+            )}
+          </IonChip>
         );
       })}
     </div>

@@ -1,10 +1,16 @@
 import {
   Checkbox,
   Input,
+  QuickFilterOption,
   TitleBanner,
 } from '@bregenz-bewegt/client-ui-components';
 import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';
-import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
+import {
+  onboardingStore,
+  OnboardingStore,
+  UserStore,
+  userStore,
+} from '@bregenz-bewegt/client/common/stores';
 import { registerSchema } from '@bregenz-bewegt/client/common/validation';
 import {
   IonPage,
@@ -16,6 +22,7 @@ import {
   IonNote,
   IonRow,
 } from '@ionic/react';
+import { DifficultyType } from '@prisma/client';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useRef, useState } from 'react';
@@ -23,10 +30,14 @@ import './register.scss';
 
 export interface RegisterProps {
   userStore?: UserStore;
+  onboardingStore?: OnboardingStore;
 }
 
-export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
-  observer(({ userStore }) => {
+export const Register: React.FC<RegisterProps> = inject(
+  userStore.storeKey,
+  onboardingStore.storeKey
+)(
+  observer(({ userStore, onboardingStore }) => {
     const [acceptTos, setAcceptTos] = useState<boolean>(false);
     const [acceptTosValid, setAcceptTosValid] = useState<boolean>(true);
     const verifyModal = useRef<HTMLIonModalElement>(null);
@@ -71,6 +82,17 @@ export const Register: React.FC<RegisterProps> = inject(userStore.storeKey)(
     });
 
     const handleVerifySuccess = async () => {
+      onboardingStore?.getPreferences((preferences) =>
+        userStore
+          ?.patchPreferences({
+            difficulties: preferences
+              .filter((p) => p.active)
+              .map((p) => p.key as DifficultyType),
+          })
+          .then(() => {
+            onboardingStore?.setPreferences(null);
+          })
+      );
       await verifyModal.current?.dismiss();
     };
 
