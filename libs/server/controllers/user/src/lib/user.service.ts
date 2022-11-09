@@ -143,6 +143,7 @@ export class UserService {
     userId: User['id'],
     dto: ResetEmailDto
   ): Promise<EmailResetToken> {
+    console.log(dto);
     const isEmailTaken = await this.prismaService.user.findUnique({
       where: { email: dto.email },
     });
@@ -159,7 +160,7 @@ export class UserService {
       data: { activationSecret, emailResetToken: resetTokenHash },
     });
 
-    await this.mailService.sendOtpActivationMail({
+    this.mailService.sendOtpActivationMail({
       to: dto.email,
       otp: token,
     });
