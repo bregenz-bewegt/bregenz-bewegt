@@ -21,7 +21,7 @@ import {
   Get,
   ParseFilePipe,
   Patch,
-  Post as Post,
+  Post,
   Put,
   Res,
   UploadedFile,
