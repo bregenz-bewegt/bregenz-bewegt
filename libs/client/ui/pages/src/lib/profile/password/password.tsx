@@ -14,11 +14,13 @@ import {
   IonButton,
   IonLabel,
   IonSpinner,
+  useIonToast,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useFormik } from 'formik';
 import { changePasswordSchema } from '@bregenz-bewegt/client/common/validation';
 import { Input } from '@bregenz-bewegt/client-ui-components';
+import { checkmark } from 'ionicons/icons';
 import './password.scss';
 
 export interface PasswordProps {
@@ -27,6 +29,7 @@ export interface PasswordProps {
 
 export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
+    const [presentToast] = useIonToast();
     const passwordForm = useFormik({
       initialValues: {
         password: '',
@@ -35,7 +38,22 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
       },
       validationSchema: changePasswordSchema,
       onSubmit: (values, { setSubmitting, setErrors }) => {
-        //
+        userStore
+          ?.changePassword({ password: values.newPassword })
+          .then(() => {
+            setSubmitting(false);
+            presentToast({
+              message: 'Passwort erfolgreich geändert',
+              icon: checkmark,
+              duration: 2000,
+              position: 'top',
+              mode: 'ios',
+              color: 'success',
+            });
+          })
+          .catch((error) => {
+            setErrors(error.response.data);
+          });
       },
     });
 
@@ -60,6 +78,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
                 name="password"
                 placeholder="Passwort"
                 label="Passwort"
+                type="password"
                 value={passwordForm.values.password}
                 error={
                   passwordForm.touched.password
@@ -75,6 +94,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
                 name="newPassword"
                 placeholder="Neues Passwort"
                 label="Neues Passwort"
+                type="password"
                 value={passwordForm.values.newPassword}
                 error={
                   passwordForm.touched.newPassword
@@ -90,6 +110,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
                 name="newPasswordConfirmation"
                 placeholder="Neues Passwort bestätigen"
                 label="Neues Passwort bestätigen"
+                type="password"
                 value={passwordForm.values.newPasswordConfirmation}
                 error={
                   passwordForm.touched.newPasswordConfirmation

@@ -4,10 +4,12 @@ import {
   Get,
   Headers,
   Post,
+  Put,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import {
+  ChangePasswordDto,
   ForgotPasswordDto,
   GuestDto,
   LoginDto,
@@ -78,15 +80,18 @@ export class AuthController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @Post('change-password')
-  changePassword(@GetCurrentUser('email') email: User['email']): Promise<void> {
-    return this.authService.changePassword(email);
+  @Put('change-password')
+  changePassword(
+    @GetCurrentUser('sub') userId: User['id'],
+    @Body() dto: ChangePasswordDto
+  ): Promise<void> {
+    return this.authService.changePassword(userId, dto);
   }
 
   @Public()
   @Post('forgot-password')
   forgotPassword(@Body() dto: ForgotPasswordDto): Promise<void> {
-    return this.authService.changePassword(dto.email);
+    return this.authService.forgotPassword(dto);
   }
 
   @Public()

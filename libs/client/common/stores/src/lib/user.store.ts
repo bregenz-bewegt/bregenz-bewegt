@@ -14,6 +14,7 @@ import type {
   EmailResetToken,
   ResetEmailDto,
   VerifyResetEmailDto,
+  ChangePasswordDto,
 } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
@@ -229,8 +230,8 @@ export class UserStore implements Store {
     return data;
   }
 
-  async changePassword(): Promise<void> {
-    await http.post('/auth/change-password');
+  async changePassword(dto: ChangePasswordDto): Promise<void> {
+    await http.put('/auth/change-password', dto);
   }
 
   async forgotPassword(dto: ForgotPasswordDto): Promise<void> {

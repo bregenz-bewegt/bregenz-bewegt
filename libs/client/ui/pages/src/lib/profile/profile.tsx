@@ -32,9 +32,7 @@ import { useFormik } from 'formik';
 import { lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
-import {
-  ValidProfilePictureMimeType,
-} from '@bregenz-bewegt/shared/types';
+import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
@@ -96,20 +94,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           });
       },
     });
-
-    const handleChangePassword = () => {
-      userStore
-        ?.changePassword()
-        .then(() => {
-          presentAlert({
-            header: 'Passwort zurücksetzen',
-            message: `Eine Email zum Zurücksetzen deines Passworts wurde an ${userStore.user?.email} versendet`,
-            backdropDismiss: false,
-            buttons: [{ text: 'OK' }],
-          });
-        })
-        .catch(() => showFailureToast());
-    };
 
     const handleImageChange = async (source: CameraSource) => {
       try {
@@ -370,22 +354,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   onBlur={profile.handleBlur}
                   disabled={!isImageLoaded}
                 />
-              </IonRow>
-              <IonRow className="profile__content__password-row">
-                <Input
-                  className="profile__content__password-row__input"
-                  expand={false}
-                  label="Passwort"
-                  disabled
-                  value={'*'.repeat(11)}
-                />
-                <IonButton
-                  onClick={() => handleChangePassword()}
-                  size="small"
-                  mode="ios"
-                >
-                  Ändern
-                </IonButton>
               </IonRow>
               <IonRow>
                 <IonText>

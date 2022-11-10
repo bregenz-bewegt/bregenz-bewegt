@@ -9,5 +9,5 @@ export const changePasswordSchema = yup.object().shape({
   newPasswordConfirmation: yup
     .string()
     .required()
-    .oneOf([yup.ref('password')], 'Passwörter stimmen nicht überein'),
+    .oneOf([yup.ref('newPassword')], 'Passwörter stimmen nicht überein'),
 });
