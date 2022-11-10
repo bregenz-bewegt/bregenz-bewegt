@@ -102,7 +102,7 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
               expand="block"
               color="primary"
               onClick={() => email.submitForm()}
-              disabled={email.isSubmitting || !email.dirty}
+              disabled={email.isSubmitting || !email.dirty || !email.isValid}
               className="ion-margin-top"
             >
               {email.isSubmitting ? (
