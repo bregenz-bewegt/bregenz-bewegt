@@ -13,6 +13,8 @@ import {
   IonRow,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
+import { useFormik } from 'formik';
+import { changePasswordSchema } from '@bregenz-bewegt/client/common/validation';
 
 export interface PasswordProps {
   userStore?: UserStore;
@@ -20,6 +22,18 @@ export interface PasswordProps {
 
 export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
+    const passwordForm = useFormik({
+      initialValues: {
+        password: '',
+        newPassword: '',
+        newPasswordConfirmation: '',
+      },
+      validationSchema: changePasswordSchema,
+      onSubmit: (values, { setSubmitting, setErrors }) => {
+        //
+      },
+    });
+
     return (
       <IonPage>
         <IonHeader mode="ios">
