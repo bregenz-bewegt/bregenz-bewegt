@@ -11,7 +11,7 @@ export class ParkStore implements Store {
     makeAutoObservable(this);
   }
 
-  @action setParks(parks: Park[]) {
+  @action setParks(parks: Park[]): void {
     this.parks = parks;
   }
 
