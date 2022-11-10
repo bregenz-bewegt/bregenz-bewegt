@@ -62,6 +62,8 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
                     ? passwordForm.errors.password
                     : undefined
                 }
+                onChange={passwordForm.handleChange}
+                onBlur={passwordForm.handleBlur}
               />
             </IonRow>
             <IonRow>
@@ -75,6 +77,8 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
                     ? passwordForm.errors.password
                     : undefined
                 }
+                onChange={passwordForm.handleChange}
+                onBlur={passwordForm.handleBlur}
               />
             </IonRow>
           </IonGrid>
