@@ -15,6 +15,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import { useFormik } from 'formik';
 import { changePasswordSchema } from '@bregenz-bewegt/client/common/validation';
+import { Input } from '@bregenz-bewegt/client-ui-components';
 
 export interface PasswordProps {
   userStore?: UserStore;
@@ -50,7 +51,36 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
           <IonGrid>
-            <IonRow>Passwort ändern</IonRow>
+            <IonRow>
+              <Input
+                name="password"
+                placeholder="Passwort"
+                label="Passwort"
+                value={passwordForm.values.password}
+                error={
+                  passwordForm.touched.password
+                    ? passwordForm.errors.password
+                    : undefined
+                }
+                onChange={passwordForm.handleChange}
+                onBlur={passwordForm.handleBlur}
+              />
+            </IonRow>
+            <IonRow>
+              <Input
+                name="newPassword"
+                placeholder="Neues Passwort"
+                label="Neues Passwort"
+                value={passwordForm.values.password}
+                error={
+                  passwordForm.touched.password
+                    ? passwordForm.errors.password
+                    : undefined
+                }
+                onChange={passwordForm.handleChange}
+                onBlur={passwordForm.handleBlur}
+              />
+            </IonRow>
           </IonGrid>
         </IonContent>
       </IonPage>
