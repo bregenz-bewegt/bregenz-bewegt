@@ -43,7 +43,7 @@ import { ActivityModule } from '@bregenz-bewegt/server/controllers/activity';
           strict: true,
         },
       },
-      preview: true, // only for testing
+      // preview: true, // only for testing
     }),
     ServeStaticModule.forRoot({
       rootPath: path.resolve('../public'),
