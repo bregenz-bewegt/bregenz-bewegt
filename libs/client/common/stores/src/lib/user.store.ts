@@ -13,6 +13,7 @@ import type {
   VerifyDto,
   EmailResetToken,
   ResetEmailDto,
+  VerifyResetEmailDto,
 } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
@@ -224,8 +225,12 @@ export class UserStore implements Store {
     return data;
   }
 
-  async verifyResetEmail(dto: ResetEmailDto): Promise<User> {
-    const { data } = await http.post('/users/email', dto);
+  async verifyResetEmail(
+    dto: VerifyResetEmailDto & { authorization: string }
+  ): Promise<User> {
+    const { data } = await http.post('/users/email/verify', dto, {
+      headers: { authorization: `Bearer ${dto.authorization}` },
+    });
     return data;
   }
 

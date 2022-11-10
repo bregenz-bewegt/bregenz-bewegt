@@ -43,7 +43,6 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
         userStore
           ?.resetEmail({ email: values.email })
           .then((token) => {
-            console.log(token);
             setSubmitting(false);
             setResetToken(token);
             setIsVerifyModalOpen(true);
@@ -120,6 +119,12 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
             isOpen={isVerifyModalOpen}
             modalRef={verifyModal}
             modalPresentingElement={verifyModalPresentingElement!}
+            onVerifySubmit={async (email, token) =>
+              userStore?.verifyResetEmail({
+                token: token,
+                authorization: resetToken?.token ?? '',
+              })
+            }
             onVerifySuccess={handleVerifySuccess}
             modalDismiss={() => verifyModal.current?.dismiss()}
           />

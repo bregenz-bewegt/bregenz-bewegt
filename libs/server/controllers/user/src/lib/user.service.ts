@@ -181,7 +181,7 @@ export class UserService {
       throw new ForbiddenException('Access denied');
     }
 
-    const tokenValid = await argon.verify(user.passwordResetToken, token);
+    const tokenValid = await argon.verify(user.emailResetToken, token);
     const otpValid = speakeasy.totp.verify({
       secret: user.activationSecret,
       encoding: 'base32',
@@ -189,7 +189,7 @@ export class UserService {
       window: 2,
     });
 
-    if (!tokenValid || otpValid) {
+    if (!tokenValid || !otpValid) {
       throw new ForbiddenException('Access denied');
     }
 

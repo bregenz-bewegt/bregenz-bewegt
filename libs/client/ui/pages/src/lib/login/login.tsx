@@ -180,6 +180,12 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
             isOpen={isVerifyModalOpen}
             modalRef={verifyModal}
             modalPresentingElement={verifyModalPresentingElement!}
+            onVerifySubmit={async (email, token) =>
+              userStore?.verify({
+                email: email,
+                token: token,
+              })
+            }
             onVerifySuccess={handleVerifySuccess}
             modalDismiss={() => {
               verifyModal.current?.dismiss();
