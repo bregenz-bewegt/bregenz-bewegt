@@ -37,7 +37,7 @@ import { ActivityModule } from '@bregenz-bewegt/server/controllers/activity';
         from: process.env['NX_MAIL_FROM'],
       },
       template: {
-        dir: __dirname + './templates',
+        dir: './templates',
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,

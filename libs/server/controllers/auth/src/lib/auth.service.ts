@@ -314,7 +314,7 @@ export class AuthService {
     const token = await this.signPasswordResetToken(user.id, email);
     const tokenHash = await argon.hash(token);
 
-    await this.prismaService.user.update({
+    const newUser = await this.prismaService.user.update({
       where: { id: user.id },
       data: {
         passwordResetToken: tokenHash,
@@ -324,6 +324,7 @@ export class AuthService {
     return this.mailService.sendPasswordResetmail({
       to: email,
       resetToken: token,
+      name: newUser.firstname ?? newUser.username,
     });
   }
 
