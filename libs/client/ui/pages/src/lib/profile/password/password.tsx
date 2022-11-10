@@ -52,7 +52,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
           <IonGrid>
-            <IonRow className="password">
+            <IonRow className="profile-password__password-row">
               <Input
                 name="password"
                 placeholder="Passwort"
