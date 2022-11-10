@@ -113,7 +113,13 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
                   </IonTabButton>
                 );
               } else {
-                return <IonTabButton disabled tab={page.route}></IonTabButton>;
+                return (
+                  <IonTabButton
+                    disabled
+                    tab={page.route}
+                    key={i}
+                  ></IonTabButton>
+                );
               }
             })}
           </IonTabBar>
