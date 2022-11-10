@@ -11,6 +11,9 @@ import {
   IonContent,
   IonGrid,
   IonRow,
+  IonButton,
+  IonLabel,
+  IonSpinner,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useFormik } from 'formik';
@@ -97,6 +100,26 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
                 onBlur={passwordForm.handleBlur}
               />
             </IonRow>
+            <IonButton
+              mode="ios"
+              expand="block"
+              color="primary"
+              onClick={() => passwordForm.submitForm()}
+              disabled={
+                passwordForm.isSubmitting ||
+                !passwordForm.dirty ||
+                !passwordForm.isValid
+              }
+              className="ion-margin-top"
+            >
+              {passwordForm.isSubmitting ? (
+                <IonLabel>
+                  <IonSpinner name="crescent" />
+                </IonLabel>
+              ) : (
+                'Passwort Ändern'
+              )}
+            </IonButton>
           </IonGrid>
         </IonContent>
       </IonPage>
