@@ -1,7 +1,6 @@
 import {
   Checkbox,
   Input,
-  QuickFilterOption,
   TitleBanner,
 } from '@bregenz-bewegt/client-ui-components';
 import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';
@@ -154,7 +153,7 @@ export const Register: React.FC<RegisterProps> = inject(
               />
               <Input
                 name="email"
-                placeholder="Email"
+                placeholder="E-Mail"
                 type="email"
                 inputMode="email"
                 value={register.values.email}
@@ -243,6 +242,12 @@ export const Register: React.FC<RegisterProps> = inject(
             isOpen={isVerifyModalOpen}
             modalRef={verifyModal}
             modalPresentingElement={verifyModalPresentingElement!}
+            onVerifySubmit={async (email, token) =>
+              userStore?.verify({
+                email: email,
+                token: token,
+              })
+            }
             onVerifySuccess={handleVerifySuccess}
             modalDismiss={() => verifyModal.current?.dismiss()}
           />

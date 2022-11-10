@@ -16,6 +16,6 @@ export const loginError: { [K in LoginError]: LoginErrorResponse } = {
     password: 'Falsche E-Mail Adresse oder Passwort',
   },
   [LoginError.EMAIL_NOT_VERIFIED]: {
-    email: 'Email noch nicht bestätigt',
+    email: 'E-Mail Adresse noch nicht bestätigt',
   },
 };

@@ -14,7 +14,6 @@ import {
   JwtPayload,
   JwtPayloadWithoutRole,
   LoginDto,
-  OtpWithSecret,
   RegisterDto,
   ResetPasswordDto,
   Tokens,
@@ -29,6 +28,7 @@ import {
 } from '@bregenz-bewegt/shared/errors';
 import { MailService } from '@bregenz-bewegt/server/mail';
 import { UserService } from '@bregenz-bewegt/server-controllers-user';
+import { UtilService } from '@bregenz-bewegt/server/util';
 
 @Injectable()
 export class AuthService {
@@ -37,7 +37,8 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private mailService: MailService,
-    private userService: UserService
+    private userService: UserService,
+    private utilService: UtilService
   ) {}
   private readonly guestUsernamePrefix = 'Gast#';
 
@@ -75,7 +76,8 @@ export class AuthService {
     try {
       const { password, ...rest } = dto;
       const hash = await argon.hash(password);
-      const { token, secret: activationSecret } = this.generateOtpToken();
+      const { token, secret: activationSecret } =
+        this.utilService.generateOtpToken();
 
       const newUser = await this.prismaService.user.create({
         data: {
@@ -96,7 +98,10 @@ export class AuthService {
         },
       });
 
-      this.mailService.sendOtpActivationMail({ to: newUser.email, otp: token });
+      this.mailService.sendOtpActivationMail({
+        to: newUser.email,
+        otp: token,
+      });
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -166,7 +171,8 @@ export class AuthService {
     }
 
     if (!user.active) {
-      const { token, secret: activationSecret } = this.generateOtpToken();
+      const { token, secret: activationSecret } =
+        this.utilService.generateOtpToken();
 
       const updatedUser = await this.prismaService.user.update({
         where: {
@@ -283,16 +289,6 @@ export class AuthService {
     });
 
     return token;
-  }
-
-  generateOtpToken(): OtpWithSecret {
-    const secret = speakeasy.generateSecret().base32;
-    const token = speakeasy.totp({
-      secret: secret,
-      encoding: 'base32',
-    });
-
-    return { token, secret };
   }
 
   async changePassword(email: User['email']): Promise<void> {

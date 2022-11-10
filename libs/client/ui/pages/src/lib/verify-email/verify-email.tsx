@@ -27,7 +27,8 @@ export interface VerifyEmailProps {
   modalRef: React.Ref<HTMLIonModalElement>;
   modalPresentingElement: HTMLElement;
   modalDismiss: () => void;
-  onVerifySuccess: () => Promise<void>;
+  onVerifySubmit: (email: string, token: string) => Promise<any>;
+  onVerifySuccess: () => Promise<any>;
   userStore?: UserStore;
 }
 
@@ -41,6 +42,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
       modalRef,
       modalPresentingElement,
       modalDismiss,
+      onVerifySubmit,
       onVerifySuccess,
       userStore,
     }: VerifyEmailProps) => {
@@ -59,8 +61,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
         isInitialValid: false,
         validationSchema: verifySchema,
         onSubmit: (values, { setSubmitting, setErrors }) => {
-          userStore
-            ?.verify({ email: email, token: values.token })
+          onVerifySubmit(email, values.token)
             .then(() => {
               setSubmitting(false);
               setIsVerified(true);
