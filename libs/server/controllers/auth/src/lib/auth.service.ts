@@ -374,7 +374,7 @@ export class AuthService {
       throw new ForbiddenException(changePasswordError.INVALID_PASSWORD);
     }
 
-    const passwordHash = await argon.hash(dto.password);
+    const passwordHash = await argon.hash(dto.newPassword);
 
     await this.prismaService.user.update({
       where: { id: user.id },

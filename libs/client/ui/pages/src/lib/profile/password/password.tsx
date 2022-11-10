@@ -39,7 +39,10 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
       validationSchema: changePasswordSchema,
       onSubmit: (values, { setSubmitting, setErrors }) => {
         userStore
-          ?.changePassword({ password: values.password })
+          ?.changePassword({
+            password: values.password,
+            newPassword: values.newPassword,
+          })
           .then(() => {
             setSubmitting(false);
             presentToast({
