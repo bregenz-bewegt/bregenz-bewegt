@@ -1,6 +1,7 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import { UtilService } from '@bregenz-bewegt/server/util';
+import { MailerOptions } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
@@ -19,6 +20,13 @@ describe('UserController', () => {
         MulterService,
         UtilService,
         JwtService,
+        {
+          name: 'MAILER_OPTIONS',
+          provide: 'MAILER_OPTIONS',
+          useValue: {
+            transport: { connection: '' },
+          } as MailerOptions,
+        },
       ],
       controllers: [UserController],
     }).compile();
