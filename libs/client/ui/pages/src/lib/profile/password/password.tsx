@@ -16,6 +16,7 @@ import { inject, observer } from 'mobx-react';
 import { useFormik } from 'formik';
 import { changePasswordSchema } from '@bregenz-bewegt/client/common/validation';
 import { Input } from '@bregenz-bewegt/client-ui-components';
+import './password.scss';
 
 export interface PasswordProps {
   userStore?: UserStore;
@@ -36,7 +37,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
     });
 
     return (
-      <IonPage>
+      <IonPage className="profile-password">
         <IonHeader mode="ios">
           <IonToolbar>
             <IonButtons>
@@ -51,7 +52,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
           <IonGrid>
-            <IonRow>
+            <IonRow className="password">
               <Input
                 name="password"
                 placeholder="Passwort"
