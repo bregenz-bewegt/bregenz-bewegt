@@ -52,6 +52,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
             });
           })
           .catch((error) => {
+            setSubmitting(false);
             setErrors(error.response.data);
           });
       },
