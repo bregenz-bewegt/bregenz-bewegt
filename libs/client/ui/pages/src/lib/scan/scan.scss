@@ -18,9 +18,6 @@
     --r: 10px;
     --w: 40px;
 
-    padding: var(--b);
-    box-sizing: border-box;
-
     &::before {
       content: '';
       position: absolute;
