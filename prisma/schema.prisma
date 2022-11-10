@@ -23,6 +23,7 @@ model User {
   password           String?
   refreshToken       String?
   passwordResetToken String?
+  emailResetToken    String?
   activationSecret   String?
   profilePicture     String?
   preferences        Preferences?

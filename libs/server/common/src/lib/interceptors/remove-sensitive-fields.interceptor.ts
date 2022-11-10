@@ -17,6 +17,7 @@ export class RemoveSensitiveFieldsInterceptor implements NestInterceptor {
               password: undefined,
               refreshToken: undefined,
               passwordResetToken: undefined,
+              emailResetToken: undefined,
               activationSecret: undefined,
             }))
           : {
@@ -24,6 +25,7 @@ export class RemoveSensitiveFieldsInterceptor implements NestInterceptor {
               password: undefined,
               refreshToken: undefined,
               passwordResetToken: undefined,
+              emailResetToken: undefined,
               activationSecret: undefined,
             }
       )
