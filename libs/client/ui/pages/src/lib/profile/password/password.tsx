@@ -71,10 +71,25 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
                 name="newPassword"
                 placeholder="Neues Passwort"
                 label="Neues Passwort"
-                value={passwordForm.values.password}
+                value={passwordForm.values.newPassword}
                 error={
-                  passwordForm.touched.password
-                    ? passwordForm.errors.password
+                  passwordForm.touched.newPassword
+                    ? passwordForm.errors.newPassword
+                    : undefined
+                }
+                onChange={passwordForm.handleChange}
+                onBlur={passwordForm.handleBlur}
+              />
+            </IonRow>
+            <IonRow>
+              <Input
+                name="newPasswordConfirmation"
+                placeholder="Neues Passwort bestätigen"
+                label="Neues Passwort bestätigen"
+                value={passwordForm.values.newPasswordConfirmation}
+                error={
+                  passwordForm.touched.newPasswordConfirmation
+                    ? passwordForm.errors.newPasswordConfirmation
                     : undefined
                 }
                 onChange={passwordForm.handleChange}
