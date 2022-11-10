@@ -54,10 +54,6 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
       },
     });
 
-    const handleVerifySuccess = async () => {
-      setIsVerifyModalOpen(false);
-    };
-
     useEffect(() => {
       email.resetForm({
         values: {
@@ -125,7 +121,7 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
                 authorization: resetToken?.token ?? '',
               })
             }
-            onVerifySuccess={handleVerifySuccess}
+            onVerifySuccess={async () => setIsVerifyModalOpen(false)}
             modalDismiss={() => verifyModal.current?.dismiss()}
           />
         </IonContent>
