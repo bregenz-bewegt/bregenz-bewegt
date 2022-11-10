@@ -117,7 +117,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
                   <IonSpinner name="crescent" />
                 </IonLabel>
               ) : (
-                'Passwort Ändern'
+                'Passwort ändern'
               )}
             </IonButton>
           </IonGrid>

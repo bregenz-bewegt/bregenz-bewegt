@@ -110,7 +110,7 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
                   <IonSpinner name="crescent" />
                 </IonLabel>
               ) : (
-                'Ändern'
+                'E-Mail ändern'
               )}
             </IonButton>
           </IonGrid>
