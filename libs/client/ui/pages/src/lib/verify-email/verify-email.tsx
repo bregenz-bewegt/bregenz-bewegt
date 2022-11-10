@@ -80,8 +80,6 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
         },
       });
 
-      console.log(email);
-
       return (
         <IonModal {...modalProps} className="verify-email">
           <IonHeader>
