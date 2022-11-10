@@ -59,8 +59,9 @@ export const List: React.FC<ListProps> = ({
         {searchResult.length > 0 ? (
           <>
             <TransitionBlock />
-            {searchResult.map((park) => (
+            {searchResult.map((park, i) => (
               <ParkCard
+                key={i}
                 isLoading={isLoadingParks}
                 title={park.name}
                 location={park.address}
