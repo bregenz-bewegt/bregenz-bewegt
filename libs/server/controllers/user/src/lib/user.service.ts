@@ -143,7 +143,6 @@ export class UserService {
     userId: User['id'],
     dto: ResetEmailDto
   ): Promise<EmailResetToken> {
-    console.log(dto);
     const isEmailTaken = await this.prismaService.user.findUnique({
       where: { email: dto.email },
     });
