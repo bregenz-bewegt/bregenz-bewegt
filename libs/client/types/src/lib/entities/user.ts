@@ -1,3 +1,4 @@
+import { Preferences } from './preferences';
 import { Role } from './role';
 
 export type User = {
@@ -14,4 +15,5 @@ export type User = {
   refreshToken?: string;
   profilePicture?: string;
   coins?: number;
+  preferences?: Preferences;
 };

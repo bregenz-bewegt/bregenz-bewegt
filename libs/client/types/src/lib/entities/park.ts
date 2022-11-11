@@ -1,3 +1,4 @@
+import { Coordinates } from './coordinates';
 import { Exercise } from './exercise';
 
 export type Park = {
@@ -7,4 +8,5 @@ export type Park = {
   address: string;
   image: string;
   exercises?: Exercise[];
+  coordinates?: Coordinates;
 };

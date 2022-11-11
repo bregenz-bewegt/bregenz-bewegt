@@ -50,8 +50,14 @@
       ],
       "@bregenz-bewegt/server-prisma": ["libs/server/prisma/src/index.ts"],
       "@bregenz-bewegt/server/common": ["libs/server/common/src/index.ts"],
+      "@bregenz-bewegt/server/controllers/activity": [
+        "libs/server/controllers/activity/src/index.ts"
+      ],
       "@bregenz-bewegt/server/controllers/exercise": [
         "libs/server/controllers/exercise/src/index.ts"
+      ],
+      "@bregenz-bewegt/server/controllers/leaderboard": [
+        "libs/server/controllers/leaderboard/src/index.ts"
       ],
       "@bregenz-bewegt/server/controllers/park": [
         "libs/server/controllers/park/src/index.ts"

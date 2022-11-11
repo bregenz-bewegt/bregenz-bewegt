@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '@bregenz-bewegt/server-controllers-user';
@@ -16,7 +16,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
-    UserModule,
+    forwardRef(() => UserModule),
     PassportModule,
     PrismaModule,
     JwtModule.register({}),

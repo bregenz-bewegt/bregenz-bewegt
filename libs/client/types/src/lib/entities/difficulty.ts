@@ -1,4 +1,4 @@
-export enum Difficulty {
+export enum DifficultyType {
   BEGINNER = 'BEGINNER',
   ADVANCED = 'ADVANCED',
   GAME = 'GAME',

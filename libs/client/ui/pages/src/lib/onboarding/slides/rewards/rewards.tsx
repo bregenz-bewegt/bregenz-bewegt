@@ -20,7 +20,7 @@ export const Rewards: React.FC<RewardsProps> = (props: RewardsProps) => {
               <h2>Belohnungen verdienen</h2>
             </IonText>
             <IonText>
-              <p>Tausche Bregenz bewegt Coins gegen tolle Belohnungen ein.</p>
+              <p>Sei einer der Besten und verdiene dir tolle Belohnungen.</p>
             </IonText>
           </IonCol>
         </IonRow>

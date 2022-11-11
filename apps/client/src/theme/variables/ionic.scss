@@ -3,6 +3,10 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 :root {
+  // Background Colors for White theme
+  --ion-background-color: #ffffff;
+  --ion-background-color-rgb: 255, 255, 255;
+
   /** primary **/
   --ion-color-primary: #0065bd;
   --ion-color-primary-rgb: 0, 101, 189;
@@ -76,6 +80,11 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /** rank **/
+  --ion-color-gold: #f9ad0e;
+  --ion-color-silver: #b1b1b1;
+  --ion-color-bronze: #c5802c;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -153,6 +162,11 @@ body.dark {
   --ion-color-light-contrast-rgb: 255, 255, 255;
   --ion-color-light-shade: #1e2023;
   --ion-color-light-tint: #383a3e;
+
+  /** rank **/
+  --ion-color-gold: #f9ad0e;
+  --ion-color-silver: #b1b1b1;
+  --ion-color-bronze: #c5802c;
 }
 
 /*

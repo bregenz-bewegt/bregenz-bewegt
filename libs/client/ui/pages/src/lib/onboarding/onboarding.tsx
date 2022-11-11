@@ -32,7 +32,7 @@ export const Onboarding: React.FC = (props: IntroProps) => {
         </IonSlides>
         <IonRow className="skip-row">
           <IonCol className="ion-justify-content-end">
-            <IonButton fill="clear" size="small" href="/login">
+            <IonButton fill="clear" size="small" routerLink="/login">
               Überspringen
               <IonIcon slot="end" icon={chevronForward} />
             </IonButton>

@@ -120,7 +120,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 name="email"
                 type="email"
                 inputMode="email"
-                placeholder="Email"
+                placeholder="E-Mail"
                 value={login.values.email}
                 error={login.touched.email ? login.errors.email : undefined}
                 onChange={login.handleChange}
@@ -171,7 +171,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 fill="outline"
                 routerLink="/register"
               >
-                Neu Registrieren
+                Registrieren
               </IonButton>
             </div>
           </div>
@@ -180,6 +180,12 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
             isOpen={isVerifyModalOpen}
             modalRef={verifyModal}
             modalPresentingElement={verifyModalPresentingElement!}
+            onVerifySubmit={async (email, token) =>
+              userStore?.verify({
+                email: email,
+                token: token,
+              })
+            }
             onVerifySuccess={handleVerifySuccess}
             modalDismiss={() => {
               verifyModal.current?.dismiss();

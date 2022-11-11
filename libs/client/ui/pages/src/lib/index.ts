@@ -2,7 +2,7 @@ export * from './onboarding/onboarding';
 export * from './loading/loading';
 export * from './analytics/analytics';
 export * from './leaderboard/leaderboard';
-export * from './profile/profile';
+export * from './profile';
 export * from './scan/scan';
 export * from './start/start';
 export * from './login/login';

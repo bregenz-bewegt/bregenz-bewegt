@@ -15,35 +15,38 @@ export class ParkStore implements Store {
     this.parks = parks;
   }
 
-  @action async getParks() {
+  @action async getParks(): Promise<Park[] | undefined> {
     try {
       const { data } = await http.get('/parks');
       this.setParks(data);
-      return data;
+      return <Park[]>data;
     } catch (error) {
-      return null;
+      return;
     }
   }
 
-  async getPark(id: Park['id']) {
+  async getPark(id: Park['id']): Promise<Park | undefined> {
     try {
       const { data } = await http.get(`/parks/${id}`);
       return data;
     } catch (error) {
-      return null;
+      return;
     }
   }
 
-  async getParkWithExercises(id: Park['id']) {
+  async getParkWithExercises(id: Park['id']): Promise<Park | undefined> {
     try {
       const { data } = await http.get(`/parks/${id}/exercises`);
       return data;
     } catch (error) {
-      return null;
+      return;
     }
   }
 
-  async getParkWithExercise(parkId: Park['id'], exerciseId: Exercise['id']) {
+  async getParkWithExercise(
+    parkId: Park['id'],
+    exerciseId: Exercise['id']
+  ): Promise<(Park & { exercises: [Exercise] }) | undefined> {
     try {
       const { data } = await http.get(
         `/parks/${parkId}/exercises/${exerciseId}`
@@ -51,7 +54,7 @@ export class ParkStore implements Store {
 
       return data;
     } catch (error) {
-      return null;
+      return;
     }
   }
 }

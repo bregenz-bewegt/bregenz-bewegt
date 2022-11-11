@@ -3,6 +3,9 @@ import {
   ExerciseDetail,
   ParkDetail,
   Appearance,
+  PublicProfile,
+  Difficulty,
+  Email,
 } from '@bregenz-bewegt/client-ui-pages';
 import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
 import {
@@ -76,6 +79,21 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
               path={`${tabRoutes.profile.route}/appearance`}
               component={Appearance}
             ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/public-profile`}
+              component={PublicProfile}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/difficulty`}
+              component={Difficulty}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/email`}
+              component={Email}
+            ></Route>
             <Route path="">
               <Redirect to="/start" />
             </Route>
@@ -92,11 +110,16 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
                     key={i}
                   >
                     <page.icon />
-                    {/* <IonLabel>{page.label}</IonLabel> */}
                   </IonTabButton>
                 );
               } else {
-                return <IonTabButton disabled tab={page.route}></IonTabButton>;
+                return (
+                  <IonTabButton
+                    disabled
+                    tab={page.route}
+                    key={i}
+                  ></IonTabButton>
+                );
               }
             })}
           </IonTabBar>

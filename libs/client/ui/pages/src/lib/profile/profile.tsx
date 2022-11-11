@@ -6,8 +6,8 @@ import {
   IonButton,
   IonCol,
   IonContent,
+  IonFooter,
   IonGrid,
-  IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
@@ -16,9 +16,7 @@ import {
   IonSkeletonText,
   IonSpinner,
   IonText,
-  IonTitle,
   IonToast,
-  IonToolbar,
   useIonActionSheet,
   useIonAlert,
   useIonLoading,
@@ -31,12 +29,15 @@ import { useEffect, useState } from 'react';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
-import { closeCircleOutline, lockClosed } from 'ionicons/icons';
+import { lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
-import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
+import {
+  ValidProfilePictureMimeType,
+} from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -46,6 +47,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
     const router = useIonRouter();
     const [presentToast] = useIonToast();
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [presentAlert] = useIonAlert();
     const [presentLoading, dismissLoading] = useIonLoading();
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
@@ -54,14 +56,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     const showFailureToast = () => {
       dismissLoading();
-      presentToast({
-        message: 'Etwas ist schiefgelaufen',
-        icon: closeCircleOutline,
-        duration: 2000,
-        position: 'top',
-        mode: 'ios',
-        color: 'danger',
-      });
+      presentDefaultErrorToast();
     };
 
     const showSuccessToast = () => {
@@ -223,11 +218,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage className="profile">
-        <IonHeader mode="ios">
-          <IonToolbar>
-            <IonTitle>Profil</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <IonContent
           fullscreen
           className={`profile__content ${
@@ -397,7 +387,26 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   Ändern
                 </IonButton>
               </IonRow>
+              <IonRow>
+                <IonText>
+                  <h2>Präferenzen</h2>
+                </IonText>
+              </IonRow>
               <ItemGroup>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/public-profile`}
+                  mode="ios"
+                >
+                  <IonLabel>Öffentliches Profil</IonLabel>
+                </IonItem>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/difficulty`}
+                  mode="ios"
+                >
+                  <IonLabel>Bevorzugte Übungen</IonLabel>
+                </IonItem>
                 <IonItem
                   button
                   routerLink={`${tabRoutes.profile.route}/appearance`}
@@ -407,36 +416,76 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   <IonLabel>Darstellung</IonLabel>
                 </IonItem>
               </ItemGroup>
+              <IonRow>
+                <IonText>
+                  <h2>Sicherheit</h2>
+                </IonText>
+              </IonRow>
+              <ItemGroup>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/email`}
+                  mode="ios"
+                >
+                  <IonLabel>E-Mail Adresse ändern</IonLabel>
+                </IonItem>
+                <IonItem
+                  button
+                  routerLink={`${tabRoutes.profile.route}/password`}
+                  mode="ios"
+                  lines="none"
+                >
+                  <IonLabel>Passwort ändern</IonLabel>
+                </IonItem>
+              </ItemGroup>
             </div>
           </IonGrid>
           {!isGuest && (
-            <IonRow className="profile__content__danger-row">
-              <IonCol className="delete">
-                <IonButton
-                  onClick={() => handleDelete()}
-                  expand="block"
-                  mode="ios"
-                  color="danger"
-                >
-                  Konto Löschen
-                </IonButton>
-              </IonCol>
-              <IonCol className="logout">
-                <IonButton
-                  onClick={() => handleLogout('/login', userStore?.user?.role)}
-                  expand="block"
-                  mode="ios"
-                >
-                  {isLoggingOut ? (
-                    <IonLabel>
-                      <IonSpinner name="crescent" />
-                    </IonLabel>
-                  ) : (
-                    'Abmelden'
-                  )}
-                </IonButton>
-              </IonCol>
-            </IonRow>
+            <>
+              <IonRow className="profile__content__danger-row">
+                <IonCol className="delete">
+                  <IonButton
+                    onClick={() => handleDelete()}
+                    expand="block"
+                    mode="ios"
+                    color="danger"
+                  >
+                    Konto löschen
+                  </IonButton>
+                </IonCol>
+                <IonCol className="logout">
+                  <IonButton
+                    onClick={() =>
+                      handleLogout('/login', userStore?.user?.role)
+                    }
+                    expand="block"
+                    mode="ios"
+                  >
+                    {isLoggingOut ? (
+                      <IonLabel>
+                        <IonSpinner name="crescent" />
+                      </IonLabel>
+                    ) : (
+                      'Abmelden'
+                    )}
+                  </IonButton>
+                </IonCol>
+              </IonRow>
+              <IonFooter>
+                <IonRow className="ion-justify-content-center account-created">
+                  <IonText color="medium">
+                    Konto erstellt am{' '}
+                    {new Date(
+                      userStore?.user?.registratedAt as any
+                    ).toLocaleDateString('de-DE', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </IonText>
+                </IonRow>
+              </IonFooter>
+            </>
           )}
         </IonContent>
       </IonPage>
