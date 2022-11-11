@@ -361,7 +361,7 @@ export class AuthService {
   async changePassword(
     userId: User['id'],
     dto: ChangePasswordDto
-  ): Promise<void> {
+  ): Promise<User> {
     const user = await this.prismaService.user.findUnique({
       where: {
         id: userId,
@@ -385,7 +385,7 @@ export class AuthService {
 
     const passwordHash = await argon.hash(dto.newPassword);
 
-    await this.prismaService.user.update({
+    return this.prismaService.user.update({
       where: { id: user.id },
       data: {
         password: passwordHash,

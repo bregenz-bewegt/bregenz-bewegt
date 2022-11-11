@@ -80,11 +80,12 @@ export class AuthController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Put('change-password')
   changePassword(
     @GetCurrentUser('sub') userId: User['id'],
     @Body() dto: ChangePasswordDto
-  ): Promise<void> {
+  ): Promise<User> {
     return this.authService.changePassword(userId, dto);
   }
 

@@ -230,8 +230,9 @@ export class UserStore implements Store {
     return data;
   }
 
-  async changePassword(dto: ChangePasswordDto): Promise<void> {
-    await http.put('/auth/change-password', dto);
+  async changePassword(dto: ChangePasswordDto): Promise<User> {
+    const { data } = await http.put('/auth/change-password', dto);
+    return data;
   }
 
   async forgotPassword(dto: ForgotPasswordDto): Promise<void> {
