@@ -7,66 +7,36 @@
   }
 
   &__indicator {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    translate: -50% -50%;
+    position: absolute;
+    left: calc(var(--spacing-4xl) / 2);
+    top: calc(50vh - (100vw - var(--spacing-4xl)) / 2);
     width: calc(100% - var(--spacing-4xl));
     aspect-ratio: 1/1;
-    background: linear-gradient(
-          to right,
-          var(--ion-color-primary) var(--spacing-xs),
-          transparent var(--spacing-xs)
-        )
-        0 0,
-      linear-gradient(
-          to right,
-          var(--ion-color-primary) var(--spacing-xs),
-          transparent var(--spacing-xs)
-        )
-        0 100%,
-      linear-gradient(
-          to left,
-          var(--ion-color-primary) var(--spacing-xs),
-          transparent var(--spacing-xs)
-        )
-        100% 0,
-      linear-gradient(
-          to left,
-          var(--ion-color-primary) var(--spacing-xs),
-          transparent var(--spacing-xs)
-        )
-        100% 100%,
-      linear-gradient(
-          to bottom,
-          var(--ion-color-primary) var(--spacing-xs),
-          transparent var(--spacing-xs)
-        )
-        0 0,
-      linear-gradient(
-          to bottom,
-          var(--ion-color-primary) var(--spacing-xs),
-          transparent var(--spacing-xs)
-        )
-        100% 0,
-      linear-gradient(
-          to top,
-          var(--ion-color-primary) var(--spacing-xs),
-          transparent var(--spacing-xs)
-        )
-        0 100%,
-      linear-gradient(
-          to top,
-          var(--ion-color-primary) var(--spacing-xs),
-          transparent var(--spacing-xs)
-        )
-        100% 100%;
-    background-repeat: no-repeat;
-    background-size: var(--spacing-l) var(--spacing-l);
+
+    --b: 4px;
+    --r: 10px;
+    --w: 40px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--ion-color-primary);
+      padding: var(--b);
+      border-radius: var(--r);
+      -webkit-mask: linear-gradient(0deg, #000 calc(2 * var(--b)), #0000 0) 50%
+          var(--b) / calc(100% - 2 * var(--w)) 100% repeat-y,
+        linear-gradient(-90deg, #000 calc(2 * var(--b)), #0000 0) var(--b) 50%/100%
+          calc(100% - 2 * var(--w)) repeat-x,
+        linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+    }
 
     &__bar {
       height: var(--spacing-xs);
-      width: 100%;
+      width: 90%;
+      margin: 0 auto;
       background-color: var(--ion-color-primary);
       margin-top: 15%;
       box-shadow: 0 0 70px 20px var(--ion-color-secondary);
@@ -87,10 +57,10 @@
 
 @keyframes move-indicator-bar {
   0% {
-    margin-top: 15%;
+    margin-top: 7%;
   }
   100% {
-    margin-top: 85%;
+    margin-top: 93%;
   }
 }
 @keyframes fade-indicator-bar {
