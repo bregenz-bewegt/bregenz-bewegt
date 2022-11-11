@@ -11,10 +11,6 @@ export class ExerciseStore implements Store {
     makeAutoObservable(this);
   }
 
-  @action setExercisese(exercises: Exercise[]) {
-    this.exercises = exercises;
-  }
-
   @action async getExercise(id: Exercise['id']) {
     try {
       const { data } = await http.get(`exercises/${id}`);

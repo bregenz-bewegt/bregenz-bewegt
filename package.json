@@ -21,6 +21,8 @@
     "test": "npx nx run-many --target=test",
     "prisma:format": "npx prisma format",
     "prisma:seed": "npx prisma db seed",
+    "prisma:seed:prod": "ts-node prisma/seed.prod.ts",
+    "prisma:seed:del": "ts-node prisma/seed.delAll.ts",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:generate": "npx prisma generate",
     "prisma:db:push": "npx prisma db push",

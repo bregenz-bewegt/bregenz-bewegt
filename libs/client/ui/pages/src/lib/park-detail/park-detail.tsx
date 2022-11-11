@@ -67,19 +67,34 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
         setPark(parkNew);
         setExercises(parkNew.exercises);
 
-        userStore?.fetchPreferences().then((p) =>
-          handleFilterChange(
-            Object.values(DifficultyType).map(
-              (d) =>
-                ({
-                  key: d,
-                  label: difficultyDisplayTexts[d],
-                  active: p.difficulties?.includes(d),
-                } as QuickFilterOption)
-            ),
-            parkNew
+        userStore
+          ?.fetchPreferences()
+          .then((p) =>
+            handleFilterChange(
+              Object.values(DifficultyType).map(
+                (d) =>
+                  ({
+                    key: d,
+                    label: difficultyDisplayTexts[d],
+                    active: p.difficulties?.includes(d),
+                  } as QuickFilterOption)
+              ),
+              parkNew
+            )
           )
-        );
+          .catch(() => {
+            handleFilterChange(
+              Object.values(DifficultyType).map(
+                (d) =>
+                  ({
+                    key: d,
+                    label: difficultyDisplayTexts[d],
+                    active: true,
+                  } as QuickFilterOption)
+              ),
+              parkNew
+            );
+          });
 
         setIsLoading(false);
       });
@@ -120,8 +135,9 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
               <IonRouterLink
                 color={'dark'}
                 href={
+                  park?.gmaps ??
                   'https://www.google.com/maps/search/?api=1&query=' +
-                  encodeURIComponent(park?.address ?? '')
+                    encodeURIComponent(park?.address ?? '')
                 }
                 target="_blank"
               >

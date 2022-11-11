@@ -29,6 +29,7 @@ import {
   Park,
   ActivityTimerResult,
   Activity,
+  ExerciseDescriptionType,
 } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { location } from 'ionicons/icons';
@@ -38,6 +39,7 @@ import {
 } from '@bregenz-bewegt/client-ui-components';
 import { play, timer, stopCircle, close } from 'ionicons/icons';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
+import { exerDescrDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
 interface MatchParams {
   park: string;
@@ -156,7 +158,20 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
                   )}
                 </IonText>
                 <IonText>
-                  <p>{park?.exercises && park?.exercises[0].description}</p>
+                  {park?.exercises &&
+                    Object.keys(park?.exercises[0].description).map((k, i) => (
+                      <div className={k} key={i}>
+                        <h2>
+                          {exerDescrDisplayTexts[k as ExerciseDescriptionType]}
+                        </h2>
+                        <p>
+                          {park?.exercises &&
+                            park?.exercises[0].description[
+                              k as ExerciseDescriptionType
+                            ]}
+                        </p>
+                      </div>
+                    ))}
                 </IonText>
               </div>
             </div>

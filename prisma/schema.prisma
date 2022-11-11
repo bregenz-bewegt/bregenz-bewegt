@@ -64,6 +64,7 @@ model Park {
   name        String
   address     String
   image       String
+  gmaps       String?
   coordinates Coordinates?
   exercises   Exercise[]
   activities  Activity[]
@@ -93,7 +94,7 @@ model Activity {
 model Exercise {
   id           Int        @id @default(autoincrement())
   name         String
-  description  String
+  description  Json
   video        String
   coins        Int
   difficulty   Difficulty @relation(fields: [difficultyId], references: [id])

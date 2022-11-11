@@ -6,6 +6,12 @@ import { faker } from '@faker-js/faker';
 import { PrismaClient, Role, DifficultyType, Park } from '@prisma/client';
 const prisma = new PrismaClient();
 
+enum ExDescType {
+  DESCRIPTION = 'DESCRIPTION',
+  EXECUTION = 'EXECUTION',
+  MUSCLES = 'MUSCLES',
+}
+
 const purgeDatabase = async () => {
   await prisma.activity.deleteMany();
   await prisma.exercise.deleteMany();
@@ -207,7 +213,11 @@ const createExercises = async () => {
   const exercises = [
     {
       name: 'Sit-Up',
-      description: 'Some description',
+      description: {
+        [ExDescType.DESCRIPTION]: 'some description',
+        [ExDescType.EXECUTION]: 'some execution detials',
+        [ExDescType.MUSCLES]: 'some muscles that are used',
+      },
       coins: 10,
       difficulty: {
         connect: {
@@ -219,7 +229,11 @@ const createExercises = async () => {
     },
     {
       name: 'Liegestütze',
-      description: 'Some description',
+      description: {
+        [ExDescType.DESCRIPTION]: 'some description',
+        [ExDescType.EXECUTION]: 'some execution detials',
+        [ExDescType.MUSCLES]: 'some muscles that are used',
+      },
       coins: 10,
       difficulty: {
         connect: {
@@ -231,7 +245,11 @@ const createExercises = async () => {
     },
     {
       name: 'Plank',
-      description: 'Some description',
+      description: {
+        [ExDescType.DESCRIPTION]: 'some description',
+        [ExDescType.EXECUTION]: 'some execution detials',
+        [ExDescType.MUSCLES]: 'some muscles that are used',
+      },
       coins: 10,
       difficulty: {
         connect: {
@@ -243,7 +261,11 @@ const createExercises = async () => {
     },
     {
       name: 'Squat',
-      description: 'Some description',
+      description: {
+        [ExDescType.DESCRIPTION]: 'some description',
+        [ExDescType.EXECUTION]: 'some execution detials',
+        [ExDescType.MUSCLES]: 'some muscles that are used',
+      },
       coins: 10,
       difficulty: {
         connect: {
@@ -255,7 +277,11 @@ const createExercises = async () => {
     },
     {
       name: 'Versteinerte Hexe',
-      description: 'Some description',
+      description: {
+        [ExDescType.DESCRIPTION]: 'some description',
+        [ExDescType.EXECUTION]: 'some execution detials',
+        [ExDescType.MUSCLES]: 'some muscles that are used',
+      },
       coins: 10,
       difficulty: {
         connect: {

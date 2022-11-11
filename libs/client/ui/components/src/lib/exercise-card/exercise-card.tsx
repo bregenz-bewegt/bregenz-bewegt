@@ -22,7 +22,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
   name,
   description,
   difficulty,
-  points,
+  coins,
   video,
   link,
   isLoading,
@@ -41,11 +41,11 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
           <IonCardHeader>
             <DifficultyBadge difficulty={difficulty} />
             <IonCardTitle>
-              {isLoaded ? name : <IonSkeletonText animated />}
+              <h3>{isLoaded ? name : <IonSkeletonText animated />}</h3>
             </IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            {isLoaded ? description : <IonSkeletonText animated />}
+            {isLoaded ? coins + ' B-Bucks' : <IonSkeletonText animated />}
           </IonCardContent>
         </div>
         <div className="exercise-card__wrapper__video">
