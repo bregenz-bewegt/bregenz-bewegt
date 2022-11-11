@@ -10,7 +10,7 @@ export const changePasswordError: {
   [K in ChangePasswordError]: ChangePasswordErrorResponse;
 } = {
   [ChangePasswordError.INVALID_PASSWORD]: {
-    password: 'Falsches Passwot',
+    password: 'Falsches Passwort',
   },
   [ChangePasswordError.PASSWORD_NOT_CHANGED]: {
     newPassword: 'Neues Passwort entspricht dem alten Passwort',
