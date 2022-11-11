@@ -10,7 +10,7 @@
         "outputPath": "dist/apps/server",
         "main": "apps/server/src/main.ts",
         "tsConfig": "apps/server/tsconfig.app.json",
-        "assets": ["apps/server/src/assets"]
+        "assets": ["apps/server/src/assets", "apps/server/src/uploads"]
       },
       "configurations": {
         "production": {
@@ -27,6 +27,17 @@
       }
     },
     "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "server:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "server:build:production"
+        }
+      }
+    },
+    "serve:build": {
       "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "server:build"
