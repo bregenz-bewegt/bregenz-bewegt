@@ -368,6 +368,15 @@ export class AuthService {
       },
     });
 
+    const passwordNotChanged = await argon.verify(
+      user.password,
+      dto.newPassword
+    );
+
+    if (passwordNotChanged) {
+      throw new ForbiddenException(changePasswordError.PASSWORD_NOT_CHANGED);
+    }
+
     const passwordMatches = await argon.verify(user.password, dto.password);
 
     if (!passwordMatches) {
