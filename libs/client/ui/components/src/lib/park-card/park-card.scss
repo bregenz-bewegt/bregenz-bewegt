@@ -8,6 +8,14 @@
     ion-card-title {
       margin-bottom: var(--spacing-s);
     }
+
+    ion-card-subtitle {
+      svg {
+        display: inline-block;
+        margin-right: var(--spacing-xs);
+        margin-bottom: calc(var(--spacing-xxs) * -1);
+      }
+    }
   }
 
   img {

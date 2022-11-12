@@ -4,11 +4,10 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonIcon,
   IonSkeletonText,
 } from '@ionic/react';
 import { useState } from 'react';
-import { location as locationIcon } from 'ionicons/icons';
+import { Location } from 'iconsax-react';
 
 export interface ParkCardProps {
   title: string;
@@ -49,7 +48,9 @@ export const ParkCard: React.FC<ParkCardProps> = ({
         <IonCardSubtitle>
           {isLoaded ? (
             <>
-              <IonIcon icon={locationIcon} /> {location}
+              <Location variant="Bold" size={16} />
+
+              {location}
             </>
           ) : (
             <IonSkeletonText animated />
