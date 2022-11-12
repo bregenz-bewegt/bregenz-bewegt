@@ -21,6 +21,7 @@ import {
   IonNote,
   IonPage,
   IonRouterLink,
+  IonSkeletonText,
   IonText,
   IonTitle,
   IonToolbar,
@@ -113,6 +114,10 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
           <div className="park-detail__header-wrapper">
+            <img
+              src={park?.image}
+              alt={'Bild des Spielplatzes ' + park?.name}
+            />
             <IonText>
               <h1>{park?.name}</h1>
             </IonText>
