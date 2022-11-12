@@ -37,7 +37,7 @@
       position: sticky;
       top: 20px;
       background-color: var(--ion-background-color);
-      border-radius: 35px 35px 0 0;
+      border-radius: var(--spacing-xl) var(--spacing-xl) 0 0;
 
       ion-text {
         h1 {

@@ -34,13 +34,11 @@ export const ParkCard: React.FC<ParkCardProps> = ({
       className="park-card"
       mode="ios"
     >
-      <img
-        onLoad={() => setIsImageLoaded(true)}
-        src={image}
-        alt="park"
-        style={{ display: isLoaded ? 'initial' : 'none' }}
-      />
-      {!isLoaded && <IonSkeletonText style={{ height: '64px' }} animated />}
+      {isLoaded ? (
+        <img onLoad={() => setIsImageLoaded(true)} src={image} alt="park" />
+      ) : (
+        <IonSkeletonText style={{ height: '200px', margin: 0 }} animated />
+      )}
       <IonCardHeader>
         <IonCardTitle>
           {isLoaded ? title : <IonSkeletonText animated />}

@@ -32,9 +32,7 @@ import { useFormik } from 'formik';
 import { lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
-import {
-  ValidProfilePictureMimeType,
-} from '@bregenz-bewegt/shared/types';
+import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
@@ -439,54 +437,54 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 </IonItem>
               </ItemGroup>
             </div>
-          </IonGrid>
-          {!isGuest && (
-            <>
-              <IonRow className="profile__content__danger-row">
-                <IonCol className="delete">
-                  <IonButton
-                    onClick={() => handleDelete()}
-                    expand="block"
-                    mode="ios"
-                    color="danger"
-                  >
-                    Konto löschen
-                  </IonButton>
-                </IonCol>
-                <IonCol className="logout">
-                  <IonButton
-                    onClick={() =>
-                      handleLogout('/login', userStore?.user?.role)
-                    }
-                    expand="block"
-                    mode="ios"
-                  >
-                    {isLoggingOut ? (
-                      <IonLabel>
-                        <IonSpinner name="crescent" />
-                      </IonLabel>
-                    ) : (
-                      'Abmelden'
-                    )}
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-              <IonFooter>
-                <IonRow className="ion-justify-content-center account-created">
-                  <IonText color="medium">
-                    Konto erstellt am{' '}
-                    {new Date(
-                      userStore?.user?.registratedAt as any
-                    ).toLocaleDateString('de-DE', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    })}
-                  </IonText>
+            {!isGuest && (
+              <>
+                <IonRow className="profile__content__danger-row">
+                  <IonCol className="delete">
+                    <IonButton
+                      onClick={() => handleDelete()}
+                      expand="block"
+                      mode="ios"
+                      color="danger"
+                    >
+                      Konto löschen
+                    </IonButton>
+                  </IonCol>
+                  <IonCol className="logout">
+                    <IonButton
+                      onClick={() =>
+                        handleLogout('/login', userStore?.user?.role)
+                      }
+                      expand="block"
+                      mode="ios"
+                    >
+                      {isLoggingOut ? (
+                        <IonLabel>
+                          <IonSpinner name="crescent" />
+                        </IonLabel>
+                      ) : (
+                        'Abmelden'
+                      )}
+                    </IonButton>
+                  </IonCol>
                 </IonRow>
-              </IonFooter>
-            </>
-          )}
+                <IonFooter>
+                  <IonRow className="ion-justify-content-center account-created">
+                    <IonText color="medium">
+                      Konto erstellt am{' '}
+                      {new Date(
+                        userStore?.user?.registratedAt as any
+                      ).toLocaleDateString('de-DE', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </IonText>
+                  </IonRow>
+                </IonFooter>
+              </>
+            )}
+          </IonGrid>
         </IonContent>
       </IonPage>
     );
