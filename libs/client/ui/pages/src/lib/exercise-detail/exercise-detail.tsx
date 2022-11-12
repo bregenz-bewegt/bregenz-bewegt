@@ -1,15 +1,10 @@
 import './exercise-detail.scss';
 import {
-  IonBackButton,
-  IonButtons,
   IonContent,
-  IonHeader,
   IonIcon,
   IonNote,
   IonPage,
   IonText,
-  IonTitle,
-  IonToolbar,
   useIonToast,
   useIonViewWillEnter,
   useIonViewWillLeave,
@@ -30,7 +25,6 @@ import {
   ActivityTimerResult,
   Activity,
 } from '@bregenz-bewegt/client/types';
-import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { location } from 'ionicons/icons';
 import {
   ActivityTimer,
