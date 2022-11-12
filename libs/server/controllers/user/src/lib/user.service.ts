@@ -18,7 +18,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { DifficultyType, Preferences, User } from '@prisma/client';
-import { Response } from 'express';
 import { Prisma } from '@prisma/client';
 import { UtilService } from '@bregenz-bewegt/server/util';
 import { ConfigService } from '@nestjs/config';
