@@ -122,11 +122,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         const file = await new File([blob], `file.${photo.format}`);
         userStore
           ?.editProfilePicture(file)
-          .then(() =>
-            userStore.fetchProfilePicture().then(() => {
-              dismissLoading().then(() => showSuccessToast());
-            })
-          )
+          .then(() => dismissLoading().then(() => showSuccessToast()))
           .catch(() => {
             showFailureToast();
           });
