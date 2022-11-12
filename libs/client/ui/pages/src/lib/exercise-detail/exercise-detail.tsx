@@ -5,7 +5,6 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonNote,
   IonPage,
   IonText,
   IonTitle,
@@ -32,7 +31,6 @@ import {
   ExerciseDescriptionType,
 } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
-import { location } from 'ionicons/icons';
 import {
   ActivityTimer,
   DifficultyBadge,
@@ -40,6 +38,7 @@ import {
 import { play, timer, stopCircle, close } from 'ionicons/icons';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import { exerDescrDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
+import { StopCircle, TimerStart } from 'iconsax-react';
 
 interface MatchParams {
   park: string;
@@ -134,54 +133,52 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           </IonToolbar>
         </IonHeader>
         <IonContent className="exercise-detail__content">
-          <div className="exercise-detail__content__flex-wrapper">
-            <div className="exercise-detail__content__video-wrapper">
-              <IonIcon icon={play} />
-            </div>
-            <div className="exercise-detail__content__content">
-              <div className="exercise-detail__content__content__park-wrapper">
-                <IonText>
-                  <h1>{park?.name}</h1>
-                </IonText>
-                <IonNote className="exercise-detail__content__content__location">
-                  <IonIcon icon={location} />
-                  {park?.address}
-                </IonNote>
-              </div>
-              <div className="exercise-detail__content__content__exercise-wrapper">
-                <IonText>
-                  <h2>{park?.exercises && park?.exercises[0].name}</h2>
-                  {park?.exercises && park?.exercises[0].difficulty && (
-                    <DifficultyBadge
-                      difficulty={park?.exercises[0].difficulty}
-                    />
-                  )}
-                </IonText>
-                <IonText>
-                  {park?.exercises &&
-                    Object.keys(park?.exercises[0].description).map((k, i) => (
+          <div className="exercise-detail__content__video-wrapper">
+            <IonIcon icon={play} />
+          </div>
+          <div className="exercise-detail__content__content">
+            <div className="exercise-detail__content__content__exercise-wrapper">
+              <IonText>
+                <h2>{park?.exercises && park?.exercises[0].name}</h2>
+                {park?.exercises && park?.exercises[0].difficulty && (
+                  <DifficultyBadge difficulty={park?.exercises[0].difficulty} />
+                )}
+              </IonText>
+              <IonText>
+                {park?.exercises &&
+                  Object.keys(park?.exercises[0].description).map((k, i) => {
+                    const desc =
+                      park?.exercises &&
+                      park?.exercises[0].description[
+                        k as ExerciseDescriptionType
+                      ];
+                    return (
                       <div className={k} key={i}>
                         <h2>
                           {exerDescrDisplayTexts[k as ExerciseDescriptionType]}
                         </h2>
                         <p>
-                          {park?.exercises &&
-                            park?.exercises[0].description[
-                              k as ExerciseDescriptionType
-                            ]}
+                          {k === ExerciseDescriptionType.MUSCLES ? (
+                            <ul>
+                              {desc?.split(', ').map((li) => (
+                                <li>{li}</li>
+                              ))}
+                            </ul>
+                          ) : (
+                            desc
+                          )}
                         </p>
                       </div>
-                    ))}
-                </IonText>
-              </div>
-            </div>
-            <div className="exercise-detail__content__timer">
-              <ActivityTimer
-                onTimerStart={handleTimerStart}
-                onTimerStop={handleTimerStop}
-              />
+                    );
+                  })}
+              </IonText>
             </div>
           </div>
+          <ActivityTimer
+            className="exercise-detail__content__timer"
+            onTimerStart={handleTimerStart}
+            onTimerStop={handleTimerStop}
+          />
         </IonContent>
       </IonPage>
     );

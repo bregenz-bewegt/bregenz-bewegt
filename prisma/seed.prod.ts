@@ -40,7 +40,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Die Finger zeigen nach vorne, die Daumen nach innen. Durch gleichzeitiges Anspannen der Arme werden diese gestreckt und der Oberkörper hebt von der Bank ab. Das Gewicht wird gleichmäßig auf Zehenspitzen und Händen verteilt. Kopf, Hals, Wirbelsäule, Gesäß und Knie bilden eine Linie und die Bauchmuskulatur ist angespannt.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 3-4 Sätzen, 1 Minute Pause dazwischen',
+              '10 Wiederholungen mit jeweils 3-4 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
@@ -60,7 +60,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Die Finger zeigen nach vorne, die Daumen nach innen. Durch gleichzeitiges Anspannen der Arme werden diese gestreckt und der Oberkörper hebt vom Boden ab. Das Gewicht wird gleichmäßig auf Zehenspitzen und Händen verteilt. Kopf, Hals, Wirbelsäule, Gesäß und Knie bilden eine Linie und die Bauchmuskulatur ist angespannt.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 4 Sätzen, 1 Minute Pause dazwischen',
+              '10 Wiederholungen mit jeweils 4 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
@@ -80,7 +80,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Setze einen Fuß etwas weiter als Schrittlänge nach vorne. Beuge kontrolliert deine Beine, bis sie jeweils etwa zu 90 Grad angewinkelt sind. Oberkörper gerade halten. Durch die Bewegung sinkt deine Hüfte nach unten. Hinteres Knie berührt nun fast den Boden. Arme bleiben unbewegt.',
             [ExDescType.EXECUTION]:
-              '15 Wiederholungen mit jeweils 3 Sätzen, 1 Minute Pause dazwischen',
+              '15 Wiederholungen mit jeweils 3 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Beinstrecker, Beinbeuger, großer Gesäßmuskel',
           },
@@ -100,7 +100,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Setze einen Fuß etwas weiter als Schrittlänge nach vorne. Beuge kontrolliert deine Beine, bis sie jeweils etwa zu 90 Grad angewinkelt sind. Oberkörper gerade halten. Durch die Bewegung sinkt deine Hüfte nach unten. Hinteres Knie berührt nun fast den Boden. Während du dich wieder nach oben begibst, springst du hoch und wechselst das Bein Arme bleiben unbewegt.',
             [ExDescType.EXECUTION]:
-              '15 Wiederholungen mit jeweils 3 Sätzen, 1 Minute Pause dazwischen',
+              '15 Wiederholungen mit jeweils 3 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Beinstrecker, Beinbeuger, großer Gesäßmuskel',
           },
@@ -139,7 +139,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Du gehst tief in eine Kniebeuge und platzierst deine Handflächen auf dem Boden. Dann springst du nach hinten in eine Plank-Position und machst einen Liegestütz. Anschließend springst du wieder nach vorne in die Kniebeuge und machst einen Strecksprung nach oben. Fertig!',
             [ExDescType.EXECUTION]:
-              'So oft wie möglich in 1 Minute! (30-40 = Spitzenleistung)',
+              'So oft wie möglich in 1 Minute!\n(30-40 = Spitzenleistung)',
             [ExDescType.MUSCLES]:
               'Core-Muskulatur, Brustmuskeln, Trizeps, Beinmuskulatur, Gesäßmuskeln',
           },
@@ -263,7 +263,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Greift die 2 Ringe im Oberhandgriff (Finger vom Körper weg), Arme strecken, Körper ruhig hängen lassen (nicht Schwingen), Knie im rechten Winkel beugen',
             [ExDescType.EXECUTION]:
-              '30 Sek jeweils 3 Sätze, 1 Minute Pause dazwischen',
+              '30 Sek jeweils 3 Sätze\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'oberer Rücken, Schultern, Ader, Unterarme, Hand- und Handgelenksbeuger',
           },
@@ -282,7 +282,7 @@ const createParks = async () => {
           description: {
             [ExDescType.DESCRIPTION]:
               'Greift die Stange im Oberhandgriff (Finger vom Körper weg), Arme strecken, Knie im rechten Winkel beugen, eine Stange nach der anderen greifen',
-            [ExDescType.EXECUTION]: '3 Runden, 1 Minute Pause dazwischen',
+            [ExDescType.EXECUTION]: '3 Runden\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'oberer Rücken, Schultern, Bizeps, Unterarme, Hand- und Handgelenksbeuger',
           },
@@ -302,7 +302,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Bauchlage, Beine fast durchstrecken, Arme ausstrecken, Spannung aufbauen, gleichzeitig Arme und Beine bis zum Becken heben, hebe Kopf und Oberkörper ein kleines Stück vom Boden ab, Position kurzhalten, Arme; Beine; Kopf; Oberkörper wieder entspannt auf Boden legen',
             [ExDescType.EXECUTION]:
-              '15 Wiederholungen jeweils 3 Sätze, 1 Minute Pause dazwischen',
+              '15 Wiederholungen jeweils 3 Sätze\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]: 'Rückenstrecker, Gesäßmuskel, Beinbizeps',
           },
           coins: 10,
@@ -321,7 +321,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Bauchlage, Beine fast durchstrecken, Spannung aufbauen, gleichzeitig Arme und Beine bis zum Becken, hebe Kopf und Oberkörper ein kleines Stück vom Boden ab, Ellbogen ziehen nach hinten zum Rücken (Schulterblätter zusammen), Position kurzhalten, Arme; Beine; Kopf; Oberkörper wieder entspannt auf Boden legen',
             [ExDescType.EXECUTION]:
-              '15 Wiederholungen jeweils 3 Sätze, 1 Minute Pause dazwischen',
+              '15 Wiederholungen jeweils 3 Sätze\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]: 'Rückenstrecker, Gesäßmuskel, Beinbizeps',
           },
           coins: 10,
@@ -340,7 +340,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Ausgansposition Vierfüßlerstand -> Kopf verlängert Wirbelsäule, Bauch und Beckenboden anspannen, rechten Arm vom Boden abheben und ihn in Verlängerung des Oberkörpers weit nach vorne ausstrecken, linkes Bein anheben und in Verlängerung zum Rumpf gerade nach hinten ausstrecken, in Ausgansposition zurückkommen und Arm/Bein wechseln',
             [ExDescType.EXECUTION]:
-              '15 Wiederholungen pro Bein jeweils 3 Sätze, 1 Minute Pause dazwischen',
+              '15 Wiederholungen pro Bein jeweils 3 Sätze\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Rumpfmuskulatur, Rückenmuskulatur, Gesäßmuskulatur, Beinmuskulatur',
           },
@@ -360,7 +360,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Ausgansposition Liegestützposition, Beine vollständig durchstrecken, Po Richtung Himmel, Rumpf anspannen, Bein vom Boden abheben und Bein parallel zum Boden ausrichten, Position für einige Sekunden halten und Bein wieder abstellen',
             [ExDescType.EXECUTION]:
-              '15 Wiederholungen pro Bein jeweils 3 Sätze, 1 Minute Pause dazwischen',
+              '15 Wiederholungen pro Bein jeweils 3 Sätze\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Rumpfmuskulatur, Rückenmuskulatur, Gesäßmuskulatur, Beinmuskulatur',
           },
@@ -380,7 +380,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Ausgansposition Unterarmstütz, Unterarme liegen auf dem Boden und Beine sind gestreckt, Arme komplett durchstrecken, langsam und kontrolliert in Ausgansposition zurück',
             [ExDescType.EXECUTION]:
-              '8-10 Wiederholungen jeweils 3 Sätze, 1 Minute Pause dazwischen',
+              '8-10 Wiederholungen jeweils 3 Sätze\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]: 'Trizeps, Brustmuskel, Bauchmuskulatur',
           },
           coins: 10,
@@ -399,7 +399,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Ausgansposition Liegestützposition, mit den Händen ein Diamant formen bzw. Dreieck, Rumpfmuskulatur anspannen und Arme leicht nach unten beugen, Rücken gerade halten und Hüfte oben, Oberarme und Ellbogen nah am Körper halten, in Ausgangsposition zurückdrücken',
             [ExDescType.EXECUTION]:
-              '8-10 Wiederholungen jeweils 3 Sätze, 1 Minute Pause dazwischen',
+              '8-10 Wiederholungen jeweils 3 Sätze\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]: 'Trizeps, Brustmuskel, Bauchmuskulatur',
           },
           coins: 10,
@@ -418,7 +418,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Ausgansposition auf dem Rücken liegend, Hände an die Schläfen, Beine und Füße bleiben unbewegt auf der Erhöhung, wenn man die Schultern nach oben hebt, unterer Rücken bleibt stabil auf dem Boden, Kopf in Verlängerung zur Wirbelsäule, für ein paar Sekunden halten, danach langsam zurücksinken in Ausgansposition',
             [ExDescType.EXECUTION]:
-              '8-10 Wiederholungen jeweils 3 Sätze, 1 Minute Pause dazwischen',
+              '8-10 Wiederholungen jeweils 3 Sätze\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]: 'gerader Bauchmuskel, seitliche Bauchmuskeln',
           },
           coins: 10,
@@ -437,7 +437,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Ausgansposition auf dem Rücken liegend, Hände an die Schläfen, Beine und Füße bleiben unbewegt auf dem Boden, wenn man die Schultern nach oben hebt, unterer Rücken bleibt stabil auf dem Boden, Kopf in Verlängerung zur Wirbelsäule, für ein paar Sekunden halten, danach langsam zurücksinken in Ausgansposition',
             [ExDescType.EXECUTION]:
-              '8-10 Wiederholungen jeweils 3 Sätze, 1 Minute Pause dazwischen',
+              '8-10 Wiederholungen jeweils 3 Sätze\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]: 'gerader Bauchmuskel, seitliche Bauchmuskeln',
           },
           coins: 10,
@@ -505,7 +505,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Spanne deinen Rumpf an. Lass nun deinen Oberkörper langsam zur Erhöhung senken; die Hände bleiben dabei unter den Schultern und der Rumpf angespannt. Strecke die Arme, bis du wieder in der Ausgangsposition ankommst.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 3 Sätzen, 1 Minute Pause dazwischen',
+              '10 Wiederholungen mit jeweils 3 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
@@ -525,7 +525,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Spanne deinen Rumpf an. Lass nun deinen Oberkörper langsam zur Erhöhung senken; die Hände bleiben dabei unter den Schultern und der Rumpf angespannt. Strecke die Arme, bis du wieder in der Ausgangsposition ankommst.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 3 Sätzen, 1 Minute Pause dazwischen',
+              '10 Wiederholungen mit jeweils 3 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
@@ -545,7 +545,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Stelle dich hüftbreit hin und halte dich mit den Armen am Barren fest. Beuge deine Knie leicht nach vorne und versuche den Rücken gerade zu halten. Die Bauchmuskeln müssen angespannt sein und die Fersen werden bis zum tiefsten Punkt gesenkt. Versuche nun die Fersen so hoch wie möglich zu heben. Beachte, dass nicht nur die Zehen abgestützt werden. Achte darauf, dass du dich nicht mit deinen Füßen abfederst.',
             [ExDescType.EXECUTION]:
-              '6-10 Wiederholungen mit jeweils 2 Sätzen, 1 Minute Pause dazwischen',
+              '6-10 Wiederholungen mit jeweils 2 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Schollenmuskel, Zwillingswadenmuskel, Langer und kurzer Wadenbeinmuskel, Hinterer Schienbeinmuskel, Langer Zehenbeuger',
           },
@@ -565,7 +565,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Stelle dich hüftbreit hin und halte dich mit den Armen am Barren fest. Ein Bein ist dabei in der Luft. Beuge das Knie leicht nach vorne und versuche den Rücken gerade zu halten. Die Bauchmuskeln müssen angespannt sein und die Ferse wird bis zum tiefsten Punkt gesenkt. Versuche nun die Ferse so hoch wie möglich zu heben. Beachte, dass nicht nur die Zehen abgestützt werden. Achte darauf, dass du dich nicht mit deinem Fuß abfederst.',
             [ExDescType.EXECUTION]:
-              '6-10 Wiederholungen mit jeweils 2 Sätzen, 1 Minute Pause dazwischen, wechsle nach jedem Satz das Bein!',
+              '6-10 Wiederholungen mit jeweils 2 Sätzen\n1 Minute Pause dazwischen\nWechsle nach jedem Satz das Bein!',
             [ExDescType.MUSCLES]:
               'Schollenmuskel, Zwillingswadenmuskel, Langer und kurzer Wadenbeinmuskel, Hinterer Schienbeinmuskel, Langer Zehenbeuger',
           },
@@ -585,7 +585,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Gehe auf die Knie und lege deine Unterarme auf dem Boden ab. Deine Ellenbogen befinden sich unter den Schultern. Dein Blick richtest du zum Boden. Anschließend heben deine Oberschenkel ab. Deine Füße sind zusammen, mit den Zehenspitzen auf dem Boden.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 3 Sätzen, 30s Pause dazwischen',
+              '10 Wiederholungen mit jeweils 3 Sätzen\n30s Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Bauchmuskulatur, Beinmuskulatur, Armmuskulatur, Gesäßmuskulatur, Tiefe Rumpf- und Rückenmuskulatur',
           },
@@ -605,7 +605,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Beginne in der normalen Plank Position. Hebe einen Arm an, die Fingerspitzen zeigen nach vorne. Hebe nun ein Bein und drücke die Zehenspitzen nach hinten. Halte die Position 1-3 Sekunden. Wechsle die Seite und wiederhole die Übung.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 3 Sätzen, 30s Pause dazwischen',
+              '10 Wiederholungen mit jeweils 3 Sätzen\n30s Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Bauchmuskulatur, Beinmuskulatur, Armmuskulatur, Gesäßmuskulatur, Tiefe Rumpf- und Rückenmuskulatur',
           },
@@ -625,7 +625,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Stelle dich hüftbreit hin und richte deine Füße leicht nach außen. Der Schwerpunkt befindet sich auf den Fersen, wenn du deinen Po nach hinten schiebst und die Beine beugst. Dein Blick ist nach vorne gerichtet. Deine Hände berühren sich vor dem Körper und dein Rücken muss eine aufrechte Haltung haben. Der untere Rücken bildet ein Hohlkreuz. Jetzt befindest du dich in einer leichten Hocke, spannst deine Muskeln an und springst in die Luft. Strecke während dem Sprung deinen ganzen Körper. Die Arme streckst du mit voller Spannung nach unten. Nach deiner Landung führst du die Übung 10-mal aus.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 2 Sätzen, 1 Minute Pause dazwischen',
+              '10 Wiederholungen mit jeweils 2 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'vierköpfiger Oberschenkelmuskel, Beinbizeps, Großer Gesäßmuskel, Rückenstrecker, Bauchmuskeln',
           },
@@ -645,7 +645,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Stelle dich hüftbreit hin und richte deine Füße leicht nach außen. Der Schwerpunkt befindet sich auf den Fersen, wenn du deinen Po nach hinten schiebst und die Beine beugst. Dein Blick ist nach vorne gerichtet. Deine Hände berühren sich vor dem Körper und dein Rücken muss eine aufrechte Haltung haben. Der untere Rücken bildet ein Hohlkreuz. Jetzt befindest du dich in einer leichten Hocke, spannst deine Muskeln an und springst in die Luft. Strecke während dem Sprung deinen ganzen Körper und springe auf die Mauer. Nach deiner Landung führst du die Übung 10 bis 15-mal aus.',
             [ExDescType.EXECUTION]:
-              '10-15 Wiederholungen mit jeweils 2 Sätzen, 1 Minute Pause dazwischen',
+              '10-15 Wiederholungen mit jeweils 2 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'vierköpfiger Oberschenkelmuskel, Beinbizeps, Großer Gesäßmuskel, Rückenstrecker, Bauchmuskeln',
           },
@@ -665,7 +665,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Stütze dich auf der Erhöhung ab Ellbogen zeigen nach hinten (nicht zur Seite) Ziehe deine Schulterblätter zusammen bzw. deine Schultern nach hinten Spanne deinen Po an und versuche Ihn leicht nach hinten/oben zu ziehen Versuche dich so weit wie möglich abzulassen. Drücke dich kontrolliert nach oben. Beim Runtergehen sind deine Beine angewinkelt.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 3-4 Sätzen, 1 Minute Pause dazwischen',
+              '10 Wiederholungen mit jeweils 3-4 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Trizeps, Knorrenmuskel, Vorderer Teil des Deltamuskels, Großer Brustmuskel',
           },
@@ -685,7 +685,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Stütze dich auf der Erhöhung ab Ellbogen zeigen nach hinten (nicht zur Seite) Ziehe deine Schulterblätter zusammen bzw. deine Schultern nach hinten Spanne deinen Po an und versuche Ihn leicht nach hinten/oben zu ziehen Versuche dich so weit wie möglich abzulassen. Drücke dich kontrolliert nach oben.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 3 Sätzen, 1 Minute Pause dazwischen',
+              '10 Wiederholungen mit jeweils 3 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Trizeps, Knorrenmuskel, Vorderer Teil des Deltamuskels, Großer Brustmuskel',
           },
@@ -749,7 +749,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Stütze dich auf der Erhöhung ab. Ellbogen zeigen nach hinten (nicht zur Seite). Ziehe deine Schulterblätter zusammen bzw. deine Schultern nach hinten. Spanne deinen Po an und versuche Ihn leicht nach hinten/oben zu ziehen. Versuche dich soweit wie möglich abzulassen. Drücke dich kontrolliert nach oben',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 3-4 Sätzen, 1 Minute Pause dazwischen',
+              '10 Wiederholungen mit jeweils 3-4 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Trizeps, Knorrenmuskel, Vorderer Teil des Deltamuskels, Großer Brustmuskel',
           },
@@ -769,7 +769,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Stütze dich auf den Erhöhungen ab. Ellbogen zeigen nach hinten (nicht zur Seite). Ziehe deine Schulterblätter zusammen bzw. deine Schultern nach hinten. Spanne deinen Po an und versuche Ihn leicht nach hinten/oben zu ziehen. Versuche dich soweit wie möglich abzulassen. Drücke dich kontrolliert nach oben',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 3-4 Sätzen, 1 Minute Pause dazwischen',
+              '10 Wiederholungen mit jeweils 3-4 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Trizeps, Knorrenmuskel, Vorderer Teil des Deltamuskels, Großer Brustmuskel',
           },
@@ -789,7 +789,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Spanne deinen Rumpf an. Lass nun deinen Oberkörper langsam zur Erhöhung senken; die Hände bleiben dabei unter den Schultern und der Rumpf angespannt. Strecke die Arme, bis du wieder in der Ausgangsposition ankommst.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 3 Sätzen, 1 Minute Pause dazwischen',
+              '10 Wiederholungen mit jeweils 3 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
@@ -809,7 +809,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Spanne deinen Rumpf an. Lass nun deinen Oberkörper langsam zur Erhöhung senken; die Hände bleiben dabei unter den Schultern und der Rumpf angespannt. Strecke die Arme, bis du wieder in der Ausgangsposition ankommst.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 3 Sätzen, 1 Minute Pause dazwischen',
+              '10 Wiederholungen mit jeweils 3 Sätzen\n1 Minute Pause dazwischen',
             [ExDescType.MUSCLES]:
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
@@ -867,7 +867,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Stelle dich hüftbreit vor die Steinmauer und gib deine Hände anstelle deiner Hüften. Stelle dich dann langsam auf die Steinmauer und achte darauf, dass du nicht zurückkippst. Danach gehst du mit dem anderen Bein wieder auf den Boden und wiederholst diesen Vorgang.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 2 Sätzen, 30-45s Pause zwischen den Sätzen',
+              '10 Wiederholungen mit jeweils 2 Sätzen\n30-45s Pause zwischen den Sätzen',
             [ExDescType.MUSCLES]:
               'hinterer Oberschenkelmuskel, Quadrizeps, Wadenmuskel, Gesäßmuskel',
           },
@@ -887,7 +887,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Stelle dich hüftbreit vor die Steinmauer und strecke die Hände gerade nach vorne aus. Springe dann beidbeinig auf die Steinmauer und achte darauf, dass du nicht zurückkippst. Danach springst du beidbeinig wieder auf den Boden und wiederholst diesen Vorgang.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 2 Sätzen, 30-45s Pause zwischen den Sätzen',
+              '10 Wiederholungen mit jeweils 2 Sätzen\n30-45s Pause zwischen den Sätzen',
             [ExDescType.MUSCLES]:
               'hinterer Oberschenkelmuskel, Quadrizeps, Wadenmuskel, Gesäßmuskel',
           },
@@ -907,7 +907,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Deine ganzen Fußsohlen müssen durchgehend auf dem Boden sein. Bewege deine Füße langsam vorwärts und senke deinen Oberkörper parallel zur Wand hinunter. Deine Knie sollten beim Absenken gebeugt sein.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 2 Sätzen, 1 Minute Pause zwischen den Sätzen',
+              '10 Wiederholungen mit jeweils 2 Sätzen\n1 Minute Pause zwischen den Sätzen',
             [ExDescType.MUSCLES]:
               'vordere Beinmuskulatur, Gesäßmuskulatur, Beinbizeps',
           },
@@ -927,7 +927,7 @@ const createParks = async () => {
             [ExDescType.DESCRIPTION]:
               'Deine ganzen Fußsohlen müssen durchgehend auf den Klettergriffensein. Bewege deine Füße langsam vorwärts und senke deinen Oberkörper parallel zur Wand hinunter. Deine Knie sollten beim Absenken gebeugt sein.',
             [ExDescType.EXECUTION]:
-              '10 Wiederholungen mit jeweils 2 Sätzen, 1 Minute Pause zwischen den Sätzen',
+              '10 Wiederholungen mit jeweils 2 Sätzen\n1 Minute Pause zwischen den Sätzen',
             [ExDescType.MUSCLES]:
               'vordere Beinmuskulatur, Gesäßmuskulatur, Beinbizeps',
           },

@@ -2,7 +2,6 @@ import './activity-timer.scss';
 import {
   DndContext,
   DragEndEvent,
-  DragStartEvent,
   MouseSensor,
   TouchSensor,
   useDraggable,
@@ -11,18 +10,12 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
-import { ActivityStore } from '@bregenz-bewegt/client/common/stores';
 import { ReactNode, useState } from 'react';
 import { IonIcon, IonText } from '@ionic/react';
-import {
-  timer,
-  stopCircle,
-  chevronForward,
-  chevronBack,
-  lockClosed,
-} from 'ionicons/icons';
+import { chevronForward, chevronBack } from 'ionicons/icons';
 import { useStopwatch } from 'react-timer-hook';
 import moment from 'moment';
+import { StopCircle, Lock1, TimerStart } from 'iconsax-react';
 
 const handleId = 'handle' as const;
 const lockingSectionId = 'locking-section' as const;
@@ -35,14 +28,14 @@ export interface ActivityTimerProps {
     hours: number;
   }) => void;
   disabled?: boolean;
-  activityStore?: ActivityStore;
+  className?: string;
 }
 
 export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   onTimerStart,
   onTimerStop,
   disabled,
-  activityStore,
+  className,
 }) => {
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const sensors = useSensors(useSensor(TouchSensor), useSensor(MouseSensor));
@@ -51,9 +44,6 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
     offsetTimestamp: new Date(),
   });
 
-  const handleDragStart = (e: DragStartEvent) => {
-    //
-  };
   const handleDragEnd = (e: DragEndEvent) => {
     if (isLocked) {
       setIsLocked(false);
@@ -74,15 +64,14 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   };
 
   return (
-    <div className="activity-timer">
+    <div className={`activity-timer ${className}`}>
       <DndContext
         sensors={sensors}
-        onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         modifiers={[restrictToParentElement]}
       >
         <div className="activity-timer__sliding-restrictor">
-          {!isLocked && <Handle disabled={disabled} icon={timer} />}
+          {!isLocked && <Handle disabled={disabled} started={false} />}
           {isLocked ? (
             <div className="activity-timer__time">
               <IonText>
@@ -90,7 +79,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
                   seconds: stopwatch.seconds,
                   minutes: stopwatch.minutes,
                   hours: stopwatch.hours,
-                }).format('HH:mm:ss')}
+                }).format('mm:ss')}
               </IonText>
             </div>
           ) : (
@@ -116,7 +105,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
             </IonText>
           </div>
           <LockingSection>
-            {isLocked ? <Handle disabled={disabled} icon={stopCircle} /> : null}
+            {isLocked ? <Handle disabled={disabled} started={true} /> : null}
           </LockingSection>
         </div>
       </DndContext>
@@ -125,11 +114,11 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
 };
 
 interface HandleProps {
-  icon: string;
+  started: boolean;
   disabled?: ActivityTimerProps['disabled'];
 }
 
-const Handle: React.FC<HandleProps> = ({ icon, disabled }) => {
+const Handle: React.FC<HandleProps> = ({ started, disabled }) => {
   const { setNodeRef, transform, listeners, attributes, isDragging } =
     useDraggable({
       id: handleId,
@@ -153,7 +142,13 @@ const Handle: React.FC<HandleProps> = ({ icon, disabled }) => {
       {...listeners}
       {...attributes}
     >
-      <IonIcon icon={disabled ? lockClosed : icon} />
+      {disabled ? (
+        <Lock1 size={32} variant="Linear" color="white" />
+      ) : started ? (
+        <StopCircle size={32} variant="Linear" color="white" />
+      ) : (
+        <TimerStart size={32} variant="Linear" color="white" />
+      )}
     </div>
   );
 };

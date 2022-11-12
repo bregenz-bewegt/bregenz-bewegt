@@ -1,22 +1,9 @@
 .exercise-detail {
-  overflow: hidden;
-
-  &::part(scroll) {
-    padding-bottom: 0;
-    overflow: hidden;
-  }
-
   &__content {
-    min-height: 100%;
-    --padding-top: 0;
-    --padding-bottom: 0;
-    --padding-start: 0;
-    --padding-end: 0;
-
     &__flex-wrapper {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
+      // display: flex;
+      // flex-direction: column;
+      // height: 100%;
 
       .activity-timer {
         margin-top: auto;
@@ -47,22 +34,6 @@
       flex-direction: column;
       overflow: auto;
 
-      &__park-wrapper {
-        ion-text {
-          h1 {
-            font-weight: 700;
-          }
-        }
-      }
-
-      &__location {
-        ion-icon {
-          display: inline-block;
-          margin-right: var(--spacing-xs);
-          margin-bottom: calc(var(--spacing-xxs) * -1);
-        }
-      }
-
       &__exercise-wrapper {
         display: flex;
         flex-direction: column;
@@ -72,7 +43,7 @@
     }
 
     &__timer {
-      padding: var(--spacing-m) var(--spacing-l) 0 var(--spacing-l);
+      // padding: var(--spacing-m) var(--spacing-l) 0 var(--spacing-l);
     }
   }
 }
