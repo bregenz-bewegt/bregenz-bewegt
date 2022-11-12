@@ -1,0 +1,21 @@
+.back-btn {
+  position: fixed;
+  top: var(--spacing-m);
+  left: var(--spacing-m);
+  background-color: var(--ion-background-color);
+  border-radius: var(--spacing-s);
+  z-index: 100;
+  padding: var(--spacing-xs) var(--spacing-s);
+
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    color: var(--ion-color-primary);
+    font-size: small;
+    font-weight: bold;
+  }
+
+  span:first-of-type {
+    margin-right: var(--spacing-xs);
+  }
+}

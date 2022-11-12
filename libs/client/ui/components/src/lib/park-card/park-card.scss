@@ -1,9 +1,10 @@
 .park-card {
   background: none;
   border-radius: var(--spacing-m);
+  box-shadow: rgba(var(--ion-color-dark-rgb), 0.12) 0px 4px 16px;
 
   img {
-    display: block !important;
+    display: block;
     object-fit: cover;
     height: 100%;
     border-radius: var(--spacing-m);

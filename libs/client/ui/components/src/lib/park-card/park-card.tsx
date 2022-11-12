@@ -34,14 +34,22 @@ export const ParkCard: React.FC<ParkCardProps> = ({
       className="park-card"
       mode="ios"
     >
-      {isLoaded ? (
-        <img onLoad={() => setIsImageLoaded(true)} src={image} alt="park" />
-      ) : (
-        <IonSkeletonText style={{ height: '200px', margin: 0 }} animated />
+      <img
+        onLoad={() => setIsImageLoaded(true)}
+        src={image}
+        alt="park"
+        style={!isLoaded ? { display: 'none' } : {}}
+      />
+      {!isLoaded && (
+        <IonSkeletonText style={{ height: '150px', margin: 0 }} animated />
       )}
       <IonCardHeader>
         <IonCardTitle>
-          {isLoaded ? title : <IonSkeletonText animated />}
+          {isLoaded ? (
+            title
+          ) : (
+            <IonSkeletonText style={{ height: '20px' }} animated />
+          )}
         </IonCardTitle>
         <IonCardSubtitle>
           {isLoaded ? (
@@ -51,7 +59,7 @@ export const ParkCard: React.FC<ParkCardProps> = ({
               {location}
             </>
           ) : (
-            <IonSkeletonText animated />
+            <IonSkeletonText style={{ height: '20px' }} animated />
           )}
         </IonCardSubtitle>
       </IonCardHeader>

@@ -101,9 +101,10 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
         />
         {parkPins.map(
-          (p) =>
+          (p, i) =>
             p.coordinates && (
               <Marker
+                key={i}
                 position={[p.coordinates?.latitude, p.coordinates?.longitude]}
                 icon={customPin}
               >

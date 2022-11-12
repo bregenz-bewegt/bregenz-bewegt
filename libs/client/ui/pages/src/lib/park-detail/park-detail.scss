@@ -6,7 +6,6 @@
     --padding-bottom: 0;
 
     img {
-      margin-top: 44px;
       position: fixed;
       left: 0;
       top: 0;
@@ -19,7 +18,7 @@
 
     &__img2 {
       z-index: 2;
-      height: 50px;
+      height: 100px;
       object-fit: cover;
       object-position: 0 0;
     }
@@ -35,7 +34,7 @@
       padding-bottom: var(--spacing-s);
       z-index: 3;
       position: sticky;
-      top: 20px;
+      top: 60px;
       background-color: var(--ion-background-color);
       border-radius: var(--spacing-xl) var(--spacing-xl) 0 0;
 

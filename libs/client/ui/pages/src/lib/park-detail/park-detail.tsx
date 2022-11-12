@@ -1,5 +1,6 @@
 import './park-detail.scss';
 import {
+  BackBtn,
   ExerciseCard,
   QuickFilter,
   QuickFilterOption,
@@ -13,16 +14,11 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { DifficultyType, Park, Exercise } from '@bregenz-bewegt/client/types';
 import {
-  IonBackButton,
-  IonButtons,
   IonContent,
-  IonHeader,
   IonNote,
   IonPage,
   IonRouterLink,
   IonText,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
@@ -98,7 +94,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       <Loading />
     ) : (
       <IonPage className="park-detail">
-        <IonHeader mode="ios">
+        {/* <IonHeader mode="ios">
           <IonToolbar>
             <IonButtons>
               <IonBackButton
@@ -109,7 +105,8 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
             </IonButtons>
             <IonTitle>{park?.name}</IonTitle>
           </IonToolbar>
-        </IonHeader>
+        </IonHeader> */}
+        <BackBtn />
         <IonContent className="park-detail__content">
           <img
             src={park?.image}
