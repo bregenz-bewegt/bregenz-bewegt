@@ -6,16 +6,12 @@
   border-radius: var(--spacing-s);
   z-index: 100;
   padding: var(--spacing-xs) var(--spacing-s);
+  color: var(--ion-color-primary);
+  font-size: small;
+  font-weight: bold;
 
-  span {
+  svg {
     display: inline-block;
-    vertical-align: middle;
-    color: var(--ion-color-primary);
-    font-size: small;
-    font-weight: bold;
-  }
-
-  span:first-of-type {
-    margin-right: var(--spacing-xs);
+    margin-bottom: -3px;
   }
 }

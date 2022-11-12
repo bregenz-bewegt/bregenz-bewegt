@@ -94,18 +94,6 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       <Loading />
     ) : (
       <IonPage className="park-detail">
-        {/* <IonHeader mode="ios">
-          <IonToolbar>
-            <IonButtons>
-              <IonBackButton
-                color="primary"
-                defaultHref={tabRoutes.start.route}
-                text="Zurück"
-              />
-            </IonButtons>
-            <IonTitle>{park?.name}</IonTitle>
-          </IonToolbar>
-        </IonHeader> */}
         <BackBtn />
         <IonContent className="park-detail__content">
           <img
