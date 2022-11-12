@@ -240,20 +240,6 @@ export class UserService {
     });
   }
 
-  async getProfilePicture(id: User['id'], res: Response): Promise<void> {
-    const user = await this.findById(id);
-
-    if (!this.uploadedProfilePictureExists(user.profilePicture)) {
-      throw new NotFoundException();
-    }
-
-    const filePath = this.multerService.getProfilePicturePath(
-      user.profilePicture
-    );
-
-    return res.sendFile(filePath);
-  }
-
   async deleteProfilePicture(id: User['id']): Promise<User> {
     const user = await this.findById(id);
 
