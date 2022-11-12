@@ -4,10 +4,12 @@ import * as path from 'path';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-const deleteAllProfileImg = async () => {
+const deleteAllProfilePictures = async () => {
   const imgPath = path.join(
     process.cwd(),
-    `${process.env['NX_API_UPLOADS_FOLDER']}/profile-pictures`
+    'static',
+    process.env['NX_UPLOADS_FOLDER'] ?? 'uploads',
+    'profile-pictures'
   );
 
   const allImg = await util.promisify(fs.readdir)(imgPath);
@@ -25,7 +27,7 @@ const main = async () => {
   await prisma.difficulty.deleteMany();
   await prisma.preferences.deleteMany();
   await prisma.user.deleteMany();
-  await deleteAllProfileImg();
+  await deleteAllProfilePictures();
 };
 
 main()

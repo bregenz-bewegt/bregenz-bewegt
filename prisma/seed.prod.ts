@@ -1,3 +1,4 @@
+import { createResponseInterceptor } from './../libs/client/common/http/src/lib/interceptors/response.interceptor';
 import { add } from 'ionicons/icons';
 import * as util from 'util';
 import * as fs from 'fs';
@@ -965,7 +966,7 @@ const createParks = async () => {
       const { coordinates, exercises, ...parkOnly } = park;
       await prisma.park.create({
         data: {
-          ...(parkOnly as Park),
+          ...parkOnly,
           coordinates: {
             create: coordinates,
           },
@@ -991,10 +992,12 @@ const createDifficulties = async () => {
   );
 };
 
-const deleteUnusedProfileImg = async () => {
+const deleteUnusedProfilePictures = async () => {
   const imgPath = path.join(
     process.cwd(),
-    `${process.env['NX_API_UPLOADS_FOLDER']}/profile-pictures`
+    'static',
+    process.env['NX_UPLOADS_FOLDER'] ?? 'uploads',
+    'profile-pictures'
   );
 
   const usedImg = (
@@ -1017,7 +1020,7 @@ const main = async () => {
   await purgeDatabase();
   await createDifficulties();
   await createParks();
-  await deleteUnusedProfileImg();
+  await deleteUnusedProfilePictures();
 };
 
 main()
