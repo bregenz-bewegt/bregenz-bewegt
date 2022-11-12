@@ -3,7 +3,6 @@ import {
   ExerciseCard,
   QuickFilter,
   QuickFilterOption,
-  TransitionBlock,
 } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
@@ -21,7 +20,6 @@ import {
   IonNote,
   IonPage,
   IonRouterLink,
-  IonSkeletonText,
   IonText,
   IonTitle,
   IonToolbar,
@@ -112,12 +110,19 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
             <IonTitle>{park?.name}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen scrollY={false}>
-          <div className="park-detail__header-wrapper">
-            <img
-              src={park?.image}
-              alt={'Bild des Spielplatzes ' + park?.name}
-            />
+        <IonContent className="park-detail__content">
+          <img
+            src={park?.image}
+            alt={'Bild des Spielplatzes ' + park?.name}
+            className="park-detail__content__img1"
+          />
+          <img
+            src={park?.image}
+            alt={'Bild des Spielplatzes ' + park?.name}
+            className="park-detail__content__img2"
+          />
+          <div className="park-detail__content__placeholder"></div>
+          <div className="park-detail__content__header-wrapper">
             <IonText>
               <h1>{park?.name}</h1>
             </IonText>
@@ -137,11 +142,10 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
             <QuickFilter
               options={quickFilters ?? []}
               onChange={(v) => handleFilterChange(v)}
-              className={`park-detail__header-wrapper__quick-filters`}
+              className={`park-detail__content__header-wrapper__quick-filters`}
             />
           </div>
-          <div className="park-detail__exercises">
-            <TransitionBlock />
+          <div className="park-detail__content__exercises">
             {exercises &&
               park?.id &&
               exercises.map((e) => {

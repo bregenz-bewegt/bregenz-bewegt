@@ -15,6 +15,10 @@
       width: calc(var(--spacing-5xl) * 2);
     }
 
+    ion-row ion-text h2 {
+      margin-bottom: 0;
+    }
+
     &__username {
       max-width: 80%;
 
@@ -104,6 +108,10 @@
 
     ion-footer {
       margin-top: var(--spacing-m);
+
+      &::before {
+        background: var(--ion-color-medium-tint);
+      }
 
       .account-created {
         padding: var(--spacing-s) 0;
