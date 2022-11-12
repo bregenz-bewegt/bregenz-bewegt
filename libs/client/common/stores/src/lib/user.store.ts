@@ -164,7 +164,7 @@ export class UserStore implements Store {
 
     if (user.profilePicture) {
       this.setProfilePicture(
-        `${process.env['NX_API_BASE_URL']}/static/uploads/profile-pictures/${user.profilePicture}`
+        `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/profile-pictures/${user.profilePicture}`
       );
       this.setIsProfilePictureSet(true);
     } else {
