@@ -23,7 +23,6 @@ import {
   Patch,
   Post,
   Put,
-  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -34,7 +33,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterService } from '@bregenz-bewegt/server/multer';
-import { Response } from 'express';
 import { Role, User, Preferences } from '@prisma/client';
 import { UtilService } from '@bregenz-bewegt/server/util';
 
@@ -125,21 +123,13 @@ export class UserController {
       }, MulterService.destinations.profilePictures),
     })
   )
-  @Post('profile-picture')
+  @Put('profile-picture')
   editProfilePicture(
     @GetCurrentUser('sub') userId: User['id'],
     @UploadedFile(ParseFilePipe, ProfilePictureValidationPipe)
     file: Express.Multer.File
   ): Promise<User> {
     return this.userService.editProfilePicture(userId, file);
-  }
-
-  @Get('profile-picture')
-  getProfilePicture(
-    @GetCurrentUser('sub') userId: User['id'],
-    @Res() res: Response
-  ): Promise<void> {
-    return this.userService.getProfilePicture(userId, res);
   }
 
   @HasRole(Role.USER)

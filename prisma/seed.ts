@@ -334,10 +334,12 @@ const createActivities = async () => {
   );
 };
 
-const deleteUnusedProfileImg = async () => {
+const deleteUnusedProfilePictures = async () => {
   const imgPath = path.join(
     process.cwd(),
-    `${process.env['NX_API_UPLOADS_FOLDER']}/profile-pictures`
+    'static',
+    process.env['NX_UPLOADS_FOLDER'] ?? 'uploads',
+    'profile-pictures'
   );
 
   const usedImg = (
@@ -376,7 +378,7 @@ const main = async () => {
   await createParks();
   await createExercises();
   await createActivities();
-  await deleteUnusedProfileImg();
+  await deleteUnusedProfilePictures();
 };
 
 main()
