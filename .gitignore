@@ -40,4 +40,4 @@ Thumbs.db
 
 # custom
 .env
-apps/server/src/uploads
+/static/uploads

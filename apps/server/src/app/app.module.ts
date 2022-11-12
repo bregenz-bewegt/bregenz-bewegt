@@ -45,9 +45,8 @@ import { ActivityModule } from '@bregenz-bewegt/server/controllers/activity';
       // },
     }),
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, 'uploads'),
-      serveRoot: '/api/uploads',
-      // exclude: ['/api*'],
+      rootPath: path.join(process.cwd(), 'static'),
+      serveRoot: '/static',
       serveStaticOptions: {
         redirect: false,
         index: false,

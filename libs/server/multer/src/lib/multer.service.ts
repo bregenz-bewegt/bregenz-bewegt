@@ -11,7 +11,9 @@ export class MulterService {
 
   static getStorage(filename: DiskStorageOptions['filename'], path?: string) {
     return diskStorage({
-      destination: `./apps/server/src/uploads${path ? `/${path}` : ''}`,
+      destination: `./static/${process.env['NX_UPLOADS_FOLDER']}${
+        path ? `/${path}` : ''
+      }`,
       filename,
     });
   }
@@ -19,7 +21,8 @@ export class MulterService {
   getProfilePicturePath(filename: string) {
     return path.join(
       process.cwd(),
-      './apps/server/src/uploads',
+      './static/',
+      process.env['NX_UPLOADS_FOLDER'] ?? 'uploads',
       `${this.destinations.profilePictures}`,
       filename
     );

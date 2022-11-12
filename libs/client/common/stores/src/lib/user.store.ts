@@ -121,6 +121,8 @@ export class UserStore implements Store {
         },
       }
     );
+
+    await this.refreshProfile();
     return data;
   }
 
@@ -160,9 +162,9 @@ export class UserStore implements Store {
   @action setUser(user: User) {
     this.user = user;
 
-    if (this.user.profilePicture) {
+    if (user.profilePicture) {
       this.setProfilePicture(
-        `${process.env['NX_API_BASE_URL']}/uploads/profile-pictures/${this.user.profilePicture}`
+        `${process.env['NX_API_BASE_URL']}/static/uploads/profile-pictures/${user.profilePicture}`
       );
       this.setIsProfilePictureSet(true);
     } else {
