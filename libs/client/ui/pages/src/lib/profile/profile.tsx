@@ -281,7 +281,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 <IonAvatar>
                   <img
                     onLoad={() => setIsImageLoaded(true)}
-                    src={`${userStore?.user?.profilePicture}`}
+                    src={userStore?.user?.profilePicture}
                     alt="profile"
                     style={{ display: isImageLoaded ? 'initial' : 'none' }}
                   />
