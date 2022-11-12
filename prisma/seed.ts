@@ -311,7 +311,7 @@ const createActivities = async () => {
 const deleteUnusedProfileImg = async () => {
   const imgPath = path.join(
     process.cwd(),
-    `${process.env['NX_API_UPLOADS_FOLDER']}/profile-pictures`
+    `apps/server/src/uploads/profile-pictures`
   );
 
   const usedImg = (
