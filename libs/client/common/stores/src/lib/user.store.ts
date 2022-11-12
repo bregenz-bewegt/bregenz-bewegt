@@ -110,7 +110,7 @@ export class UserStore implements Store {
   }
 
   async editProfilePicture(picture: globalThis.File) {
-    const { data } = await http.post(
+    const { data } = await http.put(
       '/users/profile-picture',
       {
         file: picture,
@@ -121,6 +121,8 @@ export class UserStore implements Store {
         },
       }
     );
+
+    await this.refreshProfile();
     return data;
   }
 
@@ -130,24 +132,6 @@ export class UserStore implements Store {
     const { data } = await http.delete('/users/profile-picture');
     this.setAvatarProfilePicture();
     return data;
-  }
-
-  @action async fetchProfilePicture() {
-    try {
-      const { data } = await http.get('/users/profile-picture', {
-        responseType: 'blob',
-      });
-      const reader = new window.FileReader();
-      reader.readAsDataURL(data);
-      reader.onload = () => {
-        this.setProfilePicture(`${reader.result}`);
-        this.setIsProfilePictureSet(true);
-      };
-      return reader.result;
-    } catch (error) {
-      this.setAvatarProfilePicture();
-      return;
-    }
   }
 
   @action setIsLoggedIn(value: boolean) {
@@ -177,6 +161,16 @@ export class UserStore implements Store {
 
   @action setUser(user: User) {
     this.user = user;
+
+    if (user.profilePicture) {
+      this.setProfilePicture(
+        `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/profile-pictures/${user.profilePicture}`
+      );
+      this.setIsProfilePictureSet(true);
+    } else {
+      this.setAvatarProfilePicture();
+      this.setIsProfilePictureSet(false);
+    }
   }
 
   @action setProfilePicture(picture: string) {
@@ -201,7 +195,6 @@ export class UserStore implements Store {
   @action async refreshProfile() {
     const profile = await this.fetchProfile();
     this.setUser(profile);
-    await this.fetchProfilePicture();
 
     return profile;
   }
