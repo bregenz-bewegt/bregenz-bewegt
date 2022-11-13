@@ -1,6 +1,6 @@
 import './park-detail.scss';
 import {
-  BackBtn,
+  BackButton,
   ExerciseCard,
   QuickFilter,
   QuickFilterOption,
@@ -94,7 +94,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       <Loading />
     ) : (
       <IonPage className="park-detail">
-        <BackBtn />
+        <BackButton />
         <IonContent className="park-detail__content">
           <img
             src={park?.image}

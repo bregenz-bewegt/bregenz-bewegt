@@ -28,7 +28,7 @@ import {
 import { location } from 'ionicons/icons';
 import {
   ActivityTimer,
-  BackBtn,
+  BackButton,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
 import { play, timer, stopCircle, close } from 'ionicons/icons';
@@ -114,7 +114,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
     return (
       <IonPage className="exercise-detail">
-        <BackBtn />
+        <BackButton />
         <IonContent className="exercise-detail__content">
           <div className="exercise-detail__content__flex-wrapper">
             <div className="exercise-detail__content__video-wrapper">

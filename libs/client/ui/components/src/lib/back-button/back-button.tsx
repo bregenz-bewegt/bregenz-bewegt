@@ -1,11 +1,11 @@
 import { ArrowLeft2 } from 'iconsax-react';
 import { useHistory } from 'react-router-dom';
-import './backBtn.scss';
+import './back-button.scss';
 
-export const BackBtn: React.FC = () => {
+export const BackButton: React.FC = () => {
   const history = useHistory();
   return (
-    <div onClick={history.goBack} className="back-btn">
+    <div onClick={history.goBack} className="back-button">
       <ArrowLeft2 variant="Bold" size={16} color={'var(--ion-color-primary'} />
       Zurück
     </div>
