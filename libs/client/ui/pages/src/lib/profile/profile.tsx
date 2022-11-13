@@ -32,9 +32,7 @@ import { useFormik } from 'formik';
 import { lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
-import {
-  ValidProfilePictureMimeType,
-} from '@bregenz-bewegt/shared/types';
+import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
@@ -138,11 +136,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         const file = await new File([blob], `file.${photo.format}`);
         userStore
           ?.editProfilePicture(file)
-          .then(() =>
-            userStore.fetchProfilePicture().then(() => {
-              dismissLoading().then(() => showSuccessToast());
-            })
-          )
+          .then(() => dismissLoading().then(() => showSuccessToast()))
           .catch(() => {
             showFailureToast();
           });
