@@ -75,8 +75,8 @@ model Coordinates {
   latitude        Float
   longitude       Float
   toleranceRadius Int   @default(50)
-  park            Park  @relation(fields: [parkId], references: [id])
-  parkId          Int   @unique
+  park            Park? @relation(fields: [parkId], references: [id])
+  parkId          Int?  @unique
 }
 
 model Activity {
@@ -92,13 +92,13 @@ model Activity {
 }
 
 model Exercise {
-  id           Int        @id @default(autoincrement())
+  id           Int         @id @default(autoincrement())
   name         String
   description  Json
   video        String
   coins        Int
-  difficulty   Difficulty @relation(fields: [difficultyId], references: [id])
-  difficultyId Int
+  difficulty   Difficulty? @relation(fields: [difficultyId], references: [id])
+  difficultyId Int?
   parks        Park[]
   activities   Activity[]
 }

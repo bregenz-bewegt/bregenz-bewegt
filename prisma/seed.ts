@@ -197,7 +197,7 @@ const createParks = async () => {
       const { coordinates, ...parkOnly } = park;
       await prisma.park.create({
         data: {
-          ...(parkOnly as Park),
+          ...parkOnly,
           coordinates: {
             create: coordinates,
           },

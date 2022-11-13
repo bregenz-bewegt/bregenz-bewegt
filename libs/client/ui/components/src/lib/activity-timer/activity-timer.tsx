@@ -2,6 +2,7 @@ import './activity-timer.scss';
 import {
   DndContext,
   DragEndEvent,
+  DragStartEvent,
   MouseSensor,
   TouchSensor,
   useDraggable,
@@ -13,7 +14,7 @@ import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ReactNode, useState } from 'react';
 import { IonIcon, IonText } from '@ionic/react';
 import { chevronForward, chevronBack } from 'ionicons/icons';
-import { useStopwatch } from 'react-timer-hook';
+import { useStopwatch, useTimer } from 'react-timer-hook';
 import moment from 'moment';
 import { StopCircle, Lock1, TimerStart } from 'iconsax-react';
 
@@ -38,28 +39,49 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   className,
 }) => {
   const [isLocked, setIsLocked] = useState<boolean>(false);
+  const [isStopping, setIsStopping] = useState<boolean>(false);
   const sensors = useSensors(useSensor(TouchSensor), useSensor(MouseSensor));
   const stopwatch = useStopwatch({
     autoStart: false,
     offsetTimestamp: new Date(),
   });
 
+  const handleHoldEnd = () => {
+    setIsLocked(false);
+    setIsStopping(true);
+    stopwatch.reset();
+    onTimerStop({
+      seconds: stopwatch.seconds,
+      minutes: stopwatch.minutes,
+      hours: stopwatch.hours,
+    });
+  };
+
+  const getHoldExpiry = () => {
+    const time = new Date();
+    time.setSeconds(new Date().getSeconds());
+    return time;
+  };
+
+  const holdTimer = useTimer({
+    autoStart: false,
+    expiryTimestamp: getHoldExpiry(),
+    onExpire: handleHoldEnd,
+  });
+
+  const handleDragStart = (e: DragStartEvent) => {
+    isLocked && holdTimer.restart(getHoldExpiry());
+  };
+
   const handleDragEnd = (e: DragEndEvent) => {
-    if (isLocked) {
-      setIsLocked(false);
-      stopwatch.reset();
-      onTimerStop({
-        seconds: stopwatch.seconds,
-        minutes: stopwatch.minutes,
-        hours: stopwatch.hours,
-      });
-      return;
-    }
-    if (e.over && e.over.id === lockingSectionId) {
+    if (isStopping) {
+      setIsStopping(false);
+    } else if (isLocked && !isStopping) {
+      holdTimer.pause();
+    } else if (!isLocked && e.over && e.over.id === lockingSectionId) {
       setIsLocked(true);
       stopwatch.start();
       onTimerStart();
-      return;
     }
   };
 
@@ -68,10 +90,17 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
       <DndContext
         sensors={sensors}
         onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
         modifiers={[restrictToParentElement]}
       >
         <div className="activity-timer__sliding-restrictor">
-          {!isLocked && <Handle disabled={disabled} started={false} />}
+          {!isLocked && (
+            <Handle
+              disabled={disabled}
+              started={false}
+              isStopping={isStopping}
+            />
+          )}
           {isLocked ? (
             <div className="activity-timer__time">
               <IonText>
@@ -105,7 +134,13 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
             </IonText>
           </div>
           <LockingSection>
-            {isLocked ? <Handle disabled={disabled} started={true} /> : null}
+            {isLocked ? (
+              <Handle
+                disabled={disabled}
+                started={true}
+                isStopping={isStopping}
+              />
+            ) : null}
           </LockingSection>
         </div>
       </DndContext>
@@ -116,28 +151,29 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
 interface HandleProps {
   started: boolean;
   disabled?: ActivityTimerProps['disabled'];
+  isStopping: boolean;
 }
 
-const Handle: React.FC<HandleProps> = ({ started, disabled }) => {
+const Handle: React.FC<HandleProps> = ({ started, disabled, isStopping }) => {
   const { setNodeRef, transform, listeners, attributes, isDragging } =
     useDraggable({
       id: handleId,
       disabled,
     });
+
   const style = {
-    transition: 'transform 0.5s',
-    ...(isDragging && { transition: undefined }),
+    ...(!isDragging && { transition: 'transform 0.5s' }),
     ...(transform && {
-      transform: `${
-        transform && `translate3d(${transform.x}px, ${transform.y}px, 0)`
-      }${isDragging && ` scale(.9)`}`,
+      transform: `${transform && `translateX(${transform.x}px)`}${
+        isDragging && ` scale(.9)`
+      }`,
     }),
   };
 
   return (
     <div
       ref={setNodeRef}
-      style={style}
+      style={isStopping ? {} : style}
       className="activity-timer__handle"
       {...listeners}
       {...attributes}

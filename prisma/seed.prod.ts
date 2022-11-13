@@ -1,10 +1,10 @@
-import { createResponseInterceptor } from './../libs/client/common/http/src/lib/interceptors/response.interceptor';
-import { add } from 'ionicons/icons';
+import { IonContent } from '@ionic/react';
 import * as util from 'util';
 import * as fs from 'fs';
 import * as path from 'path';
-import { PrismaClient, DifficultyType, Park } from '@prisma/client';
+import { PrismaClient, DifficultyType, Difficulty } from '@prisma/client';
 const prisma = new PrismaClient();
+let difficulties: Difficulty[];
 
 enum ExDescType {
   DESCRIPTION = 'DESCRIPTION',
@@ -12,15 +12,7 @@ enum ExDescType {
   MUSCLES = 'MUSCLES',
 }
 
-const purgeDatabase = async () => {
-  await prisma.exercise.deleteMany();
-  await prisma.coordinates.deleteMany();
-  await prisma.park.deleteMany();
-  await prisma.difficulty.deleteMany();
-};
-
-const createParks = async () => {
-  const difficulties = await prisma.difficulty.findMany();
+const updateParks = async () => {
   const parks = [
     {
       id: 1,
@@ -35,6 +27,7 @@ const createParks = async () => {
       },
       exercises: [
         {
+          id: 1,
           name: 'Liegestütz mit Erhöhung',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -45,16 +38,11 @@ const createParks = async () => {
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 2,
           name: 'Liegestütz',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -65,16 +53,11 @@ const createParks = async () => {
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 3,
           name: 'Ausfallschritt',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -85,16 +68,11 @@ const createParks = async () => {
               'Beinstrecker, Beinbeuger, großer Gesäßmuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 4,
           name: 'Ausfallschritt springend',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -105,16 +83,11 @@ const createParks = async () => {
               'Beinstrecker, Beinbeuger, großer Gesäßmuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 5,
           name: 'Burpee bloße Ausführung',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -124,16 +97,11 @@ const createParks = async () => {
               'Core-Muskulatur, Brustmuskeln, Trizeps, Beinmuskulatur, Gesäßmuskeln',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 6,
           name: 'Burpee',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -144,16 +112,11 @@ const createParks = async () => {
               'Core-Muskulatur, Brustmuskeln, Trizeps, Beinmuskulatur, Gesäßmuskeln',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 7,
           name: 'Wandsitzen am Stamm',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -162,16 +125,11 @@ const createParks = async () => {
             [ExDescType.MUSCLES]: 'Quadrizeps, Gesäßmuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 8,
           name: 'Einbeiniges Wandsitzen am Stamm',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -180,16 +138,11 @@ const createParks = async () => {
             [ExDescType.MUSCLES]: 'Quadrizeps, Gesäßmuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 9,
           name: 'Planks',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -199,16 +152,11 @@ const createParks = async () => {
               'Bauchmuskulatur, Beinmuskulatur, Armmuskulatur, Hüftmuskulatur, Gesäßmuskulatur, Tiefe Rumpf- und Rückenmuskulatur',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 10,
           name: 'Up and Down Planks',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -218,16 +166,11 @@ const createParks = async () => {
               'Bauchmuskulatur, Beinmuskulatur, Armmuskulatur, Hüftmuskulatur, Gesäßmuskulatur, Tiefe Rumpf- und Rückenmuskulatur',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 11,
           name: 'Ochs am Berg',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -235,12 +178,7 @@ const createParks = async () => {
               Der Ochs wendet sein Gesicht von der Gruppe ab, zählt bis drei und ruft: “Eins, zwei, drei, Ochs am Berg!” Danach dreht er sich um. Solange der Ochs ruft, rennen die restlichen Spieler auf den Ochs zu. Beim Wort Berg müssen die Schüler stehen bleiben und dürfen sich nicht mehr bewegen. Wird ein Schüler in der Bewegung erwischt, muss dieser wieder zurück an den Anfang.',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find((d) => d.difficulty === DifficultyType.GAME)
-                ?.id,
-            },
-          },
+          difficulty: DifficultyType.GAME,
           video: 'not-yet-defined',
         },
       ],
@@ -258,6 +196,7 @@ const createParks = async () => {
       },
       exercises: [
         {
+          id: 12,
           name: 'Hängen lassen (Ringe)',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -268,16 +207,11 @@ const createParks = async () => {
               'oberer Rücken, Schultern, Ader, Unterarme, Hand- und Handgelenksbeuger',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 13,
           name: 'Hangeln (Stange)',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -287,16 +221,11 @@ const createParks = async () => {
               'oberer Rücken, Schultern, Bizeps, Unterarme, Hand- und Handgelenksbeuger',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 14,
           name: 'Supermann ausgestreckte Arme',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -306,16 +235,11 @@ const createParks = async () => {
             [ExDescType.MUSCLES]: 'Rückenstrecker, Gesäßmuskel, Beinbizeps',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 15,
           name: 'Supermann angezogene Arme',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -325,16 +249,11 @@ const createParks = async () => {
             [ExDescType.MUSCLES]: 'Rückenstrecker, Gesäßmuskel, Beinbizeps',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 16,
           name: 'Arm-/Beinheben im Vierfüßlerstand',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -345,16 +264,11 @@ const createParks = async () => {
               'Rumpfmuskulatur, Rückenmuskulatur, Gesäßmuskulatur, Beinmuskulatur',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 17,
           name: 'Arm-/Beinheben in Liegestützposition',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -365,16 +279,11 @@ const createParks = async () => {
               'Rumpfmuskulatur, Rückenmuskulatur, Gesäßmuskulatur, Beinmuskulatur',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 18,
           name: 'Trizepsstrecken am Boden',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -384,16 +293,11 @@ const createParks = async () => {
             [ExDescType.MUSCLES]: 'Trizeps, Brustmuskel, Bauchmuskulatur',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 19,
           name: 'Diamant-Liegestütz',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -403,16 +307,11 @@ const createParks = async () => {
             [ExDescType.MUSCLES]: 'Trizeps, Brustmuskel, Bauchmuskulatur',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 20,
           name: 'Bauchpresse mit Erhöhung',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -422,16 +321,11 @@ const createParks = async () => {
             [ExDescType.MUSCLES]: 'gerader Bauchmuskel, seitliche Bauchmuskeln',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 21,
           name: 'Bauchpresse',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -441,16 +335,11 @@ const createParks = async () => {
             [ExDescType.MUSCLES]: 'gerader Bauchmuskel, seitliche Bauchmuskeln',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 22,
           name: 'Feuer, Wasser, Donner, Blitz!',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -461,15 +350,11 @@ const createParks = async () => {
                 Blitz: in der Bewegung erstarren\n',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find((d) => d.difficulty === DifficultyType.GAME)
-                ?.id,
-            },
-          },
+          difficulty: DifficultyType.GAME,
           video: 'not-yet-defined',
         },
         {
+          id: 23,
           name: 'Katz und Maus',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -477,12 +362,7 @@ const createParks = async () => {
             Sobald die Maus gefangen wird, muss die Maus der Katze nachrennen. Sobald sich die Maus zu einem Pärchen dazu sitzt, muss die äußere Person der Katze nachrennen und ist so die neue Katze.',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find((d) => d.difficulty === DifficultyType.GAME)
-                ?.id,
-            },
-          },
+          difficulty: DifficultyType.GAME,
           video: 'not-yet-defined',
         },
       ],
@@ -500,6 +380,7 @@ const createParks = async () => {
       },
       exercises: [
         {
+          id: 24,
           name: 'Liegestütz an der Mauer',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -510,16 +391,11 @@ const createParks = async () => {
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 25,
           name: 'Liegestütz',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -530,16 +406,11 @@ const createParks = async () => {
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 26,
           name: 'Wadenheben am Barren',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -550,16 +421,11 @@ const createParks = async () => {
               'Schollenmuskel, Zwillingswadenmuskel, Langer und kurzer Wadenbeinmuskel, Hinterer Schienbeinmuskel, Langer Zehenbeuger',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 27,
           name: 'Einbeiniges Wadenheben am Barren',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -570,16 +436,11 @@ const createParks = async () => {
               'Schollenmuskel, Zwillingswadenmuskel, Langer und kurzer Wadenbeinmuskel, Hinterer Schienbeinmuskel, Langer Zehenbeuger',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 28,
           name: 'Plank',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -590,16 +451,11 @@ const createParks = async () => {
               'Bauchmuskulatur, Beinmuskulatur, Armmuskulatur, Gesäßmuskulatur, Tiefe Rumpf- und Rückenmuskulatur',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 29,
           name: 'Superman-Planks',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -610,16 +466,11 @@ const createParks = async () => {
               'Bauchmuskulatur, Beinmuskulatur, Armmuskulatur, Gesäßmuskulatur, Tiefe Rumpf- und Rückenmuskulatur',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 30,
           name: 'Squad Jumps',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -630,16 +481,11 @@ const createParks = async () => {
               'vierköpfiger Oberschenkelmuskel, Beinbizeps, Großer Gesäßmuskel, Rückenstrecker, Bauchmuskeln',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 31,
           name: 'Squat Jumps auf die Mauer',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -650,16 +496,11 @@ const createParks = async () => {
               'vierköpfiger Oberschenkelmuskel, Beinbizeps, Großer Gesäßmuskel, Rückenstrecker, Bauchmuskeln',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 32,
           name: 'Dips auf der Mauer',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -670,16 +511,11 @@ const createParks = async () => {
               'Trizeps, Knorrenmuskel, Vorderer Teil des Deltamuskels, Großer Brustmuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 33,
           name: 'Dips auf dem Barren',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -690,43 +526,29 @@ const createParks = async () => {
               'Trizeps, Knorrenmuskel, Vorderer Teil des Deltamuskels, Großer Brustmuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 34,
           name: 'The Floor is Lava',
           description: {
             [ExDescType.DESCRIPTION]:
               'Die Kinder verteilen sich im Parkourpark und bewegen sich fort. Plötzlich ruft jemand „The Floor is Lava” und zählt bis fünf. Alle, die in der Nähe stehen, müssen jetzt auf sicheres Terrain klettern, um nicht zu „verbrennen“.',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find((d) => d.difficulty === DifficultyType.GAME)
-                ?.id,
-            },
-          },
+          difficulty: DifficultyType.GAME,
           video: 'not-yet-defined',
         },
         {
+          id: 35,
           name: 'Hochfangis',
           description: {
             [ExDescType.DESCRIPTION]:
               'Je nach Anzahl der Kinder werden jeweils 1-2 Fänger bestimmt. Die Fänger müssen die Kinder fangen, allerdings nur wenn sie auf dem Boden sind. Die Kinder können auf verschiedene Objekte gehen, die sich in der Höhe befinden. Allerdings nur für 10 Sekunden. Die Fänger müssen immer in Bewegung bleiben und dürfen nicht vor einem Objekt warten bis die 10 Sekunden um sind.',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find((d) => d.difficulty === DifficultyType.GAME)
-                ?.id,
-            },
-          },
+          difficulty: DifficultyType.GAME,
           video: 'not-yet-defined',
         },
       ],
@@ -744,6 +566,7 @@ const createParks = async () => {
       },
       exercises: [
         {
+          id: 36,
           name: 'Trizeps-Dips mit einer Erhöhung',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -754,16 +577,11 @@ const createParks = async () => {
               'Trizeps, Knorrenmuskel, Vorderer Teil des Deltamuskels, Großer Brustmuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 37,
           name: 'Trizeps-Dips mit zwei Erhöhungen',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -774,16 +592,11 @@ const createParks = async () => {
               'Trizeps, Knorrenmuskel, Vorderer Teil des Deltamuskels, Großer Brustmuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 38,
           name: 'Liegestütz mit angewinkelten Beinen und Erhöhung',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -794,16 +607,11 @@ const createParks = async () => {
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 39,
           name: 'Liegestütz mit gestreckten Beinen und Erhöhung',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -814,16 +622,11 @@ const createParks = async () => {
               'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 40,
           name: 'Mountainclimber einbeinig',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -833,16 +636,11 @@ const createParks = async () => {
               'Core-Muskulatur, Brustmuskeln, Trizeps, Beinmuskulatur, Gesäßmuskeln',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 41,
           name: 'Mountainclimber beidbeinig',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -852,16 +650,11 @@ const createParks = async () => {
               'Beine, Lenden-Darmbeinmuskel, Bauchmuskeln, unterer Rücken, Brustmuskeln, Arme, Stabilisation der Wirbelsäule',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 42,
           name: 'Jump-Ups auf Steinbank einbeinig',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -872,16 +665,11 @@ const createParks = async () => {
               'hinterer Oberschenkelmuskel, Quadrizeps, Wadenmuskel, Gesäßmuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 43,
           name: 'Jump-Ups auf Steinbank beidbeinig',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -892,16 +680,11 @@ const createParks = async () => {
               'hinterer Oberschenkelmuskel, Quadrizeps, Wadenmuskel, Gesäßmuskel',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 44,
           name: 'Kniebäuge auf dem Boden',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -912,16 +695,11 @@ const createParks = async () => {
               'vordere Beinmuskulatur, Gesäßmuskulatur, Beinbizeps',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.BEGINNER
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.BEGINNER,
           video: 'not-yet-defined',
         },
         {
+          id: 45,
           name: 'Kniebeuge auf der Kletterwand',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -932,16 +710,11 @@ const createParks = async () => {
               'vordere Beinmuskulatur, Gesäßmuskulatur, Beinbizeps',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find(
-                (d) => d.difficulty === DifficultyType.ADVANCED
-              )?.id,
-            },
-          },
+          difficulty: DifficultyType.ADVANCED,
           video: 'not-yet-defined',
         },
         {
+          id: 46,
           name: 'Piratenfängi',
           description: {
             [ExDescType.DESCRIPTION]:
@@ -949,12 +722,7 @@ const createParks = async () => {
               Die Piraten bekommen ca. 30 Sekunden Vorsprung, um sich zu verstecken bzw. auf dem Platz zu verteilen. Nach den 30 Sekunden beginnen die Fänger die Piraten zu fangen. Jeder gefangene Pirat muss sich auf die Seite stellen und 10 Hampelmänner machen. Ist dies erledigt, darf er wieder mitspielen. Die Hampelmänner müssen auch gemacht werden, wenn ein Pirat auf den Betonboden steht. Steht ein Fänger auf den Boden, so ist das Spiel vorbei.',
           },
           coins: 10,
-          difficulty: {
-            connect: {
-              id: difficulties.find((d) => d.difficulty === DifficultyType.GAME)
-                ?.id,
-            },
-          },
+          difficulty: DifficultyType.GAME,
           video: 'not-yet-defined',
         },
       ],
@@ -963,32 +731,91 @@ const createParks = async () => {
 
   await Promise.all(
     parks.map(async (park) => {
-      const { coordinates, exercises, ...parkOnly } = park;
-      await prisma.park.create({
-        data: {
+      const { coordinates, exercises, id: parkId, ...parkOnly } = park;
+
+      await prisma.park.upsert({
+        where: {
+          id: parkId,
+        },
+        update: parkOnly,
+        create: {
+          id: parkId,
           ...parkOnly,
-          coordinates: {
-            create: coordinates,
-          },
-          exercises: {
-            create: exercises,
-          },
+        },
+      });
+
+      await prisma.coordinates.upsert({
+        where: {
+          id: parkId,
+        },
+        update: coordinates,
+        create: {
+          id: parkId,
+          ...coordinates,
+        },
+      });
+
+      await Promise.all(
+        exercises.map(async (e) => {
+          const { id: exerId, difficulty, ...onlyExer } = e;
+          const diffId = difficulties.find(
+            (d) => d.difficulty == difficulty
+          )?.id;
+          await prisma.exercise.upsert({
+            where: {
+              id: exerId,
+            },
+            update: {
+              ...onlyExer,
+              parks: { connect: { id: parkId } },
+              difficulty: { connect: { id: diffId } },
+            },
+            create: {
+              id: exerId,
+              ...onlyExer,
+            },
+          });
+
+          await prisma.exercise.update({
+            where: {
+              id: exerId,
+            },
+            data: {
+              parks: { connect: { id: parkId } },
+              difficulty: { connect: { id: diffId } },
+            },
+          });
+        })
+      );
+
+      await prisma.park.update({
+        where: {
+          id: parkId,
+        },
+        data: {
+          coordinates: { connect: { id: parkId } },
+          exercises: { connect: exercises.map((e) => ({ id: e.id })) },
         },
       });
     })
   );
 };
 
-const createDifficulties = async () => {
-  await Promise.all(
-    Object.values(DifficultyType).map(async (difficulty, i) => {
-      await prisma.difficulty.create({
-        data: {
-          id: i + 1,
-          difficulty,
-        },
-      });
-    })
+const updateDifficulties = async () => {
+  difficulties = await Promise.all(
+    Object.values(DifficultyType).map(
+      async (difficulty, i) =>
+        await prisma.difficulty.upsert({
+          where: {
+            id: i + 1,
+          },
+          update: { difficulty: difficulty },
+          create: {
+            id: i + 1,
+            difficulty: difficulty,
+          },
+        })
+    )
   );
 };
 
@@ -1017,9 +844,8 @@ const deleteUnusedProfilePictures = async () => {
 };
 
 const main = async () => {
-  await purgeDatabase();
-  await createDifficulties();
-  await createParks();
+  await updateDifficulties();
+  await updateParks();
   await deleteUnusedProfilePictures();
 };
 

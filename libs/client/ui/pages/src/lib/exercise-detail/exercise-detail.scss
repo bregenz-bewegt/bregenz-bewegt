@@ -1,15 +1,9 @@
 .exercise-detail {
   &__content {
-    &__flex-wrapper {
-      // display: flex;
-      // flex-direction: column;
-      // height: 100%;
-
-      .activity-timer {
-        margin-top: auto;
-        margin-bottom: 80px;
-      }
-    }
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --padding-start: 0;
+    --padding-end: 0;
 
     &__video-wrapper {
       width: 100%;
@@ -27,23 +21,27 @@
       }
     }
 
-    &__content {
-      padding: 0 var(--spacing-l) var(--spacing-l) var(--spacing-l);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: auto;
+    &__exercise-wrapper {
+      padding: var(--spacing-xl);
+      white-space: pre-line;
 
-      &__exercise-wrapper {
+      &__title {
         display: flex;
-        flex-direction: column;
-        flex: 1;
-        white-space: pre-line;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
       }
     }
 
     &__timer {
-      // padding: var(--spacing-m) var(--spacing-l) 0 var(--spacing-l);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: var(--spacing-m);
+      background-color: var(--ion-background-color);
+      border-radius: var(--spacing-l) var(--spacing-l) 0 0;
+      box-shadow: rgb(0 0 0 / 12%) 0px 4px 16px;
     }
   }
 }

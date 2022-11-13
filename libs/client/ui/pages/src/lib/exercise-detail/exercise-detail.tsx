@@ -38,7 +38,6 @@ import {
 import { play, timer, stopCircle, close } from 'ionicons/icons';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import { exerDescrDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
-import { StopCircle, TimerStart } from 'iconsax-react';
 
 interface MatchParams {
   park: string;
@@ -136,43 +135,50 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           <div className="exercise-detail__content__video-wrapper">
             <IonIcon icon={play} />
           </div>
-          <div className="exercise-detail__content__content">
-            <div className="exercise-detail__content__content__exercise-wrapper">
-              <IonText>
-                <h2>{park?.exercises && park?.exercises[0].name}</h2>
-                {park?.exercises && park?.exercises[0].difficulty && (
-                  <DifficultyBadge difficulty={park?.exercises[0].difficulty} />
-                )}
-              </IonText>
-              <IonText>
-                {park?.exercises &&
-                  Object.keys(park?.exercises[0].description).map((k, i) => {
-                    const desc =
-                      park?.exercises &&
+          <div className="exercise-detail__content__exercise-wrapper">
+            <IonText className="exercise-detail__content__exercise-wrapper__title">
+              <h1>{park?.exercises && park?.exercises[0].name}</h1>
+              {park?.exercises && park?.exercises[0].difficulty && (
+                <DifficultyBadge difficulty={park?.exercises[0].difficulty} />
+              )}
+              {park?.exercises && park?.exercises[0].coins && (
+                <h3>{park?.exercises[0].coins} B-Bucks</h3>
+              )}
+            </IonText>
+            <IonText className="exercise-detail__content__exercise-wrapper__description">
+              {park?.exercises &&
+                Object.keys(park?.exercises[0].description).map((k, i) => {
+                  const desc =
+                    (park?.exercises &&
                       park?.exercises[0].description[
                         k as ExerciseDescriptionType
-                      ];
-                    return (
-                      <div className={k} key={i}>
-                        <h2>
-                          {exerDescrDisplayTexts[k as ExerciseDescriptionType]}
-                        </h2>
-                        <p>
-                          {k === ExerciseDescriptionType.MUSCLES ? (
-                            <ul>
-                              {desc?.split(', ').map((li) => (
-                                <li>{li}</li>
-                              ))}
-                            </ul>
-                          ) : (
-                            desc
-                          )}
-                        </p>
-                      </div>
-                    );
-                  })}
-              </IonText>
-            </div>
+                      ]) ??
+                    '';
+                  const liItems =
+                    k === ExerciseDescriptionType.MUSCLES &&
+                    desc?.split(',').length > 1
+                      ? desc.split(',').map((li) => li.trim())
+                      : null;
+                  return (
+                    <div className={k} key={i}>
+                      <h2>
+                        {exerDescrDisplayTexts[k as ExerciseDescriptionType]}
+                      </h2>
+                      <p>
+                        {liItems ? (
+                          <ul>
+                            {liItems.map((li) => (
+                              <li>{li}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          desc
+                        )}
+                      </p>
+                    </div>
+                  );
+                })}
+            </IonText>
           </div>
           <ActivityTimer
             className="exercise-detail__content__timer"
