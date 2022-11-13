@@ -48,7 +48,7 @@ export const ParkCard: React.FC<ParkCardProps> = ({
           {isLoaded ? (
             title
           ) : (
-            <IonSkeletonText style={{ height: '20px' }} animated />
+            <IonSkeletonText className="park-card__skeletonText" animated />
           )}
         </IonCardTitle>
         <IonCardSubtitle>
@@ -59,7 +59,7 @@ export const ParkCard: React.FC<ParkCardProps> = ({
               {location}
             </>
           ) : (
-            <IonSkeletonText style={{ height: '20px' }} animated />
+            <IonSkeletonText className="park-card__skeletonText" animated />
           )}
         </IonCardSubtitle>
       </IonCardHeader>

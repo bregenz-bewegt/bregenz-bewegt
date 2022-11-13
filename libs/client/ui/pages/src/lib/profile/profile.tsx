@@ -233,44 +233,43 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               },
             ]}
           />
+          {isGuest && (
+            <div className="guest-lock-modal">
+              <IonGrid>
+                <IonRow>
+                  <IonIcon
+                    className="lock-icon"
+                    icon={lockClosed}
+                    color="primary"
+                  />
+                </IonRow>
+                <IonRow className="info">
+                  <IonText color="primary">
+                    Erstelle ein Konto, um auf dein Profil zugreifen zu können.
+                  </IonText>
+                </IonRow>
+                <IonRow>
+                  <IonButton
+                    expand="block"
+                    mode="ios"
+                    fill="solid"
+                    onClick={() =>
+                      handleLogout('/register', userStore.user?.role)
+                    }
+                  >
+                    {isLoggingOut ? (
+                      <IonLabel>
+                        <IonSpinner name="crescent" />
+                      </IonLabel>
+                    ) : (
+                      'Konto erstellen'
+                    )}
+                  </IonButton>
+                </IonRow>
+              </IonGrid>
+            </div>
+          )}
           <IonGrid>
-            {isGuest && (
-              <div className="guest-lock-modal">
-                <IonGrid>
-                  <IonRow>
-                    <IonIcon
-                      className="lock-icon"
-                      icon={lockClosed}
-                      color="primary"
-                    />
-                  </IonRow>
-                  <IonRow className="info">
-                    <IonText color="primary">
-                      Erstelle ein Konto, um auf dein Profil zugreifen zu
-                      können.
-                    </IonText>
-                  </IonRow>
-                  <IonRow>
-                    <IonButton
-                      expand="block"
-                      mode="ios"
-                      fill="solid"
-                      onClick={() =>
-                        handleLogout('/register', userStore.user?.role)
-                      }
-                    >
-                      {isLoggingOut ? (
-                        <IonLabel>
-                          <IonSpinner name="crescent" />
-                        </IonLabel>
-                      ) : (
-                        'Konto erstellen'
-                      )}
-                    </IonButton>
-                  </IonRow>
-                </IonGrid>
-              </div>
-            )}
             <div className={isGuest ? 'guest-lock' : ''}>
               <IonRow className="ion-justify-content-center">
                 <IonText className="profile__content__username">

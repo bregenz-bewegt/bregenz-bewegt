@@ -94,17 +94,17 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       <Loading />
     ) : (
       <IonPage className="park-detail">
-        <BackButton />
         <IonContent className="park-detail__content">
+          <BackButton />
           <img
             src={park?.image}
             alt={'Bild des Spielplatzes ' + park?.name}
-            className="park-detail__content__img1"
+            className="park-detail__content__main-img"
           />
           <img
             src={park?.image}
             alt={'Bild des Spielplatzes ' + park?.name}
-            className="park-detail__content__img2"
+            className="park-detail__content__correction-img"
           />
           <div className="park-detail__content__placeholder"></div>
           <div className="park-detail__content__header-wrapper">

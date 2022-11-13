@@ -114,8 +114,8 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
     return (
       <IonPage className="exercise-detail">
-        <BackButton />
         <IonContent className="exercise-detail__content">
+          <BackButton />
           <div className="exercise-detail__content__flex-wrapper">
             <div className="exercise-detail__content__video-wrapper">
               <IonIcon icon={play} />

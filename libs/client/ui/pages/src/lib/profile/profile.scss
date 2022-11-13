@@ -68,6 +68,9 @@
 
     .guest-lock-modal {
       position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0 var(--spacing-l);
       height: 100%;
       z-index: 2;
       display: flex;
@@ -110,7 +113,7 @@
       margin-top: var(--spacing-m);
 
       &::before {
-        background: var(--ion-color-medium-tint);
+        background: var(--ion-color-light-shade);
       }
 
       .account-created {
