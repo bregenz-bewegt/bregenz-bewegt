@@ -2,7 +2,6 @@ import React from 'react';
 import './exercise-card.scss';
 import {
   IonCard,
-  IonCardContent,
   IonCardHeader,
   IonCardTitle,
   IonIcon,

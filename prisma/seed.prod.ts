@@ -4,7 +4,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { PrismaClient, DifficultyType, Difficulty } from '@prisma/client';
 const prisma = new PrismaClient();
-let difficulties: Difficulty[];
 
 const updateParks = async () => {
   const parks = [
@@ -619,6 +618,7 @@ const updateParks = async () => {
       ],
     },
   ];
+  const difficulties = await prisma.difficulty.findMany();
 
   await Promise.all(
     parks.map(async (park) => {
@@ -690,7 +690,7 @@ const updateParks = async () => {
 };
 
 const updateDifficulties = async () => {
-  difficulties = await Promise.all(
+  await Promise.all(
     Object.values(DifficultyType).map(
       async (difficulty, i) =>
         await prisma.difficulty.upsert({
