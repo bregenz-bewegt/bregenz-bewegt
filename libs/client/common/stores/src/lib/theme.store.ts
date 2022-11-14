@@ -33,7 +33,7 @@ export class ThemeStore implements Store {
       });
   }
 
-  getTheme(callback: (theme: ColorTheme) => void) {
+  getTheme(callback: (theme: ColorTheme) => void): void {
     storage.get(this.themeKey).then((theme: ColorTheme) => {
       if (!theme) {
         storage.set(this.themeKey, this.defaultTheme);
@@ -45,7 +45,7 @@ export class ThemeStore implements Store {
     });
   }
 
-  setTheme(value: ColorTheme) {
+  setTheme(value: ColorTheme): void {
     storage.set(this.themeKey, value).then((value) => {
       this.load(
         value === ColorTheme.System
@@ -57,7 +57,7 @@ export class ThemeStore implements Store {
     });
   }
 
-  private load(theme: Exclude<ColorTheme, ColorTheme.System>) {
+  private load(theme: Exclude<ColorTheme, ColorTheme.System>): void {
     window.document.body.classList.toggle('dark', theme === ColorTheme.Dark);
   }
 }

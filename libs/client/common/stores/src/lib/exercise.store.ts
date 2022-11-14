@@ -11,16 +11,16 @@ export class ExerciseStore implements Store {
     makeAutoObservable(this);
   }
 
-  @action setExercisese(exercises: Exercise[]) {
+  @action setExercisese(exercises: Exercise[]): void {
     this.exercises = exercises;
   }
 
-  @action async getExercise(id: Exercise['id']) {
+  @action async getExercise(id: Exercise['id']): Promise<Exercise | undefined> {
     try {
       const { data } = await http.get(`exercises/${id}`);
       return data;
     } catch (error) {
-      return null;
+      return;
     }
   }
 }

@@ -9,7 +9,7 @@ export class TabStore implements Store {
     makeAutoObservable(this);
   }
 
-  @action setIsShown(value: boolean) {
+  @action setIsShown(value: boolean): void {
     this.isShown = value;
   }
 }
