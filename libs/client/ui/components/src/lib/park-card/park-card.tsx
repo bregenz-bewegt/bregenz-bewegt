@@ -41,7 +41,7 @@ export const ParkCard: React.FC<ParkCardProps> = ({
         style={!isLoaded ? { display: 'none' } : {}}
       />
       {!isLoaded && (
-        <IonSkeletonText style={{ height: '150px', margin: 0 }} animated />
+        <IonSkeletonText className="park-card__skeletonImage" animated />
       )}
       <IonCardHeader>
         <IonCardTitle>
