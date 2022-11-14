@@ -8,32 +8,49 @@ import { User, Activity, Exercise, Park } from '@prisma/client';
 export class ActivityService {
   constructor(private prismaService: PrismaService) {}
 
+  async getFilterTimespans(userId: User['id']): Promise<number[]> {
+    const { _min, _max } = await this.prismaService.activity
+      .aggregate({
+        where: {
+          userId: userId,
+        },
+        _min: { endedAt: true },
+        _max: { endedAt: true },
+      })
+      .then((data) => {
+        return {
+          _min: data._min.endedAt.getFullYear(),
+          _max: data._max.endedAt.getFullYear(),
+        };
+      });
+    return [...Array(_max - _min + 1).keys()].map((x) => _max - x);
+  }
+
   async getAll(
     userId: User['id'],
     options?: ActivityPaginationQueryDto
   ): Promise<(Activity & { park: Park; exercise: Exercise })[]> {
-    const { _min, _max } = await this.prismaService.activity.aggregate({
-      _min: { endedAt: true },
-      _max: { endedAt: true },
-    });
-
     return this.prismaService.activity.findMany({
       where: {
-        AND: [
-          {
-            userId: userId,
-          },
-          {
-            endedAt: {
-              gte: new Date(options.year ?? _min.endedAt.getFullYear(), 0, 1),
-            },
-          },
-          {
-            endedAt: {
-              lte: new Date(options.year ?? _max.endedAt.getFullYear(), 11, 31),
-            },
-          },
-        ],
+        ...(options.year
+          ? {
+              AND: [
+                {
+                  userId: userId,
+                },
+                {
+                  endedAt: {
+                    gte: new Date(options.year, 0, 1),
+                  },
+                },
+                {
+                  endedAt: {
+                    lte: new Date(options.year, 11, 31),
+                  },
+                },
+              ],
+            }
+          : { AND: [{ userId: userId }, { NOT: { endedAt: null } }] }),
       },
       include: { park: true, exercise: true },
       ...(options?.skip ? { skip: options.skip } : {}),

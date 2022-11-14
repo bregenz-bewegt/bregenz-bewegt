@@ -31,6 +31,11 @@ export class ActivityController {
     return this.activityService.getAll(userId, dto);
   }
 
+  @Get('timespans')
+  getTimespans(@GetCurrentUser('sub') userId: User['id']): Promise<number[]> {
+    return this.activityService.getFilterTimespans(userId);
+  }
+
   @Post('start')
   startActivity(
     @GetCurrentUser('sub') userId: User['id'],

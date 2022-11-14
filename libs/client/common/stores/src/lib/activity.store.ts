@@ -24,6 +24,11 @@ export class ActivityStore implements Store {
     return data;
   }
 
+  async getTimespans(): Promise<number[]> {
+    const { data } = await http.get('/activity/timespans');
+    return data;
+  }
+
   async startActivity(dto: StartActivityDto): Promise<Activity> {
     const { data } = await http.post('/activity/start', dto);
     return data;
