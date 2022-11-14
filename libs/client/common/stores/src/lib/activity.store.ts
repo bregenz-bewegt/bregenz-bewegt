@@ -23,7 +23,7 @@ export class ActivityStore implements Store {
     return data;
   }
 
-  async endActivity(dto: EndActivityDto) {
+  async endActivity(dto: EndActivityDto): Promise<Activity> {
     const { data } = await http.post('/activity/end', dto);
     return data;
   }

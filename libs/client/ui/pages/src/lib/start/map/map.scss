@@ -17,15 +17,21 @@
     &__popup {
       &__link {
         color: var(--ion-color-dark);
+        font-weight: bold;
 
         img {
           display: block;
-          border-radius: 12px 12px 0 0;
+          border-radius: 12px;
+          margin-bottom: -5%;
         }
+
         div {
-          padding: 7px;
-          width: fit-content;
-          margin: 0 auto;
+          padding: var(--spacing-s);
+          padding-top: 18px;
+          width: 100%;
+          text-align: center;
+          background-color: var(--ion-color-light);
+          border-radius: 0 0 12px 12px;
         }
       }
 
@@ -39,7 +45,7 @@
 
       .leaflet-popup-content-wrapper {
         padding: 0;
-        background-color: var(--ion-color-light);
+        background: none;
 
         .leaflet-popup-content {
           margin: 0;

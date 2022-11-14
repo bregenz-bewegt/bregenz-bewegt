@@ -10,6 +10,8 @@ import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
 import { Prisma, Role, User } from '@prisma/client';
 import {
+  ChangePasswordDto,
+  ForgotPasswordDto,
   GuestDto,
   JwtPayload,
   JwtPayloadWithoutRole,
@@ -20,6 +22,7 @@ import {
   VerifyDto,
 } from '@bregenz-bewegt/shared/types';
 import {
+  changePasswordError,
   forgotPasswordError,
   loginError,
   registerError,
@@ -220,7 +223,7 @@ export class AuthService {
 
     const [access_token, refresh_token] = await Promise.all([
       this.jwtService.signAsync(jwtPayload, {
-        expiresIn: '3s',
+        expiresIn: '15m',
         secret: this.configService.get('NX_JWT_ACCESS_TOKEN_SECRET'),
       }),
       this.jwtService.signAsync(jwtPayload, {
@@ -291,10 +294,10 @@ export class AuthService {
     return token;
   }
 
-  async changePassword(email: User['email']): Promise<void> {
+  async forgotPassword(dto: ForgotPasswordDto): Promise<void> {
     const user = await this.prismaService.user.findUnique({
       where: {
-        email: email,
+        email: dto.email,
       },
     });
 
@@ -302,7 +305,7 @@ export class AuthService {
       throw new ForbiddenException(forgotPasswordError.USER_NOT_FOUND);
     }
 
-    const token = await this.signPasswordResetToken(user.id, email);
+    const token = await this.signPasswordResetToken(user.id, dto.email);
     const tokenHash = await argon.hash(token);
 
     await this.prismaService.user.update({
@@ -313,7 +316,7 @@ export class AuthService {
     });
 
     return this.mailService.sendPasswordResetmail({
-      to: email,
+      to: dto.email,
       resetToken: token,
     });
   }
@@ -350,6 +353,41 @@ export class AuthService {
       },
       data: {
         passwordResetToken: null,
+        password: passwordHash,
+      },
+    });
+  }
+
+  async changePassword(
+    userId: User['id'],
+    dto: ChangePasswordDto
+  ): Promise<User> {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    const passwordMatches = await argon.verify(user.password, dto.password);
+
+    if (!passwordMatches) {
+      throw new ForbiddenException(changePasswordError.INVALID_PASSWORD);
+    }
+
+    const passwordNotChanged = await argon.verify(
+      user.password,
+      dto.newPassword
+    );
+
+    if (passwordNotChanged) {
+      throw new ForbiddenException(changePasswordError.PASSWORD_NOT_CHANGED);
+    }
+
+    const passwordHash = await argon.hash(dto.newPassword);
+
+    return this.prismaService.user.update({
+      where: { id: user.id },
+      data: {
         password: passwordHash,
       },
     });

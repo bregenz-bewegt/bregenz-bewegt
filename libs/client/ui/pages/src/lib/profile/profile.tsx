@@ -95,20 +95,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       },
     });
 
-    const handleChangePassword = () => {
-      userStore
-        ?.changePassword()
-        .then(() => {
-          presentAlert({
-            header: 'Passwort zurücksetzen',
-            message: `Eine Email zum Zurücksetzen deines Passworts wurde an ${userStore.user?.email} versendet`,
-            backdropDismiss: false,
-            buttons: [{ text: 'OK' }],
-          });
-        })
-        .catch(() => showFailureToast());
-    };
-
     const handleImageChange = async (source: CameraSource) => {
       try {
         const photo = await Camera.getPhoto({
@@ -233,44 +219,43 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               },
             ]}
           />
+          {isGuest && (
+            <div className="guest-lock-modal">
+              <IonGrid>
+                <IonRow>
+                  <IonIcon
+                    className="lock-icon"
+                    icon={lockClosed}
+                    color="primary"
+                  />
+                </IonRow>
+                <IonRow className="info">
+                  <IonText color="primary">
+                    Erstelle ein Konto, um auf dein Profil zugreifen zu können.
+                  </IonText>
+                </IonRow>
+                <IonRow>
+                  <IonButton
+                    expand="block"
+                    mode="ios"
+                    fill="solid"
+                    onClick={() =>
+                      handleLogout('/register', userStore.user?.role)
+                    }
+                  >
+                    {isLoggingOut ? (
+                      <IonLabel>
+                        <IonSpinner name="crescent" />
+                      </IonLabel>
+                    ) : (
+                      'Konto erstellen'
+                    )}
+                  </IonButton>
+                </IonRow>
+              </IonGrid>
+            </div>
+          )}
           <IonGrid>
-            {isGuest && (
-              <div className="guest-lock-modal">
-                <IonGrid>
-                  <IonRow>
-                    <IonIcon
-                      className="lock-icon"
-                      icon={lockClosed}
-                      color="primary"
-                    />
-                  </IonRow>
-                  <IonRow className="info">
-                    <IonText color="primary">
-                      Erstelle ein Konto, um auf dein Profil zugreifen zu
-                      können.
-                    </IonText>
-                  </IonRow>
-                  <IonRow>
-                    <IonButton
-                      expand="block"
-                      mode="ios"
-                      fill="solid"
-                      onClick={() =>
-                        handleLogout('/register', userStore.user?.role)
-                      }
-                    >
-                      {isLoggingOut ? (
-                        <IonLabel>
-                          <IonSpinner name="crescent" />
-                        </IonLabel>
-                      ) : (
-                        'Konto erstellen'
-                      )}
-                    </IonButton>
-                  </IonRow>
-                </IonGrid>
-              </div>
-            )}
             <div className={isGuest ? 'guest-lock' : ''}>
               <IonRow className="ion-justify-content-center">
                 <IonText className="profile__content__username">
@@ -365,22 +350,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   disabled={!isImageLoaded}
                 />
               </IonRow>
-              <IonRow className="profile__content__password-row">
-                <Input
-                  className="profile__content__password-row__input"
-                  expand={false}
-                  label="Passwort"
-                  disabled
-                  value={'*'.repeat(11)}
-                />
-                <IonButton
-                  onClick={() => handleChangePassword()}
-                  size="small"
-                  mode="ios"
-                >
-                  Ändern
-                </IonButton>
-              </IonRow>
               <IonRow>
                 <IonText>
                   <h2>Präferenzen</h2>
@@ -433,54 +402,54 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                 </IonItem>
               </ItemGroup>
             </div>
-          </IonGrid>
-          {!isGuest && (
-            <>
-              <IonRow className="profile__content__danger-row">
-                <IonCol className="delete">
-                  <IonButton
-                    onClick={() => handleDelete()}
-                    expand="block"
-                    mode="ios"
-                    color="danger"
-                  >
-                    Konto löschen
-                  </IonButton>
-                </IonCol>
-                <IonCol className="logout">
-                  <IonButton
-                    onClick={() =>
-                      handleLogout('/login', userStore?.user?.role)
-                    }
-                    expand="block"
-                    mode="ios"
-                  >
-                    {isLoggingOut ? (
-                      <IonLabel>
-                        <IonSpinner name="crescent" />
-                      </IonLabel>
-                    ) : (
-                      'Abmelden'
-                    )}
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-              <IonFooter>
-                <IonRow className="ion-justify-content-center account-created">
-                  <IonText color="medium">
-                    Konto erstellt am{' '}
-                    {new Date(
-                      userStore?.user?.registratedAt as any
-                    ).toLocaleDateString('de-DE', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    })}
-                  </IonText>
+            {!isGuest && (
+              <>
+                <IonRow className="profile__content__danger-row">
+                  <IonCol className="delete">
+                    <IonButton
+                      onClick={() => handleDelete()}
+                      expand="block"
+                      mode="ios"
+                      color="danger"
+                    >
+                      Konto löschen
+                    </IonButton>
+                  </IonCol>
+                  <IonCol className="logout">
+                    <IonButton
+                      onClick={() =>
+                        handleLogout('/login', userStore?.user?.role)
+                      }
+                      expand="block"
+                      mode="ios"
+                    >
+                      {isLoggingOut ? (
+                        <IonLabel>
+                          <IonSpinner name="crescent" />
+                        </IonLabel>
+                      ) : (
+                        'Abmelden'
+                      )}
+                    </IonButton>
+                  </IonCol>
                 </IonRow>
-              </IonFooter>
-            </>
-          )}
+                <IonFooter>
+                  <IonRow className="ion-justify-content-center account-created">
+                    <IonText color="medium">
+                      Konto erstellt am{' '}
+                      {new Date(
+                        userStore?.user?.registratedAt as any
+                      ).toLocaleDateString('de-DE', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </IonText>
+                  </IonRow>
+                </IonFooter>
+              </>
+            )}
+          </IonGrid>
         </IonContent>
       </IonPage>
     );

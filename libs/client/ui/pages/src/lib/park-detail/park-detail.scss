@@ -1,44 +1,92 @@
 .park-detail {
-  &__header-wrapper {
-    margin: 0 var(--spacing-m);
+  &__content {
+    --padding-top: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-bottom: 0;
 
-    ion-back-button {
-      display: inline-block;
-      margin-left: calc(var(--spacing-xs) * -1);
+    img {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
     }
 
-    ion-text {
-      h1 {
+    &__main-img {
+      z-index: 0;
+    }
+
+    &__correction-img {
+      z-index: 2;
+      height: 100px;
+      object-fit: cover;
+      object-position: 0 0;
+    }
+
+    &__placeholder {
+      width: 100%;
+      height: 160px;
+      background: transparent;
+    }
+
+    &__header-wrapper {
+      padding: var(--spacing-xl);
+      padding-bottom: var(--spacing-s);
+      z-index: 3;
+      position: sticky;
+      top: 60px;
+      background-color: var(--ion-background-color);
+      border-radius: var(--spacing-xl) var(--spacing-xl) 0 0;
+
+      ion-text {
+        h1 {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+      }
+
+      ion-note {
+        svg {
+          display: inline-block;
+          margin-right: var(--spacing-xs);
+          margin-bottom: calc(var(--spacing-xxs) * -1);
+        }
+      }
+
+      &__quick-filters {
         margin-top: var(--spacing-m);
+        overflow-x: auto;
+        min-height: var(--spacing-l);
+        justify-content: space-between;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        ion-chip:first-of-type {
+          margin-left: 0;
+        }
+
+        ion-chip:last-of-type {
+          margin-right: 0;
+        }
       }
     }
 
-    ion-note {
-      svg {
-        display: inline-block;
-        margin-right: var(--spacing-xs);
-        margin-bottom: calc(var(--spacing-xxs) * -1);
+    &__exercises {
+      padding: var(--spacing-s) var(--spacing-xl) 0 var(--spacing-xl);
+      position: relative;
+      background-color: var(--ion-background-color);
+      z-index: 1;
+
+      ion-card:first-of-type {
+        margin-top: 0;
       }
-    }
 
-    &__quick-filters {
-      margin-top: 10px;
-      overflow-x: auto;
-      min-height: var(--spacing-l);
-
-      &::-webkit-scrollbar {
-        display: none;
+      ion-card {
+        margin-left: 0;
+        margin-right: 0;
       }
-    }
-  }
-
-  &__exercises {
-    overflow-y: scroll;
-    height: 100%;
-    padding-bottom: 120px;
-
-    ion-card:first-of-type {
-      margin-top: var(--spacing-xxl);
     }
   }
 }

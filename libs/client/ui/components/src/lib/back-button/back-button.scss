@@ -1,0 +1,17 @@
+.back-button {
+  position: fixed;
+  top: var(--spacing-m);
+  left: var(--spacing-m);
+  background-color: var(--ion-background-color);
+  border-radius: var(--spacing-s);
+  z-index: 100;
+  padding: var(--spacing-xs) var(--spacing-s);
+  color: var(--ion-color-primary);
+  font-size: small;
+  font-weight: bold;
+
+  svg {
+    display: inline-block;
+    margin-bottom: -3px;
+  }
+}
