@@ -1,6 +1,9 @@
-import { ActivityPaginationQueryDto } from './../../../../../shared/types/src/lib/dto/activity/activity-pagination.dto';
 import { GetCurrentUser } from '@bregenz-bewegt/server/common';
-import { EndActivityDto, StartActivityDto } from '@bregenz-bewegt/shared/types';
+import {
+  ActivityPaginationQueryDto,
+  EndActivityDto,
+  StartActivityDto,
+} from '@bregenz-bewegt/shared/types';
 import {
   Body,
   Controller,
@@ -17,7 +20,7 @@ export class ActivityController {
   constructor(private activityService: ActivityService) {}
 
   @Get()
-  getAllByMonth(
+  getAll(
     @GetCurrentUser('sub') userId: User['id'],
     @Query(
       new ValidationPipe({

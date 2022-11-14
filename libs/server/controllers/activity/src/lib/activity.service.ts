@@ -1,6 +1,9 @@
-import { ActivityPaginationQueryDto } from './../../../../../shared/types/src/lib/dto/activity/activity-pagination.dto';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
-import { EndActivityDto, StartActivityDto } from '@bregenz-bewegt/shared/types';
+import {
+  ActivityPaginationQueryDto,
+  EndActivityDto,
+  StartActivityDto,
+} from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, Activity, Exercise, Park } from '@prisma/client';
 
