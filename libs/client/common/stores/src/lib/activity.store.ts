@@ -1,7 +1,11 @@
 import { Store } from './store';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { http } from '@bregenz-bewegt/client/common/http';
-import { EndActivityDto, StartActivityDto } from '@bregenz-bewegt/shared/types';
+import {
+  EndActivityDto,
+  StartActivityDto,
+  ActivityPaginationQueryDto,
+} from '@bregenz-bewegt/shared/types';
 import { Activity } from '@bregenz-bewegt/client/types';
 
 export class ActivityStore implements Store {
@@ -12,8 +16,10 @@ export class ActivityStore implements Store {
     makeAutoObservable(this);
   }
 
-  @action async getActivities(month: number): Promise<Activity[]> {
-    const { data } = await http.get(`/activity/${month}`);
+  @action async getActivities(
+    params: ActivityPaginationQueryDto
+  ): Promise<Activity[]> {
+    const { data } = await http.get(`/activity`, { params });
     this.activities = data;
     return data;
   }

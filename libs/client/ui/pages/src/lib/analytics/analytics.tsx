@@ -17,13 +17,6 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
   activityStore.storeKey
 )(
   observer(({ activityStore }) => {
-    const [monthFilter, setMonthFilter] = useState<number>(
-      new Date().getMonth()
-    );
-
-    useEffect(() => {
-      activityStore?.getActivities(monthFilter);
-    }, [monthFilter]);
     return (
       <IonPage className="analytics">
         <Header />

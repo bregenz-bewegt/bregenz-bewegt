@@ -1,12 +1,13 @@
+import { ActivityPaginationQueryDto } from './../../../../../shared/types/src/lib/dto/activity/activity-pagination.dto';
 import { GetCurrentUser } from '@bregenz-bewegt/server/common';
 import { EndActivityDto, StartActivityDto } from '@bregenz-bewegt/shared/types';
 import {
   Body,
   Controller,
   Get,
-  Param,
-  ParseIntPipe,
   Post,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { Activity, Exercise, Park, User } from '@prisma/client';
 import { ActivityService } from './activity.service';
@@ -15,12 +16,19 @@ import { ActivityService } from './activity.service';
 export class ActivityController {
   constructor(private activityService: ActivityService) {}
 
-  @Get(':month')
+  @Get()
   getAllByMonth(
     @GetCurrentUser('sub') userId: User['id'],
-    @Param('month', ParseIntPipe) month: number
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
+        forbidNonWhitelisted: true,
+      })
+    )
+    dto: ActivityPaginationQueryDto
   ): Promise<(Activity & { park: Park; exercise: Exercise })[]> {
-    return this.activityService.findAllInMonth(userId, month);
+    return this.activityService.getAll(userId, dto);
   }
 
   @Post('start')
