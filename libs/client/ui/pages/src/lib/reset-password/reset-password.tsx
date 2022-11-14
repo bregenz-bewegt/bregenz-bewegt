@@ -8,12 +8,13 @@ import {
   IonPage,
   IonSpinner,
   IonText,
+  useIonRouter,
   useIonToast,
 } from '@ionic/react';
 import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { useEffect } from 'react';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import { checkmark } from 'ionicons/icons';
 import './reset-password.scss';
@@ -28,8 +29,8 @@ export interface ResetPasswordProps extends RouteComponentProps<MatchParams> {
 
 export const ResetPassword = inject(userStore.storeKey)(
   observer(({ match }: ResetPasswordProps) => {
-    const navigateBacktoLogin = () => history.push(`/login`);
-    const history = useHistory();
+    const navigateBacktoLogin = () => router.push(`/login`);
+    const router = useIonRouter();
     const [presentToast] = useIonToast();
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const reset = useFormik({

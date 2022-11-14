@@ -3,11 +3,11 @@
   border-radius: var(--spacing-m);
   box-shadow: rgba(var(--ion-color-dark-rgb), 0.12) 0px 4px 16px;
 
-  &__skeletonText {
+  &__skeleton-text {
     height: var(--spacing-m);
   }
 
-  &__skeletonImage {
+  &__skeleton-image {
     height: calc(var(--spacing-3xl) * 3);
     margin: 0;
   }
