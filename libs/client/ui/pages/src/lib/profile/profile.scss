@@ -15,6 +15,10 @@
       width: calc(var(--spacing-5xl) * 2);
     }
 
+    ion-row ion-text h2 {
+      margin-bottom: 0;
+    }
+
     &__username {
       max-width: 80%;
 
@@ -26,6 +30,10 @@
         white-space: nowrap;
         overflow: hidden;
       }
+    }
+
+    &__lastname {
+      margin-bottom: var(--spacing-m);
     }
 
     &__password-row {
@@ -64,6 +72,9 @@
 
     .guest-lock-modal {
       position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0 var(--spacing-l);
       height: 100%;
       z-index: 2;
       display: flex;
@@ -104,6 +115,10 @@
 
     ion-footer {
       margin-top: var(--spacing-m);
+
+      &::before {
+        background: var(--ion-color-light-shade);
+      }
 
       .account-created {
         padding: var(--spacing-s) 0;

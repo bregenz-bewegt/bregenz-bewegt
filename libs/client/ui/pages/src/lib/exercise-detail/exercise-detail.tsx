@@ -1,13 +1,8 @@
 import './exercise-detail.scss';
 import {
-  IonBackButton,
-  IonButtons,
   IonContent,
-  IonHeader,
   IonIcon,
   IonPage,
-  IonTitle,
-  IonToolbar,
   useIonToast,
   useIonViewWillEnter,
   useIonViewWillLeave,
@@ -24,9 +19,9 @@ import {
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Park, Activity } from '@bregenz-bewegt/client/types';
-import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   ActivityTimer,
+  BackButton,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
 import { play, timer, stopCircle, close } from 'ionicons/icons';
@@ -112,19 +107,8 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
     return (
       <IonPage className="exercise-detail">
-        <IonHeader mode="ios">
-          <IonToolbar>
-            <IonButtons>
-              <IonBackButton
-                color="primary"
-                defaultHref={tabRoutes.start.route}
-                text="Zurück"
-              />
-            </IonButtons>
-            <IonTitle>{park?.name}</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <IonContent className="exercise-detail__content">
+          <BackButton />
           <div className="exercise-detail__content__video-wrapper">
             <IonIcon icon={play} />
           </div>

@@ -1,19 +1,37 @@
 .park-card {
-  padding: var(--spacing-s) var(--spacing-s) 0 var(--spacing-s);
+  background: none;
+  border-radius: var(--spacing-m);
+  box-shadow: rgba(var(--ion-color-dark-rgb), 0.12) 0px 4px 16px;
 
-  ion-card-header {
-    padding-inline: var(--spacing-s);
-    padding-top: var(--spacing-s);
+  &__skeleton-text {
+    height: var(--spacing-m);
+  }
 
-    ion-card-title {
-      margin-bottom: var(--spacing-s);
-    }
+  &__skeleton-image {
+    height: calc(var(--spacing-3xl) * 3);
+    margin: 0;
   }
 
   img {
+    display: block;
     object-fit: cover;
-    width: 100%;
-    height: 100px;
-    border-radius: var(--spacing-s);
+    height: 100%;
+    border-radius: var(--spacing-m);
+  }
+
+  ion-card-header {
+    padding-inline: var(--spacing-s);
+    border-radius: var(--spacing-m);
+    background-color: var(--ion-background-color);
+    padding: var(--spacing-m) var(--spacing-l);
+    margin-top: -60px;
+
+    ion-card-subtitle {
+      svg {
+        display: inline-block;
+        margin-right: var(--spacing-xs);
+        margin-bottom: calc(var(--spacing-xxs) * -1);
+      }
+    }
   }
 }

@@ -11,13 +11,13 @@ export class OnboardingStore implements Store {
     makeAutoObservable(this);
   }
 
-  getPreferences(callback: (preferences: QuickFilterOption[]) => void) {
+  getPreferences(callback: (preferences: QuickFilterOption[]) => void): void {
     storage.get(this.preferenceKey).then((preferences: QuickFilterOption[]) => {
       callback(preferences ?? null);
     });
   }
 
-  setPreferences(preferences: QuickFilterOption[] | null) {
+  setPreferences(preferences: QuickFilterOption[] | null): void {
     preferences
       ? storage.set(this.preferenceKey, preferences)
       : storage.remove(this.preferenceKey);
