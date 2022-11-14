@@ -18,10 +18,11 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
 }) => {
   return (
     <div className={`quick-filter${className ? ` ${className}` : ''}`}>
-      {options?.map((option) => {
+      {options?.map((option, i) => {
         return (
           <IonChip
             className="quick-filter__option"
+            key={i}
             color={option.active ? 'primary' : 'medium'}
             onClick={() =>
               onChange([

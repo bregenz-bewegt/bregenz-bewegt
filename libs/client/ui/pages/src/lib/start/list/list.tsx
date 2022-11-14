@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  ParkCard,
-  TransitionBlock,
-} from '@bregenz-bewegt/client-ui-components';
+import { ParkCard } from '@bregenz-bewegt/client-ui-components';
 import { IonSearchbar, IonText } from '@ionic/react';
 import './list.scss';
 import {
@@ -58,7 +55,6 @@ export const List: React.FC<ListProps> = ({
       <div className="start__content__list__parks">
         {searchResult.length > 0 ? (
           <>
-            <TransitionBlock />
             {searchResult.map((park, i) => (
               <ParkCard
                 key={i}
