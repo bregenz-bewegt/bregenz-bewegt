@@ -6,7 +6,6 @@ import {
   IonHeader,
   IonIcon,
   IonPage,
-  IonText,
   IonTitle,
   IonToolbar,
   useIonToast,
