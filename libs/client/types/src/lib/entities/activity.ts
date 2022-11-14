@@ -1,4 +1,4 @@
-import { Exercise, User } from '..';
+import { Exercise, Park, User } from '..';
 
 export type Activity = {
   id: string;
@@ -6,4 +6,5 @@ export type Activity = {
   endedAt: Date;
   exercise: Exercise;
   user: User;
+  park: Park;
 };

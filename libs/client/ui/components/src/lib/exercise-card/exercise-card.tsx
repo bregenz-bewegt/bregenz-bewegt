@@ -22,7 +22,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
   name,
   description,
   difficulty,
-  points,
+  coins,
   video,
   link,
   isLoading,

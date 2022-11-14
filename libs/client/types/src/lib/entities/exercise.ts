@@ -5,6 +5,6 @@ export type Exercise = {
   name: string;
   description: string;
   video: string;
-  points: number;
+  coins: number;
   difficulty: DifficultyType;
 };
