@@ -95,7 +95,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         .catch(() => presentDefaultErrorToast());
     };
 
-    const handleTimerStop = (time: ActivityTimerResult) => {
+    const handleTimerStop = () => {
       activityStore
         .endActivity({ activityId: activity?.id ?? '' })
         .then(() => {
