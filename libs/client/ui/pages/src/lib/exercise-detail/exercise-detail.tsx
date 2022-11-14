@@ -130,42 +130,38 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             <IonIcon icon={play} />
           </div>
           <div className="exercise-detail__content__exercise-wrapper">
-            <IonText className="exercise-detail__content__exercise-wrapper__title">
-              <h1>{park?.exercises && park?.exercises[0].name}</h1>
-              {park?.exercises && park?.exercises[0].difficulty && (
-                <DifficultyBadge difficulty={park?.exercises[0].difficulty} />
-              )}
-              {park?.exercises && park?.exercises[0].coins && (
-                <h3>{park?.exercises[0].coins} B-Bucks</h3>
-              )}
-            </IonText>
-            <IonText className="exercise-detail__content__exercise-wrapper__description">
-              {park?.exercises && (
-                <>
-                  <h2>Beschreibung</h2>
-                  <p>{park?.exercises[0].description}</p>
-                  {park?.exercises[0].execution && (
-                    <>
-                      <h2>Ausführung</h2>
-                      <p>{park?.exercises[0].execution}</p>
-                    </>
-                  )}
-                  {park?.exercises[0].muscles && (
-                    <>
-                      <h2>Verwendete Muskeln</h2>
-                      <ul>
-                        {park?.exercises[0].muscles
-                          .split(',')
-                          .map((li) => li.trim())
-                          .map((li) => (
-                            <li>{li}</li>
-                          ))}
-                      </ul>
-                    </>
-                  )}
-                </>
-              )}
-            </IonText>
+            <h1>{park?.exercises && park?.exercises[0].name}</h1>
+            {park?.exercises && park?.exercises[0].difficulty && (
+              <DifficultyBadge difficulty={park?.exercises[0].difficulty} />
+            )}
+            {park?.exercises && park?.exercises[0].coins && (
+              <h3>{park?.exercises[0].coins} B-Bucks</h3>
+            )}
+            {park?.exercises && (
+              <>
+                <h2>Beschreibung</h2>
+                <p>{park?.exercises[0].description}</p>
+                {park?.exercises[0].execution && (
+                  <>
+                    <h2>Ausführung</h2>
+                    <p>{park?.exercises[0].execution}</p>
+                  </>
+                )}
+                {park?.exercises[0].muscles && (
+                  <>
+                    <h2>Verwendete Muskeln</h2>
+                    <ul>
+                      {park?.exercises[0].muscles
+                        .split(',')
+                        .map((li) => li.trim())
+                        .map((li) => (
+                          <li>{li}</li>
+                        ))}
+                    </ul>
+                  </>
+                )}
+              </>
+            )}
           </div>
           <ActivityTimer
             className="exercise-detail__content__timer"
