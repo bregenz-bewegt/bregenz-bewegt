@@ -20,11 +20,7 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import {
-  Park,
-  ActivityTimerResult,
-  Activity,
-} from '@bregenz-bewegt/client/types';
+import { Park, Activity } from '@bregenz-bewegt/client/types';
 import { location } from 'ionicons/icons';
 import {
   ActivityTimer,
