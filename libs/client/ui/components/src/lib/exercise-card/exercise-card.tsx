@@ -43,10 +43,8 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
             <IonCardTitle>
               <h3>{isLoaded ? name : <IonSkeletonText animated />}</h3>
             </IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
             {isLoaded ? coins + ' B-Bucks' : <IonSkeletonText animated />}
-          </IonCardContent>
+          </IonCardHeader>
         </div>
         <div className="exercise-card__wrapper__video">
           <IonIcon icon={play} />

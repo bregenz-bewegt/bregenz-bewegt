@@ -24,12 +24,7 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import {
-  Park,
-  ActivityTimerResult,
-  Activity,
-  ExerciseDescriptionType,
-} from '@bregenz-bewegt/client/types';
+import { Park, Activity } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   ActivityTimer,
@@ -37,7 +32,6 @@ import {
 } from '@bregenz-bewegt/client-ui-components';
 import { play, timer, stopCircle, close } from 'ionicons/icons';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
-import { exerDescrDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
 interface MatchParams {
   park: string;
@@ -100,7 +94,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         .catch(() => presentDefaultErrorToast());
     };
 
-    const handleTimerStop = (time: ActivityTimerResult) => {
+    const handleTimerStop = () => {
       activityStore
         .endActivity({ activityId: activity?.id ?? '' })
         .then(() => {
@@ -146,38 +140,31 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
               )}
             </IonText>
             <IonText className="exercise-detail__content__exercise-wrapper__description">
-              {park?.exercises &&
-                Object.keys(park?.exercises[0].description).map((k, i) => {
-                  const desc =
-                    (park?.exercises &&
-                      park?.exercises[0].description[
-                        k as ExerciseDescriptionType
-                      ]) ??
-                    '';
-                  const liItems =
-                    k === ExerciseDescriptionType.MUSCLES &&
-                    desc?.split(',').length > 1
-                      ? desc.split(',').map((li) => li.trim())
-                      : null;
-                  return (
-                    <div className={k} key={i}>
-                      <h2>
-                        {exerDescrDisplayTexts[k as ExerciseDescriptionType]}
-                      </h2>
-                      <p>
-                        {liItems ? (
-                          <ul>
-                            {liItems.map((li) => (
-                              <li>{li}</li>
-                            ))}
-                          </ul>
-                        ) : (
-                          desc
-                        )}
-                      </p>
-                    </div>
-                  );
-                })}
+              {park?.exercises && (
+                <>
+                  <h2>Beschreibung</h2>
+                  <p>{park?.exercises[0].description}</p>
+                  {park?.exercises[0].execution && (
+                    <>
+                      <h2>Ausführung</h2>
+                      <p>{park?.exercises[0].execution}</p>
+                    </>
+                  )}
+                  {park?.exercises[0].muscles && (
+                    <>
+                      <h2>Verwendete Muskeln</h2>
+                      <ul>
+                        {park?.exercises[0].muscles
+                          .split(',')
+                          .map((li) => li.trim())
+                          .map((li) => (
+                            <li>{li}</li>
+                          ))}
+                      </ul>
+                    </>
+                  )}
+                </>
+              )}
             </IonText>
           </div>
           <ActivityTimer
