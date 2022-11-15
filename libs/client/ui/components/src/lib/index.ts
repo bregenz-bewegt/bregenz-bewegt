@@ -16,3 +16,4 @@ export * from './otp-input/otp-input';
 export * from './activity-timer/activity-timer';
 export * from './item-group/item-group';
 export * from './back-button/back-button';
+export * from './guest-lock/guest-lock';

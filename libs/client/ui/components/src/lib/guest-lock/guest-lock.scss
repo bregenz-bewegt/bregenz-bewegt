@@ -1,0 +1,46 @@
+.guest-lock {
+  &.locked {
+  }
+}
+
+.guest-lock-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 var(--spacing-l);
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ion-grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--ion-color-primary-contrast);
+    border-radius: var(--spacing-m);
+    padding: var(--spacing-l) var(--spacing-m) var(--spacing-m) var(--spacing-m);
+
+    ion-row {
+      justify-content: center;
+      width: 100%;
+
+      .lock-icon {
+        width: var(--spacing-3xl);
+        height: var(--spacing-3xl);
+        margin: var(--spacing-s) 0 var(--spacing-m) 0;
+      }
+
+      &.info {
+        text-align: center;
+        margin: 0 0 var(--spacing-m) 0;
+      }
+
+      ion-button {
+        width: 100%;
+      }
+    }
+  }
+}

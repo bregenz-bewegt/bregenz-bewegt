@@ -1,5 +1,9 @@
 import './profile.scss';
-import { Input, ItemGroup } from '@bregenz-bewegt/client-ui-components';
+import {
+  GuestLock,
+  Input,
+  ItemGroup,
+} from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonAvatar,
@@ -219,44 +223,13 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               },
             ]}
           />
-          {isGuest && (
-            <div className="guest-lock-modal">
-              <IonGrid>
-                <IonRow>
-                  <IonIcon
-                    className="lock-icon"
-                    icon={lockClosed}
-                    color="primary"
-                  />
-                </IonRow>
-                <IonRow className="info">
-                  <IonText color="primary">
-                    Erstelle ein Konto, um auf dein Profil zugreifen zu können.
-                  </IonText>
-                </IonRow>
-                <IonRow>
-                  <IonButton
-                    expand="block"
-                    mode="ios"
-                    fill="solid"
-                    onClick={() =>
-                      handleLogout('/register', userStore.user?.role)
-                    }
-                  >
-                    {isLoggingOut ? (
-                      <IonLabel>
-                        <IonSpinner name="crescent" />
-                      </IonLabel>
-                    ) : (
-                      'Konto erstellen'
-                    )}
-                  </IonButton>
-                </IonRow>
-              </IonGrid>
-            </div>
-          )}
           <IonGrid>
-            <div className={isGuest ? 'guest-lock' : ''}>
+            <GuestLock
+              isLoading={isLoggingOut}
+              onCreateAccount={() =>
+                handleLogout('/register', userStore?.user?.role)
+              }
+            >
               <IonRow className="ion-justify-content-center">
                 <IonText className="profile__content__username">
                   <h1>{userStore?.user?.username}</h1>
@@ -401,7 +374,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   <IonLabel>Passwort ändern</IonLabel>
                 </IonItem>
               </ItemGroup>
-            </div>
+            </GuestLock>
             {!isGuest && (
               <>
                 <IonRow className="profile__content__danger-row">

@@ -5,6 +5,7 @@ import {
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
+import { Role } from '@bregenz-bewegt/client/types';
 import {
   Competitor,
   Leaderboard as LeaderboardType,
@@ -42,6 +43,8 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
   userStore.storeKey
 )(
   observer(({ leaderboardStore, userStore }) => {
+    if (userStore?.user?.role === Role.GUEST) return <>forbidden</>;
+
     const [leaderboard, setLeaderboard] = useState<LeaderboardType>(
       Array<LeaderboardType extends readonly (infer T)[] ? T : never>(10).fill({
         username: '',
