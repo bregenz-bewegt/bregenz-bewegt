@@ -1,5 +1,5 @@
 import { Store } from './store';
-import { action, makeAutoObservable, observable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import { http } from '@bregenz-bewegt/client/common/http';
 import {
   EndActivityDto,
@@ -10,7 +10,6 @@ import { Activity } from '@bregenz-bewegt/client/types';
 
 export class ActivityStore implements Store {
   storeKey = 'activityStore' as const;
-  @observable activities: Activity[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -18,7 +17,6 @@ export class ActivityStore implements Store {
 
   async getActivities(params: ActivityPaginationQueryDto): Promise<Activity[]> {
     const { data } = await http.get(`/activity`, { params });
-    this.activities = data;
     return data;
   }
 
