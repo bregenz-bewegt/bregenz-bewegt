@@ -7,17 +7,17 @@ export class ActivityPaginationQueryDto {
   @Transform(({ value }) => +value)
   @IsNumber()
   @Min(0)
-  skip?: number;
+  skip: number;
 
   @ApiProperty()
   @Transform(({ value }) => +value)
   @IsNumber()
   @IsPositive()
   @Min(0)
-  take?: number;
+  take: number;
 
   @ApiProperty()
   @Transform(({ value }) => +value)
   @IsNumber()
-  year?: number;
+  year: number;
 }
