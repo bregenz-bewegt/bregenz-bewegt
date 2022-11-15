@@ -2,7 +2,7 @@
   &.locked {
     position: relative;
     pointer-events: none;
-    filter: blur(var(--spacing-m));
+    filter: blur(var(--spacing-s));
   }
 }
 

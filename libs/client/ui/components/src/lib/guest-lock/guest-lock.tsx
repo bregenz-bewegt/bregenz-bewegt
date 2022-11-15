@@ -10,20 +10,20 @@ import {
 import React, { ReactNode, useState } from 'react';
 import { ShieldSecurity } from 'iconsax-react';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
-import { Role } from '@bregenz-bewegt/client/types';
 import { inject, observer } from 'mobx-react';
 import './guest-lock.scss';
+import { useIsGuest } from '@bregenz-bewegt/client/common/hooks';
 
 export interface GuestLockProps {
   text: string;
-  children?: ReactNode;
+  children?: (isGuest: boolean) => ReactNode;
   userStore?: UserStore;
   modalClassName?: string;
 }
 
 export const GuestLock: React.FC<GuestLockProps> = inject(userStore.storeKey)(
   observer(({ text, children, userStore, modalClassName }) => {
-    const locked = userStore?.user?.role === Role.GUEST;
+    const [isGuest] = useIsGuest();
     const router = useIonRouter();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
 
@@ -37,7 +37,7 @@ export const GuestLock: React.FC<GuestLockProps> = inject(userStore.storeKey)(
 
     return (
       <>
-        {locked && (
+        {isGuest && (
           <div
             className={`guest-lock-modal${
               modalClassName ? ` ${modalClassName}` : ''
@@ -73,7 +73,9 @@ export const GuestLock: React.FC<GuestLockProps> = inject(userStore.storeKey)(
             </IonGrid>
           </div>
         )}
-        <div className={`guest-lock ${locked ? 'locked' : ''}`}>{children}</div>
+        <div className={`guest-lock ${isGuest ? 'locked' : ''}`}>
+          {children instanceof Function && children(isGuest)}
+        </div>
       </>
     );
   })
