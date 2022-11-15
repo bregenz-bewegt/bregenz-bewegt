@@ -11,6 +11,7 @@ import { Lock } from 'iconsax-react';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import { Role } from '@bregenz-bewegt/client/types';
 import { inject, observer } from 'mobx-react';
+import './guest-lock.scss';
 
 export interface GuestLockProps {
   children?: ReactNode;
