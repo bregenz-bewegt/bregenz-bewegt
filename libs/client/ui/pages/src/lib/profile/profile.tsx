@@ -224,12 +224,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             ]}
           />
           <IonGrid>
-            <GuestLock
-              isLoading={isLoggingOut}
-              onCreateAccount={() =>
-                handleLogout('/register', userStore?.user?.role)
-              }
-            >
+            <GuestLock text="Erstelle ein Konto, um auf dein Profil zugreifen zu können.">
               <IonRow className="ion-justify-content-center">
                 <IonText className="profile__content__username">
                   <h1>{userStore?.user?.username}</h1>
