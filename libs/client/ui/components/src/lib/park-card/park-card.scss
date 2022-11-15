@@ -28,10 +28,12 @@
 
     ion-card-subtitle {
       margin-top: var(--spacing-xs);
+      display: flex;
+      align-items: center;
 
       svg {
+        flex-shrink: 0;
         margin-right: var(--spacing-xs);
-        vertical-align: bottom;
       }
     }
   }

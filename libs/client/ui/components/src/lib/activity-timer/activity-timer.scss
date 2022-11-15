@@ -1,10 +1,60 @@
 .activity-timer {
-  min-width: 300px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: var(--spacing-m);
+  background-color: var(--ion-background-color);
+  border-radius: var(--spacing-l) var(--spacing-l) 0 0;
+  box-shadow: rgba(var(--ion-color-light-contrast-rgb), 30%) 0px 4px 16px;
+  overflow: hidden;
+
+  &__animation {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    display: none;
+
+    &.active {
+      display: initial;
+    }
+
+    &:nth-of-type(1) {
+      background-color: white;
+      z-index: 101;
+    }
+
+    &:nth-of-type(2) {
+      background-color: black;
+      width: 0;
+      z-index: 102;
+
+      &.active {
+        animation: stop-fill-background 1s ease-out;
+      }
+    }
+
+    &:nth-of-type(3) {
+      background-color: var(--ion-color-primary);
+      mix-blend-mode: screen;
+      z-index: 104;
+    }
+  }
 
   &__sliding-restrictor {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    z-index: 103;
+
+    &.active * {
+      color: white;
+      mix-blend-mode: difference;
+      z-index: 103 !important;
+    }
   }
 
   &__handle {
@@ -14,7 +64,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 99;
+
+    &.active {
+      background-color: white;
+    }
   }
 
   &__locking-section {
@@ -27,7 +80,7 @@
     align-items: center;
 
     ion-icon {
-      color: var(--ion-color-secondary);
+      color: var(--ion-color-primary);
       animation: arrow-pulse 3s ease-out infinite;
 
       &:nth-of-type(2) {
@@ -41,28 +94,38 @@
   }
 
   &__info {
-    color: var(--ion-color-secondary);
     display: flex;
     align-items: center;
+    color: var(--ion-color-primary);
   }
 
   &__time {
     font-weight: 600;
     margin-left: var(--spacing-l);
-    color: var(--ion-color-secondary);
     display: flex;
     align-items: center;
+    color: var(--ion-color-primary);
   }
 }
 
 @keyframes arrow-pulse {
   0% {
-    opacity: 0.5;
+    opacity: 0.3;
   }
   50% {
-    opacity: 1;
+    opacity: 0.8;
   }
   100% {
-    opacity: 0.5;
+    opacity: 0.3;
+  }
+}
+
+@keyframes stop-fill-background {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
   }
 }

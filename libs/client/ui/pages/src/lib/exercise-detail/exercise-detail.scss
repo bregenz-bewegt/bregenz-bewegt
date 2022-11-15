@@ -39,17 +39,5 @@
         margin-top: 0;
       }
     }
-
-    &__timer {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      padding: var(--spacing-m);
-      background-color: var(--ion-background-color);
-      border-radius: var(--spacing-l) var(--spacing-l) 0 0;
-      box-shadow: rgba(var(--ion-color-light-contrast-rgb), calc(16%)) 0px 4px
-        16px;
-    }
   }
 }

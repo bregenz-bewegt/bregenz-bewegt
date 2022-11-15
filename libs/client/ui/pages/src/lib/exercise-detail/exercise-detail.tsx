@@ -147,7 +147,6 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
             )}
           </div>
           <ActivityTimer
-            className="exercise-detail__content__timer"
             onTimerStart={handleTimerStart}
             onTimerStop={handleTimerStop}
           />
