@@ -16,9 +16,7 @@ export class ActivityStore implements Store {
     makeAutoObservable(this);
   }
 
-  @action async getActivities(
-    params: ActivityPaginationQueryDto
-  ): Promise<Activity[]> {
+  async getActivities(params: ActivityPaginationQueryDto): Promise<Activity[]> {
     const { data } = await http.get(`/activity`, { params });
     this.activities = data;
     return data;
