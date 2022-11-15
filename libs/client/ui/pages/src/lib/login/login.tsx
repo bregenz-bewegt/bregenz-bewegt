@@ -64,10 +64,10 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
     });
 
     const handleGuestLogin = async () => {
+      setIsGuestLoading(true);
       const agent = await fingerprint.load();
       const { visitorId } = await agent.get();
 
-      setIsGuestLoading(true);
       userStore
         ?.guest({ visitorId })
         .then(() => {
