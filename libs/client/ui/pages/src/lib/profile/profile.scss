@@ -8,6 +8,11 @@
 
     ion-grid {
       position: relative;
+
+      .profile-guest-lock-modal {
+        position: absolute;
+        height: 100%;
+      }
     }
 
     ion-avatar {

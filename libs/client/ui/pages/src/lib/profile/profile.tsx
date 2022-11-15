@@ -12,7 +12,6 @@ import {
   IonContent,
   IonFooter,
   IonGrid,
-  IonIcon,
   IonItem,
   IonLabel,
   IonPage,
@@ -33,13 +32,15 @@ import { useEffect, useState } from 'react';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
-import { lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
 import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
-import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
+import {
+  useDefaultErrorToast,
+  useIsGuest,
+} from '@bregenz-bewegt/client/common/hooks';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -55,6 +56,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+    const [isGuest] = useIsGuest();
 
     const showFailureToast = () => {
       dismissLoading();
@@ -72,8 +74,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         color: 'success',
       });
     };
-
-    const isGuest = userStore?.user?.role === Role.GUEST;
 
     const profile = useFormik({
       initialValues: {
@@ -224,7 +224,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             ]}
           />
           <IonGrid>
-            <GuestLock text="Erstelle ein Konto, um auf dein Profil zugreifen zu können.">
+            <GuestLock
+              modalClassName="profile-guest-lock-modal"
+              text="Melde dich bei deinem Konto an, um auf dein Profil zugreifen zu können."
+            >
               <IonRow className="ion-justify-content-center">
                 <IonText className="profile__content__username">
                   <h1>{userStore?.user?.username}</h1>

@@ -3,6 +3,7 @@ import {
   GuestLock,
   Header,
 } from '@bregenz-bewegt/client-ui-components';
+import { useIsGuest } from '@bregenz-bewegt/client/common/hooks';
 import {
   leaderboardStore,
   LeaderboardStore,
@@ -59,6 +60,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     const [timespan, setTimespan] = useState<
       LeaderboardFilterTimespans[number]
     >(new Date().getFullYear());
+    const [isGuest] = useIsGuest();
 
     const fetchLeaderboardWithCompetitor = ({
       skip,
@@ -155,7 +157,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
               </IonText>
             </IonCol>
             <IonCol className="ion-align-center leaderboard__timespan">
-              {filterTimespans && (
+              {filterTimespans && !isGuest && (
                 <IonSelect
                   interface="popover"
                   value={timespan}
@@ -170,9 +172,13 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
               )}
             </IonCol>
           </IonRow>
-          <GuestLock
-            text={'Erstelle ein Konto, um die Rangliste freizuschalten'}
-          >
+          {isGuest ? (
+            <GuestLock
+              text={
+                'Melde dich bei deinem Konto an, um B-Bucks zu verdienen und die Rangliste freizuschalten'
+              }
+            />
+          ) : (
             <IonGrid className="leaderboard__table">
               {leaderboard.length > 0 &&
                 leaderboard?.map((user, i) => (
@@ -234,7 +240,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                 ></IonInfiniteScrollContent>
               </IonInfiniteScroll>
             </IonGrid>
-          </GuestLock>
+          )}
         </IonContent>
       </IonPage>
     );

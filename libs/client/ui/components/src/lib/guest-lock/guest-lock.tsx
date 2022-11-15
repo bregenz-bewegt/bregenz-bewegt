@@ -8,7 +8,7 @@ import {
   useIonRouter,
 } from '@ionic/react';
 import React, { ReactNode, useState } from 'react';
-import { Lock } from 'iconsax-react';
+import { ShieldSecurity } from 'iconsax-react';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import { Role } from '@bregenz-bewegt/client/types';
 import { inject, observer } from 'mobx-react';
@@ -16,12 +16,13 @@ import './guest-lock.scss';
 
 export interface GuestLockProps {
   text: string;
-  children: ReactNode;
+  children?: ReactNode;
   userStore?: UserStore;
+  modalClassName?: string;
 }
 
 export const GuestLock: React.FC<GuestLockProps> = inject(userStore.storeKey)(
-  observer(({ text, children, userStore }) => {
+  observer(({ text, children, userStore, modalClassName }) => {
     const locked = userStore?.user?.role === Role.GUEST;
     const router = useIonRouter();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
@@ -29,7 +30,7 @@ export const GuestLock: React.FC<GuestLockProps> = inject(userStore.storeKey)(
     const handleLogout = () => {
       setIsLoggingOut(true);
       userStore?.logout().then(() => {
-        router.push('/register');
+        router.push('/login');
         setIsLoggingOut(false);
       });
     };
@@ -37,10 +38,18 @@ export const GuestLock: React.FC<GuestLockProps> = inject(userStore.storeKey)(
     return (
       <>
         {locked && (
-          <div className={`guest-lock-modal`}>
+          <div
+            className={`guest-lock-modal${
+              modalClassName ? ` ${modalClassName}` : ''
+            }`}
+          >
             <IonGrid>
               <IonRow>
-                <Lock size={32} variant="Bold" className="lock-icon" />
+                <ShieldSecurity
+                  size={32}
+                  variant="Bold"
+                  className="lock-icon"
+                />
               </IonRow>
               <IonRow className="info">
                 <IonText color="primary">{text}</IonText>
@@ -57,7 +66,7 @@ export const GuestLock: React.FC<GuestLockProps> = inject(userStore.storeKey)(
                       <IonSpinner name="crescent" />
                     </IonLabel>
                   ) : (
-                    'Konto erstellen'
+                    'Anmelden'
                   )}
                 </IonButton>
               </IonRow>
