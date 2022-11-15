@@ -69,7 +69,7 @@ export class AuthService {
       data: {
         role: 'GUEST',
         fingerprint: dto.visitorId,
-        username: `${usernamePrefix}${cuid()}`,
+        username: `${usernamePrefix}${cuid.slug()}`,
         active: true,
       },
     });

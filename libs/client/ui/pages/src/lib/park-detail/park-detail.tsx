@@ -12,7 +12,12 @@ import {
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { DifficultyType, Park, Exercise } from '@bregenz-bewegt/client/types';
+import {
+  DifficultyType,
+  Park,
+  Exercise,
+  Role,
+} from '@bregenz-bewegt/client/types';
 import {
   IonContent,
   IonNote,
@@ -62,30 +67,64 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
         setPark(parkNew);
         setExercises(parkNew.exercises);
 
-        userStore?.fetchPreferences().then((p) =>
+        if (userStore.user?.role === Role.USER) {
+          userStore
+            ?.fetchPreferences()
+            .then((p) =>
+              handleFilterChange(
+                Object.values(DifficultyType).map(
+                  (d) =>
+                    ({
+                      key: d,
+                      label: difficultyDisplayTexts[d],
+                      active: p.difficulties?.includes(d),
+                    } as QuickFilterOption)
+                ),
+                parkNew
+              )
+            )
+            .catch(() => {
+              handleFilterChange(
+                Object.values(DifficultyType).map(
+                  (d) =>
+                    ({
+                      key: d,
+                      label: difficultyDisplayTexts[d],
+                      active: true,
+                    } as QuickFilterOption)
+                ),
+                parkNew
+              );
+            });
+        } else {
           handleFilterChange(
             Object.values(DifficultyType).map(
               (d) =>
                 ({
                   key: d,
                   label: difficultyDisplayTexts[d],
-                  active: p.difficulties?.includes(d),
+                  active: true,
                 } as QuickFilterOption)
             ),
             parkNew
-          )
-        );
+          );
+        }
 
         setIsLoading(false);
       });
     }, [match.params.park]);
 
-    const handleFilterChange = (v: QuickFilterOption[], p?: Park) => {
-      setQuickFilters(v);
+    const handleFilterChange = (
+      enabledFilters: QuickFilterOption[],
+      p?: Park
+    ) => {
+      setQuickFilters(enabledFilters);
       setExercises(
         (p ?? park)?.exercises?.filter(
           (e) =>
-            v.find((qf) => (qf.key as DifficultyType) === e.difficulty)?.active
+            enabledFilters.find(
+              (qf) => (qf.key as DifficultyType) === e.difficulty
+            )?.active
         )
       );
     };
