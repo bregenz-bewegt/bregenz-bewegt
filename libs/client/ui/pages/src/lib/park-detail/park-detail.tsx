@@ -84,30 +84,10 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
               )
             )
             .catch(() => {
-              handleFilterChange(
-                Object.values(DifficultyType).map(
-                  (d) =>
-                    ({
-                      key: d,
-                      label: difficultyDisplayTexts[d],
-                      active: true,
-                    } as QuickFilterOption)
-                ),
-                parkNew
-              );
+              enableAllFilters(parkNew);
             });
         } else {
-          handleFilterChange(
-            Object.values(DifficultyType).map(
-              (d) =>
-                ({
-                  key: d,
-                  label: difficultyDisplayTexts[d],
-                  active: true,
-                } as QuickFilterOption)
-            ),
-            parkNew
-          );
+          enableAllFilters(parkNew);
         }
 
         setIsLoading(false);
@@ -126,6 +106,20 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
               (qf) => (qf.key as DifficultyType) === e.difficulty
             )?.active
         )
+      );
+    };
+
+    const enableAllFilters = (p: Park) => {
+      handleFilterChange(
+        Object.values(DifficultyType).map(
+          (d) =>
+            ({
+              key: d,
+              label: difficultyDisplayTexts[d],
+              active: true,
+            } as QuickFilterOption)
+        ),
+        p
       );
     };
 
