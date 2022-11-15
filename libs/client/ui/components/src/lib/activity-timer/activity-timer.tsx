@@ -179,11 +179,11 @@ const Handle: React.FC<HandleProps> = ({ started, disabled, isStopping }) => {
       {...attributes}
     >
       {disabled ? (
-        <Lock1 size={32} variant="Linear" color="white" />
+        <Lock1 size={32} variant="Bold" color="white" />
       ) : started ? (
-        <StopCircle size={32} variant="Linear" color="white" />
+        <StopCircle size={32} variant="Bold" color="white" />
       ) : (
-        <TimerStart size={32} variant="Linear" color="white" />
+        <TimerStart size={32} variant="Bold" color="white" />
       )}
     </div>
   );
