@@ -59,7 +59,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
 
   const getHoldExpiry = () => {
     const time = new Date();
-    time.setSeconds(new Date().getSeconds());
+    time.setSeconds(new Date().getSeconds() + 1);
     return time;
   };
 
@@ -179,11 +179,11 @@ const Handle: React.FC<HandleProps> = ({ started, disabled, isStopping }) => {
       {...attributes}
     >
       {disabled ? (
-        <Lock1 size={32} variant="Bold" color="white" />
+        <Lock1 size={32} variant="Linear" color="white" />
       ) : started ? (
-        <StopCircle size={32} variant="Bold" color="white" />
+        <StopCircle size={32} variant="Linear" color="white" />
       ) : (
-        <TimerStart size={32} variant="Bold" color="white" />
+        <TimerStart size={32} variant="Linear" color="white" />
       )}
     </div>
   );
