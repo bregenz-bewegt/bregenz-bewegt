@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
+import cuid from 'cuid';
 import speakeasy from 'speakeasy';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ConfigService } from '@nestjs/config';
@@ -43,9 +44,9 @@ export class AuthService {
     private userService: UserService,
     private utilService: UtilService
   ) {}
-  private readonly guestUsernamePrefix = 'Gast#';
 
   async guest(dto: GuestDto): Promise<Tokens> {
+    const usernamePrefix = 'Gast#' as const;
     const returnTokens = async (
       payload: JwtPayload<'GUEST'>
     ): Promise<Tokens> => {
@@ -56,7 +57,7 @@ export class AuthService {
 
     const guest = await this.prismaService.user.findUnique({
       where: {
-        username: `${this.guestUsernamePrefix}${dto.visitorId}`,
+        fingerprint: dto.visitorId,
       },
     });
 
@@ -67,7 +68,8 @@ export class AuthService {
     const newGuest = await this.prismaService.user.create({
       data: {
         role: 'GUEST',
-        username: `${this.guestUsernamePrefix}${dto.visitorId}`,
+        fingerprint: dto.visitorId,
+        username: `${usernamePrefix}${cuid.slug()}`,
         active: true,
       },
     });
