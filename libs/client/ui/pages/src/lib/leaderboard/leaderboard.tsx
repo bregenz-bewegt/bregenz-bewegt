@@ -32,6 +32,7 @@ import {
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
+import { faker } from '@faker-js/faker';
 import './leaderboard.scss';
 
 const COMPETIORS_RELOAD_CHUNK_SIZE = 10;
@@ -149,7 +150,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       <IonPage className="leaderboard">
         <Header />
         <IonContent fullscreen scrollY={!isGuest}>
-          <CoinDepot competitor={competitor} />
+          {!isGuest && <CoinDepot competitor={competitor} />}
           <IonRow>
             <IonCol className="ion-align-center">
               <IonText>
@@ -179,9 +180,10 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
           >
             {(isGuest) => {
               const data: LeaderboardType = isGuest
-                ? new Array(5)
-                    .fill(null)
-                    .map((_, i) => ({ username: 'User', coins: 0 }))
+                ? new Array(10).fill(null).map((_, i) => ({
+                    username: faker.internet.userName(),
+                    coins: 0,
+                  }))
                 : leaderboard;
               return (
                 <IonGrid className="leaderboard__table">
