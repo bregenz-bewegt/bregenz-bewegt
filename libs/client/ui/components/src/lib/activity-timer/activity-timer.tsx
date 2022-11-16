@@ -103,7 +103,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
           isHoldingBeforeStop ? 'active' : ''
         }`}
       ></div>
-
+      <div className="activity-timer__animation"></div>
       <DndContext
         sensors={sensors}
         onDragEnd={handleDragEnd}

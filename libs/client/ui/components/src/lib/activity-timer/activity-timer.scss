@@ -4,8 +4,9 @@
   bottom: 0;
   width: 100%;
   padding: var(--spacing-m);
-  background-color: var(--ion-background-color);
-  border-radius: var(--spacing-l) var(--spacing-l) 0 0;
+  padding-bottom: var(--spacing-l);
+  border-radius: var(--spacing-xxl) var(--spacing-xxl) 0 0;
+  background-color: var(--ion-color-dark-contrast);
   box-shadow: rgba(var(--ion-color-light-contrast-rgb), 30%) 0px 4px 16px;
   overflow: hidden;
 
@@ -25,6 +26,10 @@
     &:nth-of-type(1) {
       background-color: white;
       z-index: 101;
+
+      body.dark & {
+        background-color: black;
+      }
     }
 
     &:nth-of-type(2) {
@@ -35,12 +40,35 @@
       &.active {
         animation: stop-fill-background 1s ease-out;
       }
+
+      body.dark & {
+        background-color: white;
+      }
     }
 
     &:nth-of-type(3) {
       background-color: var(--ion-color-primary);
       mix-blend-mode: screen;
-      z-index: 104;
+      z-index: 105;
+
+      body.dark & {
+        mix-blend-mode: darken;
+      }
+    }
+
+    &:nth-child(4) {
+      display: initial;
+      background-clip: content-box;
+      background-color: var(--ion-color-light);
+      padding: var(--spacing-s);
+      padding-bottom: var(--spacing-m);
+      border-radius: 50px;
+      z-index: 103;
+      mix-blend-mode: darken;
+
+      body.dark & {
+        mix-blend-mode: lighten;
+      }
     }
   }
 
@@ -48,12 +76,14 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    z-index: 103;
+
+    & * {
+      z-index: 104;
+    }
 
     &.active * {
       color: white;
       mix-blend-mode: difference;
-      z-index: 103 !important;
     }
   }
 
