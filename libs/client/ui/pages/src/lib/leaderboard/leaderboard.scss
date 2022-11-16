@@ -66,10 +66,10 @@
           }
         }
 
-        .avatar {
+        &.avatar {
           ion-avatar {
-            height: var(--spacing-m);
-            width: var(--spacing-m);
+            height: var(--spacing-l);
+            width: var(--spacing-l);
           }
         }
       }
