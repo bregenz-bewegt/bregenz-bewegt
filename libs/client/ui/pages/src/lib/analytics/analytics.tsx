@@ -3,7 +3,7 @@ import {
   activityStore,
   ActivityStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { Activity } from '@bregenz-bewegt/client/types';
+import { Activity, ActivityChartData } from '@bregenz-bewegt/client/types';
 import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 import {
   IonCard,
@@ -29,9 +29,9 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     const [activityList, setActivityList] = useState<
       (Activity & { minutes?: number; seconds?: number })[]
     >([]);
-    const [activityTimespans, setActivityTimespans] = useState<number[]>();
-    const [chartData, setChartData] = useState<Activity[]>();
-    const [chartYear, setChartYear] = useState<number>();
+    const [chartMonthTimespans, setChartMonthTimespans] = useState<number[]>();
+    const [chartData, setChartData] = useState<ActivityChartData>();
+    const [chartFilterMonth, setChartFilterMonth] = useState<number>();
     const [maximumReached, setMaximumReached] = useState<boolean>(false);
     const RELOAD_CHUNK_SIZE = 5;
 
@@ -50,7 +50,9 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
         });
     };
 
-    const calculateTime = (activities: Activity[]) => {
+    const calculateTime = (
+      activities: Activity[]
+    ): (Activity & { minutes?: number; seconds?: number })[] => {
       return activities.map((a) => {
         const diff =
           new Date(a.endedAt).getTime() - new Date(a.startedAt).getTime();
@@ -64,15 +66,19 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
       activityStore
         ?.getActivities({ take: RELOAD_CHUNK_SIZE })
         .then((data) => setActivityList(calculateTime(data)));
-      activityStore?.getTimespans().then((data) => setActivityTimespans(data));
+      activityStore?.getTimespans().then((data) => {
+        setChartMonthTimespans(data);
+        setChartFilterMonth(data[0]);
+      });
     }, []);
 
     useEffect(() => {
-      activityStore
-        ?.getActivities({ year: chartYear })
-        .then((data) => setChartData(data))
-        .catch(() => setChartData([]));
-    }, [chartYear]);
+      chartFilterMonth &&
+        activityStore
+          ?.getChartData(chartFilterMonth)
+          .then((data) => setChartData(data))
+          .catch(() => setChartData(undefined));
+    }, [chartFilterMonth]);
 
     return (
       <IonPage className="analytics">
@@ -81,21 +87,43 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
           <h2>Statistik</h2>
           <div className="analytics__content__chart">
             <ul>
-              {chartData?.map((a) => (
-                <li>{a.exercise.name}</li>
-              ))}
+              {chartData &&
+                chartFilterMonth &&
+                Object.keys(chartData).map((k: any) => {
+                  const date = new Date();
+                  date.setDate(k);
+                  date.setMonth(chartFilterMonth);
+                  return (
+                    <li>
+                      {date.toLocaleString('default', {
+                        day: 'numeric',
+                        month: 'long',
+                      })}
+                      {' - '}
+                      {chartData[k]} Aktivitäten
+                    </li>
+                  );
+                })}
             </ul>
-            {activityTimespans && (
+            {chartMonthTimespans && (
               <IonSelect
                 interface="popover"
-                value={chartYear}
+                value={chartFilterMonth}
                 className="leaderboard__timespan__select"
-                onIonChange={(e) => setChartYear(e.detail.value)}
+                onIonChange={(e) => setChartFilterMonth(e.detail.value)}
                 placeholder="Jahr"
               >
-                {activityTimespans?.map((span) => (
-                  <IonSelectOption value={span}>{span}</IonSelectOption>
-                ))}
+                {chartMonthTimespans?.map((span) => {
+                  const month = new Date();
+                  month.setMonth(span);
+                  return (
+                    <IonSelectOption value={span}>
+                      {month.toLocaleString('default', {
+                        month: 'long',
+                      })}
+                    </IonSelectOption>
+                  );
+                })}
               </IonSelect>
             )}
           </div>

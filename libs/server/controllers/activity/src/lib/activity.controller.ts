@@ -1,3 +1,4 @@
+import { ActivityChartData } from '@bregenz-bewegt/client/types';
 import { GetCurrentUser } from '@bregenz-bewegt/server/common';
 import {
   ActivityPaginationQueryDto,
@@ -8,6 +9,8 @@ import {
   Body,
   Controller,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   Query,
   ValidationPipe,
@@ -42,6 +45,14 @@ export class ActivityController {
   @Get('timespans')
   getTimespans(@GetCurrentUser('sub') userId: User['id']): Promise<number[]> {
     return this.activityService.getFilterTimespans(userId);
+  }
+
+  @Get('chartdata/:month')
+  getChartData(
+    @GetCurrentUser('sub') userId: User['id'],
+    @Param('month', ParseIntPipe) month: number
+  ): Promise<ActivityChartData> {
+    return this.activityService.getCahrtData(userId, month);
   }
 
   @Post('start')

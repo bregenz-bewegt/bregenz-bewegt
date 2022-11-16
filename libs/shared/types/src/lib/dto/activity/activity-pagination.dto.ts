@@ -17,10 +17,4 @@ export class ActivityPaginationQueryDto {
   @IsPositive()
   @Min(0)
   take?: number;
-
-  @ApiProperty()
-  @IsOptional()
-  @Transform(({ value }) => +value)
-  @IsNumber()
-  year?: number;
 }

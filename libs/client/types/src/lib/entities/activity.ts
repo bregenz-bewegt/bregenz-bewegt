@@ -8,3 +8,7 @@ export type Activity = {
   user: User;
   park: Park;
 };
+
+export type ActivityChartData = {
+  [month in number]: number;
+};

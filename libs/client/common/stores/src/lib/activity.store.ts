@@ -6,7 +6,7 @@ import {
   StartActivityDto,
   ActivityPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
-import { Activity } from '@bregenz-bewegt/client/types';
+import { Activity, ActivityChartData } from '@bregenz-bewegt/client/types';
 
 export class ActivityStore implements Store {
   storeKey = 'activityStore' as const;
@@ -22,6 +22,11 @@ export class ActivityStore implements Store {
 
   async getTimespans(): Promise<number[]> {
     const { data } = await http.get('/activity/timespans');
+    return data;
+  }
+
+  async getChartData(month: number): Promise<ActivityChartData> {
+    const { data } = await http.get('/activity/chartdata/' + month);
     return data;
   }
 
