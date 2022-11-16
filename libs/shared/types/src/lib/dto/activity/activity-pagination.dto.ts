@@ -1,15 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsPositive, Min } from 'class-validator';
+import { IsNumber, IsOptional, IsPositive, Min } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class ActivityPaginationQueryDto {
   @ApiProperty()
+  @IsOptional()
   @Transform(({ value }) => +value)
   @IsNumber()
   @Min(0)
   skip?: number;
 
   @ApiProperty()
+  @IsOptional()
   @Transform(({ value }) => +value)
   @IsNumber()
   @IsPositive()
@@ -17,6 +19,7 @@ export class ActivityPaginationQueryDto {
   take?: number;
 
   @ApiProperty()
+  @IsOptional()
   @Transform(({ value }) => +value)
   @IsNumber()
   year?: number;

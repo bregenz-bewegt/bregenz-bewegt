@@ -12,7 +12,7 @@ import {
   Query,
   ValidationPipe,
 } from '@nestjs/common';
-import { Activity, Exercise, Park, User } from '@prisma/client';
+import { Activity, DifficultyType, Exercise, Park, User } from '@prisma/client';
 import { ActivityService } from './activity.service';
 
 @Controller('activity')
@@ -30,7 +30,12 @@ export class ActivityController {
       })
     )
     dto: ActivityPaginationQueryDto
-  ): Promise<(Activity & { park: Park; exercise: Exercise })[]> {
+  ): Promise<
+    (Activity & {
+      park: Park;
+      exercise: Exercise & { difficulty: DifficultyType };
+    })[]
+  > {
     return this.activityService.getAll(userId, dto);
   }
 

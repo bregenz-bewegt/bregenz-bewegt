@@ -6,6 +6,7 @@ import {
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, Activity, Exercise, Park } from '@prisma/client';
+import { DifficultyType } from '@bregenz-bewegt/client/types';
 
 @Injectable()
 export class ActivityService {
@@ -32,8 +33,13 @@ export class ActivityService {
   async getAll(
     userId: User['id'],
     options?: ActivityPaginationQueryDto
-  ): Promise<(Activity & { park: Park; exercise: Exercise })[]> {
-    return this.prismaService.activity.findMany({
+  ): Promise<
+    (Activity & {
+      park: Park;
+      exercise: Exercise & { difficulty: DifficultyType };
+    })[]
+  > {
+    const activities = await this.prismaService.activity.findMany({
       where: {
         ...(options.year
           ? {
@@ -55,10 +61,26 @@ export class ActivityService {
             }
           : { AND: [{ userId: userId }, { NOT: { endedAt: null } }] }),
       },
-      include: { park: true, exercise: true },
+      include: {
+        park: true,
+        exercise: {
+          include: { difficulty: true },
+        },
+      },
+      orderBy: {
+        startedAt: 'desc',
+      },
       ...(options?.skip ? { skip: options.skip } : {}),
       ...(options?.take ? { take: options.take } : {}),
     });
+
+    return activities.map((a) => ({
+      ...a,
+      exercise: { ...a.exercise, difficulty: a.exercise.difficulty.difficulty },
+    })) as (Activity & {
+      park: Park;
+      exercise: Exercise & { difficulty: DifficultyType };
+    })[];
   }
 
   async startActivity(userId: User['id'], dto: StartActivityDto) {

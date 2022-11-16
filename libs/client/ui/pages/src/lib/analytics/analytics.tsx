@@ -26,17 +26,22 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
   activityStore.storeKey
 )(
   observer(({ activityStore }) => {
-    const [activityList, setActivityList] = useState<Activity[]>([]);
+    const [activityList, setActivityList] = useState<
+      (Activity & { minutes?: number; seconds?: number })[]
+    >([]);
     const [activityTimespans, setActivityTimespans] = useState<number[]>();
     const [chartData, setChartData] = useState<Activity[]>();
     const [chartYear, setChartYear] = useState<number>();
-    const RELOAD_CHUNK_SIZE = 10;
+    const [maximumReached, setMaximumReached] = useState<boolean>(false);
+    const RELOAD_CHUNK_SIZE = 5;
 
     const loadInfinite = (e: any) => {
       activityStore
         ?.getActivities({ skip: activityList.length, take: RELOAD_CHUNK_SIZE })
         .then((data) => {
-          setActivityList((prev) => [...prev, ...data]);
+          data.length > 0
+            ? setActivityList((prev) => [...prev, ...calculateTime(data)])
+            : setMaximumReached(true);
           e.target.complete();
         })
         .catch(() => {
@@ -45,10 +50,20 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
         });
     };
 
+    const calculateTime = (activities: Activity[]) => {
+      return activities.map((a) => {
+        const diff =
+          new Date(a.endedAt).getTime() - new Date(a.startedAt).getTime();
+        const minutes = Math.floor(diff / 1000 / 60);
+        const seconds = Math.floor((diff - minutes * 1000 * 60) / 1000);
+        return { ...a, minutes, seconds };
+      });
+    };
+
     useEffect(() => {
       activityStore
         ?.getActivities({ take: RELOAD_CHUNK_SIZE })
-        .then((data) => setActivityList(data));
+        .then((data) => setActivityList(calculateTime(data)));
       activityStore?.getTimespans().then((data) => setActivityTimespans(data));
     }, []);
 
@@ -62,7 +77,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     return (
       <IonPage className="analytics">
         <Header />
-        <IonContent className="analytics__content" fullscreen>
+        <IonContent className="analytics__content" scrollY={false}>
           <h2>Statistik</h2>
           <div className="analytics__content__chart">
             <ul>
@@ -85,32 +100,31 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
             )}
           </div>
           <h2>Aktivitäts Verlauf</h2>
-          <div className="analytics__content__list">
-            {activityList.map((a) => {
-              const diff = a.endedAt.getTime() - a.startedAt.getTime();
-              const hours = Math.floor(diff / 1000 / 60 / 60);
-              const minutes = Math.floor((diff - hours) / 1000 / 60);
-              const seconds = Math.floor((diff - hours - minutes) / 1000);
-              return (
-                <IonCard>
-                  {a.exercise.name} | {a.exercise.coins} B-Bucks | {a.park.name}
-                  | {difficultyDisplayTexts[a.exercise.difficulty]} | {minutes}
-                  min
-                  {seconds}sec
-                </IonCard>
-              );
-            })}
+          <div className="analytics__content__list ion-content-scroll-host">
+            {activityList.length > 0 &&
+              activityList.map((a, i) => {
+                return (
+                  <IonCard key={i}>
+                    {a.exercise.name} | {a.exercise.coins} B-Bucks |
+                    {a.park.name} |
+                    {difficultyDisplayTexts[a.exercise.difficulty]} |{a.minutes}
+                    min {a.seconds}sec |{' '}
+                    {new Date(a.endedAt).toLocaleTimeString()}
+                  </IonCard>
+                );
+              })}
+            <IonInfiniteScroll
+              onIonInfinite={loadInfinite}
+              threshold="10px"
+              className="leaderboard__infinite-scroll-loading"
+              disabled={maximumReached}
+            >
+              <IonInfiniteScrollContent
+                loadingSpinner="crescent"
+                loadingText="Mehr Aktivitäten laden.."
+              ></IonInfiniteScrollContent>
+            </IonInfiniteScroll>
           </div>
-          <IonInfiniteScroll
-            onIonInfinite={loadInfinite}
-            threshold="100px"
-            className="leaderboard__infinite-scroll-loading"
-          >
-            <IonInfiniteScrollContent
-              loadingSpinner="crescent"
-              loadingText="Mehr Aktivitäten laden.."
-            ></IonInfiniteScrollContent>
-          </IonInfiniteScroll>
         </IonContent>
       </IonPage>
     );

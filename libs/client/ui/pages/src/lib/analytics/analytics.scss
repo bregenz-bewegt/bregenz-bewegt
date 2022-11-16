@@ -3,6 +3,11 @@
     &__chart {
     }
     &__list {
+      height: 40%;
+      overflow-y: scroll;
+      ion-card {
+        padding: var(--spacing-m);
+      }
     }
   }
 }
