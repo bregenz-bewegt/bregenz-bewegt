@@ -11,7 +11,7 @@ import {
 } from '@dnd-kit/core';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ReactNode, useState } from 'react';
-import { IonIcon, IonText } from '@ionic/react';
+import { IonIcon, IonSkeletonText, IonText } from '@ionic/react';
 import { chevronForward, chevronBack } from 'ionicons/icons';
 import { useStopwatch, useTimer } from 'react-timer-hook';
 import moment from 'moment';
@@ -38,6 +38,8 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [isHoldingAfterStop, setIsHoldingAfterStop] = useState<boolean>(false);
   const [isHoldingBeforeStop, setIsHoldingBeforeStop] =
+    useState<boolean>(false);
+  const [isHoldingBeforeStart, setIsHoldingBeforeStart] =
     useState<boolean>(false);
   const sensors = useSensors(useSensor(TouchSensor), useSensor(MouseSensor));
   const stopwatch = useStopwatch({
@@ -73,6 +75,8 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
     if (isLocked) {
       holdTimer.restart(getHoldExpiry());
       setIsHoldingBeforeStop(true);
+    } else {
+      setIsHoldingBeforeStart(true);
     }
   };
 
@@ -88,23 +92,24 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
       stopwatch.start();
       onTimerStart();
     }
+    setIsHoldingBeforeStart(false);
   };
 
   return (
     <div className="activity-timer">
       <div
         className={`activity-timer__animation ${
-          isHoldingBeforeStop ? 'active' : ''
+          isHoldingBeforeStop ? 'holding-before-stop' : ''
         }`}
       ></div>
       <div
         className={`activity-timer__animation ${
-          isHoldingBeforeStop ? 'active' : ''
+          isHoldingBeforeStop ? 'holding-before-stop' : ''
         }`}
       ></div>
       <div
         className={`activity-timer__animation ${
-          isHoldingBeforeStop ? 'active' : ''
+          isHoldingBeforeStop ? 'holding-before-stop' : ''
         }`}
       ></div>
       <div className="activity-timer__animation"></div>
@@ -116,8 +121,8 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
       >
         <div
           className={`activity-timer__sliding-restrictor ${
-            isHoldingBeforeStop ? 'active' : ''
-          }`}
+            isHoldingBeforeStop ? 'holding-before-stop' : ''
+          } ${isHoldingBeforeStart ? 'holding-before-start' : ''}`}
         >
           {!isLocked && (
             <Handle
@@ -159,7 +164,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
                 : 'Übung starten'}
             </IonText>
           </div>
-          <LockingSection>
+          <LockingSection isHoldingBeforeStart={isHoldingBeforeStart}>
             {isLocked ? (
               <Handle
                 disabled={disabled}
@@ -210,7 +215,7 @@ const Handle: React.FC<HandleProps> = ({
       ref={setNodeRef}
       style={isHoldingAfterStop ? {} : style}
       className={`activity-timer__handle ${
-        isHoldingBeforeStop ? 'active' : ''
+        isHoldingBeforeStop ? 'holding-before-stop' : ''
       } ${isHoldingAfterStop ? 'stopped' : ''}`}
       {...listeners}
       {...attributes}
@@ -228,14 +233,26 @@ const Handle: React.FC<HandleProps> = ({
 
 interface LockingSectionProps {
   children: ReactNode;
+  isHoldingBeforeStart: boolean;
 }
 
-const LockingSection: React.FC<LockingSectionProps> = ({ children }) => {
+const LockingSection: React.FC<LockingSectionProps> = ({
+  children,
+  isHoldingBeforeStart,
+}) => {
   const { setNodeRef } = useDroppable({
     id: lockingSectionId,
   });
 
-  return (
+  return isHoldingBeforeStart ? (
+    <IonSkeletonText
+      ref={setNodeRef}
+      className="activity-timer__locking-section"
+      animated={true}
+    >
+      {children}
+    </IonSkeletonText>
+  ) : (
     <div ref={setNodeRef} className="activity-timer__locking-section">
       {children}
     </div>
