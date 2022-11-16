@@ -97,7 +97,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     };
 
     useEffect(() => {
-      if (isGuest) return fetchCompetitor();
+      if (isGuest) return;
 
       leaderboardStore
         ?.getFilterTimespans()
@@ -112,7 +112,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     }, []);
 
     useIonViewWillEnter(() => {
-      if (isGuest) return fetchCompetitor();
+      if (isGuest) return;
 
       fetchLeaderboardWithCompetitor({
         skip: 0,
@@ -148,7 +148,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     return (
       <IonPage className="leaderboard">
         <Header />
-        <IonContent fullscreen>
+        <IonContent fullscreen scrollY={!isGuest}>
           <CoinDepot competitor={competitor} />
           <IonRow>
             <IonCol className="ion-align-center">

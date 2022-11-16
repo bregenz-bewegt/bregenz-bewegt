@@ -1,17 +1,10 @@
-body.dark {
-  .header {
-    background-color: unset;
-    color: var(--ion-color-primary-contrast);
-  }
-}
-
 .header {
   padding: 24px 16px;
   --box-shadow: none;
   display: flex;
   justify-content: space-between;
-  background-color: var(--ion-color-primary-contrast);
-  color: var(--ion-color-light-contrast);
+  background-color: var(--ion-background-color);
+  color: var(--ion-color-dark);
 
   &__profile {
     display: flex;

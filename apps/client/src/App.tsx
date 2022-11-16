@@ -25,7 +25,9 @@ import { StoreProvider } from '@bregenz-bewegt/client-ui-components';
 /* Yup validation */
 import '@bregenz-bewegt/client/common/validation';
 
-setupIonicReact();
+setupIonicReact({
+  swipeBackEnabled: false,
+});
 
 const App: React.FC = () => (
   <IonApp>

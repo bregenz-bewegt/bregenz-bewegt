@@ -148,8 +148,9 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
               <IonRouterLink
                 color={'dark'}
                 href={
+                  park?.gmaps ??
                   'https://www.google.com/maps/search/?api=1&query=' +
-                  encodeURIComponent(park?.address ?? '')
+                    encodeURIComponent(park?.address ?? '')
                 }
                 target="_blank"
               >

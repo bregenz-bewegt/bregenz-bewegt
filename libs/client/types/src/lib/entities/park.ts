@@ -7,6 +7,7 @@ export type Park = {
   name: string;
   address: string;
   image: string;
+  gmaps?: string;
   exercises?: Exercise[];
   coordinates?: Coordinates;
 };
