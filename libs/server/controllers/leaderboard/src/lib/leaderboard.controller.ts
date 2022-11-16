@@ -25,8 +25,8 @@ export class LeaderboardController {
   constructor(private leaderboardService: LeaderboardService) {}
 
   @Get()
-  // @HasRole(Role.USER)
-  // @UseGuards(RoleGuard)
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   getLeaderboard(
     @GetCurrentUser('sub') userId: User['id'],
     @Query(
@@ -57,8 +57,8 @@ export class LeaderboardController {
   }
 
   @Get('filter-timespans')
-  // @HasRole(Role.USER)
-  // @UseGuards(RoleGuard)
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   getFilterableTimespans(): Promise<LeaderboardFilterTimespans> {
     return this.leaderboardService.getFilterTimespans();
   }

@@ -62,6 +62,19 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     >(new Date().getFullYear());
     const [isGuest] = useIsGuest();
 
+    const fetchCompetitor = () => {
+      leaderboardStore
+        ?.getCompetitor({ year: timespan })
+        .then((data) => {
+          setCompetitor(data);
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setCompetitor(undefined);
+          setIsLoading(false);
+        });
+    };
+
     const fetchLeaderboardWithCompetitor = ({
       skip,
       take,
@@ -75,16 +88,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
         })
         .then((data) => {
           setLeaderboard(data);
-          leaderboardStore
-            ?.getCompetitor({ year })
-            .then((data) => {
-              setCompetitor(data);
-              setIsLoading(false);
-            })
-            .catch(() => {
-              setCompetitor(undefined);
-              setIsLoading(false);
-            });
+          fetchCompetitor();
         })
         .catch(() => {
           setLeaderboard([]);
@@ -93,6 +97,8 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     };
 
     useEffect(() => {
+      if (isGuest) return fetchCompetitor();
+
       leaderboardStore
         ?.getFilterTimespans()
         .then((data) => setFilterTimespans(data))
@@ -105,21 +111,15 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
       });
     }, []);
 
-    useEffect(() => {
-      fetchLeaderboardWithCompetitor({
-        skip: 0,
-        take: leaderboard.length,
-        year: timespan,
-      });
-    }, [timespan]);
-
     useIonViewWillEnter(() => {
+      if (isGuest) return fetchCompetitor();
+
       fetchLeaderboardWithCompetitor({
         skip: 0,
         take: leaderboard.length,
         year: timespan,
       });
-    }, [leaderboard.length]);
+    }, [leaderboard.length, timespan]);
 
     const loadInfinite = (e: any) => {
       if (leaderboard.length === MAX_SHOWN_COMPETITORS)
