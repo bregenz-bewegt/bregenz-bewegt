@@ -209,13 +209,16 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                             )}
                           </div>
                         </IonCol>
-                        <IonCol size="2" className={`align-center`}>
+                        <IonCol
+                          size="2"
+                          className={`avatar align-center`}
+                        >
                           <IonAvatar>
                             <img src={user?.profilePicture} alt="avatar" />
-                            {!isLoading && <IonSkeletonText animated />}
+                            {isLoading && <IonSkeletonText animated />}
                           </IonAvatar>
                         </IonCol>
-                        <IonCol size="8" className="align-center">
+                        <IonCol size="6" className="align-center">
                           {isLoading ? (
                             <IonSkeletonText animated />
                           ) : (
