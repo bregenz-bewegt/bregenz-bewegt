@@ -77,7 +77,11 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   };
 
   const handleDragEnd = (e: DragEndEvent) => {
-    if (isHoldingAfterStop) {
+    if (isHoldingBeforeStop) {
+      setIsHoldingAfterStop(true);
+      setIsHoldingBeforeStop(false);
+      holdTimer.pause();
+    } else if (isHoldingAfterStop) {
       setIsHoldingAfterStop(false);
     } else if (!isLocked && e.over && e.over.id === lockingSectionId) {
       setIsLocked(true);
