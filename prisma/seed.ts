@@ -45,7 +45,6 @@ const createUsers = async () => {
         role: Role.USER,
         password: await argon.hash('testtest'),
         active: true,
-        profilePicture: faker.internet.avatar(),
       })),
     ])),
   ];

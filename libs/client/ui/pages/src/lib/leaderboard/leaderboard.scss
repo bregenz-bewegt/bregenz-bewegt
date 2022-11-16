@@ -41,8 +41,8 @@
 
         .rank-medal {
           border-radius: 50%;
-          width: 75%;
-          aspect-ratio: 1/1;
+          width: var(--spacing-xl);
+          height: var(--spacing-xl);
           display: grid;
           place-items: center;
           font-weight: 600;
@@ -68,9 +68,17 @@
 
         &.avatar {
           ion-avatar {
-            height: var(--spacing-l);
-            width: var(--spacing-l);
+            width: var(--spacing-xl);
+            height: var(--spacing-xl);
           }
+        }
+
+        &.username {
+          display: block;
+          margin: auto;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
       }
     }
