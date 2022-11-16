@@ -226,7 +226,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           <IonGrid>
             <GuestLock
               modalClassName="profile-guest-lock-modal"
-              text="Melde dich bei deinem Konto an, um auf dein Profil zugreifen zu können."
+              text="Melde dich bei deinem Konto an, um auf dein Profil zugreifen zu können"
             >
               {(isGuest) => (
                 <>

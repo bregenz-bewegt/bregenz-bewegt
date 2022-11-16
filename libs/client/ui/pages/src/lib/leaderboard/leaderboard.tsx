@@ -179,7 +179,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
           >
             {(isGuest) => {
               const data: LeaderboardType = isGuest
-                ? new Array(10)
+                ? new Array(5)
                     .fill(null)
                     .map((_, i) => ({ username: 'User', coins: 0 }))
                 : leaderboard;
