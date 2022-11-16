@@ -25,7 +25,10 @@ import {
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
 import { play, timer, stopCircle, close } from 'ionicons/icons';
-import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
+import {
+  useDefaultErrorToast,
+  useIsGuest,
+} from '@bregenz-bewegt/client/common/hooks';
 
 interface MatchParams {
   park: string;
@@ -48,6 +51,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [park, setPark] = useState<Park>();
     const [activity, setActivity] = useState<Activity>();
+    const [isGuest] = useIsGuest();
 
     useEffect(() => {
       const parkId = +match.params.park;
@@ -149,6 +153,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           <ActivityTimer
             onTimerStart={handleTimerStart}
             onTimerStop={handleTimerStop}
+            disabled={isGuest}
           />
         </IonContent>
       </IonPage>
