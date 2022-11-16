@@ -98,7 +98,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     };
 
     useEffect(() => {
-      if (isGuest) return;
+      if (isGuest) return setIsLoading(false);
 
       leaderboardStore
         ?.getFilterTimespans()
@@ -113,7 +113,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     }, []);
 
     useIonViewWillEnter(() => {
-      if (isGuest) return;
+      if (isGuest) return setIsLoading(false);
 
       fetchLeaderboardWithCompetitor({
         skip: 0,
