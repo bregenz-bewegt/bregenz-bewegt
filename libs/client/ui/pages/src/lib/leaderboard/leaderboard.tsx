@@ -17,6 +17,7 @@ import {
   LeaderboardPaginationQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import {
+  IonAvatar,
   IonCol,
   IonContent,
   IonGrid,
@@ -207,6 +208,12 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                               <>#{i + 1}</>
                             )}
                           </div>
+                        </IonCol>
+                        <IonCol size="2" className={`align-center`}>
+                          <IonAvatar>
+                            <img src={user?.profilePicture} alt="avatar" />
+                            {!isLoading && <IonSkeletonText animated />}
+                          </IonAvatar>
                         </IonCol>
                         <IonCol size="8" className="align-center">
                           {isLoading ? (
