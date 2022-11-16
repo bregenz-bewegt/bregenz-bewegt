@@ -42,8 +42,6 @@ export class LeaderboardController {
   }
 
   @Get('competitor')
-  @HasRole(Role.USER)
-  @UseGuards(RoleGuard)
   getCompetitor(
     @GetCurrentUser('sub') userId: User['id'],
     @Query(
