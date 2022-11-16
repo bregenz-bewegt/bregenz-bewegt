@@ -4,7 +4,9 @@ export type Exercise = {
   id: number;
   name: string;
   description: string;
+  execution: string;
+  muscles: string;
   video: string;
-  points: number;
+  coins: number;
   difficulty: DifficultyType;
 };

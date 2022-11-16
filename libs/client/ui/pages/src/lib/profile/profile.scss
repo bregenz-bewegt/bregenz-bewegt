@@ -32,6 +32,10 @@
       }
     }
 
+    &__lastname {
+      margin-bottom: var(--spacing-m);
+    }
+
     &__password-row {
       align-items: flex-end;
       justify-content: space-between;

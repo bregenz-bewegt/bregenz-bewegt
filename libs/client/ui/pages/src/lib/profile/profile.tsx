@@ -334,7 +334,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   disabled={!isImageLoaded}
                 />
               </IonRow>
-              <IonRow>
+              <IonRow className="profile__content__lastname">
                 <Input
                   name="lastname"
                   placeholder="Nachname"

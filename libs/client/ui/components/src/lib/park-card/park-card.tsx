@@ -55,8 +55,7 @@ export const ParkCard: React.FC<ParkCardProps> = ({
           {isLoaded ? (
             <>
               <Location variant="Bold" size={16} />
-
-              {location}
+              <span>{location}</span>
             </>
           ) : (
             <IonSkeletonText className="park-card__skeleton-text" animated />
