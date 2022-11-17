@@ -78,6 +78,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
           </IonHeader>
           <IonContent>
             <IonSearchbar
+              style={{ padding: 0 }}
               mode="ios"
               value={searchText}
               onIonChange={(e) => handleSearch(e)}
