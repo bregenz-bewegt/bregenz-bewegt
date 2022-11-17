@@ -10,5 +10,6 @@ export type Activity = {
 };
 
 export type ActivityChartData = {
-  [month in number]: number;
-};
+  date: Date;
+  activities: number;
+}[];

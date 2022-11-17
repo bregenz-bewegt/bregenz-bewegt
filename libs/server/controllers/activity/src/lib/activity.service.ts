@@ -86,7 +86,7 @@ export class ActivityService {
     userId: User['id'],
     month: number
   ): Promise<ActivityChartData> {
-    if (month > 11 || month < 0) return {};
+    if (month > 11 || month < 0) return [];
     const activities = await this.prismaService.activity.findMany({
       where: {
         AND: [
@@ -106,17 +106,23 @@ export class ActivityService {
         ],
       },
       orderBy: {
-        endedAt: 'desc',
+        endedAt: 'asc',
       },
       select: {
         endedAt: true,
       },
     });
-    return activities.reduce((result, activity) => {
-      const date = new Date(activity.endedAt).getDate();
-      result[date] ? result[date]++ : (result[date] = 1);
+
+    return activities.reduce((result: ActivityChartData, activity) => {
+      const date = new Date(activity.endedAt.setHours(13, 0, 0, 0));
+      const rIndex = result.findIndex(
+        (r) => r.date.getTime() === date.getTime()
+      );
+      rIndex > -1
+        ? result[rIndex].activities++
+        : result.push({ date: date, activities: 1 });
       return result;
-    }, {});
+    }, []);
   }
 
   async startActivity(userId: User['id'], dto: StartActivityDto) {

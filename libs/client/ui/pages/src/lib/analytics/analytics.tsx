@@ -17,6 +17,15 @@ import {
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import './analytics.scss';
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
 export interface AnalyticsProps {
   activityStore?: ActivityStore;
@@ -86,21 +95,29 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
         <IonContent className="analytics__content" scrollY={false}>
           <h2>Statistik</h2>
           <div className="analytics__content__chart">
+            <AreaChart width={300} height={200} data={chartData}>
+              <XAxis dataKey="date" />
+              <YAxis dataKey="activities" />
+              <Area
+                type="natural"
+                dataKey="activities"
+                fill="var(--ion-color-secondary)"
+                stroke="var(--ion-color-primary"
+              />
+            </AreaChart>
             <ul>
               {chartData &&
                 chartFilterMonth &&
-                Object.keys(chartData).map((k: any) => {
-                  const date = new Date();
-                  date.setDate(k);
-                  date.setMonth(chartFilterMonth);
+                chartData.map((i: any) => {
                   return (
                     <li>
-                      {date.toLocaleString('default', {
+                      {i.date.toLocaleString('default', {
                         day: 'numeric',
                         month: 'long',
-                      })}
-                      {' - '}
-                      {chartData[k]} Aktivitäten
+                      }) +
+                        ' - ' +
+                        i.activities +
+                        ' Aktivitäten'}
                     </li>
                   );
                 })}
