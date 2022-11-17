@@ -7,6 +7,7 @@ import {
   Difficulty,
   Email,
   Password,
+  Friends,
 } from '@bregenz-bewegt/client-ui-pages';
 import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
 import {
@@ -89,6 +90,11 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
               exact
               path={`${tabRoutes.profile.route}/difficulty`}
               component={Difficulty}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/friends`}
+              component={Friends}
             ></Route>
             <Route
               exact

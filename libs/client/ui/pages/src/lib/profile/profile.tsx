@@ -356,6 +356,21 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   </ItemGroup>
                   <IonRow>
                     <IonText>
+                      <h2>Freunde</h2>
+                    </IonText>
+                  </IonRow>
+                  <ItemGroup>
+                    <IonItem
+                      button
+                      routerLink={`${tabRoutes.profile.route}/friends`}
+                      mode="ios"
+                      lines="none"
+                    >
+                      <IonLabel>Freunde</IonLabel>
+                    </IonItem>
+                  </ItemGroup>
+                  <IonRow>
+                    <IonText>
                       <h2>Sicherheit</h2>
                     </IonText>
                   </IonRow>
