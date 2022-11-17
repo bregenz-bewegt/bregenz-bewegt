@@ -1,7 +1,6 @@
 import './exercise-detail.scss';
 import {
   IonContent,
-  IonIcon,
   IonPage,
   useIonToast,
   useIonViewWillEnter,
@@ -24,7 +23,7 @@ import {
   BackButton,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
-import { play, timer, stopCircle, close } from 'ionicons/icons';
+import { timer, stopCircle, close } from 'ionicons/icons';
 import {
   useDefaultErrorToast,
   useIsGuest,
@@ -114,7 +113,12 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         <IonContent className="exercise-detail__content">
           <BackButton />
           <div className="exercise-detail__content__video-wrapper">
-            <IonIcon icon={play} />
+            <video controls>
+              <source
+                src={`https://samplelib.com/lib/preview/mp4/sample-5s.mp4`}
+                type="video/mp4"
+              ></source>
+            </video>
           </div>
           <div className="exercise-detail__content__exercise-wrapper">
             <h1>{park?.exercises && park?.exercises[0].name}</h1>
