@@ -265,4 +265,13 @@ export class UserService {
 
     return fs.existsSync(filePath);
   }
+
+  async getFriends(userId: User['id']): Promise<User[]> {
+    const { friends } = await this.prismaService.user.findUnique({
+      where: { id: userId },
+      select: { friends: true },
+    });
+
+    return friends;
+  }
 }

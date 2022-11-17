@@ -140,4 +140,9 @@ export class UserController {
   ): Promise<User> {
     return this.userService.deleteProfilePicture(userId);
   }
+
+  @Get('friends')
+  getFriends(@GetCurrentUser('sub') userId: User['id']): Promise<any> {
+    return this.userService.getFriends(userId);
+  }
 }

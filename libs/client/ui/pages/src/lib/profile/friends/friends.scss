@@ -1,4 +1,7 @@
 .friends {
   &__content {
+    ion-segment {
+      margin-bottom: var(--spacing-m);
+    }
   }
 }

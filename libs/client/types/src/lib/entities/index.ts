@@ -6,3 +6,4 @@ export * from './role';
 export * from './difficulty';
 export * from './preferences';
 export * from './coordinates';
+export * from './friend';

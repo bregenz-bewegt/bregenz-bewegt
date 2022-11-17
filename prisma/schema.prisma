@@ -29,6 +29,8 @@ model User {
   profilePicture     String?
   preferences        Preferences?
   activities         Activity[]
+  friends            User[]       @relation("friends")
+  friendsRelation    User[]       @relation("friends")
 
   @@index([email])
 }
