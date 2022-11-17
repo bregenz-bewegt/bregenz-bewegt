@@ -20,8 +20,8 @@ import {
 import { inject, observer } from 'mobx-react';
 import { add } from 'ionicons/icons';
 import React, { useEffect, useRef, useState } from 'react';
-import './friend-list.scss';
 import { IonSearchbarCustomEvent } from '@ionic/core';
+import './friend-list.scss';
 
 export interface FriendsListProps {
   pageRef: React.MutableRefObject<undefined>;
