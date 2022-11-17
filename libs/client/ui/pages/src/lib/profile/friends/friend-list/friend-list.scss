@@ -1,7 +1,9 @@
 .friend-list {
   ion-modal {
-    ion-searchbar {
-      padding: 0;
+    ion-content {
+      ion-searchbar {
+        padding: 0;
+      }
     }
   }
 }
