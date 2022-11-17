@@ -1,10 +1,14 @@
 import {
   friendsStore,
   FriendsStore,
+  userStore,
+  UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import {
+  IonAvatar,
   IonButton,
   IonButtons,
+  IonCol,
   IonContent,
   IonGrid,
   IonHeader,
@@ -12,6 +16,7 @@ import {
   IonModal,
   IonRow,
   IonSearchbar,
+  IonSkeletonText,
   IonText,
   IonTitle,
   IonToolbar,
@@ -22,27 +27,31 @@ import { add } from 'ionicons/icons';
 import React, { useEffect, useRef, useState } from 'react';
 import { IonSearchbarCustomEvent } from '@ionic/core';
 import './friend-list.scss';
-import { User } from '@bregenz-bewegt/client/types';
+import { FriendSearchResult } from '@bregenz-bewegt/shared/types';
 
 export interface FriendsListProps {
   pageRef: React.MutableRefObject<undefined>;
   friendsStore?: FriendsStore;
+  userStore?: UserStore;
 }
 
 export const FriendList: React.FC<FriendsListProps> = inject(
-  friendsStore.storeKey
+  friendsStore.storeKey,
+  userStore.storeKey
 )(
-  observer(({ friendsStore, pageRef }) => {
+  observer(({ friendsStore, userStore, pageRef }) => {
     const addModalRef = useRef<HTMLIonModalElement>(null);
     const [presentingElement, setPresentingElement] = useState<
       HTMLElement | undefined
     >(undefined);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
-    const [searchResult, setSearchResult] = useState<User[]>([]);
+    const [searchResult, setSearchResult] = useState<FriendSearchResult[]>([]);
 
     const handleSearch = (
       e: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
     ) => {
+      setIsLoading(true);
       setSearchText(e.detail.value ?? searchText);
 
       const query = e.detail.value?.trim().toLowerCase();
@@ -50,12 +59,13 @@ export const FriendList: React.FC<FriendsListProps> = inject(
 
       friendsStore
         ?.searchUser({ username: query })
-        .then((users) => {
-          console.log(users);
-          setSearchResult(users);
+        .then((result) => {
+          setSearchResult(result);
+          setIsLoading(false);
         })
         .catch(() => {
           setSearchResult([]);
+          setIsLoading(false);
         });
     };
 
@@ -64,22 +74,26 @@ export const FriendList: React.FC<FriendsListProps> = inject(
     }, []);
 
     return (
-      <div className="friend-list">
-        <IonButton expand="block" mode="ios" id="open-modal">
-          <IonIcon slot="start" icon={add} />
-          Freund hinzufügen
-        </IonButton>
-        <IonGrid>
-          <IonRow>
-            <IonText>
-              <h2>Freunde</h2>
-            </IonText>
-          </IonRow>
-        </IonGrid>
+      <>
+        <div className="friend-list">
+          <IonButton expand="block" mode="ios" id="open-modal">
+            <IonIcon slot="start" icon={add} />
+            Freund hinzufügen
+          </IonButton>
+          <IonGrid>
+            <IonRow>
+              <IonText>
+                <h2>Freunde</h2>
+              </IonText>
+            </IonRow>
+          </IonGrid>
+        </div>
+
         <IonModal
           trigger="open-modal"
           ref={addModalRef}
           presentingElement={presentingElement}
+          className="add-friend-modal"
         >
           <IonHeader>
             <IonToolbar>
@@ -91,7 +105,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
               </IonButtons>
             </IonToolbar>
           </IonHeader>
-          <IonContent>
+          <IonContent className="add-friend-modal__content">
             <IonSearchbar
               style={{ padding: 0 }}
               mode="ios"
@@ -101,17 +115,45 @@ export const FriendList: React.FC<FriendsListProps> = inject(
               placeholder="nach Benutzernamen suchen"
             ></IonSearchbar>
             <IonGrid>
-              {searchResult.length > 0 ? (
-                searchResult.map((u) => {
-                  return <IonRow>{u.username}</IonRow>;
-                })
-              ) : (
-                <IonRow>Keine Benutzer gefunden</IonRow>
-              )}
+              {searchResult.length > 0
+                ? searchResult.map((user) => {
+                    return (
+                      <IonRow key={user.id}>
+                        <IonCol size="auto" className={`avatar align-center`}>
+                          <IonAvatar>
+                            {isLoading ? (
+                              <IonSkeletonText animated />
+                            ) : (
+                              <img
+                                src={
+                                  user.profilePicture
+                                    ? userStore?.getProfilePictureUrl(
+                                        user.profilePicture
+                                      )
+                                    : userStore?.getAvatarProfilePictureUrl(
+                                        user.username
+                                      )
+                                }
+                                alt="avatar"
+                              />
+                            )}
+                          </IonAvatar>
+                        </IonCol>
+                        <IonCol size="auto" className={`username`}>
+                          {isLoading ? (
+                            <IonSkeletonText animated />
+                          ) : (
+                            user.username
+                          )}
+                        </IonCol>
+                      </IonRow>
+                    );
+                  })
+                : searchText && <IonRow>Keine Benutzer gefunden</IonRow>}
             </IonGrid>
           </IonContent>
         </IonModal>
-      </div>
+      </>
     );
   })
 );

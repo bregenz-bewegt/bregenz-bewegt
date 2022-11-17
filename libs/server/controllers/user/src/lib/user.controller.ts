@@ -9,6 +9,7 @@ import {
 } from '@bregenz-bewegt/server/common';
 import {
   EmailResetToken,
+  FriendSearchResult,
   PatchPreferencesDto,
   PatchProfileDto,
   ResetEmailDto,
@@ -165,7 +166,7 @@ export class UserController {
       })
     )
     dto: SearchUserQueryDto
-  ): Promise<User[]> {
+  ): Promise<FriendSearchResult[]> {
     return this.userService.searchUserByUsername(dto.username);
   }
 }

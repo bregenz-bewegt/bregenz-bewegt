@@ -1,6 +1,31 @@
 .friend-list {
-  ion-modal {
-    ion-content {
+}
+
+.add-friend-modal {
+  &__content {
+    ion-grid {
+      ion-row {
+        ion-col {
+          display: flex;
+          align-items: center;
+
+          &.avatar {
+            ion-avatar {
+              width: var(--spacing-xl);
+              height: var(--spacing-xl);
+            }
+          }
+
+          &.username {
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin: auto 0;
+            min-width: 50%;
+          }
+        }
+      }
     }
   }
 }

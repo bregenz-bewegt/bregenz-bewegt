@@ -5,6 +5,7 @@ import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import {
   EmailResetToken,
+  FriendSearchResult,
   JwtPayloadWithoutRole,
   PatchPreferencesDto,
   PatchProfileDto,
@@ -275,9 +276,9 @@ export class UserService {
     return friends;
   }
 
-  async searchUserByUsername(query: string): Promise<User[]> {
+  async searchUserByUsername(query: string): Promise<FriendSearchResult[]> {
     return this.prismaService.user.findMany({
-      where: { username: { search: query } },
+      where: { username: { contains: query } },
     });
   }
 }
