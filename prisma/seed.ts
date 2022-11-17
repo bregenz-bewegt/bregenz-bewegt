@@ -191,7 +191,7 @@ const createParks = async () => {
       const { coordinates, ...parkOnly } = park;
       await prisma.park.create({
         data: {
-          ...(parkOnly as Park),
+          ...parkOnly,
           coordinates: {
             create: coordinates,
           },
@@ -207,62 +207,48 @@ const createExercises = async () => {
   const exercises = [
     {
       name: 'Sit-Up',
-      description: 'Some description',
+      description: 'some description',
+      execution: 'some execution detials',
+      muscles: 'some muscles that are used',
       coins: 10,
-      difficulty: {
-        connect: {
-          id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
-            ?.id,
-        },
-      },
+      difficulty: DifficultyType.BEGINNER,
       video: 'not-yet-defined',
     },
     {
       name: 'Liegestütze',
-      description: 'Some description',
+      description: 'some description',
+      execution: 'some execution detials',
+      muscles: 'some muscles that are used',
       coins: 10,
-      difficulty: {
-        connect: {
-          id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
-            ?.id,
-        },
-      },
+      difficulty: DifficultyType.BEGINNER,
       video: 'not-yet-defined',
     },
     {
       name: 'Plank',
-      description: 'Some description',
+      description: 'some description',
+      execution: 'some execution detials',
+      muscles: 'some muscles that are used',
       coins: 10,
-      difficulty: {
-        connect: {
-          id: difficulties.find((d) => d.difficulty === DifficultyType.ADVANCED)
-            ?.id,
-        },
-      },
+      difficulty: DifficultyType.ADVANCED,
       video: 'not-yet-defined',
     },
     {
       name: 'Squat',
-      description: 'Some description',
+      description: 'some description',
+      execution: 'some execution detials',
+      muscles: 'some muscles that are used',
       coins: 10,
-      difficulty: {
-        connect: {
-          id: difficulties.find((d) => d.difficulty === DifficultyType.BEGINNER)
-            ?.id,
-        },
-      },
+      difficulty: DifficultyType.BEGINNER,
       video: 'not-yet-defined',
     },
     {
       name: 'Versteinerte Hexe',
-      description: 'Some description',
+
+      description: 'some description',
+      execution: 'some execution detials',
+      muscles: 'some muscles that are used',
       coins: 10,
-      difficulty: {
-        connect: {
-          id: difficulties.find((d) => d.difficulty === DifficultyType.GAME)
-            ?.id,
-        },
-      },
+      difficulty: DifficultyType.GAME,
       video: 'not-yet-defined',
     },
   ];
@@ -272,6 +258,12 @@ const createExercises = async () => {
       await prisma.exercise.create({
         data: {
           ...exercise,
+          difficulty: {
+            connect: {
+              id: difficulties.find((d) => d.difficulty === exercise.difficulty)
+                ?.id,
+            },
+          },
           parks: {
             connect: parks.map((park) => ({ id: park.id })),
           },
@@ -286,6 +278,7 @@ const createActivities = async () => {
   const exercises = await prisma.exercise.findMany({
     include: { parks: true },
   });
+  const parks = await (await prisma.park.findMany()).length;
 
   await Promise.all(
     users.map(async (user) => {
@@ -298,7 +291,7 @@ const createActivities = async () => {
                 startedAt: new Date(),
                 endedAt: new Date(),
                 exerciseId: exercise.id,
-                parkId: exercise.parks[0].id,
+                parkId: exercise.parks[Math.floor(Math.random() * parks)].id,
               })),
             },
           },

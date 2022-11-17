@@ -2,7 +2,6 @@ import './activity-timer.scss';
 import {
   DndContext,
   DragEndEvent,
-  DragStartEvent,
   MouseSensor,
   TouchSensor,
   useDraggable,
@@ -11,18 +10,12 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
-import { ActivityStore } from '@bregenz-bewegt/client/common/stores';
 import { ReactNode, useState } from 'react';
-import { IonIcon, IonText } from '@ionic/react';
-import {
-  timer,
-  stopCircle,
-  chevronForward,
-  chevronBack,
-  lockClosed,
-} from 'ionicons/icons';
-import { useStopwatch } from 'react-timer-hook';
+import { IonIcon, IonSkeletonText, IonText } from '@ionic/react';
+import { chevronForward, chevronBack } from 'ionicons/icons';
+import { useStopwatch, useTimer } from 'react-timer-hook';
 import moment from 'moment';
+import { StopCircle, Lock1, Timer1 } from 'iconsax-react';
 
 const handleId = 'handle' as const;
 const lockingSectionId = 'locking-section' as const;
@@ -35,54 +28,110 @@ export interface ActivityTimerProps {
     hours: number;
   }) => void;
   disabled?: boolean;
-  activityStore?: ActivityStore;
 }
 
 export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   onTimerStart,
   onTimerStop,
   disabled,
-  activityStore,
 }) => {
   const [isLocked, setIsLocked] = useState<boolean>(false);
+  const [isHoldingAfterStop, setIsHoldingAfterStop] = useState<boolean>(false);
+  const [isHoldingBeforeStop, setIsHoldingBeforeStop] =
+    useState<boolean>(false);
+  const [isHoldingBeforeStart, setIsHoldingBeforeStart] =
+    useState<boolean>(false);
   const sensors = useSensors(useSensor(TouchSensor), useSensor(MouseSensor));
   const stopwatch = useStopwatch({
     autoStart: false,
     offsetTimestamp: new Date(),
   });
 
-  const handleDragStart = (e: DragStartEvent) => {
-    //
+  const handleHoldTimerFinished = () => {
+    setIsLocked(false);
+    setIsHoldingAfterStop(true);
+    setIsHoldingBeforeStop(false);
+    stopwatch.reset();
+    onTimerStop({
+      seconds: stopwatch.seconds,
+      minutes: stopwatch.minutes,
+      hours: stopwatch.hours,
+    });
   };
-  const handleDragEnd = (e: DragEndEvent) => {
+
+  const getHoldExpiry = () => {
+    const time = new Date();
+    time.setSeconds(new Date().getSeconds() + 1);
+    return time;
+  };
+
+  const holdTimer = useTimer({
+    autoStart: false,
+    expiryTimestamp: getHoldExpiry(),
+    onExpire: handleHoldTimerFinished,
+  });
+
+  const handleDragStart = () => {
     if (isLocked) {
-      setIsLocked(false);
-      stopwatch.reset();
-      onTimerStop({
-        seconds: stopwatch.seconds,
-        minutes: stopwatch.minutes,
-        hours: stopwatch.hours,
-      });
-      return;
+      holdTimer.restart(getHoldExpiry());
+      setIsHoldingBeforeStop(true);
+    } else {
+      setIsHoldingBeforeStart(true);
     }
-    if (e.over && e.over.id === lockingSectionId) {
+  };
+
+  const handleDragEnd = (e: DragEndEvent) => {
+    if (isHoldingBeforeStop) {
+      setIsHoldingAfterStop(true);
+      setIsHoldingBeforeStop(false);
+      holdTimer.pause();
+    } else if (isHoldingAfterStop) {
+      setIsHoldingAfterStop(false);
+    } else if (!isLocked && e.over && e.over.id === lockingSectionId) {
       setIsLocked(true);
       stopwatch.start();
       onTimerStart();
-      return;
     }
+    setIsHoldingBeforeStart(false);
   };
 
   return (
     <div className="activity-timer">
+      <div
+        className={`activity-timer__animation ${
+          isHoldingBeforeStop ? 'holding-before-stop' : ''
+        }`}
+      ></div>
+      <div
+        className={`activity-timer__animation ${
+          isHoldingBeforeStop ? 'holding-before-stop' : ''
+        }`}
+      ></div>
+      <div
+        className={`activity-timer__animation ${
+          isHoldingBeforeStop ? 'holding-before-stop' : ''
+        }`}
+      ></div>
+      <div className="activity-timer__animation"></div>
       <DndContext
         sensors={sensors}
-        onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
         modifiers={[restrictToParentElement]}
       >
-        <div className="activity-timer__sliding-restrictor">
-          {!isLocked && <Handle disabled={disabled} icon={timer} />}
+        <div
+          className={`activity-timer__sliding-restrictor ${
+            isHoldingBeforeStop ? 'holding-before-stop' : ''
+          } ${isHoldingBeforeStart ? 'holding-before-start' : ''}`}
+        >
+          {!isLocked && (
+            <Handle
+              disabled={disabled}
+              started={false}
+              isHoldingBeforeStop={isHoldingBeforeStop}
+              isHoldingAfterStop={isHoldingAfterStop}
+            />
+          )}
           {isLocked ? (
             <div className="activity-timer__time">
               <IonText>
@@ -90,7 +139,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
                   seconds: stopwatch.seconds,
                   minutes: stopwatch.minutes,
                   hours: stopwatch.hours,
-                }).format('HH:mm:ss')}
+                }).format('mm:ss')}
               </IonText>
             </div>
           ) : (
@@ -115,8 +164,15 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
                 : 'Übung starten'}
             </IonText>
           </div>
-          <LockingSection>
-            {isLocked ? <Handle disabled={disabled} icon={stopCircle} /> : null}
+          <LockingSection isHoldingBeforeStart={isHoldingBeforeStart}>
+            {isLocked ? (
+              <Handle
+                disabled={disabled}
+                started={true}
+                isHoldingBeforeStop={isHoldingBeforeStop}
+                isHoldingAfterStop={isHoldingAfterStop}
+              />
+            ) : null}
           </LockingSection>
         </div>
       </DndContext>
@@ -125,49 +181,78 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
 };
 
 interface HandleProps {
-  icon: string;
+  started: boolean;
   disabled?: ActivityTimerProps['disabled'];
+  isHoldingBeforeStop: boolean;
+  isHoldingAfterStop: boolean;
 }
 
-const Handle: React.FC<HandleProps> = ({ icon, disabled }) => {
+const Handle: React.FC<HandleProps> = ({
+  started,
+  disabled,
+  isHoldingBeforeStop,
+  isHoldingAfterStop,
+}) => {
   const { setNodeRef, transform, listeners, attributes, isDragging } =
     useDraggable({
       id: handleId,
       disabled,
     });
+
   const style = {
-    transition: 'transform 0.5s',
-    ...(isDragging && { transition: undefined }),
+    ...(!isDragging && {
+      transition: 'transform 0.5s',
+    }),
     ...(transform && {
-      transform: `${
-        transform && `translate3d(${transform.x}px, ${transform.y}px, 0)`
-      }${isDragging && ` scale(.9)`}`,
+      transform: `${transform && `translateX(${transform.x}px)`}${
+        isDragging && ` scale(.9)`
+      }`,
     }),
   };
 
   return (
     <div
       ref={setNodeRef}
-      style={style}
-      className="activity-timer__handle"
+      style={isHoldingAfterStop ? {} : style}
+      className={`activity-timer__handle ${
+        isHoldingBeforeStop ? 'holding-before-stop' : ''
+      } ${isHoldingAfterStop ? 'stopped' : ''}`}
       {...listeners}
       {...attributes}
     >
-      <IonIcon icon={disabled ? lockClosed : icon} />
+      {disabled ? (
+        <Lock1 size={32} variant="Bold" color="white" />
+      ) : started ? (
+        <StopCircle size={32} variant="Bold" color="white" />
+      ) : (
+        <Timer1 size={32} variant="Bold" color="white" />
+      )}
     </div>
   );
 };
 
 interface LockingSectionProps {
   children: ReactNode;
+  isHoldingBeforeStart: boolean;
 }
 
-const LockingSection: React.FC<LockingSectionProps> = ({ children }) => {
+const LockingSection: React.FC<LockingSectionProps> = ({
+  children,
+  isHoldingBeforeStart,
+}) => {
   const { setNodeRef } = useDroppable({
     id: lockingSectionId,
   });
 
-  return (
+  return isHoldingBeforeStart ? (
+    <IonSkeletonText
+      ref={setNodeRef}
+      className="activity-timer__locking-section"
+      animated={true}
+    >
+      {children}
+    </IonSkeletonText>
+  ) : (
     <div ref={setNodeRef} className="activity-timer__locking-section">
       {children}
     </div>

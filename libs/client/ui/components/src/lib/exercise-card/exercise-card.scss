@@ -6,10 +6,8 @@
       width: 70%;
 
       ion-card-header {
-        padding-bottom: var(--spacing-s);
-
-        ion-card-title {
-          margin-top: var(--spacing-xs);
+        h3 {
+          margin-top: var(--spacing-s);
         }
       }
     }

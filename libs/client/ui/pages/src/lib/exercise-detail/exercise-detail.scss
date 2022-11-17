@@ -1,34 +1,14 @@
 .exercise-detail {
-  overflow: hidden;
-
-  &::part(scroll) {
-    padding-bottom: 0;
-    overflow: hidden;
-  }
-
   &__content {
-    min-height: 100%;
     --padding-top: 0;
     --padding-bottom: 0;
     --padding-start: 0;
     --padding-end: 0;
 
-    &__flex-wrapper {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-
-      .activity-timer {
-        margin-top: auto;
-        margin-bottom: var(--spacing-m);
-      }
-    }
-
     &__video-wrapper {
       width: 100%;
       min-height: 40%;
       background-color: var(--ion-color-secondary);
-      border-radius: 0 0 var(--spacing-l) var(--spacing-l);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -40,38 +20,23 @@
       }
     }
 
-    &__content {
-      padding: 0 var(--spacing-l) var(--spacing-l) var(--spacing-l);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: auto;
+    &__exercise-wrapper {
+      padding: var(--spacing-l) var(--spacing-xxl);
+      margin-bottom: 96px;
+      white-space: pre-line;
+      hyphens: none;
 
-      &__park-wrapper {
-        ion-text {
-          h1 {
-            font-weight: 700;
-          }
-        }
+      p {
+        margin: 0;
       }
 
-      &__location {
-        ion-icon {
-          display: inline-block;
-          margin-right: var(--spacing-xs);
-          margin-bottom: calc(var(--spacing-xxs) * -1);
-        }
+      ul {
+        margin: 0;
       }
 
-      &__exercise-wrapper {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
+      h1:first-of-type {
+        margin-top: 0;
       }
-    }
-
-    &__timer {
-      padding: var(--spacing-m) var(--spacing-l) 0 var(--spacing-l);
     }
   }
 }

@@ -27,10 +27,13 @@
     margin-top: -60px;
 
     ion-card-subtitle {
+      margin-top: var(--spacing-xs);
+      display: flex;
+      align-items: center;
+
       svg {
-        display: inline-block;
+        flex-shrink: 0;
         margin-right: var(--spacing-xs);
-        margin-bottom: calc(var(--spacing-xxs) * -1);
       }
     }
   }

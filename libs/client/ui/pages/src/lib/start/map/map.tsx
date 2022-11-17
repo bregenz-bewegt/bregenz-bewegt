@@ -10,7 +10,7 @@ import {
   useMapEvents,
 } from 'react-leaflet';
 import { Loading } from '@bregenz-bewegt/client-ui-pages';
-import { closeCircleOutline } from 'ionicons/icons';
+import { closeCircleOutline, close } from 'ionicons/icons';
 import { IonButton, IonRouterLink, useIonToast } from '@ionic/react';
 import { icon, LocationEvent } from 'leaflet';
 import { Gps, GpsSlash } from 'iconsax-react';
@@ -44,6 +44,7 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
           position: 'top',
           mode: 'ios',
           color: 'danger',
+          buttons: [{ icon: close, role: 'cancel' }],
         });
       },
     });

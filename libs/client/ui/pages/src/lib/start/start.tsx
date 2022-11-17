@@ -28,6 +28,7 @@ export const Start: React.FC<StartProps> = inject(parkStore.storeKey)(
         address: '',
         image: '',
         qr: '',
+        gmaps: '',
         coordinates: { id: 0, latitude: 0, longitude: 0, toleranceRadius: 0 },
         exercises: [],
       })

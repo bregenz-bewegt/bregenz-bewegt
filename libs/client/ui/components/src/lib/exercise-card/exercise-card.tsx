@@ -2,7 +2,6 @@ import React from 'react';
 import './exercise-card.scss';
 import {
   IonCard,
-  IonCardContent,
   IonCardHeader,
   IonCardTitle,
   IonIcon,
@@ -41,12 +40,10 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
           <IonCardHeader>
             <DifficultyBadge difficulty={difficulty} />
             <IonCardTitle>
-              {isLoaded ? name : <IonSkeletonText animated />}
+              <h3>{isLoaded ? name : <IonSkeletonText animated />}</h3>
             </IonCardTitle>
+            {isLoaded ? coins + ' B-Bucks' : <IonSkeletonText animated />}
           </IonCardHeader>
-          <IonCardContent>
-            {isLoaded ? description : <IonSkeletonText animated />}
-          </IonCardContent>
         </div>
         <div className="exercise-card__wrapper__video">
           <IonIcon icon={play} />

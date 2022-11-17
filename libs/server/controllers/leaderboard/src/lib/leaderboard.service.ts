@@ -32,6 +32,7 @@ export class LeaderboardService {
     return users.map((user) => ({
       username: user.username,
       coins: user.coins,
+      profilePicture: user.profilePicture,
     }));
   }
 
@@ -46,6 +47,7 @@ export class LeaderboardService {
     return <Competitor>{
       username: competitor.username,
       coins: competitor.coins,
+      profilePicture: competitor.profilePicture,
       rank: index + 1,
     };
   }

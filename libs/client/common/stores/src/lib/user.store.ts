@@ -21,6 +21,10 @@ import { Store } from './store';
 
 export class UserStore implements Store {
   storeKey = 'userStore' as const;
+
+  private avatarApiBaseUrl =
+    'https://avatars.dicebear.com/api/initials' as const;
+
   @observable user?: User;
   @observable isLoggedIn = false;
   @observable isLoadingLoggedIn = false;
@@ -157,9 +161,7 @@ export class UserStore implements Store {
     this.user = user;
 
     if (user.profilePicture) {
-      this.setProfilePicture(
-        `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/profile-pictures/${user.profilePicture}`
-      );
+      this.setProfilePicture(this.getProfilePictureUrl(user.profilePicture));
       this.setIsProfilePictureSet(true);
     } else {
       this.setAvatarProfilePicture();
@@ -173,17 +175,25 @@ export class UserStore implements Store {
     }
   }
 
+  getProfilePictureUrl(image: string): string {
+    return `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/profile-pictures/${image}`;
+  }
+
   @action setIsProfilePictureSet(value: boolean): void {
     this.isProfilePictureSet = value;
   }
 
   @action setAvatarProfilePicture(): void {
     if (this.user) {
-      this.user.profilePicture = `https://avatars.dicebear.com/api/initials/${
-        this.user.role === Role.USER ? this.user.email : 'BB'
-      }.svg`;
+      this.user.profilePicture = this.getAvatarProfilePictureUrl(
+        this.user.role === Role.USER ? this.user.username : undefined
+      );
       this.setIsProfilePictureSet(false);
     }
+  }
+
+  getAvatarProfilePictureUrl(seed?: string): string {
+    return `${this.avatarApiBaseUrl}/${seed ?? 'BB'}.svg`;
   }
 
   @action async refreshProfile(): Promise<any> {

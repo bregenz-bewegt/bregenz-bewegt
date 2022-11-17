@@ -2,9 +2,7 @@ import './exercise-detail.scss';
 import {
   IonContent,
   IonIcon,
-  IonNote,
   IonPage,
-  IonText,
   useIonToast,
   useIonViewWillEnter,
   useIonViewWillLeave,
@@ -21,14 +19,16 @@ import {
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Park, Activity } from '@bregenz-bewegt/client/types';
-import { location } from 'ionicons/icons';
 import {
   ActivityTimer,
   BackButton,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
 import { play, timer, stopCircle, close } from 'ionicons/icons';
-import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
+import {
+  useDefaultErrorToast,
+  useIsGuest,
+} from '@bregenz-bewegt/client/common/hooks';
 
 interface MatchParams {
   park: string;
@@ -51,6 +51,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [park, setPark] = useState<Park>();
     const [activity, setActivity] = useState<Activity>();
+    const [isGuest] = useIsGuest();
 
     useEffect(() => {
       const parkId = +match.params.park;
@@ -112,41 +113,48 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       <IonPage className="exercise-detail">
         <IonContent className="exercise-detail__content">
           <BackButton />
-          <div className="exercise-detail__content__flex-wrapper">
-            <div className="exercise-detail__content__video-wrapper">
-              <IonIcon icon={play} />
-            </div>
-            <div className="exercise-detail__content__content">
-              <div className="exercise-detail__content__content__park-wrapper">
-                <IonText>
-                  <h1>{park?.name}</h1>
-                </IonText>
-                <IonNote className="exercise-detail__content__content__location">
-                  <IonIcon icon={location} />
-                  {park?.address}
-                </IonNote>
-              </div>
-              <div className="exercise-detail__content__content__exercise-wrapper">
-                <IonText>
-                  <h2>{park?.exercises && park?.exercises[0].name}</h2>
-                  {park?.exercises && park?.exercises[0].difficulty && (
-                    <DifficultyBadge
-                      difficulty={park?.exercises[0].difficulty}
-                    />
-                  )}
-                </IonText>
-                <IonText>
-                  <p>{park?.exercises && park?.exercises[0].description}</p>
-                </IonText>
-              </div>
-            </div>
-            <div className="exercise-detail__content__timer">
-              <ActivityTimer
-                onTimerStart={handleTimerStart}
-                onTimerStop={handleTimerStop}
-              />
-            </div>
+          <div className="exercise-detail__content__video-wrapper">
+            <IonIcon icon={play} />
           </div>
+          <div className="exercise-detail__content__exercise-wrapper">
+            <h1>{park?.exercises && park?.exercises[0].name}</h1>
+            {park?.exercises && park?.exercises[0].difficulty && (
+              <DifficultyBadge difficulty={park?.exercises[0].difficulty} />
+            )}
+            {park?.exercises && park?.exercises[0].coins && (
+              <h3>{park?.exercises[0].coins} B-Bucks</h3>
+            )}
+            {park?.exercises && (
+              <>
+                <h2>Beschreibung</h2>
+                <p>{park?.exercises[0].description}</p>
+                {park?.exercises[0].execution && (
+                  <>
+                    <h2>Ausführung</h2>
+                    <p>{park?.exercises[0].execution}</p>
+                  </>
+                )}
+                {park?.exercises[0].muscles && (
+                  <>
+                    <h2>Verwendete Muskeln</h2>
+                    <ul>
+                      {park?.exercises[0].muscles
+                        .split(',')
+                        .map((li) => li.trim())
+                        .map((li) => (
+                          <li>{li}</li>
+                        ))}
+                    </ul>
+                  </>
+                )}
+              </>
+            )}
+          </div>
+          <ActivityTimer
+            onTimerStart={handleTimerStart}
+            onTimerStop={handleTimerStop}
+            disabled={isGuest}
+          />
         </IonContent>
       </IonPage>
     );
