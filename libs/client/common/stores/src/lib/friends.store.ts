@@ -1,5 +1,6 @@
 import { http } from '@bregenz-bewegt/client/common/http';
-import { Friend } from '@bregenz-bewegt/client/types';
+import { Friend, User } from '@bregenz-bewegt/client/types';
+import { SearchUserQueryDto } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
 
@@ -16,8 +17,13 @@ export class FriendsStore implements Store {
   }
 
   @action async fetchFriends(): Promise<Friend> {
-    const { data } = await http.get('/user/friends');
+    const { data } = await http.get('/users/friends');
     this.setFriends = data;
+    return data;
+  }
+
+  async searchUser(params: SearchUserQueryDto): Promise<User[]> {
+    const { data } = await http.get('users/search', { params });
     return data;
   }
 }

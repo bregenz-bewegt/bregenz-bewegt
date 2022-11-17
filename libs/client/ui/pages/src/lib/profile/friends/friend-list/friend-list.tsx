@@ -22,6 +22,7 @@ import { add } from 'ionicons/icons';
 import React, { useEffect, useRef, useState } from 'react';
 import { IonSearchbarCustomEvent } from '@ionic/core';
 import './friend-list.scss';
+import { User } from '@bregenz-bewegt/client/types';
 
 export interface FriendsListProps {
   pageRef: React.MutableRefObject<undefined>;
@@ -37,11 +38,25 @@ export const FriendList: React.FC<FriendsListProps> = inject(
       HTMLElement | undefined
     >(undefined);
     const [searchText, setSearchText] = useState<string>('');
+    const [searchResult, setSearchResult] = useState<User[]>([]);
 
     const handleSearch = (
       e: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
     ) => {
       setSearchText(e.detail.value ?? searchText);
+
+      const query = e.detail.value?.trim().toLowerCase();
+      if (!query) return setSearchResult([]);
+
+      friendsStore
+        ?.searchUser({ username: query })
+        .then((users) => {
+          console.log(users);
+          setSearchResult(users);
+        })
+        .catch(() => {
+          setSearchResult([]);
+        });
     };
 
     useEffect(() => {
@@ -86,7 +101,13 @@ export const FriendList: React.FC<FriendsListProps> = inject(
               placeholder="nach Benutzernamen suchen"
             ></IonSearchbar>
             <IonGrid>
-              <IonRow>test</IonRow>
+              {searchResult.length > 0 ? (
+                searchResult.map((u) => {
+                  return <IonRow>{u.username}</IonRow>;
+                })
+              ) : (
+                <IonRow>Keine Benutzer gefunden</IonRow>
+              )}
             </IonGrid>
           </IonContent>
         </IonModal>

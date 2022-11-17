@@ -274,4 +274,10 @@ export class UserService {
 
     return friends;
   }
+
+  async searchUserByUsername(query: string): Promise<User[]> {
+    return this.prismaService.user.findMany({
+      where: { username: { search: query } },
+    });
+  }
 }

@@ -12,6 +12,7 @@ import {
   PatchPreferencesDto,
   PatchProfileDto,
   ResetEmailDto,
+  SearchUserQueryDto,
   VerifyResetEmailDto,
 } from '@bregenz-bewegt/shared/types';
 import {
@@ -27,6 +28,8 @@ import {
   UseGuards,
   UseInterceptors,
   Headers,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -141,8 +144,28 @@ export class UserController {
     return this.userService.deleteProfilePicture(userId);
   }
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @Get('friends')
-  getFriends(@GetCurrentUser('sub') userId: User['id']): Promise<any> {
+  getFriends(@GetCurrentUser('sub') userId: User['id']): Promise<User[]> {
     return this.userService.getFriends(userId);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Get('search')
+  searchUser(
+    @GetCurrentUser('sub') userId: User['id'],
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
+        forbidNonWhitelisted: true,
+      })
+    )
+    dto: SearchUserQueryDto
+  ): Promise<User[]> {
+    return this.userService.searchUserByUsername(dto.username);
   }
 }

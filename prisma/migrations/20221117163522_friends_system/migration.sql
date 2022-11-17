@@ -7,6 +7,9 @@ CREATE TABLE `_friends` (
     INDEX `_friends_B_index`(`B`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateIndex
+CREATE FULLTEXT INDEX `User_username_idx` ON `User`(`username`);
+
 -- AddForeignKey
 ALTER TABLE `_friends` ADD CONSTRAINT `_friends_A_fkey` FOREIGN KEY (`A`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
