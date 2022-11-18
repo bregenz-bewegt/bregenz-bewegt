@@ -18,7 +18,13 @@ export const RequestList: React.FC<RequestProps> = inject(
         <IonGrid>
           <IonRow>
             <IonText>
-              <h2>Anfragen</h2>
+              <h2>Empfangen</h2>
+            </IonText>
+          </IonRow>
+
+          <IonRow>
+            <IonText>
+              <h2>Gesendet</h2>
             </IonText>
           </IonRow>
         </IonGrid>

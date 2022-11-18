@@ -32,6 +32,7 @@ import { IonSearchbarCustomEvent } from '@ionic/core';
 import './friend-list.scss';
 import { FriendSearchResult } from '@bregenz-bewegt/shared/types';
 import { AddCircle } from 'iconsax-react';
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 
 export interface FriendsListProps {
   pageRef: React.MutableRefObject<undefined>;
@@ -48,9 +49,11 @@ export const FriendList: React.FC<FriendsListProps> = inject(
     const [presentingElement, setPresentingElement] = useState<
       HTMLElement | undefined
     >(undefined);
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
     const [searchResult, setSearchResult] = useState<FriendSearchResult[]>([]);
+    const [sentRequests, setSentRequests] = useState<FriendSearchResult[]>([]);
 
     const handleSearch = (
       e: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
@@ -70,6 +73,17 @@ export const FriendList: React.FC<FriendsListProps> = inject(
         .catch(() => {
           setSearchResult([]);
           setIsLoading(false);
+        });
+    };
+
+    const sendFriendRequest = (addressee: FriendSearchResult) => {
+      friendsStore
+        ?.sendFriendRequest({ addresseeId: addressee.id })
+        .then((data) => {
+          setSentRequests((prev) => [...prev, addressee]);
+        })
+        .catch(() => {
+          presentDefaultErrorToast();
         });
     };
 
@@ -96,7 +110,6 @@ export const FriendList: React.FC<FriendsListProps> = inject(
             </IonRow>
           </IonGrid>
         </div>
-
         <IonModal
           trigger="open-modal"
           ref={addModalRef}
@@ -124,8 +137,12 @@ export const FriendList: React.FC<FriendsListProps> = inject(
             <IonList>
               {isLoading || searchResult.length > 0
                 ? searchResult.map((user) => {
+                    const isRequested =
+                      user.isRequested ||
+                      sentRequests.some((r) => r.id === user.id);
+
                     return (
-                      <IonRow>
+                      <IonRow key={user.id}>
                         <IonCol size="auto" className="username-avatar-col">
                           <IonItem
                             key={user.id}
@@ -163,11 +180,19 @@ export const FriendList: React.FC<FriendsListProps> = inject(
                         </IonCol>
                         <IonCol size="auto">
                           {!isLoading && (
-                            <IonButton fill="clear">
-                              <AddCircle
-                                variant="Bold"
-                                color={`var(--ion-color-primary)`}
-                              />
+                            <IonButton
+                              fill="clear"
+                              onClick={() => sendFriendRequest(user)}
+                              disabled={isRequested}
+                            >
+                              {isRequested ? (
+                                'angefragt'
+                              ) : (
+                                <AddCircle
+                                  variant="Bold"
+                                  color={`var(--ion-color-primary)`}
+                                />
+                              )}
                             </IonButton>
                           )}
                         </IonCol>

@@ -8,6 +8,7 @@ import {
   RoleGuard,
 } from '@bregenz-bewegt/server/common';
 import {
+  CreateFriendRequestDto,
   EmailResetToken,
   FriendSearchResult,
   PatchPreferencesDto,
@@ -37,7 +38,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterService } from '@bregenz-bewegt/server/multer';
-import { Role, User, Preferences } from '@prisma/client';
+import { Role, User, Preferences, FriendRequest } from '@prisma/client';
 import { UtilService } from '@bregenz-bewegt/server/util';
 
 @Controller('users')
@@ -155,7 +156,7 @@ export class UserController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Get('search')
+  @Get('friends/search')
   searchUser(
     @GetCurrentUser('sub') userId: User['id'],
     @Query(
@@ -167,8 +168,19 @@ export class UserController {
     )
     dto: SearchUserQueryDto
   ): Promise<FriendSearchResult[]> {
-    return this.userService.searchUserByUsername(dto.username, {
-      exclude: [userId],
+    return this.userService.searchUserFriendByUsername(dto.username, userId);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @Post('friends/request')
+  createFriendRequest(
+    @GetCurrentUser('sub') requesteeId: User['id'],
+    @Body() dto: CreateFriendRequestDto
+  ): Promise<FriendRequest> {
+    return this.userService.createFriendRequest({
+      requesteeId,
+      addresseeId: dto.addresseeId,
     });
   }
 }
