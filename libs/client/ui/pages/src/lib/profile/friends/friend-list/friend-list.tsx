@@ -15,6 +15,7 @@ import {
   IonIcon,
   IonItem,
   IonLabel,
+  IonList,
   IonModal,
   IonRow,
   IonSearchbar,
@@ -114,64 +115,65 @@ export const FriendList: React.FC<FriendsListProps> = inject(
           </IonHeader>
           <IonContent className="add-friend-modal__content">
             <IonSearchbar
-              style={{ padding: 0 }}
               mode="ios"
               value={searchText}
               onIonChange={(e) => handleSearch(e)}
               debounce={250}
               placeholder="nach Benutzernamen suchen"
             ></IonSearchbar>
-            {isLoading || searchResult.length > 0
-              ? searchResult.map((user) => {
-                  return (
-                    <IonRow>
-                      <IonCol size="auto" className="username-avatar-col">
-                        <IonItem
-                          key={user.id}
-                          routerLink={`/users/${user.id}`}
-                          onClick={() => dismissAddModal()}
-                          detail={false}
-                          lines="none"
-                        >
-                          <IonAvatar className="avatar" slot="start">
-                            {isLoading ? (
-                              <IonSkeletonText animated />
-                            ) : (
-                              <img
-                                src={
-                                  user.profilePicture
-                                    ? userStore?.getProfilePictureUrl(
-                                        user.profilePicture
-                                      )
-                                    : userStore?.getAvatarProfilePictureUrl(
-                                        user.username
-                                      )
-                                }
-                                alt="avatar"
-                              />
-                            )}
-                          </IonAvatar>
-                          <IonLabel>
-                            {isLoading ? (
-                              <IonSkeletonText animated />
-                            ) : (
-                              user.username
-                            )}
-                          </IonLabel>
-                        </IonItem>
-                      </IonCol>
-                      <IonCol size="auto">
-                        <IonButton fill="clear">
-                          <AddCircle
-                            variant="Bold"
-                            color={`var(--ion-color-primary)`}
-                          />
-                        </IonButton>
-                      </IonCol>
-                    </IonRow>
-                  );
-                })
-              : searchText && <IonRow>Keine Benutzer gefunden</IonRow>}
+            <IonList>
+              {isLoading || searchResult.length > 0
+                ? searchResult.map((user) => {
+                    return (
+                      <IonRow>
+                        <IonCol size="auto" className="username-avatar-col">
+                          <IonItem
+                            key={user.id}
+                            routerLink={`/users/${user.id}`}
+                            onClick={() => dismissAddModal()}
+                            detail={false}
+                            lines="none"
+                          >
+                            <IonAvatar className="avatar" slot="start">
+                              {isLoading ? (
+                                <IonSkeletonText animated />
+                              ) : (
+                                <img
+                                  src={
+                                    user.profilePicture
+                                      ? userStore?.getProfilePictureUrl(
+                                          user.profilePicture
+                                        )
+                                      : userStore?.getAvatarProfilePictureUrl(
+                                          user.username
+                                        )
+                                  }
+                                  alt="avatar"
+                                />
+                              )}
+                            </IonAvatar>
+                            <IonLabel>
+                              {isLoading ? (
+                                <IonSkeletonText animated />
+                              ) : (
+                                user.username
+                              )}
+                            </IonLabel>
+                          </IonItem>
+                        </IonCol>
+                        <IonCol size="auto">
+                          <IonButton fill="clear">
+                            <AddCircle
+                              variant="Bold"
+                              color={`var(--ion-color-primary)`}
+                            />
+                          </IonButton>
+                        </IonCol>
+                      </IonRow>
+                    );
+                  })
+                : searchText && <IonRow>Keine Benutzer gefunden</IonRow>}
+            </IonList>
           </IonContent>
         </IonModal>
       </>
