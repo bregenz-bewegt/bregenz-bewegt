@@ -167,6 +167,8 @@ export class UserController {
     )
     dto: SearchUserQueryDto
   ): Promise<FriendSearchResult[]> {
-    return this.userService.searchUserByUsername(dto.username);
+    return this.userService.searchUserByUsername(dto.username, {
+      exclude: [userId],
+    });
   }
 }
