@@ -31,8 +31,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IonSearchbarCustomEvent } from '@ionic/core';
 import './friend-list.scss';
 import { FriendSearchResult } from '@bregenz-bewegt/shared/types';
-import { AddCircle } from 'iconsax-react';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
+import { AddCircle } from 'iconsax-react';
 
 export interface FriendsListProps {
   pageRef: React.MutableRefObject<undefined>;
@@ -119,10 +119,8 @@ export const FriendList: React.FC<FriendsListProps> = inject(
           <IonHeader>
             <IonToolbar>
               <IonTitle>Freund hinzufügen</IonTitle>
-              <IonButtons slot="end">
-                <IonButton onClick={() => dismissAddModal()}>
-                  Abbrechen
-                </IonButton>
+              <IonButtons slot="start">
+                <IonButton onClick={() => dismissAddModal()}>Zurück</IonButton>
               </IonButtons>
             </IonToolbar>
           </IonHeader>

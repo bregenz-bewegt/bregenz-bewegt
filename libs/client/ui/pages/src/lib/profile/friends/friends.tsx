@@ -45,7 +45,7 @@ export const Friends: React.FC<FriendsProps> = inject(friendsStore.storeKey)(
             <IonTitle>Freunde</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent className="friends__content" fullscreen scrollY={false}>
+        <IonContent className="friends__content" fullscreen>
           <IonSegment
             value={friendsDisplayType}
             onIonChange={(e) =>

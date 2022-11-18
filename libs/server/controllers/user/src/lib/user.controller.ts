@@ -221,4 +221,28 @@ export class UserController {
   ): Promise<User[]> {
     return this.userService.getReceivedFriendRequestUsers(userId);
   }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Put('friends/requests/accept')
+  acceptFriendRequest(): void {
+    //
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Put('friends/requests/reject')
+  rejectFriendRequest(): void {
+    //
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Put('friends/requests/revoke')
+  revokeFriendRequest(): void {
+    //
+  }
 }
