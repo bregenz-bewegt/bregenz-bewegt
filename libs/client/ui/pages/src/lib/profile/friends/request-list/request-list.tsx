@@ -1,3 +1,4 @@
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import {
   FriendsStore,
   friendsStore,
@@ -32,6 +33,7 @@ export const RequestList: React.FC<RequestProps> = inject(
 )(
   observer(({ friendsStore, userStore }) => {
     const [requests, setRequests] = useState<AllFriendRequestUsers>();
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
 
     useEffect(() => {
       friendsStore
@@ -39,12 +41,22 @@ export const RequestList: React.FC<RequestProps> = inject(
         .then((data) => {
           setRequests(data);
         })
-        .catch((e) => {});
+        .catch(() => {
+          presentDefaultErrorToast();
+        });
     }, []);
 
-    const acceptRequest = () => {};
-    const rejectRequest = () => {};
-    const revokeRequest = () => {};
+    const acceptRequest = () => {
+      //
+    };
+
+    const rejectRequest = () => {
+      //
+    };
+
+    const revokeRequest = () => {
+      //
+    };
 
     return (
       <div className="request-list">
