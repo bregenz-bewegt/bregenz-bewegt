@@ -278,7 +278,6 @@ const createActivities = async () => {
   const exercises = await prisma.exercise.findMany({
     include: { parks: true },
   });
-  const parks = await (await prisma.park.findMany()).length;
 
   await Promise.all(
     users.map(async (user) => {
@@ -287,17 +286,32 @@ const createActivities = async () => {
         data: {
           activities: {
             createMany: {
-              data: exercises.map((exercise) => ({
-                startedAt: new Date(),
-                endedAt: new Date(),
-                exerciseId: exercise.id,
-                parkId: exercise.parks[Math.floor(Math.random() * parks)].id,
-              })),
+              data: exercises.map((exercise) => {
+                const date = randomDate();
+                return {
+                  startedAt: date,
+                  endedAt: date,
+                  exerciseId: exercise.id,
+                  parkId:
+                    exercise.parks[
+                      Math.floor(Math.random() * exercise.parks.length)
+                    ].id,
+                };
+              }),
             },
           },
         },
       });
     })
+  );
+};
+
+const randomDate = () => {
+  const t = new Date();
+  t.setDate(1);
+  t.getMonth() > 0 && t.setMonth(t.getMonth() - 1);
+  return new Date(
+    +t.getTime() + Math.random() * (new Date().getTime() - t.getTime())
   );
 };
 

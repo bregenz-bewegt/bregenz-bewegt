@@ -10,6 +10,6 @@ export type Activity = {
 };
 
 export type ActivityChartData = {
-  date: Date;
-  activities: number;
+  date: number;
+  coins: number;
 }[];

@@ -52,7 +52,7 @@ export class ActivityController {
     @GetCurrentUser('sub') userId: User['id'],
     @Param('month', ParseIntPipe) month: number
   ): Promise<ActivityChartData> {
-    return this.activityService.getCahrtData(userId, month);
+    return this.activityService.getChartData(userId, month);
   }
 
   @Post('start')

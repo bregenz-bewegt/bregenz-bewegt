@@ -79,10 +79,10 @@ export class ActivityService {
           _max: data._max.endedAt.getMonth(),
         };
       });
-    return [...Array(_max - _min + 1).keys()].map((x) => _max - x);
+    return [...Array(_max - _min + 1)].map((_x, i) => _max - i);
   }
 
-  async getCahrtData(
+  async getChartData(
     userId: User['id'],
     month: number
   ): Promise<ActivityChartData> {
@@ -110,17 +110,23 @@ export class ActivityService {
       },
       select: {
         endedAt: true,
+        exercise: {
+          select: {
+            coins: true,
+          },
+        },
       },
     });
 
-    return activities.reduce((result: ActivityChartData, activity) => {
+    return activities.reduce((result, activity) => {
       const date = new Date(activity.endedAt.setHours(13, 0, 0, 0));
-      const rIndex = result.findIndex(
-        (r) => r.date.getTime() === date.getTime()
-      );
+      const rIndex = result.findIndex((r) => r.date === date.getDate());
       rIndex > -1
-        ? result[rIndex].activities++
-        : result.push({ date: date, activities: 1 });
+        ? (result[rIndex].coins += activity.exercise.coins)
+        : result.push({
+            date: date.getDate(),
+            coins: activity.exercise.coins,
+          });
       return result;
     }, []);
   }

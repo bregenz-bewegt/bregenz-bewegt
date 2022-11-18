@@ -1,13 +1,77 @@
 .analytics {
   &__content {
+    --padding-top: 0;
+
     &__chart {
-    }
-    &__list {
-      height: 40%;
-      overflow-y: scroll;
-      ion-card {
-        padding: var(--spacing-m);
+      margin: 0 var(--spacing-s);
+      margin-top: var(--spacing-l);
+
+      h2 {
+        margin: 0;
       }
+
+      &__headline {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 0;
+        margin-bottom: var(--spacing-m);
+      }
+
+      & ion-select {
+        padding: var(--spacing-xs) var(--spacing-s);
+        border-radius: var(--spacing-s);
+        color: var(--ion-color-secondary);
+
+        &::part(icon) {
+          color: var(--ion-color-secondary);
+          opacity: 1;
+        }
+      }
+    }
+
+    &__list {
+      margin-top: var(--spacing-xl);
+
+      &__title {
+        padding: var(--spacing-s);
+        padding-top: var(--spacing-l);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: flex-end;
+
+        &:first-of-type {
+          justify-content: space-between;
+          background-color: var(--ion-background-color);
+        }
+
+        & h2 {
+          margin: 0;
+          background-color: var(--ion-background-color);
+        }
+
+        & h4 {
+          margin: 0;
+          width: 50%;
+          text-align: end;
+          background-color: var(--ion-background-color);
+        }
+      }
+
+      & ion-card {
+        padding: var(--spacing-m);
+        margin: var(--spacing-s);
+      }
+    }
+
+    &__top-button {
+      bottom: 0;
+      right: 0;
+      margin-right: var(--spacing-xl);
+      margin-bottom: var(--spacing-l);
+      transition: 500ms;
     }
   }
 }
