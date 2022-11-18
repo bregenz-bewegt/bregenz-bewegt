@@ -48,7 +48,6 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     const [chartMonthTimespans, setChartMonthTimespans] = useState<number[]>();
     const [chartData, setChartData] = useState<ActivityChartData>();
     const [chartFilterMonth, setChartFilterMonth] = useState<number>();
-    const [maximumReached, setMaximumReached] = useState<boolean>(false);
     const [showTopButton, setShowTopButton] = useState<boolean>(false);
     const contentRef = createRef<HTMLIonContentElement>();
     const RELOAD_CHUNK_SIZE = 5;
@@ -61,18 +60,16 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
       includeMin: boolean;
     };
 
-    const loadInfinite = (e: any) => {
+    const loadInfinite = (e?: any) => {
       activityStore
         ?.getActivities({ skip: activityList.length, take: RELOAD_CHUNK_SIZE })
         .then((data) => {
-          data.length > 0
-            ? setActivityList((prev) => [...prev, ...calculateTime(data)])
-            : setMaximumReached(true);
-          e.target.complete();
+          setActivityList((prev) => [...prev, ...calculateTime(data)]);
+          e && e.target.complete();
         })
         .catch(() => {
           setActivityList([]);
-          e.target.complete();
+          e && e.target.complete();
         });
     };
 
@@ -116,9 +113,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     }, [chartFilterMonth]);
 
     useIonViewWillEnter(() => {
-      activityStore
-        ?.getActivities({ take: RELOAD_CHUNK_SIZE })
-        .then((data) => setActivityList(calculateTime(data)));
+      loadInfinite();
       activityStore?.getTimespans().then((data) => {
         setChartMonthTimespans(data);
         setChartFilterMonth(data[0]);
@@ -268,15 +263,17 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                         </h4>
                       </div>
                     )}
-                    <ActivityCard activity={a} key={i} />
+                    <ActivityCard
+                      activity={a}
+                      key={i}
+                      className="analytics__content__list__card"
+                    />
                   </>
                 );
               })}
             <IonInfiniteScroll
               onIonInfinite={loadInfinite}
-              threshold="10px"
               className="leaderboard__infinite-scroll-loading"
-              disabled={maximumReached}
             >
               <IonInfiniteScrollContent
                 loadingSpinner="crescent"

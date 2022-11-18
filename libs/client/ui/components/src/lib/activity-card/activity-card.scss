@@ -1,0 +1,28 @@
+.activity-card {
+  padding: var(--spacing-m);
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    div {
+      display: flex;
+      flex-direction: column;
+
+      &:first-of-type {
+        justify-content: flex-start;
+        span {
+          font-size: medium;
+          font-weight: bold;
+        }
+      }
+
+      &:last-of-type {
+        align-items: flex-end;
+        justify-content: space-between;
+        & * {
+          margin: var(--spacing-xxs);
+        }
+      }
+    }
+  }
+}
