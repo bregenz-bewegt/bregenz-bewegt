@@ -162,17 +162,23 @@ export const FriendList: React.FC<FriendsListProps> = inject(
                           </IonItem>
                         </IonCol>
                         <IonCol size="auto">
-                          <IonButton fill="clear">
-                            <AddCircle
-                              variant="Bold"
-                              color={`var(--ion-color-primary)`}
-                            />
-                          </IonButton>
+                          {!isLoading && (
+                            <IonButton fill="clear">
+                              <AddCircle
+                                variant="Bold"
+                                color={`var(--ion-color-primary)`}
+                              />
+                            </IonButton>
+                          )}
                         </IonCol>
                       </IonRow>
                     );
                   })
-                : searchText && <IonRow>Keine Benutzer gefunden</IonRow>}
+                : searchText && (
+                    <IonRow className="no-results">
+                      <IonItem lines="none">keine Benutzer gefunden</IonItem>
+                    </IonRow>
+                  )}
             </IonList>
           </IonContent>
         </IonModal>

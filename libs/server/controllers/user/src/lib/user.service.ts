@@ -286,7 +286,7 @@ export class UserService {
         username: { contains: query },
         ...(options?.exclude !== undefined
           ? {
-              AND: { id: { in: options.exclude } },
+              AND: { id: { notIn: options.exclude } },
             }
           : {}),
       },
