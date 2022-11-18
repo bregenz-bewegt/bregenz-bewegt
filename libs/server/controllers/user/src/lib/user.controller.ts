@@ -183,4 +183,42 @@ export class UserController {
       addresseeId: dto.addresseeId,
     });
   }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Get('friends/requests')
+  async getAllFriendRequestUsers(
+    @GetCurrentUser('sub') userId: User['id']
+  ): Promise<{ requested: User[]; received: User[] }> {
+    const requested = await this.userService.getRequestedFriendRequestUsers(
+      userId
+    );
+
+    const received = await this.userService.getReceivedFriendRequestUsers(
+      userId
+    );
+
+    return { requested, received };
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Get('friends/requests/requested-users')
+  getRequestedFriendRequestUsers(
+    @GetCurrentUser('sub') userId: User['id']
+  ): Promise<User[]> {
+    return this.userService.getRequestedFriendRequestUsers(userId);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @Get('friends/requests/received-users')
+  getReceivedFriendRequestUsers(
+    @GetCurrentUser('sub') userId: User['id']
+  ): Promise<User[]> {
+    return this.userService.getReceivedFriendRequestUsers(userId);
+  }
 }

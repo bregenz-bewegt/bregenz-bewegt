@@ -316,4 +316,26 @@ export class UserService {
       },
     });
   }
+
+  async getRequestedFriendRequestUsers(
+    requesteeId: FriendRequest['requesteeId']
+  ): Promise<User[]> {
+    const addressees = await this.prismaService.friendRequest.findMany({
+      where: { requestee: { id: requesteeId } },
+      select: { addressee: true },
+    });
+
+    return addressees.map((ad) => ({ ...ad.addressee }));
+  }
+
+  async getReceivedFriendRequestUsers(
+    addresseeId: FriendRequest['addresseeId']
+  ): Promise<User[]> {
+    const requestees = await this.prismaService.friendRequest.findMany({
+      where: { addressee: { id: addresseeId } },
+      select: { requestee: true },
+    });
+
+    return requestees.map((re) => ({ ...re.requestee }));
+  }
 }
