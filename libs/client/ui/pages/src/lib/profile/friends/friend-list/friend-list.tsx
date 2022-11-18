@@ -131,6 +131,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
                           routerLink={`/users/${user.id}`}
                           onClick={() => dismissAddModal()}
                           detail={false}
+                          lines="none"
                         >
                           <IonAvatar className="avatar" slot="start">
                             {isLoading ? (
