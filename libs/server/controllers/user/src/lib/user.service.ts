@@ -277,8 +277,10 @@ export class UserService {
   }
 
   async searchUserByUsername(query: string): Promise<FriendSearchResult[]> {
+    const maxSearchResults = 100;
     return this.prismaService.user.findMany({
       where: { username: { contains: query } },
+      take: maxSearchResults,
     });
   }
 }
