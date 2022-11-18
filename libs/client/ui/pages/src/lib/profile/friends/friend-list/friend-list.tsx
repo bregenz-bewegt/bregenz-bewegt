@@ -13,6 +13,8 @@ import {
   IonGrid,
   IonHeader,
   IonIcon,
+  IonItem,
+  IonLabel,
   IonModal,
   IonRow,
   IonSearchbar,
@@ -28,6 +30,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IonSearchbarCustomEvent } from '@ionic/core';
 import './friend-list.scss';
 import { FriendSearchResult } from '@bregenz-bewegt/shared/types';
+import { AddCircle } from 'iconsax-react';
 
 export interface FriendsListProps {
   pageRef: React.MutableRefObject<undefined>;
@@ -69,6 +72,10 @@ export const FriendList: React.FC<FriendsListProps> = inject(
         });
     };
 
+    const dismissAddModal = () => {
+      addModalRef.current?.dismiss();
+    };
+
     useEffect(() => {
       setPresentingElement(pageRef.current);
     }, []);
@@ -99,7 +106,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
             <IonToolbar>
               <IonTitle>Freund hinzufügen</IonTitle>
               <IonButtons slot="end">
-                <IonButton onClick={() => addModalRef.current?.dismiss()}>
+                <IonButton onClick={() => dismissAddModal()}>
                   Abbrechen
                 </IonButton>
               </IonButtons>
@@ -114,13 +121,18 @@ export const FriendList: React.FC<FriendsListProps> = inject(
               debounce={250}
               placeholder="nach Benutzernamen suchen"
             ></IonSearchbar>
-            <IonGrid>
-              {searchResult.length > 0
-                ? searchResult.map((user) => {
-                    return (
-                      <IonRow key={user.id}>
-                        <IonCol size="auto" className={`avatar align-center`}>
-                          <IonAvatar>
+            {isLoading || searchResult.length > 0
+              ? searchResult.map((user) => {
+                  return (
+                    <IonRow>
+                      <IonCol size="auto" className="username-avatar-col">
+                        <IonItem
+                          key={user.id}
+                          routerLink={`/users/${user.id}`}
+                          onClick={() => dismissAddModal()}
+                          detail={false}
+                        >
+                          <IonAvatar className="avatar" slot="start">
                             {isLoading ? (
                               <IonSkeletonText animated />
                             ) : (
@@ -138,19 +150,27 @@ export const FriendList: React.FC<FriendsListProps> = inject(
                               />
                             )}
                           </IonAvatar>
-                        </IonCol>
-                        <IonCol size="auto" className={`username`}>
-                          {isLoading ? (
-                            <IonSkeletonText animated />
-                          ) : (
-                            user.username
-                          )}
-                        </IonCol>
-                      </IonRow>
-                    );
-                  })
-                : searchText && <IonRow>Keine Benutzer gefunden</IonRow>}
-            </IonGrid>
+                          <IonLabel>
+                            {isLoading ? (
+                              <IonSkeletonText animated />
+                            ) : (
+                              user.username
+                            )}
+                          </IonLabel>
+                        </IonItem>
+                      </IonCol>
+                      <IonCol size="auto">
+                        <IonButton fill="clear">
+                          <AddCircle
+                            variant="Bold"
+                            color={`var(--ion-color-primary)`}
+                          />
+                        </IonButton>
+                      </IonCol>
+                    </IonRow>
+                  );
+                })
+              : searchText && <IonRow>Keine Benutzer gefunden</IonRow>}
           </IonContent>
         </IonModal>
       </>

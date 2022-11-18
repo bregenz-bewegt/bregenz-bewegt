@@ -3,20 +3,24 @@
 
 .add-friend-modal {
   &__content {
-    ion-grid {
-      ion-row {
-        ion-col {
-          display: flex;
-          align-items: center;
+    ion-row {
+      justify-content: space-between;
 
-          &.avatar {
-            ion-avatar {
-              width: var(--spacing-xl);
-              height: var(--spacing-xl);
-            }
+      ion-col {
+        padding: 0;
+
+        &.username-avatar-col {
+          flex: 1 !important;
+        }
+
+        ion-item {
+          ion-avatar {
+            width: var(--spacing-xl);
+            height: var(--spacing-xl);
+            margin-right: var(--spacing-m);
           }
 
-          &.username {
+          .username {
             display: block;
             overflow: hidden;
             white-space: nowrap;
