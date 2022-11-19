@@ -4,6 +4,7 @@ CREATE TABLE `FriendRequest` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `requesteeId` VARCHAR(191) NOT NULL,
     `addresseeId` VARCHAR(191) NOT NULL,
+    `acceptedAt` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

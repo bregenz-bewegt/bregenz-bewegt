@@ -111,10 +111,11 @@ model Exercise {
 }
 
 model FriendRequest {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now())
-  requestee   User     @relation("requestee", fields: [requesteeId], references: [id])
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  requestee   User      @relation("requestee", fields: [requesteeId], references: [id])
   requesteeId String
-  addressee   User     @relation("addressee", fields: [addresseeId], references: [id])
+  addressee   User      @relation("addressee", fields: [addresseeId], references: [id])
   addresseeId String
+  acceptedAt  DateTime?
 }

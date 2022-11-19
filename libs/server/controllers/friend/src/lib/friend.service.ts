@@ -5,6 +5,8 @@ import {
   FriendAdresseeResult,
   FriendRequesteeResult,
   RevokeFriendRequestDto,
+  AcceptFriendRequestDto,
+  RejectFriendRequestDto,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, FriendRequest } from '@prisma/client';
@@ -61,7 +63,7 @@ export class FriendService {
     requesteeId: FriendRequest['requesteeId']
   ): Promise<(FriendRequest & { addressee: FriendAdresseeResult })[]> {
     return this.prismaService.friendRequest.findMany({
-      where: { requestee: { id: requesteeId } },
+      where: { requestee: { id: requesteeId }, AND: { acceptedAt: null } },
       include: {
         addressee: {
           select: { id: true, username: true, profilePicture: true },
@@ -74,7 +76,7 @@ export class FriendService {
     addresseeId: FriendRequest['addresseeId']
   ): Promise<(FriendRequest & { requestee: FriendRequesteeResult })[]> {
     return this.prismaService.friendRequest.findMany({
-      where: { addressee: { id: addresseeId } },
+      where: { addressee: { id: addresseeId }, AND: { acceptedAt: null } },
       include: {
         requestee: {
           select: { id: true, username: true, profilePicture: true },
@@ -85,6 +87,23 @@ export class FriendService {
 
   async revokeFriendRequest(
     dto: RevokeFriendRequestDto
+  ): Promise<FriendRequest> {
+    return this.prismaService.friendRequest.delete({
+      where: { id: dto.requestId },
+    });
+  }
+
+  async acceptFriendRequest(
+    dto: AcceptFriendRequestDto
+  ): Promise<FriendRequest> {
+    return this.prismaService.friendRequest.update({
+      where: { id: dto.requestId },
+      data: { acceptedAt: new Date() },
+    });
+  }
+
+  async rejectFriendRequest(
+    dto: RejectFriendRequestDto
   ): Promise<FriendRequest> {
     return this.prismaService.friendRequest.delete({
       where: { id: dto.requestId },

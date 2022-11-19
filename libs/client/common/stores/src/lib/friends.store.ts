@@ -1,9 +1,11 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { Friend } from '@bregenz-bewegt/client/types';
 import {
+  AcceptFriendRequestDto,
   AllFriendRequests,
   CreateFriendRequestDto,
   FriendSearchResult,
+  RejectFriendRequestDto,
   RevokeFriendRequestDto,
   SearchUserQueryDto,
 } from '@bregenz-bewegt/shared/types';
@@ -45,6 +47,16 @@ export class FriendsStore implements Store {
 
   async revokeFriendRequest(dto: RevokeFriendRequestDto): Promise<void> {
     const { data } = await http.post('friends/requests/revoke', dto);
+    return data;
+  }
+
+  async acceptFriendRequest(dto: AcceptFriendRequestDto): Promise<void> {
+    const { data } = await http.post('friends/requests/accept', dto);
+    return data;
+  }
+
+  async rejectFriendRequest(dto: RejectFriendRequestDto): Promise<void> {
+    const { data } = await http.post('friends/requests/reject', dto);
     return data;
   }
 }
