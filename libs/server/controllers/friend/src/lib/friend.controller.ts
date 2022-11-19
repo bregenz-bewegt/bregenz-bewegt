@@ -12,13 +12,14 @@ import {
   FriendAdresseeResult,
   FriendRequesteeResult,
   RevokeFriendRequestDto,
+  RejectFriendRequestDto,
+  AcceptFriendRequestDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   Body,
   Controller,
   Get,
   Post,
-  Put,
   Query,
   UseGuards,
   UseInterceptors,
@@ -107,17 +108,22 @@ export class FriendController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Put('requests/accept')
-  acceptFriendRequest(): void {
-    //
+  @Post('requests/accept')
+  acceptFriendRequest(
+    @GetCurrentUser('sub') userId: User['id'],
+    @Body() dto: AcceptFriendRequestDto
+  ): Promise<FriendRequest> {
+    return this.friendService.acceptFriendRequest(userId, dto);
   }
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Put('requests/reject')
-  rejectFriendRequest(): void {
-    //
+  @Post('requests/reject')
+  rejectFriendRequest(
+    @Body() dto: RejectFriendRequestDto
+  ): Promise<FriendRequest> {
+    return this.friendService.rejectFriendRequest(dto);
   }
 
   @HasRole(Role.USER)

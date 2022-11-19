@@ -51,18 +51,32 @@ export const RequestList: React.FC<RequestProps> = inject(
       fetchFriendRequests();
     }, []);
 
-    const acceptRequest = () => {
-      //
+    const acceptRequest = (requestId: FriendRequest['id']) => {
+      friendsStore
+        ?.acceptFriendRequest({ requestId })
+        .then(() => {
+          fetchFriendRequests();
+        })
+        .catch(() => {
+          presentDefaultErrorToast();
+        });
     };
 
-    const rejectRequest = () => {
-      //
+    const rejectRequest = (requestId: FriendRequest['id']) => {
+      friendsStore
+        ?.rejectFriendRequest({ requestId })
+        .then(() => {
+          fetchFriendRequests();
+        })
+        .catch(() => {
+          presentDefaultErrorToast();
+        });
     };
 
     const revokeRequest = (requestId: FriendRequest['id']) => {
       friendsStore
         ?.revokeFriendRequest({ requestId })
-        .then((data) => {
+        .then(() => {
           fetchFriendRequests();
         })
         .catch(() => {
@@ -110,7 +124,7 @@ export const RequestList: React.FC<RequestProps> = inject(
                     <IonCol size="auto">
                       <IonButton
                         fill="clear"
-                        onClick={() => rejectRequest()}
+                        onClick={() => rejectRequest(request.id)}
                         className="reject"
                       >
                         <CloseCircle
@@ -120,7 +134,7 @@ export const RequestList: React.FC<RequestProps> = inject(
                       </IonButton>
                       <IonButton
                         fill="clear"
-                        onClick={() => acceptRequest()}
+                        onClick={() => acceptRequest(request.id)}
                         className="accept"
                       >
                         <TickCircle

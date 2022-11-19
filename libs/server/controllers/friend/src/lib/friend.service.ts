@@ -94,12 +94,20 @@ export class FriendService {
   }
 
   async acceptFriendRequest(
+    userId: User['id'],
     dto: AcceptFriendRequestDto
   ): Promise<FriendRequest> {
-    return this.prismaService.friendRequest.update({
+    const friendRequest = await this.prismaService.friendRequest.update({
       where: { id: dto.requestId },
       data: { acceptedAt: new Date() },
     });
+
+    await this.prismaService.user.update({
+      where: { id: userId },
+      data: { friends: { connect: { id: friendRequest.addresseeId } } },
+    });
+
+    return friendRequest;
   }
 
   async rejectFriendRequest(
