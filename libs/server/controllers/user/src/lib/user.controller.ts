@@ -191,10 +191,9 @@ export class UserController {
   @UseGuards(RoleGuard)
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Get('friends/requests')
-  async getFriendRequests(@GetCurrentUser('sub') userId: User['id']): Promise<{
-    requested: (FriendRequest & { addressee: FriendAdresseeResult })[];
-    received: (FriendRequest & { requestee: FriendRequesteeResult })[];
-  }> {
+  async getFriendRequests(
+    @GetCurrentUser('sub') userId: User['id']
+  ): Promise<AllFriendRequests> {
     const requested = await this.userService.getRequestedFriendRequests(userId);
     const received = await this.userService.getReceivedFriendRequests(userId);
 
