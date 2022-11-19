@@ -7,6 +7,7 @@ import {
   RevokeFriendRequestDto,
   AcceptFriendRequestDto,
   RejectFriendRequestDto,
+  RemoveFriendDto,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, FriendRequest } from '@prisma/client';
@@ -115,6 +116,15 @@ export class FriendService {
   ): Promise<FriendRequest> {
     return this.prismaService.friendRequest.delete({
       where: { id: dto.requestId },
+    });
+  }
+
+  async removeFriend(userId: User['id'], dto: RemoveFriendDto): Promise<User> {
+    return this.prismaService.user.update({
+      where: { id: userId },
+      data: {
+        friends: { disconnect: { id: dto.friendId } },
+      },
     });
   }
 }

@@ -14,10 +14,12 @@ import {
   RevokeFriendRequestDto,
   RejectFriendRequestDto,
   AcceptFriendRequestDto,
+  RemoveFriendDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post,
   Query,
@@ -55,6 +57,16 @@ export class FriendController {
     dto: SearchUserQueryDto
   ): Promise<FriendSearchResult[]> {
     return this.friendService.searchUserFriendByUsername(dto.username, userId);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @Delete('remove')
+  removeFriend(
+    @GetCurrentUser('sub') userId: User['id'],
+    @Body() dto: RemoveFriendDto
+  ): Promise<User> {
+    return this.friendService.removeFriend(userId, dto);
   }
 
   @HasRole(Role.USER)

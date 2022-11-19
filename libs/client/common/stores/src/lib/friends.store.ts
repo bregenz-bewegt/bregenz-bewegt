@@ -1,32 +1,27 @@
 import { http } from '@bregenz-bewegt/client/common/http';
-import { Friend } from '@bregenz-bewegt/client/types';
+import { Friend, FriendRequest } from '@bregenz-bewegt/client/types';
 import {
   AcceptFriendRequestDto,
   AllFriendRequests,
   CreateFriendRequestDto,
   FriendSearchResult,
   RejectFriendRequestDto,
+  RemoveFriendDto,
   RevokeFriendRequestDto,
   SearchUserQueryDto,
 } from '@bregenz-bewegt/shared/types';
-import { action, makeAutoObservable, observable } from 'mobx';
+import { action, makeAutoObservable } from 'mobx';
 import { Store } from './store';
 
 export class FriendsStore implements Store {
   storeKey = 'friendsStore' as const;
-  @observable friends: any[] = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  @action setFriends(value: any[]): void {
-    this.friends = value;
-  }
-
   @action async fetchFriends(): Promise<Friend[]> {
     const { data } = await http.get('/friends');
-    this.setFriends = data;
     return data;
   }
 
@@ -35,7 +30,7 @@ export class FriendsStore implements Store {
     return data;
   }
 
-  async sendFriendRequest(dto: CreateFriendRequestDto): Promise<any> {
+  async sendFriendRequest(dto: CreateFriendRequestDto): Promise<FriendRequest> {
     const { data } = await http.post('friends/request', dto);
     return data;
   }
@@ -45,18 +40,29 @@ export class FriendsStore implements Store {
     return data;
   }
 
-  async revokeFriendRequest(dto: RevokeFriendRequestDto): Promise<void> {
+  async revokeFriendRequest(
+    dto: RevokeFriendRequestDto
+  ): Promise<FriendRequest> {
     const { data } = await http.post('friends/requests/revoke', dto);
     return data;
   }
 
-  async acceptFriendRequest(dto: AcceptFriendRequestDto): Promise<void> {
+  async acceptFriendRequest(
+    dto: AcceptFriendRequestDto
+  ): Promise<FriendRequest> {
     const { data } = await http.post('friends/requests/accept', dto);
     return data;
   }
 
-  async rejectFriendRequest(dto: RejectFriendRequestDto): Promise<void> {
+  async rejectFriendRequest(
+    dto: RejectFriendRequestDto
+  ): Promise<FriendRequest> {
     const { data } = await http.post('friends/requests/reject', dto);
+    return data;
+  }
+
+  async removeFriend(dto: RemoveFriendDto): Promise<Friend> {
+    const { data } = await http.delete('friends/remove', { data: dto });
     return data;
   }
 }
