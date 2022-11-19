@@ -1,7 +1,7 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { Friend } from '@bregenz-bewegt/client/types';
 import {
-  AllFriendRequestUsers,
+  AllFriendRequests,
   CreateFriendRequestDto,
   FriendSearchResult,
   SearchUserQueryDto,
@@ -37,7 +37,7 @@ export class FriendsStore implements Store {
     return data;
   }
 
-  async getAllFriendRequests(): Promise<AllFriendRequestUsers> {
+  async getAllFriendRequests(): Promise<AllFriendRequests> {
     const { data } = await http.get('users/friends/requests');
     return data;
   }

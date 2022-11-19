@@ -5,7 +5,7 @@ import {
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { AllFriendRequestUsers } from '@bregenz-bewegt/shared/types';
+import { AllFriendRequests } from '@bregenz-bewegt/shared/types';
 import {
   IonAvatar,
   IonButton,
@@ -32,7 +32,7 @@ export const RequestList: React.FC<RequestProps> = inject(
   userStore.storeKey
 )(
   observer(({ friendsStore, userStore }) => {
-    const [requests, setRequests] = useState<AllFriendRequestUsers>();
+    const [requests, setRequests] = useState<AllFriendRequests>();
     const [presentDefaultErrorToast] = useDefaultErrorToast();
 
     useEffect(() => {
@@ -68,31 +68,31 @@ export const RequestList: React.FC<RequestProps> = inject(
           </IonRow>
           <IonList className="request-list__received">
             {requests?.received && requests.received.length > 0 ? (
-              requests.received.map((user) => {
+              requests.received.map((request) => {
                 return (
-                  <IonRow key={user.id}>
+                  <IonRow key={request.id}>
                     <IonCol size="auto" className="username-avatar-col">
                       <IonItem
-                        key={user.id}
-                        routerLink={`/users/${user.id}`}
+                        key={request.id}
+                        routerLink={`/users/${request.id}`}
                         detail={false}
                         lines="none"
                       >
                         <IonAvatar className="avatar" slot="start">
                           <img
                             src={
-                              user.profilePicture
+                              request.requestee.profilePicture
                                 ? userStore?.getProfilePictureUrl(
-                                    user.profilePicture
+                                    request.requestee.profilePicture
                                   )
                                 : userStore?.getAvatarProfilePictureUrl(
-                                    user.username
+                                    request.requestee.username
                                   )
                             }
                             alt="avatar"
                           />
                         </IonAvatar>
-                        <IonLabel>{user.username}</IonLabel>
+                        <IonLabel>{request.requestee.username}</IonLabel>
                       </IonItem>
                     </IonCol>
                     <IonCol size="auto">
@@ -146,18 +146,18 @@ export const RequestList: React.FC<RequestProps> = inject(
                         <IonAvatar className="avatar" slot="start">
                           <img
                             src={
-                              user.profilePicture
+                              user.addressee.profilePicture
                                 ? userStore?.getProfilePictureUrl(
-                                    user.profilePicture
+                                    user.addressee.profilePicture
                                   )
                                 : userStore?.getAvatarProfilePictureUrl(
-                                    user.username
+                                    user.addressee.username
                                   )
                             }
                             alt="avatar"
                           />
                         </IonAvatar>
-                        <IonLabel>{user.username}</IonLabel>
+                        <IonLabel>{user.addressee.username}</IonLabel>
                       </IonItem>
                     </IonCol>
                     <IonCol size="auto">

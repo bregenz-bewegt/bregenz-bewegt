@@ -8,8 +8,11 @@ import {
   RoleGuard,
 } from '@bregenz-bewegt/server/common';
 import {
+  AllFriendRequests,
   CreateFriendRequestDto,
   EmailResetToken,
+  FriendAdresseeResult,
+  FriendRequesteeResult,
   FriendSearchResult,
   PatchPreferencesDto,
   PatchProfileDto,
@@ -188,16 +191,12 @@ export class UserController {
   @UseGuards(RoleGuard)
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Get('friends/requests')
-  async getAllFriendRequestUsers(
-    @GetCurrentUser('sub') userId: User['id']
-  ): Promise<{ requested: User[]; received: User[] }> {
-    const requested = await this.userService.getRequestedFriendRequestUsers(
-      userId
-    );
-
-    const received = await this.userService.getReceivedFriendRequestUsers(
-      userId
-    );
+  async getFriendRequests(@GetCurrentUser('sub') userId: User['id']): Promise<{
+    requested: (FriendRequest & { addressee: FriendAdresseeResult })[];
+    received: (FriendRequest & { requestee: FriendRequesteeResult })[];
+  }> {
+    const requested = await this.userService.getRequestedFriendRequests(userId);
+    const received = await this.userService.getReceivedFriendRequests(userId);
 
     return { requested, received };
   }
@@ -205,21 +204,21 @@ export class UserController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Get('friends/requests/requested-users')
-  getRequestedFriendRequestUsers(
+  @Get('friends/requests/requested')
+  getRequestedFriendRequests(
     @GetCurrentUser('sub') userId: User['id']
-  ): Promise<User[]> {
-    return this.userService.getRequestedFriendRequestUsers(userId);
+  ): Promise<(FriendRequest & { addressee: FriendAdresseeResult })[]> {
+    return this.userService.getRequestedFriendRequests(userId);
   }
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Get('friends/requests/received-users')
-  getReceivedFriendRequestUsers(
+  @Get('friends/requests/received')
+  getReceivedFriendRequests(
     @GetCurrentUser('sub') userId: User['id']
-  ): Promise<User[]> {
-    return this.userService.getReceivedFriendRequestUsers(userId);
+  ): Promise<(FriendRequest & { requestee: FriendRequesteeResult })[]> {
+    return this.userService.getReceivedFriendRequests(userId);
   }
 
   @HasRole(Role.USER)

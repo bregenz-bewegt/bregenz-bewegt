@@ -6,6 +6,8 @@ import { MulterService } from '@bregenz-bewegt/server/multer';
 import {
   CreateFriendRequestDto,
   EmailResetToken,
+  FriendAdresseeResult,
+  FriendRequesteeResult,
   FriendSearchResult,
   JwtPayloadWithoutRole,
   PatchPreferencesDto,
@@ -317,25 +319,29 @@ export class UserService {
     });
   }
 
-  async getRequestedFriendRequestUsers(
+  async getRequestedFriendRequests(
     requesteeId: FriendRequest['requesteeId']
-  ): Promise<User[]> {
-    const addressees = await this.prismaService.friendRequest.findMany({
+  ): Promise<(FriendRequest & { addressee: FriendAdresseeResult })[]> {
+    return this.prismaService.friendRequest.findMany({
       where: { requestee: { id: requesteeId } },
-      select: { addressee: true },
+      include: {
+        addressee: {
+          select: { id: true, username: true, profilePicture: true },
+        },
+      },
     });
-
-    return addressees.map((ad) => ({ ...ad.addressee }));
   }
 
-  async getReceivedFriendRequestUsers(
+  async getReceivedFriendRequests(
     addresseeId: FriendRequest['addresseeId']
-  ): Promise<User[]> {
-    const requestees = await this.prismaService.friendRequest.findMany({
+  ): Promise<(FriendRequest & { requestee: FriendRequesteeResult })[]> {
+    return this.prismaService.friendRequest.findMany({
       where: { addressee: { id: addresseeId } },
-      select: { requestee: true },
+      include: {
+        requestee: {
+          select: { id: true, username: true, profilePicture: true },
+        },
+      },
     });
-
-    return requestees.map((re) => ({ ...re.requestee }));
   }
 }
