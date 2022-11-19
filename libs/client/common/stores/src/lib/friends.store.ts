@@ -44,7 +44,7 @@ export class FriendsStore implements Store {
   }
 
   async revokeFriendRequest(dto: RevokeFriendRequestDto): Promise<void> {
-    const { data } = await http.post('friends/revoke-request', dto);
+    const { data } = await http.post('friends/requests/revoke', dto);
     return data;
   }
 }
