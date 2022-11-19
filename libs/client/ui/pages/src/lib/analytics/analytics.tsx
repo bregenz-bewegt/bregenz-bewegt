@@ -1,15 +1,10 @@
-import {
-  ActivityCard,
-  DifficultyBadge,
-  Header,
-} from '@bregenz-bewegt/client-ui-components';
+import { ActivityCard, Header } from '@bregenz-bewegt/client-ui-components';
 import {
   activityStore,
   ActivityStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { Activity, ActivityChartData } from '@bregenz-bewegt/client/types';
 import {
-  IonCard,
   IonContent,
   IonFabButton,
   IonInfiniteScroll,
@@ -17,7 +12,6 @@ import {
   IonPage,
   IonSelect,
   IonSelectOption,
-  IonTitle,
   ScrollDetail,
   useIonViewWillEnter,
 } from '@ionic/react';
@@ -43,7 +37,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
 )(
   observer(({ activityStore }) => {
     const [activityList, setActivityList] = useState<
-      (Activity & { minutes?: number; seconds?: number })[]
+      (Activity & { minutes?: string; seconds?: string })[]
     >([]);
     const [chartMonthTimespans, setChartMonthTimespans] = useState<number[]>();
     const [chartData, setChartData] = useState<ActivityChartData>();
@@ -60,11 +54,22 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
       includeMin: boolean;
     };
 
-    const loadInfinite = (e?: any) => {
+    const loadInfinite = (
+      e?: any,
+      skip?: number,
+      take?: number,
+      replace?: boolean
+    ) => {
       activityStore
-        ?.getActivities({ skip: activityList.length, take: RELOAD_CHUNK_SIZE })
+        ?.getActivities({
+          skip: skip ?? activityList.length,
+          take: take ?? RELOAD_CHUNK_SIZE,
+        })
         .then((data) => {
-          setActivityList((prev) => [...prev, ...calculateTime(data)]);
+          setActivityList((prev) => [
+            ...(replace ? [] : prev),
+            ...calculateTime(data),
+          ]);
           e && e.target.complete();
         })
         .catch(() => {
@@ -75,13 +80,17 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
 
     const calculateTime = (
       activities: Activity[]
-    ): (Activity & { minutes?: number; seconds?: number })[] => {
+    ): (Activity & { minutes?: string; seconds?: string })[] => {
       return activities.map((a) => {
         const diff =
           new Date(a.endedAt).getTime() - new Date(a.startedAt).getTime();
         const minutes = Math.floor(diff / 1000 / 60);
         const seconds = Math.floor((diff - minutes * 1000 * 60) / 1000);
-        return { ...a, minutes, seconds };
+        return {
+          ...a,
+          minutes: String(minutes).padStart(2, '0'),
+          seconds: String(seconds).padStart(2, '0'),
+        };
       });
     };
 
@@ -109,17 +118,21 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     };
 
     useEffect(() => {
+      loadInfinite();
+    }, []);
+
+    useEffect(() => {
       chartFilterMonth && updateChartData(chartFilterMonth);
     }, [chartFilterMonth]);
 
     useIonViewWillEnter(() => {
-      loadInfinite();
       activityStore?.getTimespans().then((data) => {
         setChartMonthTimespans(data);
         setChartFilterMonth(data[0]);
         updateChartData(data[0]);
       });
-    }, []);
+      loadInfinite(null, 0, activityList.length, true);
+    }, [activityList.length]);
 
     return (
       <IonPage className="analytics">
@@ -230,7 +243,10 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                     fillOpacity={1}
                   />
                   <ReferenceLine
-                    label={{ value: '∅', position: 'right' }}
+                    label={{
+                      value: '∅',
+                      position: 'right',
+                    }}
                     y={Math.floor(
                       chartData?.reduce((r, d) => r + d.coins, 0) /
                         chartData?.length

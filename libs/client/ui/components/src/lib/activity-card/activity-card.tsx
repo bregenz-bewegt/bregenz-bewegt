@@ -6,7 +6,7 @@ import { DifficultyBadge } from '../difficulty-badge/difficulty-badge';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 export interface ActivityCardProps {
-  activity: Activity & { minutes?: number; seconds?: number };
+  activity: Activity & { minutes?: string; seconds?: string };
   key: number;
   className?: string;
 }
@@ -24,17 +24,19 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
       mode="ios"
       key={key}
     >
-      <div>
-        <div>
-          <span>{activity.exercise.name}</span>
-          {activity.park.name}
-        </div>
-        <div>
+      <div className="activity-card__content">
+        <div className="activity-card__content__main">
+          <div>{activity.exercise.name}</div>
+          <div>{activity.park.name}</div>
           <DifficultyBadge difficulty={activity.exercise.difficulty} />
-          <span>{activity.exercise.coins} B-Bucks</span>
-          <span>
-            {activity.minutes}min {activity.seconds}sec
-          </span>
+        </div>
+        <div className="activity-card__content__side">
+          <div className="activity-card__content__side__coins">
+            <span>+ {activity.exercise.coins}</span>
+          </div>
+          <div>
+            {activity.minutes}:{activity.seconds}
+          </div>
         </div>
       </div>
     </IonCard>

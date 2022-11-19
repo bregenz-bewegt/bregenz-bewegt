@@ -36,8 +36,7 @@
       margin-top: var(--spacing-xl);
 
       &__title {
-        padding: var(--spacing-l) var(--spacing-xl) var(--spacing-s)
-          var(--spacing-l);
+        padding: 0 var(--spacing-xl) var(--spacing-s) var(--spacing-l);
         position: sticky;
         top: 0;
         z-index: 100;
@@ -53,13 +52,22 @@
         & h2 {
           margin: 0;
           background-color: var(--ion-background-color);
+          padding-top: var(--spacing-l);
         }
 
         & h4 {
           margin: 0;
           width: 50%;
           text-align: end;
-          background-color: var(--ion-background-color);
+          background: linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 1) 50%,
+            rgba(255, 255, 255, 0.8) 70%,
+            rgba(255, 255, 255, 0.5) 80%,
+            rgba(255, 255, 255, 0.3) 90%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          padding-top: var(--spacing-l);
         }
       }
 
