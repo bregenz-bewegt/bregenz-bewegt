@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 import ip from 'ip';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'at.bregenz.bewegt',
   appName: 'client',
   webDir: '../../dist/apps/client',
   bundledWebRuntime: false,

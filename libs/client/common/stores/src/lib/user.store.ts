@@ -14,12 +14,17 @@ import type {
   EmailResetToken,
   ResetEmailDto,
   VerifyResetEmailDto,
+  ChangePasswordDto,
 } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
 
 export class UserStore implements Store {
   storeKey = 'userStore' as const;
+
+  private avatarApiBaseUrl =
+    'https://avatars.dicebear.com/api/initials' as const;
+
   @observable user?: User;
   @observable isLoggedIn = false;
   @observable isLoadingLoggedIn = false;
@@ -29,7 +34,7 @@ export class UserStore implements Store {
     makeAutoObservable(this);
   }
 
-  async guest(dto: GuestDto) {
+  async guest(dto: GuestDto): Promise<Tokens> {
     const { data } = await http.post('/auth/local/guest', dto);
 
     await this.setTokens({
@@ -40,12 +45,11 @@ export class UserStore implements Store {
     return data;
   }
 
-  async register(dto: RegisterDto) {
-    const { data } = await http.post('/auth/local/register', dto);
-    return data;
+  async register(dto: RegisterDto): Promise<void> {
+    await http.post('/auth/local/register', dto);
   }
 
-  @action async verify(dto: VerifyDto) {
+  @action async verify(dto: VerifyDto): Promise<Tokens> {
     const { data } = await http.post('/auth/local/verify', dto);
 
     await this.setTokens({
@@ -56,7 +60,7 @@ export class UserStore implements Store {
     return data;
   }
 
-  @action async login(dto: LoginDto) {
+  @action async login(dto: LoginDto): Promise<Tokens> {
     const { data } = await http.post('/auth/local/login', dto);
 
     await this.setTokens({
@@ -68,49 +72,43 @@ export class UserStore implements Store {
     return data;
   }
 
-  @action async logout() {
-    try {
-      await this.removeTokens();
-      this.setIsLoggedIn(false);
-    } catch (error) {
-      return;
-    }
+  @action async logout(): Promise<void> {
+    await this.removeTokens();
+    this.setIsLoggedIn(false);
   }
 
-  async fetchProfile() {
-    try {
-      const { data } = await http.get('/users/profile');
-      return data;
-    } catch (error) {
-      return;
-    }
+  async fetchProfile(): Promise<User> {
+    const { data } = await http.get('/users/profile');
+    return data;
   }
 
-  @action async patchProfile(dto: PatchProfileDto) {
+  @action async patchProfile(dto: PatchProfileDto): Promise<User> {
     const { data } = await http.patch('/users/profile', dto);
     this.setUser(data);
-    return <User>data;
+    return data;
   }
 
-  async deleteProfile() {
+  async deleteProfile(): Promise<User> {
     const { data } = await http.delete('/users/profile');
     return data;
   }
 
-  async fetchPreferences() {
+  async fetchPreferences(): Promise<Preferences> {
     const { data } = await http.get('/users/preferences');
     if (this.user) this.user.preferences = data;
-    return <Preferences>data;
+    return data;
   }
 
-  @action async patchPreferences(dto: PatchPreferencesDto) {
+  @action async patchPreferences(
+    dto: PatchPreferencesDto
+  ): Promise<Preferences> {
     const { data } = await http.patch('/users/preferences', dto);
     if (this.user) this.user.preferences = data;
-    return <Preferences>data;
+    return data;
   }
 
-  async editProfilePicture(picture: globalThis.File) {
-    const { data } = await http.post(
+  async editProfilePicture(picture: globalThis.File): Promise<User> {
+    const { data } = await http.put(
       '/users/profile-picture',
       {
         file: picture,
@@ -121,10 +119,12 @@ export class UserStore implements Store {
         },
       }
     );
+
+    await this.refreshProfile();
     return data;
   }
 
-  async removeProfilePicture() {
+  async removeProfilePicture(): Promise<User | undefined> {
     if (!this.isProfilePictureSet) return;
 
     const { data } = await http.delete('/users/profile-picture');
@@ -132,33 +132,15 @@ export class UserStore implements Store {
     return data;
   }
 
-  @action async fetchProfilePicture() {
-    try {
-      const { data } = await http.get('/users/profile-picture', {
-        responseType: 'blob',
-      });
-      const reader = new window.FileReader();
-      reader.readAsDataURL(data);
-      reader.onload = () => {
-        this.setProfilePicture(`${reader.result}`);
-        this.setIsProfilePictureSet(true);
-      };
-      return reader.result;
-    } catch (error) {
-      this.setAvatarProfilePicture();
-      return;
-    }
-  }
-
-  @action setIsLoggedIn(value: boolean) {
+  @action setIsLoggedIn(value: boolean): void {
     this.isLoggedIn = value;
   }
 
-  @action setIsLoadingLoggedIn(value: boolean) {
+  @action setIsLoadingLoggedIn(value: boolean): void {
     this.isLoadingLoggedIn = value;
   }
 
-  @action async initUser() {
+  @action async initUser(): Promise<void> {
     this.setIsLoadingLoggedIn(true);
     const tokens = await this.getTokens();
 
@@ -169,44 +151,59 @@ export class UserStore implements Store {
     this.setIsLoadingLoggedIn(false);
   }
 
-  @action async setTokens(tokens: Tokens) {
+  @action async setTokens(tokens: Tokens): Promise<void> {
     await Promise.all(
       Object.entries(tokens).map(([key, value]) => storage.set(key, value))
     );
   }
 
-  @action setUser(user: User) {
+  @action setUser(user: User): void {
     this.user = user;
+
+    if (user.profilePicture) {
+      this.setProfilePicture(this.getProfilePictureUrl(user.profilePicture));
+      this.setIsProfilePictureSet(true);
+    } else {
+      this.setAvatarProfilePicture();
+      this.setIsProfilePictureSet(false);
+    }
   }
 
-  @action setProfilePicture(picture: string) {
+  @action setProfilePicture(picture: string): void {
     if (this.user) {
       this.user.profilePicture = picture;
     }
   }
 
-  @action setIsProfilePictureSet(value: boolean) {
+  getProfilePictureUrl(image: string): string {
+    return `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/profile-pictures/${image}`;
+  }
+
+  @action setIsProfilePictureSet(value: boolean): void {
     this.isProfilePictureSet = value;
   }
 
-  @action setAvatarProfilePicture() {
+  @action setAvatarProfilePicture(): void {
     if (this.user) {
-      this.user.profilePicture = `https://avatars.dicebear.com/api/initials/${
-        this.user.role === Role.USER ? this.user.email : 'BB'
-      }.svg`;
+      this.user.profilePicture = this.getAvatarProfilePictureUrl(
+        this.user.role === Role.USER ? this.user.username : undefined
+      );
       this.setIsProfilePictureSet(false);
     }
   }
 
-  @action async refreshProfile() {
+  getAvatarProfilePictureUrl(seed?: string): string {
+    return `${this.avatarApiBaseUrl}/${seed ?? 'BB'}.svg`;
+  }
+
+  @action async refreshProfile(): Promise<any> {
     const profile = await this.fetchProfile();
     this.setUser(profile);
-    await this.fetchProfilePicture();
 
     return profile;
   }
 
-  async removeTokens() {
+  async removeTokens(): Promise<void> {
     await Promise.all([
       storage.remove('access_token'),
       storage.remove('refresh_token'),
@@ -234,17 +231,16 @@ export class UserStore implements Store {
     return data;
   }
 
-  async changePassword() {
-    const { data } = await http.post('/auth/change-password');
+  async changePassword(dto: ChangePasswordDto): Promise<User> {
+    const { data } = await http.put('/auth/change-password', dto);
     return data;
   }
 
-  async forgotPassword(dto: ForgotPasswordDto) {
-    const { data } = await http.post('/auth/forgot-password', dto);
-    return data;
+  async forgotPassword(dto: ForgotPasswordDto): Promise<void> {
+    await http.post('/auth/forgot-password', dto);
   }
 
-  @action async validateResetPassword(resetToken: string) {
+  @action async validateResetPassword(resetToken: string): Promise<void> {
     await http.get(`/auth/validate-reset-password`, {
       headers: {
         authorization: `Bearer ${resetToken}`,
@@ -252,7 +248,10 @@ export class UserStore implements Store {
     });
   }
 
-  @action async resetPassword(newPassword: string, resetToken: string) {
+  @action async resetPassword(
+    newPassword: string,
+    resetToken: string
+  ): Promise<void> {
     await http.post(
       `/auth/reset-password`,
       {

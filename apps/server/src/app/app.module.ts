@@ -46,7 +46,12 @@ import { ActivityModule } from '@bregenz-bewegt/server/controllers/activity';
       // preview: true, // only for testing
     }),
     ServeStaticModule.forRoot({
-      rootPath: path.resolve('../public'),
+      rootPath: path.join(process.cwd(), 'static'),
+      serveRoot: '/static',
+      serveStaticOptions: {
+        redirect: false,
+        index: false,
+      },
     }),
     MailModule,
     PrismaModule,

@@ -8,11 +8,20 @@
 
     ion-grid {
       position: relative;
+
+      .profile-guest-lock-modal {
+        position: absolute;
+        height: 100%;
+      }
     }
 
     ion-avatar {
       height: calc(var(--spacing-5xl) * 2);
       width: calc(var(--spacing-5xl) * 2);
+    }
+
+    ion-row ion-text h2 {
+      margin-bottom: 0;
     }
 
     &__username {
@@ -26,6 +35,10 @@
         white-space: nowrap;
         overflow: hidden;
       }
+    }
+
+    &__lastname {
+      margin-bottom: var(--spacing-m);
     }
 
     &__password-row {
@@ -56,54 +69,12 @@
       }
     }
 
-    .guest-lock {
-      position: relative;
-      pointer-events: none;
-      filter: blur(var(--spacing-m));
-    }
-
-    .guest-lock-modal {
-      position: absolute;
-      height: 100%;
-      z-index: 2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      ion-grid {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: var(--ion-color-primary-contrast);
-        border-radius: var(--spacing-m);
-        padding: var(--spacing-l) var(--spacing-m) var(--spacing-m)
-          var(--spacing-m);
-
-        ion-row {
-          justify-content: center;
-          width: 100%;
-
-          .lock-icon {
-            width: var(--spacing-3xl);
-            height: var(--spacing-3xl);
-            margin: var(--spacing-s) 0 var(--spacing-m) 0;
-          }
-
-          &.info {
-            text-align: center;
-            margin: 0 0 var(--spacing-m) 0;
-          }
-
-          ion-button {
-            width: 100%;
-          }
-        }
-      }
-    }
-
     ion-footer {
       margin-top: var(--spacing-m);
+
+      &::before {
+        background: var(--ion-color-light-shade);
+      }
 
       .account-created {
         padding: var(--spacing-s) 0;

@@ -1,5 +1,9 @@
 import './profile.scss';
-import { Input, ItemGroup } from '@bregenz-bewegt/client-ui-components';
+import {
+  GuestLock,
+  Input,
+  ItemGroup,
+} from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonAvatar,
@@ -8,7 +12,6 @@ import {
   IonContent,
   IonFooter,
   IonGrid,
-  IonIcon,
   IonItem,
   IonLabel,
   IonPage,
@@ -29,15 +32,15 @@ import { useEffect, useState } from 'react';
 import { checkmark } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useFormik } from 'formik';
-import { lockClosed } from 'ionicons/icons';
 import { trash, image, camera } from 'ionicons/icons';
 import { validProfilePictureMimeTypes } from '@bregenz-bewegt/shared/constants';
-import {
-  ValidProfilePictureMimeType,
-} from '@bregenz-bewegt/shared/types';
+import { ValidProfilePictureMimeType } from '@bregenz-bewegt/shared/types';
 import { Role } from '@bregenz-bewegt/client/types';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
-import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
+import {
+  useDefaultErrorToast,
+  useIsGuest,
+} from '@bregenz-bewegt/client/common/hooks';
 
 export interface ProfileProps {
   userStore?: UserStore;
@@ -53,6 +56,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+    const [isGuest] = useIsGuest();
 
     const showFailureToast = () => {
       dismissLoading();
@@ -70,8 +74,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         color: 'success',
       });
     };
-
-    const isGuest = userStore?.user?.role === Role.GUEST;
 
     const profile = useFormik({
       initialValues: {
@@ -96,20 +98,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
           });
       },
     });
-
-    const handleChangePassword = () => {
-      userStore
-        ?.changePassword()
-        .then(() => {
-          presentAlert({
-            header: 'Passwort zurücksetzen',
-            message: `Eine Email zum Zurücksetzen deines Passworts wurde an ${userStore.user?.email} versendet`,
-            backdropDismiss: false,
-            buttons: [{ text: 'OK' }],
-          });
-        })
-        .catch(() => showFailureToast());
-    };
 
     const handleImageChange = async (source: CameraSource) => {
       try {
@@ -138,11 +126,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         const file = await new File([blob], `file.${photo.format}`);
         userStore
           ?.editProfilePicture(file)
-          .then(() =>
-            userStore.fetchProfilePicture().then(() => {
-              dismissLoading().then(() => showSuccessToast());
-            })
-          )
+          .then(() => dismissLoading().then(() => showSuccessToast()))
           .catch(() => {
             showFailureToast();
           });
@@ -240,253 +224,209 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             ]}
           />
           <IonGrid>
-            {isGuest && (
-              <div className="guest-lock-modal">
-                <IonGrid>
-                  <IonRow>
-                    <IonIcon
-                      className="lock-icon"
-                      icon={lockClosed}
-                      color="primary"
-                    />
+            <GuestLock
+              modalClassName="profile-guest-lock-modal"
+              text="Melde dich bei deinem Konto an, um auf dein Profil zugreifen zu können"
+            >
+              {(isGuest) => (
+                <>
+                  <IonRow className="ion-justify-content-center">
+                    <IonText className="profile__content__username">
+                      <h1>{userStore?.user?.username}</h1>
+                    </IonText>
                   </IonRow>
-                  <IonRow className="info">
-                    <IonText color="primary">
-                      Erstelle ein Konto, um auf dein Profil zugreifen zu
-                      können.
+                  <IonRow className="ion-justify-content-center">
+                    <IonAvatar>
+                      <img
+                        onLoad={() => setIsImageLoaded(true)}
+                        src={userStore?.user?.profilePicture}
+                        alt="profile"
+                        style={{ display: isImageLoaded ? 'initial' : 'none' }}
+                      />
+                      {!isImageLoaded && <IonSkeletonText animated />}
+                    </IonAvatar>
+                  </IonRow>
+                  <IonRow className="ion-justify-content-center">
+                    <IonText
+                      className="text-center"
+                      color="primary"
+                      onClick={() =>
+                        presentActionSheet({
+                          buttons: [
+                            {
+                              text: 'Aus Gallerie wählen',
+                              handler: () =>
+                                handleImageChange(CameraSource.Photos),
+                              icon: image,
+                            },
+                            {
+                              text: 'Bild aufnehmen',
+                              handler: () =>
+                                handleImageChange(CameraSource.Camera),
+                              icon: camera,
+                            },
+                            ...(userStore?.isProfilePictureSet
+                              ? [
+                                  {
+                                    text: 'Bild entfernen',
+                                    handler: () => handleImageRemove(),
+                                    icon: trash,
+                                    role: 'destructive',
+                                  },
+                                ]
+                              : []),
+                            {
+                              text: 'Abbrechen',
+                              role: 'cancel',
+                              handler: () => dismissActionSheet(),
+                            },
+                          ],
+                          header: 'Profilbild',
+                        })
+                      }
+                    >
+                      <p>Ändern</p>
                     </IonText>
                   </IonRow>
                   <IonRow>
+                    <IonText>
+                      <h2>Profil</h2>
+                    </IonText>
+                  </IonRow>
+                  <IonRow>
+                    <Input
+                      name="firstname"
+                      placeholder="Vorname"
+                      label="Vorname"
+                      value={profile.values.firstname}
+                      error={
+                        profile.touched.firstname
+                          ? profile.errors.firstname
+                          : undefined
+                      }
+                      onChange={profile.handleChange}
+                      onBlur={profile.handleBlur}
+                      disabled={!isImageLoaded}
+                    />
+                  </IonRow>
+                  <IonRow>
+                    <Input
+                      name="lastname"
+                      placeholder="Nachname"
+                      label="Nachname"
+                      value={profile.values.lastname}
+                      error={
+                        profile.touched.lastname
+                          ? profile.errors.lastname
+                          : undefined
+                      }
+                      onChange={profile.handleChange}
+                      onBlur={profile.handleBlur}
+                      disabled={!isImageLoaded}
+                    />
+                  </IonRow>
+                  <IonRow>
+                    <IonText>
+                      <h2>Präferenzen</h2>
+                    </IonText>
+                  </IonRow>
+                  <ItemGroup>
+                    <IonItem
+                      button
+                      routerLink={`${tabRoutes.profile.route}/public-profile`}
+                      mode="ios"
+                    >
+                      <IonLabel>Öffentliches Profil</IonLabel>
+                    </IonItem>
+                    <IonItem
+                      button
+                      routerLink={`${tabRoutes.profile.route}/difficulty`}
+                      mode="ios"
+                    >
+                      <IonLabel>Bevorzugte Übungen</IonLabel>
+                    </IonItem>
+                    <IonItem
+                      button
+                      routerLink={`${tabRoutes.profile.route}/appearance`}
+                      lines="none"
+                      mode="ios"
+                    >
+                      <IonLabel>Darstellung</IonLabel>
+                    </IonItem>
+                  </ItemGroup>
+                  <IonRow>
+                    <IonText>
+                      <h2>Sicherheit</h2>
+                    </IonText>
+                  </IonRow>
+                  <ItemGroup>
+                    <IonItem
+                      button
+                      routerLink={`${tabRoutes.profile.route}/email`}
+                      mode="ios"
+                    >
+                      <IonLabel>E-Mail Adresse ändern</IonLabel>
+                    </IonItem>
+                    <IonItem
+                      button
+                      routerLink={`${tabRoutes.profile.route}/password`}
+                      mode="ios"
+                      lines="none"
+                    >
+                      <IonLabel>Passwort ändern</IonLabel>
+                    </IonItem>
+                  </ItemGroup>
+                </>
+              )}
+            </GuestLock>
+            {!isGuest && (
+              <>
+                <IonRow className="profile__content__danger-row">
+                  <IonCol className="delete">
                     <IonButton
+                      onClick={() => handleDelete()}
                       expand="block"
                       mode="ios"
-                      fill="solid"
+                      color="danger"
+                    >
+                      Konto löschen
+                    </IonButton>
+                  </IonCol>
+                  <IonCol className="logout">
+                    <IonButton
                       onClick={() =>
-                        handleLogout('/register', userStore.user?.role)
+                        handleLogout('/login', userStore?.user?.role)
                       }
+                      expand="block"
+                      mode="ios"
                     >
                       {isLoggingOut ? (
                         <IonLabel>
                           <IonSpinner name="crescent" />
                         </IonLabel>
                       ) : (
-                        'Konto erstellen'
+                        'Abmelden'
                       )}
                     </IonButton>
-                  </IonRow>
-                </IonGrid>
-              </div>
-            )}
-            <div className={isGuest ? 'guest-lock' : ''}>
-              <IonRow className="ion-justify-content-center">
-                <IonText className="profile__content__username">
-                  <h1>{userStore?.user?.username}</h1>
-                </IonText>
-              </IonRow>
-              <IonRow className="ion-justify-content-center">
-                <IonAvatar>
-                  <img
-                    onLoad={() => setIsImageLoaded(true)}
-                    src={userStore?.user?.profilePicture}
-                    alt="profile"
-                    style={{ display: isImageLoaded ? 'initial' : 'none' }}
-                  />
-                  {!isImageLoaded && <IonSkeletonText animated />}
-                </IonAvatar>
-              </IonRow>
-              <IonRow className="ion-justify-content-center">
-                <IonText
-                  className="text-center"
-                  color="primary"
-                  onClick={() =>
-                    presentActionSheet({
-                      buttons: [
-                        {
-                          text: 'Aus Gallerie wählen',
-                          handler: () => handleImageChange(CameraSource.Photos),
-                          icon: image,
-                        },
-                        {
-                          text: 'Bild aufnehmen',
-                          handler: () => handleImageChange(CameraSource.Camera),
-                          icon: camera,
-                        },
-                        ...(userStore?.isProfilePictureSet
-                          ? [
-                              {
-                                text: 'Bild entfernen',
-                                handler: () => handleImageRemove(),
-                                icon: trash,
-                                role: 'destructive',
-                              },
-                            ]
-                          : []),
-                        {
-                          text: 'Abbrechen',
-                          role: 'cancel',
-                          handler: () => dismissActionSheet(),
-                        },
-                      ],
-                      header: 'Profilbild',
-                    })
-                  }
-                >
-                  <p>Ändern</p>
-                </IonText>
-              </IonRow>
-              <IonRow>
-                <IonText>
-                  <h2>Profil</h2>
-                </IonText>
-              </IonRow>
-              <IonRow>
-                <Input
-                  name="firstname"
-                  placeholder="Vorname"
-                  label="Vorname"
-                  value={profile.values.firstname}
-                  error={
-                    profile.touched.firstname
-                      ? profile.errors.firstname
-                      : undefined
-                  }
-                  onChange={profile.handleChange}
-                  onBlur={profile.handleBlur}
-                  disabled={!isImageLoaded}
-                />
-              </IonRow>
-              <IonRow>
-                <Input
-                  name="lastname"
-                  placeholder="Nachname"
-                  label="Nachname"
-                  value={profile.values.lastname}
-                  error={
-                    profile.touched.lastname
-                      ? profile.errors.lastname
-                      : undefined
-                  }
-                  onChange={profile.handleChange}
-                  onBlur={profile.handleBlur}
-                  disabled={!isImageLoaded}
-                />
-              </IonRow>
-              <IonRow className="profile__content__password-row">
-                <Input
-                  className="profile__content__password-row__input"
-                  expand={false}
-                  label="Passwort"
-                  disabled
-                  value={'*'.repeat(11)}
-                />
-                <IonButton
-                  onClick={() => handleChangePassword()}
-                  size="small"
-                  mode="ios"
-                >
-                  Ändern
-                </IonButton>
-              </IonRow>
-              <IonRow>
-                <IonText>
-                  <h2>Präferenzen</h2>
-                </IonText>
-              </IonRow>
-              <ItemGroup>
-                <IonItem
-                  button
-                  routerLink={`${tabRoutes.profile.route}/public-profile`}
-                  mode="ios"
-                >
-                  <IonLabel>Öffentliches Profil</IonLabel>
-                </IonItem>
-                <IonItem
-                  button
-                  routerLink={`${tabRoutes.profile.route}/difficulty`}
-                  mode="ios"
-                >
-                  <IonLabel>Bevorzugte Übungen</IonLabel>
-                </IonItem>
-                <IonItem
-                  button
-                  routerLink={`${tabRoutes.profile.route}/appearance`}
-                  lines="none"
-                  mode="ios"
-                >
-                  <IonLabel>Darstellung</IonLabel>
-                </IonItem>
-              </ItemGroup>
-              <IonRow>
-                <IonText>
-                  <h2>Sicherheit</h2>
-                </IonText>
-              </IonRow>
-              <ItemGroup>
-                <IonItem
-                  button
-                  routerLink={`${tabRoutes.profile.route}/email`}
-                  mode="ios"
-                >
-                  <IonLabel>E-Mail Adresse ändern</IonLabel>
-                </IonItem>
-                <IonItem
-                  button
-                  routerLink={`${tabRoutes.profile.route}/password`}
-                  mode="ios"
-                  lines="none"
-                >
-                  <IonLabel>Passwort ändern</IonLabel>
-                </IonItem>
-              </ItemGroup>
-            </div>
-          </IonGrid>
-          {!isGuest && (
-            <>
-              <IonRow className="profile__content__danger-row">
-                <IonCol className="delete">
-                  <IonButton
-                    onClick={() => handleDelete()}
-                    expand="block"
-                    mode="ios"
-                    color="danger"
-                  >
-                    Konto löschen
-                  </IonButton>
-                </IonCol>
-                <IonCol className="logout">
-                  <IonButton
-                    onClick={() =>
-                      handleLogout('/login', userStore?.user?.role)
-                    }
-                    expand="block"
-                    mode="ios"
-                  >
-                    {isLoggingOut ? (
-                      <IonLabel>
-                        <IonSpinner name="crescent" />
-                      </IonLabel>
-                    ) : (
-                      'Abmelden'
-                    )}
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-              <IonFooter>
-                <IonRow className="ion-justify-content-center account-created">
-                  <IonText color="medium">
-                    Konto erstellt am{' '}
-                    {new Date(
-                      userStore?.user?.registratedAt as any
-                    ).toLocaleDateString('de-DE', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    })}
-                  </IonText>
+                  </IonCol>
                 </IonRow>
-              </IonFooter>
-            </>
-          )}
+                <IonFooter>
+                  <IonRow className="ion-justify-content-center account-created">
+                    <IonText color="medium">
+                      Konto erstellt am{' '}
+                      {new Date(
+                        userStore?.user?.registratedAt as any
+                      ).toLocaleDateString('de-DE', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </IonText>
+                  </IonRow>
+                </IonFooter>
+              </>
+            )}
+          </IonGrid>
         </IonContent>
       </IonPage>
     );

@@ -34,7 +34,7 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
       useState<HTMLElement | null>(null);
     const [isVerifyModalOpen, setIsVerifyModalOpen] = useState<boolean>(false);
     const [resetToken, setResetToken] = useState<EmailResetToken>();
-    const email = useFormik({
+    const emailForm = useFormik({
       initialValues: {
         email: userStore?.user?.email ?? '',
       },
@@ -55,7 +55,7 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
     });
 
     useEffect(() => {
-      email.resetForm({
+      emailForm.resetForm({
         values: {
           email: userStore?.user?.email ?? '',
         },
@@ -87,35 +87,39 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
                 name="email"
                 placeholder="E-Mail"
                 label="E-Mail"
-                value={email.values.email}
-                error={email.touched.email ? email.errors.email : undefined}
-                onChange={email.handleChange}
-                onBlur={email.handleBlur}
+                value={emailForm.values.email}
+                error={
+                  emailForm.touched.email ? emailForm.errors.email : undefined
+                }
+                onChange={emailForm.handleChange}
+                onBlur={emailForm.handleBlur}
               />
             </IonRow>
             <IonButton
               mode="ios"
               expand="block"
               color="primary"
-              onClick={() => email.submitForm()}
-              disabled={email.isSubmitting || !email.dirty || !email.isValid}
+              onClick={() => emailForm.submitForm()}
+              disabled={
+                emailForm.isSubmitting || !emailForm.dirty || !emailForm.isValid
+              }
               className="ion-margin-top"
             >
-              {email.isSubmitting ? (
+              {emailForm.isSubmitting ? (
                 <IonLabel>
                   <IonSpinner name="crescent" />
                 </IonLabel>
               ) : (
-                'Ändern'
+                'E-Mail ändern'
               )}
             </IonButton>
           </IonGrid>
           <VerifyEmail
-            email={email.values.email}
+            email={emailForm.values.email}
             isOpen={isVerifyModalOpen}
             modalRef={verifyModal}
             modalPresentingElement={verifyModalPresentingElement!}
-            onVerifySubmit={async (email, token) =>
+            onVerifySubmit={async (_, token) =>
               userStore?.verifyResetEmail({
                 token: token,
                 authorization: resetToken?.token ?? '',

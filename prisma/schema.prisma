@@ -14,6 +14,7 @@ model User {
   id                 String       @id @default(cuid())
   username           String?      @unique
   email              String?      @unique
+  fingerprint        String?      @unique
   active             Boolean      @default(false)
   firstname          String?
   lastname           String?
@@ -64,6 +65,7 @@ model Park {
   name        String
   address     String
   image       String
+  gmaps       String?
   coordinates Coordinates?
   exercises   Exercise[]
   activities  Activity[]
@@ -74,8 +76,8 @@ model Coordinates {
   latitude        Float
   longitude       Float
   toleranceRadius Int   @default(50)
-  park            Park  @relation(fields: [parkId], references: [id])
-  parkId          Int   @unique
+  park            Park? @relation(fields: [parkId], references: [id])
+  parkId          Int?  @unique
 }
 
 model Activity {
@@ -91,13 +93,15 @@ model Activity {
 }
 
 model Exercise {
-  id           Int        @id @default(autoincrement())
+  id           Int         @id @default(autoincrement())
   name         String
-  description  String
+  description  String      @db.VarChar(1000)
+  execution    String?
+  muscles      String?
   video        String
   coins        Int
-  difficulty   Difficulty @relation(fields: [difficultyId], references: [id])
-  difficultyId Int
+  difficulty   Difficulty? @relation(fields: [difficultyId], references: [id])
+  difficultyId Int?
   parks        Park[]
   activities   Activity[]
 }

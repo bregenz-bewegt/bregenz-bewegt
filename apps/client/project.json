@@ -43,7 +43,7 @@
         }
       }
     },
-    "serve:build": {
+    "serve": {
       "executor": "@nrwl/web:dev-server",
       "defaultConfiguration": "development",
       "options": {
@@ -51,14 +51,6 @@
         "hmr": true,
         "browserTarget": "project:build",
         "host": "0.0.0.0"
-      }
-    },
-    "serve": {
-      "executor": "@nrwl/web:dev-server",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "client:build",
-        "hmr": true
       },
       "configurations": {
         "development": {
