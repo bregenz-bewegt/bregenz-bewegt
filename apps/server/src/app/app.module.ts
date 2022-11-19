@@ -11,7 +11,6 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AccessTokenGuard, RoleGuard } from '@bregenz-bewegt/server/common';
-import { ParkModule } from 'libs/server/controllers/park/src';
 import { MulterModule } from '@bregenz-bewegt/server/multer';
 import { ExerciseModule } from '@bregenz-bewegt/server/controllers/exercise';
 import { MailModule } from '@bregenz-bewegt/server/mail';
@@ -43,7 +42,7 @@ import { ActivityModule } from '@bregenz-bewegt/server/controllers/activity';
           strict: true,
         },
       },
-      // preview: true, // only for testing
+      preview: true, // only for testing
     }),
     ServeStaticModule.forRoot({
       rootPath: path.join(process.cwd(), 'static'),
