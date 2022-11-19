@@ -18,6 +18,7 @@ import { UtilModule } from '@bregenz-bewegt/server/util';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { LeaderboardModule } from '@bregenz-bewegt/server/controllers/leaderboard';
 import { ActivityModule } from '@bregenz-bewegt/server/controllers/activity';
+import { ParkModule } from '@bregenz-bewegt/server/controllers/park';
 
 @Module({
   imports: [
@@ -36,13 +37,12 @@ import { ActivityModule } from '@bregenz-bewegt/server/controllers/activity';
         from: process.env['NX_MAIL_FROM'],
       },
       template: {
-        dir: './templates',
+        dir: '../assests/templates',
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,
         },
       },
-      preview: true, // only for testing
     }),
     ServeStaticModule.forRoot({
       rootPath: path.join(process.cwd(), 'static'),

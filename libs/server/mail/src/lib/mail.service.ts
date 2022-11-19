@@ -1,6 +1,8 @@
 import { ISendMailOptions, MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import path from 'path';
+import fs from 'fs';
 
 @Injectable()
 export class MailService {
@@ -40,7 +42,7 @@ export class MailService {
       to: options.to,
       subject: 'E-Mail Adresse bestätigen | Bregenz bewegt',
       // text: `Dein Bestätigungscode lautet: ${options.otp}`,
-      template: '',
+      template: 'changePw',
       context: { name: options.name, code: options.otp },
     });
   }
