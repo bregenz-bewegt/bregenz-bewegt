@@ -125,9 +125,8 @@ export class FriendController {
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Put('requests/revoke')
   revokeFriendRequest(
-    @GetCurrentUser('sub') userId: User['id'],
     @Body() dto: RevokeFriendRequestDto
-  ): Promise<void> {
-    return this.friendService.revokeFriendRequest(userId, dto);
+  ): Promise<FriendRequest> {
+    return this.friendService.revokeFriendRequest(dto);
   }
 }

@@ -84,10 +84,10 @@ export class FriendService {
   }
 
   async revokeFriendRequest(
-    userId: User['id'],
     dto: RevokeFriendRequestDto
-  ): Promise<void> {
-    userId;
-    dto;
+  ): Promise<FriendRequest> {
+    return this.prismaService.friendRequest.delete({
+      where: { id: dto.requestId },
+    });
   }
 }
