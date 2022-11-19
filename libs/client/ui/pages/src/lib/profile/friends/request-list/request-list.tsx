@@ -62,11 +62,11 @@ export const RequestList: React.FC<RequestProps> = inject(
     const revokeRequest = (requestId: FriendRequest['id']) => {
       friendsStore
         ?.revokeFriendRequest({ requestId })
-        .then(() => {
-          //
+        .then((data) => {
+          fetchFriendRequests();
         })
         .catch(() => {
-          //
+          presentDefaultErrorToast();
         });
     };
 

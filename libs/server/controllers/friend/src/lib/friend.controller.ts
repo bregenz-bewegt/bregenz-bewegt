@@ -123,7 +123,7 @@ export class FriendController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Put('requests/revoke')
+  @Post('requests/revoke')
   revokeFriendRequest(
     @Body() dto: RevokeFriendRequestDto
   ): Promise<FriendRequest> {
