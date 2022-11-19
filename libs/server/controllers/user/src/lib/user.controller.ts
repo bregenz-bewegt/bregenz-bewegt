@@ -8,17 +8,10 @@ import {
   RoleGuard,
 } from '@bregenz-bewegt/server/common';
 import {
-  AllFriendRequests,
-  CreateFriendRequestDto,
   EmailResetToken,
-  FriendAdresseeResult,
-  FriendRequesteeResult,
-  FriendSearchResult,
   PatchPreferencesDto,
   PatchProfileDto,
   ResetEmailDto,
-  RevokeFriendRequestDto,
-  SearchUserQueryDto,
   VerifyResetEmailDto,
 } from '@bregenz-bewegt/shared/types';
 import {
@@ -34,15 +27,13 @@ import {
   UseGuards,
   UseInterceptors,
   Headers,
-  Query,
-  ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterService } from '@bregenz-bewegt/server/multer';
-import { Role, User, Preferences, FriendRequest } from '@prisma/client';
+import { Role, User, Preferences } from '@prisma/client';
 import { UtilService } from '@bregenz-bewegt/server/util';
 
 @Controller('users')
@@ -148,103 +139,5 @@ export class UserController {
     @GetCurrentUser('sub') userId: User['id']
   ): Promise<User> {
     return this.userService.deleteProfilePicture(userId);
-  }
-
-  @HasRole(Role.USER)
-  @UseGuards(RoleGuard)
-  @Get('friends')
-  getFriends(@GetCurrentUser('sub') userId: User['id']): Promise<User[]> {
-    return this.userService.getFriends(userId);
-  }
-
-  @HasRole(Role.USER)
-  @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Get('friends/search')
-  searchUser(
-    @GetCurrentUser('sub') userId: User['id'],
-    @Query(
-      new ValidationPipe({
-        transform: true,
-        transformOptions: { enableImplicitConversion: true },
-        forbidNonWhitelisted: true,
-      })
-    )
-    dto: SearchUserQueryDto
-  ): Promise<FriendSearchResult[]> {
-    return this.userService.searchUserFriendByUsername(dto.username, userId);
-  }
-
-  @HasRole(Role.USER)
-  @UseGuards(RoleGuard)
-  @Post('friends/request')
-  createFriendRequest(
-    @GetCurrentUser('sub') requesteeId: User['id'],
-    @Body() dto: CreateFriendRequestDto
-  ): Promise<FriendRequest> {
-    return this.userService.createFriendRequest({
-      requesteeId,
-      addresseeId: dto.addresseeId,
-    });
-  }
-
-  @HasRole(Role.USER)
-  @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Get('friends/requests')
-  async getFriendRequests(
-    @GetCurrentUser('sub') userId: User['id']
-  ): Promise<AllFriendRequests> {
-    const requested = await this.userService.getRequestedFriendRequests(userId);
-    const received = await this.userService.getReceivedFriendRequests(userId);
-
-    return { requested, received };
-  }
-
-  @HasRole(Role.USER)
-  @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Get('friends/requests/requested')
-  getRequestedFriendRequests(
-    @GetCurrentUser('sub') userId: User['id']
-  ): Promise<(FriendRequest & { addressee: FriendAdresseeResult })[]> {
-    return this.userService.getRequestedFriendRequests(userId);
-  }
-
-  @HasRole(Role.USER)
-  @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Get('friends/requests/received')
-  getReceivedFriendRequests(
-    @GetCurrentUser('sub') userId: User['id']
-  ): Promise<(FriendRequest & { requestee: FriendRequesteeResult })[]> {
-    return this.userService.getReceivedFriendRequests(userId);
-  }
-
-  @HasRole(Role.USER)
-  @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Put('friends/requests/accept')
-  acceptFriendRequest(): void {
-    //
-  }
-
-  @HasRole(Role.USER)
-  @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Put('friends/requests/reject')
-  rejectFriendRequest(): void {
-    //
-  }
-
-  @HasRole(Role.USER)
-  @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
-  @Put('friends/requests/revoke')
-  revokeFriendRequest(
-    @GetCurrentUser('sub') userId: User['id'],
-    @Body() dto: RevokeFriendRequestDto
-  ): Promise<void> {
-    return this.userService.revokeFriendRequest(userId, dto);
   }
 }

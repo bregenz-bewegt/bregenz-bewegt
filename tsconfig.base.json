@@ -56,6 +56,9 @@
       "@bregenz-bewegt/server/controllers/exercise": [
         "libs/server/controllers/exercise/src/index.ts"
       ],
+      "@bregenz-bewegt/server/controllers/friend": [
+        "libs/server/controllers/friend/src/index.ts"
+      ],
       "@bregenz-bewegt/server/controllers/leaderboard": [
         "libs/server/controllers/leaderboard/src/index.ts"
       ],
