@@ -13,6 +13,7 @@ import {
   PatchPreferencesDto,
   PatchProfileDto,
   ResetEmailDto,
+  RevokeFriendRequestDto,
   VerifyResetEmailDto,
 } from '@bregenz-bewegt/shared/types';
 import {
@@ -343,5 +344,13 @@ export class UserService {
         },
       },
     });
+  }
+
+  async revokeFriendRequest(
+    userId: User['id'],
+    dto: RevokeFriendRequestDto
+  ): Promise<void> {
+    userId;
+    dto;
   }
 }

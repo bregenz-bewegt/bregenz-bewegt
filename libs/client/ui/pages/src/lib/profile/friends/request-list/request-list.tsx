@@ -5,6 +5,7 @@ import {
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
+import { FriendRequest } from '@bregenz-bewegt/client/types';
 import { AllFriendRequests } from '@bregenz-bewegt/shared/types';
 import {
   IonAvatar,
@@ -35,7 +36,7 @@ export const RequestList: React.FC<RequestProps> = inject(
     const [requests, setRequests] = useState<AllFriendRequests>();
     const [presentDefaultErrorToast] = useDefaultErrorToast();
 
-    useEffect(() => {
+    const fetchFriendRequests = () => {
       friendsStore
         ?.getAllFriendRequests()
         .then((data) => {
@@ -44,6 +45,10 @@ export const RequestList: React.FC<RequestProps> = inject(
         .catch(() => {
           presentDefaultErrorToast();
         });
+    };
+
+    useEffect(() => {
+      fetchFriendRequests();
     }, []);
 
     const acceptRequest = () => {
@@ -54,8 +59,15 @@ export const RequestList: React.FC<RequestProps> = inject(
       //
     };
 
-    const revokeRequest = () => {
-      //
+    const revokeRequest = (requestId: FriendRequest['id']) => {
+      friendsStore
+        ?.revokeFriendRequest({ requestId })
+        .then(() => {
+          //
+        })
+        .catch(() => {
+          //
+        });
     };
 
     return (
@@ -133,35 +145,38 @@ export const RequestList: React.FC<RequestProps> = inject(
           </IonRow>
           <IonList className="request-list__requested">
             {requests?.requested && requests.requested.length > 0 ? (
-              requests.requested.map((user) => {
+              requests.requested.map((request) => {
                 return (
-                  <IonRow key={user.id}>
+                  <IonRow key={request.id}>
                     <IonCol size="auto" className="username-avatar-col">
                       <IonItem
-                        key={user.id}
-                        routerLink={`/users/${user.id}`}
+                        key={request.id}
+                        routerLink={`/users/${request.id}`}
                         detail={false}
                         lines="none"
                       >
                         <IonAvatar className="avatar" slot="start">
                           <img
                             src={
-                              user.addressee.profilePicture
+                              request.addressee.profilePicture
                                 ? userStore?.getProfilePictureUrl(
-                                    user.addressee.profilePicture
+                                    request.addressee.profilePicture
                                   )
                                 : userStore?.getAvatarProfilePictureUrl(
-                                    user.addressee.username
+                                    request.addressee.username
                                   )
                             }
                             alt="avatar"
                           />
                         </IonAvatar>
-                        <IonLabel>{user.addressee.username}</IonLabel>
+                        <IonLabel>{request.addressee.username}</IonLabel>
                       </IonItem>
                     </IonCol>
                     <IonCol size="auto">
-                      <IonButton fill="clear" onClick={() => revokeRequest()}>
+                      <IonButton
+                        fill="clear"
+                        onClick={() => revokeRequest(request.id)}
+                      >
                         <CloseCircle
                           variant="Bold"
                           color={`var(--ion-color-danger)`}

@@ -4,6 +4,7 @@ import {
   AllFriendRequests,
   CreateFriendRequestDto,
   FriendSearchResult,
+  RevokeFriendRequestDto,
   SearchUserQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
@@ -39,6 +40,11 @@ export class FriendsStore implements Store {
 
   async getAllFriendRequests(): Promise<AllFriendRequests> {
     const { data } = await http.get('users/friends/requests');
+    return data;
+  }
+
+  async revokeFriendRequest(dto: RevokeFriendRequestDto): Promise<void> {
+    const { data } = await http.post('users/friends/revoke-request', dto);
     return data;
   }
 }

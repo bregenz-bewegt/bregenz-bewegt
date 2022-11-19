@@ -17,6 +17,7 @@ import {
   PatchPreferencesDto,
   PatchProfileDto,
   ResetEmailDto,
+  RevokeFriendRequestDto,
   SearchUserQueryDto,
   VerifyResetEmailDto,
 } from '@bregenz-bewegt/shared/types';
@@ -240,7 +241,10 @@ export class UserController {
   @UseGuards(RoleGuard)
   @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @Put('friends/requests/revoke')
-  revokeFriendRequest(): void {
-    //
+  revokeFriendRequest(
+    @GetCurrentUser('sub') userId: User['id'],
+    @Body() dto: RevokeFriendRequestDto
+  ): Promise<void> {
+    return this.userService.revokeFriendRequest(userId, dto);
   }
 }
