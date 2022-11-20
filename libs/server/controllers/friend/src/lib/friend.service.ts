@@ -64,7 +64,23 @@ export class FriendService {
     requesteeId: FriendRequest['requesteeId']
   ): Promise<(FriendRequest & { addressee: FriendAdresseeResult })[]> {
     return this.prismaService.friendRequest.findMany({
-      where: { requestee: { id: requesteeId }, AND: { acceptedAt: null } },
+      where: {
+        requestee: { id: requesteeId },
+        AND: {
+          OR: [
+            {
+              acceptedAt: null,
+            },
+            {
+              addressee: {
+                friends: {
+                  none: { id: requesteeId },
+                },
+              },
+            },
+          ],
+        },
+      },
       include: {
         addressee: {
           select: { id: true, username: true, profilePicture: true },
@@ -77,7 +93,17 @@ export class FriendService {
     addresseeId: FriendRequest['addresseeId']
   ): Promise<(FriendRequest & { requestee: FriendRequesteeResult })[]> {
     return this.prismaService.friendRequest.findMany({
-      where: { addressee: { id: addresseeId }, AND: { acceptedAt: null } },
+      where: {
+        addressee: { id: addresseeId },
+        AND: {
+          OR: [
+            {
+              acceptedAt: null,
+            },
+            {},
+          ],
+        },
+      },
       include: {
         requestee: {
           select: { id: true, username: true, profilePicture: true },
@@ -105,7 +131,15 @@ export class FriendService {
 
     await this.prismaService.user.update({
       where: { id: userId },
-      data: { friends: { connect: { id: friendRequest.addresseeId } } },
+      data: {
+        friends: { connect: { id: friendRequest.requesteeId } },
+      },
+    });
+    await this.prismaService.user.update({
+      where: { id: friendRequest.requesteeId },
+      data: {
+        friends: { connect: { id: userId } },
+      },
     });
 
     return friendRequest;
@@ -120,6 +154,22 @@ export class FriendService {
   }
 
   async removeFriend(userId: User['id'], dto: RemoveFriendDto): Promise<User> {
+    await this.prismaService.friendRequest.deleteMany({
+      where: {
+        OR: [
+          { requestee: { id: userId } },
+          { requestee: { id: dto.friendId } },
+        ],
+      },
+    });
+
+    await this.prismaService.user.update({
+      where: { id: dto.friendId },
+      data: {
+        friends: { disconnect: { id: userId } },
+      },
+    });
+
     return this.prismaService.user.update({
       where: { id: userId },
       data: {

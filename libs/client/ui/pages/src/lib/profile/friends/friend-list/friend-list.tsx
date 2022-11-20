@@ -103,8 +103,8 @@ export const FriendList: React.FC<FriendsListProps> = inject(
     const handleRemoveFriend = (friendId: Friend['id']) => {
       friendsStore
         ?.removeFriend({ friendId })
-        .then((data) => {
-          setFriends((prev) => prev?.filter((f) => f.id !== data.id));
+        .then(() => {
+          fetchFriends();
         })
         .catch(() => {
           presentDefaultErrorToast();
