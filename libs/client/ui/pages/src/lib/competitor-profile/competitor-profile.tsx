@@ -1,4 +1,5 @@
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { UserStore } from '@bregenz-bewegt/client/common/stores';
 import { User } from '@bregenz-bewegt/client/types';
 import {
   IonBackButton,
@@ -18,7 +19,9 @@ interface MatchParams {
   id: User['id'];
 }
 
-interface CompetitorProfileProps extends RouteComponentProps<MatchParams> {}
+interface CompetitorProfileProps extends RouteComponentProps<MatchParams> {
+  userStore?: UserStore;
+}
 
 export const CompetitorProfile: React.FC<CompetitorProfileProps> = ({
   match,
