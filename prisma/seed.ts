@@ -3,7 +3,7 @@ import * as util from 'util';
 import * as fs from 'fs';
 import * as path from 'path';
 import { faker } from '@faker-js/faker';
-import { PrismaClient, Role, DifficultyType, Park } from '@prisma/client';
+import { PrismaClient, Role, DifficultyType } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const purgeDatabase = async () => {
@@ -13,6 +13,7 @@ const purgeDatabase = async () => {
   await prisma.park.deleteMany();
   await prisma.difficulty.deleteMany();
   await prisma.preferences.deleteMany();
+  await prisma.friendRequest.deleteMany();
   await prisma.user.deleteMany();
 };
 

@@ -133,7 +133,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
                 <h2>Freunde</h2>
               </IonText>
             </IonRow>
-            <IonList className="friend-list__list">
+            <IonList className="friend-list friend-user-list">
               {friends && friends.length > 0 ? (
                 friends.map((friend) => {
                   return (
@@ -144,6 +144,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
                           routerLink={`/users/${friend.id}`}
                           detail={false}
                           lines="none"
+                          className="friend-user-list--friends"
                         >
                           <IonAvatar className="avatar" slot="start">
                             <img
@@ -206,7 +207,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
               debounce={250}
               placeholder="nach Benutzernamen suchen"
             ></IonSearchbar>
-            <IonList>
+            <IonList className="friend-user-list">
               {isLoading || searchResult.length > 0
                 ? searchResult.map((user) => {
                     const isRequested =

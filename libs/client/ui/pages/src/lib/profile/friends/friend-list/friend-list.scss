@@ -1,46 +1,45 @@
-.friend-list {
-}
+.friend-user-list {
+  ion-row {
+    justify-content: space-between;
 
-.add-friend-modal {
-  &__content {
-    ion-list {
-      ion-row {
-        justify-content: space-between;
+    ion-col {
+      padding: 0;
+      margin: auto 0;
 
-        ion-col {
-          padding: 0;
-          margin: auto 0;
+      &.username-avatar-col {
+        flex: 1 !important;
+      }
 
-          &.username-avatar-col {
-            flex: 1 !important;
-          }
+      ion-item {
+        padding: 0;
 
-          ion-item {
-            ion-avatar {
-              width: var(--spacing-xl);
-              height: var(--spacing-xl);
-              margin-right: var(--spacing-m);
-            }
-
-            .username {
-              display: block;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              margin: auto 0;
-              min-width: 50%;
-            }
-          }
-
-          ion-button {
-            margin: 0;
-          }
+        &.friend-user-list--friends {
+          --padding-start: var(--spacing-s);
         }
 
-        &.no-results {
-          width: 100%;
+        ion-avatar {
+          width: var(--spacing-xl);
+          height: var(--spacing-xl);
+          margin-right: var(--spacing-m);
+        }
+
+        .username {
+          display: block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin: auto 0;
+          min-width: 50%;
         }
       }
+
+      ion-button {
+        margin: 0;
+      }
+    }
+
+    &.no-results {
+      width: 100%;
     }
   }
 }
