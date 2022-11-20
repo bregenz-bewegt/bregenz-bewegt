@@ -191,6 +191,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                   {data.length > 0 &&
                     data?.map((user, i) => (
                       <IonRow
+                        key={user.username}
                         className={`${
                           user.username === userStore?.user?.username
                             ? 'self'
