@@ -36,7 +36,6 @@ import { AddCircle, CloseCircle } from 'iconsax-react';
 import { Friend } from '@bregenz-bewegt/client/types';
 
 export interface FriendsListProps {
-  pageRef: React.MutableRefObject<undefined>;
   friendsStore?: FriendsStore;
   userStore?: UserStore;
 }
@@ -45,11 +44,8 @@ export const FriendList: React.FC<FriendsListProps> = inject(
   friendsStore.storeKey,
   userStore.storeKey
 )(
-  observer(({ friendsStore, userStore, pageRef }) => {
+  observer(({ friendsStore, userStore }) => {
     const addModalRef = useRef<HTMLIonModalElement>(null);
-    const [presentingElement, setPresentingElement] = useState<
-      HTMLElement | undefined
-    >(undefined);
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [friends, setFriends] = useState<Friend[]>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -116,7 +112,6 @@ export const FriendList: React.FC<FriendsListProps> = inject(
     };
 
     useEffect(() => {
-      setPresentingElement(pageRef.current);
       fetchFriends();
     }, []);
 
@@ -188,8 +183,8 @@ export const FriendList: React.FC<FriendsListProps> = inject(
         <IonModal
           trigger="open-modal"
           ref={addModalRef}
-          presentingElement={presentingElement}
           className="add-friend-modal"
+          canDismiss
         >
           <IonHeader>
             <IonToolbar>

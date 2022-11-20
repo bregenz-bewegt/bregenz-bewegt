@@ -62,7 +62,7 @@ export const Friends: React.FC<FriendsProps> = inject(friendsStore.storeKey)(
             </IonSegmentButton>
           </IonSegment>
           {friendsDisplayType === FriendsDisplayType.Friends ? (
-            <FriendList pageRef={page} />
+            <FriendList />
           ) : (
             <RequestList />
           )}
