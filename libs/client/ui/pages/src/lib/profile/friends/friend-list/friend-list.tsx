@@ -29,11 +29,11 @@ import { inject, observer } from 'mobx-react';
 import { add } from 'ionicons/icons';
 import React, { useEffect, useRef, useState } from 'react';
 import { IonSearchbarCustomEvent } from '@ionic/core';
-import './friend-list.scss';
 import { FriendSearchResult } from '@bregenz-bewegt/shared/types';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import { AddCircle, CloseCircle } from 'iconsax-react';
 import { Friend } from '@bregenz-bewegt/client/types';
+import './friend-list.scss';
 
 export interface FriendsListProps {
   friendsStore?: FriendsStore;

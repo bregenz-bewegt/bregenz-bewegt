@@ -26,7 +26,7 @@ export interface FriendsProps {
 }
 
 export const Friends: React.FC<FriendsProps> = inject(friendsStore.storeKey)(
-  observer(({ friendsStore }) => {
+  observer(() => {
     const [friendsDisplayType, setFriendsDisplayType] =
       useState<FriendsDisplayType>(FriendsDisplayType.Friends);
     const page = useRef(undefined);
