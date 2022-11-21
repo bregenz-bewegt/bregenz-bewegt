@@ -85,7 +85,7 @@ export const Register: React.FC<RegisterProps> = inject(
         userStore
           ?.patchPreferences({
             difficulties: preferences
-              .filter((p) => p.active)
+              ?.filter((p) => p.active)
               .map((p) => p.key as DifficultyType),
           })
           .then(() => {
