@@ -37,7 +37,7 @@ import { ParkModule } from '@bregenz-bewegt/server/controllers/park';
         from: process.env['NX_MAIL_FROM'],
       },
       template: {
-        dir: '../assests/templates',
+        dir: path.join(__dirname, '/assests/templates'),
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,
