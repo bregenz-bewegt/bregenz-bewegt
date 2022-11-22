@@ -28,6 +28,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { Loading } from '../loading/loading';
 import { Location } from 'iconsax-react';
 import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
@@ -46,6 +47,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
 )(
   observer(({ match }) => {
     const history = useHistory();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [park, setPark] = useState<Park>();
     const [exercises, setExercises] = useState<Exercise[]>();
     const [quickFilters, setQuickFilters] = useState<QuickFilterOption[]>();
@@ -87,6 +89,8 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
         } else {
           enableAllFilters(parkNew);
         }
+
+        setIsLoading(false);
       });
     }, [match.params.park]);
 
@@ -119,7 +123,9 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       );
     };
 
-    return (
+    return isLoading ? (
+      <Loading />
+    ) : (
       <IonPage className="park-detail">
         <IonContent className="park-detail__content">
           <BackButton />
