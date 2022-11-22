@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-
 import { AuthModule } from '@bregenz-bewegt/server-controllers-auth';
 import { UserModule } from '@bregenz-bewegt/server-controllers-user';
 import { PrismaModule } from '@bregenz-bewegt/server-prisma';
@@ -37,7 +36,7 @@ import { ParkModule } from '@bregenz-bewegt/server/controllers/park';
         from: process.env['NX_MAIL_FROM'],
       },
       template: {
-        dir: path.join(__dirname, '/assests/templates'),
+        dir: __dirname + '/assets/mail/templates',
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,
