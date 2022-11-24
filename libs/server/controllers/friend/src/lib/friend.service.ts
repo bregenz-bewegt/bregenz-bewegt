@@ -25,7 +25,7 @@ export class FriendService {
     return friends;
   }
 
-  async searchUserFriendByUsername(
+  async searchUserByUsername(
     query: string,
     userId: User['id']
   ): Promise<FriendSearchResult[]> {
