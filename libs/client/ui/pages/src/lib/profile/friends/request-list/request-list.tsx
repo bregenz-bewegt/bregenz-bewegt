@@ -100,7 +100,7 @@ export const RequestList: React.FC<RequestProps> = inject(
                     <IonCol size="auto" className="username-avatar-col">
                       <IonItem
                         key={request.id}
-                        routerLink={`/users/${request.id}`}
+                        routerLink={`/users/${request.requestee.id}`}
                         detail={false}
                         lines="none"
                       >
@@ -165,7 +165,7 @@ export const RequestList: React.FC<RequestProps> = inject(
                     <IonCol size="auto" className="username-avatar-col">
                       <IonItem
                         key={request.id}
-                        routerLink={`/users/${request.id}`}
+                        routerLink={`/users/${request.addressee.id}`}
                         detail={false}
                         lines="none"
                       >
