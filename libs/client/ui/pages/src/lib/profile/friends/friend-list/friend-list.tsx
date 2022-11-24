@@ -174,7 +174,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
                 })
               ) : (
                 <IonRow className="no-results">
-                  <IonItem lines="none">Keine Anfragen</IonItem>
+                  <IonItem lines="none">Keine Freunde</IonItem>
                 </IonRow>
               )}
             </IonList>
