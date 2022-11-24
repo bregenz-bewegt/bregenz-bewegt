@@ -67,8 +67,8 @@ export const FriendList: React.FC<FriendsListProps> = inject(
     const handleSearch = (
       e: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
     ) => {
-      setIsLoading(true);
       setSearchText(e.detail.value ?? searchText);
+      setIsLoading(true);
 
       const query = e.detail.value?.trim().toLowerCase();
       if (!query) return setSearchResult([]);
