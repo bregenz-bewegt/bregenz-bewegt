@@ -193,7 +193,9 @@ export class UserStore implements Store {
   }
 
   getAvatarProfilePictureUrl(seed?: string): string {
-    return `${this.avatarApiBaseUrl}/${seed ?? 'BB'}.svg`;
+    return `${this.avatarApiBaseUrl}/${
+      seed ?? 'BB'
+    }.svg?backgroundColorLevel=600`;
   }
 
   @action async refreshProfile(): Promise<any> {
