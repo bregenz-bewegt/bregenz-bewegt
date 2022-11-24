@@ -200,7 +200,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
               value={searchText}
               onIonChange={(e) => handleSearch(e)}
               debounce={250}
-              placeholder="nach Benutzernamen suchen"
+              placeholder="Freunde suchen"
             ></IonSearchbar>
             <IonList className="friend-user-list">
               {isLoading || searchResult.length > 0
