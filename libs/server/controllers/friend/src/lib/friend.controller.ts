@@ -135,7 +135,7 @@ export class FriendController {
   rejectFriendRequest(
     @Body() dto: RejectFriendRequestDto
   ): Promise<FriendRequest> {
-    return this.friendService.rejectFriendRequest(dto);
+    return this.friendService.deleteFriendRequest(dto.requestId);
   }
 
   @HasRole(Role.USER)
@@ -145,6 +145,6 @@ export class FriendController {
   revokeFriendRequest(
     @Body() dto: RevokeFriendRequestDto
   ): Promise<FriendRequest> {
-    return this.friendService.revokeFriendRequest(dto);
+    return this.friendService.deleteFriendRequest(dto.requestId);
   }
 }
