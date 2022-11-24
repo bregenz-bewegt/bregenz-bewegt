@@ -186,7 +186,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
           className="add-friend-modal"
           canDismiss
         >
-          <IonHeader>
+          <IonHeader mode="ios">
             <IonToolbar>
               <IonTitle>Freund hinzufügen</IonTitle>
               <IonButtons slot="start">
