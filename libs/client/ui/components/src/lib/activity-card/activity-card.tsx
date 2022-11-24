@@ -1,9 +1,16 @@
 import React from 'react';
 import './activity-card.scss';
-import { IonCard } from '@ionic/react';
+import {
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+} from '@ionic/react';
 import { Activity } from '@bregenz-bewegt/client/types';
 import { DifficultyBadge } from '../difficulty-badge/difficulty-badge';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { Location } from 'iconsax-react';
 
 export interface ActivityCardProps {
   activity: Activity & { minutes?: string; seconds?: string };
@@ -24,20 +31,23 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
       mode="ios"
       key={key}
     >
-      <div className="activity-card__content">
-        <div className="activity-card__content__main">
-          <div>{activity.exercise.name}</div>
-          <div>{activity.park.name}</div>
+      <div className="activity-card__flex-wrapper">
+        <IonCardHeader>
+          <IonCardTitle>{activity.exercise.name}</IonCardTitle>
+          <IonCardSubtitle>
+            <Location variant="Bold" size={12} />
+            {activity.park.name}
+          </IonCardSubtitle>
           <DifficultyBadge difficulty={activity.exercise.difficulty} />
-        </div>
-        <div className="activity-card__content__side">
-          <div className="activity-card__content__side__coins">
+        </IonCardHeader>
+        <IonCardContent>
+          <span className="activity-card__coins">
             <span>+ {activity.exercise.coins}</span>
-          </div>
+          </span>
           <div>
             {activity.minutes}:{activity.seconds}
           </div>
-        </div>
+        </IonCardContent>
       </div>
     </IonCard>
   );

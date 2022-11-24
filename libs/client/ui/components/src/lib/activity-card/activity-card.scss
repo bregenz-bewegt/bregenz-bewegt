@@ -1,34 +1,45 @@
 .activity-card {
-  padding: var(--spacing-s) var(--spacing-m);
+  padding: var(--spacing-m);
 
-  &__content {
+  &__flex-wrapper {
     display: flex;
     justify-content: space-between;
 
-    &__main,
-    &__side {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-    }
+    ion-card-header {
+      padding: 0;
+      margin: 0;
 
-    &__main {
-      & div:first-of-type {
+      ion-card-title {
         font-size: medium;
         font-weight: bold;
         margin-bottom: var(--spacing-xs);
       }
 
+      ion-card-subtitle {
+        display: flex;
+        align-items: flex-start;
+
+        svg {
+          flex-shrink: 0;
+          margin-right: var(--spacing-xxs);
+        }
+      }
+
       & .difficulty-badge {
         width: min-content;
-        margin-top: var(--spacing-s);
+        margin-top: var(--spacing-xs);
       }
     }
 
-    &__side {
+    ion-card-content {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
       align-items: center;
 
-      &__coins {
+      & > span {
+        display: block;
         padding: var(--spacing-xs);
         background-color: var(--ion-color-primary);
         width: var(--spacing-3xl);

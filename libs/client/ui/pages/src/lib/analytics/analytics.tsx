@@ -26,7 +26,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { ArrowCircleUp } from 'iconsax-react';
+import { ArrowUp2 } from 'iconsax-react';
 
 export interface AnalyticsProps {
   activityStore?: ActivityStore;
@@ -303,7 +303,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
             onClick={() => contentRef.current?.scrollToTop(500)}
             style={{ opacity: showTopButton ? 1 : 0 }}
           >
-            <ArrowCircleUp size={32} color="white" variant="Bold" />
+            <ArrowUp2 size={32} color="white" variant="Linear" />
           </IonFabButton>
         </IonContent>
       </IonPage>

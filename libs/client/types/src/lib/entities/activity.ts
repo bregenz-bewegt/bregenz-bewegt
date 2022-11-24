@@ -8,8 +8,3 @@ export type Activity = {
   user: User;
   park: Park;
 };
-
-export type ActivityChartData = {
-  date: number;
-  coins: number;
-}[];
