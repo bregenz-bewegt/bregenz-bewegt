@@ -35,10 +35,13 @@ export class FriendService {
             id: { not: userId },
           },
           {
-            username: { contains: query },
+            role: { not: 'GUEST' },
           },
           {
-            role: { not: 'GUEST' },
+            friends: { none: { id: userId } },
+          },
+          {
+            username: { contains: query },
           },
         ],
       },
