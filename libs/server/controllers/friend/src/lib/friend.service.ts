@@ -30,8 +30,17 @@ export class FriendService {
     const maxSearchResults = 100;
     const users = await this.prismaService.user.findMany({
       where: {
-        username: { contains: query },
-        AND: { id: { not: userId } },
+        AND: [
+          {
+            id: { not: userId },
+          },
+          {
+            username: { contains: query },
+          },
+          {
+            role: { not: 'GUEST' },
+          },
+        ],
       },
       take: maxSearchResults,
     });
