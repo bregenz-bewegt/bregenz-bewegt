@@ -152,6 +152,7 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
                             fill="clear"
                             onClick={() => sendFriendRequest(user)}
                             disabled={isRequested}
+                            mode="ios"
                           >
                             {isRequested ? (
                               'angefragt'
