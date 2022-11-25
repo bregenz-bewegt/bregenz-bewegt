@@ -43,7 +43,6 @@ import { ParkModule } from '@bregenz-bewegt/server/controllers/park';
           inlineCssOptions: {
             url: ' ',
             preserveMediaQueries: true,
-            removeStyleTags: false,
           },
         }),
         options: {
