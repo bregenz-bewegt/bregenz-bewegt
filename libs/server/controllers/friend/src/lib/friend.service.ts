@@ -75,21 +75,25 @@ export class FriendService {
   ): Promise<(FriendRequest & { addressee: FriendAdresseeResult })[]> {
     return this.prismaService.friendRequest.findMany({
       where: {
-        requestee: { id: requesteeId },
-        AND: {
-          OR: [
-            {
-              acceptedAt: null,
-            },
-            {
-              addressee: {
-                friends: {
-                  none: { id: requesteeId },
+        AND: [
+          {
+            requestee: { id: requesteeId },
+          },
+          {
+            OR: [
+              {
+                acceptedAt: null,
+              },
+              {
+                addressee: {
+                  friends: {
+                    none: { id: requesteeId },
+                  },
                 },
               },
-            },
-          ],
-        },
+            ],
+          },
+        ],
       },
       include: {
         addressee: {
@@ -104,15 +108,25 @@ export class FriendService {
   ): Promise<(FriendRequest & { requestee: FriendRequesteeResult })[]> {
     return this.prismaService.friendRequest.findMany({
       where: {
-        addressee: { id: addresseeId },
-        AND: {
-          OR: [
-            {
-              acceptedAt: null,
-            },
-            {},
-          ],
-        },
+        AND: [
+          {
+            addressee: { id: addresseeId },
+          },
+          {
+            OR: [
+              {
+                acceptedAt: null,
+              },
+              {
+                requestee: {
+                  friends: {
+                    none: { id: addresseeId },
+                  },
+                },
+              },
+            ],
+          },
+        ],
       },
       include: {
         requestee: {
