@@ -32,6 +32,16 @@ export interface AnalyticsProps {
   activityStore?: ActivityStore;
 }
 
+type calculateTicksProps = {
+  min: number;
+  max: number;
+  count: number;
+  round: number;
+  includeMin: boolean;
+};
+
+const RELOAD_CHUNK_SIZE = 5;
+
 export const Analytics: React.FC<AnalyticsProps> = inject(
   activityStore.storeKey
 )(
@@ -44,15 +54,6 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     const [chartFilterMonth, setChartFilterMonth] = useState<number>();
     const [showTopButton, setShowTopButton] = useState<boolean>(false);
     const contentRef = createRef<HTMLIonContentElement>();
-    const RELOAD_CHUNK_SIZE = 5;
-
-    type calculateTicksProps = {
-      min: number;
-      max: number;
-      count: number;
-      round: number;
-      includeMin: boolean;
-    };
 
     const loadInfinite = (
       e?: any,

@@ -42,7 +42,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
         </IonCardHeader>
         <IonCardContent>
           <span className="activity-card__coins">
-            <span>+ {activity.exercise.coins}</span>
+            <span>+{activity.exercise.coins}</span>
           </span>
           <div>
             {activity.minutes}:{activity.seconds}
