@@ -173,8 +173,26 @@ export class FriendService {
     await this.prismaService.friendRequest.deleteMany({
       where: {
         OR: [
-          { requestee: { id: userId } },
-          { requestee: { id: dto.friendId } },
+          {
+            AND: [
+              {
+                requestee: { id: userId },
+              },
+              {
+                addressee: { id: dto.friendId },
+              },
+            ],
+          },
+          {
+            AND: [
+              {
+                addressee: { id: userId },
+              },
+              {
+                requestee: { id: dto.friendId },
+              },
+            ],
+          },
         ],
       },
     });
