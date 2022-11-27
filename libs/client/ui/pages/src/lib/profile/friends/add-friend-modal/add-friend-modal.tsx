@@ -95,13 +95,15 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
           </IonToolbar>
         </IonHeader>
         <IonContent className="add-friend-modal__content">
-          <IonSearchbar
-            mode="ios"
-            value={searchText}
-            onIonChange={(e) => handleSearch(e)}
-            debounce={250}
-            placeholder="Freunde suchen"
-          ></IonSearchbar>
+          <IonHeader mode="ios">
+            <IonSearchbar
+              mode="ios"
+              value={searchText}
+              onIonChange={(e) => handleSearch(e)}
+              debounce={250}
+              placeholder="Freunde suchen"
+            />
+          </IonHeader>
           <IonList className="friend-user-list">
             {isLoading || searchResult.length > 0
               ? searchResult.map((user) => {
