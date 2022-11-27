@@ -85,7 +85,12 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
     };
 
     return (
-      <IonModal trigger={trigger} ref={modalRef} canDismiss>
+      <IonModal
+        trigger={trigger}
+        ref={modalRef}
+        canDismiss
+        className="add-friend-modal"
+      >
         <IonHeader mode="ios">
           <IonToolbar>
             <IonTitle>Freund hinzufügen</IonTitle>
@@ -93,17 +98,15 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
               <IonButton onClick={() => dismissAddModal()}>Zurück</IonButton>
             </IonButtons>
           </IonToolbar>
+          <IonSearchbar
+            mode="ios"
+            value={searchText}
+            onIonChange={(e) => handleSearch(e)}
+            debounce={250}
+            placeholder="Freunde suchen"
+          />
         </IonHeader>
         <IonContent className="add-friend-modal__content">
-          <IonHeader mode="ios">
-            <IonSearchbar
-              mode="ios"
-              value={searchText}
-              onIonChange={(e) => handleSearch(e)}
-              debounce={250}
-              placeholder="Freunde suchen"
-            />
-          </IonHeader>
           <IonList className="friend-user-list">
             {isLoading || searchResult.length > 0
               ? searchResult.map((user) => {
