@@ -3,36 +3,33 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <meta charset='utf-8' />
     <title>E-Mail Adresse bestätigen | Bregenz bewegt</title>
-    <script
-      src='https://cdn.statically.io/gh/zenorocha/clipboard.js/v2.0.10/dist/clipboard.min.js'
-    ></script>
     <style>
-      * {font-family: "Roboto", "Helvetica Neue", sans-serif;}
-      body{background-color: rgb(241, 241, 241); margin: 0;} header, main,
-      footer {width: 70%; background-color: white; margin: 0 auto; padding:
-      25px;} .logo > h1 { font-size: 2.5em; color: #0065bd;} .logo > span {
-      display:block; position: absolute; top: 0; left:50%; height: 200px; width:
-      70%; transform: translateX(-50%); background: linear-gradient( to right,
-      rgba(255,255,255, 0), rgba(255,255,255,.8), rgba(255,255,255, 0));
-      background-position: -100% center; background-size: 400px; animation:
-      gradient-movement 3s linear infinite; background-repeat: no-repeat;}
-      @keyframes gradient-movement { to { background-position: 100% center; } }
+      .body{ width: 100%; height: 100%; padding: 20px 0; background-color:
+      rgb(245, 245, 245); font-family: "Roboto", "Helvetica Neue", sans-serif;}
+      .main { width: 70%; background-color: white; margin: 0 auto; padding:
+      32px;} .logo { font-size: 2.5em; color: #0065bd;} .greeting {margin: 0;}
+      .message { margin-top: 10px; color: black; font-size: medium; } #code
+      {text-align: center; letter-spacing: 5px;} .footer {margin-top: 50px;
+      text-align: center; font-size: small; color: gray; font-weight: lighter;}
     </style>
   </head>
   <body>
-    <header>
-      <div class='logo'><h1>Bregenz<br />Bewegt</h1> <span></span></div>
-    </header>
-    <main>
-      <h3>Hallo {{name}}</h3>
-      <p>Dein code ist</p>
-      <h1>{{code}}</h1>
-    </main>
-    <footer>
-      &copy; Stadt Bregenz 2022
-    </footer>
-    <script>
-      var clipboard = new ClipboardJS('.btn');
-    </script>
+    <div class='body'>
+      <div class='main'>
+        <h1 class='logo'>Bregenz<br />Bewegt</h1>
+        <h3 class='greeting'>Hallo {{name}}</h3>
+        <p class='message'>Jemand hat versucht deine Email-Addresse zu ändern.
+          Wenn das du warst füge den untenstehenden Code beim Änderungsprozess
+          ein. Wenn du das nicht warst, solltest du zur Sicherheit dein Passwort
+          ändern.</p>
+        <p>Dein Code:</p>
+        <h1 id='code'>{{code}}</h1>
+        <div class='footer'>
+          Bregenz Bewegt<br />
+          &copy; Stadt Bregenz 2022
+        </div>
+      </div>
+
+    </div>
   </body>
 </html>
