@@ -4,7 +4,7 @@
       var(--spacing-l);
   }
 
-  ion-list {
+  ion-content {
     &::part(scroll) {
       padding-top: 0;
     }
