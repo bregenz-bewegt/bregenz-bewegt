@@ -3,28 +3,36 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <meta charset='utf-8' />
     <title>E-Mail Adresse bestätigen | Bregenz bewegt</title>
+    <script
+      src='https://cdn.statically.io/gh/zenorocha/clipboard.js/v2.0.10/dist/clipboard.min.js'
+    ></script>
     <style>
-      * {font-family: "Roboto", "Helvetica Neue", sans-serif;} .title-banner >
-      h1 { font-size: 2.5em; background: linear-gradient( to right, #0065bd,
-      #74afe2, #0065bd); display: inline-block; text-align: left;
-      background-size: 200% auto; text-fill-color: transparent; animation:
-      gradient-movement 3s infinite; background-clip: text; } @keyframes
-      gradient-movement { to { background-position: -200% center; } }
+      * {font-family: "Roboto", "Helvetica Neue", sans-serif;}
+      body{background-color: rgb(241, 241, 241); margin: 0;} header, main,
+      footer {width: 70%; background-color: white; margin: 0 auto; padding:
+      25px;} .logo > h1 { font-size: 2.5em; color: #0065bd;} .logo > span {
+      display:block; position: absolute; top: 0; left:50%; height: 200px; width:
+      70%; transform: translateX(-50%); background: linear-gradient( to right,
+      rgba(255,255,255, 0), rgba(255,255,255,.8), rgba(255,255,255, 0));
+      background-position: -100% center; background-size: 400px; animation:
+      gradient-movement 3s linear infinite; background-repeat: no-repeat;}
+      @keyframes gradient-movement { to { background-position: 100% center; } }
     </style>
   </head>
   <body>
     <header>
-      <div class='title-banner'><h1
-          style='-webkit-background-clip: text; color: transparent;'
-        >Bregenz<br />Bewegt</h1></div>
+      <div class='logo'><h1>Bregenz<br />Bewegt</h1> <span></span></div>
     </header>
     <main>
-      <h1>Hallo {{name}}</h1>
-      <p>Dein code ist
-        {{code}}</p>
+      <h3>Hallo {{name}}</h3>
+      <p>Dein code ist</p>
+      <h1>{{code}}</h1>
     </main>
-    <fotter>
+    <footer>
       &copy; Stadt Bregenz 2022
-    </fotter>
+    </footer>
+    <script>
+      var clipboard = new ClipboardJS('.btn');
+    </script>
   </body>
 </html>
