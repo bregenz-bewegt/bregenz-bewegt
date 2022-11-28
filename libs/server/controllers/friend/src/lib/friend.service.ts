@@ -27,7 +27,7 @@ export class FriendService {
     query: string,
     userId: User['id']
   ): Promise<FriendSearchResult[]> {
-    const maxSearchResults = 100;
+    const maxSearchResults = 50;
     const users = await this.prismaService.user.findMany({
       where: {
         AND: [
