@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -35,6 +36,7 @@ model User {
   friendRequestsRelation FriendRequest[] @relation("addressee")
 
   @@index([email])
+  @@fulltext([username])
 }
 
 model Preferences {
