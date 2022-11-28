@@ -8,7 +8,7 @@ import {
   RemoveFriendDto,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
-import { User, FriendRequest } from '@prisma/client';
+import { User, FriendRequest, Role } from '@prisma/client';
 
 @Injectable()
 export class FriendService {
@@ -35,7 +35,7 @@ export class FriendService {
             id: { not: userId },
           },
           {
-            role: { not: 'GUEST' },
+            role: { not: Role.GUEST },
           },
           {
             friends: { none: { id: userId } },
