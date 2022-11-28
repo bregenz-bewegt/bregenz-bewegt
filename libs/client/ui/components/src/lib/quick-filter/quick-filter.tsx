@@ -11,6 +11,8 @@ export interface QuickFilterProps {
   allButton?: boolean;
 }
 
+const allButtonKey = 'ALL';
+
 export const QuickFilter: React.FC<QuickFilterProps> = ({
   options,
   className,
@@ -31,7 +33,7 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
       ) ?? null;
 
     newOptions?.unshift({
-      key: 'ALL',
+      key: allButtonKey,
       label: 'Alle',
       active: !newOptions.some((o) => o.active),
     });
@@ -39,7 +41,7 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
   return (
     <div className={`quick-filter${className ? ` ${className}` : ''}`}>
       {newOptions?.map((option, i) => {
-        options = newOptions?.filter((o) => o.key !== 'ALL') ?? [];
+        options = newOptions?.filter((o) => o.key !== allButtonKey) ?? [];
         const none = options.every((o) =>
           o.key === option.key ? o.active : !o.active
         );
@@ -51,7 +53,7 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
             onClick={() =>
               onChange([
                 ...options.map((o) =>
-                  option.key === 'ALL' || (allButton && none)
+                  option.key === allButtonKey || (allButton && none)
                     ? ({ ...o, active: true } as QuickFilterOption)
                     : o.key === option.key
                     ? ({
@@ -64,7 +66,7 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
             }
           >
             <IonLabel>{option.label}</IonLabel>
-            {option.key !== 'ALL' ? (
+            {option.key !== allButtonKey ? (
               option.active ? (
                 <CloseCircle variant="Bold" size={iconSize ?? 16} />
               ) : !allButton ? (
