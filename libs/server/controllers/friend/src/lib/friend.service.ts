@@ -28,7 +28,6 @@ export class FriendService {
     userId: User['id']
   ): Promise<FriendSearchResult[]> {
     const maxSearchResults = 50;
-
     const users = ((startsWith: string, users: User[]) => {
       users.sort();
       const [first, others] = users.reduce(
