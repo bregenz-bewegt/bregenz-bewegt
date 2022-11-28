@@ -41,7 +41,7 @@ export class FriendService {
             friends: { none: { id: userId } },
           },
           {
-            username: { search: query },
+            username: { search: `${query}*` },
           },
         ],
       },
