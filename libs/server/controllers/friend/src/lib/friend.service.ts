@@ -28,39 +28,41 @@ export class FriendService {
     userId: User['id']
   ): Promise<FriendSearchResult[]> {
     const maxSearchResults = 50;
-    const users = ((startsWith: string, users: User[]) => {
-      users.sort();
-      const [first, others] = users.reduce(
-        ([a, b], c) =>
-          c.username.toLowerCase().indexOf(startsWith) === 0
-            ? [[...a, c], b]
-            : [a, [...b, c]],
-        [[], []]
-      );
 
-      return first.concat(others);
-    })(
-      query,
+    const friends = (await this.getFriends(userId)).map((f) => f.id);
+
+    const users = (
       await this.prismaService.user.findMany({
         where: {
           AND: [
             {
-              id: { not: userId },
-            },
-            {
               role: { not: Role.GUEST },
             },
             {
-              friends: { none: { id: userId } },
+              id: { not: userId },
             },
             {
-              username: { contains: query },
+              id: { notIn: friends },
+            },
+            {
+              username: { search: `*${query}*` },
             },
           ],
         },
-        take: maxSearchResults,
+        orderBy: {
+          username: 'asc',
+        },
       })
-    );
+    )
+      .reduce(
+        ([a, b], c) =>
+          c.username.toLowerCase().startsWith(query)
+            ? [[...a, c], b]
+            : [a, [...b, c]],
+        [[], []]
+      )
+      .reduce((p, c) => [...p, ...c], [])
+      .slice(0, maxSearchResults);
 
     const { friendRequests } = await this.prismaService.user.findUnique({
       where: { id: userId },
