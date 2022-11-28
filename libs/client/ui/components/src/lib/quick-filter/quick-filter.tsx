@@ -51,7 +51,7 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
             onClick={() =>
               onChange([
                 ...options.map((o) =>
-                  option.key === 'ALL' || none
+                  option.key === 'ALL' || (allButton && none)
                     ? ({ ...o, active: true } as QuickFilterOption)
                     : o.key === option.key
                     ? ({

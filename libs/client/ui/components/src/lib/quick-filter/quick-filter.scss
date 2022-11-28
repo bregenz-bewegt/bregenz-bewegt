@@ -3,9 +3,6 @@
   justify-content: flex-start;
   align-items: center;
   overflow-y: hidden;
-  padding: 0 var(--spacing-xl);
-  transform: translateX(calc(var(--spacing-xl) * (-1)));
-  width: 100vw;
 
   &__option {
     height: var(--spacing-l);
