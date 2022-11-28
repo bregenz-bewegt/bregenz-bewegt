@@ -102,7 +102,6 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
             mode="ios"
             value={searchText}
             onIonChange={(e) => handleSearch(e)}
-            onChange={() => setIsLoading(true)}
             debounce={250}
             placeholder="Freunde suchen"
           />
