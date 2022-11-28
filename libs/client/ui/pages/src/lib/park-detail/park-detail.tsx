@@ -162,6 +162,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
               options={quickFilters ?? []}
               allButton={true}
               onChange={(v) => handleFilterChange(v)}
+              iconSize={16}
               className={`park-detail__content__header-wrapper__quick-filters`}
             />
           </div>
