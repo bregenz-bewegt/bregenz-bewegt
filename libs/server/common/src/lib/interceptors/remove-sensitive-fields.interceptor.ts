@@ -1,34 +1,42 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   CallHandler,
   ExecutionContext,
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
+import { User } from '@prisma/client';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class RemoveSensitiveFieldsInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    return next.handle().pipe(
-      map((value) =>
-        Array.isArray(value)
-          ? value.map((item) => ({
-              ...item,
-              password: undefined,
-              refreshToken: undefined,
-              passwordResetToken: undefined,
-              emailResetToken: undefined,
-              activationSecret: undefined,
-            }))
-          : {
-              ...value,
-              password: undefined,
-              refreshToken: undefined,
-              passwordResetToken: undefined,
-              emailResetToken: undefined,
-              activationSecret: undefined,
-            }
-      )
-    );
+    const mapUser = (value: User) => {
+      const {
+        password,
+        passwordResetToken,
+        refreshToken,
+        emailResetToken,
+        activationSecret,
+        fingerprint,
+        profilePicture,
+        ...rest
+      } = value;
+
+      return <User>{
+        ...rest,
+        profilePicture: `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/profile-pictures/${profilePicture}`,
+      };
+    };
+
+    return next
+      .handle()
+      .pipe(
+        map((value) =>
+          Array.isArray(value)
+            ? value.map<User>((item) => mapUser(item))
+            : mapUser(value)
+        )
+      );
   }
 }

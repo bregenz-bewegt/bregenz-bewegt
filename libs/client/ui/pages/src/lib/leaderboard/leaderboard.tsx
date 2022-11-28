@@ -217,9 +217,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                               <img
                                 src={
                                   user.profilePicture
-                                    ? userStore?.getProfilePictureUrl(
-                                        user.profilePicture
-                                      )
+                                    ? user.profilePicture
                                     : userStore?.getAvatarProfilePictureUrl(
                                         user.username
                                       )
