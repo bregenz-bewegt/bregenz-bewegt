@@ -8,6 +8,7 @@ export interface QuickFilterProps {
   className?: string;
   onChange: (values: QuickFilterOption[]) => void;
   iconSize?: number;
+  allButton?: boolean;
 }
 
 export const QuickFilter: React.FC<QuickFilterProps> = ({
@@ -15,10 +16,33 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
   className,
   onChange,
   iconSize,
+  allButton,
 }) => {
+  const every = options?.every((o) => o.active);
+  let newOptions = options ? [...options] : null;
+  if (allButton) {
+    newOptions =
+      newOptions?.map(
+        (o) =>
+          ({
+            ...o,
+            active: every ? false : o.active,
+          } as QuickFilterOption)
+      ) ?? null;
+
+    newOptions?.unshift({
+      key: 'ALL',
+      label: 'Alle',
+      active: !newOptions.some((o) => o.active),
+    });
+  }
   return (
     <div className={`quick-filter${className ? ` ${className}` : ''}`}>
-      {options?.map((option, i) => {
+      {newOptions?.map((option, i) => {
+        options = newOptions?.filter((o) => o.key !== 'ALL') ?? [];
+        const none = options.every((o) =>
+          o.key === option.key ? o.active : !o.active
+        );
         return (
           <IonChip
             className="quick-filter__option"
@@ -27,18 +51,29 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
             onClick={() =>
               onChange([
                 ...options.map((o) =>
-                  o.key === option.key
-                    ? ({ ...o, active: !o.active } as QuickFilterOption)
+                  option.key === 'ALL' || none
+                    ? ({ ...o, active: true } as QuickFilterOption)
+                    : o.key === option.key
+                    ? ({
+                        ...o,
+                        active: !o.active,
+                      } as QuickFilterOption)
                     : o
                 ),
               ])
             }
           >
             <IonLabel>{option.label}</IonLabel>
-            {option.active ? (
-              <CloseCircle variant="Bold" size={iconSize ?? 16} />
+            {option.key !== 'ALL' ? (
+              option.active ? (
+                <CloseCircle variant="Bold" size={iconSize ?? 16} />
+              ) : !allButton ? (
+                <Add variant="Linear" size={iconSize ?? 16} />
+              ) : (
+                ''
+              )
             ) : (
-              <Add variant="Linear" size={iconSize ?? 16} />
+              ''
             )}
           </IonChip>
         );

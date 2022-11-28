@@ -160,6 +160,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
             </IonNote>
             <QuickFilter
               options={quickFilters ?? []}
+              allButton={true}
               onChange={(v) => handleFilterChange(v)}
               className={`park-detail__content__header-wrapper__quick-filters`}
             />
