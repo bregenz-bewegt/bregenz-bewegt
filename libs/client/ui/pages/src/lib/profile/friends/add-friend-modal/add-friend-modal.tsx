@@ -93,7 +93,7 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
       >
         <IonHeader mode="ios">
           <IonToolbar>
-            <IonTitle>Freund hinzufügen</IonTitle>
+            <IonTitle>Freunde hinzufügen</IonTitle>
             <IonButtons slot="start">
               <IonButton onClick={() => dismissAddModal()}>Zurück</IonButton>
             </IonButtons>
@@ -102,6 +102,7 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
             mode="ios"
             value={searchText}
             onIonChange={(e) => handleSearch(e)}
+            onChange={() => setIsLoading(true)}
             debounce={250}
             placeholder="Freunde suchen"
           />

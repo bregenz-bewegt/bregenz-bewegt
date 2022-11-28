@@ -69,7 +69,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
       <div className="friend-list">
         <IonButton expand="block" mode="ios" id={modalTrigger}>
           <IonIcon slot="start" icon={add} />
-          Freund hinzufügen
+          Freunde hinzufügen
         </IonButton>
         <IonGrid>
           <IonRow>
