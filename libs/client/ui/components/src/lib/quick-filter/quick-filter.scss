@@ -8,6 +8,7 @@
     height: var(--spacing-l);
     display: flex;
     justify-content: space-between;
+    flex-shrink: 0;
 
     svg {
       margin-left: var(--spacing-xxs);
