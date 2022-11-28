@@ -80,18 +80,7 @@ export class FriendService {
             requestee: { id: requesteeId },
           },
           {
-            OR: [
-              {
-                acceptedAt: null,
-              },
-              {
-                addressee: {
-                  friends: {
-                    none: { id: requesteeId },
-                  },
-                },
-              },
-            ],
+            acceptedAt: null,
           },
         ],
       },
@@ -113,18 +102,7 @@ export class FriendService {
             addressee: { id: addresseeId },
           },
           {
-            OR: [
-              {
-                acceptedAt: null,
-              },
-              {
-                requestee: {
-                  friends: {
-                    none: { id: addresseeId },
-                  },
-                },
-              },
-            ],
+            acceptedAt: null,
           },
         ],
       },

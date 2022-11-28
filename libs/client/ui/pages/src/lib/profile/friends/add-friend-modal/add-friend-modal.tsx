@@ -56,6 +56,7 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
       e: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
     ) => {
       setSearchText(e.detail.value ?? searchText);
+      setIsLoading(true);
 
       const query = e.detail.value?.trim().toLowerCase();
       if (!query) return setSearchResult([]);
@@ -100,7 +101,6 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
           <IonSearchbar
             mode="ios"
             value={searchText}
-            onIonInput={() => setIsLoading(true)}
             onIonChange={(e) => handleSearch(e)}
             debounce={250}
             placeholder="Freunde suchen"
