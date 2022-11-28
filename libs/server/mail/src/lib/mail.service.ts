@@ -25,7 +25,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: options.to,
       subject: 'Passwort ändern | Bregenz bewegt',
-      template: 'changePw',
+      template: 'change-password',
       context: { name: options.name, link: resetLink },
     });
   }
@@ -38,7 +38,7 @@ export class MailService {
     return this.mailerService.sendMail({
       to: options.to,
       subject: 'E-Mail Adresse bestätigen | Bregenz bewegt',
-      template: 'activateMail',
+      template: 'activate-mail',
       context: {
         name: options.name,
         code: options.otp,
