@@ -9,7 +9,7 @@ import { User } from '@prisma/client';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
-export class RemoveSensitiveFieldsInterceptor implements NestInterceptor {
+export class MapUserInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const mapUser = (value: User) => {
       const {
