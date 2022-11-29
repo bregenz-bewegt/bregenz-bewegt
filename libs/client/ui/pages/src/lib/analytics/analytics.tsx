@@ -158,7 +158,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                     onIonChange={(e) => setChartFilterMonth(e.detail.value)}
                     placeholder="Jahr"
                   >
-                    {chartMonthTimespans?.map((span, i) => {
+                    {chartMonthTimespans?.map((span) => {
                       const month = new Date();
                       month.setMonth(span);
                       return (
