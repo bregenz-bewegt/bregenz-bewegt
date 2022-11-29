@@ -169,9 +169,10 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
           <div className="park-detail__content__exercises">
             {exercises &&
               park?.id &&
-              exercises.map((e) => {
+              exercises.map((e, i) => {
                 return (
                   <ExerciseCard
+                    key={i}
                     {...e}
                     link={`${tabRoutes.start.route}/${park?.id}/${e.id}`}
                   />

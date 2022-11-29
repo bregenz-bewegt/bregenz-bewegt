@@ -1,8 +1,7 @@
-import { IonContent } from '@ionic/react';
 import * as util from 'util';
 import * as fs from 'fs';
 import * as path from 'path';
-import { PrismaClient, DifficultyType, Difficulty } from '@prisma/client';
+import { PrismaClient, DifficultyType } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const updateParks = async () => {
