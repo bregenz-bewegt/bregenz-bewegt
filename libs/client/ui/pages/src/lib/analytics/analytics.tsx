@@ -32,7 +32,7 @@ export interface AnalyticsProps {
   activityStore?: ActivityStore;
 }
 
-type calculateTicksProps = {
+type CalculateTicksProps = {
   min: number;
   max: number;
   count: number;
@@ -101,7 +101,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
       count,
       round,
       includeMin,
-    }: calculateTicksProps): number[] => {
+    }: CalculateTicksProps): number[] => {
       const interval =
         Math.round(((max - min + 1) / count + Number.EPSILON) / round) * round;
       return [...Array(count)].map((_x, i) => {
