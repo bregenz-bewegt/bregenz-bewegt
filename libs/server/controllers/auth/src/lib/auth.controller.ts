@@ -22,10 +22,11 @@ import { AuthService } from './auth.service';
 import {
   GetCurrentUser,
   HasRole,
+  MapProfilePictureInterceptor,
   PasswordResetTokenGuard,
   Public,
   RefreshTokenGuard,
-  MapUserInterceptor,
+  RemoveSensitiveFieldsInterceptor,
   RoleGuard,
 } from '@bregenz-bewegt/server/common';
 import { Role, User } from '@prisma/client';
@@ -39,7 +40,10 @@ export class AuthController {
   ) {}
 
   @Public()
-  @UseInterceptors(MapUserInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   @Post('local/guest')
   guest(@Body() dto: GuestDto): Promise<Tokens> {
     return this.authService.guest(dto);
@@ -80,7 +84,10 @@ export class AuthController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapUserInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   @Put('change-password')
   changePassword(
     @GetCurrentUser('sub') userId: User['id'],

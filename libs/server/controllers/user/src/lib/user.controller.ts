@@ -2,9 +2,10 @@ import {
   EmailResetTokenGuard,
   GetCurrentUser,
   HasRole,
+  MapProfilePictureInterceptor,
   ProfilePictureValidationPipe,
   Public,
-  MapUserInterceptor,
+  RemoveSensitiveFieldsInterceptor,
   RoleGuard,
 } from '@bregenz-bewegt/server/common';
 import {
@@ -43,7 +44,10 @@ export class UserController {
     private utilService: UtilService
   ) {}
 
-  @UseInterceptors(MapUserInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   @Get('profile')
   getUser(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
     return this.userService.findById(userId);
@@ -51,7 +55,10 @@ export class UserController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapUserInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   @Patch('profile')
   patchProfile(
     @GetCurrentUser('sub') userId: User['id'],
@@ -60,7 +67,10 @@ export class UserController {
     return this.userService.patchProfile(userId, dto);
   }
 
-  @UseInterceptors(MapUserInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   @Delete('profile')
   deleteProfile(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
     return this.userService.deleteProfile(userId);
@@ -68,7 +78,6 @@ export class UserController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapUserInterceptor)
   @Get('preferences')
   getPreferences(
     @GetCurrentUser('sub') userId: User['id']
@@ -78,7 +87,6 @@ export class UserController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapUserInterceptor)
   @Patch('preferences')
   patchPreferences(
     @GetCurrentUser('sub') userId: User['id'],
@@ -99,7 +107,10 @@ export class UserController {
 
   @Public()
   @UseGuards(EmailResetTokenGuard)
-  @UseInterceptors(MapUserInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   @Post('email/verify')
   verifyResetEmail(
     @Headers('authorization') authorization: string,
@@ -113,7 +124,8 @@ export class UserController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(
-    MapUserInterceptor,
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor,
     FileInterceptor('file', {
       storage: MulterService.getStorage((req, file, cb) => {
         const filename = `${uuidv4()}`;
@@ -135,6 +147,10 @@ export class UserController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @Delete('profile-picture')
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   deleteProfilePicture(
     @GetCurrentUser('sub') userId: User['id']
   ): Promise<User> {
