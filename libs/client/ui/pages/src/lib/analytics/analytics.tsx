@@ -162,7 +162,10 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                       const month = new Date();
                       month.setMonth(span);
                       return (
-                        <IonSelectOption value={span} key={i}>
+                        <IonSelectOption
+                          value={span}
+                          key={JSON.stringify(span)}
+                        >
                           {month.toLocaleString('default', {
                             month: 'long',
                           })}
@@ -270,7 +273,10 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                     {(i === 0 ||
                       new Date(arr[i - 1].endedAt).getDate() !==
                         newD.getDate()) && (
-                      <div className="analytics__content__list__title">
+                      <div
+                        className="analytics__content__list__title"
+                        key={JSON.stringify(a)}
+                      >
                         {i === 0 && <h2>Verlauf</h2>}
                         <h4>
                           {newD.toLocaleString('default', {
