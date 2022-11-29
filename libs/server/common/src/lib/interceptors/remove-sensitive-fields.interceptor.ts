@@ -11,7 +11,9 @@ import * as _ from 'lodash';
 @Injectable()
 export class RemoveSensitiveFieldsInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    const removeSensitiveFields = (value: any): any => {
+    const removeSensitiveFields = (
+      value: Record<string | number, unknown>
+    ): Record<string | number, unknown> => {
       const {
         password,
         passwordResetToken,
