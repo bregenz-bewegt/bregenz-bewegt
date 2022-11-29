@@ -107,13 +107,10 @@ export const RequestList: React.FC<RequestProps> = inject(
                         <IonAvatar className="avatar" slot="start">
                           <img
                             src={
-                              request.requestee.profilePicture
-                                ? userStore?.getProfilePictureUrl(
-                                    request.requestee.profilePicture
-                                  )
-                                : userStore?.getAvatarProfilePictureUrl(
-                                    request.requestee.username
-                                  )
+                              request.requestee.profilePicture ??
+                              userStore?.getAvatarProfilePictureUrl(
+                                request.requestee.username
+                              )
                             }
                             alt="avatar"
                           />
@@ -172,13 +169,10 @@ export const RequestList: React.FC<RequestProps> = inject(
                         <IonAvatar className="avatar" slot="start">
                           <img
                             src={
-                              request.addressee.profilePicture
-                                ? userStore?.getProfilePictureUrl(
-                                    request.addressee.profilePicture
-                                  )
-                                : userStore?.getAvatarProfilePictureUrl(
-                                    request.addressee.username
-                                  )
+                              request.addressee.profilePicture ??
+                              userStore?.getAvatarProfilePictureUrl(
+                                request.addressee.username
+                              )
                             }
                             alt="avatar"
                           />

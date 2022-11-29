@@ -25,7 +25,11 @@ export class RemoveSensitiveFieldsInterceptor implements NestInterceptor {
 
       return <User>{
         ...rest,
-        profilePicture: `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/profile-pictures/${profilePicture}`,
+        ...(profilePicture
+          ? {
+              profilePicture: `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/profile-pictures/${profilePicture}`,
+            }
+          : {}),
       };
     };
 

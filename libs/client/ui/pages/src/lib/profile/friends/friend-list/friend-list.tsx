@@ -93,13 +93,10 @@ export const FriendList: React.FC<FriendsListProps> = inject(
                         <IonAvatar className="avatar" slot="start">
                           <img
                             src={
-                              friend.profilePicture
-                                ? userStore?.getProfilePictureUrl(
-                                    friend.profilePicture
-                                  )
-                                : userStore?.getAvatarProfilePictureUrl(
-                                    friend.username
-                                  )
+                              friend.profilePicture ??
+                              userStore?.getAvatarProfilePictureUrl(
+                                friend.username
+                              )
                             }
                             alt="avatar"
                           />

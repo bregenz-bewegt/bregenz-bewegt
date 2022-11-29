@@ -219,11 +219,10 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                             ) : (
                               <img
                                 src={
-                                  user.profilePicture
-                                    ? user.profilePicture
-                                    : userStore?.getAvatarProfilePictureUrl(
-                                        user.username
-                                      )
+                                  user.profilePicture ??
+                                  userStore?.getAvatarProfilePictureUrl(
+                                    user.username
+                                  )
                                 }
                                 alt="avatar"
                               />
