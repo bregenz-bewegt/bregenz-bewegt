@@ -1,0 +1,87 @@
+.analytics {
+  &__content {
+    --padding-top: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+
+    &__chart {
+      margin: 0 var(--spacing-l);
+      margin-top: var(--spacing-l);
+
+      h2 {
+        margin: 0;
+      }
+
+      &__headline {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 0;
+        margin-bottom: var(--spacing-m);
+      }
+
+      & ion-select {
+        padding: var(--spacing-xs) var(--spacing-s);
+        border-radius: var(--spacing-s);
+        color: var(--ion-color-secondary);
+
+        &::part(icon) {
+          color: var(--ion-color-secondary);
+          opacity: 1;
+        }
+      }
+    }
+
+    &__list {
+      margin-top: var(--spacing-xl);
+
+      &__title {
+        padding: 0 var(--spacing-xl) var(--spacing-s) var(--spacing-l);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+
+        &:first-of-type {
+          justify-content: space-between;
+          background-color: var(--ion-background-color);
+        }
+
+        & h2 {
+          margin: 0;
+          background-color: var(--ion-background-color);
+          padding-top: var(--spacing-l);
+        }
+
+        & h4 {
+          margin: 0;
+          width: 50%;
+          text-align: end;
+          background: linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 1) 50%,
+            rgba(255, 255, 255, 0.8) 70%,
+            rgba(255, 255, 255, 0.5) 80%,
+            rgba(255, 255, 255, 0.3) 90%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          padding-top: var(--spacing-l);
+        }
+      }
+
+      &__card {
+        margin: var(--spacing-s) var(--spacing-l);
+      }
+    }
+
+    &__top-button {
+      bottom: 0;
+      right: 0;
+      margin-right: var(--spacing-xl);
+      margin-bottom: var(--spacing-l);
+      transition: 500ms;
+    }
+  }
+}
