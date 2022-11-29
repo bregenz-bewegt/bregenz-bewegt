@@ -1,0 +1,47 @@
+.friend-user-list {
+  ion-row {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+
+    ion-col {
+      padding: 0;
+      margin: auto 0;
+
+      &.username-avatar-col {
+        flex: 1 !important;
+        overflow: hidden;
+      }
+
+      ion-item {
+        padding: 0;
+
+        &.friend-user-list--friends {
+          --padding-start: var(--spacing-s);
+        }
+
+        ion-avatar {
+          width: var(--spacing-xl);
+          height: var(--spacing-xl);
+          margin-right: var(--spacing-s);
+        }
+
+        .username {
+          display: block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin: auto 0;
+          min-width: 50%;
+        }
+      }
+
+      ion-button {
+        margin: 0;
+      }
+    }
+
+    &.no-results {
+      width: 100%;
+    }
+  }
+}

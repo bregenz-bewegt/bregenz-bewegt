@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -11,26 +12,31 @@ datasource db {
 }
 
 model User {
-  id                 String       @id @default(cuid())
-  username           String?      @unique
-  email              String?      @unique
-  fingerprint        String?      @unique
-  active             Boolean      @default(false)
-  firstname          String?
-  lastname           String?
-  role               Role
-  registratedAt      DateTime     @default(now())
-  updatedAt          DateTime     @default(now()) @updatedAt
-  password           String?
-  refreshToken       String?
-  passwordResetToken String?
-  emailResetToken    String?
-  activationSecret   String?
-  profilePicture     String?
-  preferences        Preferences?
-  activities         Activity[]
+  id                     String          @id @default(cuid())
+  username               String?         @unique
+  email                  String?         @unique
+  fingerprint            String?         @unique
+  active                 Boolean         @default(false)
+  firstname              String?
+  lastname               String?
+  role                   Role
+  registratedAt          DateTime        @default(now())
+  updatedAt              DateTime        @default(now()) @updatedAt
+  password               String?
+  refreshToken           String?
+  passwordResetToken     String?
+  emailResetToken        String?
+  activationSecret       String?
+  profilePicture         String?
+  preferences            Preferences?
+  activities             Activity[]
+  friends                User[]          @relation("friends")
+  friendsRelation        User[]          @relation("friends")
+  friendRequests         FriendRequest[] @relation("requestee")
+  friendRequestsRelation FriendRequest[] @relation("addressee")
 
   @@index([email])
+  @@fulltext([username])
 }
 
 model Preferences {
@@ -104,4 +110,14 @@ model Exercise {
   difficultyId Int?
   parks        Park[]
   activities   Activity[]
+}
+
+model FriendRequest {
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  requestee   User      @relation("requestee", fields: [requesteeId], references: [id])
+  requesteeId String
+  addressee   User      @relation("addressee", fields: [addresseeId], references: [id])
+  addresseeId String
+  acceptedAt  DateTime?
 }
