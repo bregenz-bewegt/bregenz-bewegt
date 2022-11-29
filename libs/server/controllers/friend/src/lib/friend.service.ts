@@ -28,9 +28,6 @@ export class FriendService {
     userId: User['id']
   ): Promise<FriendSearchResult[]> {
     const maxSearchResults = 50;
-
-    const friends = (await this.getFriends(userId)).map((f) => f.id);
-
     const users = (
       await this.prismaService.user.findMany({
         where: {
@@ -42,10 +39,10 @@ export class FriendService {
               id: { not: userId },
             },
             {
-              id: { notIn: friends },
+              friends: { none: { id: userId } },
             },
             {
-              username: { search: `*${query}*` },
+              username: { contains: query },
             },
           ],
         },
