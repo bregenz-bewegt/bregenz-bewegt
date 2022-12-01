@@ -1,1 +1,1 @@
-export * from './remove-sensitive-fields.interceptor';
+export * from './map-user.interceptor';

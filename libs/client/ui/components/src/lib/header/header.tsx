@@ -31,7 +31,10 @@ export const Header: React.FC<HeaderProps> = inject(userStore.storeKey)(
             <IonAvatar>
               <img
                 onLoad={() => setIsImageLoaded(true)}
-                src={userStore?.user?.profilePicture}
+                src={
+                  userStore?.user?.profilePicture ??
+                  userStore.getAvatarProfilePictureUrl()
+                }
                 alt="profile"
                 style={{ display: isImageLoaded ? 'initial' : 'none' }}
               />

@@ -130,13 +130,10 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
                             ) : (
                               <img
                                 src={
-                                  user.profilePicture
-                                    ? userStore?.getProfilePictureUrl(
-                                        user.profilePicture
-                                      )
-                                    : userStore?.getAvatarProfilePictureUrl(
-                                        user.username
-                                      )
+                                  user.profilePicture ??
+                                  userStore?.getAvatarProfilePictureUrl(
+                                    user.username
+                                  )
                                 }
                                 alt="avatar"
                               />

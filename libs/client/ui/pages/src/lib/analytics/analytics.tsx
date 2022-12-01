@@ -132,7 +132,9 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
         setChartFilterMonth(data[0]);
         updateChartData(data[0]);
       });
-      loadInfinite(null, 0, activityList.length, true);
+
+      activityList.length > 0 &&
+        loadInfinite(null, 0, activityList.length, true);
     }, [activityList.length]);
 
     return (

@@ -4,7 +4,7 @@ import {
   HasRole,
   ProfilePictureValidationPipe,
   Public,
-  RemoveSensitiveFieldsInterceptor,
+  MapUserInterceptor,
   RoleGuard,
 } from '@bregenz-bewegt/server/common';
 import {
@@ -43,7 +43,7 @@ export class UserController {
     private utilService: UtilService
   ) {}
 
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Get('profile')
   getUser(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
     return this.userService.findById(userId);
@@ -51,7 +51,7 @@ export class UserController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Patch('profile')
   patchProfile(
     @GetCurrentUser('sub') userId: User['id'],
@@ -60,7 +60,7 @@ export class UserController {
     return this.userService.patchProfile(userId, dto);
   }
 
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Delete('profile')
   deleteProfile(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
     return this.userService.deleteProfile(userId);
@@ -68,7 +68,7 @@ export class UserController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Get('preferences')
   getPreferences(
     @GetCurrentUser('sub') userId: User['id']
@@ -78,7 +78,7 @@ export class UserController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Patch('preferences')
   patchPreferences(
     @GetCurrentUser('sub') userId: User['id'],
@@ -99,7 +99,7 @@ export class UserController {
 
   @Public()
   @UseGuards(EmailResetTokenGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Post('email/verify')
   verifyResetEmail(
     @Headers('authorization') authorization: string,
@@ -113,7 +113,7 @@ export class UserController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(
-    RemoveSensitiveFieldsInterceptor,
+    MapUserInterceptor,
     FileInterceptor('file', {
       storage: MulterService.getStorage((req, file, cb) => {
         const filename = `${uuidv4()}`;

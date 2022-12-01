@@ -2,7 +2,7 @@ import {
   HasRole,
   RoleGuard,
   GetCurrentUser,
-  RemoveSensitiveFieldsInterceptor,
+  MapUserInterceptor,
 } from '@bregenz-bewegt/server/common';
 import {
   SearchUserQueryDto,
@@ -43,7 +43,7 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Get('search')
   searchUser(
     @GetCurrentUser('sub') userId: User['id'],
@@ -84,7 +84,7 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Get('requests')
   async getFriendRequests(
     @GetCurrentUser('sub') userId: User['id']
@@ -99,7 +99,7 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Get('requests/requested')
   getRequestedFriendRequests(
     @GetCurrentUser('sub') userId: User['id']
@@ -109,7 +109,7 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Get('requests/received')
   getReceivedFriendRequests(
     @GetCurrentUser('sub') userId: User['id']
@@ -119,7 +119,7 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Post('requests/accept')
   acceptFriendRequest(
     @GetCurrentUser('sub') userId: User['id'],
@@ -130,7 +130,7 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Post('requests/reject')
   rejectFriendRequest(
     @Body() dto: RejectFriendRequestDto
@@ -140,7 +140,7 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(MapUserInterceptor)
   @Post('requests/revoke')
   revokeFriendRequest(
     @Body() dto: RevokeFriendRequestDto
