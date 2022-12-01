@@ -23,7 +23,6 @@ export class MulterService {
       process.cwd(),
       './static/',
       process.env['NX_UPLOADS_FOLDER'] ?? 'uploads',
-      `${this.destinations.profilePictures}`,
       filename
     );
   }
