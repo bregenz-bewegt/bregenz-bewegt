@@ -1,0 +1,13 @@
+.friends {
+  &__content {
+    ion-segment {
+      margin-bottom: var(--spacing-m);
+    }
+
+    ion-button {
+      ion-icon {
+        translate: 0 -1px;
+      }
+    }
+  }
+}

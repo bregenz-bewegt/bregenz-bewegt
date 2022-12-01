@@ -26,6 +26,7 @@ const main = async () => {
   await prisma.park.deleteMany();
   await prisma.difficulty.deleteMany();
   await prisma.preferences.deleteMany();
+  await prisma.friendRequest.deleteMany();
   await prisma.user.deleteMany();
   await deleteAllProfilePictures();
 };
