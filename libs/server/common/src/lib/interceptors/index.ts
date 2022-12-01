@@ -1,1 +1,2 @@
-export * from './map-user.interceptor';
+export * from './remove-sensitive-fields.interceptor';
+export * from './map-profile-picture-path.interceptor';

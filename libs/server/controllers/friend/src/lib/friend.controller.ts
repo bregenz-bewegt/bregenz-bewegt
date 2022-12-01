@@ -2,7 +2,8 @@ import {
   HasRole,
   RoleGuard,
   GetCurrentUser,
-  MapUserInterceptor,
+  RemoveSensitiveFieldsInterceptor,
+  MapProfilePictureInterceptor,
 } from '@bregenz-bewegt/server/common';
 import {
   SearchUserQueryDto,
@@ -43,7 +44,10 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapUserInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   @Get('search')
   searchUser(
     @GetCurrentUser('sub') userId: User['id'],
@@ -61,6 +65,10 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   @Delete('remove')
   removeFriend(
     @GetCurrentUser('sub') userId: User['id'],
@@ -84,7 +92,10 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapUserInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   @Get('requests')
   async getFriendRequests(
     @GetCurrentUser('sub') userId: User['id']
@@ -99,7 +110,10 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapUserInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   @Get('requests/requested')
   getRequestedFriendRequests(
     @GetCurrentUser('sub') userId: User['id']
@@ -109,7 +123,10 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapUserInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    MapProfilePictureInterceptor
+  )
   @Get('requests/received')
   getReceivedFriendRequests(
     @GetCurrentUser('sub') userId: User['id']
@@ -119,7 +136,6 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapUserInterceptor)
   @Post('requests/accept')
   acceptFriendRequest(
     @GetCurrentUser('sub') userId: User['id'],
@@ -130,7 +146,6 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapUserInterceptor)
   @Post('requests/reject')
   rejectFriendRequest(
     @Body() dto: RejectFriendRequestDto
@@ -140,7 +155,6 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapUserInterceptor)
   @Post('requests/revoke')
   revokeFriendRequest(
     @Body() dto: RevokeFriendRequestDto
