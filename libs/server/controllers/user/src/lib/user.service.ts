@@ -235,7 +235,7 @@ export class UserService {
         id,
       },
       data: {
-        profilePicture: `${file.filename}`,
+        profilePicture: `${MulterService.destinations.profilePictures}/${file.filename}`,
       },
     });
   }

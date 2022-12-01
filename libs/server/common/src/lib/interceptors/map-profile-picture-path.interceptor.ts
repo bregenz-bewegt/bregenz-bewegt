@@ -19,7 +19,7 @@ export class MapProfilePictureInterceptor implements NestInterceptor {
         ...rest,
         ...(profilePicture
           ? {
-              profilePicture: `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/profile-pictures/${profilePicture}`,
+              profilePicture: `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/${profilePicture}`,
             }
           : {}),
       };
