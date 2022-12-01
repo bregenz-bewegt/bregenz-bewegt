@@ -153,7 +153,7 @@ export class UserService {
     const resetToken = await this.signResetEmailToken(userId, dto.email);
     const resetTokenHash = await argon.hash(resetToken);
 
-    await this.prismaService.user.update({
+    const newUser = await this.prismaService.user.update({
       where: { id: userId },
       data: { activationSecret, emailResetToken: resetTokenHash },
     });
@@ -161,6 +161,7 @@ export class UserService {
     this.mailService.sendOtpActivationMail({
       to: dto.email,
       otp: token,
+      name: newUser.firstname ?? newUser.username,
     });
 
     return { token: resetToken };
