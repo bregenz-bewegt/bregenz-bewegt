@@ -42,6 +42,8 @@ export const List: React.FC<ListProps> = ({
     setSearchResult(parks);
   }, [parks]);
 
+  console.log(parks);
+
   return (
     <>
       <IonSearchbar

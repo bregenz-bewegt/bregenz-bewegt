@@ -6,14 +6,15 @@ import { diskStorage, DiskStorageOptions } from 'multer';
 
 @Injectable()
 export class MulterService {
-  static destinations = { profilePictures: 'profile-pictures' } as const;
-  destinations = MulterService.destinations;
+  private static uploadsFolder = 'uploads';
+  static destinations = {
+    profilePictures: `${MulterService.uploadsFolder}/profile-pictures`,
+  } as const;
+  private destinations = MulterService.destinations;
 
   static getStorage(filename: DiskStorageOptions['filename'], path?: string) {
     return diskStorage({
-      destination: `./static/${process.env['NX_UPLOADS_FOLDER']}${
-        path ? `/${path}` : ''
-      }`,
+      destination: `./static${path ? `/${path}` : ''}`,
       filename,
     });
   }
@@ -21,8 +22,8 @@ export class MulterService {
   getProfilePicturePath(filename: string) {
     return path.join(
       process.cwd(),
-      './static/',
-      process.env['NX_UPLOADS_FOLDER'] ?? 'uploads',
+      'static',
+      this.destinations.profilePictures,
       filename
     );
   }

@@ -8,18 +8,18 @@ import { map, Observable } from 'rxjs';
 import * as _ from 'lodash';
 
 @Injectable()
-export class MapProfilePictureInterceptor implements NestInterceptor {
+export class MapParkImagePathInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    const mapProfilePicturePath = (
+    const mapImagePath = (
       value: Record<string | number, unknown>
     ): Record<string | number, unknown> => {
-      const { profilePicture, ...rest } = value;
+      const { image, ...rest } = value;
 
       return {
         ...rest,
-        ...(profilePicture
+        ...(image
           ? {
-              profilePicture: `${process.env['NX_API_BASE_URL']}/static/${profilePicture}`,
+              image: `${process.env['NX_API_BASE_URL']}/static/${image}`,
             }
           : {}),
       };
@@ -31,11 +31,11 @@ export class MapProfilePictureInterceptor implements NestInterceptor {
       Object.keys(value).forEach((key) => {
         if (!_.isPlainObject(value[key])) return;
 
-        value = mapProfilePicturePath(value);
+        value = mapImagePath(value);
         mapResponse(value[key]);
       });
 
-      return mapProfilePicturePath(value);
+      return mapImagePath(value);
     };
 
     return next
