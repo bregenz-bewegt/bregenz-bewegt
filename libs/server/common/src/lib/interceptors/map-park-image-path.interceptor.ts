@@ -9,6 +9,10 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class MapParkImagePathInterceptor implements NestInterceptor {
+  private isPlainObjectOrArray(value: any): boolean {
+    return _.isPlainObject(value) || _.isArray(value);
+  }
+
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
     const mapImagePath = (
       value: Record<string | number, unknown>
@@ -26,10 +30,10 @@ export class MapParkImagePathInterceptor implements NestInterceptor {
     };
 
     const mapResponse = (value: any) => {
-      if (!_.isPlainObject(value)) return;
+      if (!this.isPlainObjectOrArray(value)) return;
 
       Object.keys(value).forEach((key) => {
-        if (!_.isPlainObject(value[key])) return;
+        if (!this.isPlainObjectOrArray(value[key])) return;
 
         value = mapImagePath(value);
         mapResponse(value[key]);
