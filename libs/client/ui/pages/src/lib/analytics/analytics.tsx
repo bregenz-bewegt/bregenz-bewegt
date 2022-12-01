@@ -32,7 +32,7 @@ export interface AnalyticsProps {
   activityStore?: ActivityStore;
 }
 
-type calculateTicksProps = {
+type CalculateTicksProps = {
   min: number;
   max: number;
   count: number;
@@ -101,7 +101,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
       count,
       round,
       includeMin,
-    }: calculateTicksProps): number[] => {
+    }: CalculateTicksProps): number[] => {
       const interval =
         Math.round(((max - min + 1) / count + Number.EPSILON) / round) * round;
       return [...Array(count)].map((_x, i) => {
@@ -160,11 +160,14 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                     onIonChange={(e) => setChartFilterMonth(e.detail.value)}
                     placeholder="Jahr"
                   >
-                    {chartMonthTimespans?.map((span, i) => {
+                    {chartMonthTimespans?.map((span) => {
                       const month = new Date();
                       month.setMonth(span);
                       return (
-                        <IonSelectOption value={span} key={i}>
+                        <IonSelectOption
+                          value={span}
+                          key={JSON.stringify(span)}
+                        >
                           {month.toLocaleString('default', {
                             month: 'long',
                           })}
@@ -272,7 +275,10 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                     {(i === 0 ||
                       new Date(arr[i - 1].endedAt).getDate() !==
                         newD.getDate()) && (
-                      <div className="analytics__content__list__title">
+                      <div
+                        className="analytics__content__list__title"
+                        key={JSON.stringify(a)}
+                      >
                         {i === 0 && <h2>Verlauf</h2>}
                         <h4>
                           {newD.toLocaleString('default', {
