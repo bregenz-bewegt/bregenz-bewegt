@@ -17,7 +17,6 @@ export class SearchService {
     docs: ResolveSchema<PropertiesSchema>[],
     query: SearchParams<Schema>
   ): Promise<SearchResult<Schema>> {
-    console.log(docs, query);
     const db = create({ schema });
     insertBatch(db, docs);
 
