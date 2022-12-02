@@ -4,52 +4,29 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { map, Observable } from 'rxjs';
-import * as _ from 'lodash';
+import { map, Observable, tap } from 'rxjs';
+import * as lodash from 'lodash';
+import deepdash from 'deepdash';
+const _ = deepdash(lodash);
 
 @Injectable()
 export class MapParkImagePathInterceptor implements NestInterceptor {
-  private isPlainObjectOrArray(value: any): boolean {
-    return _.isPlainObject(value) || _.isArray(value);
-  }
+  private keysToBeMapped: (string | number)[] = ['image'];
 
-  private mapImagePath(
-    value: Record<string | number, unknown>
-  ): Record<string | number, unknown> {
-    const { image, ...rest } = value;
+  private mapImagePath<T = any>(value: T): T {
+    const mapped = _.mapValuesDeep(value, (value, key) => {
+      if (!this.keysToBeMapped.includes(key)) return value;
 
-    return {
-      ...rest,
-      ...(image
-        ? {
-            image: `${process.env['NX_API_BASE_URL']}/static/${image}`,
-          }
-        : {}),
-    };
+      return `${process.env['NX_API_BASE_URL']}/static/${value}`;
+    });
+
+    return mapped;
   }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    const mapResponse = (value: any) => {
-      if (!this.isPlainObjectOrArray(value)) return;
-
-      Object.keys(value).forEach((key) => {
-        if (!this.isPlainObjectOrArray(value[key])) return;
-
-        value = this.mapImagePath(value);
-        mapResponse(value[key]);
-      });
-
-      return this.mapImagePath(value);
-    };
-
-    return next
-      .handle()
-      .pipe(
-        map((value) =>
-          Array.isArray(value)
-            ? value.map((item) => mapResponse(item))
-            : mapResponse(value)
-        )
-      );
+    return next.handle().pipe(
+      map((value) => this.mapImagePath(value)),
+      tap(console.log)
+    );
   }
 }

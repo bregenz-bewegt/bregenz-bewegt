@@ -68,6 +68,7 @@
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "cuid": "^2.1.8",
+    "deepdash": "^5.3.9",
     "express": "^4.18.1",
     "formik": "^2.2.9",
     "iconsax-react": "0.0.8",

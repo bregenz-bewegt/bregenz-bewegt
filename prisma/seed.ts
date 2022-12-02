@@ -88,7 +88,7 @@ const createParks = async () => {
       id: 2,
       name: 'Schulsportplatz MS Stadt',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'parks/images/schulsportplatz_ms_stadt',
+      image: 'parks/images/schulsportplatz-ms-stadt',
       qr: 'not-yet-defined-1',
       coordinates: {
         latitude: 47.505646,
@@ -143,7 +143,7 @@ const createParks = async () => {
       id: 7,
       name: 'Tschutterplatz beim Stadion',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'parks/images/schutterplatz-beim-stadion.png',
+      image: 'parks/images/tschutterplatz-beim-stadion.png',
       qr: 'not-yet-defined-6',
       coordinates: {
         latitude: 47.503531,
@@ -155,7 +155,7 @@ const createParks = async () => {
       id: 8,
       name: 'Schulsportplatz VS Augasse',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'parks/images/schulsportplatz-vs-augasse',
+      image: 'parks/images/schulsportplatz-vs-augasse.png',
       qr: 'not-yet-defined-7',
       coordinates: {
         latitude: 47.500276,
