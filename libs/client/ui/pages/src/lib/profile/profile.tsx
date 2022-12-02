@@ -41,7 +41,6 @@ import {
   useDefaultErrorToast,
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
-import { toJS } from 'mobx';
 
 export interface ProfileProps {
   userStore?: UserStore;
