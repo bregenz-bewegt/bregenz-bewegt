@@ -88,7 +88,7 @@ const createParks = async () => {
       id: 2,
       name: 'Schulsportplatz MS Stadt',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'parks/images/schulsportplatz-ms-stadt',
+      image: 'parks/images/schulsportplatz-ms-stadt.png',
       qr: 'not-yet-defined-1',
       coordinates: {
         latitude: 47.505646,

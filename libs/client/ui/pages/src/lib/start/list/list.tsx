@@ -8,6 +8,8 @@ import {
 } from '@ionic/core';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { Park } from '@bregenz-bewegt/client/types';
+import { userStore } from '@bregenz-bewegt/client/common/stores';
+import { toJS } from 'mobx';
 
 export interface ListProps {
   isLoadingParks: boolean;
@@ -42,7 +44,7 @@ export const List: React.FC<ListProps> = ({
     setSearchResult(parks);
   }, [parks]);
 
-  console.log(parks);
+  console.log(toJS(userStore.user));
 
   return (
     <>

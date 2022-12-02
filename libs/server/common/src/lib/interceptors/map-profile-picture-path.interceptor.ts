@@ -5,51 +5,27 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import * as _ from 'lodash';
+import * as lodash from 'lodash';
+import deepdash from 'deepdash';
+const _ = deepdash(lodash);
 
 @Injectable()
 export class MapProfilePictureInterceptor implements NestInterceptor {
-  private isPlainObjectOrArray(value: any): boolean {
-    return _.isPlainObject(value) || _.isArray(value);
-  }
+  private keysToBeMapped: (string | number)[] = ['profilePicture'];
 
-  private mapProfilePicturePath(
-    value: Record<string | number, unknown>
-  ): Record<string | number, unknown> {
-    const { profilePicture, ...rest } = value;
+  private mapProfilePicturePath<T = any>(value: T): T {
+    const mapped = _.mapValuesDeep(value, (value, key) => {
+      if (!this.keysToBeMapped.includes(key) || _.isNil(value)) return value;
 
-    return {
-      ...rest,
-      ...(profilePicture
-        ? {
-            profilePicture: `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/profile-pictures/${profilePicture}`,
-          }
-        : {}),
-    };
+      return `${process.env['NX_API_BASE_URL']}/static/${value}`;
+    });
+
+    return mapped;
   }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    const mapResponse = (value: any) => {
-      if (!this.isPlainObjectOrArray(value)) return;
-
-      Object.keys(value).forEach((key) => {
-        if (!this.isPlainObjectOrArray(value[key])) return;
-
-        value = this.mapProfilePicturePath(value);
-        mapResponse(value[key]);
-      });
-
-      return this.mapProfilePicturePath(value);
-    };
-
     return next
       .handle()
-      .pipe(
-        map((value) =>
-          Array.isArray(value)
-            ? value.map((item) => mapResponse(item))
-            : mapResponse(value)
-        )
-      );
+      .pipe(map((value) => this.mapProfilePicturePath(value)));
   }
 }

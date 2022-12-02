@@ -4,7 +4,7 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import * as lodash from 'lodash';
 import deepdash from 'deepdash';
 const _ = deepdash(lodash);
@@ -15,7 +15,7 @@ export class MapParkImagePathInterceptor implements NestInterceptor {
 
   private mapImagePath<T = any>(value: T): T {
     const mapped = _.mapValuesDeep(value, (value, key) => {
-      if (!this.keysToBeMapped.includes(key)) return value;
+      if (!this.keysToBeMapped.includes(key) || _.isNil(value)) return value;
 
       return `${process.env['NX_API_BASE_URL']}/static/${value}`;
     });
@@ -24,9 +24,6 @@ export class MapParkImagePathInterceptor implements NestInterceptor {
   }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    return next.handle().pipe(
-      map((value) => this.mapImagePath(value)),
-      tap(console.log)
-    );
+    return next.handle().pipe(map((value) => this.mapImagePath(value)));
   }
 }
