@@ -10,36 +10,40 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class RemoveSensitiveFieldsInterceptor implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    const removeSensitiveFields = (
-      value: Record<string | number, unknown>
-    ): Record<string | number, unknown> => {
-      const {
-        password,
-        passwordResetToken,
-        refreshToken,
-        emailResetToken,
-        activationSecret,
-        fingerprint,
-        ...rest
-      } = value;
+  private isPlainObjectOrArray(value: any): boolean {
+    return _.isPlainObject(value) || _.isArray(value);
+  }
 
-      return {
-        ...rest,
-      };
+  private removeSensitiveFields(
+    value: Record<string | number, unknown>
+  ): Record<string | number, unknown> {
+    const {
+      password,
+      passwordResetToken,
+      refreshToken,
+      emailResetToken,
+      activationSecret,
+      fingerprint,
+      ...rest
+    } = value;
+
+    return {
+      ...rest,
     };
+  }
 
+  intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
     const mapResponse = (value: any) => {
-      if (!_.isPlainObject(value)) return;
+      if (!this.isPlainObjectOrArray(value)) return;
 
       Object.keys(value).forEach((key) => {
-        if (!_.isPlainObject(value[key])) return;
+        if (!this.isPlainObjectOrArray(value[key])) return;
 
-        value = removeSensitiveFields(value);
+        value = this.removeSensitiveFields(value);
         mapResponse(value[key]);
       });
 
-      return removeSensitiveFields(value);
+      return this.removeSensitiveFields(value);
     };
 
     return next
