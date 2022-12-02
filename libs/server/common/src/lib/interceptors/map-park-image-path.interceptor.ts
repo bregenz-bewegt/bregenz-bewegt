@@ -13,33 +13,33 @@ export class MapParkImagePathInterceptor implements NestInterceptor {
     return _.isPlainObject(value) || _.isArray(value);
   }
 
-  intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    const mapImagePath = (
-      value: Record<string | number, unknown>
-    ): Record<string | number, unknown> => {
-      const { image, ...rest } = value;
+  private mapImagePath(
+    value: Record<string | number, unknown>
+  ): Record<string | number, unknown> {
+    const { image, ...rest } = value;
 
-      return {
-        ...rest,
-        ...(image
-          ? {
-              image: `${process.env['NX_API_BASE_URL']}/static/${image}`,
-            }
-          : {}),
-      };
+    return {
+      ...rest,
+      ...(image
+        ? {
+            image: `${process.env['NX_API_BASE_URL']}/static/${image}`,
+          }
+        : {}),
     };
+  }
 
+  intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
     const mapResponse = (value: any) => {
       if (!this.isPlainObjectOrArray(value)) return;
 
       Object.keys(value).forEach((key) => {
         if (!this.isPlainObjectOrArray(value[key])) return;
 
-        value = mapImagePath(value);
+        value = this.mapImagePath(value);
         mapResponse(value[key]);
       });
 
-      return mapImagePath(value);
+      return this.mapImagePath(value);
     };
 
     return next
