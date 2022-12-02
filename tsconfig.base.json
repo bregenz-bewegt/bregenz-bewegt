@@ -67,6 +67,7 @@
       ],
       "@bregenz-bewegt/server/mail": ["libs/server/mail/src/index.ts"],
       "@bregenz-bewegt/server/multer": ["libs/server/multer/src/index.ts"],
+      "@bregenz-bewegt/server/search": ["libs/server/search/src/index.ts"],
       "@bregenz-bewegt/server/types": ["libs/server/types/src/index.ts"],
       "@bregenz-bewegt/server/util": ["libs/server/util/src/index.ts"],
       "@bregenz-bewegt/shared/constants": [

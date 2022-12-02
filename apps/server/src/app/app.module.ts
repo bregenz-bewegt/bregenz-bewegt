@@ -19,6 +19,7 @@ import { LeaderboardModule } from '@bregenz-bewegt/server/controllers/leaderboar
 import { ActivityModule } from '@bregenz-bewegt/server/controllers/activity';
 import { ParkModule } from '@bregenz-bewegt/server/controllers/park';
 import { FriendModule } from '@bregenz-bewegt/server/controllers/friend';
+import { SearchModule } from '@bregenz-bewegt/server/search';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { FriendModule } from '@bregenz-bewegt/server/controllers/friend';
     MailModule,
     PrismaModule,
     MulterModule,
+    SearchModule,
     AuthModule,
     UtilModule,
     UserModule,
