@@ -9,10 +9,14 @@ import {
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, FriendRequest, Role } from '@prisma/client';
+import { SearchService } from '@bregenz-bewegt/server/search';
 
 @Injectable()
 export class FriendService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private searchService: SearchService
+  ) {}
 
   async getFriends(userId: User['id']): Promise<User[]> {
     const { friends } = await this.prismaService.user.findUnique({
@@ -65,6 +69,17 @@ export class FriendService {
       where: { id: userId },
       select: { friendRequests: { where: { requestee: { id: userId } } } },
     });
+
+    const testUsers = await this.prismaService.user.findMany({
+      select: { username: true },
+    });
+    const testResult = await this.searchService.search(
+      { username: 'string' },
+      testUsers,
+      { term: query }
+    );
+
+    console.log(testResult);
 
     return <FriendSearchResult[]>users.map((user) => ({
       ...user,

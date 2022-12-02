@@ -12,11 +12,11 @@ import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types';
 
 @Injectable()
 export class SearchService {
-  search<Schema extends Configuration<PropertiesSchema>['schema']>(
+  async search<Schema extends Configuration<PropertiesSchema>['schema']>(
     schema: Schema,
     docs: ResolveSchema<PropertiesSchema>[],
     query: SearchParams<Schema>
-  ): SearchResult<Schema> {
+  ): Promise<SearchResult<Schema>> {
     const db = create({ schema });
     insertBatch(db, docs);
 
