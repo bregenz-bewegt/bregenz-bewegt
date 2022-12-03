@@ -16,11 +16,11 @@ export class SearchService {
     schema: Schema,
     docs: ResolveSchema<PropertiesSchema>[],
     query: SearchParams<Schema>
-  ): Promise<SearchResult<Schema>> {
+  ): Promise<SearchResult<Schema>['hits']> {
     const db = create({ schema });
-    insertBatch(db, docs);
+    await insertBatch(db, docs);
 
     const result = search(db, query);
-    return result;
+    return result.hits;
   }
 }

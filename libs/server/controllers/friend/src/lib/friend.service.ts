@@ -32,56 +32,45 @@ export class FriendService {
     userId: User['id']
   ): Promise<FriendSearchResult[]> {
     const maxSearchResults = 50;
-    const users = (
-      await this.prismaService.user.findMany({
-        where: {
-          AND: [
-            {
-              role: { not: Role.GUEST },
-            },
-            {
-              id: { not: userId },
-            },
-            {
-              friends: { none: { id: userId } },
-            },
-            {
-              username: { contains: query },
-            },
-          ],
-        },
-        orderBy: {
-          username: 'asc',
-        },
-      })
-    )
-      .reduce(
-        ([a, b], c) =>
-          c.username.toLowerCase().startsWith(query)
-            ? [[...a, c], b]
-            : [a, [...b, c]],
-        [[], []]
-      )
-      .reduce((p, c) => [...p, ...c], [])
-      .slice(0, maxSearchResults);
 
     const { friendRequests } = await this.prismaService.user.findUnique({
       where: { id: userId },
       select: { friendRequests: { where: { requestee: { id: userId } } } },
     });
 
-    const testUsers = await this.prismaService.user.findMany({
+    const candidates = await this.prismaService.user.findMany({
+      where: {
+        AND: [
+          {
+            role: { not: Role.GUEST },
+          },
+          {
+            id: { not: userId },
+          },
+          {
+            friends: { none: { id: userId } },
+          },
+        ],
+      },
       select: { username: true },
     });
-    const testResult = await this.searchService.search(
-      { username: 'string' },
-      testUsers,
-      { term: query }
+
+    const fullTextSearchResult = await this.searchService.search(
+      {
+        username: 'string',
+      },
+      candidates,
+      { term: query, properties: '*', tolerance: 100, limit: maxSearchResults }
     );
 
-    console.log(testResult);
+    const searchResult = await this.prismaService.user.findMany({
+      where: {
+        username: { in: fullTextSearchResult.map((result) => result.username) },
+      },
+      select: { id: true, username: true, profilePicture: true },
+    });
 
-    return <FriendSearchResult[]>users.map((user) => ({
+    return <FriendSearchResult[]>searchResult.map((user) => ({
       ...user,
       isRequested: friendRequests.some((f) => user.id === f.addresseeId),
     }));

@@ -46,7 +46,7 @@
     "@ionic/react": "^6.2.0",
     "@ionic/react-router": "^6.2.0",
     "@ionic/storage": "^3.0.6",
-    "@lyrasearch/lyra": "^0.3.1",
+    "@lyrasearch/lyra": "^0.2.4",
     "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/bull": "^0.6.1",
     "@nestjs/common": "^9.0.0",
