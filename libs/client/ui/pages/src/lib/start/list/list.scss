@@ -3,6 +3,8 @@
     &__searchbar {
       padding: 10px 0 0 0;
       height: 50px;
+      width: 100%;
+      margin-bottom: var(--spacing-m);
 
       .searchbar-input-container {
         height: 100%;
@@ -16,6 +18,12 @@
 
       ion-card:first-of-type {
         margin-top: var(--spacing-xl);
+      }
+
+      &__no-results {
+        p {
+          margin: 0 var(--spacing-m);
+        }
       }
     }
   }

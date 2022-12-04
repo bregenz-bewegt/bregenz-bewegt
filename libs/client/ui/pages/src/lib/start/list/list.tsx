@@ -67,7 +67,7 @@ export const List: React.FC<ListProps> = ({
             ))}
           </>
         ) : (
-          <IonText>
+          <IonText className="start__content__list__parks__no-results">
             <p>Keine Suchergebnisse gefunden</p>
           </IonText>
         )}
