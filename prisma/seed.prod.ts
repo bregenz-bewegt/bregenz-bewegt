@@ -10,7 +10,7 @@ const updateParks = async () => {
       id: 1,
       name: 'Generationen Park Mariahilf',
       address: 'Mariahilfstraße 50, 6900 Bregenz',
-      image: 'parks/images/generationen-park-mariahilf.png',
+      image: 'parks/generationen-park-mariahilf.png',
       qr: 'not-yet-defined-0',
       gmaps: 'https://goo.gl/maps/R5LVWh3DZD27ViwXA',
       coordinates: {
@@ -153,7 +153,7 @@ const updateParks = async () => {
       id: 2,
       name: 'Jugendplatz Spielfeld 3',
       address: 'Achsiedlungsstraße 93, 6900 Bregenz',
-      image: 'parks/images/jugendplatz-spielfeld.png',
+      image: 'parks/jugendplatz-spielfeld.png',
       qr: 'not-yet-defined-1',
       gmaps: 'https://goo.gl/maps/rRa2EQv8ZBmp7Du86',
       coordinates: {
@@ -312,7 +312,7 @@ const updateParks = async () => {
       id: 3,
       name: 'Parkourpark Remise',
       address: 'Badgässele 2, 6900 Bregenz',
-      image: 'parks/images/parkourpark-remise.png',
+      image: 'parks/parkourpark-remise.png',
       qr: 'not-yet-defined-2',
       gmaps: 'https://goo.gl/maps/7rtaEfM9dVew7KWm8',
       coordinates: {
@@ -472,7 +472,7 @@ const updateParks = async () => {
       id: 4,
       name: 'Schulsportplatz MS Stadt',
       address: 'Schillerstraße 7, 6900 Bregenz',
-      image: 'parks/images/schulsportplatz-ms-stadt.png',
+      image: 'parks/schulsportplatz-ms-stadt.png',
       qr: 'not-yet-defined-3',
       gmaps: 'https://goo.gl/maps/eBj3bP1BdhekjLzx9',
       coordinates: {
