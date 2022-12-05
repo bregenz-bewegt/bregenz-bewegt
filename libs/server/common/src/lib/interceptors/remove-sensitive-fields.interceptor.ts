@@ -6,54 +6,35 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import * as _ from 'lodash';
+import * as lodash from 'lodash';
+import deepdash from 'deepdash';
+const _ = deepdash(lodash);
 
 @Injectable()
 export class RemoveSensitiveFieldsInterceptor implements NestInterceptor {
-  private isPlainObjectOrArray(value: any): boolean {
-    return _.isPlainObject(value) || _.isArray(value);
-  }
+  private sensitiveFields: (string | number)[] = [
+    'password',
+    'passwordResetToken',
+    'refreshToken',
+    'emailResetToken',
+    'activationSecret',
+    'fingerprint',
+  ];
 
-  private removeSensitiveFields(
-    value: Record<string | number, unknown>
-  ): Record<string | number, unknown> {
-    const {
-      password,
-      passwordResetToken,
-      refreshToken,
-      emailResetToken,
-      activationSecret,
-      fingerprint,
-      ...rest
-    } = value;
+  private removeSensitiveFields<T = any>(value: T): T {
+    const mapped = _.eachDeep(value, (value, key, parent, ctx) => {
+      if (!this.sensitiveFields.includes(key)) return true;
 
-    return {
-      ...rest,
-    };
+      parent && delete parent[key];
+      return false;
+    });
+
+    return mapped;
   }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    const mapResponse = (value: any) => {
-      if (!this.isPlainObjectOrArray(value)) return;
-
-      Object.keys(value).forEach((key) => {
-        if (!this.isPlainObjectOrArray(value[key])) return;
-
-        value = this.removeSensitiveFields(value);
-        mapResponse(value[key]);
-      });
-
-      return this.removeSensitiveFields(value);
-    };
-
     return next
       .handle()
-      .pipe(
-        map((value) =>
-          Array.isArray(value)
-            ? value.map((item) => mapResponse(item))
-            : mapResponse(value)
-        )
-      );
+      .pipe(map((value) => this.removeSensitiveFields(value)));
   }
 }

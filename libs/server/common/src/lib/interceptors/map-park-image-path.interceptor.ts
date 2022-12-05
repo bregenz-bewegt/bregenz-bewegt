@@ -10,10 +10,10 @@ import deepdash from 'deepdash';
 const _ = deepdash(lodash);
 
 @Injectable()
-export class MapProfilePictureInterceptor implements NestInterceptor {
-  private keysToBeMapped: (string | number)[] = ['profilePicture'];
+export class MapParkImagePathInterceptor implements NestInterceptor {
+  private keysToBeMapped: (string | number)[] = ['image'];
 
-  private mapProfilePicturePath<T = any>(value: T): T {
+  private mapImagePath<T = any>(value: T): T {
     const mapped = _.mapValuesDeep(value, (value, key) => {
       if (!this.keysToBeMapped.includes(key) || _.isNil(value)) return value;
 
@@ -24,8 +24,6 @@ export class MapProfilePictureInterceptor implements NestInterceptor {
   }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    return next
-      .handle()
-      .pipe(map((value) => this.mapProfilePicturePath(value)));
+    return next.handle().pipe(map((value) => this.mapImagePath(value)));
   }
 }
