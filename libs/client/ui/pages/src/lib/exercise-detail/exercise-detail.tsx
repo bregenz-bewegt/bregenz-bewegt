@@ -6,7 +6,7 @@ import {
   useIonViewWillEnter,
   useIonViewWillLeave,
 } from '@ionic/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ActivityStore,
   activityStore,
@@ -51,6 +51,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [park, setPark] = useState<Park>();
     const [activity, setActivity] = useState<Activity>();
     const [isGuest] = useIsGuest();
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
       const parkId = +match.params.park;
@@ -61,6 +62,10 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         setPark(park);
       });
     }, [match.params.exercise, match.params.park]);
+
+    useEffect(() => {
+      videoRef.current?.load();
+    }, [park?.exercises ? park.exercises[0].video : undefined]);
 
     useIonViewWillEnter(() => {
       tabStore?.setIsShown(false);
@@ -113,9 +118,13 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         <IonContent className="exercise-detail__content">
           <BackButton />
           <div className="exercise-detail__content__video-wrapper">
-            <video controls>
+            <video controls ref={videoRef}>
               <source
-                src={`https://samplelib.com/lib/preview/mp4/sample-5s.mp4`}
+                src={
+                  park?.exercises && park.exercises[0].video
+                    ? park.exercises[0].video
+                    : `https://samplelib.com/lib/preview/mp4/sample-5s.mp4`
+                }
                 type="video/mp4"
               ></source>
             </video>

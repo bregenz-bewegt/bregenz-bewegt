@@ -46,7 +46,7 @@ export class UserController {
 
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   @Get('profile')
   getUser(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
@@ -57,7 +57,7 @@ export class UserController {
   @UseGuards(RoleGuard)
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   @Patch('profile')
   patchProfile(
@@ -69,7 +69,7 @@ export class UserController {
 
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   @Delete('profile')
   deleteProfile(@GetCurrentUser('sub') userId: User['id']): Promise<User> {
@@ -109,7 +109,7 @@ export class UserController {
   @UseGuards(EmailResetTokenGuard)
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   @Post('email/verify')
   verifyResetEmail(
@@ -125,7 +125,7 @@ export class UserController {
   @UseGuards(RoleGuard)
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor,
+    new MapProfilePictureInterceptor(),
     FileInterceptor('file', {
       storage: MulterService.getStorage((req, file, cb) => {
         const filename = `${uuidv4()}`;
@@ -149,7 +149,7 @@ export class UserController {
   @Delete('profile-picture')
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   deleteProfilePicture(
     @GetCurrentUser('sub') userId: User['id']
