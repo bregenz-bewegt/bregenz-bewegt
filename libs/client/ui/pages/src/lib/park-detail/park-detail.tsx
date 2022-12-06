@@ -30,7 +30,7 @@ import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Loading } from '../loading/loading';
-import { DiscountCircle, Location } from 'iconsax-react';
+import { Location } from 'iconsax-react';
 import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
 interface MatchParams {
