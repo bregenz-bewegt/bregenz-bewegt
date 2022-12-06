@@ -7,17 +7,6 @@ http://ionicframework.com/docs/theming/ */
   --ion-background-color: #ffffff;
   --ion-background-color-rgb: 255, 255, 255;
 
-  // Difficulty Colors
-  --ion-color-difficulty-beginner: #70a9a1;
-  --ion-color-difficulty-beginner-tint: #d8ebe8;
-  --ion-color-difficulty-beginner-dark: #305551;
-  --ion-color-difficulty-advanced: #9d4d96;
-  --ion-color-difficulty-advanced-tint: #fbd2f7;
-  --ion-color-difficulty-advanced-dark: #683263;
-  --ion-color-difficulty-game: #f49d6e;
-  --ion-color-difficulty-game-tint: #ffe2d3;
-  --ion-color-difficulty-game-dark: #894724;
-
   /** primary **/
   --ion-color-primary: #0065bd;
   --ion-color-primary-rgb: 0, 101, 189;
@@ -96,6 +85,17 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-gold: #f9ad0e;
   --ion-color-silver: #b1b1b1;
   --ion-color-bronze: #c5802c;
+
+  /** difficulty **/
+  --ion-color-difficulty-beginner: #70a9a1;
+  --ion-color-difficulty-beginner-tint: #d8ebe8;
+  --ion-color-difficulty-beginner-dark: #305551;
+  --ion-color-difficulty-advanced: #9d4d96;
+  --ion-color-difficulty-advanced-tint: #fbd2f7;
+  --ion-color-difficulty-advanced-dark: #683263;
+  --ion-color-difficulty-game: #f49d6e;
+  --ion-color-difficulty-game-tint: #ffe2d3;
+  --ion-color-difficulty-game-dark: #894724;
 }
 
 @media (prefers-color-scheme: dark) {
