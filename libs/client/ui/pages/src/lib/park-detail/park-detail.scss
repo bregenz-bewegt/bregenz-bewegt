@@ -58,6 +58,9 @@
         overflow-x: auto;
         min-height: var(--spacing-l);
         justify-content: space-between;
+        padding: 0 var(--spacing-xl);
+        transform: translateX(calc(var(--spacing-xl) * (-1)));
+        width: 100vw;
 
         &::-webkit-scrollbar {
           display: none;
