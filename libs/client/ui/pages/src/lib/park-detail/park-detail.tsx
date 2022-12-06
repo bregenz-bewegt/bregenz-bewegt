@@ -17,6 +17,7 @@ import {
   Park,
   Exercise,
   Role,
+  difficultyColor,
 } from '@bregenz-bewegt/client/types';
 import {
   IonContent,
@@ -29,7 +30,7 @@ import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Loading } from '../loading/loading';
-import { Location } from 'iconsax-react';
+import { DiscountCircle, Location } from 'iconsax-react';
 import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 
 interface MatchParams {
@@ -78,6 +79,10 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
                       key: d,
                       label: difficultyDisplayTexts[d],
                       active: p.difficulties?.includes(d),
+                      color: {
+                        font: difficultyColor[d].dark,
+                        background: difficultyColor[d].tint,
+                      },
                     } as QuickFilterOption)
                 ),
                 parkNew
@@ -117,6 +122,10 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
               key: d,
               label: difficultyDisplayTexts[d],
               active: true,
+              color: {
+                font: difficultyColor[d].dark,
+                background: difficultyColor[d].tint,
+              },
             } as QuickFilterOption)
         ),
         p

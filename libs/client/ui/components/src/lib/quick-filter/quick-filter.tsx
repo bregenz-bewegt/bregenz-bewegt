@@ -24,6 +24,14 @@ export const QuickFilter: React.FC<QuickFilterProps> = ({
             className="quick-filter__option"
             key={i}
             color={option.active ? 'primary' : 'medium'}
+            style={
+              option.color
+                ? {
+                    color: option.color.font,
+                    backgroundColor: option.color.background,
+                  }
+                : {}
+            }
             onClick={() =>
               onChange([
                 ...options.map((o) =>

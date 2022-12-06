@@ -13,7 +13,7 @@ export const DifficultyBadge: React.FC<DifficultyBadgeProps> = ({
   return (
     <IonBadge
       className="difficulty-badge"
-      style={{ backgroundColor: difficultyColor[difficulty] }}
+      style={{ backgroundColor: difficultyColor[difficulty].main }}
       mode="ios"
     >
       {difficultyDisplayTexts[difficulty]}
