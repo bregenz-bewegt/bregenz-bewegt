@@ -1,8 +1,7 @@
-import { IonContent } from '@ionic/react';
 import * as util from 'util';
 import * as fs from 'fs';
 import * as path from 'path';
-import { PrismaClient, DifficultyType, Difficulty } from '@prisma/client';
+import { PrismaClient, DifficultyType } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const updateParks = async () => {
@@ -11,7 +10,7 @@ const updateParks = async () => {
       id: 1,
       name: 'Generationen Park Mariahilf',
       address: 'Mariahilfstraße 50, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/generationen-park-mariahilf.png',
       qr: 'not-yet-defined-0',
       gmaps: 'https://goo.gl/maps/R5LVWh3DZD27ViwXA',
       coordinates: {
@@ -154,7 +153,7 @@ const updateParks = async () => {
       id: 2,
       name: 'Jugendplatz Spielfeld 3',
       address: 'Achsiedlungsstraße 93, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/jugendplatz-spielfeld.png',
       qr: 'not-yet-defined-1',
       gmaps: 'https://goo.gl/maps/rRa2EQv8ZBmp7Du86',
       coordinates: {
@@ -313,7 +312,7 @@ const updateParks = async () => {
       id: 3,
       name: 'Parkourpark Remise',
       address: 'Badgässele 2, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/parkourpark-remise.png',
       qr: 'not-yet-defined-2',
       gmaps: 'https://goo.gl/maps/7rtaEfM9dVew7KWm8',
       coordinates: {
@@ -473,7 +472,7 @@ const updateParks = async () => {
       id: 4,
       name: 'Schulsportplatz MS Stadt',
       address: 'Schillerstraße 7, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/schulsportplatz-ms-stadt.png',
       qr: 'not-yet-defined-3',
       gmaps: 'https://goo.gl/maps/eBj3bP1BdhekjLzx9',
       coordinates: {

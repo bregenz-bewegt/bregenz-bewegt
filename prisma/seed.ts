@@ -3,7 +3,7 @@ import * as util from 'util';
 import * as fs from 'fs';
 import * as path from 'path';
 import { faker } from '@faker-js/faker';
-import { PrismaClient, Role, DifficultyType, Park } from '@prisma/client';
+import { PrismaClient, Role, DifficultyType } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const purgeDatabase = async () => {
@@ -13,6 +13,7 @@ const purgeDatabase = async () => {
   await prisma.park.deleteMany();
   await prisma.difficulty.deleteMany();
   await prisma.preferences.deleteMany();
+  await prisma.friendRequest.deleteMany();
   await prisma.user.deleteMany();
 };
 
@@ -76,7 +77,7 @@ const createParks = async () => {
       id: 1,
       name: 'Parkourpark Remise',
       address: 'Badgässele',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/parkourpark-remise.png',
       qr: 'not-yet-defined-0',
       coordinates: {
         latitude: 47.498273,
@@ -85,9 +86,9 @@ const createParks = async () => {
     },
     {
       id: 2,
-      name: 'Schulsportplatz MS Start',
+      name: 'Schulsportplatz MS Stadt',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/schulsportplatz-ms-stadt.png',
       qr: 'not-yet-defined-1',
       coordinates: {
         latitude: 47.505646,
@@ -98,7 +99,7 @@ const createParks = async () => {
       id: 3,
       name: 'Jugendplatz Spielfeld 3',
       address: 'Achstraße',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/jugendplatz-spielfeld.png',
       qr: 'not-yet-defined-2',
       coordinates: {
         latitude: 47.501583,
@@ -110,7 +111,7 @@ const createParks = async () => {
       id: 4,
       name: 'Generationen Park Mariahilf',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/generationen-park-mariahilf.png',
       qr: 'not-yet-defined-3',
       coordinates: { latitude: 47.495515, longitude: 9.746912 },
     },
@@ -118,7 +119,7 @@ const createParks = async () => {
       id: 5,
       name: 'Schulsportplatz VS Weidach',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/schulsportplatz-vs-weidach.png',
       qr: 'not-yet-defined-4',
       coordinates: {
         latitude: 47.491353,
@@ -130,7 +131,7 @@ const createParks = async () => {
       id: 6,
       name: 'Schlossberg Trail',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/schlossberg-trail.png',
       qr: 'not-yet-defined-5',
       coordinates: {
         latitude: 47.506375,
@@ -142,7 +143,7 @@ const createParks = async () => {
       id: 7,
       name: 'Tschutterplatz beim Stadion',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/tschutterplatz-beim-stadion.png',
       qr: 'not-yet-defined-6',
       coordinates: {
         latitude: 47.503531,
@@ -154,7 +155,7 @@ const createParks = async () => {
       id: 8,
       name: 'Schulsportplatz VS Augasse',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/schulsportplatz-vs-augasse.png',
       qr: 'not-yet-defined-7',
       coordinates: {
         latitude: 47.500276,
@@ -166,7 +167,7 @@ const createParks = async () => {
       id: 9,
       name: 'Schulplatz VS Rieden',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/schulsportplatz-vs-augasse.png',
       qr: 'not-yet-defined-8',
       coordinates: {
         latitude: 47.49278,
@@ -177,7 +178,7 @@ const createParks = async () => {
       id: 10,
       name: 'Schulsportplatz MS Schendlingen',
       address: 'Rotfarbgasse 14a, 6900 Bregenz',
-      image: 'https://picsum.photos/400/200',
+      image: 'parks/schulsportplatz-ms-schendlingen.png',
       qr: 'not-yet-defined-9',
       coordinates: {
         latitude: 47.492634,
@@ -278,7 +279,6 @@ const createActivities = async () => {
   const exercises = await prisma.exercise.findMany({
     include: { parks: true },
   });
-  const parks = await (await prisma.park.findMany()).length;
 
   await Promise.all(
     users.map(async (user) => {
@@ -287,17 +287,32 @@ const createActivities = async () => {
         data: {
           activities: {
             createMany: {
-              data: exercises.map((exercise) => ({
-                startedAt: new Date(),
-                endedAt: new Date(),
-                exerciseId: exercise.id,
-                parkId: exercise.parks[Math.floor(Math.random() * parks)].id,
-              })),
+              data: exercises.map((exercise) => {
+                const date = randomDate();
+                return {
+                  startedAt: date,
+                  endedAt: date,
+                  exerciseId: exercise.id,
+                  parkId:
+                    exercise.parks[
+                      Math.floor(Math.random() * exercise.parks.length)
+                    ].id,
+                };
+              }),
             },
           },
         },
       });
     })
+  );
+};
+
+const randomDate = () => {
+  const t = new Date();
+  t.setDate(1);
+  t.getMonth() > 0 && t.setMonth(t.getMonth() - 1);
+  return new Date(
+    +t.getTime() + Math.random() * (new Date().getTime() - t.getTime())
   );
 };
 

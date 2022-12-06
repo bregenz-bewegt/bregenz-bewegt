@@ -161,7 +161,6 @@ export class UserStore implements Store {
     this.user = user;
 
     if (user.profilePicture) {
-      this.setProfilePicture(this.getProfilePictureUrl(user.profilePicture));
       this.setIsProfilePictureSet(true);
     } else {
       this.setAvatarProfilePicture();
@@ -173,10 +172,6 @@ export class UserStore implements Store {
     if (this.user) {
       this.user.profilePicture = picture;
     }
-  }
-
-  getProfilePictureUrl(image: string): string {
-    return `${process.env['NX_API_BASE_URL']}/static/${process.env['NX_UPLOADS_FOLDER']}/profile-pictures/${image}`;
   }
 
   @action setIsProfilePictureSet(value: boolean): void {

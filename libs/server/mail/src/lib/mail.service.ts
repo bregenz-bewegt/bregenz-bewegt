@@ -16,6 +16,7 @@ export class MailService {
   async sendPasswordResetmail(options: {
     to: ISendMailOptions['to'];
     resetToken: string;
+    name: string;
   }): Promise<void> {
     const resetLink = `${this.configService.get(
       'NX_CLIENT_BASE_URL'
@@ -23,16 +24,25 @@ export class MailService {
 
     await this.mailerService.sendMail({
       to: options.to,
-      subject: 'Passwort ändern',
-      text: `Besuche den folgenden Link, um dein Passwort zu ändern: ${resetLink} Der Link läuft in 15 Minuten ab.`,
+      subject: 'Passwort ändern | Bregenz bewegt',
+      template: 'change-password',
+      context: { name: options.name, link: resetLink },
     });
   }
 
-  sendOtpActivationMail(options: { to: ISendMailOptions['to']; otp: string }) {
+  sendOtpActivationMail(options: {
+    to: ISendMailOptions['to'];
+    otp: string;
+    name: string;
+  }) {
     return this.mailerService.sendMail({
       to: options.to,
-      subject: 'Bestätige deine E-Mail Adresse',
-      text: `Dein Bestätigungscode lautet: ${options.otp}`,
+      subject: 'E-Mail Adresse bestätigen | Bregenz bewegt',
+      template: 'activate-mail',
+      context: {
+        name: options.name,
+        code: options.otp,
+      },
     });
   }
 }

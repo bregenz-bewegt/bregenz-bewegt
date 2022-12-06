@@ -168,7 +168,9 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                   placeholder="Jahr"
                 >
                   {filterTimespans?.map((span) => (
-                    <IonSelectOption value={span}>{span}</IonSelectOption>
+                    <IonSelectOption key={span} value={span}>
+                      {span}
+                    </IonSelectOption>
                   ))}
                 </IonSelect>
               )}
@@ -191,6 +193,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                   {data.length > 0 &&
                     data?.map((user, i) => (
                       <IonRow
+                        key={i}
                         className={`${
                           user.username === userStore?.user?.username
                             ? 'self'
@@ -216,13 +219,10 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                             ) : (
                               <img
                                 src={
-                                  user.profilePicture
-                                    ? userStore?.getProfilePictureUrl(
-                                        user.profilePicture
-                                      )
-                                    : userStore?.getAvatarProfilePictureUrl(
-                                        user.username
-                                      )
+                                  user.profilePicture ??
+                                  userStore?.getAvatarProfilePictureUrl(
+                                    user.username
+                                  )
                                 }
                                 alt="avatar"
                               />

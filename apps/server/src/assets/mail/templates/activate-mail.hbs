@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <meta charset='utf-8' />
+    <title>E-Mail Adresse bestätigen | Bregenz bewegt</title>
+    <style>
+      .body{ width: 100%; height: 100%; padding: 25px 0; background-color:
+      rgb(245, 245, 245); font-family: "Roboto", "Helvetica Neue", sans-serif;}
+      .main { width: 70%; background-color: white; margin: 0 auto; padding:
+      32px;} .main p,.main h3 {color: black;} .logo { font-size: 2.5em; color:
+      #0065bd;} .greeting {margin: 0;} .message { max-width: 600px; margin-top:
+      10px; color: black; font-size: medium; } #code {text-align: center;
+      letter-spacing: 5px;} .footer {margin-top: 50px; text-align: center;
+      font-size: small; color: gray; font-weight: lighter;}
+    </style>
+  </head>
+  <body>
+    <div class='body'>
+      <div class='main'>
+        <h1 class='logo'>Bregenz<br />Bewegt</h1>
+        <h3 class='greeting'>Hallo {{name}}!</h3>
+        <p class='message'>Bitte nutze den untenstehenden Code, um die Änderung
+          deiner E-Mail-Adresse zu bestätigen. Solltest du diese Änderung nicht
+          beantragt haben, ändere bitte umgehend dein Passwort.</p>
+        <p>Dein Code:</p>
+        <h1 id='code'>{{code}}</h1>
+        <div class='footer'>
+          Bregenz Bewegt<br />
+          &copy; Stadt Bregenz 2022
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

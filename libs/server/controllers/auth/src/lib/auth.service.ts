@@ -106,6 +106,7 @@ export class AuthService {
       this.mailService.sendOtpActivationMail({
         to: newUser.email,
         otp: token,
+        name: newUser.firstname ?? newUser.username,
       });
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -191,6 +192,7 @@ export class AuthService {
       this.mailService.sendOtpActivationMail({
         to: updatedUser.email,
         otp: token,
+        name: updatedUser.firstname ?? updatedUser.username,
       });
       throw new ForbiddenException(loginError.EMAIL_NOT_VERIFIED);
     }
@@ -310,7 +312,7 @@ export class AuthService {
     const token = await this.signPasswordResetToken(user.id, dto.email);
     const tokenHash = await argon.hash(token);
 
-    await this.prismaService.user.update({
+    const newUser = await this.prismaService.user.update({
       where: { id: user.id },
       data: {
         passwordResetToken: tokenHash,
@@ -320,6 +322,7 @@ export class AuthService {
     return this.mailService.sendPasswordResetmail({
       to: dto.email,
       resetToken: token,
+      name: newUser.firstname ?? newUser.username,
     });
   }
 
