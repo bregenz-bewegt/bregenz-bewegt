@@ -1,13 +1,12 @@
 import './exercise-detail.scss';
 import {
   IonContent,
-  IonIcon,
   IonPage,
   useIonToast,
   useIonViewWillEnter,
   useIonViewWillLeave,
 } from '@ionic/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ActivityStore,
   activityStore,
@@ -24,7 +23,7 @@ import {
   BackButton,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
-import { play, timer, stopCircle, close } from 'ionicons/icons';
+import { timer, stopCircle, close } from 'ionicons/icons';
 import {
   useDefaultErrorToast,
   useIsGuest,
@@ -52,6 +51,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [park, setPark] = useState<Park>();
     const [activity, setActivity] = useState<Activity>();
     const [isGuest] = useIsGuest();
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
       const parkId = +match.params.park;
@@ -62,6 +62,10 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         setPark(park);
       });
     }, [match.params.exercise, match.params.park]);
+
+    useEffect(() => {
+      videoRef.current?.load();
+    }, [park?.exercises ? park.exercises[0].video : undefined]);
 
     useIonViewWillEnter(() => {
       tabStore?.setIsShown(false);
@@ -114,7 +118,16 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         <IonContent className="exercise-detail__content">
           <BackButton />
           <div className="exercise-detail__content__video-wrapper">
-            <IonIcon icon={play} />
+            <video controls ref={videoRef}>
+              <source
+                src={
+                  park?.exercises && park.exercises[0].video
+                    ? park.exercises[0].video
+                    : `https://samplelib.com/lib/preview/mp4/sample-5s.mp4`
+                }
+                type="video/mp4"
+              ></source>
+            </video>
           </div>
           <div className="exercise-detail__content__exercise-wrapper">
             <h1>{park?.exercises && park?.exercises[0].name}</h1>

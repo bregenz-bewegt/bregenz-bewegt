@@ -22,6 +22,7 @@ import { AuthService } from './auth.service';
 import {
   GetCurrentUser,
   HasRole,
+  MapProfilePictureInterceptor,
   PasswordResetTokenGuard,
   Public,
   RefreshTokenGuard,
@@ -39,7 +40,10 @@ export class AuthController {
   ) {}
 
   @Public()
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    new MapProfilePictureInterceptor()
+  )
   @Post('local/guest')
   guest(@Body() dto: GuestDto): Promise<Tokens> {
     return this.authService.guest(dto);
@@ -80,7 +84,10 @@ export class AuthController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    new MapProfilePictureInterceptor()
+  )
   @Put('change-password')
   changePassword(
     @GetCurrentUser('sub') userId: User['id'],

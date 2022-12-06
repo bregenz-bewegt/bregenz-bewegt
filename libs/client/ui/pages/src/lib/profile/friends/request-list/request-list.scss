@@ -1,0 +1,53 @@
+.request-list {
+  &__received,
+  &__requested {
+    ion-row {
+      justify-content: space-between;
+
+      ion-col {
+        padding: 0;
+
+        &.username-avatar-col {
+          flex: 1 !important;
+        }
+
+        ion-item {
+          padding: 0;
+          --padding-start: var(--spacing-s);
+
+          ion-avatar {
+            width: var(--spacing-xl);
+            height: var(--spacing-xl);
+            margin-right: var(--spacing-s);
+          }
+
+          .username {
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin: auto 0;
+            min-width: 50%;
+          }
+        }
+
+        ion-button {
+          margin: 0;
+          height: 100%;
+
+          &.accept {
+            --padding-end: 0;
+          }
+
+          &.reject {
+            --padding-end: 0;
+          }
+        }
+      }
+
+      &.no-results {
+        width: 100%;
+      }
+    }
+  }
+}

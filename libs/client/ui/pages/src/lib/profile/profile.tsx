@@ -223,7 +223,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
               },
             ]}
           />
-          <IonGrid>
+          <IonGrid className={isGuest ? 'guest-locked' : ''}>
             <GuestLock
               modalClassName="profile-guest-lock-modal"
               text="Melde dich bei deinem Konto an, um auf dein Profil zugreifen zu können"
@@ -239,7 +239,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                     <IonAvatar>
                       <img
                         onLoad={() => setIsImageLoaded(true)}
-                        src={userStore?.user?.profilePicture}
+                        src={
+                          userStore?.user?.profilePicture ??
+                          userStore?.getAvatarProfilePictureUrl()
+                        }
                         alt="profile"
                         style={{ display: isImageLoaded ? 'initial' : 'none' }}
                       />
@@ -352,6 +355,21 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       mode="ios"
                     >
                       <IonLabel>Darstellung</IonLabel>
+                    </IonItem>
+                  </ItemGroup>
+                  <IonRow>
+                    <IonText>
+                      <h2>Freunde</h2>
+                    </IonText>
+                  </IonRow>
+                  <ItemGroup>
+                    <IonItem
+                      button
+                      routerLink={`${tabRoutes.profile.route}/friends`}
+                      mode="ios"
+                      lines="none"
+                    >
+                      <IonLabel>Freunde</IonLabel>
                     </IonItem>
                   </ItemGroup>
                   <IonRow>

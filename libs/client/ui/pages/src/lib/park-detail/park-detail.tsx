@@ -17,6 +17,7 @@ import {
   Park,
   Exercise,
   Role,
+  difficultyColor,
 } from '@bregenz-bewegt/client/types';
 import {
   IonContent,
@@ -78,6 +79,10 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
                       key: d,
                       label: difficultyDisplayTexts[d],
                       active: p.difficulties?.includes(d),
+                      color: {
+                        font: difficultyColor[d].dark,
+                        background: difficultyColor[d].tint,
+                      },
                     } as QuickFilterOption)
                 ),
                 parkNew
@@ -117,6 +122,10 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
               key: d,
               label: difficultyDisplayTexts[d],
               active: true,
+              color: {
+                font: difficultyColor[d].dark,
+                background: difficultyColor[d].tint,
+              },
             } as QuickFilterOption)
         ),
         p
@@ -161,15 +170,18 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
             <QuickFilter
               options={quickFilters ?? []}
               onChange={(v) => handleFilterChange(v)}
+              iconSize={16}
+              allButton
               className={`park-detail__content__header-wrapper__quick-filters`}
             />
           </div>
           <div className="park-detail__content__exercises">
             {exercises &&
               park?.id &&
-              exercises.map((e) => {
+              exercises.map((e, i) => {
                 return (
                   <ExerciseCard
+                    key={i}
                     {...e}
                     link={`${tabRoutes.start.route}/${park?.id}/${e.id}`}
                   />

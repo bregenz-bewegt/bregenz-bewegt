@@ -1,6 +1,7 @@
 import {
   GetCurrentUser,
   HasRole,
+  MapProfilePictureInterceptor,
   RoleGuard,
 } from '@bregenz-bewegt/server/common';
 import {
@@ -15,6 +16,7 @@ import {
   Get,
   Query,
   UseGuards,
+  UseInterceptors,
   ValidationPipe,
 } from '@nestjs/common';
 import { Role, User } from '@prisma/client';
@@ -27,6 +29,7 @@ export class LeaderboardController {
   @Get()
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
+  @UseInterceptors(new MapProfilePictureInterceptor())
   getLeaderboard(
     @GetCurrentUser('sub') userId: User['id'],
     @Query(
@@ -41,6 +44,7 @@ export class LeaderboardController {
     return this.leaderboardService.getLeaderboard(userId, dto);
   }
 
+  @UseInterceptors(new MapProfilePictureInterceptor())
   @Get('competitor')
   getCompetitor(
     @GetCurrentUser('sub') userId: User['id'],
