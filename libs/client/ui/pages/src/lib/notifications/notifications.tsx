@@ -51,7 +51,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
             <IonTitle>Benachrichtigungen</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent className="ion-padding">
+        <IonContent className="notifications__content">
           <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
             <IonRefresherContent refreshingSpinner="crescent"></IonRefresherContent>
           </IonRefresher>
