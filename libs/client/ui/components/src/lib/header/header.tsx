@@ -54,7 +54,10 @@ export const Header: React.FC<HeaderProps> = inject(userStore.storeKey)(
             </IonText>
           </div>
         </div>
-        <IonFabButton className="header__fab-button">
+        <IonFabButton
+          className="header__fab-button"
+          routerLink={`/notifications`}
+        >
           <Notification variant="Bold" className="header__fab-button__icon" />
         </IonFabButton>
       </IonHeader>
