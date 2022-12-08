@@ -59,12 +59,12 @@ export const Notifications: React.FC<NotificationsProps> = inject(
               notificationsStore?.notifications.map((notification) => {
                 return (
                   <IonItem
-                    detail={true}
+                    detail
                     routerLink={notification.routerLink}
                     mode="ios"
                   >
                     <IonLabel>
-                      <h3>{notification.title}</h3>
+                      <h2>{notification.title}</h2>
                       <p>{notification.description}</p>
                     </IonLabel>
                   </IonItem>
