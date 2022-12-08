@@ -1,6 +1,6 @@
 import { Store } from './store';
 import { action, makeAutoObservable, observable } from 'mobx';
-import { Notification } from '@bregenz-bewegt/client/types';
+import type { Notification } from '@bregenz-bewegt/client/types';
 
 export class NotificationsStore implements Store {
   storeKey = 'notificationsStore' as const;
