@@ -25,10 +25,10 @@ export const Notifications: React.FC<NotificationsProps> = () => {
               text="Zurück"
             />
           </IonButtons>
-          <IonTitle>Benutzer</IonTitle>
+          <IonTitle>Benachrichtigungen</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>notifications</IonContent>
+      <IonContent fullscreen>Notifications</IonContent>
     </IonPage>
   );
 };
