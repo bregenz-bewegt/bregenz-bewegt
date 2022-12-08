@@ -9,7 +9,6 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Header } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 export interface NotificationsProps {}
