@@ -1,5 +1,5 @@
 import React from 'react';
-import './loading.scss';
+import './notifications.scss';
 import { IonContent, IonPage } from '@ionic/react';
 
 export interface NotificationsProps {}
