@@ -10,7 +10,7 @@ import {
   IonRefresherContent,
   IonTitle,
   IonToolbar,
-} from '@ionic/react';
+} from '@ionic/react/';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   notificationsStore,
@@ -26,7 +26,11 @@ export const Notifications: React.FC<NotificationsProps> = inject(
   notificationsStore.storeKey
 )(
   observer(({ notificationStore }) => {
-    const handleRefresh = () => {};
+    const handleRefresh = (e: any) => {
+      setTimeout(() => {
+        e.detail.complete();
+      }, 2000);
+    };
 
     return (
       <IonPage className="notifications">
@@ -42,9 +46,9 @@ export const Notifications: React.FC<NotificationsProps> = inject(
             <IonTitle>Benachrichtigungen</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen>
+        <IonContent>
           <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
-            <IonRefresherContent></IonRefresherContent>
+            <IonRefresherContent refreshingSpinner="crescent"></IonRefresherContent>
           </IonRefresher>
           <p>Notifications</p>
         </IonContent>
