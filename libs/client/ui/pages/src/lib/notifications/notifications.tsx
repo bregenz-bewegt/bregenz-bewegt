@@ -5,6 +5,9 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
   IonPage,
   IonRefresher,
   IonRefresherContent,
@@ -50,7 +53,20 @@ export const Notifications: React.FC<NotificationsProps> = inject(
           <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
             <IonRefresherContent refreshingSpinner="crescent"></IonRefresherContent>
           </IonRefresher>
-          <p>Notifications</p>
+          <IonList>
+            {notificationStore?.notifications &&
+              notificationStore.notifications?.length > 0 &&
+              notificationStore?.notifications.map((notification) => {
+                return (
+                  <IonItem detail={true} routerLink={notification.routerLink}>
+                    <IonLabel>
+                      <h3>{notification.title}</h3>
+                      <p>{notification.description}</p>
+                    </IonLabel>
+                  </IonItem>
+                );
+              })}
+          </IonList>
         </IonContent>
       </IonPage>
     );
