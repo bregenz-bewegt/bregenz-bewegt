@@ -22,18 +22,20 @@ import {
 import { inject, observer } from 'mobx-react';
 
 export interface NotificationsProps {
-  notificationStore?: NotificationsStore;
+  notificationsStore?: NotificationsStore;
 }
 
 export const Notifications: React.FC<NotificationsProps> = inject(
   notificationsStore.storeKey
 )(
-  observer(({ notificationStore }) => {
+  observer(({ notificationsStore }) => {
     const handleRefresh = (e: any) => {
       setTimeout(() => {
         e.detail.complete();
       }, 2000);
     };
+
+    console.log(notificationsStore?.notifications);
 
     return (
       <IonPage className="notifications">
@@ -42,21 +44,21 @@ export const Notifications: React.FC<NotificationsProps> = inject(
             <IonButtons>
               <IonBackButton
                 color="primary"
-                defaultHref={`${tabRoutes.profile.route}/friends`}
+                defaultHref={`${tabRoutes.start.route}`}
                 text="Zurück"
               />
             </IonButtons>
             <IonTitle>Benachrichtigungen</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent>
+        <IonContent className="ion-padding">
           <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
             <IonRefresherContent refreshingSpinner="crescent"></IonRefresherContent>
           </IonRefresher>
           <IonList>
-            {notificationStore?.notifications &&
-              notificationStore.notifications?.length > 0 &&
-              notificationStore?.notifications.map((notification) => {
+            {notificationsStore?.notifications &&
+              notificationsStore.notifications?.length > 0 &&
+              notificationsStore?.notifications.map((notification) => {
                 return (
                   <IonItem detail={true} routerLink={notification.routerLink}>
                     <IonLabel>
