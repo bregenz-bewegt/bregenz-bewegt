@@ -35,8 +35,6 @@ export const Notifications: React.FC<NotificationsProps> = inject(
       }, 2000);
     };
 
-    console.log(notificationsStore?.notifications);
-
     return (
       <IonPage className="notifications">
         <IonHeader mode="ios">
@@ -60,7 +58,11 @@ export const Notifications: React.FC<NotificationsProps> = inject(
               notificationsStore.notifications?.length > 0 &&
               notificationsStore?.notifications.map((notification) => {
                 return (
-                  <IonItem detail={true} routerLink={notification.routerLink}>
+                  <IonItem
+                    detail={true}
+                    routerLink={notification.routerLink}
+                    mode="ios"
+                  >
                     <IonLabel>
                       <h3>{notification.title}</h3>
                       <p>{notification.description}</p>
