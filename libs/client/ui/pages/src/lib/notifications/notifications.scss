@@ -4,5 +4,9 @@
     --padding-start: 0;
     --padding-end: 0;
     --padding-bottom: 0;
+
+    &__no-notifications {
+      margin: var(--spacing-m);
+    }
   }
 }

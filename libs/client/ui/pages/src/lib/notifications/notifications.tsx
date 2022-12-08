@@ -11,6 +11,7 @@ import {
   IonPage,
   IonRefresher,
   IonRefresherContent,
+  IonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/react/';
@@ -55,7 +56,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
           </IonRefresher>
           <IonList>
             {notificationsStore?.notifications &&
-              notificationsStore.notifications?.length > 0 &&
+            notificationsStore.notifications?.length > 0 ? (
               notificationsStore?.notifications.map((notification) => {
                 return (
                   <IonItem
@@ -69,7 +70,12 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                     </IonLabel>
                   </IonItem>
                 );
-              })}
+              })
+            ) : (
+              <IonText className="nofifications__content__no-notifications">
+                keine Benachrichtigungen
+              </IonText>
+            )}
           </IonList>
         </IonContent>
       </IonPage>
