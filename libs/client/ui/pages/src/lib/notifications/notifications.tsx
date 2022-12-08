@@ -72,7 +72,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                 );
               })
             ) : (
-              <IonText className="nofifications__content__no-notifications">
+              <IonText className="notifications__content__no-notifications">
                 keine Benachrichtigungen
               </IonText>
             )}
