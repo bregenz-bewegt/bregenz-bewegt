@@ -130,6 +130,13 @@ export class FriendService {
   async deleteFriendRequest(
     requestId: FriendRequest['id']
   ): Promise<FriendRequest> {
+    if (
+      !(await this.prismaService.friendRequest.findUnique({
+        where: { id: requestId },
+      }))
+    )
+      return;
+
     return this.prismaService.friendRequest.delete({
       where: { id: requestId },
     });
@@ -139,6 +146,13 @@ export class FriendService {
     userId: User['id'],
     dto: AcceptFriendRequestDto
   ): Promise<FriendRequest> {
+    if (
+      !(await this.prismaService.friendRequest.findUnique({
+        where: { id: dto.requestId },
+      }))
+    )
+      return;
+
     const friendRequest = await this.prismaService.friendRequest.update({
       where: { id: dto.requestId },
       data: { acceptedAt: new Date() },
