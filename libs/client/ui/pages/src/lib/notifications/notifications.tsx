@@ -2,10 +2,10 @@ import React from 'react';
 import './notifications.scss';
 import {
   IonBackButton,
-  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonItem,
   IonItemOption,
   IonItemOptions,
@@ -17,19 +17,52 @@ import {
 } from '@ionic/react/';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
+  friendsStore,
+  FriendsStore,
   notificationsStore,
   NotificationsStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
+import { toJS } from 'mobx';
+import { FriendRequest } from '@bregenz-bewegt/client/types';
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
+import { checkmarkCircle, closeCircle } from 'ionicons/icons';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
+  friendsStore?: FriendsStore;
 }
 
 export const Notifications: React.FC<NotificationsProps> = inject(
-  notificationsStore.storeKey
+  notificationsStore.storeKey,
+  friendsStore.storeKey
 )(
-  observer(({ notificationsStore }) => {
+  observer(({ friendsStore, notificationsStore }) => {
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
+
+    const acceptRequest = (requestId: FriendRequest['id']) => {
+      friendsStore
+        ?.acceptFriendRequest({ requestId })
+        .then((data) => {
+          console.log(data);
+          notificationsStore?.removeNotification(data.id);
+        })
+        .catch(() => {
+          presentDefaultErrorToast();
+        });
+    };
+
+    const rejectRequest = (requestId: FriendRequest['id']) => {
+      friendsStore
+        ?.rejectFriendRequest({ requestId })
+        .then((data) => {
+          notificationsStore?.removeNotification(data.id);
+        })
+        .catch(() => {
+          presentDefaultErrorToast();
+        });
+    };
+
     return (
       <IonPage className="notifications">
         <IonHeader mode="ios">
@@ -49,7 +82,9 @@ export const Notifications: React.FC<NotificationsProps> = inject(
           notificationsStore.notifications?.length > 0 ? (
             notificationsStore?.notifications.map((notification, i) => {
               return (
-                <IonItemSliding key={`${JSON.stringify(notification)}-${i}`}>
+                <IonItemSliding
+                  key={`${JSON.stringify(toJS(notification))}-${i}`}
+                >
                   <IonItem
                     detail
                     routerLink={notification.routerLink}
@@ -62,14 +97,23 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                   </IonItem>
                   <IonItemOptions>
                     <IonItemOption
-                      color="danger"
+                      color="success"
                       onClick={(e) => {
-                        notificationsStore.removeNotification(i);
+                        acceptRequest(notification.id);
                       }}
                     >
-                      <IonButton fill="clear" color="light">
-                        Delete
-                      </IonButton>
+                      <IonIcon
+                        slot="icon-only"
+                        icon={checkmarkCircle}
+                      ></IonIcon>
+                    </IonItemOption>
+                    <IonItemOption
+                      onClick={(e) => {
+                        rejectRequest(notification.id);
+                      }}
+                      color="danger"
+                    >
+                      <IonIcon slot="icon-only" icon={closeCircle}></IonIcon>
                     </IonItemOption>
                   </IonItemOptions>
                 </IonItemSliding>

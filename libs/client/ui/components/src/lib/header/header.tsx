@@ -20,7 +20,7 @@ import {
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Notification as NotificationIcon } from 'iconsax-react';
 import { Notification } from '@bregenz-bewegt/client/types';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
@@ -44,19 +44,22 @@ export const Header: React.FC<HeaderProps> = inject(
       friendsStore
         ?.getAllFriendRequests()
         .then((data) => {
-          console.log(data);
+          console.log(data.received);
           data.received &&
             data.received.length > 0 &&
-            notificationsStore?.addNotifications(
-              data.received.map(
-                (r) =>
-                  ({
-                    title: 'Freundschaftsanfrage',
-                    description: `${r.requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
-                    routerLink: `${tabRoutes.profile.route}/friends`,
-                  } as Notification)
-              )
-            );
+            data.received.forEach((r) => {
+              if (notificationsStore?.notifications.some((n) => n.id === r.id))
+                return;
+
+              notificationsStore?.addNotifications([
+                {
+                  id: r.id,
+                  title: 'Freundschaftsanfrage',
+                  description: `${r.requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
+                  routerLink: `${tabRoutes.profile.route}/friends`,
+                } as Notification,
+              ]);
+            });
         })
         .catch(() => {
           presentDefaultErrorToast();

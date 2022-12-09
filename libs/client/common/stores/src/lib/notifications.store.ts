@@ -4,13 +4,7 @@ import type { Notification } from '@bregenz-bewegt/client/types';
 
 export class NotificationsStore implements Store {
   storeKey = 'notificationsStore' as const;
-  @observable notifications: Notification[] = [
-    { title: '1', description: 'test', routerLink: '/start' },
-    { title: '2', description: 'test', routerLink: '/start' },
-    { title: '3', description: 'test', routerLink: '/start' },
-    { title: '4', description: 'test', routerLink: '/start' },
-    { title: '5', description: 'test', routerLink: '/start' },
-  ];
+  @observable notifications: Notification[] = [];
   @observable read = false;
 
   constructor() {
@@ -26,8 +20,8 @@ export class NotificationsStore implements Store {
     this.setRead(false);
   }
 
-  @action removeNotification(id: number): void {
-    this.notifications.splice(id, 1);
+  @action removeNotification(id: string): void {
+    this.notifications = this.notifications.filter((n) => n.id !== id);
   }
 
   @action setRead(value: boolean): void {
