@@ -39,7 +39,14 @@
   }
 
   &__fab {
-    position: static;
+    position: relative;
+
+    &__badge {
+      position: absolute;
+      z-index: 3;
+      top: calc(var(--spacing-s) * -1);
+      right: 0;
+    }
 
     &__fab-button {
       height: var(--spacing-3xl);

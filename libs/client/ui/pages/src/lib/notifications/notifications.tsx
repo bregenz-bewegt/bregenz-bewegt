@@ -7,11 +7,10 @@ import {
   IonHeader,
   IonItem,
   IonLabel,
-  IonList,
   IonPage,
-  IonText,
   IonTitle,
   IonToolbar,
+  useIonViewDidEnter,
 } from '@ionic/react/';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
@@ -28,6 +27,10 @@ export const Notifications: React.FC<NotificationsProps> = inject(
   notificationsStore.storeKey
 )(
   observer(({ notificationsStore }) => {
+    useIonViewDidEnter(() => {
+      notificationsStore?.setRead(true);
+    }, []);
+
     return (
       <IonPage className="notifications">
         <IonHeader mode="ios">
