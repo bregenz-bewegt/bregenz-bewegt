@@ -21,8 +21,8 @@ export class NotificationsStore implements Store {
     this.notifications = notifications;
   }
 
-  @action addNotification(value: Notification): void {
-    this.notifications.push(value);
+  @action addNotifications(notifications: Notification[]): void {
+    this.notifications.push(...notifications);
     this.setRead(false);
   }
 

@@ -11,7 +11,14 @@ import {
   CompetitorProfile,
   Notifications,
 } from '@bregenz-bewegt/client-ui-pages';
-import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
+import {
+  friendsStore,
+  FriendsStore,
+  notificationsStore,
+  NotificationsStore,
+  TabStore,
+  tabStore,
+} from '@bregenz-bewegt/client/common/stores';
 import {
   IonTabs,
   IonRouterOutlet,
@@ -24,15 +31,51 @@ import { inject, observer } from 'mobx-react';
 import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from '../tabs';
 import { ScanBarcode } from 'iconsax-react';
+import { useEffect } from 'react';
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
+import { Notification } from '@bregenz-bewegt/client/types';
 
 export interface PrivateTabsOutletProps {
   tabStore?: TabStore;
+  friendsStore?: FriendsStore;
+  notificationsStore?: NotificationsStore;
 }
 
 export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
-  tabStore.storeKey
+  tabStore.storeKey,
+  friendsStore.storeKey,
+  notificationsStore.storeKey
 )(
-  observer(({ tabStore }) => {
+  observer(({ tabStore, friendsStore, notificationsStore }) => {
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
+
+    const fetchFriendRequests = () => {
+      friendsStore
+        ?.getAllFriendRequests()
+        .then((data) => {
+          console.log(data);
+          data.received &&
+            data.received.length > 0 &&
+            notificationsStore?.addNotifications(
+              data.received.map(
+                (r) =>
+                  ({
+                    title: 'Freundschaftsanfrage',
+                    description: `${r.requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
+                    routerLink: `${tabRoutes.profile.route}/friends`,
+                  } as Notification)
+              )
+            );
+        })
+        .catch(() => {
+          presentDefaultErrorToast();
+        });
+    };
+
+    useEffect(() => {
+      fetchFriendRequests();
+    });
+
     return (
       <>
         <IonTabs>
