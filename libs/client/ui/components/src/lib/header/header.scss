@@ -38,15 +38,19 @@
     }
   }
 
-  &__fab-button {
-    height: var(--spacing-3xl);
-    width: var(--spacing-3xl);
-    --background: var(--ion-color-light-tint);
-    --box-shadow: none;
-    --background-activated: none;
+  &__fab {
+    position: static;
 
-    &__icon {
-      color: var(--ion-color-primary);
+    &__fab-button {
+      height: var(--spacing-3xl);
+      width: var(--spacing-3xl);
+      --background: var(--ion-color-light-tint);
+      --box-shadow: none;
+      --background-activated: none;
+
+      &__icon {
+        color: var(--ion-color-primary);
+      }
     }
   }
 }

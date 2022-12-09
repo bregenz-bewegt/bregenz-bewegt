@@ -1,5 +1,7 @@
 import {
   IonAvatar,
+  IonBadge,
+  IonFab,
   IonFabButton,
   IonHeader,
   IonRouterLink,
@@ -63,12 +65,21 @@ export const Header: React.FC<HeaderProps> = inject(
             </IonText>
           </div>
         </div>
-        <IonFabButton
-          className="header__fab-button"
-          routerLink={`/notifications`}
-        >
-          <Notification variant="Bold" className="header__fab-button__icon" />
-        </IonFabButton>
+        <IonFab className="header__fab">
+          {notificationsStore?.notifications &&
+            notificationsStore.notifications?.length > 0 && (
+              <IonBadge>{notificationsStore.notifications.length}</IonBadge>
+            )}
+          <IonFabButton
+            className="header__fab__fab-button"
+            routerLink={`/notifications`}
+          >
+            <Notification
+              variant="Bold"
+              className="header__fab__fab-button__icon"
+            />
+          </IonFabButton>
+        </IonFab>
       </IonHeader>
     );
   })
