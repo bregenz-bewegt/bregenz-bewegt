@@ -47,35 +47,6 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
   notificationsStore.storeKey
 )(
   observer(({ tabStore, friendsStore, notificationsStore }) => {
-    const [presentDefaultErrorToast] = useDefaultErrorToast();
-
-    const fetchFriendRequests = () => {
-      friendsStore
-        ?.getAllFriendRequests()
-        .then((data) => {
-          console.log(data);
-          data.received &&
-            data.received.length > 0 &&
-            notificationsStore?.addNotifications(
-              data.received.map(
-                (r) =>
-                  ({
-                    title: 'Freundschaftsanfrage',
-                    description: `${r.requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
-                    routerLink: `${tabRoutes.profile.route}/friends`,
-                  } as Notification)
-              )
-            );
-        })
-        .catch(() => {
-          presentDefaultErrorToast();
-        });
-    };
-
-    useEffect(() => {
-      fetchFriendRequests();
-    });
-
     return (
       <>
         <IonTabs>

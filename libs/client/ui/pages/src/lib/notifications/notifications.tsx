@@ -49,7 +49,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
           notificationsStore.notifications?.length > 0 ? (
             notificationsStore?.notifications.map((notification, i) => {
               return (
-                <IonItemSliding key={JSON.stringify(notification)}>
+                <IonItemSliding key={`${JSON.stringify(notification)}-${i}`}>
                   <IonItem
                     detail
                     routerLink={notification.routerLink}

@@ -11,26 +11,60 @@ import {
 import './header.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
+  friendsStore,
+  FriendsStore,
   notificationsStore,
   NotificationsStore,
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
-import { useState } from 'react';
-import { Notification } from 'iconsax-react';
+import { useEffect, useState } from 'react';
+import { Notification as NotificationIcon } from 'iconsax-react';
+import { Notification } from '@bregenz-bewegt/client/types';
+import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 
 export interface HeaderProps {
   userStore?: UserStore;
   notificationsStore?: NotificationsStore;
+  friendsStore?: FriendsStore;
 }
 
 export const Header: React.FC<HeaderProps> = inject(
   userStore.storeKey,
-  notificationsStore.storeKey
+  notificationsStore.storeKey,
+  friendsStore.storeKey
 )(
-  observer(({ userStore, notificationsStore }) => {
+  observer(({ userStore, notificationsStore, friendsStore }) => {
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
+
+    const fetchFriendRequests = () => {
+      friendsStore
+        ?.getAllFriendRequests()
+        .then((data) => {
+          console.log(data);
+          data.received &&
+            data.received.length > 0 &&
+            notificationsStore?.addNotifications(
+              data.received.map(
+                (r) =>
+                  ({
+                    title: 'Freundschaftsanfrage',
+                    description: `${r.requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
+                    routerLink: `${tabRoutes.profile.route}/friends`,
+                  } as Notification)
+              )
+            );
+        })
+        .catch(() => {
+          presentDefaultErrorToast();
+        });
+    };
+
+    useEffect(() => {
+      fetchFriendRequests();
+    }, []);
 
     return (
       <IonHeader mode="ios" className="header">
@@ -77,7 +111,7 @@ export const Header: React.FC<HeaderProps> = inject(
             className="header__fab__fab-button"
             routerLink={`/notifications`}
           >
-            <Notification
+            <NotificationIcon
               variant="Bold"
               className="header__fab__fab-button__icon"
             />
