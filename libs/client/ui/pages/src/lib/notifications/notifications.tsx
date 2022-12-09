@@ -56,9 +56,9 @@ export const Notifications: React.FC<NotificationsProps> = inject(
               );
             })
           ) : (
-            <IonText className="notifications__content__no-notifications">
+            <p className="notifications__content__no-notifications">
               keine Benachrichtigungen
-            </IonText>
+            </p>
           )}
         </IonContent>
       </IonPage>
