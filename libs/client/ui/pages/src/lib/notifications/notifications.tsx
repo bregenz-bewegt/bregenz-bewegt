@@ -2,10 +2,14 @@ import React from 'react';
 import './notifications.scss';
 import {
   IonBackButton,
+  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
   IonItem,
+  IonItemOption,
+  IonItemOptions,
+  IonItemSliding,
   IonLabel,
   IonPage,
   IonTitle,
@@ -48,14 +52,32 @@ export const Notifications: React.FC<NotificationsProps> = inject(
         <IonContent className="notifications__content">
           {notificationsStore?.notifications &&
           notificationsStore.notifications?.length > 0 ? (
-            notificationsStore?.notifications.map((notification) => {
+            notificationsStore?.notifications.map((notification, i) => {
               return (
-                <IonItem detail routerLink={notification.routerLink} mode="ios">
-                  <IonLabel>
-                    <h2>{notification.title}</h2>
-                    <p>{notification.description}</p>
-                  </IonLabel>
-                </IonItem>
+                <IonItemSliding key={JSON.stringify(notification)}>
+                  <IonItem
+                    detail
+                    routerLink={notification.routerLink}
+                    mode="ios"
+                  >
+                    <IonLabel>
+                      <h2>{notification.title}</h2>
+                      <p>{notification.description}</p>
+                    </IonLabel>
+                  </IonItem>
+                  <IonItemOptions>
+                    <IonItemOption
+                      color="danger"
+                      onClick={(e) => {
+                        notificationsStore.removeNotification(i);
+                      }}
+                    >
+                      <IonButton fill="clear" color="light">
+                        Delete
+                      </IonButton>
+                    </IonItemOption>
+                  </IonItemOptions>
+                </IonItemSliding>
               );
             })
           ) : (
