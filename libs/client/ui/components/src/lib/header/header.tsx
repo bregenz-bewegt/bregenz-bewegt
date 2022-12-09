@@ -44,7 +44,6 @@ export const Header: React.FC<HeaderProps> = inject(
       friendsStore
         ?.getAllFriendRequests()
         .then((data) => {
-          console.log(data.received);
           data.received &&
             data.received.length > 0 &&
             data.received.forEach((r) => {

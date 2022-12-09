@@ -44,7 +44,6 @@ export const Notifications: React.FC<NotificationsProps> = inject(
       friendsStore
         ?.acceptFriendRequest({ requestId })
         .then((data) => {
-          console.log(data);
           notificationsStore?.removeNotification(data.id);
         })
         .catch(() => {
