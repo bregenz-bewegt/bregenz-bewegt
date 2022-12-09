@@ -7,6 +7,7 @@ import {
   IonRouterLink,
   IonSkeletonText,
   IonText,
+  useIonViewDidEnter,
 } from '@ionic/react';
 import './header.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
@@ -62,7 +63,7 @@ export const Header: React.FC<HeaderProps> = inject(
         });
     };
 
-    useEffect(() => {
+    useIonViewDidEnter(() => {
       fetchFriendRequests();
     }, []);
 

@@ -31,9 +31,6 @@ import { inject, observer } from 'mobx-react';
 import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from '../tabs';
 import { ScanBarcode } from 'iconsax-react';
-import { useEffect } from 'react';
-import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
-import { Notification } from '@bregenz-bewegt/client/types';
 
 export interface PrivateTabsOutletProps {
   tabStore?: TabStore;
