@@ -28,6 +28,7 @@ import {
   useDefaultErrorToast,
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 interface MatchParams {
   park: string;
@@ -116,17 +117,15 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     return (
       <IonPage className="exercise-detail">
         <IonContent className="exercise-detail__content">
-          <BackButton />
+          <BackButton defaultRouterLink={tabRoutes.start.route} />
           <div className="exercise-detail__content__video-wrapper">
-            <video controls ref={videoRef}>
-              <source
-                src={
-                  park?.exercises && park.exercises[0].video
-                    ? park.exercises[0].video
-                    : `https://samplelib.com/lib/preview/mp4/sample-5s.mp4`
-                }
-                type="video/mp4"
-              ></source>
+            <video
+              controls={Boolean(park?.exercises && park.exercises[0].video)}
+              ref={videoRef}
+            >
+              {park?.exercises && park.exercises[0].video ? (
+                <source src={park.exercises[0].video} type="video/mp4"></source>
+              ) : undefined}
             </video>
           </div>
           <div className="exercise-detail__content__exercise-wrapper">

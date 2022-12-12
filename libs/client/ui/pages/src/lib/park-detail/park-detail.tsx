@@ -134,7 +134,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
     return (
       <IonPage className="park-detail">
         <IonContent className="park-detail__content">
-          <BackButton />
+          <BackButton defaultRouterLink={tabRoutes.start.route} />
           <img
             src={park?.image}
             alt={'Bild des Spielplatzes ' + park?.name}
