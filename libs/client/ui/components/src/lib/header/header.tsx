@@ -13,7 +13,6 @@ import './header.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   friendsStore,
-  FriendsStore,
   notificationsStore,
   NotificationsStore,
   userStore,
@@ -27,7 +26,6 @@ import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 export interface HeaderProps {
   userStore?: UserStore;
   notificationsStore?: NotificationsStore;
-  friendsStore?: FriendsStore;
 }
 
 export const Header: React.FC<HeaderProps> = inject(
@@ -35,7 +33,7 @@ export const Header: React.FC<HeaderProps> = inject(
   notificationsStore.storeKey,
   friendsStore.storeKey
 )(
-  observer(({ userStore, notificationsStore, friendsStore }) => {
+  observer(({ userStore, notificationsStore }) => {
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
     const [presentDefaultErrorToast] = useDefaultErrorToast();
 
