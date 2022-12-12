@@ -46,10 +46,7 @@ export const Header: React.FC<HeaderProps> = inject(
         .then((data) => {
           data.received &&
             data.received.length > 0 &&
-            data.received.forEach((r) => {
-              if (notificationsStore?.notifications.some((n) => n.id === r.id))
-                return;
-
+            data.received.forEach((r) =>
               notificationsStore?.addNotifications([
                 {
                   id: r.id,
@@ -57,8 +54,8 @@ export const Header: React.FC<HeaderProps> = inject(
                   description: `${r.requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
                   routerLink: `${tabRoutes.profile.route}/friends`,
                 } as Notification,
-              ]);
-            });
+              ])
+            );
         })
         .catch(() => {
           presentDefaultErrorToast();
