@@ -154,8 +154,8 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
                       {park?.exercises[0].muscles
                         .split(',')
                         .map((li) => li.trim())
-                        .map((li) => (
-                          <li>{li}</li>
+                        .map((li, i) => (
+                          <li key={i}>{li}</li>
                         ))}
                     </ul>
                   </>
