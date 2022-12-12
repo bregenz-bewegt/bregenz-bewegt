@@ -27,6 +27,7 @@ import { toJS } from 'mobx';
 import { FriendRequest } from '@bregenz-bewegt/client/types';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import { checkmarkCircle, closeCircle } from 'ionicons/icons';
+import { EmojiSad } from 'iconsax-react';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
@@ -120,7 +121,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
             })
           ) : (
             <p className="notifications__content__no-notifications">
-              keine Benachrichtigungen
+              Keine Benachrichtigungen
             </p>
           )}
         </IonContent>
