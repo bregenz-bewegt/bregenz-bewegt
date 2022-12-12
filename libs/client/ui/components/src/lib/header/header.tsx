@@ -44,19 +44,19 @@ export const Header: React.FC<HeaderProps> = inject(
       friendsStore
         ?.getAllFriendRequests()
         .then((data) => {
-          data.received &&
-            data.received.length > 0 &&
-            notificationsStore?.setNotifications(
-              data.received.map(
-                (r) =>
-                  ({
-                    id: r.id,
-                    title: 'Freundschaftsanfrage',
-                    description: `${r.requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
-                    routerLink: `${tabRoutes.profile.route}/friends`,
-                  } as Notification)
+          data.received && data.received.length > 0
+            ? notificationsStore?.setNotifications(
+                data.received.map(
+                  (r) =>
+                    ({
+                      id: r.id,
+                      title: 'Freundschaftsanfrage',
+                      description: `${r.requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
+                      routerLink: `${tabRoutes.profile.route}/friends`,
+                    } as Notification)
+                )
               )
-            );
+            : notificationsStore?.setNotifications([]);
         })
         .catch(() => {
           presentDefaultErrorToast();
