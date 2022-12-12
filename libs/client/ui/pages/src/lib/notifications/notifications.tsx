@@ -23,24 +23,32 @@ import {
   FriendsStore,
   notificationsStore,
   NotificationsStore,
+  userStore,
+  UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import { FriendRequest } from '@bregenz-bewegt/client/types';
-import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
+import {
+  useDefaultErrorToast,
+  useIsGuest,
+} from '@bregenz-bewegt/client/common/hooks';
 import { checkmarkCircle, closeCircle } from 'ionicons/icons';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
   friendsStore?: FriendsStore;
+  userStore?: UserStore;
 }
 
 export const Notifications: React.FC<NotificationsProps> = inject(
   notificationsStore.storeKey,
-  friendsStore.storeKey
+  friendsStore.storeKey,
+  userStore.storeKey
 )(
-  observer(({ friendsStore, notificationsStore }) => {
+  observer(({ friendsStore, notificationsStore, userStore }) => {
     const [presentDefaultErrorToast] = useDefaultErrorToast();
+    const [isGuest] = useIsGuest();
 
     const acceptRequest = (requestId: FriendRequest['id']) => {
       friendsStore
@@ -65,6 +73,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     const handleRefresh = (e: any) => {
+      if (isGuest) return;
+
       notificationsStore
         ?.fetchNotifications()
         .then(() => e.target.complete())
