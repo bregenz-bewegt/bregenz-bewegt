@@ -11,14 +11,7 @@ import {
   CompetitorProfile,
   Notifications,
 } from '@bregenz-bewegt/client-ui-pages';
-import {
-  friendsStore,
-  FriendsStore,
-  notificationsStore,
-  NotificationsStore,
-  TabStore,
-  tabStore,
-} from '@bregenz-bewegt/client/common/stores';
+import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonTabs,
   IonRouterOutlet,
@@ -34,16 +27,12 @@ import { ScanBarcode } from 'iconsax-react';
 
 export interface PrivateTabsOutletProps {
   tabStore?: TabStore;
-  friendsStore?: FriendsStore;
-  notificationsStore?: NotificationsStore;
 }
 
 export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
-  tabStore.storeKey,
-  friendsStore.storeKey,
-  notificationsStore.storeKey
+  tabStore.storeKey
 )(
-  observer(({ tabStore, friendsStore, notificationsStore }) => {
+  observer(({ tabStore }) => {
     return (
       <>
         <IonTabs>

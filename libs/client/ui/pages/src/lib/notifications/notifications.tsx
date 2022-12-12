@@ -12,6 +12,8 @@ import {
   IonItemSliding,
   IonLabel,
   IonPage,
+  IonRefresher,
+  IonRefresherContent,
   IonTitle,
   IonToolbar,
 } from '@ionic/react/';
@@ -62,6 +64,15 @@ export const Notifications: React.FC<NotificationsProps> = inject(
         });
     };
 
+    const handleRefresh = (e: any) => {
+      notificationsStore
+        ?.fetchNotifications()
+        .then(() => e.target.complete())
+        .catch(() => {
+          presentDefaultErrorToast();
+        });
+    };
+
     return (
       <IonPage className="notifications">
         <IonHeader mode="ios">
@@ -77,6 +88,11 @@ export const Notifications: React.FC<NotificationsProps> = inject(
           </IonToolbar>
         </IonHeader>
         <IonContent className="notifications__content">
+          <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+            <IonRefresherContent
+              refreshingSpinner={`crescent`}
+            ></IonRefresherContent>
+          </IonRefresher>
           {notificationsStore?.notifications &&
           notificationsStore.notifications?.length > 0 ? (
             notificationsStore?.notifications.map((notification, i) => {

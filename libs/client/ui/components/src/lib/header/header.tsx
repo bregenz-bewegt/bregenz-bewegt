@@ -22,7 +22,6 @@ import {
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
 import { Notification as NotificationIcon } from 'iconsax-react';
-import { Notification } from '@bregenz-bewegt/client/types';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 
 export interface HeaderProps {
@@ -41,26 +40,9 @@ export const Header: React.FC<HeaderProps> = inject(
     const [presentDefaultErrorToast] = useDefaultErrorToast();
 
     const fetchFriendRequests = () => {
-      friendsStore
-        ?.getAllFriendRequests()
-        .then((data) => {
-          data.received && data.received.length > 0
-            ? notificationsStore?.setNotifications(
-                data.received.map(
-                  (r) =>
-                    ({
-                      id: r.id,
-                      title: 'Freundschaftsanfrage',
-                      description: `${r.requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
-                      routerLink: `${tabRoutes.profile.route}/friends`,
-                    } as Notification)
-                )
-              )
-            : notificationsStore?.setNotifications([]);
-        })
-        .catch(() => {
-          presentDefaultErrorToast();
-        });
+      notificationsStore?.fetchNotifications().catch(() => {
+        presentDefaultErrorToast();
+      });
     };
 
     useIonViewDidEnter(() => {
@@ -101,8 +83,7 @@ export const Header: React.FC<HeaderProps> = inject(
           </div>
         </div>
         <IonFab className="header__fab">
-          {!notificationsStore?.read &&
-            notificationsStore?.notifications &&
+          {notificationsStore?.notifications &&
             notificationsStore.notifications?.length > 0 && (
               <IonBadge className="header__fab__badge">
                 {notificationsStore.notifications.length}
