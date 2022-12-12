@@ -73,9 +73,9 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     const handleRefresh = (e: any) => {
-      if (isGuest) return;
+      if (isGuest) return setTimeout(() => e.target.complete(), 500);
 
-      notificationsStore
+      return notificationsStore
         ?.fetchNotifications()
         .then(() => e.target.complete())
         .catch(() => {

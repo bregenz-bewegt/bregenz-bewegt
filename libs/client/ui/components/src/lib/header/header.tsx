@@ -8,19 +8,17 @@ import {
   IonSkeletonText,
   IonText,
   useIonViewDidEnter,
-  useIonViewWillEnter,
 } from '@ionic/react';
 import './header.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
-  friendsStore,
   notificationsStore,
   NotificationsStore,
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Notification as NotificationIcon } from 'iconsax-react';
 import {
   useDefaultErrorToast,
@@ -34,8 +32,7 @@ export interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = inject(
   userStore.storeKey,
-  notificationsStore.storeKey,
-  friendsStore.storeKey
+  notificationsStore.storeKey
 )(
   observer(({ userStore, notificationsStore }) => {
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
@@ -43,16 +40,16 @@ export const Header: React.FC<HeaderProps> = inject(
     const [presentDefaultErrorToast] = useDefaultErrorToast();
 
     const fetchFriendRequests = () => {
-      if (isGuest) return;
+      if (!userStore?.user?.role || isGuest) return;
 
       notificationsStore?.fetchNotifications().catch(() => {
         presentDefaultErrorToast();
       });
     };
 
-    useIonViewWillEnter(() => {
+    useIonViewDidEnter(() => {
       fetchFriendRequests();
-    }, []);
+    }, [isGuest]);
 
     return (
       <IonHeader mode="ios" className="header">
