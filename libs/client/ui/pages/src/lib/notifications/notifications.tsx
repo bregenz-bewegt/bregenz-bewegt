@@ -16,7 +16,7 @@ import {
   IonRefresherContent,
   IonTitle,
   IonToolbar,
-} from '@ionic/react/';
+} from '@ionic/react';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   notificationsStore,
