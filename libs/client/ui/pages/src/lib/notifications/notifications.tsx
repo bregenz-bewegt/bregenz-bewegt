@@ -37,18 +37,19 @@ import { checkmarkDone, trash } from 'ionicons/icons';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
-  friendsStore?: FriendsStore;
   userStore?: UserStore;
 }
 
 export const Notifications: React.FC<NotificationsProps> = inject(
   notificationsStore.storeKey,
-  friendsStore.storeKey,
   userStore.storeKey
 )(
-  observer(({ friendsStore, notificationsStore, userStore }) => {
+  observer(({ notificationsStore, userStore }) => {
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isGuest] = useIsGuest();
+
+    const getUnreadNotifications = (notifications: Notification[]) =>
+      notifications.filter((n) => !n.read);
 
     const markNotificationAsRead = (notificationId: Notification['id']) => {
       notificationsStore
@@ -100,51 +101,57 @@ export const Notifications: React.FC<NotificationsProps> = inject(
             ></IonRefresherContent>
           </IonRefresher>
           {notificationsStore?.notifications &&
-          notificationsStore.notifications?.length > 0 ? (
-            notificationsStore?.notifications.map((notification, i) => {
-              return (
-                <IonItemSliding
-                  key={`${JSON.stringify(toJS(notification))}-${i}`}
-                >
-                  {!notification.read ? (
-                    <div className="unread-indicator"></div>
-                  ) : undefined}
-                  <IonItem
-                    detail
-                    routerLink={
-                      notification.type === NotificationType.FRIEND_REQUEST
-                        ? `${tabRoutes.profile.route}/friends`
-                        : undefined
-                    }
-                    mode="ios"
-                    className={`${!notification.read ? 'unread' : ''}`}
+          getUnreadNotifications(notificationsStore.notifications).length >
+            0 ? (
+            getUnreadNotifications(notificationsStore.notifications).map(
+              (notification, i) => {
+                return (
+                  <IonItemSliding
+                    key={`${JSON.stringify(toJS(notification))}-${i}`}
                   >
-                    <IonLabel>
-                      <h2>{notification.title}</h2>
-                      <p>{notification.description}</p>
-                    </IonLabel>
-                  </IonItem>
-                  <IonItemOptions side="end">
-                    <IonItemOption
-                      onClick={() => {
-                        markNotificationAsRead(notification.id);
-                      }}
-                      color="medium"
+                    {!notification.read ? (
+                      <div className="unread-indicator"></div>
+                    ) : undefined}
+                    <IonItem
+                      detail
+                      routerLink={
+                        notification.type === NotificationType.FRIEND_REQUEST
+                          ? `${tabRoutes.profile.route}/friends`
+                          : undefined
+                      }
+                      mode="ios"
+                      className={`${!notification.read ? 'unread' : ''}`}
                     >
-                      <IonIcon slot="icon-only" icon={checkmarkDone}></IonIcon>
-                    </IonItemOption>
-                    <IonItemOption
-                      onClick={() => {
-                        deleteNotification(notification.id);
-                      }}
-                      color="danger"
-                    >
-                      <IonIcon slot="icon-only" icon={trash}></IonIcon>
-                    </IonItemOption>
-                  </IonItemOptions>
-                </IonItemSliding>
-              );
-            })
+                      <IonLabel>
+                        <h2>{notification.title}</h2>
+                        <p>{notification.description}</p>
+                      </IonLabel>
+                    </IonItem>
+                    <IonItemOptions side="end">
+                      <IonItemOption
+                        onClick={() => {
+                          markNotificationAsRead(notification.id);
+                        }}
+                        color="medium"
+                      >
+                        <IonIcon
+                          slot="icon-only"
+                          icon={checkmarkDone}
+                        ></IonIcon>
+                      </IonItemOption>
+                      <IonItemOption
+                        onClick={() => {
+                          deleteNotification(notification.id);
+                        }}
+                        color="danger"
+                      >
+                        <IonIcon slot="icon-only" icon={trash}></IonIcon>
+                      </IonItemOption>
+                    </IonItemOptions>
+                  </IonItemSliding>
+                );
+              }
+            )
           ) : (
             <p className="notifications__content__no-notifications">
               Keine Benachrichtigungen
