@@ -16,7 +16,7 @@ import { chevronForward, chevronBack } from 'ionicons/icons';
 import { useStopwatch, useTimer } from 'react-timer-hook';
 import moment from 'moment';
 import { StopCircle, Lock1, Timer1 } from 'iconsax-react';
-import { closeCircleOutline, close } from 'ionicons/icons';
+import { lockClosed, close } from 'ionicons/icons';
 
 const handleId = 'handle' as const;
 const lockingSectionId = 'locking-section' as const;
@@ -100,7 +100,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   const showLockedInformation = () => {
     presentToast({
       message: 'Melde dich an, um Übungen zu starten',
-      icon: closeCircleOutline,
+      icon: lockClosed,
       duration: 2000,
       position: 'top',
       mode: 'ios',
