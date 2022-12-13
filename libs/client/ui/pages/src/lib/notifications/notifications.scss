@@ -24,17 +24,10 @@
       }
 
       ion-item {
-        &::part(native) {
-          padding-left: 0;
-        }
-
-        &::before {
-          width: var(--spacing-m);
-          height: 100%;
-          background-color: red;
-        }
-
-        ion-label {
+        &.read {
+          &::part(native) {
+            padding-left: 0;
+          }
         }
       }
     }

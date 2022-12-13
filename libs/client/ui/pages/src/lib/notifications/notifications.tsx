@@ -97,7 +97,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                 <IonItemSliding
                   key={`${JSON.stringify(toJS(notification))}-${i}`}
                 >
-                  {notification.read ? (
+                  {!notification.read ? (
                     <div className="unread-indicator"></div>
                   ) : undefined}
                   <IonItem
@@ -108,6 +108,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                         : undefined
                     }
                     mode="ios"
+                    className={`${notification.read ? 'read' : ''}`}
                   >
                     <IonLabel>
                       <h2>{notification.title}</h2>
