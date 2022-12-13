@@ -24,9 +24,7 @@ export class NotificationsStore implements Store {
   }
 
   @action async fetchNotifications(): Promise<Notification[]> {
-    const { data }: { data: Notification[] } = await http.get(
-      'friends/requests'
-    );
+    const { data }: { data: Notification[] } = await http.get('notifications');
 
     this.setNotifications(data);
     return data;

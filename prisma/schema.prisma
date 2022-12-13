@@ -133,5 +133,6 @@ model Notification {
   title       String
   description String
   type        NotificationType @default(DEFAULT)
-  users       User[]
+  User        User             @relation(fields: [userId], references: [id])
+  userId      String
 }
