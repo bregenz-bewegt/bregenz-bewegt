@@ -24,7 +24,7 @@ export class NotificationsStore implements Store {
     this.notifications = this.notifications.filter((n) => n.id !== id);
   }
 
-  @action async markNotificationAsRead(
+  async markNotificationAsRead(
     dto: MarkNotificationAsReadDto
   ): Promise<Notification> {
     const { data }: { data: Notification } = await http.patch(
