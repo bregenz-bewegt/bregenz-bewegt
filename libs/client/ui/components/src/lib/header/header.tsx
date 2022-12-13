@@ -90,10 +90,9 @@ export const Header: React.FC<HeaderProps> = inject(
         </div>
         <IonFab className="header__fab">
           {notificationsStore?.notifications &&
-            getUnreadNotifications(notificationsStore.notifications).length >
-              0 && (
+            notificationsStore.getUnreadNotifications().length > 0 && (
               <IonBadge className="header__fab__badge">
-                {notificationsStore.notifications.length}
+                {notificationsStore.getUnreadNotifications().length}
               </IonBadge>
             )}
           <IonFabButton

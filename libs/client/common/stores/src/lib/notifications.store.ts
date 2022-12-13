@@ -53,6 +53,10 @@ export class NotificationsStore implements Store {
     this.setNotifications(data);
     return data;
   }
+
+  getUnreadNotifications(): Notification[] {
+    return this.notifications.filter((n) => !n.read);
+  }
 }
 
 export const notificationsStore = new NotificationsStore();
