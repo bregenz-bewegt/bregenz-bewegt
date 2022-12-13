@@ -3,10 +3,6 @@
   border-radius: var(--spacing-m);
   box-shadow: rgba(var(--ion-color-dark-rgb), 0.12) 0px 4px 16px;
 
-  &:first-of-type {
-    margin-top: var(--spacing-s) !important;
-  }
-
   &__skeleton-text {
     height: var(--spacing-m);
   }
