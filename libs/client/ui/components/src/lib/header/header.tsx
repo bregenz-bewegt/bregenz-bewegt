@@ -48,9 +48,6 @@ export const Header: React.FC<HeaderProps> = inject(
       });
     };
 
-    const getUnreadNotifications = (notifications: Notification[]) =>
-      notifications.filter((n) => !n.read);
-
     useIonViewDidEnter(() => {
       fetchFriendRequests();
     }, [isGuest]);
