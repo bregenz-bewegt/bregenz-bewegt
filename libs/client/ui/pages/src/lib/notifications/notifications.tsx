@@ -97,6 +97,9 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                 <IonItemSliding
                   key={`${JSON.stringify(toJS(notification))}-${i}`}
                 >
+                  {notification.read ? (
+                    <div className="unread-indicator"></div>
+                  ) : undefined}
                   <IonItem
                     detail
                     routerLink={
