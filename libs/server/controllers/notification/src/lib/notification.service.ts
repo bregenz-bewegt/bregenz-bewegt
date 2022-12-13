@@ -13,6 +13,8 @@ export class NotificationService {
       select: { notifications: true },
     });
 
+    console.log(notifications);
+
     return notifications;
   }
 
