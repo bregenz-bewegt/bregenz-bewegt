@@ -24,7 +24,6 @@ import {
   useDefaultErrorToast,
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
-import { Notification } from '@bregenz-bewegt/client/types';
 
 export interface HeaderProps {
   userStore?: UserStore;

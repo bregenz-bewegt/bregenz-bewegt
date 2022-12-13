@@ -19,8 +19,6 @@ import {
 } from '@ionic/react/';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
-  friendsStore,
-  FriendsStore,
   notificationsStore,
   NotificationsStore,
   userStore,
@@ -37,16 +35,14 @@ import { checkmarkDone, trash } from 'ionicons/icons';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
-  friendsStore?: FriendsStore;
   userStore?: UserStore;
 }
 
 export const Notifications: React.FC<NotificationsProps> = inject(
   notificationsStore.storeKey,
-  friendsStore.storeKey,
   userStore.storeKey
 )(
-  observer(({ friendsStore, notificationsStore, userStore }) => {
+  observer(({ notificationsStore, userStore }) => {
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isGuest] = useIsGuest();
 
