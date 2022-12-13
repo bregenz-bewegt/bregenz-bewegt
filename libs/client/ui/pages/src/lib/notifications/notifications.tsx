@@ -28,12 +28,12 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
-import { FriendRequest, NotificationType } from '@bregenz-bewegt/client/types';
+import { Notification, NotificationType } from '@bregenz-bewegt/client/types';
 import {
   useDefaultErrorToast,
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
-import { checkmarkCircle, closeCircle } from 'ionicons/icons';
+import { checkmarkDone } from 'ionicons/icons';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
@@ -50,23 +50,10 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isGuest] = useIsGuest();
 
-    const acceptRequest = (requestId: FriendRequest['id']) => {
-      friendsStore
-        ?.acceptFriendRequest({ requestId })
-        .then((data) => {
-          notificationsStore?.removeNotification(data.id);
-        })
-        .catch(() => {
-          presentDefaultErrorToast();
-        });
-    };
-
-    const rejectRequest = (requestId: FriendRequest['id']) => {
-      friendsStore
-        ?.rejectFriendRequest({ requestId })
-        .then((data) => {
-          notificationsStore?.removeNotification(data.id);
-        })
+    const markAsDone = (notificationId: Notification['id']) => {
+      notificationsStore
+        ?.markNotificationAsRead({ notificationId })
+        .then(() => notificationsStore?.fetchNotifications())
         .catch(() => {
           presentDefaultErrorToast();
         });
@@ -124,25 +111,14 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                       <p>{notification.description}</p>
                     </IonLabel>
                   </IonItem>
-                  <IonItemOptions>
-                    <IonItemOption
-                      color="success"
-                      onClick={(e) => {
-                        acceptRequest(notification.id);
-                      }}
-                    >
-                      <IonIcon
-                        slot="icon-only"
-                        icon={checkmarkCircle}
-                      ></IonIcon>
-                    </IonItemOption>
+                  <IonItemOptions side="end">
                     <IonItemOption
                       onClick={(e) => {
-                        rejectRequest(notification.id);
+                        markAsDone(notification.id);
                       }}
-                      color="danger"
+                      color="medium"
                     >
-                      <IonIcon slot="icon-only" icon={closeCircle}></IonIcon>
+                      <IonIcon slot="icon-only" icon={checkmarkDone}></IonIcon>
                     </IonItemOption>
                   </IonItemOptions>
                 </IonItemSliding>
