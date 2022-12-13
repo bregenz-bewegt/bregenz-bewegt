@@ -108,7 +108,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                         : undefined
                     }
                     mode="ios"
-                    className={`${notification.read ? 'read' : ''}`}
+                    className={`${!notification.read ? 'unread' : ''}`}
                   >
                     <IonLabel>
                       <h2>{notification.title}</h2>

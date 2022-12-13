@@ -24,7 +24,7 @@
       }
 
       ion-item {
-        &.read {
+        &.unread {
           &::part(native) {
             padding-left: 0;
           }

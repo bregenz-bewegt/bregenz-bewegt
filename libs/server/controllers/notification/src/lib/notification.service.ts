@@ -8,12 +8,12 @@ export class NotificationService {
   constructor(private prismaService: PrismaService) {}
 
   async getNotifications(userId: User['id']): Promise<Notification[]> {
-    const { notifications } = await this.prismaService.user.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: { id: userId },
-      select: { notifications: true },
+      select: { notifications: { orderBy: { read: 'asc' } } },
     });
 
-    return notifications;
+    return user?.notifications;
   }
 
   async markNotificationAsRead(
