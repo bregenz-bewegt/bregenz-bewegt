@@ -75,6 +75,22 @@ export class FriendService {
   async createFriendRequest(
     data: CreateFriendRequestDto & { requesteeId: User['id'] }
   ): Promise<FriendRequest> {
+    const requestee = await this.prismaService.user.findUnique({
+      where: { id: data.requesteeId },
+    });
+
+    await this.prismaService.user.update({
+      where: { id: data.addresseeId },
+      data: {
+        notifications: {
+          create: {
+            title: 'Neue Freundschaftsanfrage',
+            description: `${requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
+          },
+        },
+      },
+    });
+
     return this.prismaService.friendRequest.create({
       data: {
         requestee: { connect: { id: data.requesteeId } },
@@ -130,12 +146,11 @@ export class FriendService {
   async deleteFriendRequest(
     requestId: FriendRequest['id']
   ): Promise<FriendRequest> {
-    if (
-      !(await this.prismaService.friendRequest.findUnique({
-        where: { id: requestId },
-      }))
-    )
-      return;
+    const friendRequest = await this.prismaService.friendRequest.findUnique({
+      where: { id: requestId },
+    });
+
+    if (!friendRequest) return;
 
     return this.prismaService.friendRequest.delete({
       where: { id: requestId },

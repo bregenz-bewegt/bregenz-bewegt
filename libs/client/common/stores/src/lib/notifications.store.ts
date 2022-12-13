@@ -2,7 +2,6 @@ import { Store } from './store';
 import { action, makeAutoObservable, observable } from 'mobx';
 import type { Notification } from '@bregenz-bewegt/client/types';
 import { http } from '@bregenz-bewegt/client/common/http';
-import { AllFriendRequests } from '@bregenz-bewegt/shared/types';
 
 export class NotificationsStore implements Store {
   storeKey = 'notificationsStore' as const;
@@ -24,24 +23,13 @@ export class NotificationsStore implements Store {
     this.notifications = this.notifications.filter((n) => n.id !== id);
   }
 
-  @action async fetchNotifications(): Promise<void> {
-    const { data }: { data: AllFriendRequests } = await http.get(
+  @action async fetchNotifications(): Promise<Notification[]> {
+    const { data }: { data: Notification[] } = await http.get(
       'friends/requests'
     );
 
-    data.received && data.received.length > 0
-      ? notificationsStore?.setNotifications(
-          data.received.map(
-            (r) =>
-              ({
-                id: r.id,
-                title: 'Freundschaftsanfrage',
-                description: `${r.requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
-                routerLink: `profile/friends`,
-              } as Notification)
-          )
-        )
-      : notificationsStore?.setNotifications([]);
+    this.setNotifications(data);
+    return data;
   }
 }
 

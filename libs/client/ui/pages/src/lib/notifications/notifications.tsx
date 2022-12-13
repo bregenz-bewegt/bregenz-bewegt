@@ -28,7 +28,7 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
-import { FriendRequest } from '@bregenz-bewegt/client/types';
+import { FriendRequest, NotificationType } from '@bregenz-bewegt/client/types';
 import {
   useDefaultErrorToast,
   useIsGuest,
@@ -112,7 +112,11 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                 >
                   <IonItem
                     detail
-                    routerLink={notification.routerLink}
+                    routerLink={
+                      notification.type === NotificationType.FRIEND_REQUEST
+                        ? `${tabRoutes.profile.route}/friends`
+                        : undefined
+                    }
                     mode="ios"
                   >
                     <IonLabel>
