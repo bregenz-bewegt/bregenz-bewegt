@@ -4,6 +4,7 @@ CREATE TABLE `Notification` (
     `title` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
     `type` ENUM('DEFAULT', 'FRIEND_REQUEST') NOT NULL DEFAULT 'DEFAULT',
+    `read` BOOLEAN NOT NULL DEFAULT false,
     `userId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)

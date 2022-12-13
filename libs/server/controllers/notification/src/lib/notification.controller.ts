@@ -4,7 +4,15 @@ import {
   RemoveSensitiveFieldsInterceptor,
   RoleGuard,
 } from '@bregenz-bewegt/server/common';
-import { Controller, Get, UseGuards, UseInterceptors } from '@nestjs/common';
+import { MarkNotificationAsReadDto } from '@bregenz-bewegt/shared/types';
+import {
+  Body,
+  Controller,
+  Get,
+  Patch,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { Role, User, Notification } from '@prisma/client';
 import { NotificationService } from './notification.service';
 
@@ -20,5 +28,15 @@ export class NotificationController {
     @GetCurrentUser('sub') userId: User['id']
   ): Promise<Notification[]> {
     return this.notificationService.getNotifications(userId);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(new RemoveSensitiveFieldsInterceptor())
+  @Patch('mark-as-read')
+  markNotificationAsRead(
+    @Body() dto: MarkNotificationAsReadDto
+  ): Promise<Notification> {
+    return this.notificationService.markNotificationAsRead(dto);
   }
 }

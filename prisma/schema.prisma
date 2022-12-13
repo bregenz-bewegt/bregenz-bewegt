@@ -133,6 +133,7 @@ model Notification {
   title       String
   description String
   type        NotificationType @default(DEFAULT)
+  read        Boolean          @default(false)
   User        User             @relation(fields: [userId], references: [id])
   userId      String
 }

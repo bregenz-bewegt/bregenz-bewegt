@@ -1,4 +1,5 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
+import { MarkNotificationAsReadDto } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, Notification } from '@prisma/client';
 
@@ -13,5 +14,14 @@ export class NotificationService {
     });
 
     return notifications;
+  }
+
+  async markNotificationAsRead(
+    dto: MarkNotificationAsReadDto
+  ): Promise<Notification> {
+    return this.prismaService.notification.update({
+      where: { id: dto.notificationId },
+      data: { read: true },
+    });
   }
 }
