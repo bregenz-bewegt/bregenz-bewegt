@@ -33,7 +33,7 @@ import {
   useDefaultErrorToast,
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
-import { checkmarkDone } from 'ionicons/icons';
+import { checkmarkDone, trash } from 'ionicons/icons';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
@@ -50,9 +50,18 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isGuest] = useIsGuest();
 
-    const markAsDone = (notificationId: Notification['id']) => {
+    const markNotificationAsRead = (notificationId: Notification['id']) => {
       notificationsStore
         ?.markNotificationAsRead({ notificationId })
+        .then(() => notificationsStore?.fetchNotifications())
+        .catch(() => {
+          presentDefaultErrorToast();
+        });
+    };
+
+    const deleteNotification = (notificationId: Notification['id']) => {
+      notificationsStore
+        ?.deleteNotification({ notificationId })
         .then(() => notificationsStore?.fetchNotifications())
         .catch(() => {
           presentDefaultErrorToast();
@@ -117,12 +126,20 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                   </IonItem>
                   <IonItemOptions side="end">
                     <IonItemOption
-                      onClick={(e) => {
-                        markAsDone(notification.id);
+                      onClick={() => {
+                        markNotificationAsRead(notification.id);
                       }}
                       color="medium"
                     >
                       <IonIcon slot="icon-only" icon={checkmarkDone}></IonIcon>
+                    </IonItemOption>
+                    <IonItemOption
+                      onClick={() => {
+                        deleteNotification(notification.id);
+                      }}
+                      color="danger"
+                    >
+                      <IonIcon slot="icon-only" icon={trash}></IonIcon>
                     </IonItemOption>
                   </IonItemOptions>
                 </IonItemSliding>

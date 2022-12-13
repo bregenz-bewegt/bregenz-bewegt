@@ -1,5 +1,8 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
-import { MarkNotificationAsReadDto } from '@bregenz-bewegt/shared/types';
+import {
+  DeleteNotificationDto,
+  MarkNotificationAsReadDto,
+} from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, Notification } from '@prisma/client';
 
@@ -22,6 +25,18 @@ export class NotificationService {
     return this.prismaService.notification.update({
       where: { id: dto.notificationId },
       data: { read: true },
+    });
+  }
+
+  async deleteNotification(dto: DeleteNotificationDto): Promise<Notification> {
+    const exists = await this.prismaService.notification.findUnique({
+      where: { id: dto.notificationId },
+    });
+
+    if (!exists) return;
+
+    return this.prismaService.notification.delete({
+      where: { id: dto.notificationId },
     });
   }
 }

@@ -4,10 +4,14 @@ import {
   RemoveSensitiveFieldsInterceptor,
   RoleGuard,
 } from '@bregenz-bewegt/server/common';
-import { MarkNotificationAsReadDto } from '@bregenz-bewegt/shared/types';
+import {
+  DeleteNotificationDto,
+  MarkNotificationAsReadDto,
+} from '@bregenz-bewegt/shared/types';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Patch,
   UseGuards,
@@ -38,5 +42,15 @@ export class NotificationController {
     @Body() dto: MarkNotificationAsReadDto
   ): Promise<Notification> {
     return this.notificationService.markNotificationAsRead(dto);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(new RemoveSensitiveFieldsInterceptor())
+  @Delete('notification')
+  deleteNotification(
+    @Body() dto: DeleteNotificationDto
+  ): Promise<Notification> {
+    return this.notificationService.deleteNotification(dto);
   }
 }

@@ -2,7 +2,10 @@ import { Store } from './store';
 import { action, makeAutoObservable, observable } from 'mobx';
 import type { Notification } from '@bregenz-bewegt/client/types';
 import { http } from '@bregenz-bewegt/client/common/http';
-import { MarkNotificationAsReadDto } from '@bregenz-bewegt/shared/types';
+import {
+  DeleteNotificationDto,
+  MarkNotificationAsReadDto,
+} from '@bregenz-bewegt/shared/types';
 
 export class NotificationsStore implements Store {
   storeKey = 'notificationsStore' as const;
@@ -30,6 +33,15 @@ export class NotificationsStore implements Store {
     const { data }: { data: Notification } = await http.patch(
       '/notifications/mark-as-read',
       dto
+    );
+
+    return data;
+  }
+
+  async deleteNotification(dto: DeleteNotificationDto): Promise<Notification> {
+    const { data }: { data: Notification } = await http.delete(
+      '/notifications/notification',
+      { data: dto }
     );
 
     return data;
