@@ -93,7 +93,6 @@ export const Notifications: React.FC<NotificationsProps> = inject(
           {notificationsStore?.notifications &&
           notificationsStore.notifications?.length > 0 ? (
             notificationsStore?.notifications.map((notification, i) => {
-              console.log(notification.type);
               return (
                 <IonItemSliding
                   key={`${JSON.stringify(toJS(notification))}-${i}`}
