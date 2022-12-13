@@ -19,8 +19,6 @@ import {
 } from '@ionic/react/';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
-  friendsStore,
-  FriendsStore,
   notificationsStore,
   NotificationsStore,
   userStore,
