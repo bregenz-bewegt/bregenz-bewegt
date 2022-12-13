@@ -8,7 +8,7 @@ import {
   RemoveFriendDto,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
-import { User, FriendRequest, Role } from '@prisma/client';
+import { User, FriendRequest, Role, NotificationType } from '@prisma/client';
 
 @Injectable()
 export class FriendService {
@@ -86,6 +86,7 @@ export class FriendService {
           create: {
             title: 'Neue Freundschaftsanfrage',
             description: `${requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
+            type: NotificationType.FRIEND_REQUEST,
           },
         },
       },
