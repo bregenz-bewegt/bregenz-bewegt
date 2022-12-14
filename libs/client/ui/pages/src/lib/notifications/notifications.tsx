@@ -127,7 +127,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                       onClick={() => {
                         markNotificationAsRead(notification.id);
                       }}
-                      color="medium"
+                      color="primary"
                     >
                       <IonIcon slot="icon-only" icon={checkmarkDone}></IonIcon>
                     </IonItemOption>
