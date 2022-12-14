@@ -117,13 +117,14 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                     <div className="unread-indicator"></div>
                   ) : undefined}
                   <IonItem
-                    detail
+                    onClick={() => markNotificationAsRead(notification.id)}
                     routerLink={
                       notification.type === NotificationType.FRIEND_REQUEST
                         ? `${tabRoutes.profile.route}/friends`
                         : undefined
                     }
                     mode="ios"
+                    detail
                     className={`${!notification.read ? 'unread' : ''}`}
                   >
                     <IonLabel>
