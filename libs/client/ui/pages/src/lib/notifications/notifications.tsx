@@ -113,9 +113,11 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                 <IonItemSliding
                   key={`${JSON.stringify(toJS(notification))}-${i}`}
                 >
-                  {!notification.read ? (
-                    <div className="unread-indicator"></div>
-                  ) : undefined}
+                  <div
+                    className={`unread-indicator${
+                      notification.read ? ' read' : ''
+                    }`}
+                  ></div>
                   <IonItem
                     onClick={() => markNotificationAsRead(notification.id)}
                     routerLink={
@@ -125,7 +127,6 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                     }
                     mode="ios"
                     detail
-                    className={`${!notification.read ? 'unread' : ''}`}
                   >
                     <IonLabel>
                       <h2>{notification.title}</h2>

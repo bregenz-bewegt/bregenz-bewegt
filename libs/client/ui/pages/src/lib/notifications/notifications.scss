@@ -21,18 +21,16 @@
         margin: 0 var(--spacing-s);
         background-color: var(--ion-color-primary);
         align-self: center;
+
+        &.read {
+          visibility: hidden;
+        }
       }
 
       ion-item {
         &::part(native) {
-          padding-left: var(--spacing-l);
+          padding-left: 0;
           padding-right: var(--spacing-s);
-        }
-
-        &.unread {
-          &::part(native) {
-            padding-left: 0;
-          }
         }
       }
     }
