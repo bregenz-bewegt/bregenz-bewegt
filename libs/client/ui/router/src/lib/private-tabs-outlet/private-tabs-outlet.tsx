@@ -13,7 +13,6 @@ import {
 } from '@bregenz-bewegt/client-ui-pages';
 import {
   notificationsStore,
-  NotificationsStore,
   TabStore,
   tabStore,
 } from '@bregenz-bewegt/client/common/stores';
