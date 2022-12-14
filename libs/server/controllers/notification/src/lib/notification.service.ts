@@ -2,8 +2,9 @@ import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import {
   DeleteNotificationDto,
   MarkNotificationAsReadDto,
+  MarkNotificationAsUnreadDto,
 } from '@bregenz-bewegt/shared/types';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { User, Notification } from '@prisma/client';
 
 @Injectable()
@@ -19,24 +20,45 @@ export class NotificationService {
     return user?.notifications;
   }
 
+  async deleteNotification(dto: DeleteNotificationDto): Promise<Notification> {
+    const exists = await this.prismaService.notification.findUnique({
+      where: { id: dto.notificationId },
+    });
+
+    if (!exists) throw new NotFoundException();
+
+    return this.prismaService.notification.delete({
+      where: { id: dto.notificationId },
+    });
+  }
+
   async markNotificationAsRead(
     dto: MarkNotificationAsReadDto
   ): Promise<Notification> {
+    const exists = await this.prismaService.notification.findUnique({
+      where: { id: dto.notificationId },
+    });
+
+    if (!exists) throw new NotFoundException();
+
     return this.prismaService.notification.update({
       where: { id: dto.notificationId },
       data: { read: true },
     });
   }
 
-  async deleteNotification(dto: DeleteNotificationDto): Promise<Notification> {
+  async markNotificationAsUnread(
+    dto: MarkNotificationAsUnreadDto
+  ): Promise<Notification> {
     const exists = await this.prismaService.notification.findUnique({
       where: { id: dto.notificationId },
     });
 
-    if (!exists) return;
+    if (!exists) throw new NotFoundException();
 
-    return this.prismaService.notification.delete({
+    return this.prismaService.notification.update({
       where: { id: dto.notificationId },
+      data: { read: false },
     });
   }
 }

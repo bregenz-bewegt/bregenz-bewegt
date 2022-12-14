@@ -5,6 +5,7 @@ import { http } from '@bregenz-bewegt/client/common/http';
 import {
   DeleteNotificationDto,
   MarkNotificationAsReadDto,
+  MarkNotificationAsUnreadDto,
 } from '@bregenz-bewegt/shared/types';
 
 export class NotificationsStore implements Store {
@@ -19,14 +20,14 @@ export class NotificationsStore implements Store {
     this.notifications = notifications;
   }
 
-  async markNotificationAsRead(
-    dto: MarkNotificationAsReadDto
-  ): Promise<Notification> {
-    const { data }: { data: Notification } = await http.patch(
-      '/notifications/mark-as-read',
-      dto
-    );
+  getUnreadNotifications(): Notification[] {
+    return this.notifications.filter((n) => !n.read);
+  }
 
+  @action async fetchNotifications(): Promise<Notification[]> {
+    const { data }: { data: Notification[] } = await http.get('notifications');
+
+    this.setNotifications(data);
     return data;
   }
 
@@ -39,15 +40,26 @@ export class NotificationsStore implements Store {
     return data;
   }
 
-  @action async fetchNotifications(): Promise<Notification[]> {
-    const { data }: { data: Notification[] } = await http.get('notifications');
+  async markNotificationAsRead(
+    dto: MarkNotificationAsReadDto
+  ): Promise<Notification> {
+    const { data }: { data: Notification } = await http.patch(
+      '/notifications/mark-as-read',
+      dto
+    );
 
-    this.setNotifications(data);
     return data;
   }
 
-  getUnreadNotifications(): Notification[] {
-    return this.notifications.filter((n) => !n.read);
+  async markNotificationAsUnread(
+    dto: MarkNotificationAsUnreadDto
+  ): Promise<Notification> {
+    const { data }: { data: Notification } = await http.patch(
+      '/notifications/mark-as-unread',
+      dto
+    );
+
+    return data;
   }
 }
 

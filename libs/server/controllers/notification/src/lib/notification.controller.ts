@@ -37,6 +37,16 @@ export class NotificationController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(new RemoveSensitiveFieldsInterceptor())
+  @Delete('notification')
+  deleteNotification(
+    @Body() dto: DeleteNotificationDto
+  ): Promise<Notification> {
+    return this.notificationService.deleteNotification(dto);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(new RemoveSensitiveFieldsInterceptor())
   @Patch('mark-as-read')
   markNotificationAsRead(
     @Body() dto: MarkNotificationAsReadDto
@@ -47,10 +57,10 @@ export class NotificationController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(new RemoveSensitiveFieldsInterceptor())
-  @Delete('notification')
-  deleteNotification(
-    @Body() dto: DeleteNotificationDto
+  @Patch('mark-as-unread')
+  markNotificationAsUnread(
+    @Body() dto: MarkNotificationAsReadDto
   ): Promise<Notification> {
-    return this.notificationService.deleteNotification(dto);
+    return this.notificationService.markNotificationAsUnread(dto);
   }
 }

@@ -42,6 +42,15 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isGuest] = useIsGuest();
 
+    const deleteNotification = (notificationId: Notification['id']) => {
+      notificationsStore
+        ?.deleteNotification({ notificationId })
+        .then(() => notificationsStore?.fetchNotifications())
+        .catch(() => {
+          presentDefaultErrorToast();
+        });
+    };
+
     const markNotificationAsRead = (notificationId: Notification['id']) => {
       notificationsStore
         ?.markNotificationAsRead({ notificationId })
@@ -51,9 +60,9 @@ export const Notifications: React.FC<NotificationsProps> = inject(
         });
     };
 
-    const deleteNotification = (notificationId: Notification['id']) => {
+    const markNotificationAsUnread = (notificationId: Notification['id']) => {
       notificationsStore
-        ?.deleteNotification({ notificationId })
+        ?.markNotificationAsUnread({ notificationId })
         .then(() => notificationsStore?.fetchNotifications())
         .catch(() => {
           presentDefaultErrorToast();
@@ -123,14 +132,31 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                     </IonLabel>
                   </IonItem>
                   <IonItemOptions side="end">
-                    <IonItemOption
-                      onClick={() => {
-                        markNotificationAsRead(notification.id);
-                      }}
-                      color="primary"
-                    >
-                      <IonIcon slot="icon-only" icon={checkmarkDone}></IonIcon>
-                    </IonItemOption>
+                    {notification.read ? (
+                      <IonItemOption
+                        onClick={() => {
+                          markNotificationAsUnread(notification.id);
+                        }}
+                        color={'medium'}
+                      >
+                        <IonIcon
+                          slot="icon-only"
+                          icon={checkmarkDone}
+                        ></IonIcon>
+                      </IonItemOption>
+                    ) : (
+                      <IonItemOption
+                        onClick={() => {
+                          markNotificationAsRead(notification.id);
+                        }}
+                        color={'primary'}
+                      >
+                        <IonIcon
+                          slot="icon-only"
+                          icon={checkmarkDone}
+                        ></IonIcon>
+                      </IonItemOption>
+                    )}
                     <IonItemOption
                       onClick={() => {
                         deleteNotification(notification.id);
