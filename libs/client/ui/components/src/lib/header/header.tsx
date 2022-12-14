@@ -18,12 +18,13 @@ import {
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Notification as NotificationIcon } from 'iconsax-react';
 import {
   useDefaultErrorToast,
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
+import { toJS } from 'mobx';
 
 export interface HeaderProps {
   userStore?: UserStore;
@@ -50,6 +51,12 @@ export const Header: React.FC<HeaderProps> = inject(
     useIonViewDidEnter(() => {
       fetchNotifications();
     }, [isGuest]);
+
+    useEffect(() => {
+      fetchNotifications();
+    }, []);
+
+    console.log(toJS(notificationsStore?.notifications));
 
     return (
       <IonHeader mode="ios" className="header">
