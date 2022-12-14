@@ -19,14 +19,6 @@ export class NotificationsStore implements Store {
     this.notifications = notifications;
   }
 
-  @action addNotifications(notifications: Notification[]): void {
-    this.notifications.push(...notifications);
-  }
-
-  @action removeNotification(id: string): void {
-    this.notifications = this.notifications.filter((n) => n.id !== id);
-  }
-
   async markNotificationAsRead(
     dto: MarkNotificationAsReadDto
   ): Promise<Notification> {
