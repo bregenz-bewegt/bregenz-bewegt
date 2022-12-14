@@ -7,6 +7,7 @@ import {
 import {
   DeleteNotificationDto,
   MarkNotificationAsReadDto,
+  MarkNotificationAsUnreadDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   Body,
@@ -59,7 +60,7 @@ export class NotificationController {
   @UseInterceptors(new RemoveSensitiveFieldsInterceptor())
   @Patch('mark-as-unread')
   markNotificationAsUnread(
-    @Body() dto: MarkNotificationAsReadDto
+    @Body() dto: MarkNotificationAsUnreadDto
   ): Promise<Notification> {
     return this.notificationService.markNotificationAsUnread(dto);
   }
