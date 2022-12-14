@@ -56,8 +56,6 @@ export const Header: React.FC<HeaderProps> = inject(
       fetchNotifications();
     }, []);
 
-    console.log(toJS(notificationsStore?.notifications));
-
     return (
       <IonHeader mode="ios" className="header">
         <div className="header__profile">
