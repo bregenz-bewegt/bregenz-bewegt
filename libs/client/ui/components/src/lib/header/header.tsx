@@ -18,7 +18,7 @@ import {
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Notification as NotificationIcon } from 'iconsax-react';
 import {
   useDefaultErrorToast,
