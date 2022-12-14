@@ -62,19 +62,10 @@ export class NotificationService {
     });
   }
 
-  async markAllNotificationsAsRead(
-    userId: User['id']
-  ): Promise<Notification[]> {
-    const user = await this.prismaService.user.update({
-      where: { id: userId },
-      data: {
-        notifications: {
-          updateMany: { where: { NOT: null }, data: { read: true } },
-        },
-      },
-      include: { notifications: true },
+  async markAllNotificationsAsRead(userId: User['id']): Promise<void> {
+    await this.prismaService.notification.updateMany({
+      where: { user: { id: userId } },
+      data: { read: true },
     });
-
-    return user?.notifications ?? [];
   }
 }

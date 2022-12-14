@@ -62,12 +62,8 @@ export class NotificationsStore implements Store {
     return data;
   }
 
-  async markAllNotificationsAsRead(): Promise<Notification[]> {
-    const { data }: { data: Notification[] } = await http.post(
-      '/notifications/mark-as-read'
-    );
-
-    return data;
+  async markAllNotificationsAsRead(): Promise<void> {
+    await http.post('/notifications/mark-as-read');
   }
 }
 

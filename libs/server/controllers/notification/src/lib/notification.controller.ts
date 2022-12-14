@@ -71,7 +71,7 @@ export class NotificationController {
   @Post('mark-as-read')
   markAllNotificationsAsRead(
     @GetCurrentUser('sub') userId: User['id']
-  ): Promise<Notification[]> {
+  ): Promise<void> {
     return this.notificationService.markAllNotificationsAsRead(userId);
   }
 }
