@@ -11,7 +11,12 @@ import {
   CompetitorProfile,
   Notifications,
 } from '@bregenz-bewegt/client-ui-pages';
-import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
+import {
+  notificationsStore,
+  NotificationsStore,
+  TabStore,
+  tabStore,
+} from '@bregenz-bewegt/client/common/stores';
 import {
   IonTabs,
   IonRouterOutlet,
@@ -32,7 +37,7 @@ export interface PrivateTabsOutletProps {
 export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
   tabStore.storeKey
 )(
-  observer(({ tabStore }) => {
+  observer(({ tabStore, notificationStore }) => {
     return (
       <>
         <IonTabs>
