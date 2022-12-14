@@ -17,7 +17,7 @@ export class NotificationService {
       select: { notifications: { orderBy: { read: 'asc' } } },
     });
 
-    return user?.notifications;
+    return user?.notifications ?? [];
   }
 
   async deleteNotification(dto: DeleteNotificationDto): Promise<Notification> {
