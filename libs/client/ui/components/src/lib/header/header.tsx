@@ -8,6 +8,7 @@ import {
   IonSkeletonText,
   IonText,
   useIonViewDidEnter,
+  useIonViewWillEnter,
 } from '@ionic/react';
 import './header.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
@@ -24,7 +25,6 @@ import {
   useDefaultErrorToast,
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
-import { toJS } from 'mobx';
 
 export interface HeaderProps {
   userStore?: UserStore;
@@ -52,7 +52,7 @@ export const Header: React.FC<HeaderProps> = inject(
       fetchNotifications();
     }, [isGuest]);
 
-    useEffect(() => {
+    useIonViewWillEnter(() => {
       fetchNotifications();
     }, []);
 
