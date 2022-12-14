@@ -131,9 +131,9 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                     <IonLabel>
                       <h2>{notification.title}</h2>
                       <p>
-                        {new Date(notification.createdAt).toLocaleDateString()}
-                        {' - '}
-                        {notification.description}
+                        {`${new Date(
+                          notification.createdAt
+                        ).toLocaleDateString()} - ${notification.description}`}
                       </p>
                     </IonLabel>
                   </IonItem>
