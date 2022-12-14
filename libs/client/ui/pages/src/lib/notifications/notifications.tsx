@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './notifications.scss';
 import {
   IonBackButton,
@@ -21,8 +21,6 @@ import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   notificationsStore,
   NotificationsStore,
-  userStore,
-  UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
@@ -35,14 +33,12 @@ import { checkmarkDone, trash } from 'ionicons/icons';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
-  userStore?: UserStore;
 }
 
 export const Notifications: React.FC<NotificationsProps> = inject(
-  notificationsStore.storeKey,
-  userStore.storeKey
+  notificationsStore.storeKey
 )(
-  observer(({ notificationsStore, userStore }) => {
+  observer(({ notificationsStore }) => {
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isGuest] = useIsGuest();
 
@@ -74,6 +70,12 @@ export const Notifications: React.FC<NotificationsProps> = inject(
           presentDefaultErrorToast();
         });
     };
+
+    useEffect(() => {
+      notificationsStore?.fetchNotifications().catch(() => {
+        presentDefaultErrorToast();
+      });
+    }, []);
 
     return (
       <IonPage className="notifications">
