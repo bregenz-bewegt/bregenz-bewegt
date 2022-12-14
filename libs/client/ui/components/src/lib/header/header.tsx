@@ -39,7 +39,7 @@ export const Header: React.FC<HeaderProps> = inject(
     const [isGuest] = useIsGuest();
     const [presentDefaultErrorToast] = useDefaultErrorToast();
 
-    const fetchFriendRequests = () => {
+    const fetchNotifications = () => {
       if (!userStore?.user?.role || isGuest) return;
 
       notificationsStore?.fetchNotifications().catch(() => {
@@ -48,7 +48,7 @@ export const Header: React.FC<HeaderProps> = inject(
     };
 
     useIonViewDidEnter(() => {
-      fetchFriendRequests();
+      fetchNotifications();
     }, [isGuest]);
 
     return (
