@@ -15,12 +15,12 @@ export class FriendService {
   constructor(private prismaService: PrismaService) {}
 
   async getFriends(userId: User['id']): Promise<User[]> {
-    const { friends } = await this.prismaService.user.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: { id: userId },
       select: { friends: true },
     });
 
-    return friends;
+    return user?.friends;
   }
 
   async searchUserByUsername(
@@ -86,7 +86,7 @@ export class FriendService {
           create: {
             title: 'Neue Freundschaftsanfrage',
             description: `${requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
-            type: NotificationType.FRIEND_REQUEST,
+            type: NotificationType.FRIEND_REQUEST_RECEIVED,
           },
         },
       },
@@ -162,28 +162,34 @@ export class FriendService {
     userId: User['id'],
     dto: AcceptFriendRequestDto
   ): Promise<FriendRequest> {
-    if (
-      !(await this.prismaService.friendRequest.findUnique({
-        where: { id: dto.requestId },
-      }))
-    )
-      return;
+    const exists = await this.prismaService.friendRequest.findUnique({
+      where: { id: dto.requestId },
+    });
+    if (!exists) return;
 
     const friendRequest = await this.prismaService.friendRequest.update({
       where: { id: dto.requestId },
       data: { acceptedAt: new Date() },
     });
 
-    await this.prismaService.user.update({
+    const self = await this.prismaService.user.update({
       where: { id: userId },
       data: {
         friends: { connect: { id: friendRequest.requesteeId } },
       },
     });
+
     await this.prismaService.user.update({
       where: { id: friendRequest.requesteeId },
       data: {
         friends: { connect: { id: userId } },
+        notifications: {
+          create: {
+            title: `Freundschaftsanfrage angenommen`,
+            description: `${self.username} hat deine Freundschaftsanfrage angenommen`,
+            type: NotificationType.FRIEND_REQUEST_ACCEPTED,
+          },
+        },
       },
     });
 

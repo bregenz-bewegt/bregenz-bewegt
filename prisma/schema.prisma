@@ -125,7 +125,8 @@ model FriendRequest {
 
 enum NotificationType {
   DEFAULT
-  FRIEND_REQUEST
+  FRIEND_REQUEST_RECEIVED
+  FRIEND_REQUEST_ACCEPTED
 }
 
 model Notification {

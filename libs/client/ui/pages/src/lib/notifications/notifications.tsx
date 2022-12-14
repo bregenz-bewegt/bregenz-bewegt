@@ -121,7 +121,10 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                   <IonItem
                     onClick={() => markNotificationAsRead(notification.id)}
                     routerLink={
-                      notification.type === NotificationType.FRIEND_REQUEST
+                      [
+                        NotificationType.FRIEND_REQUEST_RECEIVED,
+                        NotificationType.FRIEND_REQUEST_ACCEPTED,
+                      ].includes(notification.type)
                         ? `${tabRoutes.profile.route}/friends`
                         : undefined
                     }
