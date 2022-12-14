@@ -130,7 +130,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                   >
                     <IonLabel>
                       <h2>{notification.title}</h2>
-                      <p>{notification.description}</p>
+                      <p>{notification.} {notification.description}</p>
                     </IonLabel>
                   </IonItem>
                   <IonItemOptions side="end">
