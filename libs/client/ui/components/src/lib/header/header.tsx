@@ -52,10 +52,6 @@ export const Header: React.FC<HeaderProps> = inject(
       fetchNotifications();
     }, [isGuest]);
 
-    useIonViewWillEnter(() => {
-      fetchNotifications();
-    }, []);
-
     return (
       <IonHeader mode="ios" className="header">
         <div className="header__profile">
