@@ -8,7 +8,6 @@ import {
   IonSkeletonText,
   IonText,
   useIonViewDidEnter,
-  useIonViewWillEnter,
 } from '@ionic/react';
 import './header.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
