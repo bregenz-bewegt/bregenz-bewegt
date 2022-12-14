@@ -18,8 +18,9 @@
         min-width: var(--spacing-s);
         min-height: var(--spacing-s);
         border-radius: 50%;
-        margin: var(--spacing-m) var(--spacing-s);
+        margin: 0 var(--spacing-s);
         background-color: var(--ion-color-primary);
+        align-self: center;
       }
 
       ion-item {
