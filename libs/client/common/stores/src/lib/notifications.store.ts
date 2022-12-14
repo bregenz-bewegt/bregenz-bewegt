@@ -43,8 +43,8 @@ export class NotificationsStore implements Store {
   async markNotificationAsRead(
     dto: MarkNotificationAsReadDto
   ): Promise<Notification> {
-    const { data }: { data: Notification } = await http.patch(
-      '/notifications/mark-as-read',
+    const { data }: { data: Notification } = await http.post(
+      '/notifications/notification/mark-as-read',
       dto
     );
 
@@ -54,9 +54,17 @@ export class NotificationsStore implements Store {
   async markNotificationAsUnread(
     dto: MarkNotificationAsUnreadDto
   ): Promise<Notification> {
-    const { data }: { data: Notification } = await http.patch(
-      '/notifications/mark-as-unread',
+    const { data }: { data: Notification } = await http.post(
+      '/notifications/notification/mark-as-unread',
       dto
+    );
+
+    return data;
+  }
+
+  async markAllNotificationsAsRead(): Promise<Notification[]> {
+    const { data }: { data: Notification[] } = await http.post(
+      '/notifications/mark-as-read'
     );
 
     return data;

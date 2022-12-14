@@ -14,7 +14,7 @@ import {
   Controller,
   Delete,
   Get,
-  Patch,
+  Post,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -48,7 +48,7 @@ export class NotificationController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(new RemoveSensitiveFieldsInterceptor())
-  @Patch('mark-as-read')
+  @Post('notification/mark-as-read')
   markNotificationAsRead(
     @Body() dto: MarkNotificationAsReadDto
   ): Promise<Notification> {
@@ -58,10 +58,20 @@ export class NotificationController {
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
   @UseInterceptors(new RemoveSensitiveFieldsInterceptor())
-  @Patch('mark-as-unread')
+  @Post('notification/mark-as-unread')
   markNotificationAsUnread(
     @Body() dto: MarkNotificationAsUnreadDto
   ): Promise<Notification> {
     return this.notificationService.markNotificationAsUnread(dto);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(new RemoveSensitiveFieldsInterceptor())
+  @Post('mark-as-read')
+  markAllNotificationsAsRead(
+    @GetCurrentUser('sub') userId: User['id']
+  ): Promise<Notification[]> {
+    return this.notificationService.markAllNotificationsAsRead(userId);
   }
 }

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './notifications.scss';
 import {
   IonBackButton,
+  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
@@ -69,6 +70,15 @@ export const Notifications: React.FC<NotificationsProps> = inject(
         });
     };
 
+    const markAllNotificationsAsRead = () => {
+      notificationsStore
+        ?.markAllNotificationsAsRead()
+        .then(() => notificationsStore?.fetchNotifications())
+        .catch(() => {
+          presentDefaultErrorToast();
+        });
+    };
+
     const handleRefresh = (e: any) => {
       if (isGuest) return setTimeout(() => e.target.complete(), 500);
 
@@ -98,6 +108,11 @@ export const Notifications: React.FC<NotificationsProps> = inject(
               />
             </IonButtons>
             <IonTitle>Benachrichtigungen</IonTitle>
+            <IonButtons slot="end">
+              <IonButton onClick={() => markAllNotificationsAsRead()}>
+                <IonIcon slot="icon-only" icon={checkmarkDone}></IonIcon>
+              </IonButton>
+            </IonButtons>
           </IonToolbar>
         </IonHeader>
         <IonContent className="notifications__content">
