@@ -32,7 +32,7 @@ export interface PrivateTabsOutletProps {
 export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
   tabStore.storeKey
 )(
-  observer(({ tabStore, notificationStore }) => {
+  observer(({ tabStore }) => {
     return (
       <>
         <IonTabs>
