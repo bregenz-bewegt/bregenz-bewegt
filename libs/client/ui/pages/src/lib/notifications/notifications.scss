@@ -24,6 +24,11 @@
       }
 
       ion-item {
+        &::part(native) {
+          padding-left: var(--spacing-l);
+          padding-right: var(--spacing-s);
+        }
+
         &.unread {
           &::part(native) {
             padding-left: 0;
