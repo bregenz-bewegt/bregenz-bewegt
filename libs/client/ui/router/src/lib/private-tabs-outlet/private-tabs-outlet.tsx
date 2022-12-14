@@ -11,11 +11,7 @@ import {
   CompetitorProfile,
   Notifications,
 } from '@bregenz-bewegt/client-ui-pages';
-import {
-  notificationsStore,
-  TabStore,
-  tabStore,
-} from '@bregenz-bewegt/client/common/stores';
+import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
 import {
   IonTabs,
   IonRouterOutlet,
