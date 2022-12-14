@@ -6,4 +6,5 @@ export type Notification = {
   description: string;
   type: NotificationType;
   read: boolean;
+  createdAt: Date;
 };
