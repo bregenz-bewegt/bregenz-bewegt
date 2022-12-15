@@ -1,4 +1,4 @@
-import { DifficultyType } from './difficulty';
+import { DifficultyType } from '../enums';
 
 export type Preferences = {
   id: number;

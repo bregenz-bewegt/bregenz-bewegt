@@ -62,6 +62,9 @@
       "@bregenz-bewegt/server/controllers/leaderboard": [
         "libs/server/controllers/leaderboard/src/index.ts"
       ],
+      "@bregenz-bewegt/server/controllers/notification": [
+        "libs/server/controllers/notification/src/index.ts"
+      ],
       "@bregenz-bewegt/server/controllers/park": [
         "libs/server/controllers/park/src/index.ts"
       ],
