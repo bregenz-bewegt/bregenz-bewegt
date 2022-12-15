@@ -1,4 +1,8 @@
-import { ActivityCard, Header } from '@bregenz-bewegt/client-ui-components';
+import {
+  ActivityCard,
+  GuestLock,
+  Header,
+} from '@bregenz-bewegt/client-ui-components';
 import {
   activityStore,
   ActivityStore,
@@ -149,171 +153,182 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
             setShowTopButton(e.detail.currentY > 700 ? true : false)
           }
         >
-          <div className="analytics__content__chart">
-            <div className="analytics__content__chart__headline">
-              <h2>Münzen im</h2>
-              <h2>
-                {chartMonthTimespans && (
-                  <IonSelect
-                    interface="popover"
-                    value={chartFilterMonth}
-                    onIonChange={(e) => setChartFilterMonth(e.detail.value)}
-                    placeholder="Jahr"
-                  >
-                    {chartMonthTimespans?.map((span) => {
-                      const month = new Date();
-                      month.setMonth(span);
-                      return (
-                        <IonSelectOption
-                          value={span}
-                          key={JSON.stringify(span)}
+          <GuestLock
+            modalClassName="profile-guest-lock-modal"
+            text="Melde dich bei deinem Konto an, um auf dein Profil zugreifen zu können"
+          >
+            {(isGuest) => (
+              <>
+                <div className="analytics__content__chart">
+                  <div className="analytics__content__chart__headline">
+                    <h2>Münzen im</h2>
+                    <h2>
+                      {chartMonthTimespans && (
+                        <IonSelect
+                          interface="popover"
+                          value={chartFilterMonth}
+                          onIonChange={(e) =>
+                            setChartFilterMonth(e.detail.value)
+                          }
+                          placeholder="Jahr"
                         >
-                          {month.toLocaleString('default', {
-                            month: 'long',
+                          {chartMonthTimespans?.map((span) => {
+                            const month = new Date();
+                            month.setMonth(span);
+                            return (
+                              <IonSelectOption
+                                value={span}
+                                key={JSON.stringify(span)}
+                              >
+                                {month.toLocaleString('default', {
+                                  month: 'long',
+                                })}
+                              </IonSelectOption>
+                            );
                           })}
-                        </IonSelectOption>
+                        </IonSelect>
+                      )}
+                    </h2>
+                  </div>
+                  {chartFilterMonth && chartData && (
+                    <ResponsiveContainer width={'100%'} height={200}>
+                      <AreaChart
+                        data={chartData}
+                        margin={{ top: 10, right: 20, left: -25, bottom: 0 }}
+                      >
+                        <defs>
+                          <linearGradient
+                            id="color-coins"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="5%"
+                              stopColor="var(--ion-color-secondary)"
+                              stopOpacity={0.8}
+                            />
+                            <stop
+                              offset="95%"
+                              stopColor="var(--ion-color-secondary)"
+                              stopOpacity={0}
+                            />
+                          </linearGradient>
+                        </defs>
+                        <XAxis
+                          dataKey="date"
+                          unit={'.'}
+                          type="number"
+                          axisLine={false}
+                          tickLine={false}
+                          allowDecimals={false}
+                          interval="preserveStartEnd"
+                          ticks={calculateTicks({
+                            min: 1,
+                            max: new Date(
+                              new Date().getFullYear(),
+                              chartFilterMonth + 1,
+                              0
+                            ).getDate(),
+                            count: 7,
+                            round: 5,
+                            includeMin: true,
+                          })}
+                        />
+                        <YAxis
+                          dataKey="coins"
+                          axisLine={false}
+                          tickLine={false}
+                          allowDecimals={false}
+                          interval="preserveStartEnd"
+                          ticks={calculateTicks({
+                            min: 1,
+                            max: chartData?.reduce(
+                              (r, d) => (d.coins > r ? d.coins : r),
+                              0
+                            ),
+                            count: 4,
+                            round: 10,
+                            includeMin: false,
+                          })}
+                        />
+                        <Area
+                          type="monotoneX"
+                          dataKey="coins"
+                          fill="url(#color-coins)"
+                          stroke="var(--ion-color-primary)"
+                          fillOpacity={1}
+                        />
+                        <ReferenceLine
+                          label={{
+                            value: '∅',
+                            position: 'right',
+                          }}
+                          y={Math.floor(
+                            chartData?.reduce((r, d) => r + d.coins, 0) /
+                              chartData?.length
+                          )}
+                          stroke="black"
+                          opacity={0.5}
+                          fillOpacity={1}
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  )}
+                </div>
+
+                <div className="analytics__content__list">
+                  {activityList.length > 0 &&
+                    activityList.map((a, i, arr) => {
+                      const newD = new Date(a.endedAt);
+                      return (
+                        <>
+                          {(i === 0 ||
+                            new Date(arr[i - 1].endedAt).getDate() !==
+                              newD.getDate()) && (
+                            <div
+                              className="analytics__content__list__title"
+                              key={JSON.stringify(a)}
+                            >
+                              {i === 0 && <h2>Verlauf</h2>}
+                              <h4>
+                                {newD.toLocaleString('default', {
+                                  day: 'numeric',
+                                  month: 'long',
+                                })}
+                              </h4>
+                            </div>
+                          )}
+                          <ActivityCard
+                            activity={a}
+                            key={i}
+                            className="analytics__content__list__card"
+                          />
+                        </>
                       );
                     })}
-                  </IonSelect>
-                )}
-              </h2>
-            </div>
-            {chartFilterMonth && chartData && (
-              <ResponsiveContainer width={'100%'} height={200}>
-                <AreaChart
-                  data={chartData}
-                  margin={{ top: 10, right: 20, left: -25, bottom: 0 }}
+                  <IonInfiniteScroll
+                    onIonInfinite={loadInfinite}
+                    className="leaderboard__infinite-scroll-loading"
+                  >
+                    <IonInfiniteScrollContent
+                      loadingSpinner="crescent"
+                      loadingText="Mehr Aktivitäten laden..."
+                    ></IonInfiniteScrollContent>
+                  </IonInfiniteScroll>
+                </div>
+                <IonFabButton
+                  slot="fixed"
+                  className="analytics__content__top-button"
+                  onClick={() => contentRef.current?.scrollToTop(500)}
+                  style={{ opacity: showTopButton ? 1 : 0 }}
                 >
-                  <defs>
-                    <linearGradient
-                      id="color-coins"
-                      x1="0"
-                      y1="0"
-                      x2="0"
-                      y2="1"
-                    >
-                      <stop
-                        offset="5%"
-                        stopColor="var(--ion-color-secondary)"
-                        stopOpacity={0.8}
-                      />
-                      <stop
-                        offset="95%"
-                        stopColor="var(--ion-color-secondary)"
-                        stopOpacity={0}
-                      />
-                    </linearGradient>
-                  </defs>
-                  <XAxis
-                    dataKey="date"
-                    unit={'.'}
-                    type="number"
-                    axisLine={false}
-                    tickLine={false}
-                    allowDecimals={false}
-                    interval="preserveStartEnd"
-                    ticks={calculateTicks({
-                      min: 1,
-                      max: new Date(
-                        new Date().getFullYear(),
-                        chartFilterMonth + 1,
-                        0
-                      ).getDate(),
-                      count: 7,
-                      round: 5,
-                      includeMin: true,
-                    })}
-                  />
-                  <YAxis
-                    dataKey="coins"
-                    axisLine={false}
-                    tickLine={false}
-                    allowDecimals={false}
-                    interval="preserveStartEnd"
-                    ticks={calculateTicks({
-                      min: 1,
-                      max: chartData?.reduce(
-                        (r, d) => (d.coins > r ? d.coins : r),
-                        0
-                      ),
-                      count: 4,
-                      round: 10,
-                      includeMin: false,
-                    })}
-                  />
-                  <Area
-                    type="monotoneX"
-                    dataKey="coins"
-                    fill="url(#color-coins)"
-                    stroke="var(--ion-color-primary)"
-                    fillOpacity={1}
-                  />
-                  <ReferenceLine
-                    label={{
-                      value: '∅',
-                      position: 'right',
-                    }}
-                    y={Math.floor(
-                      chartData?.reduce((r, d) => r + d.coins, 0) /
-                        chartData?.length
-                    )}
-                    stroke="black"
-                    opacity={0.5}
-                    fillOpacity={1}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+                  <ArrowUp2 size={32} color="white" variant="Linear" />
+                </IonFabButton>
+              </>
             )}
-          </div>
-
-          <div className="analytics__content__list">
-            {activityList.length > 0 &&
-              activityList.map((a, i, arr) => {
-                const newD = new Date(a.endedAt);
-                return (
-                  <>
-                    {(i === 0 ||
-                      new Date(arr[i - 1].endedAt).getDate() !==
-                        newD.getDate()) && (
-                      <div
-                        className="analytics__content__list__title"
-                        key={JSON.stringify(a)}
-                      >
-                        {i === 0 && <h2>Verlauf</h2>}
-                        <h4>
-                          {newD.toLocaleString('default', {
-                            day: 'numeric',
-                            month: 'long',
-                          })}
-                        </h4>
-                      </div>
-                    )}
-                    <ActivityCard
-                      activity={a}
-                      key={i}
-                      className="analytics__content__list__card"
-                    />
-                  </>
-                );
-              })}
-            <IonInfiniteScroll
-              onIonInfinite={loadInfinite}
-              className="leaderboard__infinite-scroll-loading"
-            >
-              <IonInfiniteScrollContent
-                loadingSpinner="crescent"
-                loadingText="Mehr Aktivitäten laden..."
-              ></IonInfiniteScrollContent>
-            </IonInfiniteScroll>
-          </div>
-          <IonFabButton
-            slot="fixed"
-            className="analytics__content__top-button"
-            onClick={() => contentRef.current?.scrollToTop(500)}
-            style={{ opacity: showTopButton ? 1 : 0 }}
-          >
-            <ArrowUp2 size={32} color="white" variant="Linear" />
-          </IonFabButton>
+          </GuestLock>
         </IonContent>
       </IonPage>
     );
