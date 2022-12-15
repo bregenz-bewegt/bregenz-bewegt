@@ -24,6 +24,8 @@ import { inject, observer } from 'mobx-react';
 import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from '../tabs';
 import { ScanBarcode } from 'iconsax-react';
+import { useEffect } from 'react';
+import { socket } from '@bregenz-bewegt/client/common/socket';
 
 export interface PrivateTabsOutletProps {
   tabStore?: TabStore;
@@ -33,6 +35,21 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
   tabStore.storeKey
 )(
   observer(({ tabStore }) => {
+    useEffect(() => {
+      console.log('useEffect');
+      socket.on('connect', () => {
+        console.log('connected');
+      });
+
+      socket.on('connect_error', (e) => {
+        console.log(e);
+      });
+
+      socket.on('receiveNotification', (notification: Notification) => {
+        console.log(notification);
+      });
+    }, []);
+
     return (
       <>
         <IonTabs>

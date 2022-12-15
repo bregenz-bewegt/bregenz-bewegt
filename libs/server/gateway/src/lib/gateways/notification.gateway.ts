@@ -3,11 +3,15 @@ import {
   InterServerEvents,
   ServerToClientEvents,
 } from '@bregenz-bewegt/shared/types';
-import { OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
+import { Notification } from '@prisma/client';
 
-@WebSocketGateway()
+@Injectable()
+@WebSocketGateway({
+  path: 'api/notification-gateway',
+})
 export class NotificationGateway implements OnModuleInit {
   @WebSocketServer()
   private server: Server = new Server<
