@@ -1,25 +1,59 @@
 import {
   IonAvatar,
+  IonBadge,
+  IonFab,
   IonFabButton,
   IonHeader,
   IonRouterLink,
   IonSkeletonText,
   IonText,
+  useIonViewDidEnter,
 } from '@ionic/react';
 import './header.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
-import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
+import {
+  notificationsStore,
+  NotificationsStore,
+  userStore,
+  UserStore,
+} from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
-import { useState } from 'react';
-import { Notification } from 'iconsax-react';
+import { useEffect, useState } from 'react';
+import { Notification as NotificationIcon } from 'iconsax-react';
+import {
+  useDefaultErrorToast,
+  useIsGuest,
+} from '@bregenz-bewegt/client/common/hooks';
 
 export interface HeaderProps {
   userStore?: UserStore;
+  notificationsStore?: NotificationsStore;
 }
 
-export const Header: React.FC<HeaderProps> = inject(userStore.storeKey)(
-  observer(() => {
+export const Header: React.FC<HeaderProps> = inject(
+  userStore.storeKey,
+  notificationsStore.storeKey
+)(
+  observer(({ userStore, notificationsStore }) => {
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+    const [isGuest] = useIsGuest();
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
+
+    const fetchNotifications = () => {
+      if (!userStore?.user?.role || isGuest) return;
+
+      notificationsStore?.fetchNotifications().catch(() => {
+        presentDefaultErrorToast();
+      });
+    };
+
+    useIonViewDidEnter(() => {
+      fetchNotifications();
+    }, [isGuest]);
+
+    useEffect(() => {
+      fetchNotifications();
+    }, [userStore?.user?.role]);
 
     return (
       <IonHeader mode="ios" className="header">
@@ -33,7 +67,7 @@ export const Header: React.FC<HeaderProps> = inject(userStore.storeKey)(
                 onLoad={() => setIsImageLoaded(true)}
                 src={
                   userStore?.user?.profilePicture ??
-                  userStore.getAvatarProfilePictureUrl()
+                  userStore?.getAvatarProfilePictureUrl()
                 }
                 alt="profile"
                 style={{ display: isImageLoaded ? 'initial' : 'none' }}
@@ -47,16 +81,30 @@ export const Header: React.FC<HeaderProps> = inject(userStore.storeKey)(
             </IonText>
             <IonText className="header__profile__greeting__username">
               {isImageLoaded ? (
-                userStore.user?.username
+                userStore?.user?.username
               ) : (
                 <IonSkeletonText animated />
               )}
             </IonText>
           </div>
         </div>
-        <IonFabButton className="header__fab-button">
-          <Notification variant="Bold" className="header__fab-button__icon" />
-        </IonFabButton>
+        <IonFab className="header__fab">
+          {notificationsStore?.notifications &&
+            notificationsStore.getUnreadNotifications().length > 0 && (
+              <IonBadge className="header__fab__badge">
+                {notificationsStore.getUnreadNotifications().length}
+              </IonBadge>
+            )}
+          <IonFabButton
+            className="header__fab__fab-button"
+            routerLink={`/notifications`}
+          >
+            <NotificationIcon
+              variant="Bold"
+              className="header__fab__fab-button__icon"
+            />
+          </IonFabButton>
+        </IonFab>
       </IonHeader>
     );
   })

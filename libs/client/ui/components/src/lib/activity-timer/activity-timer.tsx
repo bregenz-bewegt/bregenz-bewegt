@@ -11,11 +11,12 @@ import {
 } from '@dnd-kit/core';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ReactNode, useState } from 'react';
-import { IonIcon, IonSkeletonText, IonText } from '@ionic/react';
+import { IonIcon, IonSkeletonText, IonText, useIonToast } from '@ionic/react';
 import { chevronForward, chevronBack } from 'ionicons/icons';
 import { useStopwatch, useTimer } from 'react-timer-hook';
 import moment from 'moment';
 import { StopCircle, Lock1, Timer1 } from 'iconsax-react';
+import { lockClosed, close } from 'ionicons/icons';
 
 const handleId = 'handle' as const;
 const lockingSectionId = 'locking-section' as const;
@@ -35,6 +36,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   onTimerStop,
   disabled,
 }) => {
+  const [presentToast] = useIonToast();
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [isHoldingAfterStop, setIsHoldingAfterStop] = useState<boolean>(false);
   const [isHoldingBeforeStop, setIsHoldingBeforeStop] =
@@ -95,8 +97,23 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
     setIsHoldingBeforeStart(false);
   };
 
+  const showLockedInformation = () => {
+    presentToast({
+      message: 'Melde dich an, um Übungen zu starten',
+      icon: lockClosed,
+      duration: 2000,
+      position: 'top',
+      mode: 'ios',
+      color: 'danger',
+      buttons: [{ icon: close, role: 'cancel' }],
+    });
+  };
+
   return (
-    <div className="activity-timer">
+    <div
+      className="activity-timer"
+      onClick={() => disabled && showLockedInformation()}
+    >
       <div
         className={`activity-timer__animation ${
           isHoldingBeforeStop ? 'holding-before-stop' : ''

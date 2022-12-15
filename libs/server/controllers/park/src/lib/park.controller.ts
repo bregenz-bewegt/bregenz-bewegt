@@ -1,5 +1,5 @@
 import {
-  MapParkImagePathInterceptor,
+  MapStaticAssetPathInterceptor,
   Public,
 } from '@bregenz-bewegt/server/common';
 import {
@@ -17,20 +17,20 @@ export class ParkController {
   constructor(private parkService: ParkService) {}
 
   @Public()
-  @UseInterceptors(MapParkImagePathInterceptor)
+  @UseInterceptors(new MapStaticAssetPathInterceptor(['image']))
   @Get()
   getParks(): Promise<(Park & { coordinates: Coordinates })[]> {
     return this.parkService.findAll();
   }
 
   @Public()
-  @UseInterceptors(MapParkImagePathInterceptor)
+  @UseInterceptors(new MapStaticAssetPathInterceptor())
   @Get(':id')
   getPark(@Param('id', ParseIntPipe) id: number): Promise<Park> {
     return this.parkService.findById(id);
   }
 
-  @UseInterceptors(MapParkImagePathInterceptor)
+  @UseInterceptors(new MapStaticAssetPathInterceptor())
   @Get(':id/exercises')
   getParkWithExercises(@Param('id', ParseIntPipe) id: number): Promise<
     Park & {
@@ -40,7 +40,7 @@ export class ParkController {
     return this.parkService.findByIdWithExercises(id);
   }
 
-  @UseInterceptors(MapParkImagePathInterceptor)
+  @UseInterceptors(new MapStaticAssetPathInterceptor())
   @Get(':park/exercises/:exercise')
   getParkWithExercise(
     @Param('park', ParseIntPipe) park: number,

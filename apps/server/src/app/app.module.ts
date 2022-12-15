@@ -19,6 +19,7 @@ import { LeaderboardModule } from '@bregenz-bewegt/server/controllers/leaderboar
 import { ActivityModule } from '@bregenz-bewegt/server/controllers/activity';
 import { ParkModule } from '@bregenz-bewegt/server/controllers/park';
 import { FriendModule } from '@bregenz-bewegt/server/controllers/friend';
+import { NotificationModule } from '@bregenz-bewegt/server/controllers/notification';
 
 @Module({
   imports: [
@@ -69,6 +70,7 @@ import { FriendModule } from '@bregenz-bewegt/server/controllers/friend';
     ExerciseModule,
     ActivityModule,
     FriendModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [

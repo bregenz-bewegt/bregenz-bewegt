@@ -46,7 +46,7 @@ export class FriendController {
   @UseGuards(RoleGuard)
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   @Get('search')
   searchUser(
@@ -67,7 +67,7 @@ export class FriendController {
   @UseGuards(RoleGuard)
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   @Delete('remove')
   removeFriend(
@@ -94,7 +94,7 @@ export class FriendController {
   @UseGuards(RoleGuard)
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   @Get('requests')
   async getFriendRequests(
@@ -112,7 +112,7 @@ export class FriendController {
   @UseGuards(RoleGuard)
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   @Get('requests/requested')
   getRequestedFriendRequests(
@@ -125,7 +125,7 @@ export class FriendController {
   @UseGuards(RoleGuard)
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   @Get('requests/received')
   getReceivedFriendRequests(

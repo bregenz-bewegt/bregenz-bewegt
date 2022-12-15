@@ -3,12 +3,12 @@ import { DifficultyType } from '@prisma/client';
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class PatchPreferencesDto {
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsOptional()
   @IsBoolean()
   public?: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsOptional()
   @IsString({ each: true })
   difficulties?: DifficultyType[];

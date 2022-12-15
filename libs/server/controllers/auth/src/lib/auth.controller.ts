@@ -42,7 +42,7 @@ export class AuthController {
   @Public()
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   @Post('local/guest')
   guest(@Body() dto: GuestDto): Promise<Tokens> {
@@ -86,7 +86,7 @@ export class AuthController {
   @UseGuards(RoleGuard)
   @UseInterceptors(
     RemoveSensitiveFieldsInterceptor,
-    MapProfilePictureInterceptor
+    new MapProfilePictureInterceptor()
   )
   @Put('change-password')
   changePassword(

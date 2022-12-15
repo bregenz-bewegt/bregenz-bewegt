@@ -157,7 +157,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
     const handleDelete = () => {
       presentAlert({
         header: 'Account löschen',
-        message: `Der Account sowie alle zugehörigen Daten werden gelöscht. Wollen Sie fortfahren?`,
+        message: `Dein Account sowie alle zugehörigen Daten werden gelöscht. Möchtest du wirklich fortfahren?`,
         backdropDismiss: false,
         buttons: [
           { text: 'Abbrechen', role: 'cancel' },

@@ -29,7 +29,7 @@ export class LeaderboardController {
   @Get()
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
-  @UseInterceptors(MapProfilePictureInterceptor)
+  @UseInterceptors(new MapProfilePictureInterceptor())
   getLeaderboard(
     @GetCurrentUser('sub') userId: User['id'],
     @Query(
@@ -44,7 +44,7 @@ export class LeaderboardController {
     return this.leaderboardService.getLeaderboard(userId, dto);
   }
 
-  @UseInterceptors(MapProfilePictureInterceptor)
+  @UseInterceptors(new MapProfilePictureInterceptor())
   @Get('competitor')
   getCompetitor(
     @GetCurrentUser('sub') userId: User['id'],

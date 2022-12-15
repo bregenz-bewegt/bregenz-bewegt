@@ -17,6 +17,8 @@
     object-fit: cover;
     height: 100%;
     border-radius: var(--spacing-m);
+    max-height: calc(var(--spacing-5xl) * 3);
+    width: 100%;
   }
 
   ion-card-header {

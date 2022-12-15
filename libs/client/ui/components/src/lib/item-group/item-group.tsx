@@ -2,7 +2,6 @@ import { IonItemGroup } from '@ionic/react';
 import { ReactNode } from 'react';
 import './item-group.scss';
 
-/* eslint-disable-next-line */
 export interface ItemGroupProps {
   children: ReactNode;
 }

@@ -213,7 +213,7 @@ const createExercises = async () => {
       muscles: 'some muscles that are used',
       coins: 10,
       difficulty: DifficultyType.BEGINNER,
-      video: 'not-yet-defined',
+      video: 'exercises/situp.mp4',
     },
     {
       name: 'Liegestütze',
@@ -222,7 +222,7 @@ const createExercises = async () => {
       muscles: 'some muscles that are used',
       coins: 10,
       difficulty: DifficultyType.BEGINNER,
-      video: 'not-yet-defined',
+      video: 'exercises/situp.mp4',
     },
     {
       name: 'Plank',
@@ -231,7 +231,7 @@ const createExercises = async () => {
       muscles: 'some muscles that are used',
       coins: 10,
       difficulty: DifficultyType.ADVANCED,
-      video: 'not-yet-defined',
+      video: 'exercises/situp.mp4',
     },
     {
       name: 'Squat',
@@ -240,7 +240,7 @@ const createExercises = async () => {
       muscles: 'some muscles that are used',
       coins: 10,
       difficulty: DifficultyType.BEGINNER,
-      video: 'not-yet-defined',
+      video: 'exercises/situp.mp4',
     },
     {
       name: 'Versteinerte Hexe',
@@ -250,7 +250,7 @@ const createExercises = async () => {
       muscles: 'some muscles that are used',
       coins: 10,
       difficulty: DifficultyType.GAME,
-      video: 'not-yet-defined',
+      video: 'exercises/situp.mp4',
     },
   ];
 

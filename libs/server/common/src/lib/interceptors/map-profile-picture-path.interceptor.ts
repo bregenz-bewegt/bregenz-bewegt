@@ -11,7 +11,11 @@ const _ = deepdash(lodash);
 
 @Injectable()
 export class MapProfilePictureInterceptor implements NestInterceptor {
-  private keysToBeMapped: (string | number)[] = ['profilePicture'];
+  private keysToBeMapped: PropertyKey[];
+
+  constructor(keysToBeMapped: PropertyKey[] = ['profilePicture']) {
+    this.keysToBeMapped = keysToBeMapped;
+  }
 
   private mapProfilePicturePath<T = any>(value: T): T {
     const mapped = _.mapValuesDeep(value, (value, key) => {
