@@ -31,6 +31,7 @@ import {
   YAxis,
 } from 'recharts';
 import { ArrowUp2 } from 'iconsax-react';
+import { useIsGuest } from '@bregenz-bewegt/client/common/hooks';
 
 export interface AnalyticsProps {
   activityStore?: ActivityStore;
@@ -58,6 +59,23 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     const [chartFilterMonth, setChartFilterMonth] = useState<number>();
     const [showTopButton, setShowTopButton] = useState<boolean>(false);
     const contentRef = createRef<HTMLIonContentElement>();
+    const [isGuest] = useIsGuest();
+
+    const guestMockChart = [
+      {
+        date: 6,
+        coins: 10,
+      },
+      {
+        date: 8,
+        coins: 20,
+      },
+      {
+        date: 14,
+        coins: 10,
+      },
+    ];
+    const guestMockTimespans = [11, 10];
 
     const loadInfinite = (
       e?: any,
@@ -71,10 +89,10 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
           take: take ?? RELOAD_CHUNK_SIZE,
         })
         .then((data) => {
-          setActivityList((prev) => [
-            ...(replace ? [] : prev),
-            ...calculateTime(data),
-          ]);
+          setActivityList((prev) => {
+            return [...(replace ? [] : prev), ...calculateTime(data)];
+          });
+
           e && e.target.complete();
         })
         .catch(() => {
@@ -123,14 +141,25 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     };
 
     useEffect(() => {
+      if (isGuest) return;
+
       loadInfinite();
     }, []);
 
     useEffect(() => {
+      if (isGuest) return;
+
       chartFilterMonth && updateChartData(chartFilterMonth);
     }, [chartFilterMonth]);
 
     useIonViewWillEnter(() => {
+      if (isGuest) {
+        setChartMonthTimespans(guestMockTimespans);
+        setChartFilterMonth(guestMockTimespans[0]);
+        setChartData(guestMockChart);
+        return;
+      }
+
       activityStore?.getTimespans().then((data) => {
         setChartMonthTimespans(data);
         setChartFilterMonth(data[0]);
@@ -154,10 +183,10 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
           }
         >
           <GuestLock
-            modalClassName="profile-guest-lock-modal"
+            modalClassName="analytics-guest-lock-modal"
             text="Melde dich bei deinem Konto an, um auf dein Profil zugreifen zu können"
           >
-            {(isGuest) => (
+            {() => (
               <>
                 <div className="analytics__content__chart">
                   <div className="analytics__content__chart__headline">
@@ -318,17 +347,17 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                     ></IonInfiniteScrollContent>
                   </IonInfiniteScroll>
                 </div>
-                <IonFabButton
-                  slot="fixed"
-                  className="analytics__content__top-button"
-                  onClick={() => contentRef.current?.scrollToTop(500)}
-                  style={{ opacity: showTopButton ? 1 : 0 }}
-                >
-                  <ArrowUp2 size={32} color="white" variant="Linear" />
-                </IonFabButton>
               </>
             )}
           </GuestLock>
+          <IonFabButton
+            slot="fixed"
+            className="analytics__content__top-button"
+            onClick={() => contentRef.current?.scrollToTop(500)}
+            style={{ opacity: showTopButton ? 1 : 0 }}
+          >
+            <ArrowUp2 size={32} color="white" variant="Linear" />
+          </IonFabButton>
         </IonContent>
       </IonPage>
     );

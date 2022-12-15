@@ -83,5 +83,11 @@
       margin-bottom: var(--spacing-l);
       transition: 500ms;
     }
+
+    .analytics-guest-lock-modal {
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+    }
   }
 }
