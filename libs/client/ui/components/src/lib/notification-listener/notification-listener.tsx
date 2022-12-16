@@ -31,13 +31,9 @@ export const NotificationListener: React.FC = inject(userStore.storeKey)(
 
       const socket = connectSocket(userStore.user.id);
 
-      socket.on('connect', () => {
-        console.log('connected');
-      });
+      socket.on('connect', () => void 0);
 
-      socket.on('connect_error', (e) => {
-        console.log(e);
-      });
+      socket.on('connect_error', () => void 0);
 
       socket.on('receiveNotification', (notification: Notification) => {
         presentNotificationToast(notification);
