@@ -1,18 +1,33 @@
 import { useEffect } from 'react';
 import { connectSocket } from '@bregenz-bewegt/client/common/socket';
-import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
+import {
+  notificationsStore,
+  NotificationsStore,
+  UserStore,
+  userStore,
+} from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { useIonToast } from '@ionic/react';
 import { notifications as notificationIcon, close } from 'ionicons/icons';
 import type { Notification } from '@bregenz-bewegt/client/types';
+import {
+  useDefaultErrorToast,
+  useIsGuest,
+} from '@bregenz-bewegt/client/common/hooks';
 
 export interface NotificationListenerProps {
   userStore?: UserStore;
+  notificationStore?: NotificationsStore;
 }
 
-export const NotificationListener: React.FC = inject(userStore.storeKey)(
+export const NotificationListener: React.FC = inject(
+  userStore.storeKey,
+  notificationsStore.storeKey
+)(
   observer(() => {
     const [presentToast] = useIonToast();
+    const [isGuest] = useIsGuest();
+    const [presentDefaultErrorToast] = useDefaultErrorToast();
 
     const presentNotificationToast = (notification: Notification) => {
       presentToast({
@@ -26,8 +41,16 @@ export const NotificationListener: React.FC = inject(userStore.storeKey)(
       });
     };
 
+    const handleFetchNotification = () => {
+      if (isGuest) return;
+
+      return notificationsStore?.fetchNotifications().catch(() => {
+        presentDefaultErrorToast();
+      });
+    };
+
     useEffect(() => {
-      if (!userStore.user?.id) return;
+      if (!userStore.user?.id || isGuest) return;
 
       const socket = connectSocket(userStore.user.id);
 
@@ -37,6 +60,7 @@ export const NotificationListener: React.FC = inject(userStore.storeKey)(
 
       socket.on('receiveNotification', (notification: Notification) => {
         presentNotificationToast(notification);
+        handleFetchNotification();
       });
 
       return () => {
