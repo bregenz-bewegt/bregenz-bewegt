@@ -28,6 +28,7 @@ model User {
   emailResetToken        String?
   activationSecret       String?
   profilePicture         String?
+  notificationSocketId   String?
   preferences            Preferences?
   activities             Activity[]
   notifications          Notification[]

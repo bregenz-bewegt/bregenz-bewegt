@@ -16,7 +16,7 @@ export const NotificationListener: React.FC = inject(userStore.storeKey)(
 
     const presentNotificationToast = (notification: Notification) => {
       presentToast({
-        message: `${notification.title} - ${notification.description}`,
+        message: notification.title,
         icon: notificationIcon,
         duration: 2000,
         position: 'top',
