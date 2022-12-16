@@ -1,3 +1,4 @@
+import { User } from '@bregenz-bewegt/client/types';
 import {
   ClientToServerEvents,
   ServerToClientEvents,
@@ -9,10 +10,13 @@ const connectionOptions: Partial<ManagerOptions & SocketOptions> = {
   reconnectionAttempts: Infinity,
   timeout: 1000,
   transports: ['websocket'],
-  path: 'notification-gateway',
 };
 
-export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-  `${process.env['NX_API_BASE_URL']}/api`,
-  connectionOptions
-);
+export const connectSocket = (
+  userId: User['id']
+): Socket<ServerToClientEvents, ClientToServerEvents> => {
+  return io(`${process.env['NX_API_BASE_URL']}`, {
+    ...connectionOptions,
+    auth: { authorization: userId },
+  });
+};

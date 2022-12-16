@@ -3,16 +3,21 @@ import {
   InterServerEvents,
   ServerToClientEvents,
 } from '@bregenz-bewegt/shared/types';
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { Injectable } from '@nestjs/common';
+import {
+  OnGatewayConnection,
+  WebSocketGateway,
+  WebSocketServer,
+} from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
 import { Notification } from '@prisma/client';
+import { PrismaService } from '@bregenz-bewegt/server-prisma';
 
 @Injectable()
-@WebSocketGateway({
-  path: 'api/notification-gateway',
-})
-export class NotificationGateway implements OnModuleInit {
+@WebSocketGateway()
+export class NotificationGateway implements OnGatewayConnection {
+  constructor(private prismaService: PrismaService) {}
+
   @WebSocketServer()
   private server: Server = new Server<
     ServerToClientEvents,
@@ -20,10 +25,8 @@ export class NotificationGateway implements OnModuleInit {
     InterServerEvents
   >();
 
-  onModuleInit(): void {
-    this.server.on('connection', (socket) => {
-      console.log(socket.id);
-    });
+  handleConnection(client: Socket): void {
+    console.log(client.handshake.auth);
   }
 
   emitNotification(notification: Notification): void {
