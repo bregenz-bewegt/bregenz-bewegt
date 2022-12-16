@@ -185,15 +185,19 @@ export class FriendService {
       where: { id: friendRequest.requesteeId },
       data: {
         friends: { connect: { id: userId } },
-        notifications: {
-          create: {
-            title: `Freundschaftsanfrage angenommen`,
-            description: `${self.username} hat deine Freundschaftsanfrage angenommen`,
-            type: NotificationType.FRIEND_REQUEST_ACCEPTED,
-          },
-        },
       },
     });
+
+    const notification = await this.prismaService.notification.create({
+      data: {
+        title: `Freundschaftsanfrage angenommen`,
+        description: `${self.username} hat deine Freundschaftsanfrage angenommen`,
+        type: NotificationType.FRIEND_REQUEST_ACCEPTED,
+        user: { connect: { id: friendRequest.requesteeId } },
+      },
+    });
+
+    this.notificationGateway.emitNotification(notification);
 
     return friendRequest;
   }

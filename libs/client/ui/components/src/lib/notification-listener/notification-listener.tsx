@@ -31,7 +31,7 @@ export const NotificationListener: React.FC = inject(
 
     const presentNotificationToast = (notification: Notification) => {
       presentToast({
-        message: notification.title,
+        message: notification.description,
         icon: notificationIcon,
         duration: 2000,
         position: 'top',
