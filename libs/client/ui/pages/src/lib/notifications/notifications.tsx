@@ -103,7 +103,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     useEffect(() => {
-      if (!userStore.user?.role || isGuest) return;
+      if (!userStore?.user?.role || isGuest) return;
 
       notificationsStore?.fetchNotifications().catch(() => {
         presentDefaultErrorToast();
