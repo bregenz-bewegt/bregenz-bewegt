@@ -6,7 +6,6 @@ import {
 import { Injectable } from '@nestjs/common';
 import {
   OnGatewayConnection,
-  OnGatewayDisconnect,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
@@ -17,9 +16,7 @@ import { User } from '@prisma/client';
 
 @Injectable()
 @WebSocketGateway()
-export class NotificationGateway
-  implements OnGatewayConnection, OnGatewayDisconnect
-{
+export class NotificationGateway implements OnGatewayConnection {
   constructor(private prismaService: PrismaService) {}
 
   @WebSocketServer()
@@ -33,7 +30,6 @@ export class NotificationGateway
     const userId = client.handshake?.auth?.authorization;
     if (!userId) return;
 
-    console.log(userId);
     const user = await this.prismaService.user.findUnique({
       where: { id: userId },
     });
@@ -43,10 +39,6 @@ export class NotificationGateway
       where: { id: user.id },
       data: { notificationSocketId: client.id },
     });
-  }
-
-  handleDisconnect(client: Socket): void {
-    console.log('disconnect');
   }
 
   async emitNotification(notification: Notification): Promise<boolean> {
