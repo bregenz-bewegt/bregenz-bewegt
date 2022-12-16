@@ -44,6 +44,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     const [isGuest] = useIsGuest();
 
     const deleteNotification = (notificationId: Notification['id']) => {
+      if (!isGuest) return;
+
       notificationsStore
         ?.deleteNotification({ notificationId })
         .then(() => notificationsStore?.fetchNotifications())
@@ -53,6 +55,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     const markNotificationAsRead = (notificationId: Notification['id']) => {
+      if (!isGuest) return;
+
       notificationsStore
         ?.markNotificationAsRead({ notificationId })
         .then(() => notificationsStore?.fetchNotifications())
@@ -62,6 +66,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     const markNotificationAsUnread = (notificationId: Notification['id']) => {
+      if (!isGuest) return;
+
       notificationsStore
         ?.markNotificationAsUnread({ notificationId })
         .then(() => notificationsStore?.fetchNotifications())
@@ -71,6 +77,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     const markAllNotificationsAsRead = () => {
+      if (!isGuest) return;
+
       notificationsStore
         ?.markAllNotificationsAsRead()
         .then(() => notificationsStore?.fetchNotifications())
