@@ -91,6 +91,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     useEffect(() => {
+      if (isGuest) return;
+
       notificationsStore?.fetchNotifications().catch(() => {
         presentDefaultErrorToast();
       });
