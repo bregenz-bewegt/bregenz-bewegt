@@ -30,7 +30,7 @@ export class NotificationGateway
   >();
 
   async handleConnection(client: Socket): Promise<User> {
-    const userId = client.handshake.auth.authorization;
+    const userId = client.handshake?.auth?.authorization;
     if (!userId) return;
 
     console.log(userId);
