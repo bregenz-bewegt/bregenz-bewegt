@@ -22,6 +22,8 @@ import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   notificationsStore,
   NotificationsStore,
+  UserStore,
+  userStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
@@ -34,12 +36,14 @@ import { checkmarkDone, trash } from 'ionicons/icons';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
+  userStore?: UserStore;
 }
 
 export const Notifications: React.FC<NotificationsProps> = inject(
-  notificationsStore.storeKey
+  notificationsStore.storeKey,
+  userStore.storeKey
 )(
-  observer(({ notificationsStore }) => {
+  observer(({ notificationsStore, userStore }) => {
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isGuest] = useIsGuest();
 
@@ -99,7 +103,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     useEffect(() => {
-      if (isGuest) return;
+      if (!userStore.user?.role || isGuest) return;
 
       notificationsStore?.fetchNotifications().catch(() => {
         presentDefaultErrorToast();
