@@ -108,7 +108,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
       notificationsStore?.fetchNotifications().catch(() => {
         presentDefaultErrorToast();
       });
-    }, []);
+    }, [userStore?.user?.role]);
 
     return (
       <IonPage className="notifications">
@@ -162,7 +162,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                   >
                     <IonLabel>
                       <h2>{notification.title}</h2>
-                      <p>
+                      <p className="ion-text-wrap">
                         {`${new Date(
                           notification.createdAt
                         ).toLocaleDateString()} - ${notification.description}`}
