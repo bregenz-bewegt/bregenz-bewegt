@@ -7,7 +7,7 @@ import { io, ManagerOptions, Socket, SocketOptions } from 'socket.io-client';
 
 const connectionOptions: Partial<ManagerOptions & SocketOptions> = {
   forceNew: true,
-  reconnectionAttempts: Infinity,
+  reconnectionAttempts: 10,
   timeout: 1000,
   transports: ['websocket'],
 };
