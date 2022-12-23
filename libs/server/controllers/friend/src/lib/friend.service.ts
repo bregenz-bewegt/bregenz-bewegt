@@ -9,10 +9,14 @@ import {
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, FriendRequest, Role, NotificationType } from '@prisma/client';
+import { NotificationGateway } from 'libs/server/gateway/src/lib/gateways';
 
 @Injectable()
 export class FriendService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private notificationGateway: NotificationGateway
+  ) {}
 
   async getFriends(userId: User['id']): Promise<User[]> {
     const user = await this.prismaService.user.findUnique({
@@ -79,18 +83,16 @@ export class FriendService {
       where: { id: data.requesteeId },
     });
 
-    await this.prismaService.user.update({
-      where: { id: data.addresseeId },
+    const notification = await this.prismaService.notification.create({
       data: {
-        notifications: {
-          create: {
-            title: 'Neue Freundschaftsanfrage',
-            description: `${requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
-            type: NotificationType.FRIEND_REQUEST_RECEIVED,
-          },
-        },
+        title: 'Neue Freundschaftsanfrage',
+        description: `${requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
+        type: NotificationType.FRIEND_REQUEST_RECEIVED,
+        user: { connect: { id: data.addresseeId } },
       },
     });
+
+    this.notificationGateway.emitNotification(notification);
 
     return this.prismaService.friendRequest.create({
       data: {
@@ -183,15 +185,19 @@ export class FriendService {
       where: { id: friendRequest.requesteeId },
       data: {
         friends: { connect: { id: userId } },
-        notifications: {
-          create: {
-            title: `Freundschaftsanfrage angenommen`,
-            description: `${self.username} hat deine Freundschaftsanfrage angenommen`,
-            type: NotificationType.FRIEND_REQUEST_ACCEPTED,
-          },
-        },
       },
     });
+
+    const notification = await this.prismaService.notification.create({
+      data: {
+        title: `Freundschaftsanfrage angenommen`,
+        description: `${self.username} hat deine Freundschaftsanfrage angenommen`,
+        type: NotificationType.FRIEND_REQUEST_ACCEPTED,
+        user: { connect: { id: friendRequest.requesteeId } },
+      },
+    });
+
+    this.notificationGateway.emitNotification(notification);
 
     return friendRequest;
   }

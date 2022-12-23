@@ -22,6 +22,8 @@ import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   notificationsStore,
   NotificationsStore,
+  UserStore,
+  userStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
@@ -34,16 +36,20 @@ import { checkmarkDone, trash } from 'ionicons/icons';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
+  userStore?: UserStore;
 }
 
 export const Notifications: React.FC<NotificationsProps> = inject(
-  notificationsStore.storeKey
+  notificationsStore.storeKey,
+  userStore.storeKey
 )(
-  observer(({ notificationsStore }) => {
+  observer(({ notificationsStore, userStore }) => {
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isGuest] = useIsGuest();
 
     const deleteNotification = (notificationId: Notification['id']) => {
+      if (isGuest) return;
+
       notificationsStore
         ?.deleteNotification({ notificationId })
         .then(() => notificationsStore?.fetchNotifications())
@@ -53,6 +59,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     const markNotificationAsRead = (notificationId: Notification['id']) => {
+      if (isGuest) return;
+
       notificationsStore
         ?.markNotificationAsRead({ notificationId })
         .then(() => notificationsStore?.fetchNotifications())
@@ -62,6 +70,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     const markNotificationAsUnread = (notificationId: Notification['id']) => {
+      if (isGuest) return;
+
       notificationsStore
         ?.markNotificationAsUnread({ notificationId })
         .then(() => notificationsStore?.fetchNotifications())
@@ -71,6 +81,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     const markAllNotificationsAsRead = () => {
+      if (isGuest) return;
+
       notificationsStore
         ?.markAllNotificationsAsRead()
         .then(() => notificationsStore?.fetchNotifications())
@@ -91,10 +103,12 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     useEffect(() => {
+      if (!userStore?.user?.role || isGuest) return;
+
       notificationsStore?.fetchNotifications().catch(() => {
         presentDefaultErrorToast();
       });
-    }, []);
+    }, [userStore?.user?.role]);
 
     return (
       <IonPage className="notifications">
@@ -148,7 +162,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                   >
                     <IonLabel>
                       <h2>{notification.title}</h2>
-                      <p>
+                      <p className="ion-text-wrap">
                         {`${new Date(
                           notification.createdAt
                         ).toLocaleDateString()} - ${notification.description}`}

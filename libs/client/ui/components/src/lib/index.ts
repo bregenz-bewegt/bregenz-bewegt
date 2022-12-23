@@ -18,3 +18,4 @@ export * from './item-group/item-group';
 export * from './back-button/back-button';
 export * from './guest-lock/guest-lock';
 export * from './activity-card/activity-card';
+export * from './notification-listener/notification-listener';

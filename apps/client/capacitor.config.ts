@@ -3,7 +3,7 @@ import ip from 'ip';
 
 const config: CapacitorConfig = {
   appId: 'at.bregenz.bewegt',
-  appName: 'client',
+  appName: 'Bregenz bewegt',
   webDir: '../../dist/apps/client',
   bundledWebRuntime: false,
   server: {

@@ -20,6 +20,7 @@ import { ActivityModule } from '@bregenz-bewegt/server/controllers/activity';
 import { ParkModule } from '@bregenz-bewegt/server/controllers/park';
 import { FriendModule } from '@bregenz-bewegt/server/controllers/friend';
 import { NotificationModule } from '@bregenz-bewegt/server/controllers/notification';
+import { GatewayModule } from '@bregenz-bewegt/server/gateway';
 
 @Module({
   imports: [
@@ -71,6 +72,7 @@ import { NotificationModule } from '@bregenz-bewegt/server/controllers/notificat
     ActivityModule,
     FriendModule,
     NotificationModule,
+    GatewayModule,
   ],
   controllers: [AppController],
   providers: [

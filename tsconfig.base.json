@@ -29,6 +29,9 @@
       "@bregenz-bewegt/client/common/http": [
         "libs/client/common/http/src/index.ts"
       ],
+      "@bregenz-bewegt/client/common/socket": [
+        "libs/client/common/socket/src/index.ts"
+      ],
       "@bregenz-bewegt/client/common/storage": [
         "libs/client/common/storage/src/index.ts"
       ],
@@ -68,6 +71,7 @@
       "@bregenz-bewegt/server/controllers/park": [
         "libs/server/controllers/park/src/index.ts"
       ],
+      "@bregenz-bewegt/server/gateway": ["libs/server/gateway/src/index.ts"],
       "@bregenz-bewegt/server/mail": ["libs/server/mail/src/index.ts"],
       "@bregenz-bewegt/server/multer": ["libs/server/multer/src/index.ts"],
       "@bregenz-bewegt/server/types": ["libs/server/types/src/index.ts"],

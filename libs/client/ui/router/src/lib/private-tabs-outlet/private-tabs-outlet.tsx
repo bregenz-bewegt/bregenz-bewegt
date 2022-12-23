@@ -24,6 +24,7 @@ import { inject, observer } from 'mobx-react';
 import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from '../tabs';
 import { ScanBarcode } from 'iconsax-react';
+import { NotificationListener } from '@bregenz-bewegt/client-ui-components';
 
 export interface PrivateTabsOutletProps {
   tabStore?: TabStore;
@@ -161,6 +162,7 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             <ScanBarcode size={24} variant="Bold" />
           </IonFabButton>
         </IonFab>
+        <NotificationListener />
       </>
     );
   })
