@@ -37,6 +37,10 @@ export class FriendController {
 
   @HasRole(Role.USER)
   @UseGuards(RoleGuard)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    new MapProfilePictureInterceptor()
+  )
   @Get()
   getFriends(@GetCurrentUser('sub') userId: User['id']): Promise<User[]> {
     return this.friendService.getFriends(userId);
