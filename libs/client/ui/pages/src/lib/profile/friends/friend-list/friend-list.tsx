@@ -65,8 +65,6 @@ export const FriendList: React.FC<FriendsListProps> = inject(
       fetchFriends();
     }, []);
 
-    console.log(friends);
-
     return (
       <div className="friend-list">
         <IonButton expand="block" mode="ios" id={modalTrigger}>
