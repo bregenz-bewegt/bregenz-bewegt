@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'webrtc-adapter';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 ReactDOM.render(
