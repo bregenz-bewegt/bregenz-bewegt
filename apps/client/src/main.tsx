@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'webrtc-adapter';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import adapter from 'webrtc-adapter';
 
 ReactDOM.render(
   <React.StrictMode>
