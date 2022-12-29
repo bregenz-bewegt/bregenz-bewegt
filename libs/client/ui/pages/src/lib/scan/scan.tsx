@@ -52,7 +52,7 @@ export const Scan: React.FC = () => {
           <>
             <QrReader
               className="web-scanner"
-              constraints={{}}
+              constraints={{ facingMode: 'environment' }}
               onResult={(result, error) => {
                 try {
                   if (error) return;
