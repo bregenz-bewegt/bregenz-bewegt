@@ -53,6 +53,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [activity, setActivity] = useState<Activity>();
     const [isGuest] = useIsGuest();
     const videoRef = useRef<HTMLVideoElement>(null);
+    const [fullscreen, setFullscreen] = useState<boolean>(false);
 
     useEffect(() => {
       const parkId = +match.params.park;
@@ -118,7 +119,13 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       <IonPage className="exercise-detail">
         <IonContent className="exercise-detail__content">
           <BackButton defaultRouterLink={tabRoutes.start.route} />
-          <div className="exercise-detail__content__video-wrapper">
+          <div
+            className={
+              'exercise-detail__content__video-wrapper' +
+              (fullscreen ? ' fullscreen' : '')
+            }
+            onClick={() => setFullscreen(!fullscreen)}
+          >
             <video
               controls={Boolean(park?.exercises && park.exercises[0].video)}
               ref={videoRef}
