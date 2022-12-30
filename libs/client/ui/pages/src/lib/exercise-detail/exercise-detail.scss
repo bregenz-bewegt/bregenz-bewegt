@@ -11,8 +11,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: #0f0;
+      aspect-ratio: 16/9;
 
       video {
+        display: none;
         height: 100%;
         width: 100%;
       }
