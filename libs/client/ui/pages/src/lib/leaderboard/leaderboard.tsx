@@ -23,7 +23,9 @@ import {
   IonGrid,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
+  IonItem,
   IonPage,
+  IonRouterLink,
   IonRow,
   IonSelect,
   IonSelectOption,
@@ -212,29 +214,31 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                             )}
                           </div>
                         </IonCol>
-                        <IonCol size="auto" className={`avatar align-center`}>
-                          <IonAvatar>
-                            {isLoading ? (
-                              <IonSkeletonText animated />
-                            ) : (
-                              <img
-                                src={
-                                  user.profilePicture ??
-                                  userStore?.getAvatarProfilePictureUrl(
-                                    user.username
-                                  )
-                                }
-                                alt="avatar"
-                              />
-                            )}
-                          </IonAvatar>
-                        </IonCol>
-                        <IonCol size="6" className={`align-center username`}>
-                          {isLoading ? (
-                            <IonSkeletonText animated />
-                          ) : (
-                            user.username
-                          )}
+                        <IonCol size="6" className={`align-center`}>
+                          <IonItem routerLink={'/users/' + user.username}>
+                            <IonAvatar className="avatar" slot="start">
+                              {isLoading ? (
+                                <IonSkeletonText animated />
+                              ) : (
+                                <img
+                                  src={
+                                    user.profilePicture ??
+                                    userStore?.getAvatarProfilePictureUrl(
+                                      user.username
+                                    )
+                                  }
+                                  alt="avatar"
+                                />
+                              )}
+                            </IonAvatar>
+                            <div className="username" slot="start">
+                              {isLoading ? (
+                                <IonSkeletonText animated />
+                              ) : (
+                                user.username
+                              )}
+                            </div>
+                          </IonItem>
                         </IonCol>
                         <IonCol
                           size="2"

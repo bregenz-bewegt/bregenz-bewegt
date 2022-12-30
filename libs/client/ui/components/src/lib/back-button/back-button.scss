@@ -2,13 +2,18 @@
   position: fixed;
   top: var(--spacing-m);
   left: var(--spacing-m);
-  background-color: var(--ion-background-color);
   border-radius: var(--spacing-s);
   z-index: 100;
   padding: var(--spacing-xs) var(--spacing-s);
-  color: var(--ion-color-primary);
   font-size: small;
   font-weight: bold;
+  color: var(--ion-color-primary);
+  background-color: var(--ion-background-color);
+
+  &.invertColor {
+    color: white;
+    background-color: var(--ion-color-primary);
+  }
 
   svg {
     display: inline-block;

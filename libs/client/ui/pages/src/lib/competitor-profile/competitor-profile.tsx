@@ -1,22 +1,14 @@
+import { BackButton } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { UserStore } from '@bregenz-bewegt/client/common/stores';
 import { User } from '@bregenz-bewegt/client/types';
-import {
-  IonBackButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  useIonRouter,
-} from '@ionic/react';
+import { IonContent, IonPage, useIonRouter } from '@ionic/react';
 import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import './competitor-profile.scss';
 
 interface MatchParams {
-  id: User['id'];
+  username: User['username'];
 }
 
 interface CompetitorProfileProps extends RouteComponentProps<MatchParams> {
@@ -26,36 +18,25 @@ interface CompetitorProfileProps extends RouteComponentProps<MatchParams> {
 export const CompetitorProfile: React.FC<CompetitorProfileProps> = ({
   match,
 }) => {
-  const router = useIonRouter();
-  const navigateBackToProfile = () => router.push(`${tabRoutes.profile.route}`);
+  const history = useIonRouter();
+  const defaultRouterLink = tabRoutes.start.route;
 
   useEffect(() => {
-    const userId = match.params.id;
-
-    if (!userId) {
-      return navigateBackToProfile();
+    const username = match.params.username;
+    if (!username) {
+      history.canGoBack()
+        ? history.goBack()
+        : history.push(defaultRouterLink, 'back');
     }
   }, []);
 
   return (
     <IonPage className="competitor-profile">
-      <IonHeader mode="ios">
-        <IonToolbar>
-          <IonButtons>
-            <IonBackButton
-              color="primary"
-              defaultHref={`${tabRoutes.profile.route}/friends`}
-              text="Zurück"
-            />
-          </IonButtons>
-          <IonTitle>Benutzer</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent
-        className="competitor-profile__content"
-        fullscreen
-        scrollY={false}
-      >
+      <IonContent className="competitor-profile__content">
+        <BackButton defaultRouterLink={defaultRouterLink} invertColor />
+        <br />
+        <br />
+        <br />
         Benutzer
       </IonContent>
     </IonPage>

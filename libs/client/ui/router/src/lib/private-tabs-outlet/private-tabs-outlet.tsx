@@ -85,7 +85,7 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             ></Route>
             <Route
               exact
-              path={`/users/:id`}
+              path={`/users/:username`}
               component={CompetitorProfile}
             ></Route>
             <Route

@@ -39,6 +39,15 @@
         display: flex;
         align-items: center;
 
+        ion-item {
+          --padding-start: 0;
+          --padding-end: 0;
+          --padding-top: 0;
+          --padding-bottom: 0;
+
+          background: none;
+        }
+
         .rank-medal {
           border-radius: 50%;
           width: var(--spacing-xl);
@@ -66,20 +75,18 @@
           }
         }
 
-        &.avatar {
-          ion-avatar {
-            width: var(--spacing-xl);
-            height: var(--spacing-xl);
-          }
+        & .avatar {
+          width: var(--spacing-xxl);
+          height: var(--spacing-xxl);
+          margin: 0;
         }
 
-        &.username {
-          display: block;
-          padding-left: 0;
+        & .username {
           margin: auto 0;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
+          margin-left: var(--spacing-s);
         }
       }
     }

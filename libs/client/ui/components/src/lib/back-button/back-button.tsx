@@ -4,10 +4,12 @@ import './back-button.scss';
 
 export interface BackButtonProps {
   defaultRouterLink: string;
+  invertColor?: boolean;
 }
 
 export const BackButton: React.FC<BackButtonProps> = ({
   defaultRouterLink,
+  invertColor,
 }) => {
   const history = useIonRouter();
 
@@ -18,9 +20,13 @@ export const BackButton: React.FC<BackButtonProps> = ({
           ? history.goBack()
           : history.push(defaultRouterLink, 'back')
       }
-      className="back-button"
+      className={`back-button${invertColor ? ' invertColor' : ''}`}
     >
-      <ArrowLeft2 variant="Bold" size={16} color={'var(--ion-color-primary'} />
+      <ArrowLeft2
+        variant="Bold"
+        size={16}
+        color={invertColor ? 'white' : 'var(--ion-color-primary'}
+      />
       Zurück
     </div>
   );
