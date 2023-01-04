@@ -61,6 +61,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const checkLocation = async (parkCoordinates?: Coordinates) => {
       const location = await locationStore?.getLocation();
       console.log(location?.coords, parkCoordinates);
+      setIsLocationValid(false);
     };
 
     useEffect(() => {
@@ -178,7 +179,8 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           <ActivityTimer
             onTimerStart={handleTimerStart}
             onTimerStop={handleTimerStop}
-            disabled={isGuest || !isLocationValid}
+            isGuest={isGuest}
+            isLocationValid={isLocationValid}
           />
         </IonContent>
       </IonPage>

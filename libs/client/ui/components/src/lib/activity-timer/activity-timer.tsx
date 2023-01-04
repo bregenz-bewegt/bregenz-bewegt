@@ -28,14 +28,17 @@ export interface ActivityTimerProps {
     minutes: number;
     hours: number;
   }) => void;
-  disabled?: boolean;
+  isGuest: boolean;
+  isLocationValid: boolean;
 }
 
 export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   onTimerStart,
   onTimerStop,
-  disabled,
+  isGuest,
+  isLocationValid,
 }) => {
+  const disabled = isGuest || !isLocationValid;
   const [presentToast] = useIonToast();
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [isHoldingAfterStop, setIsHoldingAfterStop] = useState<boolean>(false);
@@ -199,7 +202,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
 
 interface HandleProps {
   started: boolean;
-  disabled?: ActivityTimerProps['disabled'];
+  disabled?: boolean;
   isHoldingBeforeStop: boolean;
   isHoldingAfterStop: boolean;
 }
