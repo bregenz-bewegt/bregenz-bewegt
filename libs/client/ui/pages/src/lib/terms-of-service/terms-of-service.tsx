@@ -10,8 +10,11 @@ import {
 } from '@ionic/react';
 import './terms-of-service';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { UserStore } from '@bregenz-bewegt/client/common/stores';
 
-export interface TermsOfServiceProps {}
+export interface TermsOfServiceProps {
+  userStore?: UserStore;
+}
 
 export const TermsOfService: React.FC<TermsOfServiceProps> = () => {
   return (
