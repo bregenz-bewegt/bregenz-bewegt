@@ -302,6 +302,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       placeholder="Vorname"
                       label="Vorname"
                       value={profile.values.firstname}
+                      autocomplete="given-name"
                       error={
                         profile.touched.firstname
                           ? profile.errors.firstname
@@ -318,6 +319,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       placeholder="Nachname"
                       label="Nachname"
                       value={profile.values.lastname}
+                      autocomplete="family-name"
                       error={
                         profile.touched.lastname
                           ? profile.errors.lastname
