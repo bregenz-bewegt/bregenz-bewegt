@@ -10,6 +10,8 @@ import { useEffect, useRef, useState } from 'react';
 import {
   ActivityStore,
   activityStore,
+  locationStore,
+  LocationStore,
   ParkStore,
   parkStore,
   tabStore,
@@ -23,7 +25,6 @@ import {
   BackButton,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
-import { Geolocation } from '@ionic-native/geolocation';
 import { timer, stopCircle, close } from 'ionicons/icons';
 import {
   useDefaultErrorToast,
@@ -40,15 +41,15 @@ interface MatchParams {
 export interface ExerciseDetailProps extends RouteComponentProps<MatchParams> {
   parkStore?: ParkStore;
   tabStore?: TabStore;
-  activityStore?: ActivityStore;
+  locationStore?: LocationStore;
 }
 
 export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
   parkStore.storeKey,
   tabStore.storeKey,
-  activityStore.storeKey
+  locationStore.storeKey
 )(
-  observer(({ parkStore, tabStore, match }) => {
+  observer(({ parkStore, tabStore, locationStore, match }) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [presentToast] = useIonToast();
     const [presentDefaultErrorToast] = useDefaultErrorToast();
@@ -58,12 +59,8 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const checkLocation = async () => {
-      try {
-        const position = await Geolocation.getCurrentPosition();
-        console.log(position.coords);
-      } catch {
-        return;
-      }
+      const location = await locationStore?.getLocation();
+      console.log(location?.coords);
     };
 
     useEffect(() => {
