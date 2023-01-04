@@ -181,12 +181,12 @@ const createParks = async () => {
     {
       id: 10,
       name: 'Schulsportplatz MS Schendlingen',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
+      address: 'Wuhrwaldstraße 26, 6900 Bregenz',
       image: 'parks/schulsportplatz-ms-schendlingen.png',
       qr: 'not-yet-defined-9',
       coordinates: {
-        latitude: 47.492634,
-        longitude: 9.715304,
+        latitude: 47.492532187723214,
+        longitude: 9.715366661215995,
       },
     },
   ];
