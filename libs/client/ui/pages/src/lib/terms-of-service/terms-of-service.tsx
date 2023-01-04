@@ -31,9 +31,7 @@ export const TermsOfService: React.FC<TermsOfServiceProps> = () => {
           <IonTitle>Nutzungsbedingungen</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="terms-of-service__content">
-        <h2>Nutzungsbedingungen</h2>
-      </IonContent>
+      <IonContent className="terms-of-service__content"></IonContent>
     </IonPage>
   );
 };
