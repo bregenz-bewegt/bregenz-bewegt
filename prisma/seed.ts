@@ -170,12 +170,12 @@ const createParks = async () => {
     {
       id: 9,
       name: 'Schulplatz VS Rieden',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
+      address: 'Michael-Gaismayr-Straße 32, 6900 Bregenz',
       image: 'parks/schulsportplatz-vs-augasse.png',
       qr: 'not-yet-defined-8',
       coordinates: {
-        latitude: 47.49278,
-        longitude: 9.723823,
+        latitude: 47.49298641752309,
+        longitude: 9.722950393600897,
       },
     },
     {
