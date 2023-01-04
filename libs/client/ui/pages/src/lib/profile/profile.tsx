@@ -414,7 +414,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       mode="ios"
                       lines="none"
                     >
-                      <IonLabel>Nutzungsbedingungen</IonLabel>
+                      <IonLabel>Sponsoren</IonLabel>
                     </IonItem>
                   </ItemGroup>
                 </>
