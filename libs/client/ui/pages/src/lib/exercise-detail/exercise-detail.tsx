@@ -58,10 +58,21 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [isLocationValid, setIsLocationValid] = useState<boolean>(false);
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    const checkLocation = async (parkCoordinates?: Coordinates) => {
+    const checkLocation = async (coordinates?: Coordinates) => {
       const location = await locationStore?.getLocation();
-      console.log(location?.coords, parkCoordinates);
-      setIsLocationValid(false);
+      if (!location?.coords || !coordinates) return setIsLocationValid(false);
+
+      console.log(location?.coords, coordinates);
+      const isValid = locationStore?.isLocationWithinRadius(
+        location.coords,
+        {
+          latitude: coordinates.latitude,
+          longitude: coordinates.longitude,
+        },
+        coordinates?.toleranceRadius
+      );
+
+      setIsLocationValid(isValid || false);
     };
 
     useEffect(() => {
