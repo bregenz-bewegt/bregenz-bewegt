@@ -88,6 +88,7 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
                 placeholder="E-Mail"
                 label="E-Mail"
                 value={emailForm.values.email}
+                autocomplete="email"
                 error={
                   emailForm.touched.email ? emailForm.errors.email : undefined
                 }
