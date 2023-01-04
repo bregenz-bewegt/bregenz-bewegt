@@ -90,7 +90,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           presentToast({
             message: 'Übung gestartet',
             icon: timer,
-            duration: 2000,
+            // duration: 2000,
             position: 'bottom',
             mode: 'ios',
             color: 'primary',
@@ -111,9 +111,9 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
                 : 'Übung beendet',
             icon: stopCircle,
             duration: 2000,
-            position: 'bottom',
+            position: 'top',
             mode: 'ios',
-            color: 'primary',
+            color: 'danger',
             buttons: [{ icon: close, role: 'cancel' }],
           });
         })
