@@ -105,7 +105,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
       message: isGuest
         ? 'Erstelle ein Konto oder melde dich an, um Übungen zu starten'
         : !isLocationValid
-        ? 'Du befindest dich nicht an der Sportstätte'
+        ? 'Du befindest dich nicht am Spielplatz'
         : 'Übung gesperrt',
       icon: lockClosed,
       duration: 2000,
