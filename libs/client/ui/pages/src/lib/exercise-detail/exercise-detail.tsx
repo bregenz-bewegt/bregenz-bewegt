@@ -105,9 +105,10 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         .endActivity({ activityId: activity?.id ?? '' })
         .then(() => {
           presentToast({
-            message: `+${
+            message:
               park?.exercises && park.exercises[0].coins
-            } B-Bucks erhalten`,
+                ? `+${park.exercises[0].coins} B-Bucks erhalten`
+                : 'Übung beendet',
             icon: stopCircle,
             duration: 2000,
             position: 'top',
