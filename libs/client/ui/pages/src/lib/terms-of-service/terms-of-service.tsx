@@ -1,4 +1,5 @@
 import React from 'react';
+import './terms-of-service';
 import {
   IonPage,
   IonContent,
@@ -8,7 +9,6 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import './terms-of-service';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { UserStore } from '@bregenz-bewegt/client/common/stores';
 
@@ -31,11 +31,7 @@ export const TermsOfService: React.FC<TermsOfServiceProps> = () => {
           <IonTitle>Nutzungsbedingungen</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent
-        fullscreen
-        scrollY={false}
-        className="terms-of-service__content"
-      >
+      <IonContent className="terms-of-service__content">
         <h2>Nutzungsbedingungen</h2>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus optio
