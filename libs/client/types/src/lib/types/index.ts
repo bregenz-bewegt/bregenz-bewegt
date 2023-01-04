@@ -1,3 +1,3 @@
 export * from './activity-timer-result';
 export * from './activity-chart-data';
-export * from './geographic-coordinatescoordinates';
+export * from './geographic-coordinates';

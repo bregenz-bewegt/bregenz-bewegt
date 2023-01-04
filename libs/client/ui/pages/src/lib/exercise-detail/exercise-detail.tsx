@@ -23,6 +23,7 @@ import {
   BackButton,
   DifficultyBadge,
 } from '@bregenz-bewegt/client-ui-components';
+import { Geolocation } from '@ionic-native/geolocation';
 import { timer, stopCircle, close } from 'ionicons/icons';
 import {
   useDefaultErrorToast,
@@ -56,6 +57,15 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [isGuest] = useIsGuest();
     const videoRef = useRef<HTMLVideoElement>(null);
 
+    const checkLocation = async () => {
+      try {
+        const position = await Geolocation.getCurrentPosition();
+        console.log(position);
+      } catch {
+        return;
+      }
+    };
+
     useEffect(() => {
       const parkId = +match.params.park;
       const exerciseId = +match.params.exercise;
@@ -65,6 +75,8 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         setPark(park);
         setIsLoading(false);
       });
+
+      checkLocation();
     }, [match.params.exercise, match.params.park]);
 
     useEffect(() => {
