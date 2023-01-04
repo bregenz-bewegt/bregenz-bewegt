@@ -144,6 +144,13 @@
   }
 }
 
+.locked-toast {
+  &--end,
+  &--start {
+    translate: 0 calc(var(--spacing-s) * -11);
+  }
+}
+
 @keyframes arrow-pulse {
   0% {
     opacity: 0.3;
