@@ -31,6 +31,7 @@ import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Location } from 'iconsax-react';
 import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
+import { Loading } from '@bregenz-bewegt/client-ui-pages';
 
 interface MatchParams {
   park: string;
@@ -47,9 +48,20 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
 )(
   observer(({ match }) => {
     const history = useHistory();
-    const [, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [park, setPark] = useState<Park>();
-    const [exercises, setExercises] = useState<Exercise[]>();
+    const [exercises, setExercises] = useState<Exercise[] | undefined>(
+      new Array<Exercise>(5).map((_, i) => ({
+        id: i,
+        name: '',
+        description: '',
+        coins: 0,
+        difficulty: DifficultyType.BEGINNER,
+        execution: '',
+        muscles: '',
+        video: '',
+      }))
+    );
     const [quickFilters, setQuickFilters] = useState<QuickFilterOption[]>();
 
     useEffect(() => {
@@ -131,7 +143,9 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
       );
     };
 
-    return (
+    return isLoading ? (
+      <Loading />
+    ) : (
       <IonPage className="park-detail">
         <IonContent className="park-detail__content">
           <BackButton defaultRouterLink={tabRoutes.start.route} />
@@ -181,6 +195,7 @@ export const ParkDetail: React.FC<ParkDetail> = inject(
                     key={i}
                     {...e}
                     link={`${tabRoutes.start.route}/${park?.id}/${e.id}`}
+                    isLoading={isLoading}
                   />
                 );
               })}

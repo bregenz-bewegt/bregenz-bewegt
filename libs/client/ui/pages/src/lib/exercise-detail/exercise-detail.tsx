@@ -29,6 +29,7 @@ import {
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
+import { Loading } from '@bregenz-bewegt/client-ui-pages';
 
 interface MatchParams {
   park: string;
@@ -47,6 +48,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
   activityStore.storeKey
 )(
   observer(({ parkStore, tabStore, match }) => {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [presentToast] = useIonToast();
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [park, setPark] = useState<Park>();
@@ -61,6 +63,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
       parkStore?.getParkWithExercise(parkId, exerciseId).then((park) => {
         setPark(park);
+        setIsLoading(false);
       });
     }, [match.params.exercise, match.params.park]);
 
@@ -114,7 +117,9 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         .catch(() => presentDefaultErrorToast());
     };
 
-    return (
+    return isLoading ? (
+      <Loading />
+    ) : (
       <IonPage className="exercise-detail">
         <IonContent className="exercise-detail__content">
           <BackButton defaultRouterLink={tabRoutes.start.route} />
