@@ -16,3 +16,4 @@ export * from './forgot-password-email-sent/forgot-password-email-sent';
 export * from './onboarding/onboarding';
 export * from './competitor-profile/competitor-profile';
 export * from './notifications/notifications';
+export * from './terms-of-service/terms-of-service';
