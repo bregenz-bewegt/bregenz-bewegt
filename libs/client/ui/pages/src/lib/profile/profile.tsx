@@ -404,7 +404,6 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       button
                       routerLink={`${tabRoutes.profile.route}/terms-of-service`}
                       mode="ios"
-                      lines="none"
                     >
                       <IonLabel>Nutzungsbedingungen</IonLabel>
                     </IonItem>
@@ -412,6 +411,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       button
                       routerLink={`${tabRoutes.profile.route}/sponsors`}
                       mode="ios"
+                      lines="none"
                     >
                       <IonLabel>Sponsoren</IonLabel>
                     </IonItem>
