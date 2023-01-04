@@ -102,10 +102,10 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
 
   const showLockedInformation = () => {
     presentToast({
-      message: !isLocationValid
+      message: isGuest
+        ? 'Erstelle ein Konto oder melde dich an, um Übungen zu starten'
+        : !isLocationValid
         ? 'Du befindest dich nicht an der Sportstätte'
-        : isGuest
-        ? 'Melde dich an, um Übungen zu starten'
         : 'Übung gesperrt',
       icon: lockClosed,
       duration: 2000,
