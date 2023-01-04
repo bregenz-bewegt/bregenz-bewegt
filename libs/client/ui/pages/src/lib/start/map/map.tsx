@@ -60,6 +60,7 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
 
   const GoToLocation = () => {
     const map = useMap();
+
     return (
       <IonButton
         onClick={() => location && map.flyTo(location.latlng, 15)}
