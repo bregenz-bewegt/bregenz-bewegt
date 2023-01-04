@@ -59,7 +59,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
     const checkLocation = async () => {
       const location = await locationStore?.getLocation();
-      console.log(location?.coords, park?.coordinates);
+      console.log(location?.coords);
     };
 
     useEffect(() => {
@@ -68,11 +68,11 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       if (!exerciseId || !parkId) return;
 
       parkStore?.getParkWithExercise(parkId, exerciseId).then((park) => {
+        console.log(park);
         setPark(park);
         setIsLoading(false);
+        checkLocation();
       });
-
-      checkLocation();
     }, [match.params.exercise, match.params.park]);
 
     useEffect(() => {
