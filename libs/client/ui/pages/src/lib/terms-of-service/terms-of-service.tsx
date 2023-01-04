@@ -1,5 +1,5 @@
 import React from 'react';
-import './terms-of-service';
+import './terms-of-service.scss';
 import {
   IonPage,
   IonContent,
