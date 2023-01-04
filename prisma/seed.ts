@@ -81,8 +81,8 @@ const createParks = async () => {
       image: 'parks/parkourpark-remise.png',
       qr: 'not-yet-defined-0',
       coordinates: {
-        latitude: 47.498273,
-        longitude: 9.703772,
+        latitude: 47.50271455933779,
+        longitude: 9.73657343480402,
       },
     },
     {
@@ -92,29 +92,32 @@ const createParks = async () => {
       image: 'parks/schulsportplatz-ms-stadt.png',
       qr: 'not-yet-defined-1',
       coordinates: {
-        latitude: 47.505646,
-        longitude: 9.751746,
+        latitude: 47.504987444727035,
+        longitude: 9.751705840629597,
       },
     },
     {
       id: 3,
       name: 'Jugendplatz Spielfeld 3',
-      address: 'Achstraße',
+      address: 'Achsiedlungsstraße 93, 6900 Bregenz',
       image: 'parks/jugendplatz-spielfeld.png',
       qr: 'not-yet-defined-2',
       coordinates: {
-        latitude: 47.501583,
-        longitude: 9.738889,
+        latitude: 47.498879742248256,
+        longitude: 9.7036399397155,
       },
     },
 
     {
       id: 4,
       name: 'Generationen Park Mariahilf',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
+      address: 'Mariahilfstraße 50, 6900 Bregenz',
       image: 'parks/generationen-park-mariahilf.png',
       qr: 'not-yet-defined-3',
-      coordinates: { latitude: 47.495515, longitude: 9.746912 },
+      coordinates: {
+        latitude: 47.49504770373178,
+        longitude: 9.728410353659996,
+      },
     },
     {
       id: 5,
@@ -123,8 +126,8 @@ const createParks = async () => {
       image: 'parks/schulsportplatz-vs-weidach.png',
       qr: 'not-yet-defined-4',
       coordinates: {
-        latitude: 47.491353,
-        longitude: 9.739731,
+        latitude: 47.49138263547858,
+        longitude: 9.739739264076317,
       },
     },
 
@@ -147,8 +150,8 @@ const createParks = async () => {
       image: 'parks/tschutterplatz-beim-stadion.png',
       qr: 'not-yet-defined-6',
       coordinates: {
-        latitude: 47.503531,
-        longitude: 9.734675,
+        latitude: 47.50383807029892,
+        longitude: 9.73433812513105,
       },
     },
 
