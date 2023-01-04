@@ -62,7 +62,6 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       const location = await locationStore?.getLocation();
       if (!location?.coords || !coordinates) return setIsLocationValid(false);
 
-      console.log(location?.coords, coordinates);
       const isValid = locationStore?.isLocationWithinRadius(
         location.coords,
         {
@@ -71,8 +70,6 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         },
         coordinates?.toleranceRadius
       );
-
-      console.log(isValid);
 
       setIsLocationValid(isValid || false);
     };
