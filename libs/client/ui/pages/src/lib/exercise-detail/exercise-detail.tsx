@@ -18,7 +18,7 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Park, Activity } from '@bregenz-bewegt/client/types';
+import { Park, Activity, Coordinates } from '@bregenz-bewegt/client/types';
 import {
   ActivityTimer,
   BackButton,
@@ -57,9 +57,9 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [isGuest] = useIsGuest();
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    const checkLocation = async () => {
+    const checkLocation = async (parkCoordinates?: Coordinates) => {
       const location = await locationStore?.getLocation();
-      console.log(location?.coords);
+      console.log(location?.coords, parkCoordinates);
     };
 
     useEffect(() => {
@@ -71,7 +71,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         console.log(park);
         setPark(park);
         setIsLoading(false);
-        checkLocation();
+        checkLocation(park?.coordinates);
       });
     }, [match.params.exercise, match.params.park]);
 
