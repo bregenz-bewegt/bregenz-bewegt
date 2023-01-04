@@ -33,12 +33,6 @@ export const TermsOfService: React.FC<TermsOfServiceProps> = () => {
       </IonHeader>
       <IonContent className="terms-of-service__content">
         <h2>Nutzungsbedingungen</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus optio
-          vel at? Corporis rerum adipisci at. Sit, quae doloribus ipsa
-          laboriosam eum id dolorum, eaque consequuntur quibusdam ea esse
-          aspernatur?
-        </p>
       </IonContent>
     </IonPage>
   );
