@@ -8,7 +8,6 @@ import {
 } from '@ionic/react';
 import { useEffect, useRef, useState } from 'react';
 import {
-  ActivityStore,
   activityStore,
   locationStore,
   LocationStore,
