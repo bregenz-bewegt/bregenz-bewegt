@@ -77,7 +77,7 @@ const createParks = async () => {
     {
       id: 1,
       name: 'Parkourpark Remise',
-      address: 'Badgässele',
+      address: 'Badgässele 2, 6900 Bregenz',
       image: 'parks/parkourpark-remise.png',
       qr: 'not-yet-defined-0',
       coordinates: {
@@ -88,7 +88,7 @@ const createParks = async () => {
     {
       id: 2,
       name: 'Schulsportplatz MS Stadt',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
+      address: 'Schillerstraße 7, 6900 Bregenz',
       image: 'parks/schulsportplatz-ms-stadt.png',
       qr: 'not-yet-defined-1',
       coordinates: {
@@ -158,12 +158,12 @@ const createParks = async () => {
     {
       id: 8,
       name: 'Schulsportplatz VS Augasse',
-      address: 'Rotfarbgasse 14a, 6900 Bregenz',
+      address: 'Augasse 6, 6900 Bregenz',
       image: 'parks/schulsportplatz-vs-augasse.png',
       qr: 'not-yet-defined-7',
       coordinates: {
-        latitude: 47.500276,
-        longitude: 9.738716,
+        latitude: 47.49995266468694,
+        longitude: 9.736555724858727,
       },
     },
 
