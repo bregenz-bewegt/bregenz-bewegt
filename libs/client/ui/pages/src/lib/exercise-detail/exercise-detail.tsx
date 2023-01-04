@@ -60,7 +60,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
     const checkLocation = async () => {
       const location = await locationStore?.getLocation();
-      console.log(location?.coords);
+      console.log(location?.coords, park?.coordinates);
     };
 
     useEffect(() => {
