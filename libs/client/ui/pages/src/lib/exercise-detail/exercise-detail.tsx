@@ -55,6 +55,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [park, setPark] = useState<Park>();
     const [activity, setActivity] = useState<Activity>();
     const [isGuest] = useIsGuest();
+    const [isLocationValid, setIsLocationValid] = useState<boolean>(false);
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const checkLocation = async (parkCoordinates?: Coordinates) => {
@@ -68,10 +69,9 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       if (!exerciseId || !parkId) return;
 
       parkStore?.getParkWithExercise(parkId, exerciseId).then((park) => {
-        console.log(park);
         setPark(park);
-        setIsLoading(false);
         checkLocation(park?.coordinates);
+        setIsLoading(false);
       });
     }, [match.params.exercise, match.params.park]);
 
@@ -178,7 +178,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           <ActivityTimer
             onTimerStart={handleTimerStart}
             onTimerStop={handleTimerStop}
-            disabled={isGuest}
+            disabled={isGuest || isLocationValid}
           />
         </IonContent>
       </IonPage>
