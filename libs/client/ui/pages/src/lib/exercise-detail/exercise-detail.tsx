@@ -60,7 +60,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const checkLocation = async () => {
       try {
         const position = await Geolocation.getCurrentPosition();
-        console.log(position);
+        console.log(position.coords);
       } catch {
         return;
       }
