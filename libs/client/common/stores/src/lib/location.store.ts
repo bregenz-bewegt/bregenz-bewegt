@@ -2,6 +2,7 @@ import type { GeographicCoordinates } from '@bregenz-bewegt/client/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import * as geolib from 'geolib';
 
 export class LocationStore implements Store {
   storeKey = `locationStore` as const;
@@ -23,6 +24,18 @@ export class LocationStore implements Store {
     } catch (error) {
       return undefined;
     }
+  }
+
+  isLocationWithinRadius(
+    point: GeographicCoordinates,
+    center: GeographicCoordinates,
+    radiusInMeter: number
+  ): ReturnType<typeof geolib['isPointWithinRadius']> {
+    return geolib.isPointWithinRadius(
+      { latitude: point.latitude, longitude: point.longitude },
+      { latitude: center.latitude, longitude: center.longitude },
+      radiusInMeter
+    );
   }
 }
 
