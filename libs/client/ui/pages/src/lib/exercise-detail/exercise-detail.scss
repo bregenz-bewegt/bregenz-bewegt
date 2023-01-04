@@ -42,8 +42,6 @@
 .exercise-toast {
   &--end,
   &--start {
-    &::part(container) {
-      translate: 0 calc(var(--spacing-m) * -1);
-    }
+    translate: 0 calc(var(--spacing-s) * -11);
   }
 }

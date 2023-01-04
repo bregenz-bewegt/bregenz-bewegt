@@ -90,7 +90,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           presentToast({
             message: 'Übung gestartet',
             icon: timer,
-            duration: 2000,
+            // duration: 2000,
             position: 'bottom',
             mode: 'ios',
             color: 'primary',
