@@ -13,7 +13,7 @@ import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 export interface TermsOfServiceProps {}
 
-export const TermsOfService: React.FC<TermsOfServiceProps> = ({}) => {
+export const TermsOfService: React.FC<TermsOfServiceProps> = () => {
   return (
     <IonPage className="terms-of-service">
       <IonHeader mode="ios">
@@ -32,7 +32,15 @@ export const TermsOfService: React.FC<TermsOfServiceProps> = ({}) => {
         fullscreen
         scrollY={false}
         className="terms-of-service__content"
-      ></IonContent>
+      >
+        <h2>Nutzungsbedingungen</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus optio
+          vel at? Corporis rerum adipisci at. Sit, quae doloribus ipsa
+          laboriosam eum id dolorum, eaque consequuntur quibusdam ea esse
+          aspernatur?
+        </p>
+      </IonContent>
     </IonPage>
   );
 };
