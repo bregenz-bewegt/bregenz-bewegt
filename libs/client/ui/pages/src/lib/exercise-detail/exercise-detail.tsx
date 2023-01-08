@@ -8,6 +8,7 @@ import {
 } from '@ionic/react';
 import { useEffect, useRef, useState } from 'react';
 import {
+  ActivityStore,
   activityStore,
   locationStore,
   LocationStore,
@@ -40,15 +41,17 @@ interface MatchParams {
 export interface ExerciseDetailProps extends RouteComponentProps<MatchParams> {
   parkStore?: ParkStore;
   tabStore?: TabStore;
+  activityStore?: ActivityStore;
   locationStore?: LocationStore;
 }
 
 export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
   parkStore.storeKey,
   tabStore.storeKey,
+  activityStore.storeKey,
   locationStore.storeKey
 )(
-  observer(({ parkStore, tabStore, locationStore, match }) => {
+  observer(({ parkStore, tabStore, activityStore, locationStore, match }) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [presentToast] = useIonToast();
     const [presentDefaultErrorToast] = useDefaultErrorToast();
@@ -100,7 +103,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
     const handleTimerStart = () => {
       activityStore
-        .startActivity({
+        ?.startActivity({
           parkId: park?.id ?? -1,
           exerciseId: park?.exercises ? park?.exercises[0].id : -1,
         })
@@ -121,7 +124,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
     const handleTimerStop = () => {
       activityStore
-        .endActivity({ activityId: activity?.id ?? '' })
+        ?.endActivity({ activityId: activity?.id ?? '' })
         .then(() => {
           presentToast({
             message: 'Übung beendet',
