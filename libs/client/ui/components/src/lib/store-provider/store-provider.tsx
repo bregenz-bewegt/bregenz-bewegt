@@ -12,6 +12,7 @@ import {
   leaderboardStore,
   friendsStore,
   notificationsStore,
+  locationStore,
 } from '@bregenz-bewegt/client/common/stores';
 
 const stores = {
@@ -25,6 +26,7 @@ const stores = {
   leaderboardStore,
   friendsStore,
   notificationsStore,
+  locationStore,
 };
 
 interface StoreProviderProps {
