@@ -84,6 +84,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
                 label="Passwort"
                 type="password"
                 value={passwordForm.values.password}
+                autocomplete="current-password"
                 error={
                   passwordForm.touched.password
                     ? passwordForm.errors.password
@@ -100,6 +101,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
                 label="Neues Passwort"
                 type="password"
                 value={passwordForm.values.newPassword}
+                autocomplete="new-password"
                 error={
                   passwordForm.touched.newPassword
                     ? passwordForm.errors.newPassword
@@ -116,6 +118,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
                 label="Neues Passwort bestätigen"
                 type="password"
                 value={passwordForm.values.newPasswordConfirmation}
+                autocomplete="new-password"
                 error={
                   passwordForm.touched.newPasswordConfirmation
                     ? passwordForm.errors.newPasswordConfirmation

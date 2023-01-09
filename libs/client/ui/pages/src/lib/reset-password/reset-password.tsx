@@ -88,6 +88,7 @@ export const ResetPassword = inject(userStore.storeKey)(
                 label="Neues Passwort"
                 placeholder="Neues Passwort"
                 value={reset.values.password}
+                autocomplete="new-password"
                 error={
                   reset.touched.password ? reset.errors.password : undefined
                 }
@@ -101,6 +102,7 @@ export const ResetPassword = inject(userStore.storeKey)(
                 label="Passwort bestätigen"
                 placeholder="Passwort bestätigen"
                 value={reset.values.passwordConfirmation}
+                autocomplete="new-password"
                 error={
                   reset.touched.passwordConfirmation
                     ? reset.errors.passwordConfirmation

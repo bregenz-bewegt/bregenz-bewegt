@@ -113,6 +113,7 @@ export const Register: React.FC<RegisterProps> = inject(
                   name="firstname"
                   placeholder="Vorname"
                   value={register.values.firstname}
+                  autocomplete="given-name"
                   error={
                     register.touched.firstname
                       ? register.errors.firstname
@@ -127,6 +128,7 @@ export const Register: React.FC<RegisterProps> = inject(
                   name="lastname"
                   placeholder="Nachname"
                   value={register.values.lastname}
+                  autocomplete="family-name"
                   error={
                     register.touched.lastname
                       ? register.errors.lastname
@@ -142,6 +144,7 @@ export const Register: React.FC<RegisterProps> = inject(
                 name="username"
                 placeholder="Benutzername"
                 value={register.values.username}
+                autocomplete="username"
                 error={
                   register.touched.username
                     ? register.errors.username
@@ -157,6 +160,7 @@ export const Register: React.FC<RegisterProps> = inject(
                 type="email"
                 inputMode="email"
                 value={register.values.email}
+                autocomplete="email"
                 error={
                   register.touched.email ? register.errors.email : undefined
                 }
@@ -169,6 +173,7 @@ export const Register: React.FC<RegisterProps> = inject(
                 placeholder="Passwort"
                 type="password"
                 value={register.values.password}
+                autocomplete="new-password"
                 error={
                   register.touched.password
                     ? register.errors.password
@@ -183,6 +188,7 @@ export const Register: React.FC<RegisterProps> = inject(
                 placeholder="Passwort bestätigen"
                 type="password"
                 value={register.values.passwordConfirmation}
+                autocomplete="new-password"
                 error={
                   register.touched.passwordConfirmation
                     ? register.errors.passwordConfirmation
