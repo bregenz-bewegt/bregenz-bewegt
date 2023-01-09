@@ -1,5 +1,3 @@
-import { BackButton } from '@bregenz-bewegt/client-ui-components';
-import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import {
   friendsStore,

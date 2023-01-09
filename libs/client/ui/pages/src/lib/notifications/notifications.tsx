@@ -33,6 +33,7 @@ import {
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
 import { checkmarkDone, trash } from 'ionicons/icons';
+import { BackButton } from '@bregenz-bewegt/client-ui-components';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
@@ -120,6 +121,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                 defaultHref={`${tabRoutes.start.route}`}
                 text="Zurück"
               />
+              <BackButton defaultRouterLink={tabRoutes.start.route} />
             </IonButtons>
             <IonTitle>Benachrichtigungen</IonTitle>
             <IonButtons slot="end">
