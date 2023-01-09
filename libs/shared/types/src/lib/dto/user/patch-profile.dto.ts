@@ -11,4 +11,9 @@ export class PatchProfileDto {
   @IsOptional()
   @IsString()
   lastname?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  biography?: string;
 }

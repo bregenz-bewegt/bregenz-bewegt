@@ -74,12 +74,16 @@ export class ActivityService {
         _max: { endedAt: true },
       })
       .then((data) => {
+        if (!data._max.endedAt || !data._min.endedAt)
+          return { _max: null, _min: null };
         return {
           _min: data._min.endedAt.getMonth(),
           _max: data._max.endedAt.getMonth(),
         };
       });
-    return [...Array(_max - _min + 1)].map((_x, i) => _max - i);
+    return _max && _min
+      ? [...Array(_max - _min + 1)].map((_x, i) => _max - i)
+      : [new Date().getMonth()];
   }
 
   async getChartData(

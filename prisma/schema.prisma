@@ -19,6 +19,7 @@ model User {
   active                 Boolean         @default(false)
   firstname              String?
   lastname               String?
+  biography              String?         @default("Hallo! Ich benutze Bregenz bewegt") @db.VarChar(500)
   role                   Role
   registratedAt          DateTime        @default(now())
   updatedAt              DateTime        @default(now()) @updatedAt

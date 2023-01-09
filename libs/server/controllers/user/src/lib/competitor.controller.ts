@@ -1,11 +1,11 @@
 import {
-  GetCurrentUser,
   MapProfilePictureInterceptor,
   RemoveSensitiveFieldsInterceptor,
 } from '@bregenz-bewegt/server/common';
-import { Controller, Get, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '@prisma/client';
+import { CompetitorDetail } from '@bregenz-bewegt/shared/types';
 
 @Controller('competitors')
 export class CompetitorController {
@@ -15,9 +15,15 @@ export class CompetitorController {
     RemoveSensitiveFieldsInterceptor,
     new MapProfilePictureInterceptor()
   )
-  @Get('profile')
-  async getUser(userId: User['id']): User {
-    const { id, email, ...result } = await this.userService.findById(userId);
+  @Get('profile/:username')
+  async getCompetitorProfile(
+    @Param('username')
+    username: User['username']
+  ): Promise<CompetitorDetail> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, email, ...result } = await this.userService.findByUsername(
+      username
+    );
     return result;
   }
 }

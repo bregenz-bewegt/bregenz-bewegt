@@ -56,6 +56,12 @@ export class UserService {
     return this.prismaService.user.findUnique({ where: { id: id } });
   }
 
+  async findByUsername(username: User['username']): Promise<User> {
+    return this.prismaService.user.findUnique({
+      where: { username: username },
+    });
+  }
+
   async patchProfile(id: User['id'], fields: PatchProfileDto): Promise<User> {
     return this.prismaService.user.update({
       where: {

@@ -1,3 +1,4 @@
+import { CompetitorController } from './competitor.controller';
 import { Module } from '@nestjs/common';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import { MulterModule } from '@nestjs/platform-express';
@@ -10,7 +11,7 @@ import { EamilResetTokenStrategy } from './passport';
 
 @Module({
   imports: [MulterModule],
-  controllers: [UserController],
+  controllers: [UserController, CompetitorController],
   providers: [
     UserService,
     UtilService,

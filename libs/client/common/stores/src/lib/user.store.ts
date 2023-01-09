@@ -15,9 +15,11 @@ import type {
   ResetEmailDto,
   VerifyResetEmailDto,
   ChangePasswordDto,
+  CompetitorDetail,
 } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
+import { HttpStatus } from '@nestjs/common';
 
 export class UserStore implements Store {
   storeKey = 'userStore' as const;
@@ -79,6 +81,13 @@ export class UserStore implements Store {
 
   async fetchProfile(): Promise<User> {
     const { data } = await http.get('/users/profile');
+    return data;
+  }
+
+  async fetchCompetitorProfile(
+    username: User['username']
+  ): Promise<CompetitorDetail> {
+    const { data } = await http.get('/competitors/profile/' + username);
     return data;
   }
 

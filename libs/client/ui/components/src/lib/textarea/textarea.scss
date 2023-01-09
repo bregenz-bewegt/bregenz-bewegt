@@ -1,0 +1,38 @@
+.textarea {
+  &.expand {
+    width: 100%;
+  }
+
+  ion-item {
+    width: 100%;
+    --padding-start: 0;
+    --padding-end: 0;
+    --inner-padding-end: 0;
+    --background: transparent;
+
+    ion-label {
+      &.md {
+        margin-bottom: 4px;
+      }
+    }
+
+    ion-textarea {
+      border-radius: var(--spacing-s);
+      margin: var(--spacing-xs) 0;
+      --padding-top: var(--spacing-s) !important;
+      --padding-bottom: var(--spacing-s) !important;
+      --padding-start: var(--spacing-s) !important;
+      --padding-end: var(--spacing-s) !important;
+      --background: var(--ion-color-light-tint) !important;
+
+      &.ion-invalid {
+        border: 1px solid var(--ion-color-danger);
+      }
+    }
+
+    ion-note {
+      padding-top: 0;
+      margin-bottom: var(--spacing-xs);
+    }
+  }
+}
