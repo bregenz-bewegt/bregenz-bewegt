@@ -1,6 +1,6 @@
 ion-header {
   .back-button {
-    margin-top: calc(var(--spacing-s) * -1);
+    margin-top: calc((var(--spacing-s) + 1px) * -1);
     padding-left: 0;
   }
 }
