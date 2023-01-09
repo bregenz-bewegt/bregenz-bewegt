@@ -44,7 +44,7 @@ export const PublicProfile = inject(userStore.storeKey)(
 
     return (
       <IonPage>
-        <IonHeader mode="ios" className="ion-no-border">
+        <IonHeader mode="ios">
           <IonToolbar>
             <IonButtons>
               <BackButton defaultRouterLink={tabRoutes.profile.route} />
