@@ -83,7 +83,7 @@ model Coordinates {
   id              Int   @id @default(autoincrement())
   latitude        Float
   longitude       Float
-  toleranceRadius Int   @default(50)
+  toleranceRadius Int   @default(100)
   park            Park? @relation(fields: [parkId], references: [id])
   parkId          Int?  @unique
 }
