@@ -82,7 +82,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     const calculateTime = (
       activities: Activity[]
     ): (Activity & { minutes?: string; seconds?: string })[] => {
-      return activities.map((a) => {
+      const a = activities.map((a) => {
         const diff =
           new Date(a.endedAt).getTime() - new Date(a.startedAt).getTime();
         const minutes = Math.floor(diff / 1000 / 60);
@@ -93,6 +93,9 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
           seconds: String(seconds).padStart(2, '0'),
         };
       });
+
+      console.log(a);
+      return a;
     };
 
     const calculateTicks = ({
