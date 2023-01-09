@@ -47,11 +47,12 @@ export const PublicProfile = inject(userStore.storeKey)(
         <IonHeader mode="ios" collapse="condense" className="ion-no-header">
           <IonToolbar>
             <IonButtons>
-              <IonBackButton
+              {/* <IonBackButton
                 color="primary"
                 defaultHref={tabRoutes.profile.route}
                 text="Zurück"
-              />
+              /> */}
+              <BackButton defaultRouterLink={tabRoutes.profile.route} />
             </IonButtons>
             <IonTitle>Öffentliches Profil</IonTitle>
           </IonToolbar>
