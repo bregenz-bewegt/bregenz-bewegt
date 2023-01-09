@@ -10,7 +10,6 @@ import {
   IonHeader,
   IonToolbar,
   IonButtons,
-  IonBackButton,
   IonTitle,
   IonContent,
   IonSegment,
