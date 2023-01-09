@@ -118,7 +118,9 @@ export class ActivityService {
       },
     });
 
-    return activities.reduce((result, activity) => {
+    console.log(activities);
+
+    const x = activities.reduce((result, activity) => {
       const date = new Date(activity.endedAt.setHours(13, 0, 0, 0));
       const rIndex = result.findIndex((r) => r.date === date.getDate());
       rIndex > -1
@@ -129,6 +131,9 @@ export class ActivityService {
           });
       return result;
     }, []);
+
+    console.log(x);
+    return x;
   }
 
   async startActivity(userId: User['id'], dto: StartActivityDto) {

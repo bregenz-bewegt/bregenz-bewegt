@@ -94,7 +94,6 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
         };
       });
 
-      console.log(a);
       return a;
     };
 
@@ -107,17 +106,23 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     }: CalculateTicksProps): number[] => {
       const interval =
         Math.round(((max - min + 1) / count + Number.EPSILON) / round) * round;
-      return [...Array(count)].map((_x, i) => {
+      const x = [...Array(count)].map((_x, i) => {
         const y = includeMin ? i : i + 1;
         if (y === 0) return min;
         return i === count - 1 ? max : min + y * interval - 1;
       });
+
+      console.log(x);
+      return x;
     };
 
     const updateChartData = (month: number) => {
       activityStore
         ?.getChartData(month)
-        .then((data) => setChartData(data))
+        .then((data) => {
+          console.log(data);
+          setChartData(data);
+        })
         .catch(() => setChartData(undefined));
     };
 
