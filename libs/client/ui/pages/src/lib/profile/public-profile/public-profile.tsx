@@ -7,6 +7,7 @@ import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import { Preferences } from '@bregenz-bewegt/client/types';
 import {
+  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
