@@ -9,7 +9,6 @@ import { UserStore } from '@bregenz-bewegt/client/common/stores';
 import { DifficultyType } from '@bregenz-bewegt/client/types';
 import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 import {
-  IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
