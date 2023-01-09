@@ -112,12 +112,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
 
     return (
       <IonPage className="notifications">
-        <IonHeader
-          mode="ios"
-          collapse="condense"
-          translate="yes"
-          className="ion-no-border"
-        >
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
               <BackButton defaultRouterLink={tabRoutes.start.route} />
