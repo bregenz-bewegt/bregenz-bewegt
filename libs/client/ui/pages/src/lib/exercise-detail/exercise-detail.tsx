@@ -112,11 +112,12 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
           presentToast({
             message: 'Übung gestartet',
             icon: timer,
-            duration: 2000,
-            position: 'top',
+            duration: 3000,
+            position: 'bottom',
             mode: 'ios',
             color: 'primary',
             buttons: [{ icon: close, role: 'cancel' }],
+            cssClass: 'exercise-toast--start',
           });
         })
         .catch(() => presentDefaultErrorToast());
@@ -127,13 +128,17 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
         ?.endActivity({ activityId: activity?.id ?? '' })
         .then(() => {
           presentToast({
-            message: 'Übung beendet',
+            message:
+              park?.exercises && park.exercises[0].coins
+                ? `+${park.exercises[0].coins} B-Bucks erhalten`
+                : 'Übung beendet',
             icon: stopCircle,
-            duration: 2000,
-            position: 'top',
+            duration: 3000,
+            position: 'bottom',
             mode: 'ios',
             color: 'primary',
             buttons: [{ icon: close, role: 'cancel' }],
+            cssClass: 'exercise-toast--end',
           });
         })
         .catch(() => presentDefaultErrorToast());
