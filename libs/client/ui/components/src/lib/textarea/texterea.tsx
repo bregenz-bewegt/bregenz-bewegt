@@ -5,7 +5,6 @@ import {
   IonTextareaCustomEvent,
   TextFieldTypes,
 } from '@ionic/core';
-import { useState } from 'react';
 
 export interface TextAreaProps {
   value?: string | null;
@@ -54,7 +53,6 @@ export const TextArea: React.FC<TextAreaProps> = ({
   autoGrow,
   maxlength,
 }) => {
-  const [valueLenght, setValueLength] = useState<number>(0);
   const inputProps = {
     value,
     type,
@@ -65,10 +63,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
     disabled,
     clearOnEdit,
     ref,
-    onIonChange: () => {
-      maxlength && setValueLenght();
-      onChange();
-    },
+    onIonChange: onChange,
     onIonBlur: onBlur,
     autoGrow,
     maxlength,
@@ -80,18 +75,22 @@ export const TextArea: React.FC<TextAreaProps> = ({
         className ? ` ${className}` : ''
       }`}
     >
-      <IonItem lines="none" className={`${error ? 'ion-invalid' : ''}`}>
+      <IonItem
+        lines="none"
+        className={`${error ? 'ion-invalid' : ''}`}
+        counter={!!maxlength}
+      >
         {label && <IonLabel position="stacked">{label}</IonLabel>}
         <IonTextarea
           {...inputProps}
           className={`${error ? 'ion-invalid' : ''}`}
+          rows={3}
         ></IonTextarea>
         {error && (
           <IonNote color="danger" slot="error">
             {error}
           </IonNote>
         )}
-        {maxlength && <IonNote color="light" slot="error"></IonNote>}
       </IonItem>
     </div>
   );
