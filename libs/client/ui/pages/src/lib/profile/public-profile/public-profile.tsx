@@ -44,7 +44,7 @@ export const PublicProfile = inject(userStore.storeKey)(
 
     return (
       <IonPage>
-        <IonHeader mode="ios" collapse="condense" className="ion-no-header">
+        <IonHeader mode="ios" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
               {/* <IonBackButton
