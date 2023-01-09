@@ -55,7 +55,7 @@ export const Difficulty = inject(userStore.storeKey)(
 
     return (
       <IonPage>
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
               <IonBackButton

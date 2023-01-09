@@ -33,7 +33,7 @@ export const Friends: React.FC<FriendsProps> = inject(friendsStore.storeKey)(
 
     return (
       <IonPage className="friends" ref={page}>
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
               <IonBackButton

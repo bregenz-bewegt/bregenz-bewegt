@@ -68,7 +68,7 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage ref={page}>
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
               <IonBackButton

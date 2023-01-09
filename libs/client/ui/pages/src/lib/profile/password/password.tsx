@@ -63,7 +63,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage className="profile-password">
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
               <IonBackButton

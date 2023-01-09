@@ -112,7 +112,7 @@ export const Notifications: React.FC<NotificationsProps> = inject(
 
     return (
       <IonPage className="notifications">
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
               <IonBackButton

@@ -1,3 +1,5 @@
+import { BackButton } from '@bregenz-bewegt/client-ui-components';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import {
   friendsStore,
@@ -91,7 +93,7 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
         canDismiss
         className="add-friend-modal"
       >
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonTitle>Freunde hinzufügen</IonTitle>
             <IonButtons slot="start">
