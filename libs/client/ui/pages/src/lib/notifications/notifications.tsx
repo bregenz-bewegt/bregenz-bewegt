@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import './notifications.scss';
 import {
-  IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
