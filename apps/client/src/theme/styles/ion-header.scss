@@ -4,8 +4,8 @@ ion-header {
     align-items: center !important;
 
     .back-button {
-      margin-top: calc((var(--spacing-s) + 1px) * -1);
-      margin: auto !important;
+      position: static;
+      margin: 0 auto 0 auto;
       padding-left: 0;
     }
   }
