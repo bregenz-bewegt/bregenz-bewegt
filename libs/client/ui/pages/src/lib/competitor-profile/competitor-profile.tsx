@@ -39,7 +39,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = ({
 
   return (
     <IonPage className="competitor-profile">
-      <IonHeader mode="ios">
+      <IonHeader mode="ios" collapse="condense" className="ion-no-border">
         <IonToolbar>
           <IonButtons>
             <BackButton defaultRouterLink={tabRoutes.profile.route} />

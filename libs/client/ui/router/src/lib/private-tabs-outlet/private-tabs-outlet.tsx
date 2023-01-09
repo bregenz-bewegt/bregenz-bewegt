@@ -126,7 +126,7 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             slot="bottom"
             mode="md"
             hidden={!tabStore?.isShown}
-            translucent
+            className="ion-no-border"
           >
             {Object.values(tabRoutes).map((page, i) => {
               if (page.label !== 'Scan') {
