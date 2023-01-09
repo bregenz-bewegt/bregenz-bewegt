@@ -44,7 +44,7 @@ export const Appearance = inject(themeStore.storeKey)(
             <IonButtons>
               <BackButton defaultRouterLink={tabRoutes.profile.route} />
             </IonButtons>
-            <IonTitle>Aussehen</IonTitle>
+            <IonTitle>Darstellung</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
