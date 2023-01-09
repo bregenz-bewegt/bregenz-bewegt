@@ -1,3 +1,4 @@
+import { BackButton } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { UserStore } from '@bregenz-bewegt/client/common/stores';
 import { User } from '@bregenz-bewegt/client/types';
@@ -42,11 +43,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = ({
       <IonHeader mode="ios">
         <IonToolbar>
           <IonButtons>
-            <IonBackButton
-              color="primary"
-              defaultHref={`${tabRoutes.profile.route}/friends`}
-              text="Zurück"
-            />
+            <BackButton defaultRouterLink={tabRoutes.profile.route} />
           </IonButtons>
           <IonTitle>Benutzer</IonTitle>
         </IonToolbar>

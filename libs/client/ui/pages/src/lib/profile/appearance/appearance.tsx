@@ -1,10 +1,9 @@
-import { ItemGroup } from '@bregenz-bewegt/client-ui-components';
+import { BackButton, ItemGroup } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { ThemeStore, themeStore } from '@bregenz-bewegt/client/common/stores';
 import { ColorTheme } from '@bregenz-bewegt/client/types';
 import { themeDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 import {
-  IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
@@ -43,11 +42,7 @@ export const Appearance = inject(themeStore.storeKey)(
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <IonBackButton
-                color="primary"
-                defaultHref={tabRoutes.profile.route}
-                text="Zurück"
-              />
+              <BackButton defaultRouterLink={tabRoutes.profile.route} />
             </IonButtons>
             <IonTitle>Aussehen</IonTitle>
           </IonToolbar>

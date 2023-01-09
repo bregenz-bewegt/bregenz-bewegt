@@ -1,3 +1,4 @@
+import { BackButton } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   friendsStore,
@@ -36,11 +37,7 @@ export const Friends: React.FC<FriendsProps> = inject(friendsStore.storeKey)(
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <IonBackButton
-                color="primary"
-                defaultHref={tabRoutes.profile.route}
-                text="Zurück"
-              />
+              <BackButton defaultRouterLink={tabRoutes.profile.route} />
             </IonButtons>
             <IonTitle>Freunde</IonTitle>
           </IonToolbar>
