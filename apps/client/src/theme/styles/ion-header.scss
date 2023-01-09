@@ -1,10 +1,11 @@
 ion-header {
   ion-buttons {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
 
     .back-button {
-      // margin-top: calc((var(--spacing-s) + 1px) * -1);
+      margin-top: calc((var(--spacing-s) + 1px) * -1);
+      margin: auto !important;
       padding-left: 0;
     }
   }
