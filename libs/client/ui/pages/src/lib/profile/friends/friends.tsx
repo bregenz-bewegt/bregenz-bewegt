@@ -60,11 +60,16 @@ export const Friends: React.FC<FriendsProps> = inject(friendsStore.storeKey)(
             <IonSegmentButton value={FriendsDisplayType.Requests}>
               Anfragen
             </IonSegmentButton>
+            <IonSegmentButton value={FriendsDisplayType.Chats}>
+              Chats
+            </IonSegmentButton>
           </IonSegment>
-          {friendsDisplayType === FriendsDisplayType.Friends ? (
-            <FriendList />
-          ) : (
+          {friendsDisplayType === FriendsDisplayType.Requests ? (
             <RequestList />
+          ) : friendsDisplayType === FriendsDisplayType.Chats ? (
+            <Chat />
+          ) : (
+            <FriendList />
           )}
         </IonContent>
       </IonPage>
