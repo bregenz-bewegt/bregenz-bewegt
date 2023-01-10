@@ -1,4 +1,4 @@
-import { BackButton } from '@bregenz-bewegt/client-ui-components';
+import { BackButton, Input } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   chatStore,
@@ -16,10 +16,15 @@ import {
   IonContent,
   useIonViewWillEnter,
   useIonViewWillLeave,
+  IonGrid,
+  IonFooter,
+  IonButton,
+  IonIcon,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import React from 'react';
+import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { send } from 'ionicons/icons';
 import './conversation.scss';
 
 interface MatchParams {
@@ -36,6 +41,8 @@ export const Conversation: React.FC<ConversationProps> = inject(
   tabStore.storeKey
 )(
   observer(({ chatStore, tabStore, match }) => {
+    const [message, setMessage] = useState<string>('');
+
     useIonViewWillEnter(() => {
       tabStore?.setIsShown(false);
     }, []);
@@ -57,8 +64,21 @@ export const Conversation: React.FC<ConversationProps> = inject(
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
-          {match.params.username}
+          <div>
+            <IonGrid>{match.params.username}</IonGrid>
+          </div>
         </IonContent>
+        <IonFooter mode="ios" className="ion-no-border">
+          {/* <Input /> */}
+          <IonToolbar>
+            <IonButtons slot="secondary">
+              <IonButton>
+                <IonIcon slot="icon-only" icon={send}></IonIcon>
+              </IonButton>
+            </IonButtons>
+            <IonTitle>{match.params.username}</IonTitle>
+          </IonToolbar>
+        </IonFooter>
       </IonPage>
     );
   })

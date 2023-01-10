@@ -1,4 +1,19 @@
 .conversation {
   ion-content {
+    max-height: 100%;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      ion-grid {
+        flex: 1 1 auto;
+      }
+    }
+  }
+
+  ion-footer {
+    // padding: var(--spacing-s) var(--spacing-m);
   }
 }

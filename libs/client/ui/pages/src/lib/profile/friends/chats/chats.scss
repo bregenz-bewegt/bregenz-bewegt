@@ -2,7 +2,7 @@
   &__list {
     ion-item {
       &::part(native) {
-        padding-inline-start: 0;
+        padding-inline-start: var(--spacing-s);
       }
     }
   }
