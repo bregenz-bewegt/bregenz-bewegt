@@ -91,7 +91,7 @@ export const Header: React.FC<HeaderProps> = inject(
         <IonFab className="header__fab header__fab--chat">
           <IonFabButton
             className="header__fab__fab-button"
-            routerLink={`/notifications`}
+            routerLink={`${tabRoutes.profile.route}/friends`}
           >
             <MessageText
               variant="Bold"
