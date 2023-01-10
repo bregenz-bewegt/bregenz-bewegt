@@ -77,7 +77,8 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
             setSearchResult(result);
             setIsLoading(false);
           })
-          .catch(() => {
+          .catch((e) => {
+            console.log(e);
             setSearchResult([]);
             setIsLoading(false);
           });
