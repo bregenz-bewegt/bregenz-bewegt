@@ -20,6 +20,7 @@ import {
   IonFooter,
   IonButton,
   IonIcon,
+  IonRow,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import React, { useState } from 'react';
@@ -65,18 +66,20 @@ export const Conversation: React.FC<ConversationProps> = inject(
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
           <div>
-            <IonGrid>{match.params.username}</IonGrid>
+            <IonGrid>
+              <IonRow>{match.params.username}</IonRow>
+              <IonRow>{message}</IonRow>
+            </IonGrid>
           </div>
         </IonContent>
         <IonFooter mode="ios" className="ion-no-border">
-          {/* <Input /> */}
           <IonToolbar>
-            <IonButtons slot="secondary">
+            <IonButtons slot="primary">
               <IonButton>
-                <IonIcon slot="icon-only" icon={send}></IonIcon>
+                <IonIcon slot="end" icon={send}></IonIcon>
               </IonButton>
             </IonButtons>
-            <IonTitle>{match.params.username}</IonTitle>
+            <Input />
           </IonToolbar>
         </IonFooter>
       </IonPage>
