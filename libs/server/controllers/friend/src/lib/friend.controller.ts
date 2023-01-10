@@ -86,7 +86,7 @@ export class FriendController {
     )
     dto: SearchUserQueryDto
   ): Promise<FriendSearchResult[]> {
-    return this.friendService.searchUserByUsername(dto.username, userId, true);
+    return this.friendService.searchFriendByUsername(dto.username, userId);
   }
 
   @HasRole(Role.USER)

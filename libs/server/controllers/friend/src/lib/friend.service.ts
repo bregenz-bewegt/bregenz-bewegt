@@ -6,6 +6,7 @@ import {
   FriendRequesteeResult,
   AcceptFriendRequestDto,
   RemoveFriendDto,
+  FriendSearchResult,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, FriendRequest, Role, NotificationType } from '@prisma/client';
@@ -29,8 +30,7 @@ export class FriendService {
 
   async searchUserByUsername(
     query: string,
-    userId: User['id'],
-    onlyFriends?: boolean
+    userId: User['id']
   ): Promise<UserSearchResult[]> {
     const maxSearchResults = 50;
     const users = (
@@ -44,13 +44,7 @@ export class FriendService {
               id: { not: userId },
             },
             {
-              ...(onlyFriends
-                ? {
-                    friends: { some: { id: userId } },
-                  }
-                : {
-                    friends: { none: { id: userId } },
-                  }),
+              friends: { none: { id: userId } },
             },
             {
               username: { contains: query },
@@ -60,6 +54,7 @@ export class FriendService {
         orderBy: {
           username: 'asc',
         },
+        // select: { id: true, username: true, profilePicture: true },
       })
     )
       .reduce(
@@ -80,6 +75,58 @@ export class FriendService {
     return <UserSearchResult[]>users.map((user) => ({
       ...user,
       isRequested: friendRequests.some((f) => user.id === f.addresseeId),
+    }));
+  }
+
+  async searchFriendByUsername(
+    query: string,
+    userId: User['id']
+  ): Promise<FriendSearchResult[]> {
+    const maxSearchResults = 50;
+    const users = (
+      await this.prismaService.user.findMany({
+        where: {
+          AND: [
+            {
+              role: { not: Role.GUEST },
+            },
+            {
+              id: { not: userId },
+            },
+            {
+              friends: { some: { id: userId } },
+            },
+            {
+              username: { contains: query },
+            },
+          ],
+        },
+        orderBy: {
+          username: 'asc',
+        },
+        select: { id: true, username: true, profilePicture: true },
+      })
+    )
+      .reduce(
+        ([a, b], c) =>
+          c.username.toLowerCase().startsWith(query)
+            ? [[...a, c], b]
+            : [a, [...b, c]],
+        [[], []]
+      )
+      .reduce((p, c) => [...p, ...c], [])
+      .slice(0, maxSearchResults);
+
+    const { conversations } = await this.prismaService.user.findUnique({
+      where: { id: userId },
+      select: { conversations: { include: { participants: true } } },
+    });
+
+    return <FriendSearchResult[]>users.map((user) => ({
+      ...user,
+      hasConversation: conversations.some((c) =>
+        c.participants.some((p) => p.id === user.id)
+      ),
     }));
   }
 
