@@ -104,7 +104,7 @@ export class FriendService {
             dto.onlyConversationsless
               ? {
                   conversations: {
-                    none: { participants: { none: { id: userId } } },
+                    every: { participants: { none: { id: userId } } },
                   },
                 }
               : {},

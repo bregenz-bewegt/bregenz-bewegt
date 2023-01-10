@@ -6,7 +6,7 @@ export class SearchFriendQueryDto {
   @IsString()
   username: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsOptional()
   @IsBoolean()
   onlyConversationsless?: boolean;
