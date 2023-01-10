@@ -8,6 +8,7 @@ import {
   RemoveFriendDto,
   FriendSearchResult,
   SearchFriendQueryDto,
+  GetFriendsQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, FriendRequest, Role, NotificationType } from '@prisma/client';
@@ -20,13 +21,26 @@ export class FriendService {
     private notificationGateway: NotificationGateway
   ) {}
 
-  async getFriends(userId: User['id']): Promise<User[]> {
-    const user = await this.prismaService.user.findUnique({
-      where: { id: userId },
-      select: { friends: true },
+  async getFriends(
+    dto: GetFriendsQueryDto,
+    userId: User['id']
+  ): Promise<User[]> {
+    return await this.prismaService.user.findMany({
+      where: {
+        AND: [
+          {
+            friends: { some: { id: userId } },
+          },
+          dto.onlyConversationsless
+            ? {
+                conversations: {
+                  every: { participants: { none: { id: userId } } },
+                },
+              }
+            : {},
+        ],
+      },
     });
-
-    return user?.friends;
   }
 
   async searchUserByUsername(
@@ -83,7 +97,6 @@ export class FriendService {
     dto: SearchFriendQueryDto,
     userId: User['id']
   ): Promise<FriendSearchResult[]> {
-    console.log(dto);
     const query = dto.username;
     const maxSearchResults = 50;
     const users = (

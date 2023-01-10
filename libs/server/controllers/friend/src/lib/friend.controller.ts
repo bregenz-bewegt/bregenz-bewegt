@@ -18,6 +18,7 @@ import {
   RemoveFriendDto,
   FriendSearchResult,
   SearchFriendQueryDto,
+  GetFriendsQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   Body,
@@ -44,8 +45,13 @@ export class FriendController {
     new MapProfilePictureInterceptor()
   )
   @Get()
-  getFriends(@GetCurrentUser('sub') userId: User['id']): Promise<User[]> {
-    return this.friendService.getFriends(userId);
+  getFriends(
+    @GetCurrentUser('sub') userId: User['id'],
+
+    @Query(new ValidationPipe())
+    dto: GetFriendsQueryDto
+  ): Promise<User[]> {
+    return this.friendService.getFriends(dto, userId);
   }
 
   @HasRole(Role.USER)
@@ -78,13 +84,7 @@ export class FriendController {
   @Get('search')
   searchFriend(
     @GetCurrentUser('sub') userId: User['id'],
-    @Query(
-      new ValidationPipe({
-        transform: true,
-        transformOptions: { enableImplicitConversion: true },
-        forbidNonWhitelisted: true,
-      })
-    )
+    @Query(new ValidationPipe())
     dto: SearchFriendQueryDto
   ): Promise<FriendSearchResult[]> {
     return this.friendService.searchFriendByUsername(dto, userId);

@@ -1,3 +1,4 @@
+export * from './get-friends.dto';
 export * from './search-user-query.dto';
 export * from './search-friend-query.dto';
 export * from './create-friend-request.dto';

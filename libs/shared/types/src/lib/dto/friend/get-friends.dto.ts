@@ -1,12 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsOptional } from 'class-validator';
 
-export class SearchFriendQueryDto {
-  @ApiProperty()
-  @IsString()
-  username: string;
-
+export class GetFriendsQueryDto {
   @ApiProperty({ required: false })
   @IsOptional()
   @IsBoolean()
