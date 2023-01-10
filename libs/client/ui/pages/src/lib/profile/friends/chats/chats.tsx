@@ -1,3 +1,4 @@
+import { BackButton } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   IonPage,
@@ -16,16 +17,12 @@ export interface ChatProps {}
 export const Chats: React.FC<ChatProps> = ({}) => {
   return (
     <IonPage className="chats">
-      <IonHeader mode="ios">
+      <IonHeader mode="ios" collapse="condense" className="ion-no-border">
         <IonToolbar>
           <IonButtons>
-            <IonBackButton
-              color="primary"
-              defaultHref={tabRoutes.profile.route}
-              text="Zurück"
-            />
+            <BackButton defaultRouterLink={tabRoutes.profile.route} />
           </IonButtons>
-          <IonTitle>Chats</IonTitle>
+          <IonTitle>Freunde</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="chats__content" fullscreen></IonContent>
