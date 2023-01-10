@@ -1,5 +1,6 @@
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import {
+  ChatStore,
   friendsStore,
   FriendsStore,
   userStore,
@@ -33,6 +34,7 @@ import './create-conversation-modal.scss';
 export interface CreateConversationModalProps {
   friendsStore?: FriendsStore;
   userStore?: UserStore;
+  chatStore?: ChatStore;
   trigger: string;
 }
 
@@ -41,7 +43,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
     userStore.storeKey,
     friendsStore.storeKey
   )(
-    observer(({ userStore, trigger }) => {
+    observer(({ userStore, chatStore, trigger }) => {
       const modalRef = useRef<HTMLIonModalElement>(null);
       const [presentDefaultErrorToast] = useDefaultErrorToast();
       const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -93,8 +95,13 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
           .catch(() => setSearchResult([]));
       };
 
-      const handleCreateConversation = () => {
-        chatSt;
+      const handleCreateConversation = (participantsUsernames: string[]) => {
+        chatStore
+          ?.createConversation({ participants: participantsUsernames })
+          .then((conversation) => {
+            console.log(conversation);
+          })
+          .catch(() => {});
       };
 
       useEffect(() => {
@@ -165,7 +172,11 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                           {!isLoading && (
                             <IonButton fill="clear" mode="ios">
                               <AddCircle
-                                onClick={() => handleCreateConversation()}
+                                onClick={() =>
+                                  handleCreateConversation([
+                                    user.username ?? '',
+                                  ])
+                                }
                                 variant="Bold"
                                 color={`var(--ion-color-primary)`}
                               />
