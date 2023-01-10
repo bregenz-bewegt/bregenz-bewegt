@@ -101,6 +101,13 @@ export class FriendService {
             {
               username: { contains: query },
             },
+            dto.onlyConversationsless
+              ? {
+                  conversations: {
+                    none: { participants: { none: { id: userId } } },
+                  },
+                }
+              : {},
           ],
         },
         orderBy: {
