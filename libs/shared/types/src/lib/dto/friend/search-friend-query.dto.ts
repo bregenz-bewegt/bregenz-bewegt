@@ -8,8 +8,11 @@ export class SearchFriendQueryDto {
   username: string;
 
   @ApiProperty({ required: false })
-  // @IsOptional()
+  @IsOptional()
   @IsBoolean()
-  @Transform(({ value }) => value === 'true')
-  onlyConversationsless: boolean;
+  @Transform(({ value }) => {
+    console.log(value);
+    return value === 'true';
+  })
+  onlyConversationsless?: boolean;
 }
