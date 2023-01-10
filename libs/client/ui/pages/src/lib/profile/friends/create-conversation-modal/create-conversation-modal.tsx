@@ -72,7 +72,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
         }
 
         friendsStore
-          ?.searchFriend({ username: query })
+          ?.searchFriend({ username: query, onlyConversationsless: true })
           .then((result) => {
             setSearchResult(result);
             setIsLoading(false);
