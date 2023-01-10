@@ -52,8 +52,6 @@ export const Chats: React.FC<ChatProps> = inject(
       fetchConversations();
     }, []);
 
-    console.log(conversations);
-
     return (
       <div className="chats">
         <IonButton expand="block" mode="ios" id={modalTrigger}>
