@@ -61,7 +61,10 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
         setIsLoading(true);
 
         const query = e.detail.value?.trim().toLowerCase();
-        if (!query) return setSearchResult([]);
+        if (!query) {
+          fetchFriends();
+          return setIsLoading(false);
+        }
 
         friendsStore
           ?.searchFriend({ username: query })
@@ -75,7 +78,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
           });
       };
 
-      useEffect(() => {
+      const fetchFriends = () => {
         friendsStore
           ?.fetchFriends()
           .then((result) =>
@@ -88,6 +91,10 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
             )
           )
           .catch(() => setSearchResult([]));
+      };
+
+      useEffect(() => {
+        fetchFriends();
       }, []);
 
       return (
