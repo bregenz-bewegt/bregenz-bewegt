@@ -102,7 +102,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
         chatStore
           ?.createConversation({ participantId })
           .then((conversation) => {
-            console.log(conversation);
+            // console.log(conversation);
           })
           .catch(() => {
             presentDefaultErrorToast();
