@@ -55,7 +55,7 @@ export class FriendService {
         orderBy: {
           username: 'asc',
         },
-        // select: { id: true, username: true, profilePicture: true },
+        select: { id: true, username: true, profilePicture: true },
       })
     )
       .reduce(
@@ -83,6 +83,7 @@ export class FriendService {
     dto: SearchFriendQueryDto,
     userId: User['id']
   ): Promise<FriendSearchResult[]> {
+    console.log(dto);
     const query = dto.username;
     const maxSearchResults = 50;
     const users = (
