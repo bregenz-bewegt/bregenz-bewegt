@@ -6,6 +6,17 @@ import { Conversation, User } from '@prisma/client';
 export class ChatService {
   constructor(private prismaService: PrismaService) {}
 
+  async getConversations(
+    userId: User['id']
+  ): Promise<(Conversation & { participants: User[] })[]> {
+    const { conversations } = await this.prismaService.user.findUnique({
+      where: { id: userId },
+      select: { conversations: { include: { participants: true } } },
+    });
+
+    return conversations;
+  }
+
   async createConversation(
     userId: User['id'],
     participantsUsernames: string[]

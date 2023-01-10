@@ -119,7 +119,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
         >
           <IonHeader mode="ios" collapse="condense" className="ion-no-border">
             <IonToolbar>
-              <IonTitle>Freund für Chat suchen</IonTitle>
+              <IonTitle>Neuer Chat</IonTitle>
               <IonButtons slot="start">
                 <IonButton onClick={() => dismissAddModal()}>Zurück</IonButton>
               </IonButtons>
@@ -129,7 +129,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
               value={searchText}
               onIonChange={(e) => handleSearch(e)}
               debounce={250}
-              placeholder="Freunde suchen"
+              placeholder="Freunde für neuen Chat suchen"
             />
           </IonHeader>
           <IonContent className="create-conversation-modal__content">

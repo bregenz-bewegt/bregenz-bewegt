@@ -1,5 +1,5 @@
 import { http } from '@bregenz-bewegt/client/common/http';
-import { Conversation } from '@bregenz-bewegt/client/types';
+import { Conversation, User } from '@bregenz-bewegt/client/types';
 import { CreateConversationDto } from '@bregenz-bewegt/shared/types';
 import { makeAutoObservable } from 'mobx';
 import { Store } from './store';
@@ -9,6 +9,13 @@ export class ChatStore implements Store {
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  async getConversations(): Promise<
+    (Conversation & { participants: User[] })[]
+  > {
+    const { data } = await http.get('chats/conversations');
+    return <Conversation[]>data;
   }
 
   async createConversation(dto: CreateConversationDto): Promise<Conversation> {
