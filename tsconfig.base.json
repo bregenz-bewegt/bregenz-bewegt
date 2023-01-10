@@ -56,6 +56,9 @@
       "@bregenz-bewegt/server/controllers/activity": [
         "libs/server/controllers/activity/src/index.ts"
       ],
+      "@bregenz-bewegt/server/controllers/chat": [
+        "libs/server/controllers/chat/src/index.ts"
+      ],
       "@bregenz-bewegt/server/controllers/exercise": [
         "libs/server/controllers/exercise/src/index.ts"
       ],

@@ -19,6 +19,7 @@
     "server-common": "libs/server/common",
     "server-controllers-activity": "libs/server/controllers/activity",
     "server-controllers-auth": "libs/server/controllers/auth",
+    "server-controllers-chat": "libs/server/controllers/chat",
     "server-controllers-exercise": "libs/server/controllers/exercise",
     "server-controllers-friend": "libs/server/controllers/friend",
     "server-controllers-leaderboard": "libs/server/controllers/leaderboard",
