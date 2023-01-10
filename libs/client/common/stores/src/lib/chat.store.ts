@@ -16,3 +16,5 @@ export class ChatStore implements Store {
     return <Conversation>data;
   }
 }
+
+export const chatStore = new ChatStore();

@@ -10,3 +10,4 @@ export * from './leaderboard.store';
 export * from './friends.store';
 export * from './notifications.store';
 export * from './location.store';
+export * from './chat.store';
