@@ -93,6 +93,8 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
           .catch(() => setSearchResult([]));
       };
 
+      const handleCreateConversation = () => {};
+
       useEffect(() => {
         fetchFriends();
       }, []);
@@ -161,6 +163,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                           {!isLoading && (
                             <IonButton fill="clear" mode="ios">
                               <AddCircle
+                                onClick={() => handleCreateConversation()}
                                 variant="Bold"
                                 color={`var(--ion-color-primary)`}
                               />
