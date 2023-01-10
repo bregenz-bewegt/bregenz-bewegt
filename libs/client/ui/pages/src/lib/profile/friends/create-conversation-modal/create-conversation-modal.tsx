@@ -5,7 +5,7 @@ import {
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { UserSearchResult } from '@bregenz-bewegt/shared/types';
+import { FriendSearchResult } from '@bregenz-bewegt/shared/types';
 import { IonSearchbarCustomEvent } from '@ionic/core';
 import {
   IonModal,
@@ -27,7 +27,7 @@ import {
 } from '@ionic/react';
 import { AddCircle } from 'iconsax-react';
 import { inject, observer } from 'mobx-react';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './create-conversation-modal.scss';
 
 export interface CreateConversationModalProps {
@@ -46,8 +46,9 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
       const [presentDefaultErrorToast] = useDefaultErrorToast();
       const [isLoading, setIsLoading] = useState<boolean>(false);
       const [searchText, setSearchText] = useState<string>('');
-      const [searchResult, setSearchResult] = useState<UserSearchResult[]>([]);
-      const [sentRequests, setSentRequests] = useState<UserSearchResult[]>([]);
+      const [searchResult, setSearchResult] = useState<FriendSearchResult[]>(
+        []
+      );
 
       const dismissAddModal = () => {
         modalRef.current?.dismiss();
@@ -74,16 +75,20 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
           });
       };
 
-      const sendFriendRequest = (addressee: UserSearchResult) => {
+      useEffect(() => {
         friendsStore
-          ?.sendFriendRequest({ addresseeId: addressee.id })
-          .then(() => {
-            setSentRequests((prev) => [...prev, addressee]);
-          })
-          .catch(() => {
-            presentDefaultErrorToast();
-          });
-      };
+          ?.fetchFriends()
+          .then((result) =>
+            setSearchResult(
+              result.map((u) => ({
+                id: u.id,
+                username: u.username,
+                profilePicture: u.profilePicture,
+              }))
+            )
+          )
+          .catch(() => setSearchResult([]));
+      }, []);
 
       return (
         <IonModal
@@ -111,10 +116,6 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
             <IonList className="friend-user-list">
               {isLoading || searchResult.length > 0
                 ? searchResult.map((user) => {
-                    const isRequested =
-                      user.isRequested ||
-                      sentRequests.some((r) => r.id === user.id);
-
                     return (
                       <IonRow key={user.id}>
                         <IonCol size="auto" className="username-avatar-col">
@@ -151,20 +152,11 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                         </IonCol>
                         <IonCol size="auto">
                           {!isLoading && (
-                            <IonButton
-                              fill="clear"
-                              onClick={() => sendFriendRequest(user)}
-                              disabled={isRequested}
-                              mode="ios"
-                            >
-                              {isRequested ? (
-                                'angefragt'
-                              ) : (
-                                <AddCircle
-                                  variant="Bold"
-                                  color={`var(--ion-color-primary)`}
-                                />
-                              )}
+                            <IonButton fill="clear" mode="ios">
+                              <AddCircle
+                                variant="Bold"
+                                color={`var(--ion-color-primary)`}
+                              />
                             </IonButton>
                           )}
                         </IonCol>

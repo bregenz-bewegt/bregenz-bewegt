@@ -13,7 +13,6 @@ import React from 'react';
 import { CreateConversationModal } from '../create-conversation-modal/create-conversation-modal';
 import { chatbox } from 'ionicons/icons';
 import './chats.scss';
-import { MessageText } from 'iconsax-react';
 
 export interface ChatProps {}
 
