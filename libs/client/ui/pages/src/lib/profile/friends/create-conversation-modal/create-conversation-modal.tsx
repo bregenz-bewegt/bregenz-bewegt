@@ -176,7 +176,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                             <IonButton fill="clear" mode="ios">
                               <AddCircle
                                 onClick={() =>
-                                  handleCreateConversation([user.id ?? ''])
+                                  handleCreateConversation(user.id ?? '')
                                 }
                                 variant="Bold"
                                 color={`var(--ion-color-primary)`}
