@@ -51,7 +51,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
             <IonButtons>
               <BackButton defaultRouterLink={tabRoutes.profile.route} />
             </IonButtons>
-            <IonTitle>Chat</IonTitle>
+            <IonTitle>{match.params.username}</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
