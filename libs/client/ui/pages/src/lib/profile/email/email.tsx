@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Input } from '@bregenz-bewegt/client-ui-components';
+import { BackButton, Input } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import { changeEmailSchema } from '@bregenz-bewegt/client/common/validation';
@@ -8,7 +8,6 @@ import {
   IonHeader,
   IonToolbar,
   IonButtons,
-  IonBackButton,
   IonTitle,
   IonContent,
   IonGrid,
@@ -68,14 +67,10 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage ref={page}>
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <IonBackButton
-                color="primary"
-                defaultHref={tabRoutes.profile.route}
-                text="Zurück"
-              />
+              <BackButton defaultRouterLink={tabRoutes.profile.route} />
             </IonButtons>
             <IonTitle>E-Mail Adresse ändern</IonTitle>
           </IonToolbar>

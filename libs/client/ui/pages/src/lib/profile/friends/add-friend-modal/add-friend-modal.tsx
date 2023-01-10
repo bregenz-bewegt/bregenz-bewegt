@@ -91,7 +91,7 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
         canDismiss
         className="add-friend-modal"
       >
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonTitle>Freunde hinzufügen</IonTitle>
             <IonButtons slot="start">
