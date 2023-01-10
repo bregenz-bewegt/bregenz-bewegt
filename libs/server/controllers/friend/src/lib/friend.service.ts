@@ -83,7 +83,6 @@ export class FriendService {
     dto: SearchFriendQueryDto,
     userId: User['id']
   ): Promise<FriendSearchResult[]> {
-    console.log(dto);
     const query = dto.username;
     const maxSearchResults = 50;
     const users = (
