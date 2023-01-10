@@ -91,11 +91,6 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             ></Route>
             <Route
               exact
-              path={`${tabRoutes.profile.route}/chat/:username`}
-              component={Conversation}
-            ></Route>
-            <Route
-              exact
               path={`${tabRoutes.profile.route}/appearance`}
               component={Appearance}
             ></Route>
@@ -113,6 +108,11 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
               exact
               path={`${tabRoutes.profile.route}/friends`}
               component={Friends}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/chat/:username`}
+              component={Conversation}
             ></Route>
             <Route
               exact
