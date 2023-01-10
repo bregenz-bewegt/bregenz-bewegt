@@ -49,7 +49,9 @@ export const Conversation: React.FC<ConversationProps> = inject(
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <BackButton defaultRouterLink={tabRoutes.profile.route} />
+              <BackButton
+                defaultRouterLink={`${tabRoutes.profile.route}/friends`}
+              />
             </IonButtons>
             <IonTitle>{match.params.username}</IonTitle>
           </IonToolbar>
