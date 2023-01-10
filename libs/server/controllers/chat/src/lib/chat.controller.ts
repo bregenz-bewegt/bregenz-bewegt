@@ -45,6 +45,6 @@ export class ChatController {
     @GetCurrentUser('sub') userId: User['id'],
     @Body() dto: CreateConversationDto
   ): Promise<Conversation> {
-    return this.chatService.createConversation(userId, dto.participants);
+    return this.chatService.createConversation(userId, dto.participantId);
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { Conversation, User } from '@prisma/client';
 
@@ -21,6 +21,14 @@ export class ChatService {
     userId: User['id'],
     participantId: User['id']
   ): Promise<Conversation> {
+    const exists = await this.prismaService.user.findUnique({
+      where: { id: participantId },
+    });
+
+    if (!exists) {
+      throw new ForbiddenException();
+    }
+
     return this.prismaService.conversation.create({
       data: {
         participants: {
