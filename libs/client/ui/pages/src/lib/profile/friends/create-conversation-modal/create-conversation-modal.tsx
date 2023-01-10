@@ -93,7 +93,9 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
           .catch(() => setSearchResult([]));
       };
 
-      const handleCreateConversation = () => {};
+      const handleCreateConversation = () => {
+        chatSt;
+      };
 
       useEffect(() => {
         fetchFriends();
