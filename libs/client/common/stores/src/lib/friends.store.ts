@@ -4,7 +4,7 @@ import {
   AcceptFriendRequestDto,
   AllFriendRequests,
   CreateFriendRequestDto,
-  FriendSearchResult,
+  UserSearchResult,
   RejectFriendRequestDto,
   RemoveFriendDto,
   RevokeFriendRequestDto,
@@ -25,7 +25,12 @@ export class FriendsStore implements Store {
     return data;
   }
 
-  async searchUser(params: SearchUserQueryDto): Promise<FriendSearchResult[]> {
+  async searchUser(params: SearchUserQueryDto): Promise<UserSearchResult[]> {
+    const { data } = await http.get('friends/search-user', { params });
+    return data;
+  }
+
+  async searchFriend(params: SearchUserQueryDto): Promise<UserSearchResult[]> {
     const { data } = await http.get('friends/search', { params });
     return data;
   }

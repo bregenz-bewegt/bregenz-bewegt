@@ -1,6 +1,6 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import {
-  FriendSearchResult,
+  UserSearchResult,
   CreateFriendRequestDto,
   FriendAdresseeResult,
   FriendRequesteeResult,
@@ -30,7 +30,7 @@ export class FriendService {
   async searchUserByUsername(
     query: string,
     userId: User['id']
-  ): Promise<FriendSearchResult[]> {
+  ): Promise<UserSearchResult[]> {
     const maxSearchResults = 50;
     const users = (
       await this.prismaService.user.findMany({
@@ -70,7 +70,7 @@ export class FriendService {
       select: { friendRequests: { where: { requestee: { id: userId } } } },
     });
 
-    return <FriendSearchResult[]>users.map((user) => ({
+    return <UserSearchResult[]>users.map((user) => ({
       ...user,
       isRequested: friendRequests.some((f) => user.id === f.addresseeId),
     }));

@@ -5,7 +5,7 @@ import {
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { FriendSearchResult } from '@bregenz-bewegt/shared/types';
+import { UserSearchResult } from '@bregenz-bewegt/shared/types';
 import { IonSearchbarCustomEvent } from '@ionic/core';
 import {
   IonModal,
@@ -45,8 +45,8 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
-    const [searchResult, setSearchResult] = useState<FriendSearchResult[]>([]);
-    const [sentRequests, setSentRequests] = useState<FriendSearchResult[]>([]);
+    const [searchResult, setSearchResult] = useState<UserSearchResult[]>([]);
+    const [sentRequests, setSentRequests] = useState<UserSearchResult[]>([]);
 
     const dismissAddModal = () => {
       modalRef.current?.dismiss();
@@ -73,7 +73,7 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
         });
     };
 
-    const sendFriendRequest = (addressee: FriendSearchResult) => {
+    const sendFriendRequest = (addressee: UserSearchResult) => {
       friendsStore
         ?.sendFriendRequest({ addresseeId: addressee.id })
         .then(() => {

@@ -10,14 +10,17 @@ import {
   IonIcon,
 } from '@ionic/react';
 import React from 'react';
+import { CreateConversationModal } from '../create-conversation-modal/create-conversation-modal';
 import './chats.scss';
 
 export interface ChatProps {}
 
 export const Chats: React.FC<ChatProps> = ({}) => {
+  const modalTrigger = 'create-conversation-modal' as const;
+
   return (
     <div className="chats">
-      <IonButton expand="block" mode="ios">
+      <IonButton expand="block" mode="ios" id={modalTrigger}>
         <IonIcon slot="start" />
         Neuer Chat
       </IonButton>
@@ -45,6 +48,7 @@ export const Chats: React.FC<ChatProps> = ({}) => {
           </IonItem>
         </IonList>
       </IonGrid>
+      <CreateConversationModal trigger={modalTrigger} />
     </div>
   );
 };

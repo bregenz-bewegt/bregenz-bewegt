@@ -7,7 +7,7 @@ import {
 } from '@bregenz-bewegt/server/common';
 import {
   SearchUserQueryDto,
-  FriendSearchResult,
+  UserSearchResult,
   CreateFriendRequestDto,
   AllFriendRequests,
   FriendAdresseeResult,
@@ -16,6 +16,7 @@ import {
   RejectFriendRequestDto,
   AcceptFriendRequestDto,
   RemoveFriendDto,
+  FriendSearchResult,
 } from '@bregenz-bewegt/shared/types';
 import {
   Body,
@@ -52,8 +53,29 @@ export class FriendController {
     RemoveSensitiveFieldsInterceptor,
     new MapProfilePictureInterceptor()
   )
-  @Get('search')
+  @Get('search-user')
   searchUser(
+    @GetCurrentUser('sub') userId: User['id'],
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
+        forbidNonWhitelisted: true,
+      })
+    )
+    dto: SearchUserQueryDto
+  ): Promise<UserSearchResult[]> {
+    return this.friendService.searchUserByUsername(dto.username, userId);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    new MapProfilePictureInterceptor()
+  )
+  @Get('search')
+  searchFriend(
     @GetCurrentUser('sub') userId: User['id'],
     @Query(
       new ValidationPipe({
