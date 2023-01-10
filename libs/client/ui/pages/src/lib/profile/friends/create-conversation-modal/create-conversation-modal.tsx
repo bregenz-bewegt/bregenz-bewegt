@@ -101,7 +101,9 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
           .then((conversation) => {
             console.log(conversation);
           })
-          .catch(() => {});
+          .catch(() => {
+            presentDefaultErrorToast();
+          });
       };
 
       useEffect(() => {
