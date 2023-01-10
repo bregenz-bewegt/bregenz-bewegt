@@ -3,6 +3,7 @@ import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   chatStore,
   ChatStore,
+  tabStore,
   TabStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { User } from '@bregenz-bewegt/client/types';
@@ -31,7 +32,8 @@ export interface ConversationProps extends RouteComponentProps<MatchParams> {
 }
 
 export const Conversation: React.FC<ConversationProps> = inject(
-  chatStore.storeKey
+  chatStore.storeKey,
+  tabStore.storeKey
 )(
   observer(({ chatStore, tabStore, match }) => {
     useIonViewWillEnter(() => {
