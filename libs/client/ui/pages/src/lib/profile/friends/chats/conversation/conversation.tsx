@@ -23,10 +23,11 @@ import {
   IonRow,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { send } from 'ionicons/icons';
 import './conversation.scss';
+import { useFormik } from 'formik';
 
 interface MatchParams {
   username: User['username'];
@@ -42,7 +43,10 @@ export const Conversation: React.FC<ConversationProps> = inject(
   tabStore.storeKey
 )(
   observer(({ chatStore, tabStore, match }) => {
-    const [message, setMessage] = useState<string>('');
+    const chat = useFormik({
+      initialValues: { message: '' },
+      onSubmit: (values, { setSubmitting, setValues }) => {},
+    });
 
     useIonViewWillEnter(() => {
       tabStore?.setIsShown(false);
@@ -68,7 +72,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
           <div>
             <IonGrid>
               <IonRow>{match.params.username}</IonRow>
-              <IonRow>{message}</IonRow>
+              <IonRow>{chat.values.message}</IonRow>
             </IonGrid>
           </div>
         </IonContent>
@@ -79,7 +83,15 @@ export const Conversation: React.FC<ConversationProps> = inject(
                 <IonIcon slot="end" icon={send}></IonIcon>
               </IonButton>
             </IonButtons>
-            <Input />
+            <Input
+              name="message"
+              type="text"
+              inputMode="text"
+              placeholder="Nachricht"
+              value={chat.values.message}
+              onChange={chat.handleChange}
+              onBlur={chat.handleBlur}
+            />
           </IonToolbar>
         </IonFooter>
       </IonPage>
