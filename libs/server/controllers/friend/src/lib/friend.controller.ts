@@ -17,6 +17,7 @@ import {
   AcceptFriendRequestDto,
   RemoveFriendDto,
   FriendSearchResult,
+  SearchFriendQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   Body,
@@ -84,7 +85,7 @@ export class FriendController {
         forbidNonWhitelisted: true,
       })
     )
-    dto: SearchUserQueryDto
+    dto: SearchFriendQueryDto
   ): Promise<FriendSearchResult[]> {
     return this.friendService.searchFriendByUsername(dto.username, userId);
   }
