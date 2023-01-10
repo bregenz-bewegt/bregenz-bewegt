@@ -5,5 +5,5 @@ import { IsString } from 'class-validator';
 export class CreateConversationDto {
   @ApiProperty()
   @IsString({ each: true })
-  participants: Conversation['participants'];
+  participants: Conversation['participants'][0]['username'][];
 }
