@@ -81,7 +81,7 @@ export class FriendController {
     @Query(
       new ValidationPipe({
         transform: true,
-        transformOptions: { enableImplicitConversion: true },
+        // transformOptions: { enableImplicitConversion: true },
         forbidNonWhitelisted: true,
       })
     )
