@@ -29,7 +29,8 @@ export class FriendService {
 
   async searchUserByUsername(
     query: string,
-    userId: User['id']
+    userId: User['id'],
+    onlyFriends?: boolean
   ): Promise<UserSearchResult[]> {
     const maxSearchResults = 50;
     const users = (
@@ -43,7 +44,13 @@ export class FriendService {
               id: { not: userId },
             },
             {
-              friends: { none: { id: userId } },
+              ...(onlyFriends
+                ? {
+                    friends: { some: { id: userId } },
+                  }
+                : {
+                    friends: { none: { id: userId } },
+                  }),
             },
             {
               username: { contains: query },
