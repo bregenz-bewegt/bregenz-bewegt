@@ -26,6 +26,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from '../tabs';
 import { ScanBarcode } from 'iconsax-react';
 import { NotificationListener } from '@bregenz-bewegt/client-ui-components';
+import { Conversation } from 'libs/client/ui/pages/src/lib/profile/friends';
 
 export interface PrivateTabsOutletProps {
   tabStore?: TabStore;
