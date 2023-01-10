@@ -21,6 +21,7 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { Conversation, User } from '@bregenz-bewegt/client/types';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 export interface ChatProps {
   chatStore?: ChatStore;
@@ -72,7 +73,12 @@ export const Chats: React.FC<ChatProps> = inject(
                 )[0];
 
                 return (
-                  <IonItem button detail key={conversation.id}>
+                  <IonItem
+                    button
+                    detail
+                    key={conversation.id}
+                    routerLink={`${tabRoutes.profile.route}/chat/${partner.username}`}
+                  >
                     <IonAvatar className="avatar" slot="start">
                       <img
                         src={
