@@ -117,17 +117,7 @@ export class FriendService {
       .reduce((p, c) => [...p, ...c], [])
       .slice(0, maxSearchResults);
 
-    const { conversations } = await this.prismaService.user.findUnique({
-      where: { id: userId },
-      select: { conversations: { include: { participants: true } } },
-    });
-
-    return <FriendSearchResult[]>users.map((user) => ({
-      ...user,
-      hasConversation: conversations.some((c) =>
-        c.participants.some((p) => p.id === user.id)
-      ),
-    }));
+    return users as FriendSearchResult[];
   }
 
   async createFriendRequest(

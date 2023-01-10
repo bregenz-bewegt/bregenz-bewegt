@@ -9,6 +9,7 @@ import {
   RemoveFriendDto,
   RevokeFriendRequestDto,
   SearchUserQueryDto,
+  FriendSearchResult,
 } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable } from 'mobx';
 import { Store } from './store';
@@ -30,7 +31,9 @@ export class FriendsStore implements Store {
     return data;
   }
 
-  async searchFriend(params: SearchUserQueryDto): Promise<UserSearchResult[]> {
+  async searchFriend(
+    params: SearchUserQueryDto
+  ): Promise<FriendSearchResult[]> {
     const { data } = await http.get('friends/search', { params });
     return data;
   }
