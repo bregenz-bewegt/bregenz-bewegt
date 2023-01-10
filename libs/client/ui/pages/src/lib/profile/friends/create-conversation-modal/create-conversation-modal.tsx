@@ -1,5 +1,6 @@
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import {
+  chatStore,
   ChatStore,
   friendsStore,
   FriendsStore,
@@ -42,7 +43,8 @@ export interface CreateConversationModalProps {
 export const CreateConversationModal: React.FC<CreateConversationModalProps> =
   inject(
     userStore.storeKey,
-    friendsStore.storeKey
+    friendsStore.storeKey,
+    chatStore.storeKey
   )(
     observer(({ userStore, chatStore, trigger }) => {
       const modalRef = useRef<HTMLIonModalElement>(null);
@@ -175,9 +177,9 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                           {!isLoading && (
                             <IonButton fill="clear" mode="ios">
                               <AddCircle
-                                onClick={() =>
-                                  handleCreateConversation(user.id ?? '')
-                                }
+                                onClick={() => {
+                                  handleCreateConversation(user.id ?? '');
+                                }}
                                 variant="Bold"
                                 color={`var(--ion-color-primary)`}
                               />
