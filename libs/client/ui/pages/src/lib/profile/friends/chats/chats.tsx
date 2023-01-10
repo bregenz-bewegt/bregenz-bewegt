@@ -74,7 +74,7 @@ export const Chats: React.FC<ChatProps> = inject(
                 )[0];
 
                 return (
-                  <IonItem button detail>
+                  <IonItem button detail key={conversation.id}>
                     <IonAvatar className="avatar" slot="start">
                       <img
                         src={
@@ -94,7 +94,7 @@ export const Chats: React.FC<ChatProps> = inject(
                 );
               })
             ) : (
-              <IonRow className="no-results">
+              <IonRow className="no-chats">
                 <IonItem lines="none">Keine Chats</IonItem>
               </IonRow>
             )}
