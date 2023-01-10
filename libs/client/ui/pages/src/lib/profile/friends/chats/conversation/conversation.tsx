@@ -1,6 +1,10 @@
 import { BackButton } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
-import { chatStore, ChatStore } from '@bregenz-bewegt/client/common/stores';
+import {
+  chatStore,
+  ChatStore,
+  TabStore,
+} from '@bregenz-bewegt/client/common/stores';
 import { User } from '@bregenz-bewegt/client/types';
 import {
   IonPage,
@@ -9,6 +13,8 @@ import {
   IonButtons,
   IonTitle,
   IonContent,
+  useIonViewWillEnter,
+  useIonViewWillLeave,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import React from 'react';
@@ -21,12 +27,21 @@ interface MatchParams {
 
 export interface ConversationProps extends RouteComponentProps<MatchParams> {
   chatStore?: ChatStore;
+  tabStore?: TabStore;
 }
 
 export const Conversation: React.FC<ConversationProps> = inject(
   chatStore.storeKey
 )(
-  observer(({ chatStore, match }) => {
+  observer(({ chatStore, tabStore, match }) => {
+    useIonViewWillEnter(() => {
+      tabStore?.setIsShown(false);
+    }, []);
+
+    useIonViewWillLeave(() => {
+      tabStore?.setIsShown(true);
+    }, []);
+
     return (
       <IonPage className="conversation">
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
