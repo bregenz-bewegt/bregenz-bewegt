@@ -59,5 +59,9 @@
         color: var(--ion-color-primary);
       }
     }
+
+    &--chat {
+      margin-right: var(--spacing-m);
+    }
   }
 }

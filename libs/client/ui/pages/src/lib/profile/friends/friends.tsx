@@ -17,9 +17,8 @@ import {
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import React, { useRef, useState } from 'react';
-import { FriendList } from './friend-list/friend-list';
+import { FriendList, RequestList, Chats } from '.';
 import './friends.scss';
-import { RequestList } from './request-list/request-list';
 
 export interface FriendsProps {
   friendsStore?: FriendsStore;
@@ -67,7 +66,7 @@ export const Friends: React.FC<FriendsProps> = inject(friendsStore.storeKey)(
           {friendsDisplayType === FriendsDisplayType.Requests ? (
             <RequestList />
           ) : friendsDisplayType === FriendsDisplayType.Chats ? (
-            <Chat />
+            <Chats />
           ) : (
             <FriendList />
           )}

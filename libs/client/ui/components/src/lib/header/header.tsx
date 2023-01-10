@@ -19,7 +19,7 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
-import { Notification as NotificationIcon } from 'iconsax-react';
+import { Notification as NotificationIcon, MessageText } from 'iconsax-react';
 import {
   useDefaultErrorToast,
   useIsGuest,
@@ -88,6 +88,17 @@ export const Header: React.FC<HeaderProps> = inject(
             </IonText>
           </div>
         </div>
+        <IonFab className="header__fab header__fab--chat">
+          <IonFabButton
+            className="header__fab__fab-button"
+            routerLink={`/notifications`}
+          >
+            <MessageText
+              variant="Bold"
+              className="header__fab__fab-button__icon"
+            />
+          </IonFabButton>
+        </IonFab>
         <IonFab className="header__fab">
           {notificationsStore?.notifications &&
             notificationsStore.getUnreadNotifications().length > 0 && (
