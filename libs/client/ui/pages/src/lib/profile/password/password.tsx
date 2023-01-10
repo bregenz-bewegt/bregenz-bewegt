@@ -6,7 +6,6 @@ import {
   IonHeader,
   IonToolbar,
   IonButtons,
-  IonBackButton,
   IonTitle,
   IonContent,
   IonGrid,
@@ -19,7 +18,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import { useFormik } from 'formik';
 import { changePasswordSchema } from '@bregenz-bewegt/client/common/validation';
-import { Input } from '@bregenz-bewegt/client-ui-components';
+import { BackButton, Input } from '@bregenz-bewegt/client-ui-components';
 import { checkmark } from 'ionicons/icons';
 import './password.scss';
 
@@ -63,14 +62,10 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
 
     return (
       <IonPage className="profile-password">
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <IonBackButton
-                color="primary"
-                defaultHref={tabRoutes.profile.route}
-                text="Zurück"
-              />
+              <BackButton defaultRouterLink={tabRoutes.profile.route} />
             </IonButtons>
             <IonTitle>Passwort ändern</IonTitle>
           </IonToolbar>

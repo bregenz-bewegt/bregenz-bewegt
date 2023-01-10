@@ -122,7 +122,12 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
               <Redirect to="/start" />
             </Route>
           </IonRouterOutlet>
-          <IonTabBar slot="bottom" mode="md" hidden={!tabStore?.isShown}>
+          <IonTabBar
+            slot="bottom"
+            mode="md"
+            hidden={!tabStore?.isShown}
+            className="ion-no-border"
+          >
             {Object.values(tabRoutes).map((page, i) => {
               if (page.label !== 'Scan') {
                 return (
