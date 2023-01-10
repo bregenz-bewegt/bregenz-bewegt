@@ -6,6 +6,7 @@ import {
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
+import { User } from '@bregenz-bewegt/client/types';
 import { FriendSearchResult } from '@bregenz-bewegt/shared/types';
 import { IonSearchbarCustomEvent } from '@ionic/core';
 import {
@@ -95,9 +96,9 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
           .catch(() => setSearchResult([]));
       };
 
-      const handleCreateConversation = (participantsUsernames: string[]) => {
+      const handleCreateConversation = (participantId: User['id']) => {
         chatStore
-          ?.createConversation({ participants: participantsUsernames })
+          ?.createConversation({ participantId })
           .then((conversation) => {
             console.log(conversation);
           })
@@ -175,9 +176,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                             <IonButton fill="clear" mode="ios">
                               <AddCircle
                                 onClick={() =>
-                                  handleCreateConversation([
-                                    user.username ?? '',
-                                  ])
+                                  handleCreateConversation([user.id ?? ''])
                                 }
                                 variant="Bold"
                                 color={`var(--ion-color-primary)`}

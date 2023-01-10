@@ -19,15 +19,12 @@ export class ChatService {
 
   async createConversation(
     userId: User['id'],
-    participantsUsernames: string[]
+    participantId: User['id']
   ): Promise<Conversation> {
     return this.prismaService.conversation.create({
       data: {
         participants: {
-          connect: [
-            { id: userId },
-            ...participantsUsernames.map((u) => ({ username: u })),
-          ],
+          connect: [{ id: userId }, { id: participantId }],
         },
       },
     });
