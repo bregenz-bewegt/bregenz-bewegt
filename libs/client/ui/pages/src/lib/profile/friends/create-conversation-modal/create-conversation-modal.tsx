@@ -86,7 +86,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
 
       const fetchFriends = () => {
         friendsStore
-          ?.fetchFriends()
+          ?.fetchFriends({ onlyConversationsless: true })
           .then((result) =>
             setSearchResult(
               result.map((u) => ({

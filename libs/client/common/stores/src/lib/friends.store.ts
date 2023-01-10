@@ -11,6 +11,7 @@ import {
   SearchUserQueryDto,
   FriendSearchResult,
   SearchFriendQueryDto,
+  GetFriendsQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable } from 'mobx';
 import { Store } from './store';
@@ -22,8 +23,8 @@ export class FriendsStore implements Store {
     makeAutoObservable(this);
   }
 
-  @action async fetchFriends(): Promise<Friend[]> {
-    const { data } = await http.get('/friends');
+  @action async fetchFriends(params: GetFriendsQueryDto): Promise<Friend[]> {
+    const { data } = await http.get('/friends', { params });
     return data;
   }
 
