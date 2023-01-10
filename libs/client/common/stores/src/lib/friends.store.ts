@@ -13,7 +13,7 @@ import {
   SearchFriendQueryDto,
   GetFriendsQueryDto,
 } from '@bregenz-bewegt/shared/types';
-import { action, makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import { Store } from './store';
 
 export class FriendsStore implements Store {
@@ -23,8 +23,8 @@ export class FriendsStore implements Store {
     makeAutoObservable(this);
   }
 
-  @action async fetchFriends(params: GetFriendsQueryDto): Promise<Friend[]> {
-    const { data } = await http.get('/friends', { params });
+  async fetchFriends(params?: GetFriendsQueryDto): Promise<Friend[]> {
+    const { data } = await http.get('/friends', params ? { params } : {});
     return data;
   }
 
