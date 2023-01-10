@@ -7,6 +7,7 @@ import {
   AcceptFriendRequestDto,
   RemoveFriendDto,
   FriendSearchResult,
+  SearchFriendQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, FriendRequest, Role, NotificationType } from '@prisma/client';
@@ -79,9 +80,10 @@ export class FriendService {
   }
 
   async searchFriendByUsername(
-    query: string,
+    dto: SearchFriendQueryDto,
     userId: User['id']
   ): Promise<FriendSearchResult[]> {
+    const query = dto.username;
     const maxSearchResults = 50;
     const users = (
       await this.prismaService.user.findMany({
