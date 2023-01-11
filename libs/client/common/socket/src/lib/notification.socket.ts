@@ -3,16 +3,10 @@ import {
   NotificationClientToServerEvents,
   NotificationServerToClientEvents,
 } from '@bregenz-bewegt/shared/types';
-import { io, ManagerOptions, Socket, SocketOptions } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
+import { connectionOptions } from '.';
 
-const connectionOptions: Partial<ManagerOptions & SocketOptions> = {
-  forceNew: true,
-  reconnectionAttempts: 10,
-  timeout: 1000,
-  transports: ['websocket'],
-};
-
-export const connectSocket = (
+export const connectNotificationSocket = (
   userId: User['id']
 ): Socket<
   NotificationServerToClientEvents,
