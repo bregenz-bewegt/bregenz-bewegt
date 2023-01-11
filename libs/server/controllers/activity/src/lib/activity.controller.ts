@@ -1,5 +1,9 @@
 import { ActivityChartData } from '@bregenz-bewegt/client/types';
-import { GetCurrentUser } from '@bregenz-bewegt/server/common';
+import {
+  GetCurrentUser,
+  HasRole,
+  RoleGuard,
+} from '@bregenz-bewegt/server/common';
 import {
   ActivityPaginationQueryDto,
   EndActivityDto,
@@ -13,15 +17,25 @@ import {
   ParseIntPipe,
   Post,
   Query,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
-import { Activity, DifficultyType, Exercise, Park, User } from '@prisma/client';
+import {
+  Activity,
+  DifficultyType,
+  Exercise,
+  Park,
+  Role,
+  User,
+} from '@prisma/client';
 import { ActivityService } from './activity.service';
 
 @Controller('activity')
 export class ActivityController {
   constructor(private activityService: ActivityService) {}
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @Get()
   getAll(
     @GetCurrentUser('sub') userId: User['id'],
@@ -42,11 +56,15 @@ export class ActivityController {
     return this.activityService.getAll(userId, dto);
   }
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @Get('timespans')
   getTimespans(@GetCurrentUser('sub') userId: User['id']): Promise<number[]> {
     return this.activityService.getFilterTimespans(userId);
   }
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @Get('chartdata/:month')
   getChartData(
     @GetCurrentUser('sub') userId: User['id'],
@@ -55,6 +73,8 @@ export class ActivityController {
     return this.activityService.getChartData(userId, month);
   }
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @Post('start')
   startActivity(
     @GetCurrentUser('sub') userId: User['id'],
@@ -63,6 +83,8 @@ export class ActivityController {
     return this.activityService.startActivity(userId, dto);
   }
 
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
   @Post('end')
   endActivity(@Body() dto: EndActivityDto) {
     return this.activityService.endActivity(dto);
