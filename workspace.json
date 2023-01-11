@@ -26,7 +26,6 @@
     "server-controllers-notification": "libs/server/controllers/notification",
     "server-controllers-park": "libs/server/controllers/park",
     "server-controllers-user": "libs/server/controllers/user",
-    "server-gateway": "libs/server/gateway",
     "server-mail": "libs/server/mail",
     "server-multer": "libs/server/multer",
     "server-prisma": "libs/server/prisma",

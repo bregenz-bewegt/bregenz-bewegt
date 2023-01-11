@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { NotificationGateway } from 'libs/server/gateway/src/lib/gateways';
+import { NotificationGateway } from '@bregenz-bewegt/server/controllers/notification';
 import { FriendController } from './friend.controller';
 import { FriendService } from './friend.service';
 

@@ -1,4 +1,5 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
+import { NotificationGateway } from '@bregenz-bewegt/server/controllers/notification';
 import {
   UserSearchResult,
   CreateFriendRequestDto,
@@ -12,7 +13,6 @@ import {
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, FriendRequest, Role, NotificationType } from '@prisma/client';
-import { NotificationGateway } from 'libs/server/gateway/src/lib/gateways';
 
 @Injectable()
 export class FriendService {

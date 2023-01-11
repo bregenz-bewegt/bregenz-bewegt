@@ -1,7 +1,7 @@
 import {
-  ClientToServerEvents,
-  InterServerEvents,
-  ServerToClientEvents,
+  NotificationClientToServerEvents,
+  NotificationInterServerEvents,
+  NotificationServerToClientEvents,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import {
@@ -15,15 +15,15 @@ import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { User } from '@prisma/client';
 
 @Injectable()
-@WebSocketGateway()
+@WebSocketGateway({ namespace: 'notifications' })
 export class NotificationGateway implements OnGatewayConnection {
   constructor(private prismaService: PrismaService) {}
 
   @WebSocketServer()
   private server: Server = new Server<
-    ServerToClientEvents,
-    ClientToServerEvents,
-    InterServerEvents
+    NotificationServerToClientEvents,
+    NotificationClientToServerEvents,
+    NotificationInterServerEvents
   >();
 
   async handleConnection(client: Socket): Promise<User> {

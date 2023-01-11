@@ -1,5 +1,5 @@
 import { Notification } from '@bregenz-bewegt/client/types';
 
-export interface ServerToClientEvents {
+export interface NotificationServerToClientEvents {
   receiveNotification: (notification: Notification) => void;
 }

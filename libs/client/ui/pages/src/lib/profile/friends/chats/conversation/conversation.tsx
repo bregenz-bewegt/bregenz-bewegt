@@ -72,7 +72,6 @@ export const Conversation: React.FC<ConversationProps> = inject(
           <div>
             <IonGrid>
               <IonRow>{match.params.username}</IonRow>
-              <IonRow>{chat.values.message}</IonRow>
             </IonGrid>
           </div>
         </IonContent>
