@@ -23,11 +23,14 @@ import {
   IonRow,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { send } from 'ionicons/icons';
 import './conversation.scss';
 import { useFormik } from 'formik';
+import { connectChatSocket } from '@bregenz-bewegt/client/common/socket';
+
+const socket = connectChatSocket();
 
 interface MatchParams {
   username: User['username'];
@@ -55,6 +58,12 @@ export const Conversation: React.FC<ConversationProps> = inject(
     useIonViewWillLeave(() => {
       tabStore?.setIsShown(true);
     }, []);
+
+    const sendMessage = (text: string) => {
+      // socket.emit('createMessage', {text: });
+    };
+
+    useEffect(() => {}, []);
 
     return (
       <IonPage className="conversation">

@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import {
+  ConnectedSocket,
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import {
   ChatServerToClientEvents,
   ChatClientToServerEvents,
@@ -26,7 +27,10 @@ export class ChatGateway {
   >();
 
   @SubscribeMessage('createMessage')
-  createMessage(@MessageBody() data: any): void {
+  createMessage(
+    @MessageBody() data: any,
+    @ConnectedSocket() client: Socket
+  ): void {
     console.log(data);
   }
 }
