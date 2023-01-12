@@ -4,13 +4,16 @@ import {
   AcceptFriendRequestDto,
   AllFriendRequests,
   CreateFriendRequestDto,
-  FriendSearchResult,
+  UserSearchResult,
   RejectFriendRequestDto,
   RemoveFriendDto,
   RevokeFriendRequestDto,
   SearchUserQueryDto,
+  FriendSearchResult,
+  SearchFriendQueryDto,
+  GetFriendsQueryDto,
 } from '@bregenz-bewegt/shared/types';
-import { action, makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import { Store } from './store';
 
 export class FriendsStore implements Store {
@@ -20,12 +23,19 @@ export class FriendsStore implements Store {
     makeAutoObservable(this);
   }
 
-  @action async fetchFriends(): Promise<Friend[]> {
-    const { data } = await http.get('/friends');
+  async fetchFriends(params?: GetFriendsQueryDto): Promise<Friend[]> {
+    const { data } = await http.get('/friends', params ? { params } : {});
     return data;
   }
 
-  async searchUser(params: SearchUserQueryDto): Promise<FriendSearchResult[]> {
+  async searchUser(params: SearchUserQueryDto): Promise<UserSearchResult[]> {
+    const { data } = await http.get('friends/search-user', { params });
+    return data;
+  }
+
+  async searchFriend(
+    params: SearchFriendQueryDto
+  ): Promise<FriendSearchResult[]> {
     const { data } = await http.get('friends/search', { params });
     return data;
   }

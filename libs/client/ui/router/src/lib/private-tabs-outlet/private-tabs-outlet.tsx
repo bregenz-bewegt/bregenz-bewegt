@@ -10,6 +10,7 @@ import {
   Friends,
   CompetitorProfile,
   Notifications,
+  Conversation,
 } from '@bregenz-bewegt/client-ui-pages';
 import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
 import {
@@ -107,6 +108,11 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
               exact
               path={`${tabRoutes.profile.route}/friends`}
               component={Friends}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/chat/:username`}
+              component={Conversation}
             ></Route>
             <Route
               exact

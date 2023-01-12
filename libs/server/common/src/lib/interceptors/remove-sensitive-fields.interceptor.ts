@@ -19,6 +19,7 @@ export class RemoveSensitiveFieldsInterceptor implements NestInterceptor {
     'emailResetToken',
     'activationSecret',
     'fingerprint',
+    'notificationSocketId',
   ];
 
   private removeSensitiveFields<T = any>(value: T): T {

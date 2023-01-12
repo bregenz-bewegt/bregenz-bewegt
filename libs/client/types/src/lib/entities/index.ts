@@ -9,3 +9,5 @@ export * from './coordinates';
 export * from './friend';
 export * from './friend-request';
 export * from './notification';
+export * from './conversation';
+export * from './message';

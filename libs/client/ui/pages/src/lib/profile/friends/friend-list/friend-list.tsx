@@ -22,8 +22,8 @@ import React, { useEffect, useState } from 'react';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import { CloseCircle } from 'iconsax-react';
 import { Friend } from '@bregenz-bewegt/client/types';
-import './friend-list.scss';
 import { AddFriendModal } from '../add-friend-modal/add-friend-modal';
+import './friend-list.scss';
 
 export interface FriendsListProps {
   friendsStore?: FriendsStore;

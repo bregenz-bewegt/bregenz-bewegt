@@ -1,0 +1,9 @@
+.chats {
+  &__list {
+    ion-item {
+      &::part(native) {
+        padding-inline-start: var(--spacing-s);
+      }
+    }
+  }
+}

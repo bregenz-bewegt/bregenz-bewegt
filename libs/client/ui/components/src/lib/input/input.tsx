@@ -27,7 +27,7 @@ export interface InputProps {
   error?: string;
   expand?: boolean;
   clearOnEdit?: boolean;
-  autocomplete: AutocompleteTypes;
+  autocomplete?: AutocompleteTypes;
   className?: string;
   ref?: React.Ref<HTMLIonInputElement>;
   onChange?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
