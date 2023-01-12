@@ -616,6 +616,33 @@ const updateParks = async () => {
         },
       ],
     },
+    {
+      id: 5,
+      name: 'DigBiz Award Bühne',
+      address: 'Hinterfeldgasse 19, 6900 Bregenz',
+      image: 'parks/digbiz-award-bühne.jpg',
+      qr: 'not-yet-defined-5',
+      gmaps: 'https://goo.gl/maps/eBj3bP1BdhekjLzx9',
+      coordinates: {
+        latitude: 47.491632061845976,
+        longitude: 9.724471244806148,
+      },
+      exercises: [
+        {
+          id: 47,
+          name: 'Trizeps-Dips mit einer Erhöhung',
+          description:
+            'Stütze dich auf der Erhöhung ab. Ellbogen zeigen nach hinten (nicht zur Seite). Ziehe deine Schulterblätter zusammen bzw. deine Schultern nach hinten. Spanne deinen Po an und versuche Ihn leicht nach hinten/oben zu ziehen. Versuche dich soweit wie möglich abzulassen. Drücke dich kontrolliert nach oben',
+          execution:
+            '10 Wiederholungen mit jeweils 3-4 Sätzen\n1 Minute Pause dazwischen',
+          muscles:
+            'Trizeps, Knorrenmuskel, Vorderer Teil des Deltamuskels, Großer Brustmuskel',
+          coins: 10,
+          difficulty: DifficultyType.BEGINNER,
+          video: 'not-yet-defined',
+        },
+      ],
+    },
   ];
   const difficulties = await prisma.difficulty.findMany();
 
