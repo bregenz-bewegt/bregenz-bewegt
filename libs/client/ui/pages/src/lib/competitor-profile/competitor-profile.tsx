@@ -43,9 +43,13 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
         history.canGoBack()
           ? history.goBack()
           : history.push(defaultRouterLink, 'back');
-      } else if (userStore?.user?.username === username) {
-        window.location.replace(tabRoutes.profile.route);
       }
+
+      userStore?.fetchProfile().then((u) => {
+        u.username === username &&
+          window.location.replace(tabRoutes.profile.route);
+      });
+
       userStore
         ?.fetchCompetitorProfile(username)
         .then((data) => {
