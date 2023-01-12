@@ -621,7 +621,7 @@ const updateParks = async () => {
       name: 'DigBiz Award Bühne',
       address: 'Hinterfeldgasse 19, 6900 Bregenz',
       image: 'parks/digbiz-award-bühne.jpg',
-      qr: 'not-yet-defined-5',
+      qr: 'not-yet-defined-4',
       gmaps: 'https://goo.gl/maps/eBj3bP1BdhekjLzx9',
       coordinates: {
         latitude: 47.491632061845976,
