@@ -1,2 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ChatServerToClientEvents {}
+import { Message } from '@bregenz-bewegt/client/types';
+
+export interface ChatServerToClientEvents {
+  onCreateMessage: (message: Message) => void;
+}
