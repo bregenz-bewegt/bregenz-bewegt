@@ -6,7 +6,7 @@ import {
   tabStore,
   TabStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { User } from '@bregenz-bewegt/client/types';
+import { Conversation, User } from '@bregenz-bewegt/client/types';
 import {
   IonPage,
   IonHeader,
@@ -23,7 +23,7 @@ import {
   IonRow,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { send } from 'ionicons/icons';
 import './conversation.scss';
@@ -46,6 +46,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
   tabStore.storeKey
 )(
   observer(({ chatStore, tabStore, match }) => {
+    const [conversation, setConversation] = useState<Conversation>();
     const chat = useFormik({
       initialValues: { message: '' },
       onSubmit: (values, { setSubmitting, setValues }) => {},
@@ -60,10 +61,14 @@ export const Conversation: React.FC<ConversationProps> = inject(
     }, []);
 
     const sendMessage = (text: string) => {
-      // socket.emit('createMessage', {text: });
+      socket.emit('createMessage', { text }, (result) => {
+        console.log(result);
+      });
     };
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+      socket.on('onCreateMessage', () => {});
+    }, []);
 
     return (
       <IonPage className="conversation">

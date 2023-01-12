@@ -11,6 +11,7 @@ import {
   ChatServerToClientEvents,
   ChatClientToServerEvents,
   ChatInterServerEvents,
+  CreateMessageDto,
 } from '@bregenz-bewegt/shared/types';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 
@@ -28,9 +29,10 @@ export class ChatGateway {
 
   @SubscribeMessage('createMessage')
   createMessage(
-    @MessageBody() data: any,
+    @MessageBody() data: CreateMessageDto,
     @ConnectedSocket() client: Socket
   ): void {
     console.log(data);
+    return data;
   }
 }

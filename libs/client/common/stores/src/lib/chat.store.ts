@@ -15,7 +15,12 @@ export class ChatStore implements Store {
     (Conversation & { participants: User[] })[]
   > {
     const { data } = await http.get('chats/conversations');
-    return <Conversation[]>data;
+    return <(Conversation & { participants: User[] })[]>data;
+  }
+
+  async getConversation(id: Conversation['id']): Promise<Conversation> {
+    const { data } = await http.get(`chats/conversation/${id}`);
+    return <Conversation>data;
   }
 
   async createConversation(dto: CreateConversationDto): Promise<Conversation> {
