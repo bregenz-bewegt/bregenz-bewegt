@@ -15,6 +15,7 @@ export const Intro: React.FC<IntroProps> = (props: IntroProps) => {
           </IonCol>
         </IonRow>
       </IonGrid>
+      <div className="intro__background"></div>
     </IonSlide>
   );
 };
