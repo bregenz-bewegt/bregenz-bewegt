@@ -1,3 +1,4 @@
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import {
   chatStore,
@@ -175,7 +176,11 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                         </IonCol>
                         <IonCol size="auto">
                           {!isLoading && (
-                            <IonButton fill="clear" mode="ios">
+                            <IonButton
+                              fill="clear"
+                              mode="ios"
+                              routerLink={`${tabRoutes.profile.route}/chats/${user.username}`}
+                            >
                               <AddCircle
                                 onClick={() => {
                                   handleCreateConversation(user.id ?? '');
