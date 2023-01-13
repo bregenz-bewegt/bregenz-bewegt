@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseGuards } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
@@ -15,6 +15,7 @@ import {
   CreateMessageDto,
 } from '@bregenz-bewegt/shared/types';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
+import { WsAccessTokenGuard } from '@bregenz-bewegt/server/common';
 
 @Injectable()
 @WebSocketGateway({ namespace: 'chats' })
@@ -29,17 +30,19 @@ export class ChatGateway implements OnGatewayConnection {
   >();
 
   handleConnection(client: Socket): void {
-    console.log(client.id);
+    //
   }
 
+  @UseGuards(WsAccessTokenGuard)
   @SubscribeMessage('message.create')
   createMessage(
     @MessageBody() data: CreateMessageDto,
     @ConnectedSocket()
-    client: Socket
+    socket: Socket
   ): CreateMessageDto {
-    console.log(data);
-    client.emit('onCreateMessage', data);
+    const token = socket.handshake.headers.authorization;
+    console.log(token, data);
+    socket.emit('onCreateMessage', data);
 
     return data;
   }

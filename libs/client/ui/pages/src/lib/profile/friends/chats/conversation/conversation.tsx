@@ -5,6 +5,8 @@ import {
   ChatStore,
   tabStore,
   TabStore,
+  userStore,
+  UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import {
   Conversation as ConversationType,
@@ -34,8 +36,11 @@ import { send } from 'ionicons/icons';
 import './conversation.scss';
 import { useFormik } from 'formik';
 import { connectChatSocket } from '@bregenz-bewegt/client/common/socket';
-
-const socket = connectChatSocket();
+import { Socket } from 'socket.io-client';
+import {
+  ChatClientToServerEvents,
+  ChatServerToClientEvents,
+} from '@bregenz-bewegt/shared/types';
 
 interface MatchParams {
   username: User['username'];
@@ -44,16 +49,19 @@ interface MatchParams {
 export interface ConversationProps extends RouteComponentProps<MatchParams> {
   chatStore?: ChatStore;
   tabStore?: TabStore;
+  userStore?: UserStore;
 }
 
 export const Conversation: React.FC<ConversationProps> = inject(
   chatStore.storeKey,
-  tabStore.storeKey
+  tabStore.storeKey,
+  userStore.storeKey
 )(
-  observer(({ chatStore, tabStore, match }) => {
+  observer(({ chatStore, tabStore, userStore, match }) => {
     const router = useIonRouter();
-    const navigateBackToFriends = () =>
-      router.push(`${tabRoutes.profile.route}/friends`);
+    const [socket, setSocket] =
+      useState<Socket<ChatServerToClientEvents, ChatClientToServerEvents>>();
+
     const [conversation, setConversation] = useState<ConversationType>();
     const chat = useFormik({
       initialValues: { message: '' },
@@ -61,6 +69,9 @@ export const Conversation: React.FC<ConversationProps> = inject(
         //
       },
     });
+
+    const navigateBackToFriends = () =>
+      router.push(`${tabRoutes.profile.route}/friends`);
 
     useIonViewWillEnter(() => {
       tabStore?.setIsShown(false);
@@ -71,12 +82,16 @@ export const Conversation: React.FC<ConversationProps> = inject(
     }, []);
 
     const sendMessage = (text: string) => {
-      socket.emit('message.create', { text }, () => {
+      socket?.emit('message.create', { text }, () => {
         chat.resetForm();
       });
     };
 
     useEffect(() => {
+      userStore?.getTokens().then((tokens) => {
+        setSocket(connectChatSocket(tokens.access_token));
+      });
+
       chatStore
         ?.getConversationWith(match.params.username)
         .then((result) => {
@@ -85,10 +100,10 @@ export const Conversation: React.FC<ConversationProps> = inject(
         .catch(() => {
           navigateBackToFriends();
         });
+    }, [match.params.username, setSocket]);
 
-      socket.on('onCreateMessage', (message: Message) => {
-        console.log(message);
-
+    useEffect(() => {
+      socket?.on('onCreateMessage', (message: Message) => {
         setConversation((prev) =>
           !prev
             ? prev
@@ -98,7 +113,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
               }
         );
       });
-    }, [match.params.username]);
+    }, [socket]);
 
     console.log(conversation);
 
