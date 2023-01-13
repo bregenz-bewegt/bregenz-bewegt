@@ -1,4 +1,4 @@
-import { Injectable, UseGuards } from '@nestjs/common';
+import { Injectable, UnauthorizedException, UseGuards } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
@@ -13,6 +13,7 @@ import {
   ChatClientToServerEvents,
   ChatInterServerEvents,
   CreateMessageDto,
+  JwtPayloadWithRefreshToken,
 } from '@bregenz-bewegt/shared/types';
 import {
   WsAccessTokenGuard,
@@ -20,11 +21,21 @@ import {
 } from '@bregenz-bewegt/server/common';
 import { User } from '@prisma/client';
 import { ChatService } from '../chat.service';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { UtilService } from '@bregenz-bewegt/server/util';
+import { PrismaService } from '@bregenz-bewegt/server-prisma';
 
 @Injectable()
 @WebSocketGateway({ namespace: 'chats', cors: { origin: true } })
 export class ChatGateway implements OnGatewayConnection {
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private chatService: ChatService,
+    private jwtService: JwtService,
+    private configService: ConfigService,
+    private utilService: UtilService,
+    private prismaService: PrismaService
+  ) {}
 
   @WebSocketServer()
   private server: Server = new Server<
@@ -33,13 +44,33 @@ export class ChatGateway implements OnGatewayConnection {
     ChatInterServerEvents
   >();
 
-  handleConnection(
-    @ConnectedSocket()
-    socket: Socket,
-    @WsGetCurrentUser('sub') userId: User['id']
-  ): void {
-    console.log(userId);
-    // TODO: auth user and safe socketId to db
+  async handleConnection(socket: Socket): Promise<any> {
+    const token = this.utilService.extractBearerToken(
+      socket.handshake.auth.authorization
+    );
+
+    try {
+      const decoded: JwtPayloadWithRefreshToken = this.jwtService.verify(
+        token,
+        { secret: this.configService.get('NX_JWT_ACCESS_TOKEN_SECRET') }
+      );
+
+      const user = await this.prismaService.user.findUnique({
+        where: { id: decoded.sub },
+      });
+
+      if (!user) {
+        socket.emit('error', new UnauthorizedException());
+        return socket.disconnect();
+      }
+
+      this.prismaService.user.update({
+        where: { id: user.id },
+        data: { conversationSocketId: socket.id },
+      });
+    } catch {
+      return socket.disconnect();
+    }
   }
 
   @UseGuards(WsAccessTokenGuard)
