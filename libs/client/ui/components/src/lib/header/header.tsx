@@ -24,6 +24,8 @@ import {
   useDefaultErrorToast,
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
+import { Link } from 'react-router-dom';
+import { FriendsDisplayType } from '@bregenz-bewegt/client/types';
 
 export interface HeaderProps {
   userStore?: UserStore;
@@ -89,15 +91,21 @@ export const Header: React.FC<HeaderProps> = inject(
           </div>
         </div>
         <IonFab className="header__fab header__fab--chat">
-          <IonFabButton
-            className="header__fab__fab-button"
-            routerLink={`${tabRoutes.profile.route}/friends`}
+          <Link
+            to={{
+              pathname: `${tabRoutes.profile.route}/friends`,
+              state: {
+                segment: FriendsDisplayType.Chats,
+              } as { segment: FriendsDisplayType },
+            }}
           >
-            <MessageText
-              variant="Bold"
-              className="header__fab__fab-button__icon"
-            />
-          </IonFabButton>
+            <IonFabButton className="header__fab__fab-button">
+              <MessageText
+                variant="Bold"
+                className="header__fab__fab-button__icon"
+              />
+            </IonFabButton>
+          </Link>
         </IonFab>
         <IonFab className="header__fab">
           {notificationsStore?.notifications &&

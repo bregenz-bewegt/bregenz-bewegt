@@ -11,6 +11,8 @@ export const WsGetCurrentUser = createParamDecorator(
     // console.log(client);
     // console.log(wsData);
 
+    console.log(client.user);
+
     if (!data) return client.user;
     return client.user[data];
   }
