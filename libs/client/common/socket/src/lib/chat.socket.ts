@@ -14,12 +14,5 @@ export const connectChatSocket = (
     auth: {
       authorization,
     },
-    transports: ['polling'],
-    transportOptions: {
-      polling: {
-        extraHeaders: { authorization },
-      },
-    },
-    query: { authorization },
   });
 };

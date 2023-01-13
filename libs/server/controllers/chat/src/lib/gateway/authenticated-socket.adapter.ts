@@ -1,14 +1,21 @@
 import { INestApplicationContext } from '@nestjs/common';
 import { IoAdapter } from '@nestjs/platform-socket.io';
-import { Server, ServerOptions } from 'socket.io';
+import { Socket, Server, ServerOptions } from 'socket.io';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { UtilService } from '@bregenz-bewegt/server/util';
+import {
+  ChatClientToServerEvents,
+  ChatInterServerEvents,
+  ChatServerToClientEvents,
+} from '@bregenz-bewegt/shared/types';
+import { PrismaService } from '@bregenz-bewegt/server-prisma';
 
 export class AuthenticatedSocketAdapter extends IoAdapter {
   private jwtService: JwtService;
   private configService: ConfigService;
   private utilService: UtilService;
+  private prismaService: PrismaService;
 
   constructor(private app: INestApplicationContext) {
     super(app);
@@ -18,23 +25,52 @@ export class AuthenticatedSocketAdapter extends IoAdapter {
     this.jwtService = app.get(JwtService);
     this.configService = app.get(ConfigService);
     this.utilService = app.get(UtilService);
+    this.prismaService = app.get(PrismaService);
   }
 
-  createIOServer(port: number, options?: ServerOptions): any {
-    options.allowRequest = async (request, allowFunction) => {
-      console.log(request.headers.authorization);
+  createIOServer(
+    port: number,
+    options?: ServerOptions
+  ): Server<
+    ChatClientToServerEvents,
+    ChatServerToClientEvents,
+    ChatInterServerEvents
+  > {
+    const server: Server<
+      ChatClientToServerEvents,
+      ChatServerToClientEvents,
+      ChatInterServerEvents
+    > = super.createIOServer(port, {
+      ...options,
+      cors: true,
+    });
+
+    server.use(async (socket: Socket, next) => {
       const token = this.utilService.extractBearerToken(
-        request.headers.authorization
+        socket.handshake.auth.authorization
       );
+      console.log(token);
 
-      //   const verified = this.jwtService.verify(token);
-      //   if (verified) {
-      //     return allowFunction(null, true);
-      //   }
+      if (!token) {
+        return next(new Error('Token not provided'));
+      }
 
-      //   return allowFunction('Unauthorized', false);
-    };
+      try {
+        const decoded = await this.jwtService.verify(token, {
+          secret: this.configService.get('NX_JWT_ACCESS_TOKEN_SECRET'),
+        });
 
-    return super.createIOServer(port, { ...options, cors: true });
+        const user = await this.prismaService.user.findUnique({
+          where: { id: decoded.sub },
+        });
+
+        if (user) (socket as Socket & { user: any }).user = user;
+        return next();
+      } catch (error: any) {
+        return next(new Error('Authentication error'));
+      }
+    });
+
+    return server;
   }
 }
