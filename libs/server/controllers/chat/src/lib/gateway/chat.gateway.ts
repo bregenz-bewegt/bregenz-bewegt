@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
+  OnGatewayConnection,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -17,7 +18,7 @@ import { PrismaService } from '@bregenz-bewegt/server-prisma';
 
 @Injectable()
 @WebSocketGateway({ namespace: 'chats' })
-export class ChatGateway {
+export class ChatGateway implements OnGatewayConnection {
   constructor(private prismaService: PrismaService) {}
 
   @WebSocketServer()
@@ -27,12 +28,18 @@ export class ChatGateway {
     ChatInterServerEvents
   >();
 
+  handleConnection(x: any): void {
+    console.log(x);
+  }
+
   @SubscribeMessage('createMessage')
   createMessage(
     @MessageBody() data: CreateMessageDto,
-    @ConnectedSocket() client: Socket
-  ): void {
+    @ConnectedSocket()
+    client: Socket
+  ): CreateMessageDto {
     console.log(data);
+    client.emit('onCreateMessage', data);
     return data;
   }
 }

@@ -6,7 +6,10 @@ import {
   tabStore,
   TabStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { Conversation, User } from '@bregenz-bewegt/client/types';
+import {
+  Conversation as ConversationType,
+  User,
+} from '@bregenz-bewegt/client/types';
 import {
   IonPage,
   IonHeader,
@@ -46,10 +49,12 @@ export const Conversation: React.FC<ConversationProps> = inject(
   tabStore.storeKey
 )(
   observer(({ chatStore, tabStore, match }) => {
-    const [conversation, setConversation] = useState<Conversation>();
+    const [conversation, setConversation] = useState<ConversationType>();
     const chat = useFormik({
       initialValues: { message: '' },
-      onSubmit: (values, { setSubmitting, setValues }) => {},
+      onSubmit: (values, { setSubmitting, setValues }) => {
+        //
+      },
     });
 
     useIonViewWillEnter(() => {
@@ -61,13 +66,20 @@ export const Conversation: React.FC<ConversationProps> = inject(
     }, []);
 
     const sendMessage = (text: string) => {
-      socket.emit('createMessage', { text }, (result) => {
+      socket.emit('message.create', { text }, (result) => {
         console.log(result);
       });
     };
 
     useEffect(() => {
-      socket.on('onCreateMessage', () => {});
+      console.log('fired');
+      socket.on('connect', () => {
+        console.log('connected');
+      });
+      socket.on('connect_error', (e) => console.log);
+      socket.on('onCreateMessage', (message) => {
+        console.log(message);
+      });
     }, []);
 
     return (
@@ -92,7 +104,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
         <IonFooter mode="ios" className="ion-no-border">
           <IonToolbar>
             <IonButtons slot="primary">
-              <IonButton>
+              <IonButton onClick={() => sendMessage(chat.values.message)}>
                 <IonIcon slot="end" icon={send}></IonIcon>
               </IonButton>
             </IonButtons>
