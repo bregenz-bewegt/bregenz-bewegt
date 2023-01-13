@@ -50,12 +50,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
   tabStore.storeKey
 )(
   observer(({ chatStore, tabStore, match }) => {
-    const [conversation, setConversation] = useState<ConversationType>({
-      id: '',
-      createdAt: new Date(),
-      messages: [],
-      participants: [],
-    });
+    const [conversation, setConversation] = useState<ConversationType>();
     const chat = useFormik({
       initialValues: { message: '' },
       onSubmit: (values, { setSubmitting, setValues }) => {
@@ -72,18 +67,23 @@ export const Conversation: React.FC<ConversationProps> = inject(
     }, []);
 
     const sendMessage = (text: string) => {
-      socket.emit('message.create', { text }, (result) => {
-        console.log(result);
+      socket.emit('message.create', { text }, () => {
+        chat.resetForm();
       });
     };
 
     useEffect(() => {
       socket.on('onCreateMessage', (message: Message) => {
         console.log(message);
-        setConversation((prev) => ({
-          ...prev,
-          messages: [...(prev?.messages ?? []), message],
-        }));
+
+        setConversation((prev) =>
+          !prev
+            ? prev
+            : {
+                ...prev,
+                messages: [...(prev?.messages ?? []), message],
+              }
+        );
       });
     }, []);
 
@@ -100,11 +100,9 @@ export const Conversation: React.FC<ConversationProps> = inject(
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
-          <div>
-            <IonGrid>
-              <IonRow>{match.params.username}</IonRow>
-            </IonGrid>
-          </div>
+          <IonGrid>
+            <IonRow>{match.params.username}</IonRow>
+          </IonGrid>
         </IonContent>
         <IonFooter mode="ios" className="ion-no-border">
           <IonToolbar>

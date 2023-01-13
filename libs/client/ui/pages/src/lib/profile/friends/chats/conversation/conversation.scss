@@ -2,14 +2,13 @@
   ion-content {
     max-height: 100%;
 
-    div {
+    ion-grid {
       display: flex;
       flex-direction: column;
       height: 100%;
-
-      ion-grid {
-        flex: 1 1 auto;
-      }
+      flex: 1 1 auto;
+      background-color: red;
+      padding-bottom: 0;
     }
   }
 
