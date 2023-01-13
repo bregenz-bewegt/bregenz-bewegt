@@ -16,8 +16,8 @@ export class AuthenticatedSocketAdapter extends IoAdapter {
     //   this.jwtService = jwtService;
     // });
     this.jwtService = app.get(JwtService);
-    this.jwtService = app.get(ConfigService);
-    this.jwtService = app.get(UtilService);
+    this.configService = app.get(ConfigService);
+    this.utilService = app.get(UtilService);
   }
 
   createIOServer(port: number, options?: ServerOptions): any {
