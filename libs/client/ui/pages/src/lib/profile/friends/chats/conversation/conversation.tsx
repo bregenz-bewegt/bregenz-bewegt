@@ -102,6 +102,9 @@ export const Conversation: React.FC<ConversationProps> = inject(
         <IonContent fullscreen scrollY={false}>
           <IonGrid>
             <IonRow>{match.params.username}</IonRow>
+            {conversation?.messages.map((message) => {
+              return <IonRow>{message.text}</IonRow>;
+            })}
           </IonGrid>
         </IonContent>
         <IonFooter mode="ios" className="ion-no-border">
