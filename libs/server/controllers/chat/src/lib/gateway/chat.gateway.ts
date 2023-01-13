@@ -33,7 +33,7 @@ export class ChatGateway implements OnGatewayConnection {
     ChatInterServerEvents
   >();
 
-  handleConnection(client: Socket): void {
+  handleConnection(): void {
     //
   }
 
