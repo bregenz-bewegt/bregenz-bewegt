@@ -33,9 +33,8 @@ export class AuthenticatedSocketAdapter extends IoAdapter {
       //   }
 
       //   return allowFunction('Unauthorized', false);
-      // };
-
-      return super.createIOServer(port, { ...options, cors: true });
     };
+
+    return super.createIOServer(port, { ...options, cors: true });
   }
 }
