@@ -4,5 +4,5 @@ export const connectionOptions: Partial<ManagerOptions & SocketOptions> = {
   forceNew: true,
   reconnectionAttempts: 10,
   timeout: 1000,
-  transports: ['websocket'],
+  // transports: ['websocket', 'polling'],
 };

@@ -22,7 +22,7 @@ import { User } from '@prisma/client';
 import { ChatService } from '../chat.service';
 
 @Injectable()
-@WebSocketGateway({ namespace: 'chats' })
+@WebSocketGateway({ namespace: 'chats', cors: { origin: true } })
 export class ChatGateway implements OnGatewayConnection {
   constructor(private chatService: ChatService) {}
 
@@ -33,8 +33,11 @@ export class ChatGateway implements OnGatewayConnection {
     ChatInterServerEvents
   >();
 
-  handleConnection(): void {
-    //
+  handleConnection(
+    @ConnectedSocket()
+    socket: Socket
+  ): void {
+    // TODO: auth user and safe socketId to db
   }
 
   @UseGuards(WsAccessTokenGuard)

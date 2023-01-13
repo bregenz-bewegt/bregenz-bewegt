@@ -21,7 +21,7 @@ export class WsAccessTokenGuard implements CanActivate {
   ): boolean | any | Promise<boolean | any> | Observable<boolean | any> {
     const client: Socket = context.switchToWs().getClient<Socket>();
     const token = this.utilService.extractBearerToken(
-      client.handshake.auth.authorization
+      client.handshake.headers.authorization
     );
 
     try {
