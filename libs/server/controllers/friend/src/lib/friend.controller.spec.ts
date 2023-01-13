@@ -1,7 +1,7 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
+import { NotificationGateway } from '@bregenz-bewegt/server/controllers/notification';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
-import { NotificationGateway } from 'libs/server/gateway/src/lib/gateways';
 import { FriendController } from './friend.controller';
 import { FriendService } from './friend.service';
 
