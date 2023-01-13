@@ -28,11 +28,11 @@ export class ChatGateway implements OnGatewayConnection {
     ChatInterServerEvents
   >();
 
-  handleConnection(@ConnectedSocket() client: Socket): void {
+  handleConnection(client: Socket): void {
     console.log(client.id);
   }
 
-  @SubscribeMessage('createMessage')
+  @SubscribeMessage('message.create')
   createMessage(
     @MessageBody() data: CreateMessageDto,
     @ConnectedSocket()
@@ -40,6 +40,7 @@ export class ChatGateway implements OnGatewayConnection {
   ): CreateMessageDto {
     console.log(data);
     client.emit('onCreateMessage', data);
+
     return data;
   }
 }

@@ -8,6 +8,7 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import {
   Conversation as ConversationType,
+  Message,
   User,
 } from '@bregenz-bewegt/client/types';
 import {
@@ -49,7 +50,12 @@ export const Conversation: React.FC<ConversationProps> = inject(
   tabStore.storeKey
 )(
   observer(({ chatStore, tabStore, match }) => {
-    const [conversation, setConversation] = useState<ConversationType>();
+    const [conversation, setConversation] = useState<ConversationType>({
+      id: '',
+      createdAt: new Date(),
+      messages: [],
+      participants: [],
+    });
     const chat = useFormik({
       initialValues: { message: '' },
       onSubmit: (values, { setSubmitting, setValues }) => {
@@ -72,12 +78,12 @@ export const Conversation: React.FC<ConversationProps> = inject(
     };
 
     useEffect(() => {
-      socket.on('connect', () => {
-        console.log('connected');
-      });
-      socket.on('connect_error', (e) => console.log(e));
-      socket.on('onCreateMessage', (message) => {
+      socket.on('onCreateMessage', (message: Message) => {
         console.log(message);
+        setConversation((prev) => ({
+          ...prev,
+          messages: [...(prev?.messages ?? []), message],
+        }));
       });
     }, []);
 
