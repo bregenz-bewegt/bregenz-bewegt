@@ -14,17 +14,17 @@ import {
   ChatInterServerEvents,
   CreateMessageDto,
 } from '@bregenz-bewegt/shared/types';
-import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import {
   WsAccessTokenGuard,
   WsGetCurrentUser,
 } from '@bregenz-bewegt/server/common';
 import { User } from '@prisma/client';
+import { ChatService } from '../chat.service';
 
 @Injectable()
 @WebSocketGateway({ namespace: 'chats' })
 export class ChatGateway implements OnGatewayConnection {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private chatService: ChatService) {}
 
   @WebSocketServer()
   private server: Server = new Server<
@@ -41,14 +41,13 @@ export class ChatGateway implements OnGatewayConnection {
   @SubscribeMessage('message.create')
   createMessage(
     @WsGetCurrentUser('sub') userId: User['id'],
-    @MessageBody() data: CreateMessageDto,
+    @MessageBody() dto: CreateMessageDto,
     @ConnectedSocket()
     socket: Socket
   ): CreateMessageDto {
-    const token = socket.handshake.auth.authorization;
-    console.log(userId);
-    socket.emit('onCreateMessage', data);
+    this.chatService.createMessage(userId, dto);
+    socket.emit('onCreateMessage', dto);
 
-    return data;
+    return dto;
   }
 }

@@ -7,11 +7,6 @@ export const WsGetCurrentUser = createParamDecorator(
     context: ExecutionContext
   ) => {
     const client = context.switchToWs().getClient();
-    const wsData = context.switchToWs().getData();
-    // console.log(client);
-    // console.log(wsData);
-
-    console.log(client.user);
 
     if (!data) return client.user;
     return client.user[data];

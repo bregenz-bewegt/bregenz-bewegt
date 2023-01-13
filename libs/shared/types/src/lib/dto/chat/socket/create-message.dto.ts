@@ -5,4 +5,8 @@ export class CreateMessageDto {
   @ApiProperty()
   @IsString()
   text: string;
+
+  @ApiProperty()
+  @IsString()
+  conversationId: string;
 }

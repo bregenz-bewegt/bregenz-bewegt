@@ -1,6 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { Conversation, Message, User } from '@prisma/client';
+import { CreateMessageDto } from '@bregenz-bewegt/shared/types';
 
 @Injectable()
 export class ChatService {
@@ -52,6 +53,20 @@ export class ChatService {
       data: {
         participants: {
           connect: [{ id: userId }, { id: participantId }],
+        },
+      },
+    });
+  }
+
+  async createMessage(
+    userId: User['id'],
+    dto: CreateMessageDto
+  ): Promise<Conversation> {
+    return this.prismaService.conversation.update({
+      where: { id: dto.conversationId },
+      data: {
+        messages: {
+          create: { text: dto.text, author: { connect: { id: userId } } },
         },
       },
     });

@@ -82,9 +82,13 @@ export const Conversation: React.FC<ConversationProps> = inject(
     }, []);
 
     const sendMessage = (text: string) => {
-      socket?.emit('message.create', { text }, () => {
-        chat.resetForm();
-      });
+      socket?.emit(
+        'message.create',
+        { text, conversationId: conversation?.id ?? '' },
+        () => {
+          chat.resetForm();
+        }
+      );
     };
 
     useEffect(() => {
@@ -114,8 +118,6 @@ export const Conversation: React.FC<ConversationProps> = inject(
         );
       });
     }, [socket]);
-
-    console.log(conversation);
 
     return (
       <IonPage className="conversation">
