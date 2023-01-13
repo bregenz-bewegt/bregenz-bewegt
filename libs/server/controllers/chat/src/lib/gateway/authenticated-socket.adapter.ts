@@ -64,7 +64,7 @@ export class AuthenticatedSocketAdapter extends IoAdapter {
           where: { id: decoded.sub },
         });
 
-        if (user) (socket as Socket & { user: any }).user = user;
+        if (user) (socket as Socket & { user: any }).user = decoded;
         return next();
       } catch (error: any) {
         return next(new Error('Authentication error'));
