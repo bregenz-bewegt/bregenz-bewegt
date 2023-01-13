@@ -29,6 +29,7 @@ model User {
   activationSecret       String?
   profilePicture         String?
   notificationSocketId   String?
+  conversationSocketId   String?
   preferences            Preferences?
   activities             Activity[]
   notifications          Notification[]

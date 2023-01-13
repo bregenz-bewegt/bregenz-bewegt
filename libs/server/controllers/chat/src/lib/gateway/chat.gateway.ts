@@ -19,6 +19,7 @@ import {
   WsAccessTokenGuard,
   WsGetCurrentUser,
 } from '@bregenz-bewegt/server/common';
+import { User } from '@prisma/client';
 
 @Injectable()
 @WebSocketGateway({ namespace: 'chats' })
@@ -39,13 +40,13 @@ export class ChatGateway implements OnGatewayConnection {
   @UseGuards(WsAccessTokenGuard)
   @SubscribeMessage('message.create')
   createMessage(
-    @WsGetCurrentUser() user: any,
+    @WsGetCurrentUser('sub') userId: User['id'],
     @MessageBody() data: CreateMessageDto,
     @ConnectedSocket()
     socket: Socket
   ): CreateMessageDto {
     const token = socket.handshake.auth.authorization;
-    console.log(token, data, user);
+    console.log(userId);
     socket.emit('onCreateMessage', data);
 
     return data;

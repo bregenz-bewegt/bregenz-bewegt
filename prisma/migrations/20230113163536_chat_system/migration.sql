@@ -1,6 +1,9 @@
 -- AlterTable
 ALTER TABLE `coordinates` MODIFY `toleranceRadius` INTEGER NOT NULL DEFAULT 100;
 
+-- AlterTable
+ALTER TABLE `user` ADD COLUMN `conversationSocketId` VARCHAR(191) NULL;
+
 -- CreateTable
 CREATE TABLE `Conversation` (
     `id` VARCHAR(191) NOT NULL,
