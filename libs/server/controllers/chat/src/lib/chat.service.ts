@@ -61,7 +61,7 @@ export class ChatService {
   async createMessage(
     userId: User['id'],
     dto: CreateMessageDto
-  ): Promise<Conversation> {
+  ): Promise<Conversation & { participants: User[] }> {
     return this.prismaService.conversation.update({
       where: { id: dto.conversationId },
       data: {
@@ -69,6 +69,7 @@ export class ChatService {
           create: { text: dto.text, author: { connect: { id: userId } } },
         },
       },
+      include: { participants: true },
     });
   }
 }

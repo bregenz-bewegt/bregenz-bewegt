@@ -39,14 +39,17 @@ export class ChatGateway implements OnGatewayConnection {
 
   @UseGuards(WsAccessTokenGuard)
   @SubscribeMessage('message.create')
-  createMessage(
+  async createMessage(
     @WsGetCurrentUser('sub') userId: User['id'],
     @MessageBody() dto: CreateMessageDto,
     @ConnectedSocket()
     socket: Socket
-  ): CreateMessageDto {
-    this.chatService.createMessage(userId, dto);
-    socket.emit('onCreateMessage', dto);
+  ): Promise<CreateMessageDto> {
+    const conversation = await this.chatService.createMessage(userId, dto);
+
+    conversation.participants.forEach((partifipant) => {
+      socket.to(partifipant.conversationSocketId).emit('onCreateMessage', dto);
+    });
 
     return dto;
   }
