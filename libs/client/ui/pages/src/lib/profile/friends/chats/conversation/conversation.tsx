@@ -100,7 +100,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
       });
     }, [match.params.username]);
 
-    console.log(conversation?.messages);
+    console.log(conversation);
 
     return (
       <IonPage className="conversation">
@@ -118,7 +118,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
           <IonGrid>
             <IonRow>{match.params.username}</IonRow>
             {conversation?.messages.map((message) => {
-              return <IonRow>{message.text}</IonRow>;
+              return <IonRow key={message.id}>{message.text}</IonRow>;
             })}
           </IonGrid>
         </IonContent>
