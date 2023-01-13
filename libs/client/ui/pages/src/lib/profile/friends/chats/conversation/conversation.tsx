@@ -72,7 +72,6 @@ export const Conversation: React.FC<ConversationProps> = inject(
     };
 
     useEffect(() => {
-      console.log('fired');
       socket.on('connect', () => {
         console.log('connected');
       });

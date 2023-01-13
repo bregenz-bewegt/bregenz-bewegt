@@ -28,8 +28,8 @@ export class ChatGateway implements OnGatewayConnection {
     ChatInterServerEvents
   >();
 
-  handleConnection(x: any): void {
-    console.log(x);
+  handleConnection(@ConnectedSocket() client: Socket): void {
+    console.log(client.id);
   }
 
   @SubscribeMessage('createMessage')
