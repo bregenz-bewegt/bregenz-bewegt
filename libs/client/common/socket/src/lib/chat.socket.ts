@@ -11,5 +11,8 @@ export const connectChatSocket = (
   return io(`${process.env['NX_API_BASE_URL']}/chats`, {
     ...connectionOptions,
     extraHeaders: { authorization },
+    auth: {
+      authorization,
+    },
   });
 };

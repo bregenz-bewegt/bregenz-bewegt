@@ -3,22 +3,30 @@ import { JwtPayloadWithRefreshToken } from '@bregenz-bewegt/shared/types';
 import { Injectable, CanActivate } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
+import { UtilService } from '@bregenz-bewegt/server/util';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class WsAccessTokenGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
-    private prismaService: PrismaService
+    private prismaService: PrismaService,
+    private utilService: UtilService,
+    private configService: ConfigService
   ) {}
 
   canActivate(
     context: any
   ): boolean | any | Promise<boolean | any> | Observable<boolean | any> {
-    const token = context.args[0].handshake.headers.authorization
-      .replace('Bearer', '')
-      .trim();
+    const token = this.utilService.extractBearerToken(
+      context.args[0].handshake.auth.authorization
+    );
+
     try {
-      const decoded: JwtPayloadWithRefreshToken = this.jwtService.verify(token);
+      const decoded: JwtPayloadWithRefreshToken = this.jwtService.verify(
+        token,
+        { secret: this.configService.get('NX_JWT_ACCESS_TOKEN_SECRET') }
+      );
       return new Promise((resolve, reject) => {
         return this.prismaService.user
           .findUnique({ where: { id: decoded.sub } })
@@ -31,7 +39,6 @@ export class WsAccessTokenGuard implements CanActivate {
           });
       });
     } catch (ex) {
-      console.log(ex);
       return false;
     }
   }
