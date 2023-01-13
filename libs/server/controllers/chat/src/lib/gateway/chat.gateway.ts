@@ -92,8 +92,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ): Promise<CreateMessageDto> {
     const conversation = await this.chatService.createMessage(userId, dto);
 
+    socket.emit('onCreateMessage', dto);
+
     conversation.participants.forEach((partifipant) => {
-      socket.to(partifipant.conversationSocketId).emit('onCreateMessage', dto);
+      this.server
+        .to(partifipant.conversationSocketId)
+        .emit('onCreateMessage', dto);
     });
 
     return dto;
