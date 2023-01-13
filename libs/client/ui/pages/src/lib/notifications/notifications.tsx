@@ -26,13 +26,18 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
-import { Notification, NotificationType } from '@bregenz-bewegt/client/types';
+import {
+  FriendsDisplayType,
+  Notification,
+  NotificationType,
+} from '@bregenz-bewegt/client/types';
 import {
   useDefaultErrorToast,
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
 import { checkmarkDone, trash } from 'ionicons/icons';
 import { BackButton } from '@bregenz-bewegt/client-ui-components';
+import { Link } from 'react-router-dom';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
@@ -143,28 +148,50 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                       notification.read ? ' read' : ''
                     }`}
                   ></div>
-                  <IonItem
-                    onClick={() => markNotificationAsRead(notification.id)}
-                    routerLink={
-                      [
+
+                  <Link
+                    to={{
+                      pathname: [
                         NotificationType.FRIEND_REQUEST_RECEIVED,
                         NotificationType.FRIEND_REQUEST_ACCEPTED,
                       ].includes(notification.type)
                         ? `${tabRoutes.profile.route}/friends`
-                        : undefined
-                    }
-                    mode="ios"
-                    detail
+                        : undefined,
+                      state:
+                        notification.type ===
+                        NotificationType.FRIEND_REQUEST_RECEIVED
+                          ? { segment: FriendsDisplayType.Requests }
+                          : notification.type ===
+                            NotificationType.FRIEND_REQUEST_ACCEPTED
+                          ? { segment: FriendsDisplayType.Friends }
+                          : undefined,
+                    }}
                   >
-                    <IonLabel>
-                      <h2>{notification.title}</h2>
-                      <p className="ion-text-wrap">
-                        {`${new Date(
-                          notification.createdAt
-                        ).toLocaleDateString()} - ${notification.description}`}
-                      </p>
-                    </IonLabel>
-                  </IonItem>
+                    <IonItem
+                      onClick={() => markNotificationAsRead(notification.id)}
+                      // routerLink={
+                      //   [
+                      //     NotificationType.FRIEND_REQUEST_RECEIVED,
+                      //     NotificationType.FRIEND_REQUEST_ACCEPTED,
+                      //   ].includes(notification.type)
+                      //     ? `${tabRoutes.profile.route}/friends`
+                      //     : undefined
+                      // }
+                      mode="ios"
+                      detail
+                    >
+                      <IonLabel>
+                        <h2>{notification.title}</h2>
+                        <p className="ion-text-wrap">
+                          {`${new Date(
+                            notification.createdAt
+                          ).toLocaleDateString()} - ${
+                            notification.description
+                          }`}
+                        </p>
+                      </IonLabel>
+                    </IonItem>
+                  </Link>
                   <IonItemOptions side="end">
                     {notification.read ? (
                       <IonItemOption
