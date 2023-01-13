@@ -41,9 +41,9 @@ export class ChatController {
     new MapProfilePictureInterceptor(),
     RemoveSensitiveFieldsInterceptor
   )
-  @Get('conversation-with')
+  @Get('conversation-with/:username')
   async getConversationWith(
-    @Param(':username') participantUsername,
+    @Param('username') participantUsername,
     @GetCurrentUser('sub')
     userId: User['id']
   ): Promise<Conversation & { participants: User[]; messages: Message[] }> {

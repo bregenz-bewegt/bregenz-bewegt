@@ -98,7 +98,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
               }
         );
       });
-    }, []);
+    }, [match.params.username]);
 
     console.log(conversation?.messages);
 
