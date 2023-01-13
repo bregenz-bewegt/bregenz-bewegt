@@ -3,6 +3,7 @@ import {
   ConnectedSocket,
   MessageBody,
   OnGatewayConnection,
+  OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -28,7 +29,7 @@ import { PrismaService } from '@bregenz-bewegt/server-prisma';
 
 @Injectable()
 @WebSocketGateway({ namespace: 'chats', cors: { origin: true } })
-export class ChatGateway implements OnGatewayConnection {
+export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(
     private chatService: ChatService,
     private jwtService: JwtService,
@@ -44,7 +45,7 @@ export class ChatGateway implements OnGatewayConnection {
     ChatInterServerEvents
   >();
 
-  async handleConnection(socket: Socket): Promise<any> {
+  async handleConnection(socket: Socket): Promise<Socket> {
     const token = this.utilService.extractBearerToken(
       socket.handshake.auth.authorization
     );
@@ -73,6 +74,14 @@ export class ChatGateway implements OnGatewayConnection {
     }
   }
 
+  async handleDisconnect(socket: Socket): Promise<Socket> {
+    this.prismaService.user.updateMany({
+      where: { conversationSocketId: socket.id },
+      data: { conversationSocketId: null },
+    });
+    return socket.disconnect();
+  }
+
   @UseGuards(WsAccessTokenGuard)
   @SubscribeMessage('message.create')
   async createMessage(
@@ -82,7 +91,6 @@ export class ChatGateway implements OnGatewayConnection {
     socket: Socket
   ): Promise<CreateMessageDto> {
     const conversation = await this.chatService.createMessage(userId, dto);
-    console.log(conversation.participants);
 
     conversation.participants.forEach((partifipant) => {
       socket.to(partifipant.conversationSocketId).emit('onCreateMessage', dto);
