@@ -25,6 +25,7 @@ import {
   IonButton,
   IonIcon,
   IonRow,
+  useIonRouter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
@@ -50,6 +51,9 @@ export const Conversation: React.FC<ConversationProps> = inject(
   tabStore.storeKey
 )(
   observer(({ chatStore, tabStore, match }) => {
+    const router = useIonRouter();
+    const navigateBackToFriends = () =>
+      router.push(`${tabRoutes.profile.route}/friends`);
     const [conversation, setConversation] = useState<ConversationType>();
     const chat = useFormik({
       initialValues: { message: '' },
@@ -73,6 +77,15 @@ export const Conversation: React.FC<ConversationProps> = inject(
     };
 
     useEffect(() => {
+      chatStore
+        ?.getConversationWith(match.params.username)
+        .then((result) => {
+          setConversation(result);
+        })
+        .catch(() => {
+          navigateBackToFriends();
+        });
+
       socket.on('onCreateMessage', (message: Message) => {
         console.log(message);
 
@@ -86,6 +99,8 @@ export const Conversation: React.FC<ConversationProps> = inject(
         );
       });
     }, []);
+
+    console.log(conversation?.messages);
 
     return (
       <IonPage className="conversation">

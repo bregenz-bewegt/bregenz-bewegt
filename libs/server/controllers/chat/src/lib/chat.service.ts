@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
-import { Conversation, User } from '@prisma/client';
+import { Conversation, Message, User } from '@prisma/client';
 
 @Injectable()
 export class ChatService {
@@ -15,6 +15,25 @@ export class ChatService {
     });
 
     return conversations;
+  }
+
+  async getConversationWith(
+    participantUsername: User['username'],
+    userId: User['id']
+  ): Promise<Conversation & { participants: User[]; messages: Message[] }> {
+    return this.prismaService.conversation.findFirst({
+      where: {
+        AND: [
+          {
+            participants: { some: { username: participantUsername } },
+          },
+          {
+            participants: { some: { id: userId } },
+          },
+        ],
+      },
+      include: { participants: true, messages: true },
+    });
   }
 
   async createConversation(

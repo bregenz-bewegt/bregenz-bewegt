@@ -10,11 +10,12 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { Conversation, Role, User } from '@prisma/client';
+import { Conversation, Message, Role, User } from '@prisma/client';
 import { ChatService } from './chat.service';
 
 @Controller('chats')
@@ -32,6 +33,21 @@ export class ChatController {
     @GetCurrentUser('sub') userId: User['id']
   ): Promise<Conversation[]> {
     return this.chatService.getConversations(userId);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(
+    new MapProfilePictureInterceptor(),
+    RemoveSensitiveFieldsInterceptor
+  )
+  @Get('conversation-with')
+  async getConversationWith(
+    @Param(':username') participantUsername,
+    @GetCurrentUser('sub')
+    userId: User['id']
+  ): Promise<Conversation & { participants: User[]; messages: Message[] }> {
+    return this.chatService.getConversationWith(participantUsername, userId);
   }
 
   @HasRole(Role.USER)
