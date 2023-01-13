@@ -66,13 +66,9 @@ export const Conversation: React.FC<ConversationProps> = inject(
     }, []);
 
     const sendMessage = (text: string) => {
-      try {
-        socket.emit('message.create', { text }, (result) => {
-          console.log(result);
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      socket.emit('message.create', { text }, (result) => {
+        console.log(result);
+      });
     };
 
     useEffect(() => {
