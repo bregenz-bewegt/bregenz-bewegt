@@ -35,8 +35,10 @@ export class ChatGateway implements OnGatewayConnection {
 
   handleConnection(
     @ConnectedSocket()
-    socket: Socket
+    socket: Socket,
+    @WsGetCurrentUser('sub') userId: User['id']
   ): void {
+    console.log(userId);
     // TODO: auth user and safe socketId to db
   }
 

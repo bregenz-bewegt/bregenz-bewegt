@@ -49,7 +49,6 @@ export class AuthenticatedSocketAdapter extends IoAdapter {
       const token = this.utilService.extractBearerToken(
         socket.handshake.auth.authorization
       );
-      console.log(token);
 
       if (!token) {
         return next(new Error('Token not provided'));
