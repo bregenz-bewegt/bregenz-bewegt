@@ -46,6 +46,7 @@ export class ChatGateway implements OnGatewayConnection {
     socket: Socket
   ): Promise<CreateMessageDto> {
     const conversation = await this.chatService.createMessage(userId, dto);
+    console.log(conversation.participants);
 
     conversation.participants.forEach((partifipant) => {
       socket.to(partifipant.conversationSocketId).emit('onCreateMessage', dto);
