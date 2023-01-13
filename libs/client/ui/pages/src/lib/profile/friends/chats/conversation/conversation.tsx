@@ -66,9 +66,13 @@ export const Conversation: React.FC<ConversationProps> = inject(
     }, []);
 
     const sendMessage = (text: string) => {
-      socket.emit('message.create', { text }, (result) => {
-        console.log(result);
-      });
+      try {
+        socket.emit('message.create', { text }, (result) => {
+          console.log(result);
+        });
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     useEffect(() => {
@@ -76,7 +80,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
       socket.on('connect', () => {
         console.log('connected');
       });
-      socket.on('connect_error', (e) => console.log);
+      socket.on('connect_error', (e) => console.log(e));
       socket.on('onCreateMessage', (message) => {
         console.log(message);
       });
