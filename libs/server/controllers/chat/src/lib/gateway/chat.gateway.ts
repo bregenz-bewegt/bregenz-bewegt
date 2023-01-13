@@ -15,7 +15,10 @@ import {
   CreateMessageDto,
 } from '@bregenz-bewegt/shared/types';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
-import { WsAccessTokenGuard } from '@bregenz-bewegt/server/common';
+import {
+  WsAccessTokenGuard,
+  WsGetCurrentUser,
+} from '@bregenz-bewegt/server/common';
 
 @Injectable()
 @WebSocketGateway({ namespace: 'chats' })
@@ -36,12 +39,13 @@ export class ChatGateway implements OnGatewayConnection {
   @UseGuards(WsAccessTokenGuard)
   @SubscribeMessage('message.create')
   createMessage(
+    @WsGetCurrentUser() user: any,
     @MessageBody() data: CreateMessageDto,
     @ConnectedSocket()
     socket: Socket
   ): CreateMessageDto {
-    const token = socket.handshake.headers.authorization;
-    console.log(token, data);
+    const token = socket.handshake.auth.authorization;
+    console.log(token, data, user);
     socket.emit('onCreateMessage', data);
 
     return data;
