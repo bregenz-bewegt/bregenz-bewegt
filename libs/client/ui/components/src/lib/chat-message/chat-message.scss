@@ -1,4 +1,18 @@
 .chat-message {
   display: flex;
   flex-direction: column;
+  padding: var(--spacing-xs);
+  margin-bottom: var(--spacing-s);
+  background-color: var(--ion-color-light);
+  border-radius: var(--spacing-s);
+
+  &__author {
+    margin-bottom: var(--spacing-xxs);
+  }
+
+  &__text {
+  }
+
+  &__self-sent {
+  }
 }

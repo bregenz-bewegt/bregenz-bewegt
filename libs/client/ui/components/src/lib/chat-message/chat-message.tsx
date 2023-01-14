@@ -12,9 +12,14 @@ export interface ChatMessageProps {
 export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   console.log(message);
   return (
-    <IonRow key={message.id} className="chat-message">
-      <IonCardSubtitle>{message.author.username}</IonCardSubtitle>
-      <IonLabel>{message.text}</IonLabel>
+    <IonRow
+      key={message.id}
+      className={`chat-message${
+        message.selfSent ? ' chat-message__self-sent' : ''
+      }`}
+    >
+      <div className="chat-message__author">{message.author.username}</div>
+      <div className="chat-message__text">{message.text}</div>
     </IonRow>
   );
 };
