@@ -30,7 +30,7 @@ import {
   useIonRouter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { send } from 'ionicons/icons';
 import './conversation.scss';
@@ -69,6 +69,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
         //
       },
     });
+    const bottomViewRef = useRef<HTMLDivElement>(null);
 
     const navigateBackToFriends = () =>
       router.push(`${tabRoutes.profile.route}/friends`);
@@ -114,6 +115,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
       });
 
       socket.on('onCreateMessage', (message: Message) => {
+        bottomViewRef?.current?.scrollIntoView({ behavior: 'smooth' });
         setConversation((prev) =>
           !prev
             ? prev
@@ -143,6 +145,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
             {conversation?.messages.map((message) => {
               return <IonRow key={message.id}>{message.text}</IonRow>;
             })}
+            <div ref={bottomViewRef}></div>
           </IonGrid>
         </IonContent>
         <IonFooter mode="ios" className="ion-no-border">

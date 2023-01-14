@@ -65,7 +65,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         return socket.disconnect();
       }
 
-      this.prismaService.user.update({
+      await this.prismaService.user.update({
         where: { id: user.id },
         data: { conversationSocketId: socket.id },
       });
@@ -93,10 +93,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const conversation = await this.chatService.createMessage(userId, dto);
 
     this.server.to(socket.id).emit('onCreateMessage', dto);
-    console.log(socket.id);
 
     conversation.participants.forEach((partifipant) => {
-      console.log(partifipant.id);
+      console.log(socket.id, {
+        username: partifipant.username,
+        socketId: partifipant.conversationSocketId,
+      });
       this.server
         .to(partifipant.conversationSocketId)
         .emit('onCreateMessage', dto);
