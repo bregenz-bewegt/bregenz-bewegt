@@ -92,7 +92,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ): Promise<CreateMessageDto> {
     const conversation = await this.chatService.createMessage(userId, dto);
 
-    socket.to(socket.id).emit('onCreateMessage', dto);
+    this.server.to(socket.id).emit('onCreateMessage', dto);
     console.log(socket.id);
 
     conversation.participants.forEach((partifipant) => {
