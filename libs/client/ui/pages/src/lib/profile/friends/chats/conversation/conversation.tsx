@@ -74,6 +74,10 @@ export const Conversation: React.FC<ConversationProps> = inject(
     const navigateBackToFriends = () =>
       router.push(`${tabRoutes.profile.route}/friends`);
 
+    const scrollChatToBottom = () => {
+      bottomViewRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
     useIonViewWillEnter(() => {
       tabStore?.setIsShown(false);
     }, []);
@@ -101,11 +105,12 @@ export const Conversation: React.FC<ConversationProps> = inject(
         ?.getConversationWith(match.params.username)
         .then((result) => {
           setConversation(result);
+          scrollChatToBottom();
         })
         .catch(() => {
           navigateBackToFriends();
         });
-    }, [match.params.username, setSocket]);
+    }, [match.params.username, setSocket, bottomViewRef]);
 
     useEffect(() => {
       if (!socket) return;
@@ -115,7 +120,6 @@ export const Conversation: React.FC<ConversationProps> = inject(
       });
 
       socket.on('onCreateMessage', (message: Message) => {
-        bottomViewRef?.current?.scrollIntoView({ behavior: 'smooth' });
         setConversation((prev) =>
           !prev
             ? prev
@@ -124,6 +128,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
                 messages: [...(prev?.messages ?? []), message],
               }
         );
+        scrollChatToBottom();
       });
     }, [socket]);
 
