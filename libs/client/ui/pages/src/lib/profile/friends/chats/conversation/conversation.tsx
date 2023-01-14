@@ -155,10 +155,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
             {conversation?.messages.map((message) => {
               return <IonRow key={message.id}>{message.text}</IonRow>;
             })}
-            <div
-              className="conversation__scroll-bottom"
-              ref={bottomViewRef}
-            ></div>
+            <div className="scroll-bottom" ref={bottomViewRef}></div>
           </IonGrid>
         </IonContent>
         <IonFooter mode="ios" className="ion-no-border">

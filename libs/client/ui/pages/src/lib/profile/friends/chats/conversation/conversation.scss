@@ -10,7 +10,7 @@
       flex: 1 1 auto;
       overflow-y: auto;
 
-      &__scroll-bottom {
+      .scroll-bottom {
         margin-bottom: var(--sapcing-m);
       }
     }
