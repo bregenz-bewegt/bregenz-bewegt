@@ -28,6 +28,7 @@ import {
   IonIcon,
   IonRow,
   useIonRouter,
+  useIonViewDidEnter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -79,8 +80,11 @@ export const Conversation: React.FC<ConversationProps> = inject(
     };
 
     useIonViewWillEnter(() => {
-      scrollChatToBottom();
       tabStore?.setIsShown(false);
+    }, []);
+
+    useIonViewDidEnter(() => {
+      scrollChatToBottom();
     }, []);
 
     useIonViewWillLeave(() => {
@@ -119,10 +123,6 @@ export const Conversation: React.FC<ConversationProps> = inject(
     useEffect(() => {
       if (!socket) return;
 
-      socket.on('connect', () => {
-        console.log('connected');
-      });
-
       socket.on('onCreateMessage', (message: Message) => {
         console.log(message);
         setConversation((prev) =>
@@ -155,7 +155,10 @@ export const Conversation: React.FC<ConversationProps> = inject(
             {conversation?.messages.map((message) => {
               return <IonRow key={message.id}>{message.text}</IonRow>;
             })}
-            <div ref={bottomViewRef}></div>
+            <div
+              className="conversation__scroll-bottom"
+              ref={bottomViewRef}
+            ></div>
           </IonGrid>
         </IonContent>
         <IonFooter mode="ios" className="ion-no-border">
