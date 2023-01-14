@@ -124,6 +124,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
       });
 
       socket.on('onCreateMessage', (message: Message) => {
+        console.log(message);
         setConversation((prev) =>
           !prev
             ? prev

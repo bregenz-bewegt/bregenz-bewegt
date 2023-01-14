@@ -1,6 +1,5 @@
 import { Injectable, UnauthorizedException, UseGuards } from '@nestjs/common';
 import {
-  ConnectedSocket,
   MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -86,19 +85,11 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @SubscribeMessage('message.create')
   async createMessage(
     @WsGetCurrentUser('sub') userId: User['id'],
-    @MessageBody() dto: CreateMessageDto,
-    @ConnectedSocket()
-    socket: Socket
+    @MessageBody() dto: CreateMessageDto
   ): Promise<CreateMessageDto> {
     const conversation = await this.chatService.createMessage(userId, dto);
 
-    this.server.to(socket.id).emit('onCreateMessage', dto);
-
     conversation.participants.forEach((partifipant) => {
-      console.log(socket.id, {
-        username: partifipant.username,
-        socketId: partifipant.conversationSocketId,
-      });
       this.server
         .to(partifipant.conversationSocketId)
         .emit('onCreateMessage', dto);
