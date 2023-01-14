@@ -124,7 +124,6 @@ export const Conversation: React.FC<ConversationProps> = inject(
       if (!socket) return;
 
       socket.on('onCreateMessage', (message: Message) => {
-        console.log(message);
         setConversation((prev) =>
           !prev
             ? prev
