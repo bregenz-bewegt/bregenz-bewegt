@@ -160,8 +160,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
                 <ChatMessage
                   message={{
                     ...message,
-                    // selfSent: message.author.id === userStore?.user?.id,
-                    selfSent: true,
+                    selfSent: message.author.id === userStore?.user?.id,
                   }}
                 />
               );
