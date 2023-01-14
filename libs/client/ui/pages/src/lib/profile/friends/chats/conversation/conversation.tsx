@@ -79,6 +79,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
     };
 
     useIonViewWillEnter(() => {
+      scrollChatToBottom();
       tabStore?.setIsShown(false);
     }, []);
 
@@ -105,12 +106,15 @@ export const Conversation: React.FC<ConversationProps> = inject(
         ?.getConversationWith(match.params.username)
         .then((result) => {
           setConversation(result);
-          scrollChatToBottom();
         })
         .catch(() => {
           navigateBackToFriends();
         });
-    }, [match.params.username, setSocket, bottomViewRef]);
+    }, [match.params.username, setSocket]);
+
+    useEffect(() => {
+      scrollChatToBottom();
+    }, [conversation?.messages]);
 
     useEffect(() => {
       if (!socket) return;
