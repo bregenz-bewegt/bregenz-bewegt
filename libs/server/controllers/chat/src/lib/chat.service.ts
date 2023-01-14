@@ -21,7 +21,12 @@ export class ChatService {
   async getConversationWith(
     participantUsername: User['username'],
     userId: User['id']
-  ): Promise<Conversation & { participants: User[]; messages: Message[] }> {
+  ): Promise<
+    Conversation & {
+      participants: User[];
+      messages: (Message & { author: User })[];
+    }
+  > {
     return this.prismaService.conversation.findFirst({
       where: {
         AND: [
@@ -33,7 +38,7 @@ export class ChatService {
           },
         ],
       },
-      include: { participants: true, messages: true },
+      include: { participants: true, messages: { include: { author: true } } },
     });
   }
 

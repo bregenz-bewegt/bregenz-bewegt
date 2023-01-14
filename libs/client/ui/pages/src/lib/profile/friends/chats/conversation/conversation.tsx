@@ -1,4 +1,8 @@
-import { BackButton, Input } from '@bregenz-bewegt/client-ui-components';
+import {
+  BackButton,
+  ChatMessage,
+  Input,
+} from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   chatStore,
@@ -152,7 +156,15 @@ export const Conversation: React.FC<ConversationProps> = inject(
           <IonGrid>
             <IonRow>{match.params.username}</IonRow>
             {conversation?.messages.map((message) => {
-              return <IonRow key={message.id}>{message.text}</IonRow>;
+              return (
+                <ChatMessage
+                  message={{
+                    ...message,
+                    // selfSent: message.author.id === userStore?.user?.id,
+                    selfSent: true,
+                  }}
+                />
+              );
             })}
             <div className="scroll-bottom" ref={bottomViewRef}></div>
           </IonGrid>

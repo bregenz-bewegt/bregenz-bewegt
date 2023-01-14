@@ -46,7 +46,12 @@ export class ChatController {
     @Param('username') participantUsername,
     @GetCurrentUser('sub')
     userId: User['id']
-  ): Promise<Conversation & { participants: User[]; messages: Message[] }> {
+  ): Promise<
+    Conversation & {
+      participants: User[];
+      messages: (Message & { author: User })[];
+    }
+  > {
     return this.chatService.getConversationWith(participantUsername, userId);
   }
 
