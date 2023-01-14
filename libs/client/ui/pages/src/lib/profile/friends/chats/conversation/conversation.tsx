@@ -107,7 +107,13 @@ export const Conversation: React.FC<ConversationProps> = inject(
     }, [match.params.username, setSocket]);
 
     useEffect(() => {
-      socket?.on('onCreateMessage', (message: Message) => {
+      if (!socket) return;
+
+      socket.on('connect', () => {
+        console.log('connected');
+      });
+
+      socket.on('onCreateMessage', (message: Message) => {
         setConversation((prev) =>
           !prev
             ? prev
