@@ -28,6 +28,7 @@ import {
   IonSkeletonText,
   IonLabel,
   SearchbarChangeEventDetail,
+  useIonRouter,
 } from '@ionic/react';
 import { AddCircle } from 'iconsax-react';
 import { inject, observer } from 'mobx-react';
@@ -48,6 +49,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
     chatStore.storeKey
   )(
     observer(({ userStore, chatStore, trigger }) => {
+      const router = useIonRouter();
       const modalRef = useRef<HTMLIonModalElement>(null);
       const [presentDefaultErrorToast] = useDefaultErrorToast();
       const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -78,7 +80,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
             setSearchResult(result);
             setIsLoading(false);
           })
-          .catch((e) => {
+          .catch(() => {
             setSearchResult([]);
             setIsLoading(false);
           });
@@ -99,11 +101,16 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
           .catch(() => setSearchResult([]));
       };
 
-      const handleCreateConversation = (participantId: User['id']) => {
+      const handleCreateConversation = (
+        participantId: User['id'],
+        participantUsername: User['username']
+      ) => {
         chatStore
           ?.createConversation({ participantId })
           .then((conversation) => {
-            // console.log(conversation);
+            router.push(
+              `${tabRoutes.profile.route}/chats/${participantUsername}`
+            );
           })
           .catch(() => {
             presentDefaultErrorToast();
@@ -183,7 +190,10 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                             >
                               <AddCircle
                                 onClick={() => {
-                                  handleCreateConversation(user.id ?? '');
+                                  handleCreateConversation(
+                                    user.id ?? '',
+                                    user.username ?? ''
+                                  );
                                 }}
                                 variant="Bold"
                                 color={`var(--ion-color-primary)`}
