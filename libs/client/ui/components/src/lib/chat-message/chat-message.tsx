@@ -1,5 +1,7 @@
+import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import { Message } from '@bregenz-bewegt/client/types';
-import { IonCardSubtitle, IonLabel, IonRow } from '@ionic/react';
+import { IonAvatar, IonRow } from '@ionic/react';
+import { inject, observer } from 'mobx-react';
 import React from 'react';
 import './chat-message.scss';
 
@@ -7,19 +9,31 @@ export interface ChatMessageProps {
   message: Omit<Message, 'conversation'> & {
     selfSent: boolean;
   };
+  userStore?: UserStore;
 }
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
-  console.log(message);
-  return (
-    <IonRow
-      key={message.id}
-      className={`chat-message${
-        message.selfSent ? ' chat-message__self-sent' : ''
-      }`}
-    >
-      <div className="chat-message__author">{message.author.username}</div>
-      <div className="chat-message__text">{message.text}</div>
-    </IonRow>
-  );
-};
+export const ChatMessage: React.FC<ChatMessageProps> = inject(
+  userStore.storeKey
+)(
+  observer(({ message, userStore }) => {
+    return (
+      <IonRow
+        key={message.id}
+        className={`chat-message${
+          message.selfSent ? ' chat-message__self-sent' : ''
+        }`}
+      >
+        <IonAvatar>
+          <img
+            src={
+              message.author.profilePicture ??
+              userStore?.getAvatarProfilePictureUrl(message.author.username)
+            }
+            alt="profile"
+          />
+        </IonAvatar>
+        <div className="chat-message__text">{message.text}</div>
+      </IonRow>
+    );
+  })
+);

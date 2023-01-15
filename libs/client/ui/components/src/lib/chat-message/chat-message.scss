@@ -1,22 +1,28 @@
 .chat-message {
   display: flex;
-  flex-direction: column;
-  padding: var(--spacing-s);
-  margin-bottom: var(--spacing-s);
-  background-color: var(--ion-color-light);
-  border-radius: var(--spacing-s);
-  width: fit-content;
 
-  &__author {
-    margin-bottom: var(--spacing-xxs);
+  ion-avatar {
+    width: var(--spacing-xl);
+    height: var(--spacing-xl);
   }
 
   &__text {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-s);
+    margin-bottom: var(--spacing-s);
+    background-color: var(--ion-color-light);
+    border-radius: var(--spacing-s);
+    width: fit-content;
   }
 
   &__self-sent {
     margin-left: auto;
     align-items: flex-end;
-    background-color: var(--ion-color-secondary);
+    flex-direction: row-reverse;
+
+    .chat-message__text {
+      background-color: var(--ion-color-secondary);
+    }
   }
 }
