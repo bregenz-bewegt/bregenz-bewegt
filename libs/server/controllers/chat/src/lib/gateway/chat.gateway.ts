@@ -6,6 +6,7 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
+  WsResponse,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import {
@@ -19,7 +20,7 @@ import {
   WsAccessTokenGuard,
   WsGetCurrentUser,
 } from '@bregenz-bewegt/server/common';
-import { User } from '@prisma/client';
+import { Message, User } from '@prisma/client';
 import { ChatService } from '../chat.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -93,7 +94,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async createMessage(
     @WsGetCurrentUser('sub') userId: User['id'],
     @MessageBody() dto: CreateMessageDto
-  ): Promise<void> {
+  ): Promise<Message> {
     const message = await this.chatService.createMessage(userId, dto);
     if (!message) return;
 
@@ -106,5 +107,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         .to(partifipant.conversationSocketId)
         .emit('onCreateMessage', message);
     });
+
+    return message;
   }
 }
