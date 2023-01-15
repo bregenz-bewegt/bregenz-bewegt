@@ -1,4 +1,5 @@
 import React from 'react';
+import './chat-date-divider.scss';
 
 export interface ChatDateDividerProps {
   currentDate: Date;
