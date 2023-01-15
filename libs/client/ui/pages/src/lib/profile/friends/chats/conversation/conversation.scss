@@ -9,6 +9,12 @@
       height: 100%;
       flex: 1 1 auto;
       overflow-y: auto;
+      max-width: 100%;
+      overflow-x: hidden;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
       .scroll-bottom {
         margin-bottom: var(--spacing-s);
