@@ -77,13 +77,14 @@ export class ChatService {
   async createMessage(
     userId: User['id'],
     dto: CreateMessageDto
-  ): Promise<Message> {
+  ): Promise<Message & { author: User }> {
     return this.prismaService.message.create({
       data: {
         text: dto.text,
         author: { connect: { id: userId } },
         conversation: { connect: { id: dto.conversationId } },
       },
+      include: { author: true },
     });
   }
 }
