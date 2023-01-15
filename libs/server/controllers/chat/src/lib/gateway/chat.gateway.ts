@@ -95,6 +95,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @MessageBody() dto: CreateMessageDto
   ): Promise<void> {
     const message = await this.chatService.createMessage(userId, dto);
+    if (!message) return;
+
     const conversation = await this.chatService.getConversationById(
       message.conversationId
     );
