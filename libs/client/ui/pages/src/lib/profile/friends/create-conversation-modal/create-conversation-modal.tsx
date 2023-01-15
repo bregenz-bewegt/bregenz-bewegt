@@ -101,17 +101,11 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
           .catch(() => setSearchResult([]));
       };
 
-      const handleCreateConversation = (
-        participantId: User['id'],
-        participantUsername: User['username']
-      ) => {
+      const handleCreateConversation = (participantId: User['id']) => {
         chatStore
           ?.createConversation({ participantId })
           .then((conversation) => {
-            dismissAddModal();
-            router.push(
-              `${tabRoutes.profile.route}/chat/${participantUsername}`
-            );
+            setSearchResult((prev) => prev.filter((r) => r.))
           })
           .catch(() => {
             presentDefaultErrorToast();
