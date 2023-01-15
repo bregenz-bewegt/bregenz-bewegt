@@ -86,6 +86,16 @@ export class ChatService {
     userId: User['id'],
     dto: CreateMessageDto
   ): Promise<Message & { author: User }> {
+    const conversationExists = await this.prismaService.conversation.findUnique(
+      {
+        where: { id: dto.conversationId },
+      }
+    );
+
+    if (!conversationExists) {
+      throw new ForbiddenException();
+    }
+
     return this.prismaService.message.create({
       data: {
         text: dto.text,
