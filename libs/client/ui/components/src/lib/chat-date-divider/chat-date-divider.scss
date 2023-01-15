@@ -2,4 +2,9 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  top: 0;
+  position: sticky;
+  background-color: var(--ion-color-primary-contrast);
+
+  border-radius: var(--spacing-s);
 }
