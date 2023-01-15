@@ -39,12 +39,18 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @WebSocketServer()
   private server: Server = new Server<
-    ChatServerToClientEvents,
     ChatClientToServerEvents,
+    ChatServerToClientEvents,
     ChatInterServerEvents
   >();
 
-  async handleConnection(socket: Socket): Promise<Socket> {
+  async handleConnection(
+    socket: Socket<
+      ChatClientToServerEvents,
+      ChatServerToClientEvents,
+      ChatInterServerEvents
+    >
+  ): Promise<Socket> {
     const token = this.utilService.extractBearerToken(
       socket.handshake.auth.authorization
     );
@@ -88,7 +94,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @WsGetCurrentUser('sub') userId: User['id'],
     @MessageBody() dto: CreateMessageDto
   ): Promise<CreateMessageDto> {
-    console.log(userId);
     const message = await this.chatService.createMessage(userId, dto);
     const conversation = await this.chatService.getConversationById(
       message.conversationId

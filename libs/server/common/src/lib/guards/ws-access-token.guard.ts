@@ -1,11 +1,6 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { JwtPayloadWithRefreshToken } from '@bregenz-bewegt/shared/types';
-import {
-  Injectable,
-  CanActivate,
-  ExecutionContext,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 import { UtilService } from '@bregenz-bewegt/server/util';
@@ -28,8 +23,6 @@ export class WsAccessTokenGuard implements CanActivate {
     const token = this.utilService.extractBearerToken(
       client.handshake.auth.authorization
     );
-
-    console.log('test');
 
     try {
       const decoded: JwtPayloadWithRefreshToken = this.jwtService.verify(
