@@ -6,7 +6,6 @@ import {
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { Conversation, Message, User } from '@prisma/client';
 import { CreateMessageDto } from '@bregenz-bewegt/shared/types';
-import { WsException } from '@nestjs/websockets';
 
 @Injectable()
 export class ChatService {
