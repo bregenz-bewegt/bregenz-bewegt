@@ -155,7 +155,6 @@ export const Conversation: React.FC<ConversationProps> = inject(
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
           <IonGrid>
-            <IonRow>{match.params.username}</IonRow>
             {conversation?.messages.map((message, i, messages) => {
               return (
                 <>

@@ -12,7 +12,6 @@ export const ChatDateDivider: React.FC<ChatDateDividerProps> = ({
   previousDate,
 }) => {
   const isSameDay = (d1: Date, d2?: Date) => {
-    console.log(d1, d2);
     if (!d2) return false;
 
     return (
