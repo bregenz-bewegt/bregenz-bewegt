@@ -28,6 +28,10 @@
     padding: var(--spacing-m) var(--spacing-l);
     margin-top: -60px;
 
+    ion-card-title {
+      font-size: var(--spacing-m);
+    }
+
     ion-card-subtitle {
       margin-top: var(--spacing-xs);
       display: flex;

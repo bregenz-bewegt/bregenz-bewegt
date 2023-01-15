@@ -40,7 +40,6 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
       <>
         <IonTabs>
           <IonRouterOutlet>
-            {/* <Switch> */}
             <Route
               exact
               path={'/reset-password/:token'}
@@ -134,9 +133,13 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             <Route path="">
               <Redirect to="/start" />
             </Route>
-            {/* </Switch> */}
           </IonRouterOutlet>
-          <IonTabBar slot="bottom" mode="md" hidden={!tabStore?.isShown}>
+          <IonTabBar
+            slot="bottom"
+            mode="md"
+            hidden={!tabStore?.isShown}
+            className="ion-no-border"
+          >
             {Object.values(tabRoutes).map((page, i) => {
               if (page.label !== 'Scan') {
                 return (

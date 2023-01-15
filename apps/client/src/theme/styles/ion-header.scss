@@ -1,0 +1,13 @@
+ion-header {
+  ion-buttons {
+    display: flex;
+    align-items: center;
+
+    .back-button {
+      position: static;
+      margin-top: auto;
+      margin-bottom: auto;
+      background-color: transparent;
+    }
+  }
+}

@@ -38,3 +38,10 @@
     }
   }
 }
+
+.exercise-toast {
+  &--end,
+  &--start {
+    translate: 0 calc(var(--spacing-s) * -11);
+  }
+}

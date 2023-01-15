@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import './notifications.scss';
 import {
-  IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
@@ -33,6 +32,7 @@ import {
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
 import { checkmarkDone, trash } from 'ionicons/icons';
+import { BackButton } from '@bregenz-bewegt/client-ui-components';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
@@ -112,14 +112,10 @@ export const Notifications: React.FC<NotificationsProps> = inject(
 
     return (
       <IonPage className="notifications">
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <IonBackButton
-                color="primary"
-                defaultHref={`${tabRoutes.start.route}`}
-                text="Zurück"
-              />
+              <BackButton defaultRouterLink={tabRoutes.start.route} />
             </IonButtons>
             <IonTitle>Benachrichtigungen</IonTitle>
             <IonButtons slot="end">

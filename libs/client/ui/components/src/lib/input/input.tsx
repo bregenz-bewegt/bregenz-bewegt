@@ -5,6 +5,7 @@ import {
   IonInputCustomEvent,
   TextFieldTypes,
 } from '@ionic/core';
+import { AutocompleteTypes } from '@bregenz-bewegt/client/types';
 
 export interface InputProps {
   value?: string | number | null;
@@ -26,6 +27,7 @@ export interface InputProps {
   error?: string;
   expand?: boolean;
   clearOnEdit?: boolean;
+  autocomplete: AutocompleteTypes;
   className?: string;
   ref?: React.Ref<HTMLIonInputElement>;
   onChange?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
@@ -45,6 +47,7 @@ export const Input: React.FC<InputProps> = ({
   expand = true,
   className,
   clearOnEdit = false,
+  autocomplete,
   ref,
   onChange,
   onBlur,
@@ -58,6 +61,7 @@ export const Input: React.FC<InputProps> = ({
     required,
     disabled,
     clearOnEdit,
+    autocomplete,
     ref,
     onIonChange: onChange,
     onIonBlur: onBlur,

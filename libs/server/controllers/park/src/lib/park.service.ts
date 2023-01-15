@@ -60,6 +60,7 @@ export class ParkService {
             difficulty: true,
           },
         },
+        coordinates: true,
       },
     });
 
