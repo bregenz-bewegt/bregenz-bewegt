@@ -108,8 +108,9 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
         chatStore
           ?.createConversation({ participantId })
           .then((conversation) => {
+            dismissAddModal();
             router.push(
-              `${tabRoutes.profile.route}/chats/${participantUsername}`
+              `${tabRoutes.profile.route}/chat/${participantUsername}`
             );
           })
           .catch(() => {
