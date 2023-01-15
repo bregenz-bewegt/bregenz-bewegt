@@ -23,8 +23,8 @@ export const ChatDateDivider: React.FC<ChatDateDividerProps> = ({
   };
 
   return !isSameDay(currentDate, previousDate) ? (
-    <div>
-      <IonText color="light">{currentDate.toLocaleDateString()}</IonText>
+    <div className="chat-date-divider">
+      <IonText color="medium">{currentDate.toLocaleDateString()}</IonText>
     </div>
   ) : null;
 };
