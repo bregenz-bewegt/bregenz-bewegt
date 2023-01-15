@@ -3,7 +3,6 @@ import './terms-of-service.scss';
 import {
   IonPage,
   IonContent,
-  IonBackButton,
   IonButtons,
   IonHeader,
   IonTitle,
