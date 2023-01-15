@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException, UseGuards } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import {
   MessageBody,
   OnGatewayConnection,
@@ -6,7 +11,6 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  WsResponse,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import {
@@ -17,6 +21,7 @@ import {
   JwtPayloadWithRefreshToken,
 } from '@bregenz-bewegt/shared/types';
 import {
+  RemoveSensitiveFieldsInterceptor,
   WsAccessTokenGuard,
   WsGetCurrentUser,
 } from '@bregenz-bewegt/server/common';
@@ -89,6 +94,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     return socket.disconnect();
   }
 
+  @UseInterceptors(RemoveSensitiveFieldsInterceptor)
   @UseGuards(WsAccessTokenGuard)
   @SubscribeMessage('message.create')
   async createMessage(
