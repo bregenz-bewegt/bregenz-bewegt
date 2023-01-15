@@ -31,7 +31,6 @@ import {
   IonFooter,
   IonButton,
   IonIcon,
-  IonRow,
   useIonRouter,
   useIonViewDidEnter,
 } from '@ionic/react';
