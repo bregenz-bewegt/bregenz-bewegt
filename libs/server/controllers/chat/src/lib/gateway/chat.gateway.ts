@@ -60,7 +60,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       });
 
       if (!user) {
-        socket.emit('error', new UnauthorizedException());
+        socket.emit('onUnauthorized', new UnauthorizedException());
         return socket.disconnect();
       }
 
@@ -68,7 +68,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         where: { id: user.id },
         data: { conversationSocketId: socket.id },
       });
-    } catch {
+    } catch (ex) {
+      socket.emit('onUnauthorized');
       return socket.disconnect();
     }
   }
@@ -87,6 +88,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @WsGetCurrentUser('sub') userId: User['id'],
     @MessageBody() dto: CreateMessageDto
   ): Promise<CreateMessageDto> {
+    console.log(userId);
     const message = await this.chatService.createMessage(userId, dto);
     const conversation = await this.chatService.getConversationById(
       message.conversationId

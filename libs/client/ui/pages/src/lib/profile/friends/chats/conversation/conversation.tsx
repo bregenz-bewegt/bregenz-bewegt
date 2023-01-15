@@ -76,7 +76,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
         socket?.emit(
           'message.create',
           { text: values.message, conversationId: conversation?.id ?? '' },
-          () => {
+          (result) => {
             resetForm();
           }
         );
@@ -89,6 +89,12 @@ export const Conversation: React.FC<ConversationProps> = inject(
 
     const scrollChatToBottom = () => {
       bottomViewRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    const refreshSocket = () => {
+      userStore?.getTokens().then((tokens) => {
+        setSocket(connectChatSocket(tokens.access_token));
+      });
     };
 
     useIonViewWillEnter(() => {
@@ -104,9 +110,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
     }, []);
 
     useEffect(() => {
-      userStore?.getTokens().then((tokens) => {
-        setSocket(connectChatSocket(tokens.access_token));
-      });
+      refreshSocket();
 
       chatStore
         ?.getConversationWith(match.params.username)
@@ -124,6 +128,19 @@ export const Conversation: React.FC<ConversationProps> = inject(
 
     useEffect(() => {
       if (!socket) return;
+
+      socket.on('connect', () => {
+        console.log('connected');
+      });
+
+      socket.on('disconnect', () => {
+        console.log('disconnected');
+      });
+
+      socket.on('onUnauthorized', () => {
+        console.log('unauthorized');
+        refreshSocket();
+      });
 
       socket.on('onCreateMessage', (message: Message) => {
         setConversation((prev) =>
@@ -160,6 +177,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
               return (
                 <>
                   <ChatDateDivider
+                    key={`chat-divider-${message.createdAt}`}
                     currentDate={new Date(message.createdAt)}
                     previousDate={
                       messages[i - 1]?.createdAt
@@ -168,6 +186,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
                     }
                   />
                   <ChatMessage
+                    key={i}
                     message={{
                       ...message,
                       selfSent: message.author.id === userStore?.user?.id,

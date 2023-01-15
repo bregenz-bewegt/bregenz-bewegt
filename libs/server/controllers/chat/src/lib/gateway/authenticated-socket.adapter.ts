@@ -46,7 +46,6 @@ export class AuthenticatedSocketAdapter extends IoAdapter {
     });
 
     server.use(async (socket: Socket, next) => {
-      console.log('test');
       const token = this.utilService.extractBearerToken(
         socket.handshake.auth.authorization
       );
@@ -65,7 +64,6 @@ export class AuthenticatedSocketAdapter extends IoAdapter {
         });
 
         if (user) (socket as Socket & { user: any }).user = decoded;
-        console.log((socket as any).user);
         return next();
       } catch (error: any) {
         return next(new Error('Authentication error'));
