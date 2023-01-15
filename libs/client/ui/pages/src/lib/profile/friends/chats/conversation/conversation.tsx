@@ -70,8 +70,16 @@ export const Conversation: React.FC<ConversationProps> = inject(
     const [conversation, setConversation] = useState<ConversationType>();
     const chat = useFormik({
       initialValues: { message: '' },
-      onSubmit: (values, { setSubmitting, setValues }) => {
-        //
+      onSubmit: (values, { resetForm }) => {
+        if (!values.message) return;
+
+        socket?.emit(
+          'message.create',
+          { text: values.message, conversationId: conversation?.id ?? '' },
+          () => {
+            resetForm();
+          }
+        );
       },
     });
     const bottomViewRef = useRef<HTMLDivElement>(null);
@@ -94,16 +102,6 @@ export const Conversation: React.FC<ConversationProps> = inject(
     useIonViewWillLeave(() => {
       tabStore?.setIsShown(true);
     }, []);
-
-    const sendMessage = (text: string) => {
-      socket?.emit(
-        'message.create',
-        { text, conversationId: conversation?.id ?? '' },
-        () => {
-          chat.resetForm();
-        }
-      );
-    };
 
     useEffect(() => {
       userStore?.getTokens().then((tokens) => {
@@ -140,6 +138,8 @@ export const Conversation: React.FC<ConversationProps> = inject(
       });
     }, [socket]);
 
+    console.log(conversation);
+
     return (
       <IonPage className="conversation">
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
@@ -154,7 +154,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
         </IonHeader>
         <IonContent fullscreen scrollY={false}>
           <IonGrid>
-            {conversation?.messages.map((message, i, messages) => {
+            {conversation?.messages?.map((message, i, messages) => {
               return (
                 <>
                   <ChatDateDivider
@@ -180,7 +180,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
         <IonFooter mode="ios" className="ion-no-border">
           <IonToolbar>
             <IonButtons slot="primary">
-              <IonButton onClick={() => sendMessage(chat.values.message)}>
+              <IonButton onClick={() => chat.submitForm()}>
                 <IonIcon slot="end" icon={send}></IonIcon>
               </IonButton>
             </IonButtons>

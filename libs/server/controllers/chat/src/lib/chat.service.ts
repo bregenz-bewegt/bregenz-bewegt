@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { Conversation, Message, User } from '@prisma/client';
 import { CreateMessageDto } from '@bregenz-bewegt/shared/types';
@@ -27,7 +31,7 @@ export class ChatService {
       messages: (Message & { author: User })[];
     }
   > {
-    return this.prismaService.conversation.findFirst({
+    const conversation = this.prismaService.conversation.findFirst({
       where: {
         AND: [
           {
@@ -40,6 +44,10 @@ export class ChatService {
       },
       include: { participants: true, messages: { include: { author: true } } },
     });
+
+    if (!conversation) throw new NotFoundException();
+
+    return conversation;
   }
 
   async getConversationById(
