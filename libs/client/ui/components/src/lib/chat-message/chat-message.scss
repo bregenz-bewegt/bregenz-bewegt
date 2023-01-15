@@ -1,5 +1,6 @@
 .chat-message {
   display: flex;
+  margin-bottom: var(--spacing-s);
 
   ion-avatar {
     width: var(--spacing-xl);
@@ -10,10 +11,10 @@
     display: flex;
     flex-direction: column;
     padding: var(--spacing-s);
-    margin-bottom: var(--spacing-s);
     background-color: var(--ion-color-light);
     border-radius: var(--spacing-s);
     width: fit-content;
+    margin: 0 0 0 var(--spacing-s);
   }
 
   &__self-sent {
@@ -23,6 +24,7 @@
 
     .chat-message__text {
       background-color: var(--ion-color-secondary);
+      margin: 0 var(--spacing-s) 0 0;
     }
   }
 }
