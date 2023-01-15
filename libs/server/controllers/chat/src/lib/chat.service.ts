@@ -73,6 +73,12 @@ export class ChatService {
       throw new ForbiddenException();
     }
 
+    const conversationExits = this.getConversationWith(exists.username, userId);
+
+    if (!conversationExits) {
+      throw new ForbiddenException();
+    }
+
     return this.prismaService.conversation.create({
       data: {
         participants: {
