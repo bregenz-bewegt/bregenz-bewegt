@@ -1,5 +1,6 @@
 import {
   BackButton,
+  ChatDateDivider,
   ChatMessage,
   Input,
 } from '@bregenz-bewegt/client-ui-components';
@@ -155,14 +156,24 @@ export const Conversation: React.FC<ConversationProps> = inject(
         <IonContent fullscreen scrollY={false}>
           <IonGrid>
             <IonRow>{match.params.username}</IonRow>
-            {conversation?.messages.map((message) => {
+            {conversation?.messages.map((message, i, messages) => {
               return (
-                <ChatMessage
-                  message={{
-                    ...message,
-                    selfSent: message.author.id === userStore?.user?.id,
-                  }}
-                />
+                <>
+                  <ChatDateDivider
+                    currentDate={new Date(message.createdAt)}
+                    previousDate={
+                      messages[i - 1]?.createdAt
+                        ? new Date(messages[i - 1]?.createdAt)
+                        : undefined
+                    }
+                  />
+                  <ChatMessage
+                    message={{
+                      ...message,
+                      selfSent: message.author.id === userStore?.user?.id,
+                    }}
+                  />
+                </>
               );
             })}
             <div className="scroll-bottom" ref={bottomViewRef}></div>
