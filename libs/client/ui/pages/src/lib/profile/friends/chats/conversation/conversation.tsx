@@ -140,8 +140,6 @@ export const Conversation: React.FC<ConversationProps> = inject(
       });
     }, [socket]);
 
-    console.log(conversation?.messages);
-
     return (
       <IonPage className="conversation">
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
