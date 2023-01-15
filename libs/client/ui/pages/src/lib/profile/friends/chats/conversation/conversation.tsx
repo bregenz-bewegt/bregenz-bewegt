@@ -136,6 +136,10 @@ export const Conversation: React.FC<ConversationProps> = inject(
         );
         scrollChatToBottom();
       });
+
+      return () => {
+        socket.disconnect();
+      };
     }, [socket]);
 
     return (
