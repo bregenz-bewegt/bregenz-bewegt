@@ -42,17 +42,15 @@ export class WsAccessTokenGuard implements CanActivate {
           .findUnique({ where: { id: decoded.sub } })
           .then((user) => {
             if (user) {
-              console.log(user);
               context.switchToHttp().getRequest().user = decoded;
               resolve(user);
             } else {
-              console.log('unauthorized');
               reject(false);
             }
           });
       });
     } catch (ex) {
-      console.log('expired');
+      client.emit('onUnauthorized');
       return false;
     }
   }
