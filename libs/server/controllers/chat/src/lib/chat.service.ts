@@ -42,6 +42,17 @@ export class ChatService {
     });
   }
 
+  async getConversationById(
+    conversationId: Conversation['id']
+  ): Promise<Conversation & { participants: User[] }> {
+    return this.prismaService.conversation.findUnique({
+      where: {
+        id: conversationId,
+      },
+      include: { participants: true },
+    });
+  }
+
   async createConversation(
     userId: User['id'],
     participantId: User['id']
@@ -66,15 +77,13 @@ export class ChatService {
   async createMessage(
     userId: User['id'],
     dto: CreateMessageDto
-  ): Promise<Conversation & { participants: User[] }> {
-    return this.prismaService.conversation.update({
-      where: { id: dto.conversationId },
+  ): Promise<Message> {
+    return this.prismaService.message.create({
       data: {
-        messages: {
-          create: { text: dto.text, author: { connect: { id: userId } } },
-        },
+        text: dto.text,
+        author: { connect: { id: userId } },
+        conversation: { connect: { id: dto.conversationId } },
       },
-      include: { participants: true },
     });
   }
 }

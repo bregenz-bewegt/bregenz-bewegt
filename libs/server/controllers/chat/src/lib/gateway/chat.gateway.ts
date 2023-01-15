@@ -87,12 +87,15 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @WsGetCurrentUser('sub') userId: User['id'],
     @MessageBody() dto: CreateMessageDto
   ): Promise<CreateMessageDto> {
-    const conversation = await this.chatService.createMessage(userId, dto);
+    const message = await this.chatService.createMessage(userId, dto);
+    const conversation = await this.chatService.getConversationById(
+      message.conversationId
+    );
 
     conversation.participants.forEach((partifipant) => {
       this.server
         .to(partifipant.conversationSocketId)
-        .emit('onCreateMessage', dto);
+        .emit('onCreateMessage', message);
     });
 
     return dto;
