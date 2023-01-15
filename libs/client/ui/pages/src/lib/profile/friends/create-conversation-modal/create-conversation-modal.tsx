@@ -1,4 +1,3 @@
-import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
 import {
   chatStore,
@@ -9,7 +8,7 @@ import {
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { User } from '@bregenz-bewegt/client/types';
-import { FriendSearchResult } from '@bregenz-bewegt/shared/types';
+import { ConversationFriendSearchResult } from '@bregenz-bewegt/shared/types';
 import { IonSearchbarCustomEvent } from '@ionic/core';
 import {
   IonModal,
@@ -28,7 +27,6 @@ import {
   IonSkeletonText,
   IonLabel,
   SearchbarChangeEventDetail,
-  useIonRouter,
 } from '@ionic/react';
 import { AddCircle } from 'iconsax-react';
 import { inject, observer } from 'mobx-react';
@@ -49,14 +47,13 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
     chatStore.storeKey
   )(
     observer(({ userStore, chatStore, trigger }) => {
-      const router = useIonRouter();
       const modalRef = useRef<HTMLIonModalElement>(null);
       const [presentDefaultErrorToast] = useDefaultErrorToast();
       const [isLoading, setIsLoading] = useState<boolean>(false);
       const [searchText, setSearchText] = useState<string>('');
-      const [searchResult, setSearchResult] = useState<FriendSearchResult[]>(
-        []
-      );
+      const [searchResult, setSearchResult] = useState<
+        ConversationFriendSearchResult[]
+      >([]);
 
       const dismissAddModal = () => {
         modalRef.current?.dismiss();
@@ -77,7 +74,12 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
         friendsStore
           ?.searchFriend({ username: query, onlyConversationsless: true })
           .then((result) => {
-            setSearchResult(result);
+            setSearchResult(
+              result.map((r) => ({
+                ...r,
+                hasConversation: false,
+              }))
+            );
             setIsLoading(false);
           })
           .catch(() => {
@@ -95,6 +97,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                 id: u.id,
                 username: u.username,
                 profilePicture: u.profilePicture,
+                hasConversation: false,
               }))
             )
           )
@@ -105,7 +108,11 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
         chatStore
           ?.createConversation({ participantId })
           .then((conversation) => {
-            setSearchResult((prev) => prev.filter((r) => r.))
+            setSearchResult((prev) =>
+              prev.map((r) =>
+                r.id === participantId ? { ...r, hasConversation: true } : r
+              )
+            );
           })
           .catch(() => {
             presentDefaultErrorToast();
@@ -181,18 +188,20 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                             <IonButton
                               fill="clear"
                               mode="ios"
-                              routerLink={`${tabRoutes.profile.route}/chats/${user.username}`}
+                              // routerLink={`${tabRoutes.profile.route}/chat/${user.username}`}
+                              disabled={user.hasConversation}
+                              onClick={() => {
+                                handleCreateConversation(user.id ?? '');
+                              }}
                             >
-                              <AddCircle
-                                onClick={() => {
-                                  handleCreateConversation(
-                                    user.id ?? '',
-                                    user.username ?? ''
-                                  );
-                                }}
-                                variant="Bold"
-                                color={`var(--ion-color-primary)`}
-                              />
+                              {user.hasConversation ? (
+                                'erstellt'
+                              ) : (
+                                <AddCircle
+                                  variant="Bold"
+                                  color={`var(--ion-color-primary)`}
+                                />
+                              )}
                             </IonButton>
                           )}
                         </IonCol>
