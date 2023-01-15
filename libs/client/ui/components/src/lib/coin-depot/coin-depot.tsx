@@ -57,7 +57,7 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
               className="coin-depot__content-button"
             >
               <IonIcon slot="start" icon={add} />
-              Mehr Coins verdienen
+              Mehr B-Bucks verdienen
             </IonButton>
           </IonCardContent>
         )}
