@@ -19,7 +19,7 @@ export const Sponsors: React.FC = () => {
           <IonButtons>
             <BackButton defaultRouterLink={tabRoutes.profile.route} />
           </IonButtons>
-          <IonTitle>Darstellung</IonTitle>
+          <IonTitle>Sponsoren</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="sponsors__content"></IonContent>

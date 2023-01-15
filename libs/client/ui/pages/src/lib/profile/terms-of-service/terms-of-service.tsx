@@ -24,7 +24,7 @@ export const TermsOfService: React.FC<TermsOfServiceProps> = () => {
           <IonButtons>
             <BackButton defaultRouterLink={tabRoutes.profile.route} />
           </IonButtons>
-          <IonTitle>Darstellung</IonTitle>
+          <IonTitle>Nutzungsbedingungen</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="terms-of-service__content"></IonContent>
