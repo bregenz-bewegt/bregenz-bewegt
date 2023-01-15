@@ -297,6 +297,17 @@ export class FriendService {
       },
     });
 
+    await this.prismaService.message.deleteMany({
+      where: {
+        conversation: {
+          AND: [
+            { participants: { some: { id: userId } } },
+            { participants: { some: { id: dto.friendId } } },
+          ],
+        },
+      },
+    });
+
     await this.prismaService.conversation.deleteMany({
       where: {
         AND: [
