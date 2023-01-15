@@ -104,7 +104,10 @@ export const Chats: React.FC<ChatProps> = inject(
             )}
           </IonList>
         </IonGrid>
-        <CreateConversationModal trigger={modalTrigger} />
+        <CreateConversationModal
+          trigger={modalTrigger}
+          onClose={() => fetchConversations()}
+        />
       </div>
     );
   })

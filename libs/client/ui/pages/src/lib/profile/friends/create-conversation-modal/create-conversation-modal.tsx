@@ -38,6 +38,7 @@ export interface CreateConversationModalProps {
   userStore?: UserStore;
   chatStore?: ChatStore;
   trigger: string;
+  onClose: () => void;
 }
 
 export const CreateConversationModal: React.FC<CreateConversationModalProps> =
@@ -46,7 +47,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
     friendsStore.storeKey,
     chatStore.storeKey
   )(
-    observer(({ userStore, chatStore, trigger }) => {
+    observer(({ userStore, chatStore, trigger, onClose }) => {
       const modalRef = useRef<HTMLIonModalElement>(null);
       const [presentDefaultErrorToast] = useDefaultErrorToast();
       const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -56,6 +57,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
       >([]);
 
       const dismissAddModal = () => {
+        onClose();
         modalRef.current?.dismiss();
       };
 
