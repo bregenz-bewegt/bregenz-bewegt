@@ -129,16 +129,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
     useEffect(() => {
       if (!socket) return;
 
-      socket.on('connect', () => {
-        console.log('connected');
-      });
-
-      socket.on('disconnect', () => {
-        console.log('disconnected');
-      });
-
       socket.on('onUnauthorized', () => {
-        console.log('unauthorized');
         refreshSocket();
       });
 
