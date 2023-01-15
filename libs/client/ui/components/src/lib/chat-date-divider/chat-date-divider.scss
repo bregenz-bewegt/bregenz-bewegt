@@ -2,12 +2,10 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  top: 0;
-  position: sticky;
 
   ion-text {
-    background-color: var(--ion-color-primary-contrast);
+    background-color: var(--ion-color-light);
     border-radius: var(--spacing-s);
-    padding: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-s);
   }
 }
