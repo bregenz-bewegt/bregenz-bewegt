@@ -8,9 +8,8 @@ import {
   IonAvatar,
   IonButton,
   IonIcon,
-  useIonViewDidEnter,
 } from '@ionic/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CreateConversationModal } from '../create-conversation-modal/create-conversation-modal';
 import { chatbox } from 'ionicons/icons';
 import './chats.scss';
@@ -50,7 +49,7 @@ export const Chats: React.FC<ChatProps> = inject(
         });
     };
 
-    useIonViewDidEnter(() => {
+    useEffect(() => {
       fetchConversations();
     }, []);
 
