@@ -1,3 +1,4 @@
+import { IonText } from '@ionic/react';
 import React from 'react';
 import './chat-date-divider.scss';
 
@@ -22,6 +23,8 @@ export const ChatDateDivider: React.FC<ChatDateDividerProps> = ({
   };
 
   return !isSameDay(currentDate, previousDate) ? (
-    <div>{currentDate.toLocaleDateString()}</div>
+    <div>
+      <IonText color="light">{currentDate.toLocaleDateString()}</IonText>
+    </div>
   ) : null;
 };
