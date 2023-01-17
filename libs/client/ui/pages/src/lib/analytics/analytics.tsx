@@ -163,6 +163,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                     {chartMonthTimespans?.map((span) => {
                       const month = new Date();
                       month.setMonth(span);
+
                       return (
                         <IonSelectOption
                           value={span}
