@@ -1,2 +1,2 @@
-export * from './location-marker';
-export * from './go-to-location';
+export * from './location-marker/location-marker';
+export * from './go-to-location/go-to-location';

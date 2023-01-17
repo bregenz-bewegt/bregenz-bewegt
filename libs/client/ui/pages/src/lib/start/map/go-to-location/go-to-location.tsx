@@ -2,6 +2,7 @@ import { IonButton } from '@ionic/react';
 import { Gps, GpsSlash } from 'iconsax-react';
 import { LocationEvent } from 'leaflet';
 import { useMap } from 'react-leaflet';
+import './go-to-location.scss';
 
 export interface GoToLocationProps {
   location?: LocationEvent;
@@ -14,7 +15,7 @@ export const GoToLocation: React.FC<GoToLocationProps> = ({ location }) => {
     <IonButton
       onClick={() => location && map.flyTo(location.latlng, 15)}
       disabled={!location?.latlng}
-      className="start__content__map__gotolocation"
+      className="go-to-location"
       shape="round"
     >
       <span slot="icon-only">
