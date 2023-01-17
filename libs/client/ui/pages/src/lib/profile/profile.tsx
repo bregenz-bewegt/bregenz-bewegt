@@ -396,6 +396,28 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       <IonLabel>Passwort ändern</IonLabel>
                     </IonItem>
                   </ItemGroup>
+                  <IonRow>
+                    <IonText>
+                      <h2>Rechtliches</h2>
+                    </IonText>
+                  </IonRow>
+                  <ItemGroup>
+                    <IonItem
+                      button
+                      routerLink={`${tabRoutes.profile.route}/terms-of-service`}
+                      mode="ios"
+                    >
+                      <IonLabel>Nutzungsbedingungen</IonLabel>
+                    </IonItem>
+                    <IonItem
+                      button
+                      routerLink={`${tabRoutes.profile.route}/sponsors`}
+                      mode="ios"
+                      lines="none"
+                    >
+                      <IonLabel>Sponsoren</IonLabel>
+                    </IonItem>
+                  </ItemGroup>
                 </>
               )}
             </GuestLock>
