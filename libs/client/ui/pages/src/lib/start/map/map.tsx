@@ -9,7 +9,6 @@ import {
   useMap,
   useMapEvents,
 } from 'react-leaflet';
-import { Loading } from '@bregenz-bewegt/client-ui-pages';
 import { closeCircleOutline, close } from 'ionicons/icons';
 import { IonButton, IonRouterLink, useIonToast } from '@ionic/react';
 import { icon, LocationEvent } from 'leaflet';
@@ -104,7 +103,6 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
         center={[47.497262, 9.727287]}
         zoom={13}
         scrollWheelZoom={false}
-        placeholder={<Loading />}
         touchZoom={true}
       >
         <TileLayer
@@ -139,8 +137,8 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
               </Marker>
             )
         )}
-        {/* <LocationMarker location={location} setLocation={setLocation} /> */}
-        {/* <GoToLocation location={location} /> */}
+        <LocationMarker location={location} setLocation={setLocation} />
+        <GoToLocation location={location} />
       </MapContainer>
     </div>
   );
