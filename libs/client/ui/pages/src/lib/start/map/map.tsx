@@ -18,66 +18,78 @@ import './map.scss';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import pin from './img/location-sharp.png';
 
+export interface GoToLocationProps {
+  location?: LocationEvent;
+}
+
+export const GoToLocation: React.FC<GoToLocationProps> = ({ location }) => {
+  const map = useMap();
+
+  return (
+    <IonButton
+      onClick={() => location && map.flyTo(location.latlng, 15)}
+      disabled={!location?.latlng}
+      className="start__content__map__gotolocation"
+      shape="round"
+    >
+      <span slot="icon-only">
+        {location?.latlng ? (
+          <Gps variant="Linear" size={32} />
+        ) : (
+          <GpsSlash variant="Linear" size={32} />
+        )}
+      </span>
+    </IonButton>
+  );
+};
+
+export interface LocationMarkerProps {
+  location?: LocationEvent;
+  setLocation: React.Dispatch<React.SetStateAction<LocationEvent | undefined>>;
+}
+
+const LocationMarker: React.FC<LocationMarkerProps> = ({
+  location,
+  setLocation,
+}) => {
+  const [presentToast] = useIonToast();
+  const map = useMapEvents({
+    locationfound(e) {
+      setLocation(e);
+    },
+    locationerror() {
+      presentToast({
+        message: 'Standort wurde nicht gefunden',
+        icon: closeCircleOutline,
+        duration: 2000,
+        position: 'top',
+        mode: 'ios',
+        color: 'danger',
+        buttons: [{ icon: close, role: 'cancel' }],
+      });
+    },
+  });
+
+  map.locate({ enableHighAccuracy: true, watch: true });
+
+  return location?.latlng ? (
+    <Circle center={location.latlng} radius={location.accuracy}>
+      <Popup>Du bist hier</Popup>
+    </Circle>
+  ) : null;
+};
+
 export interface MapProps {
   parks: Park[];
 }
 
 export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
   const [parkPins, setParkPins] = useState<Park[]>(parks);
-  const [presentToast] = useIonToast();
   const [location, setLocation] = useState<LocationEvent>();
 
   useEffect(() => {
     setParkPins(parks);
   }, [parks]);
-
-  function LocationMarker() {
-    const map = useMapEvents({
-      locationfound(e) {
-        setLocation(e);
-      },
-      locationerror() {
-        presentToast({
-          message: 'Standort wurde nicht gefunden',
-          icon: closeCircleOutline,
-          duration: 2000,
-          position: 'top',
-          mode: 'ios',
-          color: 'danger',
-          buttons: [{ icon: close, role: 'cancel' }],
-        });
-      },
-    });
-
-    map.locate({ enableHighAccuracy: true, watch: true });
-
-    return location?.latlng ? (
-      <Circle center={location.latlng} radius={location.accuracy}>
-        <Popup>Du bist hier</Popup>
-      </Circle>
-    ) : null;
-  }
-
-  const GoToLocation = () => {
-    const map = useMap();
-
-    return (
-      <IonButton
-        onClick={() => location && map.flyTo(location.latlng, 15)}
-        disabled={!location?.latlng}
-        className="start__content__map__gotolocation"
-        shape="round"
-      >
-        <span slot="icon-only">
-          {location?.latlng ? (
-            <Gps variant="Linear" size={32} />
-          ) : (
-            <GpsSlash variant="Linear" size={32} />
-          )}
-        </span>
-      </IonButton>
-    );
-  };
 
   const customPin = icon({
     iconUrl: pin,
@@ -127,8 +139,8 @@ export const Map: React.FC<MapProps> = ({ parks }: MapProps) => {
               </Marker>
             )
         )}
-        <LocationMarker />
-        <GoToLocation />
+        {/* <LocationMarker location={location} setLocation={setLocation} /> */}
+        {/* <GoToLocation location={location} /> */}
       </MapContainer>
     </div>
   );
