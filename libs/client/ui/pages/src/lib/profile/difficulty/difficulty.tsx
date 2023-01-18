@@ -69,7 +69,7 @@ export const Difficulty = inject(userStore.storeKey)(
         <IonContent fullscreen scrollY={false}>
           <ItemGroup>
             {Object.values(DifficultyType).map((d, i, a) => (
-              <IonItem lines={i === a.length - 1 ? 'none' : 'full'}>
+              <IonItem lines={i === a.length - 1 ? 'none' : 'full'} key={i}>
                 <Checkbox
                   checked={difficulties.includes(d)}
                   key={i}

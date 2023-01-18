@@ -11,6 +11,8 @@ import {
   CompetitorProfile,
   Notifications,
   Conversation,
+  TermsOfService,
+  Sponsors,
 } from '@bregenz-bewegt/client-ui-pages';
 import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
 import {
@@ -123,6 +125,16 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
               exact
               path={`${tabRoutes.profile.route}/password`}
               component={Password}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/terms-of-service`}
+              component={TermsOfService}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/sponsors`}
+              component={Sponsors}
             ></Route>
             <Route path="">
               <Redirect to="/start" />

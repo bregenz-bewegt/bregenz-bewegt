@@ -5,3 +5,5 @@ export * from './public-profile/public-profile';
 export * from './email/email';
 export * from './password/password';
 export * from './friends';
+export * from './terms-of-service/terms-of-service';
+export * from './sponsors/sponsors';
