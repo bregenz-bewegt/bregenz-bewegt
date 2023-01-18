@@ -85,7 +85,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
     const bottomViewRef = useRef<HTMLDivElement>(null);
 
     const navigateBackToFriends = () =>
-      router.push(`${tabRoutes.profile.route}/friends`);
+      router.push(`${tabRoutes.profile.route}/friends`, 'none', 'pop');
 
     const scrollChatToBottom = () => {
       bottomViewRef.current?.scrollIntoView({ behavior: 'smooth' });
