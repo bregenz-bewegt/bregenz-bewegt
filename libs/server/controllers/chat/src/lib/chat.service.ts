@@ -31,7 +31,15 @@ export class ChatService {
       messages: (Message & { author: User })[];
     }
   > {
-    const conversation = this.prismaService.conversation.findFirst({
+    const self = await this.prismaService.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (self.username === participantUsername) {
+      throw new ForbiddenException();
+    }
+
+    const conversation = await this.prismaService.conversation.findFirst({
       where: {
         AND: [
           {

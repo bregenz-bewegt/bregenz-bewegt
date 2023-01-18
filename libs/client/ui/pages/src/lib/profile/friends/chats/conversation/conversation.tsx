@@ -76,7 +76,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
         socket?.emit(
           'message.create',
           { text: values.message, conversationId: conversation?.id ?? '' },
-          (result) => {
+          () => {
             resetForm();
           }
         );
