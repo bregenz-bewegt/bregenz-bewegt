@@ -1,14 +1,14 @@
 import { IonText } from '@ionic/react';
+import React from 'react';
 import './title-banner.scss';
 
-/* eslint-disable-next-line */
 export interface TitleBannerProps {
   textSegments?: string[];
   animated?: boolean;
 }
 
 export const TitleBanner: React.FC<TitleBannerProps> = ({
-  textSegments = ['Bregenz', 'Bewegt'],
+  textSegments = ['Bregenz', 'bewegt'],
   animated = false,
 }) => {
   return (
@@ -26,5 +26,14 @@ export const TitleBanner: React.FC<TitleBannerProps> = ({
         })}
       </h1>
     </IonText>
+  );
+};
+
+export const TitleBanner2: React.FC = () => {
+  return (
+    <div className="title-banner-2">
+      <h2>Kemi</h2>
+      <h2>Kemi</h2>
+    </div>
   );
 };
