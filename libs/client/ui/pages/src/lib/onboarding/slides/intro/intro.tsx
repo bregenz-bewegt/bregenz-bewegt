@@ -1,7 +1,4 @@
-import {
-  TitleBanner,
-  TitleBanner2,
-} from '@bregenz-bewegt/client-ui-components';
+import { TitleBanner } from '@bregenz-bewegt/client-ui-components';
 import { IonCol, IonGrid, IonRow, IonSlide } from '@ionic/react';
 import './intro.scss';
 
@@ -14,7 +11,7 @@ export const Intro: React.FC<IntroProps> = (props: IntroProps) => {
       <IonGrid>
         <IonRow className="ion-align-items-center">
           <IonCol className="ion-justify-content-start">
-            <TitleBanner2 />
+            <TitleBanner />
           </IonCol>
         </IonRow>
       </IonGrid>

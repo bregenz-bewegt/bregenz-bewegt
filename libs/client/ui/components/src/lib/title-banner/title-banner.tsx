@@ -28,12 +28,3 @@ export const TitleBanner: React.FC<TitleBannerProps> = ({
     </IonText>
   );
 };
-
-export const TitleBanner2: React.FC = () => {
-  return (
-    <div className="title-banner-2">
-      <h2>Kemi</h2>
-      <h2>Kemi</h2>
-    </div>
-  );
-};
