@@ -42,7 +42,7 @@ export class ChatController {
     RemoveSensitiveFieldsInterceptor
   )
   @Get('conversation-with/:username')
-  async getConversationWith(
+  async getConversationWithUser(
     @Param('username') participantUsername,
     @GetCurrentUser('sub')
     userId: User['id']
@@ -52,7 +52,10 @@ export class ChatController {
       messages: (Message & { author: User })[];
     }
   > {
-    return this.chatService.getConversationWith(participantUsername, userId);
+    return this.chatService.getConversationWithUser(
+      participantUsername,
+      userId
+    );
   }
 
   @HasRole(Role.USER)

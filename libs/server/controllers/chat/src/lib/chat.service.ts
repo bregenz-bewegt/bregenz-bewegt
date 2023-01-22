@@ -22,7 +22,7 @@ export class ChatService {
     return conversations;
   }
 
-  async getConversationWith(
+  async getConversationWithUser(
     participantUsername: User['username'],
     userId: User['id']
   ): Promise<
@@ -81,7 +81,10 @@ export class ChatService {
       throw new ForbiddenException();
     }
 
-    const conversationExits = this.getConversationWith(exists.username, userId);
+    const conversationExits = this.getConversationWithUser(
+      exists.username,
+      userId
+    );
 
     if (!conversationExits) {
       throw new ForbiddenException();

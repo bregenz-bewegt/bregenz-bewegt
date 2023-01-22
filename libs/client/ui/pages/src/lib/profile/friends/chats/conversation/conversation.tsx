@@ -113,7 +113,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
       refreshSocket();
 
       chatStore
-        ?.getConversationWith(match.params.username)
+        ?.getConversationWithUser(match.params.username)
         .then((result) => {
           setConversation(result);
         })

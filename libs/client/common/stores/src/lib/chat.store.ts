@@ -16,7 +16,9 @@ export class ChatStore implements Store {
     return <Conversation[]>data;
   }
 
-  async getConversationWith(username: User['username']): Promise<Conversation> {
+  async getConversationWithUser(
+    username: User['username']
+  ): Promise<Conversation> {
     const { data } = await http.get(`chats/conversation-with/${username}`);
     return <Conversation>data;
   }
