@@ -25,7 +25,7 @@ import {
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
 import { Link } from 'react-router-dom';
-import { FriendsDisplayType } from '@bregenz-bewegt/client/types';
+import { FriendsDisplaySegment } from '@bregenz-bewegt/client/types';
 
 export interface HeaderProps {
   userStore?: UserStore;
@@ -95,8 +95,8 @@ export const Header: React.FC<HeaderProps> = inject(
             to={{
               pathname: `${tabRoutes.profile.route}/friends`,
               state: {
-                segment: FriendsDisplayType.Chats,
-              } as { segment: FriendsDisplayType },
+                segment: FriendsDisplaySegment.Chats,
+              } as { segment: FriendsDisplaySegment },
             }}
           >
             <IonFabButton className="header__fab__fab-button">

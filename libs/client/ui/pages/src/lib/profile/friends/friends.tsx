@@ -4,7 +4,7 @@ import {
   friendsStore,
   FriendsStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { FriendsDisplayType } from '@bregenz-bewegt/client/types';
+import { FriendsDisplaySegment } from '@bregenz-bewegt/client/types';
 import {
   IonPage,
   IonHeader,
@@ -27,10 +27,10 @@ export interface FriendsProps {
 
 export const Friends: React.FC<FriendsProps> = inject(friendsStore.storeKey)(
   observer(() => {
-    const history = useHistory<{ segment: FriendsDisplayType }>();
+    const history = useHistory<{ segment: FriendsDisplaySegment }>();
     const [friendsDisplayType, setFriendsDisplayType] =
-      useState<FriendsDisplayType>(
-        history.location?.state?.segment ?? FriendsDisplayType.Friends
+      useState<FriendsDisplaySegment>(
+        history.location?.state?.segment ?? FriendsDisplaySegment.Friends
       );
     const page = useRef(undefined);
 
@@ -48,24 +48,24 @@ export const Friends: React.FC<FriendsProps> = inject(friendsStore.storeKey)(
           <IonSegment
             value={friendsDisplayType}
             onIonChange={(e) =>
-              setFriendsDisplayType(e.detail.value as FriendsDisplayType)
+              setFriendsDisplayType(e.detail.value as FriendsDisplaySegment)
             }
             mode="ios"
             className="friends__content__segment"
           >
-            <IonSegmentButton value={FriendsDisplayType.Friends}>
+            <IonSegmentButton value={FriendsDisplaySegment.Friends}>
               Freunde
             </IonSegmentButton>
-            <IonSegmentButton value={FriendsDisplayType.Requests}>
+            <IonSegmentButton value={FriendsDisplaySegment.Requests}>
               Anfragen
             </IonSegmentButton>
-            <IonSegmentButton value={FriendsDisplayType.Chats}>
+            <IonSegmentButton value={FriendsDisplaySegment.Chats}>
               Chats
             </IonSegmentButton>
           </IonSegment>
-          {friendsDisplayType === FriendsDisplayType.Requests ? (
+          {friendsDisplayType === FriendsDisplaySegment.Requests ? (
             <RequestList />
-          ) : friendsDisplayType === FriendsDisplayType.Chats ? (
+          ) : friendsDisplayType === FriendsDisplaySegment.Chats ? (
             <Chats />
           ) : (
             <FriendList />

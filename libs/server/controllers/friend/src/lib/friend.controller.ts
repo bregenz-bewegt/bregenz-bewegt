@@ -47,7 +47,6 @@ export class FriendController {
   @Get()
   getFriends(
     @GetCurrentUser('sub') userId: User['id'],
-
     @Query(new ValidationPipe())
     dto: GetFriendsQueryDto
   ): Promise<User[]> {

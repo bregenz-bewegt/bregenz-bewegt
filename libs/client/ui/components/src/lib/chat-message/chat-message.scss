@@ -19,7 +19,7 @@
     margin: 0 0 0 var(--spacing-s);
   }
 
-  &__self-sent {
+  &--self-sent {
     margin-left: auto;
     align-items: flex-end;
     flex-direction: row-reverse;

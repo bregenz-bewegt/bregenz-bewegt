@@ -27,7 +27,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import {
-  FriendsDisplayType,
+  FriendsDisplaySegment,
   Notification,
   NotificationType,
 } from '@bregenz-bewegt/client/types';
@@ -160,10 +160,10 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                       state:
                         notification.type ===
                         NotificationType.FRIEND_REQUEST_RECEIVED
-                          ? { segment: FriendsDisplayType.Requests }
+                          ? { segment: FriendsDisplaySegment.Requests }
                           : notification.type ===
                             NotificationType.FRIEND_REQUEST_ACCEPTED
-                          ? { segment: FriendsDisplayType.Friends }
+                          ? { segment: FriendsDisplaySegment.Friends }
                           : undefined,
                     }}
                   >

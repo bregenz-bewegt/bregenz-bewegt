@@ -91,6 +91,16 @@ export const Conversation: React.FC<ConversationProps> = inject(
       bottomViewRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
+    const isSameDay = (d1: Date, d2?: Date) => {
+      if (!d2) return false;
+
+      return (
+        d1.getFullYear() === d2.getFullYear() &&
+        d1.getMonth() === d2.getMonth() &&
+        d1.getDate() === d2.getDate()
+      );
+    };
+
     const refreshSocket = () => {
       userStore?.getTokens().then((tokens) => {
         setSocket(connectChatSocket(tokens.access_token));
@@ -165,17 +175,19 @@ export const Conversation: React.FC<ConversationProps> = inject(
         <IonContent fullscreen scrollY={false}>
           <IonGrid>
             {conversation?.messages?.map((message, i, messages) => {
+              const currentDate = new Date(message.createdAt);
+              const previousDate = messages[i - 1]?.createdAt
+                ? new Date(messages[i - 1]?.createdAt)
+                : undefined;
+
               return (
                 <>
-                  <ChatDateDivider
-                    key={`chat-divider-${message.createdAt}`}
-                    currentDate={new Date(message.createdAt)}
-                    previousDate={
-                      messages[i - 1]?.createdAt
-                        ? new Date(messages[i - 1]?.createdAt)
-                        : undefined
-                    }
-                  />
+                  {!isSameDay(currentDate, previousDate) ? (
+                    <ChatDateDivider
+                      key={`chat-divider-${message.createdAt}`}
+                      date={currentDate}
+                    />
+                  ) : null}
                   <ChatMessage
                     key={i}
                     message={{

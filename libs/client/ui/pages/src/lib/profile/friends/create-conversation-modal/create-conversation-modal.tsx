@@ -28,7 +28,7 @@ import {
   IonLabel,
   SearchbarChangeEventDetail,
 } from '@ionic/react';
-import { AddCircle } from 'iconsax-react';
+import { AddCircle, TickCircle } from 'iconsax-react';
 import { inject, observer } from 'mobx-react';
 import React, { useEffect, useRef, useState } from 'react';
 import './create-conversation-modal.scss';
@@ -156,7 +156,7 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                         <IonCol size="auto" className="username-avatar-col">
                           <IonItem
                             key={user.id}
-                            routerLink={`/users/${user.id}`}
+                            routerLink={`/user/${user.id}`}
                             onClick={() => dismissAddModal()}
                             detail={false}
                             lines="none"
@@ -190,14 +190,16 @@ export const CreateConversationModal: React.FC<CreateConversationModalProps> =
                             <IonButton
                               fill="clear"
                               mode="ios"
-                              // routerLink={`${tabRoutes.profile.route}/chat/${user.username}`}
                               disabled={user.hasConversation}
                               onClick={() => {
                                 handleCreateConversation(user.id ?? '');
                               }}
                             >
                               {user.hasConversation ? (
-                                'erstellt'
+                                <TickCircle
+                                  variant="Bold"
+                                  color={`var(--ion-color-success)`}
+                                />
                               ) : (
                                 <AddCircle
                                   variant="Bold"

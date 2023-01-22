@@ -25,7 +25,7 @@ import {
   IonLabel,
   SearchbarChangeEventDetail,
 } from '@ionic/react';
-import { AddCircle } from 'iconsax-react';
+import { AddCircle, TickCircle } from 'iconsax-react';
 import { inject, observer } from 'mobx-react';
 import React, { useRef, useState } from 'react';
 import './add-friend-modal.scss';
@@ -119,7 +119,7 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
                       <IonCol size="auto" className="username-avatar-col">
                         <IonItem
                           key={user.id}
-                          routerLink={`/users/${user.id}`}
+                          routerLink={`/user/${user.id}`}
                           onClick={() => dismissAddModal()}
                           detail={false}
                           lines="none"
@@ -157,7 +157,10 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
                             mode="ios"
                           >
                             {isRequested ? (
-                              'angefragt'
+                              <TickCircle
+                                variant="Bold"
+                                color={`var(--ion-color-success)`}
+                              />
                             ) : (
                               <AddCircle
                                 variant="Bold"
