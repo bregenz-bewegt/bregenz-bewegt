@@ -76,6 +76,9 @@
       "@bregenz-bewegt/server/multer": ["libs/server/multer/src/index.ts"],
       "@bregenz-bewegt/server/types": ["libs/server/types/src/index.ts"],
       "@bregenz-bewegt/server/util": ["libs/server/util/src/index.ts"],
+      "@bregenz-bewegt/shared/components": [
+        "libs/shared/components/src/index.ts"
+      ],
       "@bregenz-bewegt/shared/constants": [
         "libs/shared/constants/src/index.ts"
       ],

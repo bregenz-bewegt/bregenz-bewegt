@@ -11,6 +11,7 @@ import {
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { UserStore } from '@bregenz-bewegt/client/common/stores';
 import { BackButton } from '@bregenz-bewegt/client-ui-components';
+import { TermsOfServiceContent } from '@bregenz-bewegt/shared/components';
 
 export interface TermsOfServiceProps {
   userStore?: UserStore;
@@ -27,7 +28,9 @@ export const TermsOfService: React.FC<TermsOfServiceProps> = () => {
           <IonTitle>Nutzungsbedingungen</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="terms-of-service__content"></IonContent>
+      <IonContent className="terms-of-service__content">
+        <TermsOfServiceContent />
+      </IonContent>
     </IonPage>
   );
 };
