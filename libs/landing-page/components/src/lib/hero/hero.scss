@@ -1,0 +1,18 @@
+.hero {
+  height: 100vh;
+  display: flex;
+
+  &__mockup {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__info {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -16,6 +16,7 @@
     "client-ui-router": "libs/client/ui/router",
     "client-ui-shared-content": "libs/client/ui/shared/content",
     "landing-page": "apps/landing-page",
+    "landing-page-components": "libs/landing-page/components",
     "landing-page-e2e": "apps/landing-page-e2e",
     "server": "apps/server",
     "server-common": "libs/server/common",
