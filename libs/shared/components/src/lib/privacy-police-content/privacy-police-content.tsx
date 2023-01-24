@@ -1,13 +1,13 @@
-import './terms-of-service-content.scss';
+import './privacy-police-content.scss';
 
 /* eslint-disable-next-line */
-export interface TermsOfServiceProps {}
+export interface PrivacyPoliceProps {}
 
-export const TermsOfServiceContent: React.FC<TermsOfServiceProps> = (
-  props: TermsOfServiceProps
+export const PrivacyPoliceContent: React.FC<PrivacyPoliceProps> = (
+  props: PrivacyPoliceProps
 ) => {
   return (
-    <div className="terms-of-service-content">
+    <div className="privacy-police-content">
       <h4>1 Datenschutzerklärung der Landeshauptstadt Bregenz</h4>
       <p>
         Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Wir

@@ -1,5 +1,5 @@
 import React from 'react';
-import './terms-of-service.scss';
+import './privacy-police.scss';
 import {
   IonPage,
   IonContent,
@@ -11,25 +11,25 @@ import {
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { UserStore } from '@bregenz-bewegt/client/common/stores';
 import { BackButton } from '@bregenz-bewegt/client-ui-components';
-import { TermsOfServiceContent } from '@bregenz-bewegt/shared/components';
+import { PrivacyPoliceContent } from '@bregenz-bewegt/shared/components';
 
-export interface TermsOfServiceProps {
+export interface PrivacyPoliceProps {
   userStore?: UserStore;
 }
 
-export const TermsOfService: React.FC<TermsOfServiceProps> = () => {
+export const PrivacyPoliceProps: React.FC<PrivacyPoliceProps> = () => {
   return (
-    <IonPage className="terms-of-service">
+    <IonPage className="privacy-police">
       <IonHeader mode="ios" collapse="condense" className="ion-no-border">
         <IonToolbar>
           <IonButtons>
             <BackButton defaultRouterLink={tabRoutes.profile.route} />
           </IonButtons>
-          <IonTitle>Nutzungsbedingungen</IonTitle>
+          <IonTitle>Datenschutzbestimmungen</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="terms-of-service__content">
-        <TermsOfServiceContent />
+      <IonContent className="privacy-police__content">
+        <PrivacyPoliceContent />
       </IonContent>
     </IonPage>
   );

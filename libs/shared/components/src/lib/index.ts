@@ -1,1 +1,1 @@
-export * from './terms-of-service-content/terms-of-service-content';
+export * from './privacy-police-content/privacy-police-content';

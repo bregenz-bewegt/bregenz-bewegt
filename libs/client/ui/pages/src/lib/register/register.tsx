@@ -205,7 +205,7 @@ export const Register: React.FC<RegisterProps> = inject(
                 valid={acceptTosValid}
                 label={
                   <IonNote mode="md">
-                    Ich akzeptiere die AGBs und Nutzungsbedigungen
+                    Ich akzeptiere Datenschutz und Nutzungsbedingungen
                   </IonNote>
                 }
                 onChange={(e: any) => {
