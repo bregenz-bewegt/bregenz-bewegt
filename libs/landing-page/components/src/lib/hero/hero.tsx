@@ -8,7 +8,7 @@ export interface HeroProps {}
 
 export const Hero: React.FC<HeroProps> = (props: HeroProps) => {
   useEffect(() => {
-    gsap.from('.mockup', { x: -300, duration: 1 });
+    gsap.fromTo('.mockup', { x: -300 }, { x: 0, duration: 2, ease: 'power4' });
   }, []);
 
   return (
