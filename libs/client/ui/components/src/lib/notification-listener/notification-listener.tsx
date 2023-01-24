@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { connectSocket } from '@bregenz-bewegt/client/common/socket';
+import { connectNotificationSocket } from '@bregenz-bewegt/client/common/socket';
 import {
   notificationsStore,
   NotificationsStore,
@@ -52,7 +52,7 @@ export const NotificationListener: React.FC = inject(
     useEffect(() => {
       if (!userStore.user?.id || isGuest) return;
 
-      const socket = connectSocket(userStore.user.id);
+      const socket = connectNotificationSocket(userStore.user.id);
 
       socket.on('receiveNotification', (notification: Notification) => {
         presentNotificationToast(notification);

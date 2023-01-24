@@ -56,6 +56,9 @@
       "@bregenz-bewegt/server/controllers/activity": [
         "libs/server/controllers/activity/src/index.ts"
       ],
+      "@bregenz-bewegt/server/controllers/chat": [
+        "libs/server/controllers/chat/src/index.ts"
+      ],
       "@bregenz-bewegt/server/controllers/exercise": [
         "libs/server/controllers/exercise/src/index.ts"
       ],
@@ -71,7 +74,6 @@
       "@bregenz-bewegt/server/controllers/park": [
         "libs/server/controllers/park/src/index.ts"
       ],
-      "@bregenz-bewegt/server/gateway": ["libs/server/gateway/src/index.ts"],
       "@bregenz-bewegt/server/mail": ["libs/server/mail/src/index.ts"],
       "@bregenz-bewegt/server/multer": ["libs/server/multer/src/index.ts"],
       "@bregenz-bewegt/server/types": ["libs/server/types/src/index.ts"],

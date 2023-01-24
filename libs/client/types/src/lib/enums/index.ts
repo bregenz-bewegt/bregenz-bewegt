@@ -1,5 +1,5 @@
-export * from './park-display-type';
-export * from './friends-display-type';
+export * from './park-display-segment';
+export * from './friends-display-segment';
 export * from './color-theme';
 export * from './difficulty-type';
 export * from './difficulty-color';

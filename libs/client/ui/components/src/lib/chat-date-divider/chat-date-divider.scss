@@ -1,0 +1,13 @@
+.chat-date-divider {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-m);
+
+  ion-text {
+    font-size: calc(var(--spacing-m) - var(--spacing-xxs));
+    background-color: var(--ion-color-light);
+    border-radius: var(--spacing-s);
+    padding: var(--spacing-xs) var(--spacing-s);
+  }
+}

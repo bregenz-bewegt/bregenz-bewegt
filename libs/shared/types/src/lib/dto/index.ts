@@ -5,3 +5,4 @@ export * from './leaderboard';
 export * from './activity';
 export * from './friend';
 export * from './notification';
+export * from './chat';

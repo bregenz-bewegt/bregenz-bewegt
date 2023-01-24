@@ -1,0 +1,31 @@
+.conversation {
+  ion-content {
+    max-height: 100%;
+    --padding-bottom: var(--spacing-xs);
+
+    ion-grid {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      flex: 1 1 auto;
+      overflow-y: auto;
+      max-width: 100%;
+      overflow-x: hidden;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .scroll-bottom {
+        margin-top: var(--spacing-l);
+      }
+    }
+  }
+
+  ion-footer {
+    ion-toolbar {
+      --background: transparent;
+      padding: var(--spacing-s);
+    }
+  }
+}
