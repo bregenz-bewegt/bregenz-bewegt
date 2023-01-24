@@ -4,27 +4,25 @@ $device-height: 812px;
 
 .mockup {
   position: relative;
-  background-color: #000;
-  padding: 12px;
-  // height: $device-height;
-  // width: $device-width;
+  background-color: var(--color-dark);
+  padding: calc(var(--spacing-m) - var(--spacing-xs));
   aspect-ratio: 10/21;
   height: 80%;
-  box-shadow: 0 0 32px #d8d8d8;
-  border-radius: 40px;
+  box-shadow: 0 0 var(--sapcing-xl) #d8d8d8;
+  border-radius: calc(var(--spacing-xl) + var(--spacing-m) - var(--spacing-xs));
 
   &__screen {
     width: 100%;
     height: 100%;
-    border-radius: 30px;
+    border-radius: var(--spacing-xl);
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    background-color: #fff;
+    background-color: var(--color-white);
     overflow: hidden;
 
     &__iframe {
-      padding-top: 24px;
+      padding-top: var(--spacing-l);
       box-sizing: border-box;
       border: 0;
       width: 100%;
@@ -33,22 +31,22 @@ $device-height: 812px;
   }
 
   &__notch {
-    height: 24px;
-    width: 150px;
+    height: var(--spacing-l);
+    width: calc(var(--spacing-4xl) * 3);
     left: 50%;
     translate: -50% 0;
-    background: #000;
+    background: var(--color-dark);
     position: absolute;
-    border-radius: 0 0 16px 16px;
+    border-radius: 0 0 var(--spacing-m) var(--spacing-m);
 
     &__speaker {
-      width: 60px;
-      height: 4px;
-      background: #fff;
+      width: var(--spacing-5xl);
+      height: var(--spacing-xs);
+      background: var(--color-white);
       display: block;
       margin: auto;
-      margin-top: 5px;
-      border-radius: 16px;
+      margin-top: var(--spacing-xs);
+      border-radius: var(--spacing-m);
     }
   }
 }

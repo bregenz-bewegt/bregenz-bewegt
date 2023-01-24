@@ -11,7 +11,7 @@ import {
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { UserStore } from '@bregenz-bewegt/client/common/stores';
 import { BackButton } from '@bregenz-bewegt/client-ui-components';
-import { PrivacyPoliceContent } from '@bregenz-bewegt/shared/components';
+import { PrivacyPoliceContent } from '@bregenz-bewegt/shared/ui/components';
 
 export interface PrivacyPoliceProps {
   userStore?: UserStore;

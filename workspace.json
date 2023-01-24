@@ -34,9 +34,9 @@
     "server-prisma": "libs/server/prisma",
     "server-types": "libs/server/types",
     "server-util": "libs/server/util",
-    "shared-components": "libs/shared/components",
     "shared-constants": "libs/shared/constants",
     "shared-errors": "libs/shared/errors",
-    "shared-types": "libs/shared/types"
+    "shared-types": "libs/shared/types",
+    "shared-ui-components": "libs/shared/ui/components"
   }
 }
