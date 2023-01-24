@@ -7,7 +7,7 @@ import {
 } from '@bregenz-bewegt/server/common';
 import {
   SearchUserQueryDto,
-  FriendSearchResult,
+  UserSearchResult,
   CreateFriendRequestDto,
   AllFriendRequests,
   FriendAdresseeResult,
@@ -16,6 +16,9 @@ import {
   RejectFriendRequestDto,
   AcceptFriendRequestDto,
   RemoveFriendDto,
+  FriendSearchResult,
+  SearchFriendQueryDto,
+  GetFriendsQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import {
   Body,
@@ -42,8 +45,12 @@ export class FriendController {
     new MapProfilePictureInterceptor()
   )
   @Get()
-  getFriends(@GetCurrentUser('sub') userId: User['id']): Promise<User[]> {
-    return this.friendService.getFriends(userId);
+  getFriends(
+    @GetCurrentUser('sub') userId: User['id'],
+    @Query(new ValidationPipe())
+    dto: GetFriendsQueryDto
+  ): Promise<User[]> {
+    return this.friendService.getFriends(dto, userId);
   }
 
   @HasRole(Role.USER)
@@ -52,7 +59,7 @@ export class FriendController {
     RemoveSensitiveFieldsInterceptor,
     new MapProfilePictureInterceptor()
   )
-  @Get('search')
+  @Get('search-user')
   searchUser(
     @GetCurrentUser('sub') userId: User['id'],
     @Query(
@@ -63,8 +70,23 @@ export class FriendController {
       })
     )
     dto: SearchUserQueryDto
-  ): Promise<FriendSearchResult[]> {
+  ): Promise<UserSearchResult[]> {
     return this.friendService.searchUserByUsername(dto.username, userId);
+  }
+
+  @HasRole(Role.USER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(
+    RemoveSensitiveFieldsInterceptor,
+    new MapProfilePictureInterceptor()
+  )
+  @Get('search')
+  searchFriend(
+    @GetCurrentUser('sub') userId: User['id'],
+    @Query(new ValidationPipe())
+    dto: SearchFriendQueryDto
+  ): Promise<FriendSearchResult[]> {
+    return this.friendService.searchFriendByUsername(dto, userId);
   }
 
   @HasRole(Role.USER)
