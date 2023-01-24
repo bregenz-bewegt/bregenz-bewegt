@@ -31,6 +31,7 @@ $device-height: 812px;
     width: 100%;
     height: 100%;
     border-radius: 30px;
+    padding-top: 26px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -38,7 +39,6 @@ $device-height: 812px;
     overflow: hidden;
 
     &__iframe {
-      padding-top: 16px;
       box-sizing: border-box;
       border: 0;
       width: 100%;
@@ -48,7 +48,7 @@ $device-height: 812px;
 
   &__notch {
     width: 150px;
-    height: 20px;
+    height: 24px;
     background: #000;
     position: absolute;
     margin: 0 100px;
