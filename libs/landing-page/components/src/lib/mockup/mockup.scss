@@ -13,6 +13,7 @@ $device-height: 812px;
 
   &.offset {
     left: -100px;
+    opacity: 0;
   }
 
   &__screen {
@@ -53,4 +54,10 @@ $device-height: 812px;
       border-radius: var(--spacing-m);
     }
   }
+}
+
+.mockup-loader {
+  color: var(--color-black);
+  text-align: center;
+  width: 100%;
 }

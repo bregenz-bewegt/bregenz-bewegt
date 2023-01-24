@@ -11,7 +11,11 @@ export const Mockup: React.FC<MockupProps> = ({ src }) => {
   useEffect(() => {
     if (!isIframeLoaded) return;
 
-    gsap.fromTo('.mockup', { x: -100 }, { x: 0, duration: 2, ease: 'power4' });
+    gsap.fromTo(
+      '.mockup',
+      { x: -100, opacity: 0 },
+      { x: 0, opacity: 1, duration: 2, ease: 'power4' }
+    );
   }, [isIframeLoaded]);
 
   const handleLoadIframe = () => {
@@ -19,18 +23,23 @@ export const Mockup: React.FC<MockupProps> = ({ src }) => {
   };
 
   return (
-    <div className={`mockup${!isIframeLoaded ? ' offset' : ''}`}>
-      <div className="mockup__notch">
-        <span className="mockup__notch__speaker"></span>
+    <>
+      <div className={`mockup${!isIframeLoaded ? ' offset' : ''}`}>
+        <div className="mockup__notch">
+          <span className="mockup__notch__speaker"></span>
+        </div>
+        <div className={`mockup__screen`}>
+          <iframe
+            onLoad={handleLoadIframe}
+            className="mockup__screen__iframe"
+            src={src}
+            title="web app mockup"
+          ></iframe>
+        </div>
       </div>
-      <div className={`mockup__screen`}>
-        <iframe
-          onLoad={handleLoadIframe}
-          className="mockup__screen__iframe"
-          src={src}
-          title="web app mockup"
-        ></iframe>
-      </div>
-    </div>
+      {!isIframeLoaded ? (
+        <div className="mockup-loader">Lade Demo App...</div>
+      ) : null}
+    </>
   );
 };
