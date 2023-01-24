@@ -11,6 +11,10 @@ $device-height: 812px;
   box-shadow: 0 0 var(--sapcing-xl) #d8d8d8;
   border-radius: calc(var(--spacing-xl) + var(--spacing-m) - var(--spacing-xs));
 
+  &.offset {
+    left: -100px;
+  }
+
   &__screen {
     width: 100%;
     height: 100%;
