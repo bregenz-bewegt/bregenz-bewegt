@@ -18,7 +18,9 @@
 
     h1 {
       font-size: 5em;
-      background: linear-gradient(#eee, #333);
+      background-image: linear-gradient(45deg, #0065bd, #74afe2);
+      background-clip: text;
+      color: transparent;
     }
   }
 }
