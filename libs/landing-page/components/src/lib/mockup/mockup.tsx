@@ -18,7 +18,6 @@ export const Mockup: React.FC<MockupProps> = ({ src }) => {
           title="web app mockup"
         ></iframe>
       </div>
-      <div className="mockup__home-indicator"></div>
     </div>
   );
 };

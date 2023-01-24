@@ -5,14 +5,19 @@
   &__mockup {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
+    padding-right: 32px;
   }
 
   &__info {
     flex: 1;
     display: flex;
-    justify-content: center;
     align-items: center;
+    padding-left: 32px;
+
+    h1 {
+      font-size: 5em;
+    }
   }
 }

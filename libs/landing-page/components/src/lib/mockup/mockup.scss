@@ -3,35 +3,20 @@ $device-width: 375px;
 $device-height: 812px;
 
 .mockup {
-  // iframe {
-  //   border-radius: 32px;
-  //   position: absolute;
-  //   border: 8px solid #000;
-  //   width: calc($device-width - 50px);
-  //   height: calc($device-height - 80px);
-  // }
-
-  // &__notch {
-  //   position: absolute;
-  //   height: 16px;
-  //   width: 100px;
-  //   z-index: 2;
-  //   background-color: #000;
-  //   border-radius: 0 0 8px 8px;
-  // }
-
+  position: relative;
   background-color: #000;
-  padding: 10px 10px 30px;
-  height: $device-height;
-  width: $device-width;
-  box-shadow: 0 0 20px #e2e2e2;
+  padding: 12px;
+  // height: $device-height;
+  // width: $device-width;
+  aspect-ratio: 10/21;
+  height: 80%;
+  box-shadow: 0 0 32px #d8d8d8;
   border-radius: 40px;
 
   &__screen {
     width: 100%;
     height: 100%;
     border-radius: 30px;
-    padding-top: 26px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -39,6 +24,7 @@ $device-height: 812px;
     overflow: hidden;
 
     &__iframe {
+      padding-top: 24px;
       box-sizing: border-box;
       border: 0;
       width: 100%;
@@ -47,21 +33,22 @@ $device-height: 812px;
   }
 
   &__notch {
-    width: 150px;
     height: 24px;
+    width: 150px;
+    left: 50%;
+    translate: -50% 0;
     background: #000;
     position: absolute;
-    margin: 0 100px;
     border-radius: 0 0 16px 16px;
 
     &__speaker {
       width: 60px;
-      height: 5px;
+      height: 4px;
       background: #fff;
       display: block;
       margin: auto;
       margin-top: 5px;
-      border-radius: 20px;
+      border-radius: 16px;
     }
   }
 }

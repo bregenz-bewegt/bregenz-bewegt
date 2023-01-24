@@ -11,7 +11,11 @@ export const Hero: React.FC<HeroProps> = (props: HeroProps) => {
         <Mockup src={`${process.env['NX_CLIENT_BASE_URL']}`} />
       </div>
       <div className="hero__info">
-        <h1>Bregenz bewegt App</h1>
+        <h1>
+          Bregenz <br />
+          Bewegt <br />
+          App
+        </h1>
       </div>
     </div>
   );
