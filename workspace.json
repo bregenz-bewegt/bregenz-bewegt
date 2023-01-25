@@ -18,6 +18,7 @@
     "landing-page": "apps/landing-page",
     "landing-page-components": "libs/landing-page/components",
     "landing-page-e2e": "apps/landing-page-e2e",
+    "landing-page-pages": "libs/landing-page/pages",
     "server": "apps/server",
     "server-common": "libs/server/common",
     "server-controllers-activity": "libs/server/controllers/activity",

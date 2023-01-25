@@ -48,6 +48,9 @@
       "@bregenz-bewegt/landing-page/components": [
         "libs/landing-page/components/src/index.ts"
       ],
+      "@bregenz-bewegt/landing-page/pages": [
+        "libs/landing-page/pages/src/index.ts"
+      ],
       "@bregenz-bewegt/server-controllers-auth": [
         "libs/server/controllers/auth/src/index.ts"
       ],
