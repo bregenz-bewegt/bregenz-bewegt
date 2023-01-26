@@ -25,6 +25,7 @@ export const Hero: React.FC<HeroProps> = (props: HeroProps) => {
         <h1 className="hero__info__text-part">Bewegt</h1>
         <h1 className="hero__info__text-part">App</h1>
       </div>
+      <div className="hero__bow"></div>
     </div>
   );
 };
