@@ -13,8 +13,22 @@ export const Mockup: React.FC<MockupProps> = ({ src }) => {
 
     gsap.fromTo(
       '.mockup',
-      { x: -100, opacity: 0 },
-      { x: 0, opacity: 1, duration: 2, ease: 'power4' }
+      {
+        x: -300,
+        opacity: 0,
+        rotateX: '30deg',
+        rotateY: '10deg',
+        rotateZ: '-20deg',
+      },
+      {
+        x: 0,
+        rotateX: '0deg',
+        rotateY: '0deg',
+        rotateZ: '0deg',
+        opacity: 1,
+        duration: 2,
+        ease: 'power4',
+      }
     );
   }, [isIframeLoaded]);
 
