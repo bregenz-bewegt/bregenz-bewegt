@@ -14,6 +14,7 @@ export const Hero: React.FC<HeroProps> = (props: HeroProps) => {
       { x: 0, opacity: 1, duration: 2, ease: 'power4' }
     );
   }, []);
+
   return (
     <div className="hero">
       <div className="hero__mockup">
