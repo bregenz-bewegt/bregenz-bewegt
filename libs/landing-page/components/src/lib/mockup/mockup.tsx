@@ -4,9 +4,10 @@ import gsap from 'gsap';
 
 export interface MockupProps {
   src: string;
+  onLoadIframe?: () => void;
 }
 
-export const Mockup: React.FC<MockupProps> = ({ src }) => {
+export const Mockup: React.FC<MockupProps> = ({ src, onLoadIframe }) => {
   const [isIframeLoaded, setIsIframeLoaded] = useState<boolean>(false);
   useEffect(() => {
     if (!isIframeLoaded) return;
@@ -34,6 +35,7 @@ export const Mockup: React.FC<MockupProps> = ({ src }) => {
 
   const handleLoadIframe = () => {
     setIsIframeLoaded(true);
+    onLoadIframe && onLoadIframe();
   };
 
   return (
