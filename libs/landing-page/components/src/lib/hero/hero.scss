@@ -60,3 +60,13 @@
     background-position: 300% center;
   }
 }
+
+@media (max-width: 800px) {
+  .hero {
+    flex-direction: column-reverse;
+
+    &__mockup {
+      display: none;
+    }
+  }
+}
