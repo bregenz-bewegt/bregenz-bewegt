@@ -9,18 +9,18 @@ export const App: React.FC = () => {
     <div className="app">
       <BrowserRouter>
         <Switch>
-          <Route
-            exact
-            path="/privacy-police"
-            component={() => <PrivacyPolice />}
-          />
-          <Route path="/" component={() => <Home />} />
+          <Route exact path="/privacy-police">
+            <PrivacyPolice />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
           <Route path="">
             <Redirect to="/" />
           </Route>
         </Switch>
+        <Footer />
       </BrowserRouter>
-      <Footer />
     </div>
   );
 };
