@@ -9,12 +9,8 @@ export const App: React.FC = () => {
     <div className="app">
       <BrowserRouter>
         <Switch>
-          <Route exact path="/privacy-police">
-            <PrivacyPolice />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
+          <Route exact path="/privacy-police" component={PrivacyPolice} />
+          <Route exact path="/" component={Home} />
           <Route path="">
             <Redirect to="/" />
           </Route>

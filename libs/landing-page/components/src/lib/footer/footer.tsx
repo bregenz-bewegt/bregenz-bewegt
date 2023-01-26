@@ -11,6 +11,7 @@ export const Footer: React.FC<FooterProps> = (props: FooterProps) => {
       <div className="footer__content">
         <Link to={'/'}>Start</Link>
         <Link to={'/privacy-police'}>Datenschutz</Link>
+        <a href="/">Start</a>
       </div>
       <div className="footer__impressum"></div>
     </footer>
