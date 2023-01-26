@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Mockup } from '../mockup/mockup';
 import './hero.scss';
+import { Mockup } from '../mockup/mockup';
 import gsap from 'gsap';
 
 /* eslint-disable-next-line */
