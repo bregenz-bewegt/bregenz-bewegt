@@ -4,7 +4,7 @@ import { Hero } from '@bregenz-bewegt/landing-page/components';
 
 export const Home: React.FC = () => {
   return (
-    <div className="homer">
+    <div className="home">
       <Hero />
     </div>
   );
