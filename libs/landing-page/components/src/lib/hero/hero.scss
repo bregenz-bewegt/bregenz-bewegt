@@ -1,6 +1,7 @@
 .hero {
   height: 100vh;
   display: flex;
+  overflow-x: hidden;
 
   &__mockup {
     flex: 1;
@@ -12,17 +13,19 @@
 
   &__info {
     flex: 1;
+    flex-direction: column;
     display: flex;
-    align-items: center;
+    justify-content: center;
     padding-left: 32px;
 
-    h1 {
+    &__text-part {
       font-size: 5em;
       background-image: linear-gradient(90deg, #0065bd, #74afe2, #0065bd);
       background-clip: text;
       color: transparent;
       animation: text-gradient 10s ease-in-out infinite;
       background-size: 300% auto;
+      margin: 0;
     }
   }
 }
