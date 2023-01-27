@@ -3,13 +3,14 @@ $device-width: 375px;
 $device-height: 812px;
 
 .mockup {
-  position: relative;
+  position: fixed;
   background-color: var(--color-dark);
   padding: calc(var(--spacing-m) - var(--spacing-xs));
   aspect-ratio: 10/21;
   height: 80%;
   box-shadow: 0 0 var(--sapcing-xl) #d8d8d8;
   border-radius: calc(var(--spacing-xl) + var(--spacing-m) - var(--spacing-xs));
+  z-index: 999;
 
   &.offset {
     left: -100px;
