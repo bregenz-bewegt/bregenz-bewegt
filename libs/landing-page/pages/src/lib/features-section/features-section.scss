@@ -9,6 +9,11 @@
     justify-content: center;
     margin-right: 70%;
     align-items: flex-end;
+
+    &__coin {
+      box-shadow: var(--spacing-xs) var(--spacing-xs) var(--spacing-3xl)
+        var(--color-medium);
+    }
   }
 
   &__earn-rewards {
