@@ -9,7 +9,7 @@ export const Footer: React.FC<FooterProps> = (props: FooterProps) => {
     <footer className="footer">
       <div className="footer__content">
         <a href="/">Start</a>
-        <a href="/privay-police">Datenschutz</a>
+        <a href="/privacy-police">Datenschutz</a>
       </div>
       <div className="footer__impressum">
         &#169; {new Date().getFullYear()} Landeshauptstadt Bregenz
