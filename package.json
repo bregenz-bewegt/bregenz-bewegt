@@ -66,6 +66,7 @@
     "@types/otp-generator": "^4.0.0",
     "argon2": "^0.28.7",
     "axios": "^0.27.2",
+    "axios-auth-refresh": "^3.3.4",
     "bull": "^4.8.5",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
