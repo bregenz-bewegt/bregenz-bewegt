@@ -10,7 +10,7 @@ import {
   Friends,
   CompetitorProfile,
   Notifications,
-  PrivacyPoliceProps,
+  PrivacyPolice,
   Conversation,
   Sponsors,
 } from '@bregenz-bewegt/client-ui-pages';
@@ -129,7 +129,11 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             <Route
               exact
               path={`${tabRoutes.profile.route}/privacy-police`}
-              component={PrivacyPoliceProps}
+              component={() => (
+                <PrivacyPolice
+                  defaultBackRouterLinkt={`${tabRoutes.profile.route}`}
+                />
+              )}
             ></Route>
             <Route
               exact

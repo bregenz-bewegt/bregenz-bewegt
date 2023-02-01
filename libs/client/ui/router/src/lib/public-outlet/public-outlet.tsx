@@ -5,6 +5,7 @@ import {
   Register,
   ForgotPasswordEmailSent,
   ResetPassword,
+  PrivacyPolice,
 } from '@bregenz-bewegt/client-ui-pages';
 import { IonRouterOutlet } from '@ionic/react';
 import { Route, Redirect } from 'react-router-dom';
@@ -23,6 +24,11 @@ export const PublicOutlet: React.FC = () => {
         exact
         path={'/email-sent'}
         component={ForgotPasswordEmailSent}
+      ></Route>
+      <Route
+        exact
+        path={`/privacy-police`}
+        component={() => <PrivacyPolice defaultBackRouterLinkt={``} />}
       ></Route>
       <Route exact path={'/login'} component={Login}></Route>
       <Route exact path={'/register'} component={Register}></Route>

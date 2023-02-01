@@ -8,22 +8,22 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
-import { UserStore } from '@bregenz-bewegt/client/common/stores';
 import { BackButton } from '@bregenz-bewegt/client-ui-components';
 import { PrivacyPoliceContent } from '@bregenz-bewegt/shared/ui/components';
 
 export interface PrivacyPoliceProps {
-  userStore?: UserStore;
+  defaultBackRouterLinkt: string;
 }
 
-export const PrivacyPoliceProps: React.FC<PrivacyPoliceProps> = () => {
+export const PrivacyPolice: React.FC<PrivacyPoliceProps> = ({
+  defaultBackRouterLinkt,
+}) => {
   return (
     <IonPage className="privacy-police">
       <IonHeader mode="ios" collapse="condense" className="ion-no-border">
         <IonToolbar>
           <IonButtons>
-            <BackButton defaultRouterLink={tabRoutes.profile.route} />
+            <BackButton defaultRouterLink={defaultBackRouterLinkt} />
           </IonButtons>
           <IonTitle>Datenschutzbestimmungen</IonTitle>
         </IonToolbar>
