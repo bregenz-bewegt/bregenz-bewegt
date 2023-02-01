@@ -1,10 +1,7 @@
 import React from 'react';
 import './footer.scss';
 
-/* eslint-disable-next-line */
-export interface FooterProps {}
-
-export const Footer: React.FC<FooterProps> = (props: FooterProps) => {
+export const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <div className="footer__content">
