@@ -25,7 +25,7 @@ export const PrivacyPolice: React.FC<PrivacyPoliceProps> = ({
           <IonButtons>
             <BackButton defaultRouterLink={defaultBackRouterLinkt} />
           </IonButtons>
-          <IonTitle>Datenschutzbestimmungen</IonTitle>
+          <IonTitle>Datenschutzerklärung</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="privacy-police__content">

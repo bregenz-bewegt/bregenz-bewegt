@@ -206,9 +206,9 @@ export const Register: React.FC<RegisterProps> = inject(
                 valid={acceptTosValid}
                 label={
                   <IonNote mode="md">
-                    Ich akzeptiere{' '}
+                    Ich akzeptiere die{' '}
                     <IonRouterLink routerLink={`/privacy-police`}>
-                      Datenschutz
+                      Datenschutzerklärung
                     </IonRouterLink>{' '}
                     und Nutzungsbedingungen
                   </IonNote>
