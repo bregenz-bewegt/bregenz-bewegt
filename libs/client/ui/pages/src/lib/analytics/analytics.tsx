@@ -7,7 +7,12 @@ import {
   activityStore,
   ActivityStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { Activity, ActivityChartData } from '@bregenz-bewegt/client/types';
+import {
+  Activity,
+  ActivityChartData,
+  Exercise,
+  Role,
+} from '@bregenz-bewegt/client/types';
 import {
   IonContent,
   IonFabButton,
@@ -32,6 +37,7 @@ import {
 } from 'recharts';
 import { ArrowUp2 } from 'iconsax-react';
 import { useIsGuest } from '@bregenz-bewegt/client/common/hooks';
+import { DifficultyType } from '@prisma/client';
 
 export interface AnalyticsProps {
   activityStore?: ActivityStore;
@@ -107,298 +113,108 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
         coins: 25,
       },
     ];
-    const guestMockList = [
+    const guestMockList: (Activity & {
+      minutes?: string | undefined;
+      seconds?: string | undefined;
+    })[] = [
       {
-        id: 'cld4jzgsr0519i4lfqzevc487',
-        startedAt: '2023-01-20T13:24:08.522Z',
-        endedAt: '2023-01-20T13:24:09.805Z',
-        exerciseId: 5,
-        parkId: 7,
-        userId: 'cld1makuv0012xclfxfsn8tzs',
-        park: {
-          id: 7,
-          qr: 'not-yet-defined-6',
-          name: 'Tschutterplatz beim Stadion',
-          address: 'Rotfarbgasse 14a, 6900 Bregenz',
-          image: 'parks/tschutterplatz-beim-stadion.png',
-          gmaps: null,
-        },
-        exercise: {
-          id: 5,
-          name: 'Squat',
-          description: 'some description',
-          execution: 'some execution detials',
-          muscles: 'some muscles that are used',
-          video: 'exercises/situp.mp4',
-          coins: 10,
-          difficultyId: 1,
-          difficulty: 'BEGINNER',
-        },
+        id: '',
         minutes: '00',
         seconds: '01',
-      },
-      {
-        id: 'cld4jzd820501i4lfm6xokyw0',
-        startedAt: '2023-01-20T13:24:03.889Z',
-        endedAt: '2023-01-20T13:24:05.375Z',
-        exerciseId: 4,
-        parkId: 7,
-        userId: 'cld1makuv0012xclfxfsn8tzs',
-        park: {
-          id: 7,
-          qr: 'not-yet-defined-6',
-          name: 'Tschutterplatz beim Stadion',
-          address: 'Rotfarbgasse 14a, 6900 Bregenz',
-          image: 'parks/tschutterplatz-beim-stadion.png',
-          gmaps: null,
-        },
+        endedAt: new Date(),
         exercise: {
-          id: 4,
+          id: 5,
           name: 'Versteinerte Hexe',
           description: 'some description',
           execution: 'some execution detials',
           muscles: 'some muscles that are used',
           video: 'exercises/situp.mp4',
           coins: 10,
-          difficultyId: 3,
-          difficulty: 'GAME',
+          difficulty: DifficultyType.GAME as Exercise['difficulty'],
         },
+        park: {
+          id: 7,
+          qr: 'not-yet-defined-6',
+          name: 'Tschutterplatz beim Stadion',
+          address: 'Rotfarbgasse 14a, 6900 Bregenz',
+          image: 'parks/tschutterplatz-beim-stadion.png',
+          gmaps: undefined,
+        },
+        startedAt: new Date(),
+        user: {
+          updatedAt: new Date(),
+          role: Role.USER,
+          registratedAt: new Date(),
+          id: '',
+          active: true,
+        },
+      },
+      {
+        id: '',
         minutes: '00',
         seconds: '01',
-      },
-      {
-        id: 'cld4jz8wu0484i4lfdn8a5u9t',
-        startedAt: '2023-01-20T13:23:58.299Z',
-        endedAt: '2023-01-20T13:23:59.787Z',
-        exerciseId: 1,
-        parkId: 7,
-        userId: 'cld1makuv0012xclfxfsn8tzs',
-        park: {
-          id: 7,
-          qr: 'not-yet-defined-6',
-          name: 'Tschutterplatz beim Stadion',
-          address: 'Rotfarbgasse 14a, 6900 Bregenz',
-          image: 'parks/tschutterplatz-beim-stadion.png',
-          gmaps: null,
-        },
-        exercise: {
-          id: 1,
-          name: 'Liegestütze',
-          description: 'some description',
-          execution: 'some execution detials',
-          muscles: 'some muscles that are used',
-          video: 'exercises/situp.mp4',
-          coins: 10,
-          difficultyId: 1,
-          difficulty: 'BEGINNER',
-        },
-        minutes: '00',
-        seconds: '01',
-      },
-      {
-        id: 'cld4jz4tc0467i4lfo9hr01gu',
-        startedAt: '2023-01-20T13:23:52.989Z',
-        endedAt: '2023-01-20T13:23:54.963Z',
-        exerciseId: 1,
-        parkId: 7,
-        userId: 'cld1makuv0012xclfxfsn8tzs',
-        park: {
-          id: 7,
-          qr: 'not-yet-defined-6',
-          name: 'Tschutterplatz beim Stadion',
-          address: 'Rotfarbgasse 14a, 6900 Bregenz',
-          image: 'parks/tschutterplatz-beim-stadion.png',
-          gmaps: null,
-        },
-        exercise: {
-          id: 1,
-          name: 'Liegestütze',
-          description: 'some description',
-          execution: 'some execution detials',
-          muscles: 'some muscles that are used',
-          video: 'exercises/situp.mp4',
-          coins: 10,
-          difficultyId: 1,
-          difficulty: 'BEGINNER',
-        },
-        minutes: '00',
-        seconds: '01',
-      },
-      {
-        id: 'cld4jyupg0447i4lf07cbci5a',
-        startedAt: '2023-01-20T13:23:39.890Z',
-        endedAt: '2023-01-20T13:23:42.013Z',
-        exerciseId: 1,
-        parkId: 7,
-        userId: 'cld1makuv0012xclfxfsn8tzs',
-        park: {
-          id: 7,
-          qr: 'not-yet-defined-6',
-          name: 'Tschutterplatz beim Stadion',
-          address: 'Rotfarbgasse 14a, 6900 Bregenz',
-          image: 'parks/tschutterplatz-beim-stadion.png',
-          gmaps: null,
-        },
-        exercise: {
-          id: 1,
-          name: 'Liegestütze',
-          description: 'some description',
-          execution: 'some execution detials',
-          muscles: 'some muscles that are used',
-          video: 'exercises/situp.mp4',
-          coins: 10,
-          difficultyId: 1,
-          difficulty: 'BEGINNER',
-        },
-        minutes: '00',
-        seconds: '02',
-      },
-      {
-        id: 'cld1mal7a1442xclfssxrhnj7',
-        startedAt: '2023-01-17T20:09:03.347Z',
-        endedAt: '2023-01-17T20:09:03.347Z',
-        exerciseId: 5,
-        parkId: 7,
-        userId: 'cld1makuv0012xclfxfsn8tzs',
-        park: {
-          id: 7,
-          qr: 'not-yet-defined-6',
-          name: 'Tschutterplatz beim Stadion',
-          address: 'Rotfarbgasse 14a, 6900 Bregenz',
-          image: 'parks/tschutterplatz-beim-stadion.png',
-          gmaps: null,
-        },
+        endedAt: new Date(),
         exercise: {
           id: 5,
-          name: 'Squat',
-          description: 'some description',
-          execution: 'some execution detials',
-          muscles: 'some muscles that are used',
-          video: 'exercises/situp.mp4',
-          coins: 10,
-          difficultyId: 1,
-          difficulty: 'BEGINNER',
-        },
-        minutes: '00',
-        seconds: '00',
-      },
-      {
-        id: 'cld1mal7a1441xclfoja3h97m',
-        startedAt: '2023-01-16T11:48:00.628Z',
-        endedAt: '2023-01-16T11:48:00.628Z',
-        exerciseId: 4,
-        parkId: 7,
-        userId: 'cld1makuv0012xclfxfsn8tzs',
-        park: {
-          id: 7,
-          qr: 'not-yet-defined-6',
-          name: 'Tschutterplatz beim Stadion',
-          address: 'Rotfarbgasse 14a, 6900 Bregenz',
-          image: 'parks/tschutterplatz-beim-stadion.png',
-          gmaps: null,
-        },
-        exercise: {
-          id: 4,
-          name: 'Versteinerte Hexe',
-          description: 'some description',
-          execution: 'some execution detials',
-          muscles: 'some muscles that are used',
-          video: 'exercises/situp.mp4',
-          coins: 10,
-          difficultyId: 3,
-          difficulty: 'GAME',
-        },
-        minutes: '00',
-        seconds: '00',
-      },
-      {
-        id: 'cld1mal7a1436xclfz70rwrwy',
-        startedAt: '2023-01-14T02:42:27.138Z',
-        endedAt: '2023-01-14T02:42:27.138Z',
-        exerciseId: 3,
-        parkId: 4,
-        userId: 'cld1makuv0012xclfxfsn8tzs',
-        park: {
-          id: 4,
-          qr: 'not-yet-defined-3',
-          name: 'Generationen Park Mariahilf',
-          address: 'Rotfarbgasse 14a, 6900 Bregenz',
-          image: 'parks/generationen-park-mariahilf.png',
-          gmaps: null,
-        },
-        exercise: {
-          id: 3,
-          name: 'Sit-Up',
-          description: 'some description',
-          execution: 'some execution detials',
-          muscles: 'some muscles that are used',
-          video: 'exercises/situp.mp4',
-          coins: 10,
-          difficultyId: 1,
-          difficulty: 'BEGINNER',
-        },
-        minutes: '00',
-        seconds: '00',
-      },
-      {
-        id: 'cld1mal791433xclfzddccaef',
-        startedAt: '2023-01-03T22:19:56.870Z',
-        endedAt: '2023-01-03T22:19:56.870Z',
-        exerciseId: 2,
-        parkId: 1,
-        userId: 'cld1makuv0012xclfxfsn8tzs',
-        park: {
-          id: 1,
-          qr: 'not-yet-defined-0',
-          name: 'Parkourpark Remise',
-          address: 'Badgässele',
-          image: 'parks/parkourpark-remise.png',
-          gmaps: null,
-        },
-        exercise: {
-          id: 2,
           name: 'Plank',
           description: 'some description',
           execution: 'some execution detials',
           muscles: 'some muscles that are used',
           video: 'exercises/situp.mp4',
           coins: 10,
-          difficultyId: 2,
-          difficulty: 'ADVANCED',
+          difficulty: DifficultyType.BEGINNER as Exercise['difficulty'],
         },
-        minutes: '00',
-        seconds: '00',
+        park: {
+          id: 7,
+          qr: 'not-yet-defined-6',
+          name: 'Tschutterplatz beim Stadion',
+          address: 'Rotfarbgasse 14a, 6900 Bregenz',
+          image: 'parks/tschutterplatz-beim-stadion.png',
+          gmaps: undefined,
+        },
+        startedAt: new Date(),
+        user: {
+          updatedAt: new Date(),
+          role: Role.USER,
+          registratedAt: new Date(),
+          id: '',
+          active: true,
+        },
       },
       {
-        id: 'cld1mal791430xclfc3vd7kke',
-        startedAt: '2023-01-03T02:59:51.765Z',
-        endedAt: '2023-01-03T02:59:51.765Z',
-        exerciseId: 1,
-        parkId: 5,
-        userId: 'cld1makuv0012xclfxfsn8tzs',
-        park: {
-          id: 5,
-          qr: 'not-yet-defined-4',
-          name: 'Schulsportplatz VS Weidach',
-          address: 'Rotfarbgasse 14a, 6900 Bregenz',
-          image: 'parks/schulsportplatz-vs-weidach.png',
-          gmaps: null,
-        },
+        id: '',
+        minutes: '00',
+        seconds: '01',
+        endedAt: new Date(),
         exercise: {
-          id: 1,
-          name: 'Liegestütze',
+          id: 5,
+          name: 'Kniebeuge auf Bank',
           description: 'some description',
           execution: 'some execution detials',
           muscles: 'some muscles that are used',
           video: 'exercises/situp.mp4',
           coins: 10,
-          difficultyId: 1,
-          difficulty: 'BEGINNER',
+          difficulty: DifficultyType.BEGINNER as Exercise['difficulty'],
         },
-        minutes: '00',
-        seconds: '00',
+        park: {
+          id: 7,
+          qr: 'not-yet-defined-6',
+          name: 'Tschutterplatz beim Stadion',
+          address: 'Rotfarbgasse 14a, 6900 Bregenz',
+          image: 'parks/tschutterplatz-beim-stadion.png',
+          gmaps: undefined,
+        },
+        startedAt: new Date(),
+        user: {
+          updatedAt: new Date(),
+          role: Role.USER,
+          registratedAt: new Date(),
+          id: '',
+          active: true,
+        },
       },
     ];
+
     const guestMockTimespans = [11, 10];
 
     const loadInfinite = (
@@ -423,7 +239,6 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
           setActivityList([]);
           e && e.target.complete();
         });
-      console.log(activityList);
     };
 
     const calculateTime = (
@@ -501,7 +316,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
         <Header />
         <IonContent
           className="analytics__content"
-          scrollY={true}
+          scrollY={!isGuest}
           ref={contentRef}
           scrollEvents={true}
           onIonScroll={(e: CustomEvent<ScrollDetail>) =>
@@ -663,15 +478,17 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                         </>
                       );
                     })}
-                  <IonInfiniteScroll
-                    onIonInfinite={loadInfinite}
-                    className="leaderboard__infinite-scroll-loading"
-                  >
-                    <IonInfiniteScrollContent
-                      loadingSpinner="crescent"
-                      loadingText="Mehr Aktivitäten laden..."
-                    ></IonInfiniteScrollContent>
-                  </IonInfiniteScroll>
+                  {!isGuest && (
+                    <IonInfiniteScroll
+                      onIonInfinite={loadInfinite}
+                      className="leaderboard__infinite-scroll-loading"
+                    >
+                      <IonInfiniteScrollContent
+                        loadingSpinner="crescent"
+                        loadingText="Mehr Aktivitäten laden..."
+                      ></IonInfiniteScrollContent>
+                    </IonInfiniteScroll>
+                  )}
                 </div>
               </>
             )}
