@@ -134,7 +134,6 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                   )}
                 </IonText>
               </IonRow>
-              Test
             </IonFooter>
           </IonGrid>
         </IonContent>
