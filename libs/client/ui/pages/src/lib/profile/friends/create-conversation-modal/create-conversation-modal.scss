@@ -1,0 +1,12 @@
+.create-conversation-modal {
+  ion-searchbar {
+    padding: var(--spacing-3xl) var(--spacing-l) var(--spacing-xl)
+      var(--spacing-l);
+  }
+
+  ion-content {
+    &::part(scroll) {
+      padding-top: 0;
+    }
+  }
+}

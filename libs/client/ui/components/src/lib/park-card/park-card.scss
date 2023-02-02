@@ -17,7 +17,7 @@
     object-fit: cover;
     height: 100%;
     border-radius: var(--spacing-m);
-    max-height: calc(var(--spacing-5xl) * 3);
+    max-height: 150px;
     width: 100%;
   }
 
@@ -27,6 +27,10 @@
     background-color: var(--ion-background-color);
     padding: var(--spacing-m) var(--spacing-l);
     margin-top: -60px;
+
+    ion-card-title {
+      font-size: var(--spacing-m);
+    }
 
     ion-card-subtitle {
       margin-top: var(--spacing-xs);

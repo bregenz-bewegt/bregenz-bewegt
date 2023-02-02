@@ -28,14 +28,17 @@ export interface ActivityTimerProps {
     minutes: number;
     hours: number;
   }) => void;
-  disabled?: boolean;
+  isGuest: boolean;
+  isLocationValid: boolean;
 }
 
 export const ActivityTimer: React.FC<ActivityTimerProps> = ({
   onTimerStart,
   onTimerStop,
-  disabled,
+  isGuest,
+  isLocationValid,
 }) => {
+  const disabled = isGuest || !isLocationValid;
   const [presentToast] = useIonToast();
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [isHoldingAfterStop, setIsHoldingAfterStop] = useState<boolean>(false);
@@ -99,13 +102,18 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
 
   const showLockedInformation = () => {
     presentToast({
-      message: 'Melde dich an, um Übungen zu starten',
+      message: isGuest
+        ? 'Erstelle ein Konto oder melde dich an, um Übungen zu starten'
+        : !isLocationValid
+        ? 'Du befindest dich nicht am Spielplatz'
+        : 'Übung gesperrt',
       icon: lockClosed,
       duration: 2000,
-      position: 'top',
+      position: 'bottom',
       mode: 'ios',
       color: 'danger',
       buttons: [{ icon: close, role: 'cancel' }],
+      cssClass: 'locked-toast',
     });
   };
 
@@ -199,7 +207,7 @@ export const ActivityTimer: React.FC<ActivityTimerProps> = ({
 
 interface HandleProps {
   started: boolean;
-  disabled?: ActivityTimerProps['disabled'];
+  disabled?: boolean;
   isHoldingBeforeStop: boolean;
   isHoldingAfterStop: boolean;
 }

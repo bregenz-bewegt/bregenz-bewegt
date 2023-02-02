@@ -1,0 +1,9 @@
+.go-to-location {
+  z-index: 800;
+  position: relative;
+  top: 100%;
+  transform: translateY(-100%);
+  margin: -10px 0 0 10px;
+  height: 50px;
+  width: 50px;
+}

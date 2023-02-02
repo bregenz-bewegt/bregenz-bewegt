@@ -1,4 +1,4 @@
-export enum ParkDisplayType {
+export enum ParkDisplaySegment {
   List = 'list',
   Map = 'map',
 }

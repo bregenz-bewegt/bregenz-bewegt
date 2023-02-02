@@ -1,5 +1,5 @@
 import { CompetitorController } from './competitor.controller';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import { MulterModule } from '@nestjs/platform-express';
 import { UserController } from './user.controller';
@@ -7,8 +7,9 @@ import { UserService } from './user.service';
 import { UtilService } from '@bregenz-bewegt/server/util';
 import { JwtService } from '@nestjs/jwt';
 import { MailService } from '@bregenz-bewegt/server/mail';
-import { EamilResetTokenStrategy } from './passport';
+import { EmailResetTokenStrategy } from './passport';
 
+@Global()
 @Module({
   imports: [MulterModule],
   controllers: [UserController, CompetitorController],
@@ -18,7 +19,7 @@ import { EamilResetTokenStrategy } from './passport';
     MulterService,
     JwtService,
     MailService,
-    EamilResetTokenStrategy,
+    EmailResetTokenStrategy,
   ],
   exports: [UserService],
 })

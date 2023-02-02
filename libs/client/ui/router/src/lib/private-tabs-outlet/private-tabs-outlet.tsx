@@ -10,6 +10,9 @@ import {
   Friends,
   CompetitorProfile,
   Notifications,
+  Conversation,
+  TermsOfService,
+  Sponsors,
 } from '@bregenz-bewegt/client-ui-pages';
 import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
 import {
@@ -24,6 +27,7 @@ import { inject, observer } from 'mobx-react';
 import { Route, Redirect } from 'react-router-dom';
 import { tabRoutes } from '../tabs';
 import { ScanBarcode } from 'iconsax-react';
+import { NotificationListener } from '@bregenz-bewegt/client-ui-components';
 
 export interface PrivateTabsOutletProps {
   tabStore?: TabStore;
@@ -37,7 +41,6 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
       <>
         <IonTabs>
           <IonRouterOutlet>
-            {/* <Switch> */}
             <Route
               exact
               path={'/reset-password/:token'}
@@ -110,6 +113,11 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             ></Route>
             <Route
               exact
+              path={`${tabRoutes.profile.route}/chat/:username`}
+              component={Conversation}
+            ></Route>
+            <Route
+              exact
               path={`${tabRoutes.profile.route}/email`}
               component={Email}
             ></Route>
@@ -118,12 +126,26 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
               path={`${tabRoutes.profile.route}/password`}
               component={Password}
             ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/terms-of-service`}
+              component={TermsOfService}
+            ></Route>
+            <Route
+              exact
+              path={`${tabRoutes.profile.route}/sponsors`}
+              component={Sponsors}
+            ></Route>
             <Route path="">
               <Redirect to="/start" />
             </Route>
-            {/* </Switch> */}
           </IonRouterOutlet>
-          <IonTabBar slot="bottom" mode="md" hidden={!tabStore?.isShown}>
+          <IonTabBar
+            slot="bottom"
+            mode="md"
+            hidden={!tabStore?.isShown}
+            className="ion-no-border"
+          >
             {Object.values(tabRoutes).map((page, i) => {
               if (page.label !== 'Scan') {
                 return (
@@ -161,6 +183,7 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             <ScanBarcode size={24} variant="Bold" />
           </IonFabButton>
         </IonFab>
+        <NotificationListener />
       </>
     );
   })

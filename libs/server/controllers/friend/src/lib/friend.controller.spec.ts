@@ -1,4 +1,5 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
+import { NotificationGateway } from '@bregenz-bewegt/server/controllers/notification';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { FriendController } from './friend.controller';
@@ -9,7 +10,12 @@ describe('FriendController', () => {
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [FriendService, PrismaService, ConfigService],
+      providers: [
+        FriendService,
+        PrismaService,
+        ConfigService,
+        NotificationGateway,
+      ],
       controllers: [FriendController],
     }).compile();
 

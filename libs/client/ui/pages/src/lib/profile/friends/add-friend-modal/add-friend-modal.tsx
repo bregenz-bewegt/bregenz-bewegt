@@ -5,7 +5,7 @@ import {
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { FriendSearchResult } from '@bregenz-bewegt/shared/types';
+import { UserSearchResult } from '@bregenz-bewegt/shared/types';
 import { IonSearchbarCustomEvent } from '@ionic/core';
 import {
   IonModal,
@@ -25,7 +25,7 @@ import {
   IonLabel,
   SearchbarChangeEventDetail,
 } from '@ionic/react';
-import { AddCircle } from 'iconsax-react';
+import { AddCircle, TickCircle } from 'iconsax-react';
 import { inject, observer } from 'mobx-react';
 import React, { useRef, useState } from 'react';
 import './add-friend-modal.scss';
@@ -45,8 +45,8 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
-    const [searchResult, setSearchResult] = useState<FriendSearchResult[]>([]);
-    const [sentRequests, setSentRequests] = useState<FriendSearchResult[]>([]);
+    const [searchResult, setSearchResult] = useState<UserSearchResult[]>([]);
+    const [sentRequests, setSentRequests] = useState<UserSearchResult[]>([]);
 
     const dismissAddModal = () => {
       modalRef.current?.dismiss();
@@ -73,7 +73,7 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
         });
     };
 
-    const sendFriendRequest = (addressee: FriendSearchResult) => {
+    const sendFriendRequest = (addressee: UserSearchResult) => {
       friendsStore
         ?.sendFriendRequest({ addresseeId: addressee.id })
         .then(() => {
@@ -91,7 +91,7 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
         canDismiss
         className="add-friend-modal"
       >
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonTitle>Freunde hinzufügen</IonTitle>
             <IonButtons slot="start">
@@ -157,7 +157,10 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
                             mode="ios"
                           >
                             {isRequested ? (
-                              'angefragt'
+                              <TickCircle
+                                variant="Bold"
+                                color={`var(--ion-color-success)`}
+                              />
                             ) : (
                               <AddCircle
                                 variant="Bold"
