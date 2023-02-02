@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import './notifications.scss';
 import {
-  IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
@@ -22,28 +21,40 @@ import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import {
   notificationsStore,
   NotificationsStore,
+  UserStore,
+  userStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
-import { Notification, NotificationType } from '@bregenz-bewegt/client/types';
+import {
+  FriendsDisplaySegment,
+  Notification,
+  NotificationType,
+} from '@bregenz-bewegt/client/types';
 import {
   useDefaultErrorToast,
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
 import { checkmarkDone, trash } from 'ionicons/icons';
+import { BackButton } from '@bregenz-bewegt/client-ui-components';
+import { Link } from 'react-router-dom';
 
 export interface NotificationsProps {
   notificationsStore?: NotificationsStore;
+  userStore?: UserStore;
 }
 
 export const Notifications: React.FC<NotificationsProps> = inject(
-  notificationsStore.storeKey
+  notificationsStore.storeKey,
+  userStore.storeKey
 )(
-  observer(({ notificationsStore }) => {
+  observer(({ notificationsStore, userStore }) => {
     const [presentDefaultErrorToast] = useDefaultErrorToast();
     const [isGuest] = useIsGuest();
 
     const deleteNotification = (notificationId: Notification['id']) => {
+      if (isGuest) return;
+
       notificationsStore
         ?.deleteNotification({ notificationId })
         .then(() => notificationsStore?.fetchNotifications())
@@ -53,6 +64,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     const markNotificationAsRead = (notificationId: Notification['id']) => {
+      if (isGuest) return;
+
       notificationsStore
         ?.markNotificationAsRead({ notificationId })
         .then(() => notificationsStore?.fetchNotifications())
@@ -62,6 +75,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     const markNotificationAsUnread = (notificationId: Notification['id']) => {
+      if (isGuest) return;
+
       notificationsStore
         ?.markNotificationAsUnread({ notificationId })
         .then(() => notificationsStore?.fetchNotifications())
@@ -71,6 +86,8 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     const markAllNotificationsAsRead = () => {
+      if (isGuest) return;
+
       notificationsStore
         ?.markAllNotificationsAsRead()
         .then(() => notificationsStore?.fetchNotifications())
@@ -91,21 +108,19 @@ export const Notifications: React.FC<NotificationsProps> = inject(
     };
 
     useEffect(() => {
+      if (!userStore?.user?.role || isGuest) return;
+
       notificationsStore?.fetchNotifications().catch(() => {
         presentDefaultErrorToast();
       });
-    }, []);
+    }, [userStore?.user?.role]);
 
     return (
       <IonPage className="notifications">
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <IonBackButton
-                color="primary"
-                defaultHref={`${tabRoutes.start.route}`}
-                text="Zurück"
-              />
+              <BackButton defaultRouterLink={tabRoutes.start.route} />
             </IonButtons>
             <IonTitle>Benachrichtigungen</IonTitle>
             <IonButtons slot="end">
@@ -133,28 +148,42 @@ export const Notifications: React.FC<NotificationsProps> = inject(
                       notification.read ? ' read' : ''
                     }`}
                   ></div>
-                  <IonItem
-                    onClick={() => markNotificationAsRead(notification.id)}
-                    routerLink={
-                      [
+
+                  <Link
+                    to={{
+                      pathname: [
                         NotificationType.FRIEND_REQUEST_RECEIVED,
                         NotificationType.FRIEND_REQUEST_ACCEPTED,
                       ].includes(notification.type)
                         ? `${tabRoutes.profile.route}/friends`
-                        : undefined
-                    }
-                    mode="ios"
-                    detail
+                        : undefined,
+                      state:
+                        notification.type ===
+                        NotificationType.FRIEND_REQUEST_RECEIVED
+                          ? { segment: FriendsDisplaySegment.Requests }
+                          : notification.type ===
+                            NotificationType.FRIEND_REQUEST_ACCEPTED
+                          ? { segment: FriendsDisplaySegment.Friends }
+                          : undefined,
+                    }}
                   >
-                    <IonLabel>
-                      <h2>{notification.title}</h2>
-                      <p>
-                        {`${new Date(
-                          notification.createdAt
-                        ).toLocaleDateString()} - ${notification.description}`}
-                      </p>
-                    </IonLabel>
-                  </IonItem>
+                    <IonItem
+                      onClick={() => markNotificationAsRead(notification.id)}
+                      mode="ios"
+                      detail
+                    >
+                      <IonLabel>
+                        <h2>{notification.title}</h2>
+                        <p className="ion-text-wrap">
+                          {`${new Date(
+                            notification.createdAt
+                          ).toLocaleDateString()} - ${
+                            notification.description
+                          }`}
+                        </p>
+                      </IonLabel>
+                    </IonItem>
+                  </Link>
                   <IonItemOptions side="end">
                     {notification.read ? (
                       <IonItemOption

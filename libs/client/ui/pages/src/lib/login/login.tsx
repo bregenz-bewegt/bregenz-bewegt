@@ -9,7 +9,6 @@ import {
   IonLabel,
   IonSpinner,
   IonRow,
-  useIonRouter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useRef, useState } from 'react';
@@ -20,6 +19,7 @@ import { VerifyEmail } from '@bregenz-bewegt/client-ui-pages';
 import { loginError } from '@bregenz-bewegt/shared/errors';
 import { ForgotPasswordDto } from '@bregenz-bewegt/shared/types';
 import fingerprint from '@fingerprintjs/fingerprintjs';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 export interface LoginProps {
   userStore?: UserStore;
@@ -27,7 +27,6 @@ export interface LoginProps {
 
 export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
   observer(({ userStore }) => {
-    const router = useIonRouter();
     const [isGuestLoading, setIsGuestLoading] = useState<boolean>(false);
     const verifyModal = useRef<HTMLIonModalElement>(null);
     const page = useRef(null);
@@ -48,7 +47,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
             userStore.setIsLoggedIn(true);
             userStore.refreshProfile();
             setSubmitting(false);
-            router.push('/start');
+            window.location.replace(tabRoutes.start.route);
           })
           .catch((error) => {
             if (
@@ -74,7 +73,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
           userStore.setIsLoggedIn(true);
           userStore.refreshProfile();
           setIsGuestLoading(false);
-          router.push('/start');
+          window.location.replace(tabRoutes.start.route);
         })
         .catch(() => {
           setIsGuestLoading(false);
@@ -122,6 +121,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 inputMode="email"
                 placeholder="E-Mail"
                 value={login.values.email}
+                autocomplete="email"
                 error={login.touched.email ? login.errors.email : undefined}
                 onChange={login.handleChange}
                 onBlur={login.handleBlur}
@@ -132,6 +132,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 inputMode="text"
                 placeholder="Passwort"
                 value={login.values.password}
+                autocomplete="current-password"
                 error={
                   login.touched.password ? login.errors.password : undefined
                 }

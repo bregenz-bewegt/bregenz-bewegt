@@ -20,6 +20,7 @@ import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
 import { checkmark, mailOpen } from 'ionicons/icons';
 import './verify-email.scss';
+import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 
 export interface VerifyEmailProps {
   email: string;
@@ -70,6 +71,7 @@ export const VerifyEmail: React.FC<VerifyEmailProps> = inject(
                   onVerifySuccess().then(() => {
                     userStore?.setIsLoggedIn(true);
                     userStore?.refreshProfile();
+                    window.location.replace(tabRoutes.start.route);
                   }),
                 animationTransition
               );

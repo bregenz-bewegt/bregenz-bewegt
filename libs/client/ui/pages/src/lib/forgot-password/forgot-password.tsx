@@ -65,6 +65,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = inject(
                 inputMode="email"
                 placeholder="Email"
                 value={forgot.values.email}
+                autocomplete="email"
                 error={forgot.touched.email ? forgot.errors.email : undefined}
                 onChange={forgot.handleChange}
                 onBlur={forgot.handleBlur}

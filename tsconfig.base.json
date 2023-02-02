@@ -29,6 +29,9 @@
       "@bregenz-bewegt/client/common/http": [
         "libs/client/common/http/src/index.ts"
       ],
+      "@bregenz-bewegt/client/common/socket": [
+        "libs/client/common/socket/src/index.ts"
+      ],
       "@bregenz-bewegt/client/common/storage": [
         "libs/client/common/storage/src/index.ts"
       ],
@@ -52,6 +55,9 @@
       "@bregenz-bewegt/server/common": ["libs/server/common/src/index.ts"],
       "@bregenz-bewegt/server/controllers/activity": [
         "libs/server/controllers/activity/src/index.ts"
+      ],
+      "@bregenz-bewegt/server/controllers/chat": [
+        "libs/server/controllers/chat/src/index.ts"
       ],
       "@bregenz-bewegt/server/controllers/exercise": [
         "libs/server/controllers/exercise/src/index.ts"

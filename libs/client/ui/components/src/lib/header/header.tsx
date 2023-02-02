@@ -19,11 +19,13 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
-import { Notification as NotificationIcon } from 'iconsax-react';
+import { Notification as NotificationIcon, MessageText } from 'iconsax-react';
 import {
   useDefaultErrorToast,
   useIsGuest,
 } from '@bregenz-bewegt/client/common/hooks';
+import { Link } from 'react-router-dom';
+import { FriendsDisplaySegment } from '@bregenz-bewegt/client/types';
 
 export interface HeaderProps {
   userStore?: UserStore;
@@ -88,6 +90,23 @@ export const Header: React.FC<HeaderProps> = inject(
             </IonText>
           </div>
         </div>
+        <IonFab className="header__fab header__fab--chat">
+          <Link
+            to={{
+              pathname: `${tabRoutes.profile.route}/friends`,
+              state: {
+                segment: FriendsDisplaySegment.Chats,
+              } as { segment: FriendsDisplaySegment },
+            }}
+          >
+            <IonFabButton className="header__fab__fab-button">
+              <MessageText
+                variant="Bold"
+                className="header__fab__fab-button__icon"
+              />
+            </IonFabButton>
+          </Link>
+        </IonFab>
         <IonFab className="header__fab">
           {notificationsStore?.notifications &&
             notificationsStore.getUnreadNotifications().length > 0 && (

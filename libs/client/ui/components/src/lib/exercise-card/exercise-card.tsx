@@ -13,7 +13,7 @@ import { DifficultyBadge } from '../difficulty-badge/difficulty-badge';
 
 export interface ExerciseCardProps extends Exercise {
   link: string;
-  isLoading?: string;
+  isLoading?: boolean;
 }
 
 export const ExerciseCard: React.FC<ExerciseCardProps> = ({

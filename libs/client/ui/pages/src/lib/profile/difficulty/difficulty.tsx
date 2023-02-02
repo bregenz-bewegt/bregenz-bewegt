@@ -1,11 +1,14 @@
-import { Checkbox, ItemGroup } from '@bregenz-bewegt/client-ui-components';
+import {
+  BackButton,
+  Checkbox,
+  ItemGroup,
+} from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { userStore } from '@bregenz-bewegt/client/common/stores';
 import { UserStore } from '@bregenz-bewegt/client/common/stores';
 import { DifficultyType } from '@bregenz-bewegt/client/types';
 import { difficultyDisplayTexts } from '@bregenz-bewegt/client/ui/shared/content';
 import {
-  IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
@@ -55,14 +58,10 @@ export const Difficulty = inject(userStore.storeKey)(
 
     return (
       <IonPage>
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <IonBackButton
-                color="primary"
-                defaultHref={tabRoutes.profile.route}
-                text="Zurück"
-              />
+              <BackButton defaultRouterLink={tabRoutes.profile.route} />
             </IonButtons>
             <IonTitle>Bevorzugte Übungen</IonTitle>
           </IonToolbar>
@@ -70,7 +69,7 @@ export const Difficulty = inject(userStore.storeKey)(
         <IonContent fullscreen scrollY={false}>
           <ItemGroup>
             {Object.values(DifficultyType).map((d, i, a) => (
-              <IonItem lines={i === a.length - 1 ? 'none' : 'full'}>
+              <IonItem lines={i === a.length - 1 ? 'none' : 'full'} key={i}>
                 <Checkbox
                   checked={difficulties.includes(d)}
                   key={i}

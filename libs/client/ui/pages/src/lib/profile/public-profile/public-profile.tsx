@@ -1,9 +1,12 @@
-import { ItemGroup, Toggle } from '@bregenz-bewegt/client-ui-components';
+import {
+  BackButton,
+  ItemGroup,
+  Toggle,
+} from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
 import { Preferences } from '@bregenz-bewegt/client/types';
 import {
-  IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
@@ -40,19 +43,15 @@ export const PublicProfile = inject(userStore.storeKey)(
 
     return (
       <IonPage>
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <IonBackButton
-                color="primary"
-                defaultHref={tabRoutes.profile.route}
-                text="Zurück"
-              />
+              <BackButton defaultRouterLink={tabRoutes.profile.route} />
             </IonButtons>
             <IonTitle>Öffentliches Profil</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen scrollY={false}>
+        <IonContent>
           <ItemGroup>
             <Toggle
               name="public-profile"

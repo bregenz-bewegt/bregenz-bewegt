@@ -1,32 +1,52 @@
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
+import { NotificationGateway } from '@bregenz-bewegt/server/controllers/notification';
 import {
-  FriendSearchResult,
+  UserSearchResult,
   CreateFriendRequestDto,
   FriendAdresseeResult,
   FriendRequesteeResult,
   AcceptFriendRequestDto,
   RemoveFriendDto,
+  FriendSearchResult,
+  SearchFriendQueryDto,
+  GetFriendsQueryDto,
 } from '@bregenz-bewegt/shared/types';
 import { Injectable } from '@nestjs/common';
 import { User, FriendRequest, Role, NotificationType } from '@prisma/client';
 
 @Injectable()
 export class FriendService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private notificationGateway: NotificationGateway
+  ) {}
 
-  async getFriends(userId: User['id']): Promise<User[]> {
-    const user = await this.prismaService.user.findUnique({
-      where: { id: userId },
-      select: { friends: true },
+  async getFriends(
+    dto: GetFriendsQueryDto,
+    userId: User['id']
+  ): Promise<User[]> {
+    return await this.prismaService.user.findMany({
+      where: {
+        AND: [
+          {
+            friends: { some: { id: userId } },
+          },
+          dto.onlyConversationsless
+            ? {
+                conversations: {
+                  every: { participants: { none: { id: userId } } },
+                },
+              }
+            : {},
+        ],
+      },
     });
-
-    return user?.friends;
   }
 
   async searchUserByUsername(
     query: string,
     userId: User['id']
-  ): Promise<FriendSearchResult[]> {
+  ): Promise<UserSearchResult[]> {
     const maxSearchResults = 50;
     const users = (
       await this.prismaService.user.findMany({
@@ -44,11 +64,13 @@ export class FriendService {
             {
               username: { contains: query },
             },
+            { active: true },
           ],
         },
         orderBy: {
           username: 'asc',
         },
+        select: { id: true, username: true, profilePicture: true },
       })
     )
       .reduce(
@@ -66,10 +88,60 @@ export class FriendService {
       select: { friendRequests: { where: { requestee: { id: userId } } } },
     });
 
-    return <FriendSearchResult[]>users.map((user) => ({
+    return <UserSearchResult[]>users.map((user) => ({
       ...user,
       isRequested: friendRequests.some((f) => user.id === f.addresseeId),
     }));
+  }
+
+  async searchFriendByUsername(
+    dto: SearchFriendQueryDto,
+    userId: User['id']
+  ): Promise<FriendSearchResult[]> {
+    const query = dto.username;
+    const maxSearchResults = 50;
+    const users = (
+      await this.prismaService.user.findMany({
+        where: {
+          AND: [
+            {
+              role: { not: Role.GUEST },
+            },
+            {
+              id: { not: userId },
+            },
+            {
+              friends: { some: { id: userId } },
+            },
+            {
+              username: { contains: query },
+            },
+            dto.onlyConversationsless
+              ? {
+                  conversations: {
+                    every: { participants: { none: { id: userId } } },
+                  },
+                }
+              : {},
+          ],
+        },
+        orderBy: {
+          username: 'asc',
+        },
+        select: { id: true, username: true, profilePicture: true },
+      })
+    )
+      .reduce(
+        ([a, b], c) =>
+          c.username.toLowerCase().startsWith(query)
+            ? [[...a, c], b]
+            : [a, [...b, c]],
+        [[], []]
+      )
+      .reduce((p, c) => [...p, ...c], [])
+      .slice(0, maxSearchResults);
+
+    return users as FriendSearchResult[];
   }
 
   async createFriendRequest(
@@ -79,18 +151,16 @@ export class FriendService {
       where: { id: data.requesteeId },
     });
 
-    await this.prismaService.user.update({
-      where: { id: data.addresseeId },
+    const notification = await this.prismaService.notification.create({
       data: {
-        notifications: {
-          create: {
-            title: 'Neue Freundschaftsanfrage',
-            description: `${requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
-            type: NotificationType.FRIEND_REQUEST_RECEIVED,
-          },
-        },
+        title: 'Neue Freundschaftsanfrage',
+        description: `${requestee.username} hat dir eine Freundschaftsanfrage gesendet`,
+        type: NotificationType.FRIEND_REQUEST_RECEIVED,
+        user: { connect: { id: data.addresseeId } },
       },
     });
+
+    this.notificationGateway.emitNotification(notification);
 
     return this.prismaService.friendRequest.create({
       data: {
@@ -183,15 +253,19 @@ export class FriendService {
       where: { id: friendRequest.requesteeId },
       data: {
         friends: { connect: { id: userId } },
-        notifications: {
-          create: {
-            title: `Freundschaftsanfrage angenommen`,
-            description: `${self.username} hat deine Freundschaftsanfrage angenommen`,
-            type: NotificationType.FRIEND_REQUEST_ACCEPTED,
-          },
-        },
       },
     });
+
+    const notification = await this.prismaService.notification.create({
+      data: {
+        title: `Freundschaftsanfrage angenommen`,
+        description: `${self.username} hat deine Freundschaftsanfrage angenommen`,
+        type: NotificationType.FRIEND_REQUEST_ACCEPTED,
+        user: { connect: { id: friendRequest.requesteeId } },
+      },
+    });
+
+    this.notificationGateway.emitNotification(notification);
 
     return friendRequest;
   }
@@ -220,6 +294,26 @@ export class FriendService {
               },
             ],
           },
+        ],
+      },
+    });
+
+    await this.prismaService.message.deleteMany({
+      where: {
+        conversation: {
+          AND: [
+            { participants: { some: { id: userId } } },
+            { participants: { some: { id: dto.friendId } } },
+          ],
+        },
+      },
+    });
+
+    await this.prismaService.conversation.deleteMany({
+      where: {
+        AND: [
+          { participants: { some: { id: userId } } },
+          { participants: { some: { id: dto.friendId } } },
         ],
       },
     });
