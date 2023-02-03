@@ -266,7 +266,6 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
               </ResponsiveContainer>
             )}
           </div>
-
           <div className="analytics__content__list">
             {activityList.length > 0 &&
               activityList.map((a, i, arr) => {
