@@ -90,7 +90,6 @@ export const Header: React.FC<HeaderProps> = inject(
             </IonText>
           </div>
         </div>
-        test
         {!isGuest && (
           <IonFab className="header__fab header__fab--chat">
             <Link

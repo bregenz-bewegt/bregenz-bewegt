@@ -149,7 +149,6 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
             setShowTopButton(e.detail.currentY > 700 ? true : false)
           }
         >
-          test
           <div className="analytics__content__chart">
             <div className="analytics__content__chart__headline">
               <h2>Münzen im</h2>
