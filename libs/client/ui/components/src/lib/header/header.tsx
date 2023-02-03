@@ -109,7 +109,6 @@ export const Header: React.FC<HeaderProps> = inject(
             </Link>
           </IonFab>
         )}
-        test
         <IonFab className="header__fab">
           {notificationsStore?.notifications &&
             notificationsStore.getUnreadNotifications().length > 0 && (
