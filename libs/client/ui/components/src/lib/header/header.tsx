@@ -116,6 +116,7 @@ export const Header: React.FC<HeaderProps> = inject(
                 {notificationsStore.getUnreadNotifications().length}
               </IonBadge>
             )}
+          test
           <IonFabButton
             className="header__fab__fab-button"
             routerLink={`/notifications`}
