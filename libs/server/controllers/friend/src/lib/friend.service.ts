@@ -64,6 +64,7 @@ export class FriendService {
             {
               username: { contains: query },
             },
+            { active: true },
           ],
         },
         orderBy: {

@@ -1,14 +1,9 @@
-// IPhone 12 Pro dimensions
-$device-width: 375px;
-$device-height: 812px;
-
 .mockup {
   position: relative;
   background-color: var(--color-dark);
   padding: calc(var(--spacing-m) - var(--spacing-xs));
   aspect-ratio: 10/21;
-  height: 80%;
-  box-shadow: 0 0 var(--sapcing-xl) #d8d8d8;
+  box-shadow: 0 0 var(--sapcing-xl) var(--color-medium);
   border-radius: calc(var(--spacing-xl) + var(--spacing-m) - var(--spacing-xs));
 
   &.offset {
@@ -18,20 +13,25 @@ $device-height: 812px;
 
   &__screen {
     width: 100%;
-    height: 100%;
     border-radius: var(--spacing-xl);
     display: flex;
     justify-content: center;
     align-items: flex-end;
     background-color: var(--color-white);
     overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
 
-    &__iframe {
+    &__frame {
       padding-top: var(--spacing-l);
+      padding-bottom: var(--spacing-xs);
       box-sizing: border-box;
       border: 0;
-      width: 100%;
-      height: 100%;
+      width: calc(var(--spacing-4xl) * 5);
+      height: auto;
+      grid-row-start: 1;
+      grid-column-start: 1;
+      visibility: hidden;
     }
   }
 
@@ -54,10 +54,4 @@ $device-height: 812px;
       border-radius: var(--spacing-m);
     }
   }
-}
-
-.mockup-loader {
-  color: var(--color-black);
-  text-align: center;
-  width: 100%;
 }

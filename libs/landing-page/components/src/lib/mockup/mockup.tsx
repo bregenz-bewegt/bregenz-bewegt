@@ -1,16 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import './mockup.scss';
 import gsap from 'gsap';
+import startFrame from './img/screen/start.png';
+import analyticsFrame from './img/screen/analytics.png';
+import parkDetailFrame from './img/screen/park-detail.png';
+import exerciseDetailFrame from './img/screen/exercise-detail.png';
+import profileFrame from './img/screen/profile.png';
 
-export interface MockupProps {
-  src: string;
-  onLoadIframe?: () => void;
-}
+export const Mockup: React.FC = () => {
+  const [isDemoLoaded, setIsDemoLoaded] = useState<boolean>(false);
+  const frames = [
+    startFrame,
+    parkDetailFrame,
+    exerciseDetailFrame,
+    analyticsFrame,
+    profileFrame,
+  ] as const;
 
-export const Mockup: React.FC<MockupProps> = ({ src, onLoadIframe }) => {
-  const [isIframeLoaded, setIsIframeLoaded] = useState<boolean>(false);
   useEffect(() => {
-    if (!isIframeLoaded) return;
+    if (isDemoLoaded) {
+      animateFrames(1.5, 5);
+      return;
+    }
 
     gsap.fromTo(
       '.mockup',
@@ -31,31 +42,49 @@ export const Mockup: React.FC<MockupProps> = ({ src, onLoadIframe }) => {
         ease: 'power4',
       }
     );
-  }, [isIframeLoaded]);
 
-  const handleLoadIframe = () => {
-    setIsIframeLoaded(true);
-    onLoadIframe && onLoadIframe();
+    setIsDemoLoaded(true);
+  }, [isDemoLoaded]);
+
+  const animateFrames = (fadeDuration: number, stayDuration: number) => {
+    const tl = gsap.timeline({ repeat: -1 });
+    const images: any = gsap.utils.toArray('.mockup__screen__frame');
+
+    gsap.set(images[0], { autoAlpha: 1 });
+
+    tl.to(images.slice(1), {
+      delay: stayDuration,
+      autoAlpha: 1,
+      duration: fadeDuration,
+      stagger: stayDuration + fadeDuration,
+    })
+      .to(
+        images.slice(0, images.length - 1),
+        { autoAlpha: 0, duration: 0.01, stagger: stayDuration + fadeDuration },
+        stayDuration + fadeDuration
+      )
+      .set(images[0], { autoAlpha: 1 })
+      .to(
+        images[images.length - 1],
+        { autoAlpha: 0, duration: fadeDuration },
+        '+=' + stayDuration
+      );
   };
 
   return (
-    <>
-      <div className={`mockup${!isIframeLoaded ? ' offset' : ''}`}>
-        <div className="mockup__notch">
-          <span className="mockup__notch__speaker"></span>
-        </div>
-        <div className={`mockup__screen`}>
-          <iframe
-            onLoad={handleLoadIframe}
-            className="mockup__screen__iframe"
-            src={src}
-            title="web app mockup"
-          ></iframe>
-        </div>
+    <div className={`mockup`}>
+      <div className="mockup__notch">
+        <span className="mockup__notch__speaker"></span>
       </div>
-      {!isIframeLoaded ? (
-        <div className="mockup-loader">Lade Demo App...</div>
-      ) : null}
-    </>
+      <div className={`mockup__screen`}>
+        {frames.map((frame, i) => (
+          <img
+            className={`mockup__screen__frame frame--${i + 1}`}
+            src={frame}
+            alt="frame"
+          />
+        ))}
+      </div>
+    </div>
   );
 };
