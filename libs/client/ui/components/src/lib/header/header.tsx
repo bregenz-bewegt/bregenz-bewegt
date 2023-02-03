@@ -100,7 +100,6 @@ export const Header: React.FC<HeaderProps> = inject(
                 } as { segment: FriendsDisplaySegment },
               }}
             >
-              test
               <IonFabButton className="header__fab__fab-button">
                 <MessageText
                   variant="Bold"
