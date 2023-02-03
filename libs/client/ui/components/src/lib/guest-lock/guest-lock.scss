@@ -21,6 +21,8 @@
     border-radius: var(--spacing-m);
     padding: var(--spacing-l) var(--spacing-m) var(--spacing-m) var(--spacing-m);
     background-color: var(--ion-background-color);
+    box-shadow: 0px var(--spacing-s) var(--spacing-l)
+      var(--ion-color-light-shade);
 
     ion-row {
       justify-content: center;
