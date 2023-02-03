@@ -492,51 +492,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                 </div>
               </>
             )}
-<<<<<<< HEAD
           </GuestLock>
-=======
-          </div>
-          <div className="analytics__content__list">
-            {activityList.length > 0 &&
-              activityList.map((a, i, arr) => {
-                const newD = new Date(a.endedAt);
-                return (
-                  <>
-                    {(i === 0 ||
-                      new Date(arr[i - 1].endedAt).getDate() !==
-                        newD.getDate()) && (
-                      <div
-                        className="analytics__content__list__title"
-                        key={JSON.stringify(a)}
-                      >
-                        {i === 0 && <h2>Verlauf</h2>}
-                        <h4>
-                          {newD.toLocaleString('default', {
-                            day: 'numeric',
-                            month: 'long',
-                          })}
-                        </h4>
-                      </div>
-                    )}
-                    <ActivityCard
-                      activity={a}
-                      key={i}
-                      className="analytics__content__list__card"
-                    />
-                  </>
-                );
-              })}
-            <IonInfiniteScroll
-              onIonInfinite={loadInfinite}
-              className="leaderboard__infinite-scroll-loading"
-            >
-              <IonInfiniteScrollContent
-                loadingSpinner="crescent"
-                loadingText="Mehr Aktivitäten laden..."
-              ></IonInfiniteScrollContent>
-            </IonInfiniteScroll>
-          </div>
->>>>>>> main
           <IonFabButton
             slot="fixed"
             className="analytics__content__top-button"
