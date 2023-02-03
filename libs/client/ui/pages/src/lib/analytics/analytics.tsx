@@ -151,7 +151,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
         >
           <div className="analytics__content__chart">
             <div className="analytics__content__chart__headline">
-              <h2>Münzen im</h2>
+              <h2>B-Bucks im</h2>
               <h2>
                 {chartMonthTimespans && (
                   <IonSelect
