@@ -15,6 +15,10 @@
     "client-ui-pages": "libs/client/ui/pages",
     "client-ui-router": "libs/client/ui/router",
     "client-ui-shared-content": "libs/client/ui/shared/content",
+    "landing-page": "apps/landing-page",
+    "landing-page-components": "libs/landing-page/components",
+    "landing-page-e2e": "apps/landing-page-e2e",
+    "landing-page-pages": "libs/landing-page/pages",
     "server": "apps/server",
     "server-common": "libs/server/common",
     "server-controllers-activity": "libs/server/controllers/activity",
@@ -33,6 +37,7 @@
     "server-util": "libs/server/util",
     "shared-constants": "libs/shared/constants",
     "shared-errors": "libs/shared/errors",
-    "shared-types": "libs/shared/types"
+    "shared-types": "libs/shared/types",
+    "shared-ui-components": "libs/shared/ui/components"
   }
 }

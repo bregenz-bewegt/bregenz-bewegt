@@ -10,8 +10,8 @@ import {
   Friends,
   CompetitorProfile,
   Notifications,
+  PrivacyPoliceProps,
   Conversation,
-  TermsOfService,
   Sponsors,
 } from '@bregenz-bewegt/client-ui-pages';
 import { TabStore, tabStore } from '@bregenz-bewegt/client/common/stores';
@@ -128,8 +128,8 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             ></Route>
             <Route
               exact
-              path={`${tabRoutes.profile.route}/terms-of-service`}
-              component={TermsOfService}
+              path={`${tabRoutes.profile.route}/privacy-police`}
+              component={PrivacyPoliceProps}
             ></Route>
             <Route
               exact

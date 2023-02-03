@@ -45,6 +45,12 @@
       "@bregenz-bewegt/client/ui/shared/content": [
         "libs/client/ui/shared/content/src/index.ts"
       ],
+      "@bregenz-bewegt/landing-page/components": [
+        "libs/landing-page/components/src/index.ts"
+      ],
+      "@bregenz-bewegt/landing-page/pages": [
+        "libs/landing-page/pages/src/index.ts"
+      ],
       "@bregenz-bewegt/server-controllers-auth": [
         "libs/server/controllers/auth/src/index.ts"
       ],
@@ -82,7 +88,10 @@
         "libs/shared/constants/src/index.ts"
       ],
       "@bregenz-bewegt/shared/errors": ["libs/shared/errors/src/index.ts"],
-      "@bregenz-bewegt/shared/types": ["libs/shared/types/src/index.ts"]
+      "@bregenz-bewegt/shared/types": ["libs/shared/types/src/index.ts"],
+      "@bregenz-bewegt/shared/ui/components": [
+        "libs/shared/ui/components/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

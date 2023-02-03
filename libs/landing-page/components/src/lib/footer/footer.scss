@@ -1,0 +1,18 @@
+.footer {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--color-white);
+  padding: var(--spacing-l);
+
+  &__content,
+  &__impressum {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__content {
+    margin-bottom: var(--spacing-m);
+  }
+}

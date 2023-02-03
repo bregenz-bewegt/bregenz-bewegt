@@ -4,6 +4,6 @@ export * from './difficulty/difficulty';
 export * from './public-profile/public-profile';
 export * from './email/email';
 export * from './password/password';
+export * from './privacy-police/privacy-police';
 export * from './friends';
-export * from './terms-of-service/terms-of-service';
 export * from './sponsors/sponsors';

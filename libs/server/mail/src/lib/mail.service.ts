@@ -26,7 +26,11 @@ export class MailService {
       to: options.to,
       subject: 'Passwort ändern | Bregenz bewegt',
       template: 'change-password',
-      context: { name: options.name, link: resetLink },
+      context: {
+        name: options.name,
+        link: resetLink,
+        year: new Date().getFullYear(),
+      },
     });
   }
 
@@ -42,6 +46,7 @@ export class MailService {
       context: {
         name: options.name,
         code: options.otp,
+        year: new Date().getFullYear(),
       },
     });
   }

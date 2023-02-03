@@ -1,0 +1,84 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/landing-page/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/landing-page",
+        "index": "apps/landing-page/src/index.html",
+        "baseHref": "/",
+        "main": "apps/landing-page/src/main.tsx",
+        "polyfills": "apps/landing-page/src/polyfills.ts",
+        "tsConfig": "apps/landing-page/tsconfig.app.json",
+        "assets": [
+          "apps/landing-page/src/favicon.ico",
+          "apps/landing-page/src/assets"
+        ],
+        "styles": ["apps/landing-page/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/landing-page/src/environments/environment.ts",
+              "with": "apps/landing-page/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "landing-page:build",
+        "hmr": true,
+        "port": 4444
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "landing-page:build:development"
+        },
+        "production": {
+          "buildTarget": "landing-page:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/landing-page/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/landing-page"],
+      "options": {
+        "jestConfig": "apps/landing-page/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
