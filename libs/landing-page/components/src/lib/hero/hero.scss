@@ -9,7 +9,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 32px;
+    padding-right: var(--spacing-xl);
   }
 
   &__info {
@@ -17,7 +17,7 @@
     flex-direction: column;
     display: flex;
     justify-content: center;
-    padding-left: 32px;
+    padding-left: var(--spacing-xl);
 
     &__text-part {
       font-size: calc(var(--spacing-xl) * 2);
