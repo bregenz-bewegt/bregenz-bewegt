@@ -149,6 +149,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
             setShowTopButton(e.detail.currentY > 700 ? true : false)
           }
         >
+          test
           <div className="analytics__content__chart">
             <div className="analytics__content__chart__headline">
               <h2>Münzen im</h2>
@@ -266,7 +267,6 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
               </ResponsiveContainer>
             )}
           </div>
-
           <div className="analytics__content__list">
             {activityList.length > 0 &&
               activityList.map((a, i, arr) => {
