@@ -72,24 +72,19 @@ export const Mockup: React.FC = () => {
   };
 
   return (
-    <>
-      <div className={`mockup`}>
-        <div className="mockup__notch">
-          <span className="mockup__notch__speaker"></span>
-        </div>
-        <div className={`mockup__screen`}>
-          {frames.map((frame, i) => (
-            <img
-              className={`mockup__screen__frame frame--${i + 1}`}
-              src={frame}
-              alt="frame"
-            />
-          ))}
-        </div>
+    <div className={`mockup`}>
+      <div className="mockup__notch">
+        <span className="mockup__notch__speaker"></span>
       </div>
-      {!isDemoLoaded ? (
-        <div className="mockup-loader">Lade Demo App...</div>
-      ) : null}
-    </>
+      <div className={`mockup__screen`}>
+        {frames.map((frame, i) => (
+          <img
+            className={`mockup__screen__frame frame--${i + 1}`}
+            src={frame}
+            alt="frame"
+          />
+        ))}
+      </div>
+    </div>
   );
 };
