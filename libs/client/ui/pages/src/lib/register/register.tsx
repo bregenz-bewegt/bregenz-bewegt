@@ -210,7 +210,6 @@ export const Register: React.FC<RegisterProps> = inject(
                     <IonRouterLink routerLink={`/privacy-police`}>
                       Datenschutzerklärung
                     </IonRouterLink>{' '}
-                    und Nutzungsbedingungen
                   </IonNote>
                 }
                 onChange={(e: any) => {
