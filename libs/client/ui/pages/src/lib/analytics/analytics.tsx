@@ -325,7 +325,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
         >
           <GuestLock
             modalClassName="analytics-guest-lock-modal"
-            text="Melde dich bei deinem Konto an, um auf dein Profil zugreifen zu können"
+            text="Melde dich bei deinem Konto an, um auf deinen Übungsverlauf zugreifen zu können"
           >
             {() => (
               <>
