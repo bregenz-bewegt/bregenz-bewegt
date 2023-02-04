@@ -111,32 +111,56 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             <Route
               exact
               path={`${tabRoutes.profile.route}/public-profile`}
-              component={PublicProfile}
+              component={() => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <PublicProfile />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/difficulty`}
-              component={Difficulty}
+              component={() => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <Difficulty />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/friends`}
-              component={Friends}
+              component={() => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <Friends />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/chat/:username`}
-              component={Conversation}
+              component={(props: RouteComponentProps<any>) => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <Conversation {...props} />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/email`}
-              component={Email}
+              component={() => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <Email />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/password`}
-              component={Password}
+              component={() => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <Password />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
