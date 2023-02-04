@@ -407,7 +407,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       routerLink={`${tabRoutes.profile.route}/privacy-police`}
                       mode="ios"
                     >
-                      <IonLabel>Datenschutzbestimmungen</IonLabel>
+                      <IonLabel>Datenschutzerklärung</IonLabel>
                     </IonItem>
                     <IonItem
                       button
