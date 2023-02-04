@@ -209,8 +209,7 @@ export const Register: React.FC<RegisterProps> = inject(
                     Ich akzeptiere die{' '}
                     <IonRouterLink routerLink={`/privacy-police`}>
                       Datenschutzerklärung
-                    </IonRouterLink>{' '}
-                    und Nutzungsbedingungen
+                    </IonRouterLink>
                   </IonNote>
                 }
                 onChange={(e: any) => {
