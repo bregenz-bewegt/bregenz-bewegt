@@ -6,7 +6,7 @@ import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 @Injectable()
-export class EamilResetTokenStrategy extends PassportStrategy(
+export class EmailResetTokenStrategy extends PassportStrategy(
   Strategy,
   'jwt-email-reset'
 ) {

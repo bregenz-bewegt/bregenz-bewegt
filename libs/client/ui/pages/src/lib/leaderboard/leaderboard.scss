@@ -88,4 +88,12 @@
   &__infinite-scroll-loading {
     margin-bottom: var(--spacing-l);
   }
+
+  .guest-lock-modal {
+    position: absolute;
+    width: 85%;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+  }
 }

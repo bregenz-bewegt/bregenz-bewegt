@@ -61,11 +61,11 @@
           text-align: end;
           background: linear-gradient(
             0deg,
-            rgba(255, 255, 255, 1) 50%,
-            rgba(255, 255, 255, 0.8) 70%,
-            rgba(255, 255, 255, 0.5) 80%,
-            rgba(255, 255, 255, 0.3) 90%,
-            rgba(255, 255, 255, 0) 100%
+            rgba(var(--ion-color-dark-contrast-rgb), 1) 50%,
+            rgba(var(--ion-color-dark-contrast-rgb), 0.8) 70%,
+            rgba(var(--ion-color-dark-contrast-rgb), 0.5) 80%,
+            rgba(var(--ion-color-dark-contrast-rgb), 0.3) 90%,
+            rgba(var(--ion-color-dark-contrast-rgb), 0) 100%
           );
           padding-top: var(--spacing-l);
         }
@@ -82,6 +82,13 @@
       margin-right: var(--spacing-xl);
       margin-bottom: var(--spacing-l);
       transition: 500ms;
+    }
+
+    .analytics-guest-lock-modal {
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+      margin: 0 var(--spacing-xl);
     }
   }
 }

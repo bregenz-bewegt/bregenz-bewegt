@@ -180,7 +180,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
                 )}
                 {park?.exercises[0].muscles && (
                   <>
-                    <h2>Verwendete Muskeln</h2>
+                    <h2>Beanspruchte Muskeln</h2>
                     <ul>
                       {park?.exercises[0].muscles
                         .split(',')

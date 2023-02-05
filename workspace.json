@@ -15,17 +15,21 @@
     "client-ui-pages": "libs/client/ui/pages",
     "client-ui-router": "libs/client/ui/router",
     "client-ui-shared-content": "libs/client/ui/shared/content",
+    "landing-page": "apps/landing-page",
+    "landing-page-components": "libs/landing-page/components",
+    "landing-page-e2e": "apps/landing-page-e2e",
+    "landing-page-pages": "libs/landing-page/pages",
     "server": "apps/server",
     "server-common": "libs/server/common",
     "server-controllers-activity": "libs/server/controllers/activity",
     "server-controllers-auth": "libs/server/controllers/auth",
+    "server-controllers-chat": "libs/server/controllers/chat",
     "server-controllers-exercise": "libs/server/controllers/exercise",
     "server-controllers-friend": "libs/server/controllers/friend",
     "server-controllers-leaderboard": "libs/server/controllers/leaderboard",
     "server-controllers-notification": "libs/server/controllers/notification",
     "server-controllers-park": "libs/server/controllers/park",
     "server-controllers-user": "libs/server/controllers/user",
-    "server-gateway": "libs/server/gateway",
     "server-mail": "libs/server/mail",
     "server-multer": "libs/server/multer",
     "server-prisma": "libs/server/prisma",
@@ -33,6 +37,7 @@
     "server-util": "libs/server/util",
     "shared-constants": "libs/shared/constants",
     "shared-errors": "libs/shared/errors",
-    "shared-types": "libs/shared/types"
+    "shared-types": "libs/shared/types",
+    "shared-ui-components": "libs/shared/ui/components"
   }
 }
