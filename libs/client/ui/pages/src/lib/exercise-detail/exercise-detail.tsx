@@ -65,17 +65,17 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       const location = await locationStore?.getLocation();
       if (!location?.coords || !coordinates) return setIsLocationValid(false);
 
-      const isValid = locationStore?.isLocationWithinRadius(
-        location.coords,
-        {
-          latitude: coordinates.latitude,
-          longitude: coordinates.longitude,
-        },
-        coordinates?.toleranceRadius
-      );
-
       // Disable location check for presentation
-      // setIsLocationValid(isValid || false);
+      // const isValid = locationStore?.isLocationWithinRadius(
+      //   location.coords,
+      //   {
+      //     latitude: coordinates.latitude,
+      //     longitude: coordinates.longitude,
+      //   },
+      //   coordinates?.toleranceRadius
+      // );
+      const isValid = true;
+
       setIsLocationValid(isValid || false);
     };
 
