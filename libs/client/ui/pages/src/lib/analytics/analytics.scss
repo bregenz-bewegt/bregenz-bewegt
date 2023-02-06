@@ -30,6 +30,13 @@
           opacity: 1;
         }
       }
+
+      ion-text {
+        padding: var(--spacing-s) var(--spacing-m);
+        border-radius: var(--spacing-s);
+        background-color: var(--ion-color-light);
+        display: block;
+      }
     }
 
     &__list {

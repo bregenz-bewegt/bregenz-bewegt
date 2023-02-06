@@ -1,7 +1,24 @@
 .competitor-profile {
-  &__friends {
+  &__content {
+    &__avatar {
+      margin-top: var(--spacing-xxl);
+    }
+
     &__friends {
       display: flex;
+      margin: var(--spacing-m) 0;
+
+      ion-button:first-child {
+        flex: 1;
+      }
+    }
+
+    &__chart {
+      ion-text {
+        padding: var(--spacing-m) var(--spacing-l);
+        border-radius: var(--spacing-s);
+        background-color: var(--ion-color-light);
+      }
     }
   }
 }

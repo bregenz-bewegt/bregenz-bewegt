@@ -16,6 +16,7 @@ import {
   IonPage,
   IonSelect,
   IonSelectOption,
+  IonText,
   ScrollDetail,
   useIonViewWillEnter,
 } from '@ionic/react';
@@ -155,13 +156,16 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
               </h2>
             </div>
             {chartFilterMonth !== null &&
-              chartFilterMonth !== undefined &&
-              chartData && (
-                <Chart
-                  chartData={chartData}
-                  chartFilterMonth={chartFilterMonth}
-                />
-              )}
+            chartFilterMonth !== undefined &&
+            chartData &&
+            chartData.length > 0 ? (
+              <Chart
+                chartData={chartData}
+                chartFilterMonth={chartFilterMonth}
+              />
+            ) : (
+              <IonText>Zu wenig Daten für die Statistik vorhanden</IonText>
+            )}
           </div>
 
           <div className="analytics__content__list">

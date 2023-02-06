@@ -4,7 +4,6 @@ import * as speakeasy from 'speakeasy';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import {
-  CompetitorDetail,
   EmailResetToken,
   JwtPayloadWithoutRole,
   PatchPreferencesDto,

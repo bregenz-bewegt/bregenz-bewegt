@@ -58,6 +58,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
       useState<CompetitorFriendStatus>();
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
     const [isGuest] = useIsGuest();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const reloadCompetitor = (username: User['username']) => {
       userStore
@@ -102,6 +103,8 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
         ?.fetchCompetitorChartData(username)
         .then((data) => data && data.length > 0 && setCompetitorChartData(data))
         .catch();
+
+      setIsLoading(false);
     });
 
     return (
@@ -109,7 +112,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
         <IonContent className="competitor-profile__content">
           <BackButton defaultRouterLink={defaultRouterLink} invertColor />
           <IonGrid>
-            <IonRow className="ion-justify-content-center">
+            <IonRow className="competitor-profile__content__avatar ion-justify-content-center">
               <IonAvatar>
                 <img
                   onLoad={() => setIsImageLoaded(true)}
@@ -295,12 +298,14 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                 <IonSkeletonText />
               )}
             </IonRow>
-            <IonRow>
+            <IonRow className="competitor-profile__content__chart">
               {competitorChartData ? (
                 <Chart
                   chartData={competitorChartData}
                   chartFilterMonth={new Date().getMonth()}
                 />
+              ) : isLoading ? (
+                <IonSkeletonText />
               ) : (
                 <IonText>Keine Statistik für diesen Monat verfügbar</IonText>
               )}
