@@ -123,8 +123,8 @@ const createParks = async () => {
       qr: 'not-yet-defined-4',
       gmaps: 'https://goo.gl/maps/eBj3bP1BdhekjLzx9',
       coordinates: {
-        latitude: 47.491632061845976,
-        longitude: 9.724471244806148,
+        latitude: 47.49154238414924,
+        longitude: 9.72443860490714,
       },
     },
   ];
