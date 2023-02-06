@@ -89,7 +89,6 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
         ?.getChartData(month)
         .then((data) => {
           setChartData(data);
-          console.log(data);
         })
         .catch(() => setChartData(undefined));
     };

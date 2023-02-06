@@ -19,7 +19,6 @@ import {
   CompetitorFriendStatus,
 } from '@bregenz-bewegt/shared/types';
 import { ActivityChartData } from '@bregenz-bewegt/client/types';
-import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { ActivityService } from '@bregenz-bewegt/server/controllers/activity';
 import { FriendService } from '@bregenz-bewegt/server/controllers/friend';
 
@@ -44,8 +43,7 @@ export class CompetitorController {
   ): Promise<CompetitorDetail | undefined> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { email, ...result } = await this.userService.findByUsername(
-      username,
-      true
+      username
     );
     if (!result) return undefined;
     return result as unknown as CompetitorDetail;
@@ -57,7 +55,7 @@ export class CompetitorController {
   async getCompetitorGraphData(
     @Param('username') username: User['username']
   ): Promise<ActivityChartData | undefined> {
-    const comp = await this.userService.findByUsername(username, false);
+    const comp = await this.userService.findByUsername(username);
     if (!comp) return undefined;
     return comp
       ? this.activityService.getChartData(comp.id, new Date().getMonth())
@@ -71,7 +69,7 @@ export class CompetitorController {
     @GetCurrentUser('sub') userId: User['id'],
     @Param('username') username: User['username']
   ): Promise<CompetitorFriendStatus | undefined> {
-    const comp = await this.userService.findByUsername(username, false);
+    const comp = await this.userService.findByUsername(username);
     const user = await this.userService.findById(userId);
 
     if (!comp || !user) return undefined;

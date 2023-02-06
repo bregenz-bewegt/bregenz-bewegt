@@ -2,7 +2,9 @@ import { BackButton, Chart } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { useIsGuest } from '@bregenz-bewegt/client/common/hooks';
 import {
+  chatStore,
   ChatStore,
+  friendsStore,
   FriendsStore,
   userStore,
   UserStore,
@@ -41,7 +43,9 @@ interface CompetitorProfileProps extends RouteComponentProps<MatchParams> {
 }
 
 export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
-  userStore.storeKey
+  userStore.storeKey,
+  friendsStore.storeKey,
+  chatStore.storeKey
 )(
   observer(({ userStore, friendsStore, chatStore, match }) => {
     const history = useIonRouter();
@@ -55,10 +59,28 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
     const [isGuest] = useIsGuest();
 
-    const fetchFriendStatus = (username: User['username']) =>
+    const reloadCompetitor = (username: User['username']) => {
       userStore
-        ?.fetchCompetitorFriendStatus(username)
-        .then((data) => data && setCompetitorFriendStatus(data));
+        ?.fetchCompetitorProfile(username)
+        .then((data) => {
+          if (!data.preferences.public) {
+            history.canGoBack()
+              ? history.goBack()
+              : history.push(defaultRouterLink, 'back');
+            return;
+          }
+          setCompetitorProfile(data);
+
+          userStore
+            ?.fetchCompetitorFriendStatus(username)
+            .then((data) => data && setCompetitorFriendStatus(data));
+        })
+        .catch(() => {
+          history.canGoBack()
+            ? history.goBack()
+            : history.push(defaultRouterLink, 'back');
+        });
+    };
 
     useIonViewWillEnter(() => {
       const username = match.params.username;
@@ -74,29 +96,12 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
           window.location.replace(tabRoutes.profile.route);
       });
 
-      userStore
-        ?.fetchCompetitorProfile(username)
-        .then((data) => {
-          if (!data.preferences.public) {
-            history.canGoBack()
-              ? history.goBack()
-              : history.push(defaultRouterLink, 'back');
-          } else {
-            setCompetitorProfile(data);
-          }
-        })
-        .catch(() => {
-          history.canGoBack()
-            ? history.goBack()
-            : history.push(defaultRouterLink, 'back');
-        });
+      reloadCompetitor(username);
 
       userStore
         ?.fetchCompetitorChartData(username)
         .then((data) => data && data.length > 0 && setCompetitorChartData(data))
         .catch();
-
-      fetchFriendStatus(username);
     });
 
     return (
@@ -175,7 +180,9 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                   <>
                     {competitorFriendStatus.chat ? (
                       <IonButton
-                        href={'/profile/chat/' + competitorProfile.username}
+                        routerLink={
+                          '/profile/chat/' + competitorProfile.username
+                        }
                         mode="ios"
                       >
                         Chat öffnen
@@ -189,11 +196,12 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                             })
                             .then(() =>
                               history.push(
-                                '/profile/chat' + competitorProfile.username
+                                '/profile/chat/' + competitorProfile.username
                               )
                             )
                         }
                         mode="ios"
+                        color={'secondary'}
                       >
                         Chat erstellen
                       </IonButton>
@@ -205,43 +213,64 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                             friendId: competitorProfile?.id,
                           })
                           .then(() =>
-                            history.canGoBack()
-                              ? history.goBack()
-                              : history.push(defaultRouterLink, 'back')
+                            reloadCompetitor(competitorProfile.username)
                           )
                       }
                       mode="ios"
+                      color={'danger'}
                     >
-                      <UserRemove />
+                      <UserRemove color="white" />
                     </IonButton>
                   </>
                 ) : competitorFriendStatus?.recievedRequest ? (
                   <IonButton
-                    onClick={() =>
+                    onClick={() => {
+                      const requestId =
+                        competitorProfile.friendRequestsRelation.find(
+                          (r) => r.requesteeId === competitorProfile.id
+                        )?.id;
+
+                      if (!requestId) {
+                        reloadCompetitor(competitorProfile.username);
+                        return;
+                      }
+
                       friendsStore
                         ?.acceptFriendRequest({
-                          requestId: competitorProfile.id,
+                          requestId: requestId,
                         })
                         .then(() =>
-                          fetchFriendStatus(competitorProfile.username)
-                        )
-                    }
+                          reloadCompetitor(competitorProfile.username)
+                        );
+                    }}
                     mode="ios"
+                    color={'success'}
                   >
                     Anfrage akzeptieren
                   </IonButton>
                 ) : competitorFriendStatus?.requestedRequest ? (
                   <IonButton
-                    onClick={() =>
+                    onClick={() => {
+                      const requestId =
+                        competitorProfile.friendRequestsRelation.find(
+                          (r) => r.addresseeId === competitorProfile.id
+                        )?.id;
+
+                      if (!requestId) {
+                        reloadCompetitor(competitorProfile.username);
+                        return;
+                      }
+
                       friendsStore
                         ?.revokeFriendRequest({
-                          requestId: competitorProfile.id,
+                          requestId: requestId,
                         })
                         .then(() =>
-                          fetchFriendStatus(competitorProfile.username)
-                        )
-                    }
+                          reloadCompetitor(competitorProfile.username)
+                        );
+                    }}
                     mode="ios"
+                    color={'warning'}
                   >
                     Anfrage zurückrufen
                   </IonButton>
@@ -253,10 +282,11 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                           addresseeId: competitorProfile.id,
                         })
                         .then(() =>
-                          fetchFriendStatus(competitorProfile.username)
+                          reloadCompetitor(competitorProfile.username)
                         )
                     }
                     mode="ios"
+                    color={'secondary'}
                   >
                     Anfrage senden
                   </IonButton>

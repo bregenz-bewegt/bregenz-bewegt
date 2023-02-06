@@ -4,6 +4,7 @@ import * as speakeasy from 'speakeasy';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { MulterService } from '@bregenz-bewegt/server/multer';
 import {
+  CompetitorDetail,
   EmailResetToken,
   JwtPayloadWithoutRole,
   PatchPreferencesDto,
@@ -17,7 +18,12 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { DifficultyType, Preferences, User } from '@prisma/client';
+import {
+  DifficultyType,
+  FriendRequest,
+  Preferences,
+  User,
+} from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { UtilService } from '@bregenz-bewegt/server/util';
 import { ConfigService } from '@nestjs/config';
@@ -56,16 +62,21 @@ export class UserService {
     return this.prismaService.user.findUnique({ where: { id: id } });
   }
 
-  async findByUsername(
-    username: User['username'],
-    includePreferences: boolean
-  ): Promise<User & { preferences: Preferences }> {
-    return this.prismaService.user.findUnique({
+  async findByUsername(username: User['username']): Promise<
+    User & {
+      preferences: Preferences;
+      friendRequestsRelation: FriendRequest[];
+    }
+  > {
+    const result = await this.prismaService.user.findUnique({
       where: { username: username },
       include: {
-        preferences: includePreferences,
+        preferences: true,
+        friendRequestsRelation: true,
       },
     });
+
+    return result;
   }
 
   async patchProfile(id: User['id'], fields: PatchProfileDto): Promise<User> {
