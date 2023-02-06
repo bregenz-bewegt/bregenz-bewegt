@@ -1,7 +1,11 @@
 import { BackButton, Chart } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { useIsGuest } from '@bregenz-bewegt/client/common/hooks';
-import { userStore, UserStore } from '@bregenz-bewegt/client/common/stores';
+import {
+  FriendsStore,
+  userStore,
+  UserStore,
+} from '@bregenz-bewegt/client/common/stores';
 import { ActivityChartData, User } from '@bregenz-bewegt/client/types';
 import {
   CompetitorDetail,
@@ -29,12 +33,13 @@ interface MatchParams {
 
 interface CompetitorProfileProps extends RouteComponentProps<MatchParams> {
   userStore?: UserStore;
+  friendsStore?: FriendsStore;
 }
 
 export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
   userStore.storeKey
 )(
-  observer(({ userStore, match }) => {
+  observer(({ userStore, friendsStore, match }) => {
     const history = useIonRouter();
     const defaultRouterLink = tabRoutes.start.route;
     const [competitorProfile, setCompetitorProfile] =
@@ -143,7 +148,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
             </IonRow>
             <IonRow>
               <IonText>
-                Befreundet seit / Konto erstellt am{' '}
+                Konto erstellt am{' '}
                 {competitorProfile ? (
                   new Date(
                     competitorProfile.registratedAt as any
@@ -158,7 +163,15 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
               </IonText>
             </IonRow>
             <IonRow>
-              {competitorFriendStatus && JSON.stringify(competitorFriendStatus)}
+              {competitorFriendStatus && competitorFriendStatus.friends
+                ? competitorFriendStatus.chat
+                  ? 'Freunde & Chat'
+                  : 'Nur Freunde'
+                : competitorFriendStatus?.recievedRequest
+                ? 'Anfrage bekommen'
+                : competitorFriendStatus?.requestedRequest
+                ? 'Anfrage Ausstehend'
+                : 'nichts'}
             </IonRow>
             <IonRow>
               {competitorChartData ? (
