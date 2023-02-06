@@ -62,10 +62,10 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const checkLocation = async (coordinates?: Coordinates) => {
-      const location = await locationStore?.getLocation();
-      if (!location?.coords || !coordinates) return setIsLocationValid(false);
-
       // Disable location check for presentation
+
+      // const location = await locationStore?.getLocation();
+      // if (!location?.coords || !coordinates) return setIsLocationValid(false);
       // const isValid = locationStore?.isLocationWithinRadius(
       //   location.coords,
       //   {
@@ -75,7 +75,6 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       //   coordinates?.toleranceRadius
       // );
       const isValid = true;
-      console.log(isValid);
 
       setIsLocationValid(isValid || false);
     };
@@ -183,7 +182,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
                 )}
                 {park?.exercises[0].muscles && (
                   <>
-                    <h2>Beanspruchte Muskeln test</h2>
+                    <h2>Beanspruchte Muskeln</h2>
                     <ul>
                       {park?.exercises[0].muscles
                         .split(',')
