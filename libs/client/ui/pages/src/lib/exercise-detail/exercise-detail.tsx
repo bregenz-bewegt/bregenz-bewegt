@@ -75,6 +75,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
       //   coordinates?.toleranceRadius
       // );
       const isValid = true;
+      console.log(isValid);
 
       setIsLocationValid(isValid || false);
     };
