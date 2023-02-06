@@ -109,7 +109,6 @@ const createParks = async () => {
         longitude: 9.7036399397155,
       },
     },
-
     {
       id: 4,
       name: 'Generationen Park Mariahilf',
@@ -132,7 +131,6 @@ const createParks = async () => {
         longitude: 9.739739264076317,
       },
     },
-
     {
       id: 6,
       name: 'Schlossberg Trail',
@@ -144,7 +142,6 @@ const createParks = async () => {
         longitude: 9.7387,
       },
     },
-
     {
       id: 7,
       name: 'Tschutterplatz beim Stadion',
@@ -156,7 +153,6 @@ const createParks = async () => {
         longitude: 9.73433812513105,
       },
     },
-
     {
       id: 8,
       name: 'Schulsportplatz VS Augasse',
