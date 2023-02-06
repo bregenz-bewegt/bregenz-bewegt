@@ -264,6 +264,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                         </IonCol>
                         <IonCol
                           size="2"
+                          style={{ transform: 'translateX(-14px)' }}
                           className="align-center ion-justify-content-end"
                         >
                           {competitor?.coins}
