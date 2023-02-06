@@ -56,9 +56,15 @@ export class UserService {
     return this.prismaService.user.findUnique({ where: { id: id } });
   }
 
-  async findByUsername(username: User['username']): Promise<User> {
+  async findByUsername(
+    username: User['username'],
+    includePreferences: boolean
+  ): Promise<User & { preferences: Preferences }> {
     return this.prismaService.user.findUnique({
       where: { username: username },
+      include: {
+        preferences: includePreferences,
+      },
     });
   }
 
@@ -102,7 +108,9 @@ export class UserService {
 
     return {
       ...preferences,
-      difficulties: preferences.difficulties.map((d) => d.difficulty),
+      difficulties: preferences.difficulties.map(
+        (d) => d.difficulty as unknown as DifficultyType
+      ),
     };
   }
 

@@ -22,3 +22,4 @@ export * from './textarea/texterea';
 export * from './notification-listener/notification-listener';
 export * from './chat-message/chat-message';
 export * from './chat-date-divider/chat-date-divider';
+export * from './chart/chart';

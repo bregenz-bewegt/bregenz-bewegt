@@ -1,3 +1,4 @@
+import { FriendService } from './../../../friend/src/lib/friend.service';
 import { CompetitorController } from './competitor.controller';
 import { Global, Module } from '@nestjs/common';
 import { MulterService } from '@bregenz-bewegt/server/multer';
@@ -8,6 +9,8 @@ import { UtilService } from '@bregenz-bewegt/server/util';
 import { JwtService } from '@nestjs/jwt';
 import { MailService } from '@bregenz-bewegt/server/mail';
 import { EmailResetTokenStrategy } from './passport';
+import { ActivityService } from '@bregenz-bewegt/server/controllers/activity';
+import { NotificationGateway } from '@bregenz-bewegt/server/controllers/notification';
 
 @Global()
 @Module({
@@ -19,7 +22,10 @@ import { EmailResetTokenStrategy } from './passport';
     MulterService,
     JwtService,
     MailService,
+    ActivityService,
+    FriendService,
     EmailResetTokenStrategy,
+    NotificationGateway,
   ],
   exports: [UserService],
 })
