@@ -138,13 +138,10 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                   >
                     {chartMonthTimespans?.map((span) => {
                       const month = new Date();
-                      month.setMonth(span);
+                      month.setMonth(span - 1);
 
                       return (
-                        <IonSelectOption
-                          value={span}
-                          key={JSON.stringify(span)}
-                        >
+                        <IonSelectOption value={span} key={span}>
                           {month.toLocaleString('default', {
                             month: 'long',
                           })}

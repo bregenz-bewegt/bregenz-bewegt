@@ -77,19 +77,20 @@ export class ActivityService {
         if (!data._max.endedAt || !data._min.endedAt)
           return { _max: null, _min: null };
         return {
-          _min: data._min.endedAt.getMonth(),
-          _max: data._max.endedAt.getMonth(),
+          _min: data._min.endedAt.getMonth() + 1,
+          _max: data._max.endedAt.getMonth() + 1,
         };
       });
     return _max && _min
       ? [...Array(_max - _min + 1)].map((_x, i) => _max - i)
-      : [new Date().getMonth()];
+      : [new Date().getMonth() + 1];
   }
 
   async getChartData(
     userId: User['id'],
     month: number
   ): Promise<ActivityChartData> {
+    month = month - 1;
     if (month > 11 || month < 0) return [];
     const activities = await this.prismaService.activity.findMany({
       where: {
