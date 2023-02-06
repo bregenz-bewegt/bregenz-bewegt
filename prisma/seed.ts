@@ -102,7 +102,7 @@ const createParks = async () => {
       id: 3,
       name: 'Jugendplatz Spielfeld 3',
       address: 'Achsiedlungsstraße 93, 6900 Bregenz',
-      image: 'parks/jugendplatz-spielfeld.png',
+      image: 'parks/jugendplatz-spielfeld-3.png',
       qr: 'not-yet-defined-2',
       coordinates: {
         latitude: 47.498879742248256,
@@ -168,12 +168,11 @@ const createParks = async () => {
         longitude: 9.736555724858727,
       },
     },
-
     {
       id: 9,
       name: 'Schulplatz VS Rieden',
       address: 'Michael-Gaismayr-Straße 32, 6900 Bregenz',
-      image: 'parks/schulsportplatz-vs-augasse.png',
+      image: 'parks/schulplatz-vs-rieden.png',
       qr: 'not-yet-defined-8',
       coordinates: {
         latitude: 47.49298641752309,
