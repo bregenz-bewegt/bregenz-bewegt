@@ -31,6 +31,15 @@ const createUsers = async () => {
       password: await argon.hash('testtest'),
       active: true,
     },
+    {
+      username: 'valmir_bekiri',
+      email: 'valmir.bekiri@hak-bregenz.at',
+      firstname: 'Valmir',
+      lastname: 'Bekiri',
+      role: Role.USER,
+      password: await argon.hash('testtest'),
+      active: true,
+    },
     ...(await Promise.all([
       ...new Array(200).fill(null).map(async () => ({
         username: faker.internet.userName(),
