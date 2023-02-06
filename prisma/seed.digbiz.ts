@@ -22,6 +22,7 @@ const purgeDatabase = async () => {
 
 const bekiriUsername = 'valmir_bekiri';
 const simonUsername = 'simonostini';
+const juryUsers = [{}];
 
 const createUsers = async () => {
   const users = [
