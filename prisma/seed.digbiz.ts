@@ -193,6 +193,17 @@ const createExercises = async () => {
       video: 'not-yet-defined',
     },
     {
+      name: 'Planks',
+      description:
+        'Die Ellenbogen sind unter den Schultern, der Unterarm senkrecht zum Körper, Handfläche auf dem Boden, Füße liegen übereinander. Presse deinen Unterarm in den Boden und strecke die Hüften Richtung Decke nach oben.',
+      execution: 'ca 10-15 Sekunden halten',
+      muscles:
+        'Bauchmuskulatur, Beinmuskulatur, Armmuskulatur, Hüftmuskulatur, Gesäßmuskulatur, Tiefe Rumpf- und Rückenmuskulatur',
+      coins: 10,
+      difficulty: DifficultyType.BEGINNER,
+      video: 'not-yet-defined',
+    },
+    {
       name: 'Liegestütz',
       description:
         'Die Finger zeigen nach vorne, die Daumen nach innen. Durch gleichzeitiges Anspannen der Arme werden diese gestreckt und der Oberkörper hebt vom Boden ab. Das Gewicht wird gleichmäßig auf Zehenspitzen und Händen verteilt. Kopf, Hals, Wirbelsäule, Gesäß und Knie bilden eine Linie und die Bauchmuskulatur ist angespannt.',
@@ -232,17 +243,6 @@ const createExercises = async () => {
       muscles: 'Quadrizeps, Gesäßmuskel',
       coins: 10,
       difficulty: DifficultyType.ADVANCED,
-      video: 'not-yet-defined',
-    },
-    {
-      name: 'Planks',
-      description:
-        'Die Ellenbogen sind unter den Schultern, der Unterarm senkrecht zum Körper, Handfläche auf dem Boden, Füße liegen übereinander. Presse deinen Unterarm in den Boden und strecke die Hüften Richtung Decke nach oben.',
-      execution: 'ca 10-15 Sekunden halten',
-      muscles:
-        'Bauchmuskulatur, Beinmuskulatur, Armmuskulatur, Hüftmuskulatur, Gesäßmuskulatur, Tiefe Rumpf- und Rückenmuskulatur',
-      coins: 10,
-      difficulty: DifficultyType.BEGINNER,
       video: 'not-yet-defined',
     },
     {
