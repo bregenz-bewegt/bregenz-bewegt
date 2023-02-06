@@ -2,17 +2,19 @@ import { BackButton, Chart } from '@bregenz-bewegt/client-ui-components';
 import { tabRoutes } from '@bregenz-bewegt/client-ui-router';
 import { useIsGuest } from '@bregenz-bewegt/client/common/hooks';
 import {
+  ChatStore,
   FriendsStore,
   userStore,
   UserStore,
 } from '@bregenz-bewegt/client/common/stores';
 import { ActivityChartData, User } from '@bregenz-bewegt/client/types';
-import {
+import type {
   CompetitorDetail,
   CompetitorFriendStatus,
 } from '@bregenz-bewegt/shared/types';
 import {
   IonAvatar,
+  IonButton,
   IonContent,
   IonGrid,
   IonPage,
@@ -22,6 +24,7 @@ import {
   useIonRouter,
   useIonViewWillEnter,
 } from '@ionic/react';
+import { UserRemove } from 'iconsax-react';
 import { inject, observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
@@ -34,12 +37,13 @@ interface MatchParams {
 interface CompetitorProfileProps extends RouteComponentProps<MatchParams> {
   userStore?: UserStore;
   friendsStore?: FriendsStore;
+  chatStore?: ChatStore;
 }
 
 export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
   userStore.storeKey
 )(
-  observer(({ userStore, friendsStore, match }) => {
+  observer(({ userStore, friendsStore, chatStore, match }) => {
     const history = useIonRouter();
     const defaultRouterLink = tabRoutes.start.route;
     const [competitorProfile, setCompetitorProfile] =
@@ -50,6 +54,11 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
       useState<CompetitorFriendStatus>();
     const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
     const [isGuest] = useIsGuest();
+
+    const fetchFriendStatus = (username: User['username']) =>
+      userStore
+        ?.fetchCompetitorFriendStatus(username)
+        .then((data) => data && setCompetitorFriendStatus(data));
 
     useIonViewWillEnter(() => {
       const username = match.params.username;
@@ -87,9 +96,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
         .then((data) => data && data.length > 0 && setCompetitorChartData(data))
         .catch();
 
-      userStore
-        ?.fetchCompetitorFriendStatus(username)
-        .then((data) => data && setCompetitorFriendStatus(data));
+      fetchFriendStatus(username);
     });
 
     return (
@@ -114,7 +121,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
               </IonAvatar>
             </IonRow>
             <IonRow className="ion-justify-content-center">
-              <IonText className="profile__content__username">
+              <IonText>
                 <h2>
                   {competitorProfile ? (
                     competitorProfile.username
@@ -162,16 +169,101 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                 )}
               </IonText>
             </IonRow>
-            <IonRow>
-              {competitorFriendStatus && competitorFriendStatus.friends
-                ? competitorFriendStatus.chat
-                  ? 'Freunde & Chat'
-                  : 'Nur Freunde'
-                : competitorFriendStatus?.recievedRequest
-                ? 'Anfrage bekommen'
-                : competitorFriendStatus?.requestedRequest
-                ? 'Anfrage Ausstehend'
-                : 'nichts'}
+            <IonRow className="competitor-profile__content__friends">
+              {competitorProfile && competitorFriendStatus ? (
+                competitorFriendStatus.friends ? (
+                  <>
+                    {competitorFriendStatus.chat ? (
+                      <IonButton
+                        href={'/profile/chat/' + competitorProfile.username}
+                        mode="ios"
+                      >
+                        Chat öffnen
+                      </IonButton>
+                    ) : (
+                      <IonButton
+                        onClick={() =>
+                          chatStore
+                            ?.createConversation({
+                              participantId: competitorProfile.id,
+                            })
+                            .then(() =>
+                              history.push(
+                                '/profile/chat' + competitorProfile.username
+                              )
+                            )
+                        }
+                        mode="ios"
+                      >
+                        Chat erstellen
+                      </IonButton>
+                    )}
+                    <IonButton
+                      onClick={() =>
+                        friendsStore
+                          ?.removeFriend({
+                            friendId: competitorProfile?.id,
+                          })
+                          .then(() =>
+                            history.canGoBack()
+                              ? history.goBack()
+                              : history.push(defaultRouterLink, 'back')
+                          )
+                      }
+                      mode="ios"
+                    >
+                      <UserRemove />
+                    </IonButton>
+                  </>
+                ) : competitorFriendStatus?.recievedRequest ? (
+                  <IonButton
+                    onClick={() =>
+                      friendsStore
+                        ?.acceptFriendRequest({
+                          requestId: competitorProfile.id,
+                        })
+                        .then(() =>
+                          fetchFriendStatus(competitorProfile.username)
+                        )
+                    }
+                    mode="ios"
+                  >
+                    Anfrage akzeptieren
+                  </IonButton>
+                ) : competitorFriendStatus?.requestedRequest ? (
+                  <IonButton
+                    onClick={() =>
+                      friendsStore
+                        ?.revokeFriendRequest({
+                          requestId: competitorProfile.id,
+                        })
+                        .then(() =>
+                          fetchFriendStatus(competitorProfile.username)
+                        )
+                    }
+                    mode="ios"
+                  >
+                    Anfrage zurückrufen
+                  </IonButton>
+                ) : (
+                  <IonButton
+                    onClick={() =>
+                      friendsStore
+                        ?.sendFriendRequest({
+                          addresseeId: competitorProfile.id,
+                        })
+                        .then(() =>
+                          fetchFriendStatus(competitorProfile.username)
+                        )
+                    }
+                    mode="ios"
+                  >
+                    Anfrage senden
+                  </IonButton>
+                )
+              ) : (
+                <IonSkeletonText />
+              )}
             </IonRow>
             <IonRow>
               {competitorChartData ? (

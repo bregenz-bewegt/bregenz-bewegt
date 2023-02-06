@@ -43,7 +43,7 @@ export class CompetitorController {
     username: User['username']
   ): Promise<CompetitorDetail | undefined> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { id, email, ...result } = await this.userService.findByUsername(
+    const { email, ...result } = await this.userService.findByUsername(
       username,
       true
     );
