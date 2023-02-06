@@ -153,7 +153,7 @@ const updateParks = async () => {
       id: 2,
       name: 'Jugendplatz Spielfeld 3',
       address: 'Achsiedlungsstraße 93, 6900 Bregenz',
-      image: 'parks/jugendplatz-spielfeld.png',
+      image: 'parks/jugendplatz-spielfeld-3.png',
       qr: 'not-yet-defined-1',
       gmaps: 'https://goo.gl/maps/rRa2EQv8ZBmp7Du86',
       coordinates: {
