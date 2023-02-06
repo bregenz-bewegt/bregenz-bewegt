@@ -20,10 +20,13 @@ const purgeDatabase = async () => {
   await prisma.user.deleteMany();
 };
 
+const bekiriUsername = 'valmir_bekiri';
+const simonUsername = 'simonostini';
+
 const createUsers = async () => {
   const users = [
     {
-      username: 'simonostini',
+      username: simonUsername,
       email: 'simonostini@gmail.com',
       firstname: 'Simon',
       lastname: 'Ostini',
@@ -32,7 +35,7 @@ const createUsers = async () => {
       active: true,
     },
     {
-      username: 'valmir_bekiri',
+      username: bekiriUsername,
       email: 'valmir.bekiri@hak-bregenz.at',
       firstname: 'Valmir',
       lastname: 'Bekiri',
@@ -298,29 +301,85 @@ const createExercises = async () => {
 
 const createActivities = async () => {
   const users = await prisma.user.findMany();
-  const exercises = await prisma.exercise.findMany({
+  const bekiri = await prisma.user.findUnique({
+    where: { username: bekiriUsername },
+  });
+  const simon = await prisma.user.findUnique({
+    where: { username: simonUsername },
+  });
+  const restUsers = users.filter(
+    (u) => ![bekiriUsername, simonUsername].includes(u.username ?? '')
+  );
+  const tempExercises = await prisma.exercise.findMany({
     include: { parks: true },
+  });
+  const exercises = [...new Array(4).fill(tempExercises).flatMap((e) => e)];
+
+  await prisma.user.update({
+    where: { username: bekiriUsername },
+    data: {
+      activities: {
+        createMany: {
+          data: [...exercises, ...exercises.slice(3)].map((exercise) => {
+            const date = randomDate();
+            return {
+              startedAt: date,
+              endedAt: date,
+              exerciseId: exercise.id,
+              parkId:
+                exercise.parks[
+                  Math.floor(Math.random() * exercise.parks.length)
+                ].id,
+            };
+          }),
+        },
+      },
+    },
+  });
+
+  await prisma.user.update({
+    where: { username: simonUsername },
+    data: {
+      activities: {
+        createMany: {
+          data: exercises.slice(exercises.length / 1.5).map((exercise) => {
+            const date = randomDate();
+            return {
+              startedAt: date,
+              endedAt: date,
+              exerciseId: exercise.id,
+              parkId:
+                exercise.parks[
+                  Math.floor(Math.random() * exercise.parks.length)
+                ].id,
+            };
+          }),
+        },
+      },
+    },
   });
 
   await Promise.all(
-    users.map(async (user) => {
+    restUsers.map(async (user) => {
       await prisma.user.update({
         where: { id: user.id },
         data: {
           activities: {
             createMany: {
-              data: exercises.map((exercise) => {
-                const date = randomDate();
-                return {
-                  startedAt: date,
-                  endedAt: date,
-                  exerciseId: exercise.id,
-                  parkId:
-                    exercise.parks[
-                      Math.floor(Math.random() * exercise.parks.length)
-                    ].id,
-                };
-              }),
+              data: exercises
+                .slice(Math.random() * exercises.length)
+                .map((exercise) => {
+                  const date = randomDate();
+                  return {
+                    startedAt: date,
+                    endedAt: date,
+                    exerciseId: exercise.id,
+                    parkId:
+                      exercise.parks[
+                        Math.floor(Math.random() * exercise.parks.length)
+                      ].id,
+                  };
+                }),
             },
           },
         },
