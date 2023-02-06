@@ -26,6 +26,7 @@
     "prisma:seed": "npx prisma db seed",
     "prisma:seed:prod": "ts-node prisma/seed.prod.ts",
     "prisma:seed:purge": "ts-node prisma/seed.purge.ts",
+    "prisma:seed:digbiz": "ts-node prisma/seed.digbiz.ts",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:generate": "npx prisma generate",
     "prisma:db:push": "npx prisma db push",

@@ -245,7 +245,6 @@ const createExercises = async () => {
     },
     {
       name: 'Versteinerte Hexe',
-
       description: 'some description',
       execution: 'some execution detials',
       muscles: 'some muscles that are used',
