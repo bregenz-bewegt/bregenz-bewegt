@@ -13,11 +13,12 @@ import {
   ValidationException,
   ValidationFilter,
 } from '@bregenz-bewegt/server/common';
+import { AuthenticatedSocketAdapter } from 'libs/server/controllers/chat/src/lib/gateway';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.enableCors({ origin: true });
+  app.enableCors({ origin: '*' });
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
@@ -37,12 +38,14 @@ async function bootstrap(): Promise<void> {
       },
     })
   );
+  app.useWebSocketAdapter(new AuthenticatedSocketAdapter(app));
 
   const document = SwaggerModule.createDocument(
     app,
     new DocumentBuilder()
       .setTitle('Bregenz Bewegt API')
       .setVersion('1.0')
+      .addBearerAuth()
       .build()
   );
   SwaggerModule.setup(`${globalPrefix}/swagger`, app, document);

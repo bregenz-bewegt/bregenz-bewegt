@@ -8,7 +8,7 @@ export interface TitleBannerProps {
 }
 
 export const TitleBanner: React.FC<TitleBannerProps> = ({
-  textSegments = ['Bregenz', 'Bewegt'],
+  textSegments = ['Bregenz', 'bewegt'],
   animated = false,
 }) => {
   return (

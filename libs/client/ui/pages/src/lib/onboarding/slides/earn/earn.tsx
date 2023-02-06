@@ -17,12 +17,11 @@ export const Earn: React.FC<EarnProps> = (props: EarnProps) => {
         <IonRow>
           <IonCol>
             <IonText>
-              <h2>Coins sammeln</h2>
+              <h2>B-Bucks sammeln</h2>
             </IonText>
             <IonText>
               <p>
-                Absolviere Sportübungen, stoppe deine Zeit und sammle Bregenz
-                bewegt Coins.
+                Absolviere Sportübungen, stoppe deine Zeit und sammle B-Bucks.
               </p>
             </IonText>
           </IonCol>

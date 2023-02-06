@@ -45,6 +45,12 @@
       "@bregenz-bewegt/client/ui/shared/content": [
         "libs/client/ui/shared/content/src/index.ts"
       ],
+      "@bregenz-bewegt/landing-page/components": [
+        "libs/landing-page/components/src/index.ts"
+      ],
+      "@bregenz-bewegt/landing-page/pages": [
+        "libs/landing-page/pages/src/index.ts"
+      ],
       "@bregenz-bewegt/server-controllers-auth": [
         "libs/server/controllers/auth/src/index.ts"
       ],
@@ -55,6 +61,9 @@
       "@bregenz-bewegt/server/common": ["libs/server/common/src/index.ts"],
       "@bregenz-bewegt/server/controllers/activity": [
         "libs/server/controllers/activity/src/index.ts"
+      ],
+      "@bregenz-bewegt/server/controllers/chat": [
+        "libs/server/controllers/chat/src/index.ts"
       ],
       "@bregenz-bewegt/server/controllers/exercise": [
         "libs/server/controllers/exercise/src/index.ts"
@@ -71,7 +80,6 @@
       "@bregenz-bewegt/server/controllers/park": [
         "libs/server/controllers/park/src/index.ts"
       ],
-      "@bregenz-bewegt/server/gateway": ["libs/server/gateway/src/index.ts"],
       "@bregenz-bewegt/server/mail": ["libs/server/mail/src/index.ts"],
       "@bregenz-bewegt/server/multer": ["libs/server/multer/src/index.ts"],
       "@bregenz-bewegt/server/types": ["libs/server/types/src/index.ts"],
@@ -80,7 +88,10 @@
         "libs/shared/constants/src/index.ts"
       ],
       "@bregenz-bewegt/shared/errors": ["libs/shared/errors/src/index.ts"],
-      "@bregenz-bewegt/shared/types": ["libs/shared/types/src/index.ts"]
+      "@bregenz-bewegt/shared/types": ["libs/shared/types/src/index.ts"],
+      "@bregenz-bewegt/shared/ui/components": [
+        "libs/shared/ui/components/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

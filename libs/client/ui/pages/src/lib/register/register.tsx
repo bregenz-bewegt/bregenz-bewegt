@@ -20,6 +20,7 @@ import {
   IonSpinner,
   IonNote,
   IonRow,
+  IonRouterLink,
 } from '@ionic/react';
 import { DifficultyType } from '@prisma/client';
 import { useFormik } from 'formik';
@@ -205,7 +206,10 @@ export const Register: React.FC<RegisterProps> = inject(
                 valid={acceptTosValid}
                 label={
                   <IonNote mode="md">
-                    Ich akzeptiere die AGBs und Nutzungsbedigungen
+                    Ich akzeptiere die{' '}
+                    <IonRouterLink routerLink={`/privacy-police`}>
+                      Datenschutzerklärung
+                    </IonRouterLink>
                   </IonNote>
                 }
                 onChange={(e: any) => {
