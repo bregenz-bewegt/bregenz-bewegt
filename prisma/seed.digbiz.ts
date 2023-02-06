@@ -21,8 +21,7 @@ const purgeDatabase = async () => {
 };
 
 const bekiriUsername = 'valmir_bekiri';
-const simonUsername = 'simonostini';
-const juryUsers = [{}];
+const simonUsername = 'simon_ostini';
 
 const createUsers = async () => {
   const users = [
@@ -302,12 +301,6 @@ const createExercises = async () => {
 
 const createActivities = async () => {
   const users = await prisma.user.findMany();
-  const bekiri = await prisma.user.findUnique({
-    where: { username: bekiriUsername },
-  });
-  const simon = await prisma.user.findUnique({
-    where: { username: simonUsername },
-  });
   const restUsers = users.filter(
     (u) => ![bekiriUsername, simonUsername].includes(u.username ?? '')
   );
@@ -435,6 +428,148 @@ const createDifficulties = async () => {
   );
 };
 
+const createFriends = async () => {
+  const friendUsers = [
+    {
+      username: 'jonas_mayrhofer',
+      email: 'jonas.mayrhofer@hak-bregenz.com',
+      firstname: 'Jonas',
+      lastname: 'Mayrhofer',
+      role: Role.USER,
+      password: await argon.hash('testtest'),
+      active: true,
+    },
+    {
+      username: 'timon_stadelmann',
+      email: 'timon.stadelmann@gmail.com',
+      firstname: 'Timon',
+      lastname: 'Stadelmann',
+      role: Role.USER,
+      password: await argon.hash('testtest'),
+      active: true,
+    },
+    {
+      username: 'raphael_posch',
+      email: 'raphael.posch@gmail.com',
+      firstname: 'Raphael',
+      lastname: 'Posch',
+      role: Role.USER,
+      password: await argon.hash('testtest'),
+      active: true,
+    },
+  ];
+
+  const difficulties = (await prisma.difficulty.findMany()).map((d) => ({
+    id: d.id,
+  }));
+
+  await prisma.user.update({
+    where: { username: simonUsername },
+    data: {
+      friendsRelation: {
+        create: friendUsers.map((user) => ({
+          ...user,
+          preferences: {
+            create: {
+              public: true,
+              difficulties: {
+                connect: difficulties,
+              },
+            },
+          },
+        })),
+      },
+    },
+  });
+};
+
+const createFriendRequests = async () => {
+  const juryUsers = [
+    {
+      username: 'regine_kadgien',
+      email: 'regine.kadgien@gmail.com',
+      firstname: 'Regine',
+      lastname: 'Kadgien',
+      role: Role.USER,
+      password: await argon.hash('testtest'),
+      active: true,
+    },
+    {
+      username: 'stefan_kainbacher',
+      email: 'stefan.kainbacher@gmail.com',
+      firstname: 'Stefan',
+      lastname: 'Kainbacher',
+      role: Role.USER,
+      password: await argon.hash('testtest'),
+      active: true,
+    },
+    {
+      username: 'matthias_kainz',
+      email: 'matthias.kainz@gmail.com',
+      firstname: 'Matthias',
+      lastname: 'Kainz',
+      role: Role.USER,
+      password: await argon.hash('testtest'),
+      active: true,
+    },
+    {
+      username: 'andreas_renner',
+      email: 'andreas.renner@gmail.com',
+      firstname: 'Andreas',
+      lastname: 'Renner',
+      role: Role.USER,
+      password: await argon.hash('testtest'),
+      active: true,
+    },
+    {
+      username: 'andreas_salcher',
+      email: 'andreas.salcher@gmail.com',
+      firstname: 'Andreas',
+      lastname: 'Salcher',
+      role: Role.USER,
+      password: await argon.hash('testtest'),
+      active: true,
+    },
+    {
+      username: 'klaus_wendel',
+      email: 'klaus.wendel@gmail.com',
+      firstname: 'Klaus',
+      lastname: 'Wendel',
+      role: Role.USER,
+      password: await argon.hash('testtest'),
+      active: true,
+    },
+  ];
+  const simon = await prisma.user.findUnique({
+    where: { username: simonUsername },
+  });
+
+  await Promise.all([
+    juryUsers.map(async (user) => {
+      await prisma.user.create({
+        data: {
+          ...user,
+          preferences: {
+            create: {
+              public: true,
+              difficulties: {
+                connect: (
+                  await prisma.difficulty.findMany()
+                ).map((d) => ({ id: d.id })),
+              },
+            },
+          },
+          friendRequests: {
+            createMany: {
+              data: { createdAt: new Date(), addresseeId: simon?.id ?? '' },
+            },
+          },
+        },
+      });
+    }),
+  ]);
+};
+
 const main = async () => {
   await purgeDatabase();
   await createDifficulties();
@@ -442,6 +577,8 @@ const main = async () => {
   await createParks();
   await createExercises();
   await createActivities();
+  await createFriendRequests();
+  await createFriends();
   await deleteUnusedProfilePictures();
 };
 
