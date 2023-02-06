@@ -24,10 +24,14 @@ import {
   IonFabButton,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { tabRoutes } from '../tabs';
 import { ScanBarcode } from 'iconsax-react';
-import { NotificationListener } from '@bregenz-bewegt/client-ui-components';
+import {
+  NotificationListener,
+  RoleRouteGuard,
+} from '@bregenz-bewegt/client-ui-components';
+import { Role } from '@bregenz-bewegt/client/types';
 
 export interface PrivateTabsOutletProps {
   tabStore?: TabStore;
@@ -89,42 +93,74 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             <Route
               exact
               path={`/user/:id`}
-              component={CompetitorProfile}
+              component={(props: RouteComponentProps<any>) => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <CompetitorProfile {...props} />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/appearance`}
-              component={Appearance}
+              component={() => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <Appearance />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/public-profile`}
-              component={PublicProfile}
+              component={() => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <PublicProfile />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/difficulty`}
-              component={Difficulty}
+              component={() => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <Difficulty />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/friends`}
-              component={Friends}
+              component={() => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <Friends />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/chat/:username`}
-              component={Conversation}
+              component={(props: RouteComponentProps<any>) => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <Conversation {...props} />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/email`}
-              component={Email}
+              component={() => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <Email />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
               path={`${tabRoutes.profile.route}/password`}
-              component={Password}
+              component={() => (
+                <RoleRouteGuard allowedRoles={[Role.USER]}>
+                  <Password />
+                </RoleRouteGuard>
+              )}
             ></Route>
             <Route
               exact
