@@ -38,6 +38,7 @@
     "shared-constants": "libs/shared/constants",
     "shared-errors": "libs/shared/errors",
     "shared-types": "libs/shared/types",
+    "shared-ui-assets": "libs/shared/ui/assets",
     "shared-ui-components": "libs/shared/ui/components"
   }
 }
