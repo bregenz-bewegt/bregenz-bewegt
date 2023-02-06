@@ -63,7 +63,6 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
     const checkLocation = async (coordinates?: Coordinates) => {
       const location = await locationStore?.getLocation();
-      console.log(location?.coords);
       if (!location?.coords || !coordinates) return setIsLocationValid(false);
 
       const isValid = locationStore?.isLocationWithinRadius(
