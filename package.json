@@ -21,6 +21,7 @@
     "build:server": "npx nx run server:build",
     "lint": "npx nx run-many --target=lint",
     "test": "npx nx run-many --target=test",
+    "e2e": "npx nx run-many --target=e2e",
     "prisma:format": "npx prisma format",
     "prisma:seed": "npx prisma db seed",
     "prisma:seed:prod": "ts-node prisma/seed.prod.ts",

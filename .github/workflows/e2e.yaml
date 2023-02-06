@@ -1,4 +1,4 @@
-name: test
+name: e2e
 
 on:
   push:
@@ -22,4 +22,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm i
-      - run: npm run test
+      - run: npm run e2e
