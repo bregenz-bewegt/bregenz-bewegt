@@ -169,7 +169,7 @@ const createExercises = async () => {
       muscles: 'Beinstrecker, Beinbeuger, großer Gesäßmuskel',
       coins: 10,
       difficulty: DifficultyType.BEGINNER,
-      video: 'not-yet-defined',
+      video: 'exercises/liegestuetz_mit_erhoehung.mp4',
     },
     {
       name: 'Ausfallschritt springend',
@@ -180,7 +180,7 @@ const createExercises = async () => {
       muscles: 'Beinstrecker, Beinbeuger, großer Gesäßmuskel',
       coins: 10,
       difficulty: DifficultyType.ADVANCED,
-      video: 'not-yet-defined',
+      video: 'exercises/liegestuetz_mit_erhoehung.mp4',
     },
     {
       name: 'Burpee bloße Ausführung',
@@ -191,7 +191,7 @@ const createExercises = async () => {
         'Core-Muskulatur, Brustmuskeln, Trizeps, Beinmuskulatur, Gesäßmuskeln',
       coins: 10,
       difficulty: DifficultyType.BEGINNER,
-      video: 'not-yet-defined',
+      video: 'exercises/liegestuetz_mit_erhoehung.mp4',
     },
     {
       name: 'Burpee',
@@ -202,7 +202,7 @@ const createExercises = async () => {
         'Core-Muskulatur, Brustmuskeln, Trizeps, Beinmuskulatur, Gesäßmuskeln',
       coins: 10,
       difficulty: DifficultyType.ADVANCED,
-      video: 'not-yet-defined',
+      video: 'exercises/liegestuetz_mit_erhoehung.mp4',
     },
     {
       name: 'Planks',
@@ -213,7 +213,7 @@ const createExercises = async () => {
         'Bauchmuskulatur, Beinmuskulatur, Armmuskulatur, Hüftmuskulatur, Gesäßmuskulatur, Tiefe Rumpf- und Rückenmuskulatur',
       coins: 10,
       difficulty: DifficultyType.BEGINNER,
-      video: 'not-yet-defined',
+      video: 'exercises/liegestuetz_mit_erhoehung.mp4',
     },
     {
       name: 'Liegestütz',
@@ -224,7 +224,7 @@ const createExercises = async () => {
       muscles: 'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
       coins: 10,
       difficulty: DifficultyType.ADVANCED,
-      video: 'not-yet-defined',
+      video: 'exercises/liegestuetz_mit_erhoehung.mp4',
     },
     {
       name: 'Liegestütz mit Erhöhung',
@@ -235,7 +235,7 @@ const createExercises = async () => {
       muscles: 'Großer Brustmuskel, Armstrecker, Vorderer Schultermuskel',
       coins: 10,
       difficulty: DifficultyType.BEGINNER,
-      video: 'not-yet-defined',
+      video: 'exercises/liegestuetz_mit_erhoehung.mp4',
     },
     {
       name: 'Wandsitzen am Stamm',
@@ -245,7 +245,7 @@ const createExercises = async () => {
       muscles: 'Quadrizeps, Gesäßmuskel',
       coins: 10,
       difficulty: DifficultyType.BEGINNER,
-      video: 'not-yet-defined',
+      video: 'exercises/liegestuetz_mit_erhoehung.mp4',
     },
     {
       name: 'Einbeiniges Wandsitzen am Stamm',
@@ -255,7 +255,7 @@ const createExercises = async () => {
       muscles: 'Quadrizeps, Gesäßmuskel',
       coins: 10,
       difficulty: DifficultyType.ADVANCED,
-      video: 'not-yet-defined',
+      video: 'exercises/liegestuetz_mit_erhoehung.mp4',
     },
     {
       name: 'Up and Down Planks',
@@ -266,7 +266,7 @@ const createExercises = async () => {
         'Bauchmuskulatur, Beinmuskulatur, Armmuskulatur, Hüftmuskulatur, Gesäßmuskulatur, Tiefe Rumpf- und Rückenmuskulatur',
       coins: 10,
       difficulty: DifficultyType.ADVANCED,
-      video: 'not-yet-defined',
+      video: 'exercises/liegestuetz_mit_erhoehung.mp4',
     },
     {
       name: 'Ochs am Berg',
@@ -275,7 +275,7 @@ const createExercises = async () => {
               Der Ochs wendet sein Gesicht von der Gruppe ab, zählt bis drei und ruft: “Eins, zwei, drei, Ochs am Berg!” Danach dreht er sich um. Solange der Ochs ruft, rennen die restlichen Spieler auf den Ochs zu. Beim Wort Berg müssen die Schüler stehen bleiben und dürfen sich nicht mehr bewegen. Wird ein Schüler in der Bewegung erwischt, muss dieser wieder zurück an den Anfang.',
       coins: 10,
       difficulty: DifficultyType.GAME,
-      video: 'not-yet-defined',
+      video: 'exercises/liegestuetz_mit_erhoehung.mp4',
     },
   ];
 
