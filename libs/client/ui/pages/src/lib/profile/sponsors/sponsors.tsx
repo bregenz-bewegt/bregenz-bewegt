@@ -17,7 +17,10 @@ export const Sponsors: React.FC = () => {
       <IonHeader mode="ios" collapse="condense" className="ion-no-border">
         <IonToolbar>
           <IonButtons>
-            <BackButton defaultRouterLink={tabRoutes.profile.route} />
+            <BackButton
+              defaultRouterLink={tabRoutes.profile.route}
+              invertColor
+            />
           </IonButtons>
           <IonTitle>Sponsoren</IonTitle>
         </IonToolbar>

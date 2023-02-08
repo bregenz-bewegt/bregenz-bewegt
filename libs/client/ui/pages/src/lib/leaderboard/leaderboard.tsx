@@ -25,7 +25,6 @@ import {
   IonInfiniteScrollContent,
   IonItem,
   IonPage,
-  IonRouterLink,
   IonRow,
   IonSelect,
   IonSelectOption,

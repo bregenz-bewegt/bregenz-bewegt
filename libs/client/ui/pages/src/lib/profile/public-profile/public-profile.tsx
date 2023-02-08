@@ -17,6 +17,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
+import './public-profile.scss';
 
 export interface PupblicProfileProps {
   userStore?: UserStore;
@@ -42,11 +43,14 @@ export const PublicProfile = inject(userStore.storeKey)(
     };
 
     return (
-      <IonPage>
+      <IonPage className="public-profile">
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <BackButton defaultRouterLink={tabRoutes.profile.route} />
+              <BackButton
+                defaultRouterLink={tabRoutes.profile.route}
+                invertColor
+              />
             </IonButtons>
             <IonTitle>Öffentliches Profil</IonTitle>
           </IonToolbar>

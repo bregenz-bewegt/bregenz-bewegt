@@ -305,7 +305,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                   {competitorProfile ? (
                     'Konto erstellt am ' +
                     new Date(
-                      competitorProfile.registratedAt as any
+                      competitorProfile.registratedAt
                     ).toLocaleDateString('de-DE', {
                       day: 'numeric',
                       month: 'long',

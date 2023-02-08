@@ -1,5 +1,17 @@
 .privacy-police {
+  ion-header .back-button {
+    margin-left: var(--spacing-m);
+  }
+
   &__content {
     --padding-top: 0;
+
+    &__top-button {
+      bottom: 0;
+      right: 0;
+      margin-right: var(--spacing-xl);
+      margin-bottom: var(--spacing-l);
+      transition: 500ms;
+    }
   }
 }

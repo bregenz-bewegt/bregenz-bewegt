@@ -39,7 +39,10 @@ export const Friends: React.FC<FriendsProps> = inject(friendsStore.storeKey)(
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <BackButton defaultRouterLink={tabRoutes.profile.route} />
+              <BackButton
+                defaultRouterLink={tabRoutes.profile.route}
+                invertColor
+              />
             </IonButtons>
             <IonTitle>Freunde</IonTitle>
           </IonToolbar>
