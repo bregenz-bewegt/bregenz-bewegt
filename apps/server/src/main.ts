@@ -16,11 +16,15 @@ import {
 import { AuthenticatedSocketAdapter } from 'libs/server/controllers/chat/src/lib/gateway';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    httpsOptions: {
+      key: '',
+    },
+  });
 
   app.enableCors({ origin: '*' });
 
-  const globalPrefix = 'api';
+  const globalPrefix = '';
   app.setGlobalPrefix(globalPrefix);
 
   app.useGlobalFilters(new ValidationFilter());
