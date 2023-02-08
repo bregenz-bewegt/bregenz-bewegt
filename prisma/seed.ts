@@ -102,14 +102,13 @@ const createParks = async () => {
       id: 3,
       name: 'Jugendplatz Spielfeld 3',
       address: 'Achsiedlungsstraße 93, 6900 Bregenz',
-      image: 'parks/jugendplatz-spielfeld.png',
+      image: 'parks/jugendplatz-spielfeld-3.png',
       qr: 'not-yet-defined-2',
       coordinates: {
         latitude: 47.498879742248256,
         longitude: 9.7036399397155,
       },
     },
-
     {
       id: 4,
       name: 'Generationen Park Mariahilf',
@@ -132,7 +131,6 @@ const createParks = async () => {
         longitude: 9.739739264076317,
       },
     },
-
     {
       id: 6,
       name: 'Schlossberg Trail',
@@ -144,7 +142,6 @@ const createParks = async () => {
         longitude: 9.7387,
       },
     },
-
     {
       id: 7,
       name: 'Tschutterplatz beim Stadion',
@@ -156,7 +153,6 @@ const createParks = async () => {
         longitude: 9.73433812513105,
       },
     },
-
     {
       id: 8,
       name: 'Schulsportplatz VS Augasse',
@@ -168,12 +164,11 @@ const createParks = async () => {
         longitude: 9.736555724858727,
       },
     },
-
     {
       id: 9,
       name: 'Schulplatz VS Rieden',
       address: 'Michael-Gaismayr-Straße 32, 6900 Bregenz',
-      image: 'parks/schulsportplatz-vs-augasse.png',
+      image: 'parks/schulplatz-vs-rieden.png',
       qr: 'not-yet-defined-8',
       coordinates: {
         latitude: 47.49298641752309,

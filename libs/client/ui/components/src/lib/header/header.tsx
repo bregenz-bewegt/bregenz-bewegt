@@ -90,23 +90,25 @@ export const Header: React.FC<HeaderProps> = inject(
             </IonText>
           </div>
         </div>
-        <IonFab className="header__fab header__fab--chat">
-          <Link
-            to={{
-              pathname: `${tabRoutes.profile.route}/friends`,
-              state: {
-                segment: FriendsDisplaySegment.Chats,
-              } as { segment: FriendsDisplaySegment },
-            }}
-          >
-            <IonFabButton className="header__fab__fab-button">
-              <MessageText
-                variant="Bold"
-                className="header__fab__fab-button__icon"
-              />
-            </IonFabButton>
-          </Link>
-        </IonFab>
+        {!isGuest && (
+          <IonFab className="header__fab header__fab--chat">
+            <Link
+              to={{
+                pathname: `${tabRoutes.profile.route}/friends`,
+                state: {
+                  segment: FriendsDisplaySegment.Chats,
+                } as { segment: FriendsDisplaySegment },
+              }}
+            >
+              <IonFabButton className="header__fab__fab-button">
+                <MessageText
+                  variant="Bold"
+                  className="header__fab__fab-button__icon"
+                />
+              </IonFabButton>
+            </Link>
+          </IonFab>
+        )}
         <IonFab className="header__fab">
           {notificationsStore?.notifications &&
             notificationsStore.getUnreadNotifications().length > 0 && (

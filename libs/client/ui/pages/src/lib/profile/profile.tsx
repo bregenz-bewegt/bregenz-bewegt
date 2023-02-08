@@ -431,10 +431,10 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                   <ItemGroup>
                     <IonItem
                       button
-                      routerLink={`${tabRoutes.profile.route}/terms-of-service`}
+                      routerLink={`${tabRoutes.profile.route}/privacy-police`}
                       mode="ios"
                     >
-                      <IonLabel>Nutzungsbedingungen</IonLabel>
+                      <IonLabel>Datenschutzerklärung</IonLabel>
                     </IonItem>
                     <IonItem
                       button

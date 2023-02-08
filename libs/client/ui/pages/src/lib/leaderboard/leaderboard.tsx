@@ -185,7 +185,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
           >
             {(isGuest) => {
               const data: LeaderboardType = isGuest
-                ? new Array(10).fill(null).map((_, i) => ({
+                ? new Array(15).fill(null).map((_, i) => ({
                     username: faker.internet.userName(),
                     coins: 0,
                   }))

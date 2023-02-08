@@ -21,8 +21,7 @@ export const Earn: React.FC<EarnProps> = (props: EarnProps) => {
             </IonText>
             <IonText>
               <p>
-                Absolviere Sportübungen, stoppe deine Zeit und sammle Bregenz
-                bewegt Coins.
+                Absolviere Sportübungen, stoppe deine Zeit und sammle B-Bucks.
               </p>
             </IonText>
           </IonCol>

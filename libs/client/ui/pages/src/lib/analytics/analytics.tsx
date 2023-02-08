@@ -1,5 +1,6 @@
 import {
   ActivityCard,
+  GuestLock,
   Chart,
   Header,
 } from '@bregenz-bewegt/client-ui-components';
@@ -7,7 +8,12 @@ import {
   activityStore,
   ActivityStore,
 } from '@bregenz-bewegt/client/common/stores';
-import { Activity, ActivityChartData } from '@bregenz-bewegt/client/types';
+import {
+  Activity,
+  ActivityChartData,
+  Exercise,
+  Role,
+} from '@bregenz-bewegt/client/types';
 import {
   IonContent,
   IonFabButton,
@@ -25,6 +31,8 @@ import { createRef, useEffect, useState } from 'react';
 import './analytics.scss';
 
 import { ArrowUp2 } from 'iconsax-react';
+import { useIsGuest } from '@bregenz-bewegt/client/common/hooks';
+import { DifficultyType } from '@prisma/client';
 
 export interface AnalyticsProps {
   activityStore?: ActivityStore;
@@ -44,6 +52,157 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     const [chartFilterMonth, setChartFilterMonth] = useState<number>();
     const [showTopButton, setShowTopButton] = useState<boolean>(false);
     const contentRef = createRef<HTMLIonContentElement>();
+    const [isGuest] = useIsGuest();
+
+    const guestMockChart = [
+      {
+        date: 1,
+        coins: 10,
+      },
+      {
+        date: 3,
+        coins: 35,
+      },
+      {
+        date: 6,
+        coins: 15,
+      },
+      {
+        date: 9,
+        coins: 30,
+      },
+      {
+        date: 12,
+        coins: 45,
+      },
+      {
+        date: 15,
+        coins: 20,
+      },
+      {
+        date: 18,
+        coins: 25,
+      },
+      {
+        date: 21,
+        coins: 10,
+      },
+      {
+        date: 24,
+        coins: 30,
+      },
+      {
+        date: 27,
+        coins: 35,
+      },
+      {
+        date: 31,
+        coins: 25,
+      },
+    ];
+    const guestMockList: (Activity & {
+      minutes?: string | undefined;
+      seconds?: string | undefined;
+    })[] = [
+      {
+        id: '',
+        minutes: '00',
+        seconds: '01',
+        endedAt: new Date(),
+        exercise: {
+          id: 5,
+          name: 'Versteinerte Hexe',
+          description: 'some description',
+          execution: 'some execution detials',
+          muscles: 'some muscles that are used',
+          video: 'exercises/situp.mp4',
+          coins: 10,
+          difficulty: DifficultyType.GAME as Exercise['difficulty'],
+        },
+        park: {
+          id: 7,
+          qr: 'not-yet-defined-6',
+          name: 'Tschutterplatz beim Stadion',
+          address: 'Rotfarbgasse 14a, 6900 Bregenz',
+          image: 'parks/tschutterplatz-beim-stadion.png',
+          gmaps: undefined,
+        },
+        startedAt: new Date(),
+        user: {
+          updatedAt: new Date(),
+          role: Role.USER,
+          registratedAt: new Date(),
+          id: '',
+          active: true,
+        },
+      },
+      {
+        id: '',
+        minutes: '00',
+        seconds: '01',
+        endedAt: new Date(),
+        exercise: {
+          id: 5,
+          name: 'Plank',
+          description: 'some description',
+          execution: 'some execution detials',
+          muscles: 'some muscles that are used',
+          video: 'exercises/situp.mp4',
+          coins: 10,
+          difficulty: DifficultyType.BEGINNER as Exercise['difficulty'],
+        },
+        park: {
+          id: 7,
+          qr: 'not-yet-defined-6',
+          name: 'Tschutterplatz beim Stadion',
+          address: 'Rotfarbgasse 14a, 6900 Bregenz',
+          image: 'parks/tschutterplatz-beim-stadion.png',
+          gmaps: undefined,
+        },
+        startedAt: new Date(),
+        user: {
+          updatedAt: new Date(),
+          role: Role.USER,
+          registratedAt: new Date(),
+          id: '',
+          active: true,
+        },
+      },
+      {
+        id: '',
+        minutes: '00',
+        seconds: '01',
+        endedAt: new Date(),
+        exercise: {
+          id: 5,
+          name: 'Kniebeuge auf Bank',
+          description: 'some description',
+          execution: 'some execution detials',
+          muscles: 'some muscles that are used',
+          video: 'exercises/situp.mp4',
+          coins: 10,
+          difficulty: DifficultyType.BEGINNER as Exercise['difficulty'],
+        },
+        park: {
+          id: 7,
+          qr: 'not-yet-defined-6',
+          name: 'Tschutterplatz beim Stadion',
+          address: 'Rotfarbgasse 14a, 6900 Bregenz',
+          image: 'parks/tschutterplatz-beim-stadion.png',
+          gmaps: undefined,
+        },
+        startedAt: new Date(),
+        user: {
+          updatedAt: new Date(),
+          role: Role.USER,
+          registratedAt: new Date(),
+          id: '',
+          active: true,
+        },
+      },
+    ];
+
+    const guestMockTimespans = [11, 10];
 
     const loadInfinite = (
       e?: any,
@@ -57,10 +216,10 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
           take: take ?? RELOAD_CHUNK_SIZE,
         })
         .then((data) => {
-          setActivityList((prev) => [
-            ...(replace ? [] : prev),
-            ...calculateTime(data),
-          ]);
+          setActivityList((prev) => {
+            return [...(replace ? [] : prev), ...calculateTime(data)];
+          });
+
           e && e.target.complete();
         })
         .catch(() => {
@@ -95,14 +254,26 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
     };
 
     useEffect(() => {
+      if (isGuest) return;
+
       loadInfinite();
     }, []);
 
     useEffect(() => {
+      if (isGuest) return;
+
       chartFilterMonth && updateChartData(chartFilterMonth);
     }, [chartFilterMonth]);
 
     useIonViewWillEnter(() => {
+      if (isGuest) {
+        setChartMonthTimespans(guestMockTimespans);
+        setChartFilterMonth(guestMockTimespans[0]);
+        setChartData(guestMockChart);
+        setActivityList(guestMockList);
+        return;
+      }
+
       activityStore?.getTimespans().then((data) => {
         setChartMonthTimespans(data);
         setChartFilterMonth(data[0]);
@@ -118,93 +289,108 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
         <Header />
         <IonContent
           className="analytics__content"
-          scrollY={true}
+          scrollY={!isGuest}
           ref={contentRef}
           scrollEvents={true}
           onIonScroll={(e: CustomEvent<ScrollDetail>) =>
             setShowTopButton(e.detail.currentY > 700 ? true : false)
           }
         >
-          <div className="analytics__content__chart">
-            <div className="analytics__content__chart__headline">
-              <h2>Münzen im</h2>
-              <h2>
-                {chartMonthTimespans && (
-                  <IonSelect
-                    interface="popover"
-                    value={chartFilterMonth}
-                    onIonChange={(e) => setChartFilterMonth(e.detail.value)}
-                    placeholder="Jahr"
-                  >
-                    {chartMonthTimespans?.map((span) => {
-                      const month = new Date();
-                      month.setMonth(span - 1);
+          <GuestLock
+            modalClassName="analytics-guest-lock-modal"
+            text="Melde dich bei deinem Konto an, um auf deinen Übungsverlauf zugreifen zu können"
+          >
+            {() => (
+              <>
+                <div className="analytics__content__chart">
+                  <div className="analytics__content__chart__headline">
+                    <h2>B-Bucks im</h2>
+                    <h2>
+                      {chartMonthTimespans && (
+                        <IonSelect
+                          interface="popover"
+                          value={chartFilterMonth}
+                          onIonChange={(e) =>
+                            setChartFilterMonth(e.detail.value)
+                          }
+                          placeholder="Jahr"
+                        >
+                          {chartMonthTimespans?.map((span) => {
+                            const month = new Date();
+                            month.setMonth(span - 1);
 
-                      return (
-                        <IonSelectOption value={span} key={span}>
-                          {month.toLocaleString('default', {
-                            month: 'long',
+                            return (
+                              <IonSelectOption value={span} key={span}>
+                                {month.toLocaleString('default', {
+                                  month: 'long',
+                                })}
+                              </IonSelectOption>
+                            );
                           })}
-                        </IonSelectOption>
+                        </IonSelect>
+                      )}
+                    </h2>
+                  </div>
+                  {chartFilterMonth !== null &&
+                  chartFilterMonth !== undefined &&
+                  chartData &&
+                  chartData.length > 0 ? (
+                    <Chart
+                      chartData={chartData}
+                      chartFilterMonth={chartFilterMonth}
+                    />
+                  ) : (
+                    <IonText>
+                      Zu wenig Daten für die Statistik vorhanden
+                    </IonText>
+                  )}
+                </div>
+                <div className="analytics__content__list">
+                  {activityList.length > 0 &&
+                    activityList.map((a, i, arr) => {
+                      const newD = new Date(a.endedAt);
+                      return (
+                        <>
+                          {(i === 0 ||
+                            new Date(arr[i - 1].endedAt).getDate() !==
+                              newD.getDate()) && (
+                            <div
+                              className="analytics__content__list__title"
+                              key={i}
+                            >
+                              {i === 0 && <h2>Verlauf</h2>}
+                              <h4>
+                                {newD.toLocaleString('default', {
+                                  day: 'numeric',
+                                  month: 'long',
+                                })}
+                              </h4>
+                            </div>
+                          )}
+                          <ActivityCard
+                            activity={a}
+                            key={i}
+                            className="analytics__content__list__card"
+                          />
+                        </>
                       );
                     })}
-                  </IonSelect>
-                )}
-              </h2>
-            </div>
-            {chartFilterMonth !== null &&
-            chartFilterMonth !== undefined &&
-            chartData &&
-            chartData.length > 0 ? (
-              <Chart
-                chartData={chartData}
-                chartFilterMonth={chartFilterMonth}
-              />
-            ) : (
-              <IonText>Zu wenig Daten für die Statistik vorhanden</IonText>
+                  {!isGuest && (
+                    <IonInfiniteScroll
+                      onIonInfinite={loadInfinite}
+                      className="leaderboard__infinite-scroll-loading"
+                    >
+                      <IonInfiniteScrollContent
+                        loadingSpinner="crescent"
+                        loadingText="Mehr Aktivitäten laden..."
+                      ></IonInfiniteScrollContent>
+                    </IonInfiniteScroll>
+                  )}
+                </div>
+              </>
             )}
-          </div>
+          </GuestLock>
 
-          <div className="analytics__content__list">
-            {activityList.length > 0 &&
-              activityList.map((a, i, arr) => {
-                const newD = new Date(a.endedAt);
-                return (
-                  <>
-                    {(i === 0 ||
-                      new Date(arr[i - 1].endedAt).getDate() !==
-                        newD.getDate()) && (
-                      <div
-                        className="analytics__content__list__title"
-                        key={JSON.stringify(a)}
-                      >
-                        {i === 0 && <h2>Verlauf</h2>}
-                        <h4>
-                          {newD.toLocaleString('default', {
-                            day: 'numeric',
-                            month: 'long',
-                          })}
-                        </h4>
-                      </div>
-                    )}
-                    <ActivityCard
-                      activity={a}
-                      key={i}
-                      className="analytics__content__list__card"
-                    />
-                  </>
-                );
-              })}
-            <IonInfiniteScroll
-              onIonInfinite={loadInfinite}
-              className="leaderboard__infinite-scroll-loading"
-            >
-              <IonInfiniteScrollContent
-                loadingSpinner="crescent"
-                loadingText="Mehr Aktivitäten laden..."
-              ></IonInfiniteScrollContent>
-            </IonInfiniteScroll>
-          </div>
           <IonFabButton
             slot="fixed"
             className="analytics__content__top-button"
