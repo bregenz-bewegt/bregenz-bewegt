@@ -20,7 +20,6 @@ import {
   IonSkeletonText,
   IonSpinner,
   IonText,
-  IonTextarea,
   IonToast,
   useIonActionSheet,
   useIonAlert,
