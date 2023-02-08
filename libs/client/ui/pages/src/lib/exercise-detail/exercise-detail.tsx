@@ -19,7 +19,7 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Park, Activity, Coordinates } from '@bregenz-bewegt/client/types';
+import { Park, Activity } from '@bregenz-bewegt/client/types';
 import {
   ActivityTimer,
   BackButton,
@@ -61,20 +61,23 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [isLocationValid, setIsLocationValid] = useState<boolean>(false);
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    const checkLocation = async (coordinates?: Coordinates) => {
-      // Disable location check for presentation
+    const checkLocation = async (park?: Park) => {
+      // Disable location check for presentation on digbiz playground
+      if (park?.id === 5) {
+        return setIsLocationValid(true);
+      }
 
-      // const location = await locationStore?.getLocation();
-      // if (!location?.coords || !coordinates) return setIsLocationValid(false);
-      // const isValid = locationStore?.isLocationWithinRadius(
-      //   location.coords,
-      //   {
-      //     latitude: coordinates.latitude,
-      //     longitude: coordinates.longitude,
-      //   },
-      //   coordinates?.toleranceRadius
-      // );
-      const isValid = true;
+      const location = await locationStore?.getLocation();
+      if (!location?.coords || !park?.coordinates)
+        return setIsLocationValid(false);
+      const isValid = locationStore?.isLocationWithinRadius(
+        location.coords,
+        {
+          latitude: park?.coordinates.latitude,
+          longitude: park?.coordinates.longitude,
+        },
+        park?.coordinates?.toleranceRadius
+      );
 
       setIsLocationValid(isValid || false);
     };
@@ -86,7 +89,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
       parkStore?.getParkWithExercise(parkId, exerciseId).then((park) => {
         setPark(park);
-        checkLocation(park?.coordinates);
+        checkLocation(park);
         setIsLoading(false);
       });
     }, [match.params.exercise, match.params.park]);
