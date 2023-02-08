@@ -18,6 +18,7 @@ import {
   IonAvatar,
   IonButton,
   IonContent,
+  IonFooter,
   IonGrid,
   IonPage,
   IonRow,
@@ -128,7 +129,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                 {!isImageLoaded && <IonSkeletonText animated />}
               </IonAvatar>
             </IonRow>
-            <IonRow className="ion-justify-content-center">
+            <IonRow className="ion-justify-content-center competitor-profile__content__username">
               <IonText>
                 <h2>
                   {competitorProfile ? (
@@ -139,20 +140,17 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                 </h2>
               </IonText>
             </IonRow>
-            <IonRow>
+            <IonRow className="competitor-profile__content__infos">
               {competitorProfile ? (
-                competitorProfile.firstname && competitorProfile.lastname ? (
-                  <IonText>
-                    {competitorProfile.firstname} {competitorProfile.lastname}
-                  </IonText>
-                ) : (
-                  ''
-                )
+                <IonText>
+                  {competitorProfile.firstname && competitorProfile.firstname}{' '}
+                  {competitorProfile.lastname && competitorProfile.lastname}
+                </IonText>
               ) : (
                 <IonSkeletonText />
               )}
             </IonRow>
-            <IonRow>
+            <IonRow className="competitor-profile__content__infos">
               <IonText>
                 {competitorProfile ? (
                   competitorProfile.biography
@@ -161,22 +159,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                 )}
               </IonText>
             </IonRow>
-            <IonRow>
-              <IonText>
-                Konto erstellt am{' '}
-                {competitorProfile ? (
-                  new Date(
-                    competitorProfile.registratedAt as any
-                  ).toLocaleDateString('de-DE', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })
-                ) : (
-                  <IonSkeletonText />
-                )}
-              </IonText>
-            </IonRow>
+
             <IonRow className="competitor-profile__content__friends">
               {competitorProfile && competitorFriendStatus ? (
                 competitorFriendStatus.friends ? (
@@ -299,6 +282,12 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
               )}
             </IonRow>
             <IonRow className="competitor-profile__content__chart">
+              <h2>
+                B-Bucks im{' '}
+                {new Date().toLocaleString('default', {
+                  month: 'long',
+                })}
+              </h2>
               {competitorChartData ? (
                 <Chart
                   chartData={competitorChartData}
@@ -310,6 +299,24 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                 <IonText>Keine Statistik für diesen Monat verfügbar</IonText>
               )}
             </IonRow>
+            <IonFooter>
+              <IonRow className="ion-justify-content-center account-created">
+                <IonText color="medium">
+                  {competitorProfile ? (
+                    'Konto erstellt am ' +
+                    new Date(
+                      competitorProfile.registratedAt as any
+                    ).toLocaleDateString('de-DE', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })
+                  ) : (
+                    <IonSkeletonText />
+                  )}
+                </IonText>
+              </IonRow>
+            </IonFooter>
           </IonGrid>
         </IonContent>
       </IonPage>
