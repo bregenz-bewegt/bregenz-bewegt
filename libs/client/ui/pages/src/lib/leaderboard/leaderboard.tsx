@@ -151,32 +151,8 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
     return (
       <IonPage className="leaderboard">
         <Header />
-        <IonContent fullscreen scrollY={!isGuest}>
+        <IonContent scrollY={!isGuest}>
           {!isGuest && <CoinDepot competitor={competitor} />}
-          <IonRow>
-            <IonCol className="ion-align-center">
-              <IonText>
-                <h2>Rangliste</h2>
-              </IonText>
-            </IonCol>
-            <IonCol className="ion-align-center leaderboard__timespan">
-              {filterTimespans && !isGuest && (
-                <IonSelect
-                  interface="popover"
-                  value={timespan}
-                  className="leaderboard__timespan__select"
-                  onIonChange={(e) => setTimespan(e.detail.value)}
-                  placeholder="Jahr"
-                >
-                  {filterTimespans?.map((span) => (
-                    <IonSelectOption key={span} value={span}>
-                      {span}
-                    </IonSelectOption>
-                  ))}
-                </IonSelect>
-              )}
-            </IonCol>
-          </IonRow>
           <GuestLock
             text={
               'Melde dich bei deinem Konto an, um B-Bucks zu verdienen und die Rangliste freizuschalten'
@@ -190,102 +166,164 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                   }))
                 : leaderboard;
               return (
-                <IonGrid className="leaderboard__table">
-                  {data.length > 0 &&
-                    data?.map((user, i) => (
-                      <IonRow
-                        key={i}
-                        className={`${
-                          user.username === userStore?.user?.username
-                            ? 'self'
-                            : ''
-                        }`}
-                      >
-                        <IonCol size="2" className={`align-center`}>
-                          <div className={`rank-medal rank-${i + 1}`}>
-                            {isLoading ? (
-                              <IonSkeletonText
-                                style={{ height: '100%' }}
-                                animated
-                              />
-                            ) : (
-                              <>#{i + 1}</>
-                            )}
-                          </div>
-                        </IonCol>
-                        <IonCol size="6" className={`align-center`}>
-                          <IonItem routerLink={'/users/' + user.username}>
-                            <IonAvatar className="avatar" slot="start">
+                <>
+                  <IonRow className="ion-align-items-center ion-justify-content-between leaderboard__ranking-title">
+                    <IonCol>
+                      <IonText>
+                        <h2>Rangliste</h2>
+                        {isGuest && <br />}
+                      </IonText>
+                    </IonCol>
+                    <IonCol size="auto">
+                      {filterTimespans && !isGuest && (
+                        <IonSelect
+                          interface="popover"
+                          value={timespan}
+                          onIonChange={(e) => setTimespan(e.detail.value)}
+                          placeholder="Jahr"
+                        >
+                          {filterTimespans?.map((span) => (
+                            <IonSelectOption key={span} value={span}>
+                              {span}
+                            </IonSelectOption>
+                          ))}
+                        </IonSelect>
+                      )}
+                    </IonCol>
+                  </IonRow>
+
+                  <IonGrid className="leaderboard__table" fixed>
+                    {data.length > 0 &&
+                      data?.map((user, i) => (
+                        <IonRow
+                          key={i}
+                          className={`ion-align-items-center ion-justify-content-between ${
+                            user.username === userStore?.user?.username
+                              ? ' self'
+                              : ''
+                          }`}
+                        >
+                          <IonCol size="0">
+                            <div className={`rank-medal rank-${i + 1}`}>
                               {isLoading ? (
-                                <IonSkeletonText animated />
-                              ) : (
-                                <img
-                                  src={
-                                    user.profilePicture ??
-                                    userStore?.getAvatarProfilePictureUrl(
-                                      user.username
-                                    )
-                                  }
-                                  alt="avatar"
+                                <IonSkeletonText
+                                  style={{ height: '100%' }}
+                                  animated
                                 />
-                              )}
-                            </IonAvatar>
-                            <div className="username" slot="start">
-                              {isLoading ? (
-                                <IonSkeletonText animated />
                               ) : (
-                                user.username
+                                <>#{i + 1}</>
                               )}
                             </div>
-                          </IonItem>
-                        </IonCol>
-                        <IonCol
-                          size="2"
-                          className="align-center ion-justify-content-end"
-                        >
-                          {isLoading ? (
-                            <IonSkeletonText animated />
-                          ) : (
-                            user.coins
-                          )}
-                        </IonCol>
-                      </IonRow>
-                    ))}
-                  {!isGuest &&
-                    !isLoading &&
-                    !leaderboard.some(
-                      (user) => user.username === competitor?.username
-                    ) && (
-                      <IonRow className={`self snack-bottom`}>
-                        <IonCol size="2" className={`align-center`}>
-                          <div className={`rank-medal`}>
-                            #{competitor?.rank}
-                          </div>
-                        </IonCol>
-                        <IonCol size="8" className="align-center">
-                          {competitor?.username}
-                        </IonCol>
-                        <IonCol
-                          size="2"
-                          className="align-center ion-justify-content-end"
-                        >
-                          {competitor?.coins}
-                        </IonCol>
-                      </IonRow>
+                          </IonCol>
+                          <IonCol size="9">
+                            <IonItem
+                              routerLink={
+                                user.username === userStore?.user?.username
+                                  ? undefined
+                                  : '/users/' + user.username
+                              }
+                              lines="none"
+                            >
+                              <IonAvatar className="avatar">
+                                {isLoading ? (
+                                  <IonSkeletonText animated />
+                                ) : (
+                                  <img
+                                    src={
+                                      user.profilePicture ??
+                                      userStore?.getAvatarProfilePictureUrl(
+                                        user.username
+                                      )
+                                    }
+                                    alt="avatar"
+                                  />
+                                )}
+                              </IonAvatar>
+                              <div className="username">
+                                {isLoading ? (
+                                  <IonSkeletonText animated />
+                                ) : (
+                                  user.username
+                                )}
+                              </div>
+                            </IonItem>
+                          </IonCol>
+                          <IonCol size="auto">
+                            {isLoading ? (
+                              <IonSkeletonText animated />
+                            ) : (
+                              user.coins
+                            )}
+                          </IonCol>
+                        </IonRow>
+                      ))}
+                    {!isGuest &&
+                      !isLoading &&
+                      !leaderboard.some(
+                        (user) => user.username === competitor?.username
+                      ) && (
+                        <IonRow className="ion-align-items-center ion-justify-content-between self snack-bottom">
+                          <IonCol size="0">
+                            <div className="rank-medal">
+                              {isLoading ? (
+                                <IonSkeletonText
+                                  style={{ height: '100%' }}
+                                  animated
+                                />
+                              ) : (
+                                <>#{competitor?.rank}</>
+                              )}
+                            </div>
+                          </IonCol>
+                          <IonCol size="9">
+                            <IonItem lines="none">
+                              <IonAvatar className="avatar">
+                                {isLoading ? (
+                                  <IonSkeletonText animated />
+                                ) : (
+                                  <img
+                                    src={
+                                      competitor?.profilePicture ??
+                                      userStore?.getAvatarProfilePictureUrl(
+                                        competitor?.username
+                                      )
+                                    }
+                                    alt="avatar"
+                                  />
+                                )}
+                              </IonAvatar>
+                              <div className="username">
+                                {isLoading ? (
+                                  <IonSkeletonText animated />
+                                ) : (
+                                  competitor?.username
+                                )}
+                              </div>
+                            </IonItem>
+                          </IonCol>
+                          <IonCol size="auto">
+                            {isLoading ? (
+                              <IonSkeletonText animated />
+                            ) : (
+                              competitor?.coins
+                            )}
+                          </IonCol>
+                        </IonRow>
+                      )}
+                    {!isGuest && (
+                      <IonInfiniteScroll
+                        onIonInfinite={loadInfinite}
+                        threshold="100px"
+                        className="leaderboard__infinite-scroll-loading"
+                      >
+                        <IonInfiniteScrollContent
+                          loadingSpinner="crescent"
+                          loadingText="Mehr Benutzer laden.."
+                        ></IonInfiniteScrollContent>
+                      </IonInfiniteScroll>
                     )}
-                  {!isGuest && (
-                    <IonInfiniteScroll
-                      onIonInfinite={loadInfinite}
-                      threshold="100px"
-                      className="leaderboard__infinite-scroll-loading"
-                    >
-                      <IonInfiniteScrollContent
-                        loadingSpinner="crescent"
-                        loadingText="Mehr Benutzer laden.."
-                      ></IonInfiniteScrollContent>
-                    </IonInfiniteScroll>
-                  )}
-                </IonGrid>
+                  </IonGrid>
+                </>
               );
             }}
           </GuestLock>

@@ -1,29 +1,39 @@
 .leaderboard {
-  &__timespan {
-    display: flex;
-    padding-top: var(--spacing-s);
-    justify-content: flex-end;
-    align-items: center;
+  ion-content {
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+  }
+
+  .coin-depot {
+    margin: var(--spacing-m);
+  }
+
+  &__ranking-title {
+    padding-top: var(--spacing-m);
+    margin: 0 var(--spacing-m);
+
+    ion-col {
+      padding: 0;
+    }
   }
 
   &__table {
-    margin: 0 calc(var(--spacing-m) * -1);
+    margin: 0;
     padding: 0;
-    width: 100vw;
-    left: 0;
 
     ion-row {
-      border-radius: var(--spacing-s);
-      margin: var(--ion-spacing-s) 0;
+      margin: 0;
       padding: 0 var(--spacing-m);
+      flex-wrap: nowrap;
 
       &.self {
         position: sticky;
-        top: calc(var(--spacing-l) * -1);
-        bottom: calc(var(--spacing-m) * -1);
+        top: 0;
+        bottom: 0;
         background-color: var(--ion-color-primary-tint);
         color: var(--ion-color-primary-contrast);
-        border-radius: 0;
         z-index: 2;
 
         &.snack-bottom {
@@ -32,24 +42,20 @@
           bottom: 0;
           width: 100%;
         }
+
+        ion-item::part(native) {
+          color: var(--ion-color-primary-contrast);
+        }
       }
 
       ion-col {
-        padding: var(--spacing-s);
-        display: flex;
-        align-items: center;
+        padding: 0;
 
-        ion-item {
-          --padding-start: 0;
-          --padding-end: 0;
-          --padding-top: 0;
-          --padding-bottom: 0;
-
-          background: none;
+        ion-item::part(native) {
+          background: transparent;
         }
 
         .rank-medal {
-          border-radius: 50%;
           width: var(--spacing-xl);
           height: var(--spacing-xl);
           display: grid;
@@ -59,6 +65,8 @@
           &.rank-1,
           &.rank-2,
           &.rank-3 {
+            border-radius: 50%;
+            aspect-ratio: 1/1;
             color: var(--ion-color-primary-contrast);
           }
 
@@ -79,14 +87,15 @@
           width: var(--spacing-xxl);
           height: var(--spacing-xxl);
           margin: 0;
+          aspect-ratio: 1/1;
         }
 
         & .username {
-          margin: auto 0;
+          margin: 0;
+          margin-left: var(--spacing-s);
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          margin-left: var(--spacing-s);
         }
       }
     }

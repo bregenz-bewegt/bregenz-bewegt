@@ -120,7 +120,10 @@ export const Notifications: React.FC<NotificationsProps> = inject(
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <BackButton defaultRouterLink={tabRoutes.start.route} />
+              <BackButton
+                defaultRouterLink={tabRoutes.start.route}
+                invertColor
+              />
             </IonButtons>
             <IonTitle>Benachrichtigungen</IonTitle>
             <IonButtons slot="end">

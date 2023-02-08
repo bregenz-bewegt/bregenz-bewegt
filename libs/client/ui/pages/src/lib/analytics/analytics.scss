@@ -68,13 +68,24 @@
           text-align: end;
           background: linear-gradient(
             0deg,
-            rgba(var(--ion-color-dark-contrast-rgb), 1) 50%,
-            rgba(var(--ion-color-dark-contrast-rgb), 0.8) 70%,
-            rgba(var(--ion-color-dark-contrast-rgb), 0.5) 80%,
-            rgba(var(--ion-color-dark-contrast-rgb), 0.3) 90%,
-            rgba(var(--ion-color-dark-contrast-rgb), 0) 100%
+            rgba(white, 1) 50%,
+            rgba(white, 0.8) 70%,
+            rgba(white, 0.5) 80%,
+            rgba(white, 0.3) 90%,
+            rgba(white, 0) 100%
           );
           padding-top: var(--spacing-l);
+
+          body.dark & {
+            background: linear-gradient(
+              0deg,
+              rgba(#121212, 1) 50%,
+              rgba(#121212, 0.8) 70%,
+              rgba(#121212, 0.5) 80%,
+              rgba(#121212, 0.3) 90%,
+              rgba(#121212, 0) 100%
+            );
+          }
         }
       }
 

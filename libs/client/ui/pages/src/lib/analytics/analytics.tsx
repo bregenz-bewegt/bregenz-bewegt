@@ -27,7 +27,7 @@ import {
   useIonViewWillEnter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import './analytics.scss';
 
 import { ArrowUp2 } from 'iconsax-react';
@@ -350,14 +350,11 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                     activityList.map((a, i, arr) => {
                       const newD = new Date(a.endedAt);
                       return (
-                        <>
+                        <React.Fragment key={i}>
                           {(i === 0 ||
                             new Date(arr[i - 1].endedAt).getDate() !==
                               newD.getDate()) && (
-                            <div
-                              className="analytics__content__list__title"
-                              key={i}
-                            >
+                            <div className="analytics__content__list__title">
                               {i === 0 && <h2>Verlauf</h2>}
                               <h4>
                                 {newD.toLocaleString('default', {
@@ -369,10 +366,9 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                           )}
                           <ActivityCard
                             activity={a}
-                            key={i}
                             className="analytics__content__list__card"
                           />
-                        </>
+                        </React.Fragment>
                       );
                     })}
                   {!isGuest && (
