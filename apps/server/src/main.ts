@@ -16,11 +16,7 @@ import {
 import { AuthenticatedSocketAdapter } from 'libs/server/controllers/chat/src/lib/gateway';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    httpsOptions: {
-      key: 'api',
-    },
-  });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.enableCors({ origin: '*' });
 
