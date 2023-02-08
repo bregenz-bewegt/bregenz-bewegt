@@ -76,11 +76,13 @@ export class ActivityService {
       .then((data) => {
         if (!data._max.endedAt || !data._min.endedAt)
           return { _max: null, _min: null };
+
         return {
           _min: data._min.endedAt.getMonth() + 1,
           _max: data._max.endedAt.getMonth() + 1,
         };
       });
+      
     return _max && _min
       ? [...Array(_max - _min + 1)].map((_x, i) => _max - i)
       : [new Date().getMonth() + 1];

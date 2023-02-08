@@ -33,6 +33,7 @@ import './analytics.scss';
 import { ArrowUp2 } from 'iconsax-react';
 import { useIsGuest } from '@bregenz-bewegt/client/common/hooks';
 import { DifficultyType } from '@prisma/client';
+import { isNil } from 'lodash';
 
 export interface AnalyticsProps {
   activityStore?: ActivityStore;
@@ -331,8 +332,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                       )}
                     </h2>
                   </div>
-                  {chartFilterMonth !== null &&
-                  chartFilterMonth !== undefined &&
+                  {!isNil(chartFilterMonth) &&
                   chartData &&
                   chartData.length > 0 ? (
                     <Chart
