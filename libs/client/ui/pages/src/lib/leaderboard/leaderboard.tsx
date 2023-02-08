@@ -265,49 +265,28 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                         <IonRow className="ion-align-items-center ion-justify-content-between self snack-bottom">
                           <IonCol size="0">
                             <div className="rank-medal">
-                              {isLoading ? (
-                                <IonSkeletonText
-                                  style={{ height: '100%' }}
-                                  animated
-                                />
-                              ) : (
-                                <>#{competitor?.rank}</>
-                              )}
+                              #{competitor?.rank}
                             </div>
                           </IonCol>
                           <IonCol size="9">
                             <IonItem lines="none">
                               <IonAvatar className="avatar">
-                                {isLoading ? (
-                                  <IonSkeletonText animated />
-                                ) : (
-                                  <img
-                                    src={
-                                      competitor?.profilePicture ??
-                                      userStore?.getAvatarProfilePictureUrl(
-                                        competitor?.username
-                                      )
-                                    }
-                                    alt="avatar"
-                                  />
-                                )}
+                                <img
+                                  src={
+                                    competitor?.profilePicture ??
+                                    userStore?.getAvatarProfilePictureUrl(
+                                      competitor?.username
+                                    )
+                                  }
+                                  alt="avatar"
+                                />
                               </IonAvatar>
                               <div className="username">
-                                {isLoading ? (
-                                  <IonSkeletonText animated />
-                                ) : (
-                                  competitor?.username
-                                )}
+                                competitor?.username
                               </div>
                             </IonItem>
                           </IonCol>
-                          <IonCol size="auto">
-                            {isLoading ? (
-                              <IonSkeletonText animated />
-                            ) : (
-                              competitor?.coins
-                            )}
-                          </IonCol>
+                          <IonCol size="auto">competitor?.coins</IonCol>
                         </IonRow>
                       )}
                     {!isGuest && (
