@@ -337,7 +337,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                   chartData.length > 0 ? (
                     <Chart
                       chartData={chartData}
-                      chartFilterMonth={chartFilterMonth}
+                      chartFilterMonth={chartFilterMonth - 1}
                     />
                   ) : (
                     <IonText>
