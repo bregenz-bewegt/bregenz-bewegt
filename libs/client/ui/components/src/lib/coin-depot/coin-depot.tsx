@@ -43,10 +43,10 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
           <IonCardContent>
             <IonText>
               <h2>
-                Jählich werden am 31.12. Preise an die Top 10 Sportler
+                Jährlich werden am 31.12. Preise an die Top 10 Sportler
                 verliehen.
                 <br />
-                Sei dabei und verdien dir einen Preis!
+                Sei dabei und verdien' dir einen Preis!
               </h2>
             </IonText>
             <IonButton
