@@ -26,13 +26,13 @@ import {
   IonTitle,
   IonContent,
   useIonViewWillEnter,
-  useIonViewWillLeave,
   IonGrid,
   IonFooter,
   IonButton,
   IonIcon,
   useIonRouter,
   useIonViewDidEnter,
+  useIonViewDidLeave,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -115,7 +115,7 @@ export const Conversation: React.FC<ConversationProps> = inject(
       scrollChatToBottom();
     }, []);
 
-    useIonViewWillLeave(() => {
+    useIonViewDidLeave(() => {
       tabStore?.setIsShown(true);
     }, []);
 

@@ -20,7 +20,7 @@ async function bootstrap(): Promise<void> {
 
   app.enableCors({ origin: '*' });
 
-  const globalPrefix = '';
+  const globalPrefix = process.env['NX_API_SERVER_PREFIX'] ?? '';
   app.setGlobalPrefix(globalPrefix);
 
   app.useGlobalFilters(new ValidationFilter());

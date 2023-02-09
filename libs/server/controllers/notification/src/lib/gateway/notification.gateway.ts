@@ -15,7 +15,7 @@ import { PrismaService } from '@bregenz-bewegt/server-prisma';
 import { User } from '@prisma/client';
 
 @Injectable()
-@WebSocketGateway({ namespace: 'notifications' })
+@WebSocketGateway({ namespace: 'api/notifications', cors: { origin: '*' } })
 export class NotificationGateway implements OnGatewayConnection {
   constructor(private prismaService: PrismaService) {}
 

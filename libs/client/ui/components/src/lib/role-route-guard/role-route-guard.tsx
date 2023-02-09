@@ -15,7 +15,7 @@ export const RoleRouteGuard: React.FC<RoleRouteGuardProps> = inject(
   userStore.storeKey
 )(
   observer(({ children, allowedRoles, userStore }: RoleRouteGuardProps) => {
-    return userStore?.isLoadingLoggedIn ? (
+    return userStore?.isLoadingLoggedIn || !userStore?.user ? (
       <Loading />
     ) : userStore?.isLoggedIn &&
       userStore.user?.role &&
