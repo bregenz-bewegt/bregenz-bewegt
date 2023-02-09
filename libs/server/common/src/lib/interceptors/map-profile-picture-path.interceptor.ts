@@ -21,11 +21,7 @@ export class MapProfilePictureInterceptor implements NestInterceptor {
     const mapped = _.mapValuesDeep(value, (value, key) => {
       if (!this.keysToBeMapped.includes(key) || _.isNil(value)) return value;
 
-      return `${process.env['NX_API_BASE_URL']}${
-        process.env['NX_API_SERVER_PREFIX']
-          ? `/${process.env['NX_API_SERVER_PREFIX']}`
-          : ''
-      }/static/${value}`;
+      return `${process.env['NX_API_BASE_URL']}/api/static/${value}`;
     });
 
     return mapped;
