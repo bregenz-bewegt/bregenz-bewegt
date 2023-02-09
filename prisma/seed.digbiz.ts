@@ -432,7 +432,7 @@ const createFriends = async () => {
   const friendUsers = [
     {
       username: 'jonas_mayrhofer',
-      email: 'jonas.mayrhofer@hak-bregenz.com',
+      email: 'jonas.mayrhofer@hak-bregenz.at',
       firstname: 'Jonas',
       lastname: 'Mayrhofer',
       role: Role.USER,
@@ -441,7 +441,7 @@ const createFriends = async () => {
     },
     {
       username: 'timon_stadelmann',
-      email: 'timon.stadelmann@gmail.com',
+      email: 'timon.stadelmann@hak-bregenz.at',
       firstname: 'Timon',
       lastname: 'Stadelmann',
       role: Role.USER,
@@ -450,7 +450,7 @@ const createFriends = async () => {
     },
     {
       username: 'raphael_posch',
-      email: 'raphael.posch@gmail.com',
+      email: 'raphael.posch@hak-bregenz.at',
       firstname: 'Raphael',
       lastname: 'Posch',
       role: Role.USER,
