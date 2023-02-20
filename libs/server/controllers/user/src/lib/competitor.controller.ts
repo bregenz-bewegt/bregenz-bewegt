@@ -46,7 +46,7 @@ export class CompetitorController {
       username
     );
     if (!result) return undefined;
-    return result as unknown as CompetitorDetail;
+    return result as CompetitorDetail;
   }
 
   @HasRole(Role.USER)
@@ -55,10 +55,10 @@ export class CompetitorController {
   async getCompetitorGraphData(
     @Param('username') username: User['username']
   ): Promise<ActivityChartData | undefined> {
-    const comp = await this.userService.findByUsername(username);
-    if (!comp) return undefined;
-    return comp
-      ? this.activityService.getChartData(comp.id, new Date().getMonth())
+    const competitor = await this.userService.findByUsername(username);
+    if (!competitor) return undefined;
+    return competitor
+      ? this.activityService.getChartData(competitor.id, new Date().getMonth())
       : undefined;
   }
 
@@ -69,10 +69,10 @@ export class CompetitorController {
     @GetCurrentUser('sub') userId: User['id'],
     @Param('username') username: User['username']
   ): Promise<CompetitorFriendStatus | undefined> {
-    const comp = await this.userService.findByUsername(username);
+    const competitor = await this.userService.findByUsername(username);
     const user = await this.userService.findById(userId);
 
-    if (!comp || !user) return undefined;
+    if (!competitor || !user) return undefined;
 
     const result: CompetitorFriendStatus = {
       chat: false,
@@ -82,7 +82,7 @@ export class CompetitorController {
     };
 
     result.friends = (await this.friendService.getFriends({}, user.id)).some(
-      (u) => u.id === comp.id
+      (u) => u.id === competitor.id
     );
 
     if (result.friends) {
@@ -91,15 +91,15 @@ export class CompetitorController {
           { onlyConversationsless: true },
           user.id
         )
-      ).some((u) => u.id === comp.id);
+      ).some((u) => u.id === competitor.id);
     } else {
       result.recievedRequest = (
         await this.friendService.getReceivedFriendRequests(user.id)
-      ).some((u) => u.requesteeId === comp.id);
+      ).some((u) => u.requesteeId === competitor.id);
 
       result.requestedRequest = (
         await this.friendService.getRequestedFriendRequests(user.id)
-      ).some((u) => u.addresseeId === comp.id);
+      ).some((u) => u.addresseeId === competitor.id);
     }
 
     return result;

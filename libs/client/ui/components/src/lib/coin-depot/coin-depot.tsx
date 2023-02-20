@@ -42,7 +42,7 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
         {!isGuest && (
           <IonCardContent>
             <IonText>
-              Jählich werden am 31.12. Preise an die Top 10 Sportler verliehen.
+              Jährlich werden am 31.12. Preise an die Top 10 Sportler verliehen.
               <br />
               Sei dabei und verdien dir einen Preis!
             </IonText>

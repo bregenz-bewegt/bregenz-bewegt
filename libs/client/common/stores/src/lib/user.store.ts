@@ -1,7 +1,10 @@
-import { ActivityChartData } from './../../../../types/src/lib/types/activity-chart-data';
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
-import { Preferences, Role } from '@bregenz-bewegt/client/types';
+import {
+  ActivityChartData,
+  Preferences,
+  Role,
+} from '@bregenz-bewegt/client/types';
 import type { User } from '@bregenz-bewegt/client/types';
 import type {
   ForgotPasswordDto,

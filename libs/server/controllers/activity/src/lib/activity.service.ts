@@ -82,7 +82,7 @@ export class ActivityService {
           _max: data._max.endedAt.getMonth() + 1,
         };
       });
-      
+
     return _max && _min
       ? [...Array(_max - _min + 1)].map((_x, i) => _max - i)
       : [new Date().getMonth() + 1];

@@ -187,7 +187,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                             )
                         }
                         mode="ios"
-                        color={'secondary'}
+                        color={'primary'}
                       >
                         Chat erstellen
                       </IonButton>
@@ -256,7 +256,7 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                         );
                     }}
                     mode="ios"
-                    color={'warning'}
+                    color={'secondary'}
                   >
                     Anfrage zurückrufen
                   </IonButton>
@@ -272,9 +272,9 @@ export const CompetitorProfile: React.FC<CompetitorProfileProps> = inject(
                         )
                     }
                     mode="ios"
-                    color={'secondary'}
+                    color={'primary'}
                   >
-                    Anfrage senden
+                    Freund hinzufügen
                   </IonButton>
                 )
               ) : (

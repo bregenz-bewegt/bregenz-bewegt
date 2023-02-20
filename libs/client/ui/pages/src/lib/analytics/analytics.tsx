@@ -386,7 +386,6 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
               </>
             )}
           </GuestLock>
-
           <IonFabButton
             slot="fixed"
             className="analytics__content__top-button"

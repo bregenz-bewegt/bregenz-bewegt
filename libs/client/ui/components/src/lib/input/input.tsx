@@ -5,20 +5,15 @@ import {
   IonInputCustomEvent,
   TextFieldTypes,
 } from '@ionic/core';
-import { AutocompleteTypes } from '@bregenz-bewegt/client/types';
+import {
+  AutocompleteTypes,
+  InputModeTypes,
+} from '@bregenz-bewegt/client/types';
 
 export interface InputProps {
   value?: string | number | null;
   type?: TextFieldTypes;
-  inputMode?:
-    | 'search'
-    | 'text'
-    | 'email'
-    | 'tel'
-    | 'url'
-    | 'none'
-    | 'numeric'
-    | 'decimal';
+  inputMode?: InputModeTypes;
   placeholder?: string;
   name?: string;
   required?: boolean;

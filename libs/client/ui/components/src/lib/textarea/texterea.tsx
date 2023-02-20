@@ -5,19 +5,12 @@ import {
   IonTextareaCustomEvent,
   TextFieldTypes,
 } from '@ionic/core';
+import { InputModeTypes } from '@bregenz-bewegt/client/types';
 
 export interface TextAreaProps {
   value?: string | null;
   type?: TextFieldTypes;
-  inputMode?:
-    | 'search'
-    | 'text'
-    | 'email'
-    | 'tel'
-    | 'url'
-    | 'none'
-    | 'numeric'
-    | 'decimal';
+  inputMode?: InputModeTypes;
   placeholder?: string;
   name?: string;
   required?: boolean;

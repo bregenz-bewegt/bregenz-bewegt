@@ -20,7 +20,7 @@ export const BackButton: React.FC<BackButtonProps> = ({
           ? history.goBack()
           : history.push(defaultRouterLink, 'back')
       }
-      className={`back-button${invertColor ? ' invertColor' : ''}`}
+      className={`back-button${invertColor ? ' inverted' : ''}`}
     >
       <ArrowLeft2
         variant="Bold"
