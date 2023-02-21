@@ -282,11 +282,11 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
                                 />
                               </IonAvatar>
                               <div className="username">
-                                competitor?.username
+                                {competitor?.username}
                               </div>
                             </IonItem>
                           </IonCol>
-                          <IonCol size="auto">competitor?.coins</IonCol>
+                          <IonCol size="auto">{competitor?.coins}</IonCol>
                         </IonRow>
                       )}
                     {!isGuest && (

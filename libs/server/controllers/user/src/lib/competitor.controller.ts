@@ -40,12 +40,11 @@ export class CompetitorController {
   async getCompetitorProfile(
     @Param('username')
     username: User['username']
-  ): Promise<CompetitorDetail | undefined> {
+  ): Promise<CompetitorDetail> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { email, ...result } = await this.userService.findByUsername(
       username
     );
-    if (!result) return undefined;
     return result as CompetitorDetail;
   }
 
@@ -54,9 +53,8 @@ export class CompetitorController {
   @Get('chart/:username')
   async getCompetitorGraphData(
     @Param('username') username: User['username']
-  ): Promise<ActivityChartData | undefined> {
+  ): Promise<ActivityChartData> {
     const competitor = await this.userService.findByUsername(username);
-    if (!competitor) return undefined;
     return competitor
       ? this.activityService.getChartData(competitor.id, new Date().getMonth())
       : undefined;

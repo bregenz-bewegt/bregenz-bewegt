@@ -122,7 +122,6 @@ export const Notifications: React.FC<NotificationsProps> = inject(
             <IonButtons>
               <BackButton
                 defaultRouterLink={tabRoutes.start.route}
-                invertColor
               />
             </IonButtons>
             <IonTitle>Benachrichtigungen</IonTitle>

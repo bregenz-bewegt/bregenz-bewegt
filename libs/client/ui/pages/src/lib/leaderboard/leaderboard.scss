@@ -25,7 +25,7 @@
 
     ion-row {
       margin: 0;
-      padding: 0 var(--spacing-m);
+      padding: 0 var(--spacing-l);
       flex-wrap: nowrap;
 
       &.self {
@@ -84,8 +84,8 @@
         }
 
         & .avatar {
-          width: var(--spacing-xxl);
-          height: var(--spacing-xxl);
+          width: var(--spacing-xl);
+          height: var(--spacing-xl);
           margin: 0;
           aspect-ratio: 1/1;
         }

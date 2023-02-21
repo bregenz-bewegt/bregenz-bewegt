@@ -65,10 +65,7 @@ export const Password: React.FC<PasswordProps> = inject(userStore.storeKey)(
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>
-              <BackButton
-                defaultRouterLink={tabRoutes.profile.route}
-                invertColor
-              />
+              <BackButton defaultRouterLink={tabRoutes.profile.route} />
             </IonButtons>
             <IonTitle>Passwort ändern</IonTitle>
           </IonToolbar>

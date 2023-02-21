@@ -29,10 +29,7 @@ export const PrivacyPolice: React.FC<PrivacyPoliceProps> = ({
       <IonHeader mode="ios" collapse="condense" className="ion-no-border">
         <IonToolbar>
           <IonButtons>
-            <BackButton
-              defaultRouterLink={defaultBackRouterLinkt}
-              invertColor
-            />
+            <BackButton defaultRouterLink={defaultBackRouterLinkt} />
           </IonButtons>
           <IonTitle>Datenschutzerklärung</IonTitle>
         </IonToolbar>

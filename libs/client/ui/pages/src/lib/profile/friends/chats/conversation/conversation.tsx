@@ -167,7 +167,6 @@ export const Conversation: React.FC<ConversationProps> = inject(
             <IonButtons>
               <BackButton
                 defaultRouterLink={`${tabRoutes.profile.route}/friends`}
-                invertColor
               />
             </IonButtons>
             <IonTitle>{match.params.username}</IonTitle>
