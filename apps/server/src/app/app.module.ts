@@ -54,7 +54,7 @@ import { ChatModule } from '@bregenz-bewegt/server/controllers/chat';
     }),
     ServeStaticModule.forRoot({
       rootPath: path.join(process.cwd(), 'static'),
-      serveRoot: '/static',
+      serveRoot: `/${process.env['NX_API_SERVER_PREFIX'] ?? ''}/static`,
       serveStaticOptions: {
         redirect: false,
         index: false,
