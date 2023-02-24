@@ -25,7 +25,7 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
     const [isGuest] = useIsGuest();
 
     return (
-      <IonCard className="coin-depot" color="secondary" mode="ios">
+      <IonCard className="coin-depot" mode="ios">
         <IonCardHeader>
           <Coin className="coin-depot__coin" />
           <div className="coin-stats">
@@ -42,12 +42,9 @@ export const CoinDepot: React.FC<CoinDepotProps> = inject(userStore.storeKey)(
         {!isGuest && (
           <IonCardContent>
             <IonText>
-              <h2>
-                Jählich werden am 31.12. Preise an die Top 10 Sportler
-                verliehen.
-                <br />
-                Sei dabei und verdien dir einen Preis!
-              </h2>
+              Jährlich werden am 31.12. Preise an die Top 10 Sportler verliehen.
+              <br />
+              Sei dabei und verdien dir einen Preis!
             </IonText>
             <IonButton
               expand="block"

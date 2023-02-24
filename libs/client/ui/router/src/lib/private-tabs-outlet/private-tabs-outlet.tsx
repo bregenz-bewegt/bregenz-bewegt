@@ -92,7 +92,7 @@ export const PrivateTabsOutlet: React.FC<PrivateTabsOutletProps> = inject(
             ></Route>
             <Route
               exact
-              path={`/user/:id`}
+              path={`/users/:username`}
               component={(props: RouteComponentProps<any>) => (
                 <RoleRouteGuard allowedRoles={[Role.USER]}>
                   <CompetitorProfile {...props} />

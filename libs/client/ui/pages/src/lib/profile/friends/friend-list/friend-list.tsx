@@ -85,7 +85,7 @@ export const FriendList: React.FC<FriendsListProps> = inject(
                     <IonCol size="auto" className="username-avatar-col">
                       <IonItem
                         key={friend.id}
-                        routerLink={`/user/${friend.id}`}
+                        routerLink={`/users/${friend.username}`}
                         detail={false}
                         lines="none"
                         className="friend-user-list--friends"

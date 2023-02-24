@@ -1,6 +1,10 @@
 import { http } from '@bregenz-bewegt/client/common/http';
 import { storage } from '@bregenz-bewegt/client/common/storage';
-import { Preferences, Role } from '@bregenz-bewegt/client/types';
+import {
+  ActivityChartData,
+  Preferences,
+  Role,
+} from '@bregenz-bewegt/client/types';
 import type { User } from '@bregenz-bewegt/client/types';
 import type {
   ForgotPasswordDto,
@@ -15,6 +19,8 @@ import type {
   ResetEmailDto,
   VerifyResetEmailDto,
   ChangePasswordDto,
+  CompetitorDetail,
+  CompetitorFriendStatus,
 } from '@bregenz-bewegt/shared/types';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { Store } from './store';
@@ -79,6 +85,27 @@ export class UserStore implements Store {
 
   async fetchProfile(): Promise<User> {
     const { data } = await http.get('/users/profile');
+    return data;
+  }
+
+  async fetchCompetitorProfile(
+    username: User['username']
+  ): Promise<CompetitorDetail> {
+    const { data } = await http.get('/competitors/profile/' + username);
+    return data;
+  }
+
+  async fetchCompetitorChartData(
+    username: User['username']
+  ): Promise<ActivityChartData | undefined> {
+    const { data } = await http.get('/competitors/chart/' + username);
+    return data;
+  }
+
+  async fetchCompetitorFriendStatus(
+    username: User['username']
+  ): Promise<CompetitorFriendStatus | undefined> {
+    const { data } = await http.get('/competitors/friends/' + username);
     return data;
   }
 

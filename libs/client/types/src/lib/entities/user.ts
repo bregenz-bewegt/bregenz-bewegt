@@ -9,6 +9,7 @@ export type User = {
   activationOtp?: string;
   firstname?: string;
   lastname?: string;
+  biography?: string;
   role: Role;
   registratedAt: Date;
   updatedAt: Date;

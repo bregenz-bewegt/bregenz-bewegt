@@ -20,6 +20,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { useDefaultErrorToast } from '@bregenz-bewegt/client/common/hooks';
+import './difficulty.scss';
 
 export interface DifficultyProps {
   userStore?: UserStore;
@@ -57,7 +58,7 @@ export const Difficulty = inject(userStore.storeKey)(
     };
 
     return (
-      <IonPage>
+      <IonPage className="difficulty">
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>

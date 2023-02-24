@@ -20,6 +20,7 @@ import { useFormik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { VerifyEmail } from '../../verify-email/verify-email';
 import { EmailResetToken } from '@bregenz-bewegt/shared/types';
+import './email.scss';
 
 export interface EmailProps {
   userStore?: UserStore;
@@ -66,7 +67,7 @@ export const Email: React.FC<EmailProps> = inject(userStore.storeKey)(
     }, []);
 
     return (
-      <IonPage ref={page}>
+      <IonPage ref={page} className="email">
         <IonHeader mode="ios" collapse="condense" className="ion-no-border">
           <IonToolbar>
             <IonButtons>

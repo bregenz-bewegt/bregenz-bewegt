@@ -1,6 +1,7 @@
 import {
   ActivityCard,
   GuestLock,
+  Chart,
   Header,
 } from '@bregenz-bewegt/client-ui-components';
 import {
@@ -21,20 +22,14 @@ import {
   IonPage,
   IonSelect,
   IonSelectOption,
+  IonText,
   ScrollDetail,
   useIonViewWillEnter,
 } from '@ionic/react';
 import { inject, observer } from 'mobx-react';
-import { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import './analytics.scss';
-import {
-  Area,
-  AreaChart,
-  ReferenceLine,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from 'recharts';
+
 import { ArrowUp2 } from 'iconsax-react';
 import { useIsGuest } from '@bregenz-bewegt/client/common/hooks';
 import { DifficultyType } from '@prisma/client';
@@ -43,14 +38,6 @@ import { isNil } from 'lodash';
 export interface AnalyticsProps {
   activityStore?: ActivityStore;
 }
-
-type CalculateTicksProps = {
-  min: number;
-  max: number;
-  count: number;
-  round: number;
-  includeMin: boolean;
-};
 
 const RELOAD_CHUNK_SIZE = 5;
 
@@ -258,26 +245,12 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
       });
     };
 
-    const calculateTicks = ({
-      min,
-      max,
-      count,
-      round,
-      includeMin,
-    }: CalculateTicksProps): number[] => {
-      const interval =
-        Math.round(((max - min + 1) / count + Number.EPSILON) / round) * round;
-      return [...Array(count)].map((_x, i) => {
-        const y = includeMin ? i : i + 1;
-        if (y === 0) return min;
-        return i === count - 1 ? max : min + y * interval - 1;
-      });
-    };
-
     const updateChartData = (month: number) => {
       activityStore
         ?.getChartData(month)
-        .then((data) => setChartData(data))
+        .then((data) => {
+          setChartData(data);
+        })
         .catch(() => setChartData(undefined));
     };
 
@@ -348,10 +321,7 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                             month.setMonth(span - 1);
 
                             return (
-                              <IonSelectOption
-                                value={span}
-                                key={JSON.stringify(span)}
-                              >
+                              <IonSelectOption value={span} key={span}>
                                 {month.toLocaleString('default', {
                                   month: 'long',
                                 })}
@@ -362,107 +332,29 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                       )}
                     </h2>
                   </div>
-                  {!isNil(chartFilterMonth) && chartData && (
-                    <ResponsiveContainer width={'100%'} height={200}>
-                      <AreaChart
-                        data={chartData}
-                        margin={{ top: 10, right: 20, left: -25, bottom: 0 }}
-                      >
-                        <defs>
-                          <linearGradient
-                            id="color-coins"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                          >
-                            <stop
-                              offset="5%"
-                              stopColor="var(--ion-color-secondary)"
-                              stopOpacity={0.8}
-                            />
-                            <stop
-                              offset="95%"
-                              stopColor="var(--ion-color-secondary)"
-                              stopOpacity={0}
-                            />
-                          </linearGradient>
-                        </defs>
-                        <XAxis
-                          dataKey="date"
-                          unit={'.'}
-                          type="number"
-                          axisLine={false}
-                          tickLine={false}
-                          allowDecimals={false}
-                          interval="preserveStartEnd"
-                          ticks={calculateTicks({
-                            min: 1,
-                            max: new Date(
-                              new Date().getFullYear(),
-                              chartFilterMonth + 1,
-                              0
-                            ).getDate(),
-                            count: 7,
-                            round: 5,
-                            includeMin: true,
-                          })}
-                        />
-                        <YAxis
-                          dataKey="coins"
-                          axisLine={false}
-                          tickLine={false}
-                          allowDecimals={false}
-                          interval="preserveStartEnd"
-                          ticks={calculateTicks({
-                            min: 1,
-                            max: chartData?.reduce(
-                              (r, d) => (d.coins > r ? d.coins : r),
-                              0
-                            ),
-                            count: 4,
-                            round: 10,
-                            includeMin: false,
-                          })}
-                        />
-                        <Area
-                          type="monotoneX"
-                          dataKey="coins"
-                          fill="url(#color-coins)"
-                          stroke="var(--ion-color-primary)"
-                          fillOpacity={1}
-                        />
-                        <ReferenceLine
-                          label={{
-                            value: '∅',
-                            position: 'right',
-                          }}
-                          y={Math.floor(
-                            chartData?.reduce((r, d) => r + d.coins, 0) /
-                              chartData?.length
-                          )}
-                          stroke="black"
-                          opacity={0.5}
-                          fillOpacity={1}
-                        />
-                      </AreaChart>
-                    </ResponsiveContainer>
+                  {!isNil(chartFilterMonth) &&
+                  chartData &&
+                  chartData.length > 0 ? (
+                    <Chart
+                      chartData={chartData}
+                      chartFilterMonth={chartFilterMonth - 1}
+                    />
+                  ) : (
+                    <IonText>
+                      Zu wenig Daten für die Statistik vorhanden
+                    </IonText>
                   )}
                 </div>
-
                 <div className="analytics__content__list">
                   {activityList.length > 0 &&
                     activityList.map((a, i, arr) => {
                       const newD = new Date(a.endedAt);
                       return (
-                        <>
+                        <React.Fragment key={i}>
                           {(i === 0 ||
                             new Date(arr[i - 1].endedAt).getDate() !==
                               newD.getDate()) && (
-                            <div
-                              className="analytics__content__list__title"
-                              key={JSON.stringify(a)}
-                            >
+                            <div className="analytics__content__list__title">
                               {i === 0 && <h2>Verlauf</h2>}
                               <h4>
                                 {newD.toLocaleString('default', {
@@ -474,10 +366,9 @@ export const Analytics: React.FC<AnalyticsProps> = inject(
                           )}
                           <ActivityCard
                             activity={a}
-                            key={i}
                             className="analytics__content__list__card"
                           />
-                        </>
+                        </React.Fragment>
                       );
                     })}
                   {!isGuest && (

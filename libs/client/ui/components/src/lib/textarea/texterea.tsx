@@ -1,17 +1,14 @@
-import './input.scss';
-import { IonInput, IonItem, IonLabel, IonNote } from '@ionic/react';
+import './textarea.scss';
+import { IonItem, IonLabel, IonNote, IonTextarea } from '@ionic/react';
 import {
-  InputChangeEventDetail,
-  IonInputCustomEvent,
+  TextareaChangeEventDetail,
+  IonTextareaCustomEvent,
   TextFieldTypes,
 } from '@ionic/core';
-import {
-  AutocompleteTypes,
-  InputModeTypes,
-} from '@bregenz-bewegt/client/types';
+import { InputModeTypes } from '@bregenz-bewegt/client/types';
 
-export interface InputProps {
-  value?: string | number | null;
+export interface TextAreaProps {
+  value?: string | null;
   type?: TextFieldTypes;
   inputMode?: InputModeTypes;
   placeholder?: string;
@@ -22,14 +19,15 @@ export interface InputProps {
   error?: string;
   expand?: boolean;
   clearOnEdit?: boolean;
-  autocomplete?: AutocompleteTypes;
   className?: string;
-  ref?: React.Ref<HTMLIonInputElement>;
-  onChange?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
-  onBlur?: (event: IonInputCustomEvent<FocusEvent>) => void;
+  ref?: React.Ref<HTMLIonTextareaElement>;
+  onChange?: (event: IonTextareaCustomEvent<TextareaChangeEventDetail>) => void;
+  onBlur?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
+  autoGrow?: boolean;
+  maxlength?: number;
 }
 
-export const Input: React.FC<InputProps> = ({
+export const TextArea: React.FC<TextAreaProps> = ({
   value,
   type,
   inputMode,
@@ -42,10 +40,11 @@ export const Input: React.FC<InputProps> = ({
   expand = true,
   className,
   clearOnEdit = false,
-  autocomplete,
   ref,
   onChange,
   onBlur,
+  autoGrow,
+  maxlength,
 }) => {
   const inputProps = {
     value,
@@ -56,24 +55,30 @@ export const Input: React.FC<InputProps> = ({
     required,
     disabled,
     clearOnEdit,
-    autocomplete,
     ref,
     onIonChange: onChange,
     onIonBlur: onBlur,
+    autoGrow,
+    maxlength,
   };
 
   return (
     <div
-      className={`input${expand ? ' expand' : ''}${
+      className={`textarea${expand ? ' expand' : ''}${
         className ? ` ${className}` : ''
       }`}
     >
-      <IonItem lines="none" className={`${error ? 'ion-invalid' : ''}`}>
+      <IonItem
+        lines="none"
+        className={`${error ? 'ion-invalid' : ''}`}
+        counter={!!maxlength}
+      >
         {label && <IonLabel position="stacked">{label}</IonLabel>}
-        <IonInput
+        <IonTextarea
           {...inputProps}
           className={`${error ? 'ion-invalid' : ''}`}
-        ></IonInput>
+          rows={3}
+        ></IonTextarea>
         {error && (
           <IonNote color="danger" slot="error">
             {error}
