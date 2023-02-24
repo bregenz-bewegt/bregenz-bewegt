@@ -17,7 +17,12 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { DifficultyType, Preferences, User } from '@prisma/client';
+import {
+  DifficultyType,
+  FriendRequest,
+  Preferences,
+  User,
+} from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { UtilService } from '@bregenz-bewegt/server/util';
 import { ConfigService } from '@nestjs/config';
@@ -54,6 +59,23 @@ export class UserService {
 
   async findById(id: User['id']): Promise<User> {
     return this.prismaService.user.findUnique({ where: { id: id } });
+  }
+
+  async findByUsername(username: User['username']): Promise<
+    User & {
+      preferences: Preferences;
+      friendRequestsRelation: FriendRequest[];
+    }
+  > {
+    const result = await this.prismaService.user.findUnique({
+      where: { username: username },
+      include: {
+        preferences: true,
+        friendRequestsRelation: true,
+      },
+    });
+
+    return result;
   }
 
   async patchProfile(id: User['id'], fields: PatchProfileDto): Promise<User> {
@@ -96,7 +118,9 @@ export class UserService {
 
     return {
       ...preferences,
-      difficulties: preferences.difficulties.map((d) => d.difficulty),
+      difficulties: preferences.difficulties.map(
+        (d) => d.difficulty as unknown as DifficultyType
+      ),
     };
   }
 

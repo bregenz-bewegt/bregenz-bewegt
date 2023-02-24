@@ -119,7 +119,7 @@ export const AddFriendModal: React.FC<AddFriendModalProps> = inject(
                       <IonCol size="auto" className="username-avatar-col">
                         <IonItem
                           key={user.id}
-                          routerLink={`/user/${user.id}`}
+                          routerLink={`/users/${user.username}`}
                           onClick={() => dismissAddModal()}
                           detail={false}
                           lines="none"

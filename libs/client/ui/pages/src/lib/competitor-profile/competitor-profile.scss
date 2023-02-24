@@ -1,2 +1,52 @@
 .competitor-profile {
+  &__content {
+    &__avatar {
+      margin-top: var(--spacing-l);
+      ion-avatar {
+        height: calc(var(--spacing-5xl) * 2);
+        width: calc(var(--spacing-5xl) * 2);
+      }
+    }
+
+    &__username {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    &__infos {
+      padding: var(--spacing-s) var(--spacing-m);
+      border-radius: var(--spacing-s);
+      background-color: var(--ion-color-light);
+      margin-bottom: var(--spacing-s);
+    }
+
+    &__friends {
+      display: flex;
+      margin: var(--spacing-m) 0;
+
+      ion-button:first-child {
+        flex: 1;
+      }
+    }
+
+    &__chart {
+      ion-text {
+        padding: var(--spacing-m) var(--spacing-l);
+        border-radius: var(--spacing-s);
+        background-color: var(--ion-color-light);
+      }
+    }
+
+    ion-footer {
+      margin-top: var(--spacing-3xl);
+
+      &::before {
+        background: var(--ion-color-light-shade);
+      }
+
+      .account-created {
+        padding: var(--spacing-s) 0;
+        font-size: small;
+      }
+    }
+  }
 }

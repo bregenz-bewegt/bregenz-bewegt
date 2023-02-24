@@ -3,6 +3,7 @@ import {
   GuestLock,
   Input,
   ItemGroup,
+  TextArea,
 } from '@bregenz-bewegt/client-ui-components';
 import { UserStore, userStore } from '@bregenz-bewegt/client/common/stores';
 import {
@@ -79,6 +80,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
       initialValues: {
         firstname: userStore?.user?.firstname ?? '',
         lastname: userStore?.user?.lastname ?? '',
+        biography: userStore?.user?.biography ?? '',
       },
       onSubmit: (values, { setSubmitting, setValues }) => {
         setSubmitting(true);
@@ -88,6 +90,7 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
             setValues({
               firstname: result.firstname ?? '',
               lastname: result.lastname ?? '',
+              biography: userStore?.user?.biography ?? '',
             });
             setSubmitting(false);
             showSuccessToast();
@@ -195,10 +198,15 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
         values: {
           firstname: userStore?.user?.firstname ?? '',
           lastname: userStore?.user?.lastname ?? '',
+          biography: userStore?.user?.biography ?? '',
         },
       });
       userStore?.refreshProfile().then(() => setIsImageLoaded(true));
-    }, [userStore?.user?.firstname, userStore?.user?.lastname]);
+    }, [
+      userStore?.user?.firstname,
+      userStore?.user?.lastname,
+      userStore?.user?.biography,
+    ]);
 
     return (
       <IonPage className="profile">
@@ -328,6 +336,24 @@ export const Profile: React.FC<ProfileProps> = inject(userStore.storeKey)(
                       onChange={profile.handleChange}
                       onBlur={profile.handleBlur}
                       disabled={!isImageLoaded}
+                    />
+                  </IonRow>
+                  <IonRow>
+                    <TextArea
+                      name="biography"
+                      placeholder="Schreibe etwas über dich"
+                      label="Bio"
+                      value={profile.values.biography}
+                      error={
+                        profile.touched.biography
+                          ? profile.errors.biography
+                          : undefined
+                      }
+                      onChange={profile.handleChange}
+                      onBlur={profile.handleBlur}
+                      disabled={!isImageLoaded}
+                      autoGrow={false}
+                      maxlength={500}
                     />
                   </IonRow>
                   <IonRow>

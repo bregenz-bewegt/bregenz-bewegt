@@ -14,13 +14,11 @@ import { Location } from 'iconsax-react';
 
 export interface ActivityCardProps {
   activity: Activity & { minutes?: string; seconds?: string };
-  key: number;
   className?: string;
 }
 
 export const ActivityCard: React.FC<ActivityCardProps> = ({
   activity,
-  key,
   className,
 }: ActivityCardProps) => {
   return (
@@ -29,7 +27,6 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
       routerDirection="forward"
       className={`activity-card ${className ?? ''}`}
       mode="ios"
-      key={key}
     >
       <div className="activity-card__flex-wrapper">
         <IonCardHeader>
