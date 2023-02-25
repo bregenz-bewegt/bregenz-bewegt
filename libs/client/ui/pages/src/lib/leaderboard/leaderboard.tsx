@@ -70,11 +70,11 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
         ?.getCompetitor({ year: timespan })
         .then((data) => {
           setCompetitor(data);
-          // setIsLoading(false);
+          setIsLoading(false);
         })
         .catch(() => {
           setCompetitor(undefined);
-          // setIsLoading(false);
+          setIsLoading(false);
         });
     };
 
@@ -95,7 +95,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = inject(
         })
         .catch(() => {
           setLeaderboard([]);
-          // setIsLoading(false);
+          setIsLoading(false);
         });
     };
 
