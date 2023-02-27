@@ -62,14 +62,11 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const checkLocation = async (park?: Park) => {
-      // Disable location check for presentation on digbiz playground
-      if (park?.id === 5) {
-        return setIsLocationValid(true);
-      }
-
       const location = await locationStore?.getLocation();
+
       if (!location?.coords || !park?.coordinates)
         return setIsLocationValid(false);
+
       const isValid = locationStore?.isLocationWithinRadius(
         location.coords,
         {
