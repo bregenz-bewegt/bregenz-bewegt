@@ -21,7 +21,7 @@ export class MapStaticAssetPathInterceptor implements NestInterceptor {
     const mapped = _.mapValuesDeep(value, (value, key) => {
       if (!this.keysToBeMapped.includes(key) || _.isNil(value)) return value;
 
-      return `${process.env['NX_API_BASE_URL']}/static/${value}`;
+      return `${process.env['NX_API_BASE_URL']}/api/static/${value}`;
     });
 
     return mapped;

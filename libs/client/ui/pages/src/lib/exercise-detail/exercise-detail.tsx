@@ -19,7 +19,7 @@ import {
 } from '@bregenz-bewegt/client/common/stores';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Park, Activity, Coordinates } from '@bregenz-bewegt/client/types';
+import { Park, Activity } from '@bregenz-bewegt/client/types';
 import {
   ActivityTimer,
   BackButton,
@@ -61,17 +61,19 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
     const [isLocationValid, setIsLocationValid] = useState<boolean>(false);
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    const checkLocation = async (coordinates?: Coordinates) => {
+    const checkLocation = async (park?: Park) => {
       const location = await locationStore?.getLocation();
-      if (!location?.coords || !coordinates) return setIsLocationValid(false);
+
+      if (!location?.coords || !park?.coordinates)
+        return setIsLocationValid(false);
 
       const isValid = locationStore?.isLocationWithinRadius(
         location.coords,
         {
-          latitude: coordinates.latitude,
-          longitude: coordinates.longitude,
+          latitude: park?.coordinates.latitude,
+          longitude: park?.coordinates.longitude,
         },
-        coordinates?.toleranceRadius
+        park?.coordinates?.toleranceRadius
       );
 
       setIsLocationValid(isValid || false);
@@ -84,7 +86,7 @@ export const ExerciseDetail: React.FC<ExerciseDetailProps> = inject(
 
       parkStore?.getParkWithExercise(parkId, exerciseId).then((park) => {
         setPark(park);
-        checkLocation(park?.coordinates);
+        checkLocation(park);
         setIsLoading(false);
       });
     }, [match.params.exercise, match.params.park]);

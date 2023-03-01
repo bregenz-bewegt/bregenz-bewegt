@@ -8,7 +8,7 @@ import { connectionOptions } from '.';
 export const connectChatSocket = (
   authorization: string
 ): Socket<ChatServerToClientEvents, ChatClientToServerEvents> => {
-  return io(`${process.env['NX_API_BASE_URL']}/chats`, {
+  return io(`${process.env['NX_API_BASE_URL']}/api/chats`, {
     ...connectionOptions,
     extraHeaders: { authorization },
     auth: {

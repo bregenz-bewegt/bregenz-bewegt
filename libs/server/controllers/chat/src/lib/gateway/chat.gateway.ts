@@ -33,7 +33,7 @@ import { UtilService } from '@bregenz-bewegt/server/util';
 import { PrismaService } from '@bregenz-bewegt/server-prisma';
 
 @Injectable()
-@WebSocketGateway({ namespace: 'chats', cors: { origin: true } })
+@WebSocketGateway({ namespace: 'api/chats', cors: { origin: '*' } })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(
     private chatService: ChatService,

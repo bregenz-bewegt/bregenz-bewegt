@@ -12,7 +12,7 @@ export const connectNotificationSocket = (
   NotificationServerToClientEvents,
   NotificationClientToServerEvents
 > => {
-  return io(`${process.env['NX_API_BASE_URL']}/notifications`, {
+  return io(`${process.env['NX_API_BASE_URL']}/api/notifications`, {
     ...connectionOptions,
     auth: { authorization: userId },
   });
