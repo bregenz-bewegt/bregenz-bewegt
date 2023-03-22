@@ -1,0 +1,23 @@
+.features-section {
+  width: 100%;
+
+  &__collect {
+    height: 200vh;
+    background-color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 70%;
+    align-items: flex-end;
+
+    &__coin {
+      box-shadow: var(--spacing-xs) var(--spacing-xs) var(--spacing-3xl)
+        var(--color-medium);
+    }
+  }
+
+  &__earn-rewards {
+    height: 100vh;
+    background-color: var(--color-light);
+  }
+}
