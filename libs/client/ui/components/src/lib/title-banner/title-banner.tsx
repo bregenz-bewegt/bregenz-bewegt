@@ -1,7 +1,7 @@
 import { IonText } from '@ionic/react';
+import React from 'react';
 import './title-banner.scss';
 
-/* eslint-disable-next-line */
 export interface TitleBannerProps {
   textSegments?: string[];
   animated?: boolean;

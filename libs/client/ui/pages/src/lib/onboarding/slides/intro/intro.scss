@@ -6,6 +6,29 @@
 
     ion-row {
       flex: 1;
+
+      ion-col {
+        display: flex;
+        justify-content: center !important;
+        align-items: center;
+
+        img {
+          height: calc(var(--spacing-3xl) * 2);
+          width: calc(var(--spacing-3xl) * 2);
+          border-radius: var(--spacing-m);
+          margin-right: var(--spacing-m);
+        }
+      }
     }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
   }
 }
