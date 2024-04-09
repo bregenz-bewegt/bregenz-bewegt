@@ -1,6 +1,5 @@
 import './coin.scss';
 
-/* eslint-disable-next-line */
 export interface CoinProps {
   className?: string;
 }
