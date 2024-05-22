@@ -123,6 +123,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 value={login.values.email}
                 autocomplete="email"
                 error={login.touched.email ? login.errors.email : undefined}
+                required
                 onChange={login.handleChange}
                 onBlur={login.handleBlur}
               ></Input>
@@ -136,6 +137,7 @@ export const Login: React.FC<LoginProps> = inject(userStore.storeKey)(
                 error={
                   login.touched.password ? login.errors.password : undefined
                 }
+                required
                 onChange={login.handleChange}
                 onBlur={login.handleBlur}
               />
