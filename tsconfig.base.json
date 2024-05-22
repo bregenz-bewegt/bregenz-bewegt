@@ -89,6 +89,9 @@
       ],
       "@bregenz-bewegt/shared/errors": ["libs/shared/errors/src/index.ts"],
       "@bregenz-bewegt/shared/types": ["libs/shared/types/src/index.ts"],
+      "@bregenz-bewegt/shared/ui/assets": [
+        "libs/shared/ui/assets/src/index.ts"
+      ],
       "@bregenz-bewegt/shared/ui/components": [
         "libs/shared/ui/components/src/index.ts"
       ]
